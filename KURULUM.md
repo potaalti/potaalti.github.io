@@ -57,23 +57,28 @@ hesaplanır.
 
 1. Draft'tan hemen önce bilgisayarda `guncelle.bat`'a çift tıkla (en güncel VP ortalamaları için),
    birkaç dakika bekle.
-2. Yönetici sayfası → **Oyuncu havuzunu yükle** (draftta seçilebilecek oyuncular ve otomatik seçim
-   sıralaması bu anki VP ortalamalarıyla sabitlenir).
-3. **Kurayı çek** → herkesin ekranında sıra 17'den 1'e doğru canlı açılır.
-4. Herkes hazır olunca **Draftı başlat**.
-5. Draft sırasında:
+2. **Mevkiler** sayfasında (yönetici menüsü) oyuncuların Ön/Arka mevkilerini kontrol et. TBF'de mevki
+   bilgisi olmadığı için ilk değerler istatistikten tahmin edilir (ribaund ve blok, asistin iki katından
+   fazlaysa Ön). Kanat oyuncuları ve hiç oynamamış oyuncular (**?** işaretli) yanılabilir; her tıklama
+   hemen kaydedilir.
+3. Yönetici sayfası → **Oyuncu havuzunu yükle** (draftta seçilebilecek oyuncular, mevkileri ve otomatik
+   seçim sıralaması bu anki VP ortalamalarıyla sabitlenir; draft başlatılırken son haliyle yeniden yüklenir).
+4. **Kurayı çek** → herkesin ekranında sıra 17'den 1'e doğru canlı açılır.
+5. Herkes hazır olunca **Draftı başlat**.
+6. Draft sırasında:
    - Sırası gelen menajerin ekranında "Sıra sende!" çıkar, ses ve titreşim olur.
    - Süre dolarsa müsait en iyi 15 oyuncudan (sezon VP ortalamasına göre) rastgele biri otomatik seçilir.
      Bunu açık olan herhangi bir menajer ekranı yapar; en az bir menajerin (ya da yöneticinin) sayfası
      açık olmalı.
-   - **Türk kuralı**: As'ta (ilk 5 seçim) en az 1, Yedekte (son 2 seçim) en az 1 Türk oyuncu
-     (TÜRKİYE/KKTC) olmalı. İlk 4 seçimde Türk almayan takım 5. seçimde, 6. seçimde Türk almayan
-     takım 7. seçimde sadece Türk seçebilir; otomatik seçim de buna uyar.
+   - **Kadro kuralı**: As beşi **3 Ön + 2 Arka**, 2 Yedeğin mevkisi serbest. As'ta en az 1, Yedekte
+     en az 1 Türk oyuncu (TÜRKİYE/KKTC). Bu kuralı imkânsız kılacak seçime izin verilmez (ör. 4 yabancı
+     Ön alan takım 5. seçimde yabancı Ön alamaz); site, sırası gelen takımın o an seçebileceği oyuncu
+     türlerini gösterir. Otomatik seçim de buna uyar.
    - Yönetici: **Duraklat / Devam ettir**, **Son seçimi geri al**, gerekirse sıradaki takım adına
      **Seç** (oyuncular listesinde).
-6. Draft bitince takımlar **Kadrom** sayfasından As/Yedek dizilişini serbestçe kurar
-   (As'ta ve Yedekte en az 1'er Türk).
-7. Puanlamanın başlayacağı haftanın ilk maçından önce yönetici **Sezonu başlat**'a basar →
+7. Draft bitince takımlar **Kadrom** sayfasından As/Yedek dizilişini serbestçe kurar
+   (As 3 Ön + 2 Arka; As'ta ve Yedekte en az 1'er Türk).
+8. Puanlamanın başlayacağı haftanın ilk maçından önce yönetici **Sezonu başlat**'a basar →
    dizilişler kilitlenir.
 
 > **Deneme draftı:** Gerçek drafttan önce süreyi 10 sn yapıp birkaç arkadaşla deneyebilirsin.
@@ -86,7 +91,8 @@ hesaplanır.
   5,5,5,4,4,4,4,3,3,3,3,2,2,2,1,1,1. Puanlar TBL fantezi ligiyle aynı kurallarla hesaplanır
   (As'ların VP toplamı; süre almayan As'ın yerine en yüksek VP'li yedek sayılır; eşitlikte en iyi
   Türk oyuncunun VP'si).
-- **Takas**: sınırsız, iki taraf kabul etmeli, iki taraftan 1–3'er oyuncu.
+- **Takas**: sınırsız, iki taraf kabul etmeli, iki taraftan 1–3'er oyuncu. Gelen oyuncu gidenin yerine
+  geçer; As'taki bir oyuncunun yerine aynı mevkiden oyuncu gelmeli.
 - **Serbest Oyuncular**: sezon boyunca takım başına 2.
 - **Kadrom → As–Yedek değişikliği**: sezon boyunca takım başına 1.
 - Bütün değişiklikler, ilk maçı henüz başlamamış ilk haftadan itibaren geçerlidir.

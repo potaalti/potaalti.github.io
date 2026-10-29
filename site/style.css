@@ -93,6 +93,7 @@ tr.alindi td { color: var(--soluk); }
 .rozet.tr { background: var(--kirmizi); color: #fff; }
 .rozet.as { background: var(--yesil-acik); color: var(--yesil); }
 .rozet.yedek { background: var(--cizgi); color: var(--soluk); }
+.rozet.mv { background: none; border: 1px solid var(--cizgi); color: var(--soluk); font-weight: 600; }
 .rozet.oto { background: var(--vurgu-acik); color: var(--vurgu); }
 .rozet.uyari { background: var(--vurgu); color: #fff; }
 

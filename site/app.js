@@ -1,5 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
-import { getAuth, signInAnonymously, connectAuthEmulator } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
+import { getAuth, signInAnonymously, signOut, connectAuthEmulator } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
 import * as F from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
 import { firebaseConfig } from './config.js';
 import * as C from './core.js';
@@ -24,16 +24,17 @@ const S = {
   hazir: false, ligYok: false, hataMesaji: null,
   uid: null, kod: null, ben: null, saatFarki: 0,
   ayar: null, durum: null, takimlar: {}, kadrolar: {}, secimler: {}, teklifler: {}, hareketler: {},
-  havuz: [], havuzMap: new Map(), havuzYuklendi: false,
+  havuz: [], havuzMap: new Map(), havuzYuklendi: false, mevkiler: {},
   rehber: new Map(), index: null, haftalar: {}, haftalarYuklendi: false,
   kodlar: null, kuraAcilan: -1, sonUyarilan: null,
   ui: {
-    draftSekme: 'oyuncular', ara: '', bslTakim: '', sadeceTurk: false, alinanlar: false,
+    draftSekme: 'oyuncular', ara: '', bslTakim: '', sadeceTurk: false, alinanlar: false, mevkiFiltre: '', belirsiz: false,
     puanSekme: 'genel', acik: null, faAl: null, dizilis: null,
     takasTakim: '', verilen: [], alinan: [],
   },
 };
 let secimDinleyici = null;
+if (YEREL) window.S = S; // yerel denemede durumu konsoldan incelemek için
 
 // ---------- Yardımcılar ----------
 const $ = s => document.querySelector(s);
@@ -53,13 +54,22 @@ function oyuncu(pid) {
     ?? { id: pid, ad: Object.values(S.secimler).find(s => s.oyuncu === pid)?.ad ?? `Oyuncu ${pid}`, takim: '', turk: false, vpOrt: 0, mac: 0 };
 }
 const turkMu = pid => !!oyuncu(pid).turk;
-
-// Sıradaki seçimde sadece Türk seçilebiliyorsa nedeni, yoksa null
-function turkZorunlu(tid) {
-  const k = S.kadrolar[tid];
-  if (!C.turkZorunlu(k, S.ayar.asSayisi, S.ayar.yedekSayisi)) return null;
-  return (k?.as?.length ?? 0) < S.ayar.asSayisi ? "As'ın son yuvası ve As'ta Türk yok" : 'Yedeğin son yuvası ve Yedekte Türk yok';
-}
+// Oyuncunun mevkisi (Ön/Arka): yöneticinin belirlediği, yoksa istatistik tahmini
+const mevki = pid => S.mevkiler[pid] ?? S.havuzMap.get(pid)?.mevki ?? oyuncu(pid).mevkiTahmini ?? 'arka';
+const bilgi = pid => ({ id: pid, mevki: mevki(pid), turk: turkMu(pid), vpOrt: oyuncu(pid).vpOrt ?? 0 });
+// Draftta kurallar havuzdaki mevkiye bakar
+const havuzBilgi = pid => {
+  const o = S.havuzMap.get(pid);
+  return o ? { id: pid, mevki: o.mevki, turk: !!o.turk, vpOrt: o.vpOrt ?? 0 } : bilgi(pid);
+};
+const kural = () => ({ asOn: S.ayar.asOn ?? 3, asArka: S.ayar.asArka ?? 2, yedek: S.ayar.yedekSayisi });
+let kadroTablosu = null;
+const izinliTipler = tid => C.izinliTipler(S.kadrolar[tid]?.tip, kadroTablosu ??= C.kadroTablosu(kural()));
+// Takımın sıradaki seçimi kısıtlıysa açıklaması ("sadece Türk Arka oyuncu"), değilse null
+const secimKisiti = tid => C.kisitMetni(izinliTipler(tid));
+const dizilisSorunu = k => C.dizilisHatasi(k.as.map(bilgi), k.yedek.map(bilgi), kural());
+const draftDizilisi = idler => C.dizilisOner(idler.map(havuzBilgi), kural());
+const mevkiRozeti = m => `<span class="rozet mv" title="${m === 'on' ? 'Ön saha (uzun/forvet)' : 'Arka saha (oyun kurucu/şutör)'}">${C.MEVKI_ADI[m]}</span>`;
 
 // Oyuncu id -> fantezi takımı (kadrolardan)
 function sahipler() {
@@ -70,7 +80,7 @@ function sahipler() {
 
 function oyuncuAdi(pid, { takim = true } = {}) {
   const o = oyuncu(pid);
-  return `${esc(o.ad)}${o.turk ? ' <span class="rozet tr" title="Türk oyuncu">TR</span>' : ''}${takim && o.takim ? ` <span class="bsl">${esc(o.takimKod || o.takim)}</span>` : ''}`;
+  return `${esc(o.ad)} ${mevkiRozeti(mevki(pid))}${o.turk ? ' <span class="rozet tr" title="Türk oyuncu">TR</span>' : ''}${takim && o.takim ? ` <span class="bsl">${esc(o.takimKod || o.takim)}</span>` : ''}`;
 }
 
 function bildir(mesaj, hata = false) {
@@ -116,9 +126,15 @@ let cizimBekliyor = false;
 function ciz() {
   if (cizimBekliyor) return;
   cizimBekliyor = true;
-  // Arka plandaki sekmede requestAnimationFrame çalışmaz; ekran yine de güncel kalsın
-  const zamanla = document.hidden ? f => setTimeout(f, 100) : requestAnimationFrame;
-  zamanla(() => { cizimBekliyor = false; cizHemen(); });
+  // Arka plandaki ya da görünmeyen sekmede requestAnimationFrame çalışmayabilir; ekran yine de güncel
+  // kalsın diye hangisi önce gelirse onunla çizilir
+  const ciz1 = () => {
+    if (!cizimBekliyor) return;
+    cizimBekliyor = false;
+    cizHemen();
+  };
+  requestAnimationFrame(ciz1);
+  setTimeout(ciz1, 150);
 }
 
 function cizHemen() {
@@ -163,6 +179,7 @@ function menu() {
     sezon && ['hareketler', 'Hareketler'],
     ['kurallar', 'Kurallar'],
     yonetici() && ['yonetici', 'Yönetici'],
+    yonetici() && ['mevkiler', 'Mevkiler'],
   ].filter(Boolean);
   return ogeler.map(([id, ad]) => `<a href="#/${id}" class="${sayfa === id || (sayfa === 'takim' && id === 'takimlar') ? 'aktif' : ''}">${ad}</a>`).join('');
 }
@@ -190,6 +207,7 @@ function gorunum() {
     case 'hareketler': return gorunumHareketler();
     case 'kurallar': return gorunumKurallar();
     case 'yonetici': return yonetici() ? gorunumYonetici() : '<p class="bos">Bu sayfa yönetici içindir.</p>';
+    case 'mevkiler': return yonetici() ? gorunumMevkiler() : '<p class="bos">Bu sayfa yönetici içindir.</p>';
     default: return gorunumDraft();
   }
 }
@@ -260,7 +278,7 @@ function durumKarti() {
     case 'kurulum':
       return `<div class="kart"><h2>Draft henüz başlamadı</h2>
         <p>Önce yönetici kurayı çekecek; çıkan sıra herkese burada canlı gösterilir. Sonra draft başlar.</p>
-        <p class="soluk">Yılan draft: 1. tur 1→17, 2. tur 17→1, … · Her takım 7 oyuncu (5 As + 2 Yedek) ·
+        <p class="soluk">Yılan draft: 1. tur 1→17, 2. tur 17→1, … · Her takım 7 oyuncu (As 3 Ön + 2 Arka, 2 Yedek) ·
         Seçim süresi ${sureMetni(S.ayar.secimSuresi)}</p></div>`;
     case 'kura':
       return kuraKarti(true);
@@ -271,7 +289,7 @@ function durumKarti() {
       const { tur, turSecimi } = C.secimBilgisi(n, S.ayar.takimSayisi);
       const benimSiram = tid === benimTakimim();
       const sonrakiler = d.secimSirasi.slice(n + 1, n + 6);
-      const turkZor = turkZorunlu(tid);
+      const kisit = secimKisiti(tid);
       return `<div class="kart saat-kart ${benimSiram ? 'sira-sende' : ''}">
         <div class="soluk">Tur ${tur} · ${turSecimi}. seçim · Genel ${n + 1}/${toplam}</div>
         <div class="siradaki">${benimSiram ? 'Sıra sende!' : esc(takimAdi(tid))}</div>
@@ -279,7 +297,7 @@ function durumKarti() {
         <div id="sayac" class="sayac">--:--</div>
         <div class="cubuk"><div id="cubuk" style="width:100%"></div></div>
         ${d.asama === 'duraklatildi' ? '<div class="uyari-kutu">Draft yönetici tarafından duraklatıldı.</div>' : ''}
-        ${turkZor ? `<div class="uyari-kutu">${benimSiram ? 'Bu seçim' : 'Bu takımın seçimi'} ${turkZor}: sadece Türk oyuncu seçilebilir.</div>` : ''}
+        ${kisit ? `<div class="uyari-kutu">Kadro kuralı gereği ${benimSiram ? `bu seçimde ${kisit} seçebilirsin` : `bu takım ${kisit} seçebilir`}.</div>` : ''}
         ${sonrakiler.length ? `<div class="sonraki"><span class="soluk" style="border:0;background:none">Sıradakiler:</span>${sonrakiler.map(t => `<span class="${t === benimTakimim() ? 'rozet uyari' : ''}">${esc(takimAdi(t))}</span>`).join('')}</div>` : ''}
         <p class="kucuk soluk" style="margin-bottom:0">Süre dolarsa müsait en iyi 15 oyuncudan (sezon VP ortalamasına göre) rastgele biri seçilir.</p>
       </div>`;
@@ -347,10 +365,11 @@ function benimDraftim() {
   const benimSiralarim = (S.durum.secimSirasi ?? []).map((t, i) => (t === tid ? i : -1)).filter(i => i >= S.durum.secimNo);
   const siradaki = benimSiralarim[0];
   return `<div class="kart">
-    <div class="baslik-satir"><h3>${esc(takimAdi(tid))} <span class="soluk kucuk">${oyuncular.length}/${kadroBoyu()} · Türk: As ${k?.asTurk ?? 0}, Yedek ${k?.yedekTurk ?? 0}</span></h3>
+    <div class="baslik-satir"><h3>${esc(takimAdi(tid))} <span class="soluk kucuk">${oyuncular.length}/${kadroBoyu()} · Ön ${(k?.tip?.oT ?? 0) + (k?.tip?.oY ?? 0)} · Arka ${(k?.tip?.aT ?? 0) + (k?.tip?.aY ?? 0)} · Türk ${(k?.tip?.oT ?? 0) + (k?.tip?.aT ?? 0)}</span></h3>
     ${siradaki != null && S.durum.asama !== 'kurulum' ? `<span class="soluk kucuk">Sıradaki seçimin: ${siradaki + 1}. seçim${siradaki > S.durum.secimNo ? ` (${siradaki - S.durum.secimNo} seçim sonra)` : ''}</span>` : ''}</div>
-    ${turkZorunlu(tid) ? `<div class="uyari-kutu kucuk">Sıradaki seçimin ${turkZorunlu(tid)}: Türk oyuncu seçmek zorundasın.</div>` : ''}
-    ${oyuncular.length ? `<div>${oyuncular.map((p, i) => `<span class="secim-chip">${oyuncuAdi(p)} <span class="rozet ${i < S.ayar.asSayisi ? 'as' : 'yedek'}">${i < S.ayar.asSayisi ? 'As' : 'Yedek'}</span></span>`).join('')}</div>`
+    <p class="kucuk soluk" style="margin:0 0 6px">Kadro kuralı: As ${kural().asOn} Ön + ${kural().asArka} Arka, ${kural().yedek} Yedek (mevki serbest); As'ta ve Yedekte en az 1'er Türk.</p>
+    ${secimKisiti(tid) && oyuncular.length < kadroBoyu() ? `<div class="uyari-kutu kucuk">Sıradaki seçiminde ${secimKisiti(tid)} seçebilirsin.</div>` : ''}
+    ${oyuncular.length ? `<div>${[...k.as.map(p => [p, 'as']), ...k.yedek.map(p => [p, 'yedek'])].map(([p, rol]) => `<span class="secim-chip">${oyuncuAdi(p)} <span class="rozet ${rol}">${rol === 'as' ? 'As' : 'Yedek'}</span></span>`).join('')}</div>`
       : '<p class="soluk" style="margin:0">Henüz oyuncu seçmedin.</p>'}
   </div>`;
 }
@@ -363,11 +382,13 @@ function draftOyunculari() {
   const sahip = sahipler();
   const tid = siradakiTakim();
   const secebilir = d.asama === 'draft' && tid && (tid === benimTakimim() || yonetici());
-  const turkZor = tid && turkZorunlu(tid);
+  const izin = tid ? izinliTipler(tid) : C.TIPLER;
+  const kisit = tid && secimKisiti(tid);
   const ara = S.ui.ara.toLocaleLowerCase('tr');
   const bslTakimlar = [...new Set(S.havuz.map(o => o.takim))].sort((a, b) => a.localeCompare(b, 'tr'));
   const liste = S.havuz.filter(o => (S.ui.alinanlar || !sahip.has(o.id))
     && (!S.ui.sadeceTurk || o.turk)
+    && (!S.ui.mevkiFiltre || o.mevki === S.ui.mevkiFiltre)
     && (!S.ui.bslTakim || o.takim === S.ui.bslTakim)
     && (!ara || o.ad.toLocaleLowerCase('tr').includes(ara)));
   const musait = S.havuz.filter(o => !sahip.has(o.id)).length;
@@ -375,6 +396,7 @@ function draftOyunculari() {
     <div class="satir" style="margin-bottom:10px">
       <input type="search" id="ara" data-ui="ara" placeholder="Oyuncu ara" value="${esc(S.ui.ara)}" class="ara">
       <select id="f-takim" data-ui="bslTakim"><option value="">Bütün BSL takımları</option>${bslTakimlar.map(t => `<option ${t === S.ui.bslTakim ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select>
+      <select id="f-mevki" data-ui="mevkiFiltre"><option value="">Ön + Arka</option><option value="on" ${S.ui.mevkiFiltre === 'on' ? 'selected' : ''}>Sadece Ön</option><option value="arka" ${S.ui.mevkiFiltre === 'arka' ? 'selected' : ''}>Sadece Arka</option></select>
       <label class="secenek"><input type="checkbox" id="f-turk" data-ui="sadeceTurk" ${S.ui.sadeceTurk ? 'checked' : ''}> Sadece Türkler</label>
       <label class="secenek"><input type="checkbox" id="f-alinan" data-ui="alinanlar" ${S.ui.alinanlar ? 'checked' : ''}> Seçilenleri de göster</label>
     </div>
@@ -383,14 +405,14 @@ function draftOyunculari() {
       <thead><tr><th class="sayi">#</th><th>Oyuncu</th><th>BSL takımı</th><th class="sayi">Maç</th><th class="sayi">VP ort.</th><th class="sayi">Sayı</th><th></th></tr></thead>
       <tbody>${liste.slice(0, 300).map(o => {
         const kimde = sahip.get(o.id);
-        const turkEngel = turkZor && !o.turk;
+        const engel = !izin.includes(C.tipi(o.mevki, o.turk));
         return `<tr class="${kimde ? 'alindi' : ''}">
           <td class="sayi soluk">${o.sira}</td>
-          <td>${esc(o.ad)}${o.turk ? ' <span class="rozet tr">TR</span>' : ''}</td>
+          <td>${esc(o.ad)} ${mevkiRozeti(o.mevki)}${o.turk ? ' <span class="rozet tr">TR</span>' : ''}</td>
           <td class="kucuk">${esc(o.takim)}</td>
           <td class="sayi">${o.mac}</td><td class="sayi"><b>${sayi(o.vpOrt)}</b></td><td class="sayi">${sayi(o.sayiOrt)}</td>
           <td class="sayi">${kimde ? `<span class="kucuk">${esc(takimAdi(kimde))}</span>`
-            : secebilir ? `<button class="btn kucuk ${turkEngel ? '' : 'ana'}" data-is="sec" data-id="${o.id}" ${turkEngel ? 'disabled title="Sadece Türk oyuncu seçilebilir"' : ''}>Seç</button>` : ''}</td>
+            : secebilir ? `<button class="btn kucuk ${engel ? '' : 'ana'}" data-is="sec" data-id="${o.id}" ${engel ? `disabled title="Kadro kuralı: ${kisit}"` : ''}>Seç</button>` : ''}</td>
         </tr>`;
       }).join('') || '<tr><td colspan="7" class="bos">Oyuncu bulunamadı</td></tr>'}</tbody>
     </table></div>
@@ -412,7 +434,7 @@ function draftTahtasi() {
       const simdiki = ['draft', 'duraklatildi'].includes(d.asama) && n === d.secimNo;
       const sinif = [simdiki && 'simdi', !s && 'bos-hucre', d.sira[c] === benimTakimim() && 'ben'].filter(Boolean).join(' ');
       hucreler += `<td class="${sinif}"><span class="soluk">${n + 1}.</span> ${s
-        ? `${esc(s.ad)}${s.turk ? ' <span class="rozet tr">TR</span>' : ''}${s.otomatik ? ' <span class="rozet oto" title="Süre doldu, otomatik seçildi">oto</span>' : ''}<div class="bsl">${esc(oyuncu(s.oyuncu).takimKod || s.bslTakim)}</div>`
+        ? `${esc(s.ad)}${s.mevki ? ` ${mevkiRozeti(s.mevki)}` : ''}${s.turk ? ' <span class="rozet tr">TR</span>' : ''}${s.otomatik ? ' <span class="rozet oto" title="Süre doldu, otomatik seçildi">oto</span>' : ''}<div class="bsl">${esc(oyuncu(s.oyuncu).takimKod || s.bslTakim)}</div>`
         : simdiki ? '<b>seçiyor…</b>' : ''}</td>`;
     }
     satirlar += `<tr><th>${r + 1}. tur ${r % 2 === 0 ? '→' : '←'}</th>${hucreler}</tr>`;
@@ -568,18 +590,18 @@ function gorunumKadrom() {
     if (!S.ui.dizilis) S.ui.dizilis = new Set(k.as);
     const secili = S.ui.dizilis;
     const tum = [...k.as, ...k.yedek];
-    const dizilisSorunu = secili.size === S.ayar.asSayisi
-      ? C.turkKuraliHatasi({ as: tum.filter(p => secili.has(p)), yedek: tum.filter(p => !secili.has(p)) }, turkMu) : null;
+    const sorun = secili.size === S.ayar.asSayisi
+      ? dizilisSorunu({ as: tum.filter(p => secili.has(p)), yedek: tum.filter(p => !secili.has(p)) }) : null;
     ana = `<div class="kart"><h3>As/Yedek dizilişi</h3>
-      <p>Sezon başlayana kadar dizilişini serbestçe değiştirebilirsin. <b>5 As</b> seç, kalan 2 oyuncu Yedek olur. As'ta en az 1, Yedekte en az 1 Türk oyuncu olmalı.</p>
+      <p>Sezon başlayana kadar dizilişini serbestçe değiştirebilirsin. <b>5 As</b> seç (${kural().asOn} Ön + ${kural().asArka} Arka), kalan 2 oyuncu Yedek olur. As'ta en az 1, Yedekte en az 1 Türk oyuncu olmalı.</p>
       <div>${tum.map(p => `<button class="secim-chip ${secili.has(p) ? 'secili' : ''}" data-is="dizilis" data-id="${p}">${oyuncuAdi(p)}</button>`).join('')}</div>
       <p class="soluk kucuk">${secili.size}/5 As seçili</p>
-      ${dizilisSorunu ? `<div class="hata-kutu kucuk">${dizilisSorunu}</div>` : ''}
-      <button class="btn ana" data-is="dizilis-kaydet" ${secili.size === S.ayar.asSayisi && !dizilisSorunu ? '' : 'disabled'}>Dizilişi kaydet</button></div>`;
+      ${sorun ? `<div class="hata-kutu kucuk">${sorun}</div>` : ''}
+      <button class="btn ana" data-is="dizilis-kaydet" ${secili.size === S.ayar.asSayisi && !sorun ? '' : 'disabled'}>Dizilişi kaydet</button></div>`;
   } else if (asama() === 'sezon') {
     const hak = S.ayar.degisiklikHakki - k.degisiklik;
     ana = `<div class="kart"><h3>As–Yedek değişikliği</h3>
-      ${hak > 0 ? `<p>Sezon boyunca <b>${S.ayar.degisiklikHakki}</b> kez bir As ile bir Yedeğin yerini değiştirebilirsin. Değişiklik <b>${etkinHafta()}. haftadan</b> itibaren geçerli olur.</p>
+      ${hak > 0 ? `<p>Sezon boyunca <b>${S.ayar.degisiklikHakki}</b> kez bir As ile bir Yedeğin yerini değiştirebilirsin (As'ta ${kural().asOn} Ön + ${kural().asArka} Arka kalmalı, yani aynı mevkiden iki oyuncu). Değişiklik <b>${etkinHafta()}. haftadan</b> itibaren geçerli olur.</p>
         <div class="satir">
           <select id="dg-as"><option value="">Yedeğe geçecek As</option>${k.as.map(p => `<option value="${p}">${esc(oyuncu(p).ad)}</option>`).join('')}</select>
           <span>⇄</span>
@@ -612,7 +634,7 @@ function gorunumSerbest() {
   if (S.ui.faAl && k) {
     const al = oyuncu(S.ui.faAl);
     panel = `<div class="kart sira-sende"><h3>${esc(al.ad)} ${al.turk ? '<span class="rozet tr">TR</span>' : ''} <span class="soluk kucuk">${esc(al.takim)}</span></h3>
-      <p>Kimin yerine alıyorsun? Gelen oyuncu, bıraktığın oyuncunun yerine (As ya da Yedek) geçer ve <b>${etkinHafta()}. haftadan</b> itibaren sayılır. Bıraktığın oyuncu serbest kalır.</p>
+      <p>Kimin yerine alıyorsun? Gelen oyuncu, bıraktığın oyuncunun yerine (As ya da Yedek) geçer; As'taki bir oyuncunun yerine aynı mevkiden oyuncu alınmalı ve <b>${etkinHafta()}. haftadan</b> itibaren sayılır. Bıraktığın oyuncu serbest kalır.</p>
       <div class="satir"><select id="fa-birak"><option value="">Bırakılacak oyuncu</option>
         ${[...k.as.map(p => [p, 'As']), ...k.yedek.map(p => [p, 'Yedek'])].map(([p, rol]) => `<option value="${p}">${esc(oyuncu(p).ad)} (${rol})</option>`).join('')}</select>
       <button class="btn ana" data-is="fa-onayla">Onayla</button><button class="btn" data-is="fa-vazgec">Vazgeç</button></div></div>`;
@@ -639,9 +661,9 @@ function gorunumSerbest() {
 
 // ---------- Takas ----------
 function takasSorunu(verenId, alanId, verenYeni, alanYeni) {
-  const v = C.turkKuraliHatasi(verenYeni, turkMu);
+  const v = dizilisSorunu(verenYeni);
   if (v) return `Bu takas olmaz: ${takimAdi(verenId)} kadrosunda ${v}.`;
-  const a = C.turkKuraliHatasi(alanYeni, turkMu);
+  const a = dizilisSorunu(alanYeni);
   if (a) return `Bu takas olmaz: ${takimAdi(alanId)} kadrosunda ${a}.`;
   return null;
 }
@@ -700,7 +722,7 @@ function gorunumTakas() {
         ${sorun ? `<div class="hata-kutu kucuk">${esc(sorun)}</div>` : ''}`;
     }
     yeni = `<div class="kart"><h3>Yeni takas teklifi</h3>
-      <p class="kucuk soluk">Her iki taraftan aynı sayıda (1–3) oyuncu seç. Seçim sırası eşleşmeyi belirler: 1. verdiğinin yerine 1. aldığın geçer (As ya da Yedek). Takas karşı taraf kabul edince <b>${etkinHafta()}. haftadan</b> itibaren geçerli olur.</p>
+      <p class="kucuk soluk">Her iki taraftan aynı sayıda (1–3) oyuncu seç. Seçim sırası eşleşmeyi belirler: 1. verdiğinin yerine 1. aldığın geçer (As ya da Yedek). As'taki bir oyuncunun yerine aynı mevkiden oyuncu gelmeli. Takas karşı taraf kabul edince <b>${etkinHafta()}. haftadan</b> itibaren geçerli olur.</p>
       <select id="takas-takim" data-ui="takasTakim"><option value="">Takım seç</option>${takimlar().filter(t => t.id !== tid).map(t => `<option value="${t.id}" ${t.id === S.ui.takasTakim ? 'selected' : ''}>${esc(t.ad)}</option>`).join('')}</select>
       ${karsi ? `<div class="iki-kolon" style="margin-top:10px">
         <div><b>Vereceklerin</b><div>${[...k.as, ...k.yedek].map(p => chip(p, S.ui.verilen, 'tk-ver')).join('')}</div></div>
@@ -743,14 +765,16 @@ function gorunumKurallar() {
       <li>Her takım ${kadroBoyu()} oyuncu seçer: ${a.asSayisi} As + ${a.yedekSayisi} Yedek (toplam ${a.takimSayisi * kadroBoyu()} seçim). Bir oyuncu sadece bir takımda olabilir.</li>
       <li>Her seçim için süre ${sureMetni(a.secimSuresi)}. Süre dolarsa, müsait oyuncular içinden bu sezonun BSL maç başı VP ortalamasına göre en iyi 15 oyuncudan rastgele biri otomatik seçilir.</li>
       <li>Aynı BSL takımından istediğin kadar oyuncu seçebilirsin.</li>
-      <li>Her takımın As'ında (ilk 5 seçim) en az 1, Yedeğinde (son 2 seçim) en az 1 Türk oyuncu (TÜRKİYE / KKTC) olmalı. İlk 4 seçimde Türk almadıysan 5. seçimde, 6. seçimde Türk almadıysan 7. seçimde sadece Türk oyuncu seçebilirsin (otomatik seçim de buna uyar).</li>
-      <li>Draft sırasında ilk 5 seçimin As, son 2 seçimin Yedek olarak yerleşir; draft bitince sezon başlayana kadar dizilişini serbestçe değiştirebilirsin.</li>
+      <li>Her oyuncu <b>Ön</b> (uzun/forvet) ya da <b>Arka</b> (oyun kurucu/şutör) sahadır. As beşi <b>${kural().asOn} Ön + ${kural().asArka} Arka</b>; ${kural().yedek} Yedeğin mevkisi serbest.</li>
+      <li>As'ta en az 1, Yedekte en az 1 Türk oyuncu (TÜRKİYE / KKTC) olmalı.</li>
+      <li>Draftta bu kuralı imkânsız hale getirecek oyuncu seçilemez (ör. 4 yabancı Ön alan takım 5. seçimde yabancı Ön alamaz); site o an seçebileceğin oyuncu türlerini gösterir. Otomatik seçim de buna uyar.</li>
+      <li>Seçilen oyuncular kadroya mevkilerine göre yerleşir; draft bitince sezon başlayana kadar dizilişini serbestçe değiştirebilirsin.</li>
     </ul>
     <h3>Sezon</h3><ul>
       <li>Takaslar sınırsız; iki taraf da kabul etmeli. İki taraftan aynı sayıda (1–3) oyuncu verilir; gelen oyuncu gidenin yerine (As/Yedek) geçer.</li>
       <li>Her takım sezon boyunca en fazla ${a.faHakki} serbest oyuncu (hiçbir takımda olmayan oyuncu) alabilir; alırken bir oyuncusunu bırakır.</li>
       <li>Her takım sezon boyunca ${a.degisiklikHakki} kez As–Yedek değişikliği yapabilir.</li>
-      <li>Diziliş, As–Yedek değişikliği, takas ve serbest oyuncu sonrasında da As'ta en az 1, Yedekte en az 1 Türk oyuncu kalmalı.</li>
+      <li>Diziliş, As–Yedek değişikliği, takas ve serbest oyuncu sonrasında da As ${kural().asOn} Ön + ${kural().asArka} Arka olmalı ve As'ta en az 1, Yedekte en az 1 Türk kalmalı. Bu yüzden As'taki bir oyuncunun yerine ancak aynı mevkiden oyuncu gelebilir.</li>
       <li>Kadro değişiklikleri, ilk maçı henüz başlamamış ilk haftadan itibaren geçerlidir (hafta ortasında yapılan değişiklik bir sonraki haftadan sayılır). Geçmiş haftalar değişmez.</li>
     </ul>
     <h3>Puanlama</h3><ul>
@@ -775,9 +799,9 @@ function gorunumYonetici() {
   const adimlar = [];
   const asamaAdi = { kurulum: 'Kurulum (kura bekleniyor)', kura: 'Kura çekildi', draft: 'Draft devam ediyor', duraklatildi: 'Draft duraklatıldı', kadro: 'Draft bitti, dizilişler kuruluyor', sezon: 'Sezon devam ediyor' }[a];
   if (DRAFT_ASAMALARI.includes(a)) {
-    const rehberHavuz = C.havuzSirala([...S.rehber.values()]);
+    const rehberHavuz = C.havuzSirala([...S.rehber.values()], o => mevki(o.id));
     adimlar.push(`<div class="kart"><h3>1. Oyuncu havuzu</h3>
-      <p>Draftta seçilebilecek oyuncular ve otomatik seçim sıralaması (bu sezonun VP ortalaması). Draftı başlatmadan hemen önce en güncel veriyle yükle.</p>
+      <p>Draftta seçilebilecek oyuncular ve otomatik seçim sıralaması (bu sezonun VP ortalaması). Önce <a href="#/mevkiler">Mevkiler</a> sayfasından oyuncuların Ön/Arka mevkilerini kontrol et. Havuz, draft başlatılırken son haliyle otomatik yeniden yüklenir.</p>
       <p class="soluk kucuk">Yüklü havuz: ${S.havuz.length} oyuncu · Sitedeki veri: ${rehberHavuz.length} aktif oyuncu (${rehberHavuz.filter(o => o.turk).length} Türk), güncelleme ${S.index?.guncelleme ? tarih(S.index.guncelleme) : '-'}</p>
       <button class="btn ${S.havuz.length ? '' : 'ana'}" data-is="havuz-yukle" ${['kurulum', 'kura'].includes(a) ? '' : 'disabled'}>Oyuncu havuzunu yükle</button></div>`);
   }
@@ -817,6 +841,39 @@ function gorunumYonetici() {
     <p class="kucuk">Deneme draftından sonra gerçek drafta temiz başlamak için: bütün seçimleri, kadroları, takasları ve hareketleri siler. Takım adları, menajerler ve giriş linkleri kalır.</p>
     <button class="btn tehlike" data-is="sifirla">Draftı sıfırla</button></div>`);
   return adimlar.join('');
+}
+
+// ---------- Yönetici: mevkiler ----------
+function gorunumMevkiler() {
+  const ara = S.ui.ara.toLocaleLowerCase('tr');
+  const tum = [...S.rehber.values()].filter(o => o.aktif);
+  const belirsizMi = o => !S.mevkiler[o.id] && !o.mevkiTahmini;
+  const bslTakimlar = [...new Set(tum.map(o => o.takim))].sort((a, b) => a.localeCompare(b, 'tr'));
+  const liste = tum.filter(o => (!S.ui.bslTakim || o.takim === S.ui.bslTakim)
+    && (!S.ui.belirsiz || belirsizMi(o)) && (!S.ui.mevkiFiltre || mevki(o.id) === S.ui.mevkiFiltre)
+    && (!ara || o.ad.toLocaleLowerCase('tr').includes(ara)));
+  const sayim = m => tum.filter(o => mevki(o.id) === m).length;
+  return `<div class="kart"><h2>Mevkiler</h2>
+    <p>TBF'de mevki bilgisi olmadığı için ilk değerler maç istatistiklerinden tahmin edildi (ribaund ve blok asistin iki katından fazlaysa Ön).
+    Kanat oyuncularında ve hiç oynamamış oyuncularda (<b>?</b>) yanılabilir; draft öncesi kontrol et. Her tıklama hemen kaydedilir.</p>
+    <p class="kucuk soluk">Ön: ${sayim('on')} · Arka: ${sayim('arka')} · Belirsiz: ${tum.filter(belirsizMi).length}.
+    ${['draft', 'duraklatildi', 'kadro', 'sezon'].includes(asama()) ? 'Draft başladıktan sonra bir takımdaki oyuncunun mevkisini değiştirmek o takımın dizilişini kurala aykırı yapabilir.' : ''}</p>
+    <div class="satir" style="margin-bottom:10px">
+      <input type="search" id="ara" data-ui="ara" placeholder="Oyuncu ara" value="${esc(S.ui.ara)}" class="ara">
+      <select id="f-takim" data-ui="bslTakim"><option value="">Bütün BSL takımları</option>${bslTakimlar.map(t => `<option ${t === S.ui.bslTakim ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select>
+      <select id="f-mevki" data-ui="mevkiFiltre"><option value="">Ön + Arka</option><option value="on" ${S.ui.mevkiFiltre === 'on' ? 'selected' : ''}>Sadece Ön</option><option value="arka" ${S.ui.mevkiFiltre === 'arka' ? 'selected' : ''}>Sadece Arka</option></select>
+      <label class="secenek"><input type="checkbox" id="f-belirsiz" data-ui="belirsiz" ${S.ui.belirsiz ? 'checked' : ''}> Sadece belirsizler</label>
+    </div>
+    <div class="tablo-kap"><table>
+      <thead><tr><th>Oyuncu</th><th>BSL takımı</th><th class="sayi">Maç</th><th class="sayi">VP</th><th class="sayi">Rib.</th><th class="sayi">Ast.</th><th>Mevki</th></tr></thead>
+      <tbody>${liste.map(o => {
+        const m = mevki(o.id);
+        return `<tr><td>${esc(o.ad)}${o.turk ? ' <span class="rozet tr">TR</span>' : ''}${belirsizMi(o) ? ' <span class="rozet uyari" title="Tahmin yok">?</span>' : ''}</td>
+          <td class="kucuk">${esc(o.takim)}</td><td class="sayi">${o.mac}</td><td class="sayi">${sayi(o.vpOrt)}</td>
+          <td class="sayi">${sayi(o.ribOrt)}</td><td class="sayi">${sayi(o.astOrt)}</td>
+          <td><div class="satir" style="flex-wrap:nowrap">${['on', 'arka'].map(x => `<button class="btn kucuk ${m === x ? 'ana' : ''}" data-is="mevki" data-id="${o.id}" data-mevki="${x}">${C.MEVKI_ADI[x]}</button>`).join('')}</div></td></tr>`;
+      }).join('') || '<tr><td colspan="7" class="bos">Oyuncu bulunamadı</td></tr>'}</tbody>
+    </table></div></div>`;
 }
 
 // ---------- Olaylar ----------
@@ -894,7 +951,7 @@ async function eylem(is, id, el) {
       const tid = d.secimSirasi[d.secimNo];
       const kimin = tid === benimTakimim() ? '' : ` (${takimAdi(tid)} adına)`;
       if (!confirm(`${o.ad} – ${o.takim}${kimin} seçilsin mi?`)) return;
-      await D.secimYap({ takim: tid, oyuncu: o, otomatik: false, beklenenNo: d.secimNo });
+      await D.secimYap({ takim: tid, oyuncu: o, otomatik: false, beklenenNo: d.secimNo, dizilis: draftDizilisi });
       S.ui.ara = '';
       return bildir(`${o.ad} seçildi!`);
     }
@@ -915,7 +972,7 @@ async function eylem(is, id, el) {
       const yP = deger('dg-yedek');
       if (!asP || !yP) return bildir('Bir As ve bir Yedek seç.', true);
       const kk = S.kadrolar[benimTakimim()];
-      const turkHata = C.turkKuraliHatasi({ as: kk.as.map(p => (p === asP ? yP : p)), yedek: kk.yedek.map(p => (p === yP ? asP : p)) }, turkMu);
+      const turkHata = dizilisSorunu({ as: kk.as.map(p => (p === asP ? yP : p)), yedek: kk.yedek.map(p => (p === yP ? asP : p)) });
       if (turkHata) return bildir(`Bu değişiklik olmaz: ${turkHata}.`, true);
       const h = etkinHafta();
       if (!confirm(`${oyuncu(asP).ad} yedeğe, ${oyuncu(yP).ad} As'a geçecek (${h}. haftadan itibaren). Sezondaki tek değişiklik hakkın kullanılacak. Onaylıyor musun?`)) return;
@@ -936,7 +993,7 @@ async function eylem(is, id, el) {
       const tid = benimTakimim();
       const al = oyuncu(S.ui.faAl);
       const yeni = C.yerineKoy(S.kadrolar[tid], birak, al.id);
-      const turkHata = C.turkKuraliHatasi(yeni, turkMu);
+      const turkHata = dizilisSorunu(yeni);
       if (turkHata) return bildir(`Bu değişiklik olmaz: ${turkHata}.`, true);
       const h = etkinHafta();
       if (!confirm(`${al.ad} alınacak, ${oyuncu(birak).ad} bırakılacak (${h}. haftadan itibaren). Serbest oyuncu hakkından 1 kullanılacak. Onaylıyor musun?`)) return;
@@ -972,13 +1029,16 @@ async function eylem(is, id, el) {
     case 'teklif-iptal': await D.teklifIptal(id); return bildir('Teklif geri çekildi');
     // Yönetici
     case 'havuz-yukle': {
-      const havuz = C.havuzSirala([...S.rehber.values()]);
+      const havuz = C.havuzSirala([...S.rehber.values()], o => mevki(o.id));
       if (!confirm(`${havuz.length} oyuncu draft havuzuna yüklensin mi?`)) return;
       el.disabled = true;
-      await D.havuzuYukle(havuz);
-      await havuzuYukleIstemci(true);
+      await havuzuGuncelle();
       return bildir('Oyuncu havuzu yüklendi');
     }
+    case 'mevki':
+      await D.mevkiKaydet(id, el.dataset.mevki, S.havuzMap.has(id));
+      if (S.havuzMap.has(id)) S.havuzMap.get(id).mevki = el.dataset.mevki;
+      return;
     case 'takim-kaydet':
       await D.takimiKaydet(id, { ad: deger(`ta-${id}`) || S.takimlar[id].ad, menajer: deger(`tm-${id}`) });
       return bildir('Kaydedildi');
@@ -1003,6 +1063,8 @@ async function eylem(is, id, el) {
       return;
     case 'draft-baslat':
       if (!confirm('Draft başlasın mı? İlk seçimin saati hemen işlemeye başlar.')) return;
+      el.disabled = true;
+      await havuzuGuncelle(); // son mevki düzeltmeleri ve otomatik seçim sıraları havuza işlensin
       await D.draftiBaslat(S.ayar.secimSuresi);
       location.hash = '#/draft';
       return;
@@ -1030,6 +1092,14 @@ async function eylem(is, id, el) {
 }
 
 // ---------- Veri ----------
+// Yönetici: sitedeki oyuncu listesini ve mevkileri draft havuzu olarak Firestore'a yazar
+async function havuzuGuncelle() {
+  const havuz = C.havuzSirala([...S.rehber.values()], o => mevki(o.id));
+  await D.mevkileriYaz(Object.fromEntries([...S.rehber.values()].map(o => [o.id, mevki(o.id)])));
+  await D.havuzuYukle(havuz);
+  await havuzuYukleIstemci(true);
+}
+
 async function havuzuYukleIstemci(zorla = false) {
   if (S.havuzYukleniyor && !zorla) return;
   S.havuzYukleniyor = true;
@@ -1139,10 +1209,9 @@ async function otomatikKontrol() {
   try {
     const n = d.secimNo;
     const tid = d.secimSirasi[n];
-    const sadeceTurk = !!turkZorunlu(tid);
-    const adaylar = C.otomatikAdaylar(S.havuz, new Set(sahipler().keys()), sadeceTurk);
+    const adaylar = C.otomatikAdaylar(S.havuz, new Set(sahipler().keys()), izinliTipler(tid));
     if (!adaylar.length) throw new D.Hata('Otomatik seçim için uygun oyuncu yok.');
-    await D.secimYap({ takim: tid, oyuncu: C.rastgele(adaylar), otomatik: true, beklenenNo: n });
+    await D.secimYap({ takim: tid, oyuncu: C.rastgele(adaylar), otomatik: true, beklenenNo: n, dizilis: draftDizilisi });
   } catch (e) {
     if (!(e instanceof D.Hata)) console.warn('Otomatik seçim yapılamadı', e);
     otoBekle = Date.now() + 2500;
@@ -1198,6 +1267,14 @@ async function basla() {
   }
   try {
     await signInAnonymously(auth);
+    // Tarayıcıda kayıtlı anonim kullanıcı geçersizse (silinmişse) yeni bir anonim girişle devam et;
+    // menajer kodu cihazda saklı olduğu için takım bağlantısı aşağıda yeniden kurulur
+    try {
+      await auth.currentUser.getIdToken(true);
+    } catch {
+      await signOut(auth);
+      await signInAnonymously(auth);
+    }
     S.uid = auth.currentUser.uid;
     const params = new URLSearchParams(location.search);
     const linkKodu = params.get('kod');
@@ -1216,8 +1293,9 @@ async function basla() {
       return ciz();
     }
     await girisYap();
-    S.saatFarki = await D.saatFarki(S.uid).catch(() => 0);
     D.dinle(veriGeldi, dinlemeHatasi);
+    // Sunucu saati farkı arka planda ölçülür; sayfanın açılmasını bekletmesin
+    D.saatFarki(S.uid).then(f => { S.saatFarki = f; }).catch(e => console.warn('Sunucu saati alınamadı', e));
   } catch (e) {
     console.error(e);
     S.hataMesaji = `Bağlantı kurulamadı: ${esc(e.message)}. ${YEREL ? 'Firebase emülatörü çalışıyor mu?' : 'Firebase ayarlarını ve Anonim girişin açık olduğunu kontrol edin.'}`;

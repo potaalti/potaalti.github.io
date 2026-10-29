@@ -1,6 +1,7 @@
 // Firestore işlemleri. Firebase modülü dışarıdan verilir (tarayıcıda CDN'den, testlerde npm'den).
 import {
-  yilanSirasi, kadroyaEkle, secimBilgisi, takimId, yeniKod, karistir, takasKadrolari, yerineKoy,
+  yilanSirasi, secimBilgisi, takimId, yeniKod, karistir, takasKadrolari, yerineKoy,
+  kadroTablosu, varsayilanKural, tipi, bosTip,
 } from './core.js';
 
 let F, db;
@@ -23,9 +24,12 @@ export async function ligiKur(uid, { ad, takimSayisi = 17, menajerler = [], seci
   const kodlar = {};
   const b = F.writeBatch(db);
   b.set(yol('lig', 'ayar'), {
-    ad, takimSayisi, asSayisi: 5, yedekSayisi: 2, secimSuresi, baslangicHaftasi,
-    faHakki: 2, degisiklikHakki: 1, olusturuldu: simdi(),
+    ad, takimSayisi, asSayisi: 5, yedekSayisi: 2, asOn: varsayilanKural.asOn, asArka: varsayilanKural.asArka,
+    secimSuresi, baslangicHaftasi, faHakki: 2, degisiklikHakki: 1, olusturuldu: simdi(),
   });
+  // Draftta geçerli kadro durumları (Ön/Arka × Türk/yabancı sayıları); kurallar seçimleri bununla denetler
+  b.set(yol('lig', 'kadroKurali'), { gecerli: kadroTablosu(varsayilanKural) });
+  b.set(yol('lig', 'mevkiler'), { m: {} });
   b.set(yol('lig', 'durum'), {
     asama: 'kurulum', sira: null, secimSirasi: [], secimNo: 0, toplamSecim: takimSayisi * 7,
     saatBaslangic: null, saatSure: secimSuresi, aktifHafta: baslangicHaftasi,
@@ -45,7 +49,7 @@ export async function ligiKur(uid, { ad, takimSayisi = 17, menajerler = [], seci
 }
 
 function bosKadro() {
-  return { as: [], yedek: [], asTurk: 0, yedekTurk: 0, fa: 0, degisiklik: 0, gecmis: [], sonSecim: null, sonFa: null, sonTeklif: null };
+  return { as: [], yedek: [], tip: bosTip(), fa: 0, degisiklik: 0, gecmis: [], sonSecim: null, sonFa: null, sonTeklif: null };
 }
 
 // Menajerin cihazını takımına bağlar (kod linkteki gizli koddur)
@@ -84,6 +88,7 @@ export function dinle(cb, hata) {
   }, hata));
   tekil('ayar', yol('lig', 'ayar'));
   tekil('durum', yol('lig', 'durum'));
+  kapat.push(F.onSnapshot(yol('lig', 'mevkiler'), s => cb('mevkiler', s.data()?.m ?? {}), hata));
   coklu('takimlar', koleksiyon('takimlar'));
   coklu('kadrolar', koleksiyon('kadrolar'));
   coklu('teklifler', F.query(koleksiyon('teklifler'), F.orderBy('zaman', 'desc'), F.limit(60)));
@@ -112,8 +117,9 @@ export async function ligVarMi() {
 // ---------- Draft ----------
 
 // Seçim yapar (otomatik=true ise süresi dolan takım adına). Sıra bu arada değiştiyse Hata fırlatır.
-// beklenenNo: ekranda görülen seçim numarası (o arada başka seçim yapıldıysa işlem yapılmaz)
-export async function secimYap({ takim, oyuncu, otomatik, beklenenNo }) {
+// oyuncu: havuzdaki kayıt (mevki ve Türk bilgisiyle). beklenenNo: ekranda görülen seçim numarası
+// (o arada başka seçim yapıldıysa işlem yapılmaz). dizilis(idler): kadronun As/Yedek yerleşimi.
+export async function secimYap({ takim, oyuncu, otomatik, beklenenNo, dizilis }) {
   return F.runTransaction(db, async tx => {
     const durumRef = yol('lig', 'durum');
     const ayarRef = yol('lig', 'ayar');
@@ -128,17 +134,14 @@ export async function secimYap({ takim, oyuncu, otomatik, beklenenNo }) {
     if (alS.exists()) throw new Hata(`${oyuncu.ad} başka bir takımda.`);
     const n = d.secimNo;
     const kadro = kS.data();
-    const yeni = kadroyaEkle(kadro, oyuncu.id, ayar.asSayisi);
+    const yeni = dizilis([...kadro.as, ...kadro.yedek, oyuncu.id]);
+    const tip = tipi(oyuncu.mevki, oyuncu.turk);
     tx.set(yol('secimler', String(n)), {
       no: n, tur: secimBilgisi(n, ayar.takimSayisi).tur, takim, oyuncu: oyuncu.id, ad: oyuncu.ad,
-      bslTakim: oyuncu.takim, turk: !!oyuncu.turk, otomatik: !!otomatik, zaman: simdi(),
+      bslTakim: oyuncu.takim, turk: !!oyuncu.turk, mevki: oyuncu.mevki, otomatik: !!otomatik, zaman: simdi(),
     });
     tx.set(alinanRef, { takim, secim: n });
-    const asa = kadro.as.length < ayar.asSayisi;
-    tx.update(kadroRef, {
-      ...yeni, sonSecim: n,
-      asTurk: kadro.asTurk + (asa && oyuncu.turk ? 1 : 0), yedekTurk: kadro.yedekTurk + (!asa && oyuncu.turk ? 1 : 0),
-    });
+    tx.update(kadroRef, { as: yeni.as, yedek: yeni.yedek, sonSecim: n, tip: { ...kadro.tip, [tip]: kadro.tip[tip] + 1 } });
     tx.update(durumRef, {
       secimNo: n + 1, saatBaslangic: simdi(), saatSure: ayar.secimSuresi,
       asama: n + 1 === d.toplamSecim ? 'kadro' : 'draft',
@@ -184,8 +187,7 @@ export async function sonSecimiGeriAl() {
     tx.delete(yol('alinan', s.oyuncu));
     tx.update(kadroRef, {
       as: k.as.filter(p => p !== s.oyuncu), yedek: k.yedek.filter(p => p !== s.oyuncu),
-      asTurk: k.asTurk - (s.turk && k.as.includes(s.oyuncu) ? 1 : 0),
-      yedekTurk: k.yedekTurk - (s.turk && k.yedek.includes(s.oyuncu) ? 1 : 0),
+      tip: { ...k.tip, [tipi(s.mevki, s.turk)]: k.tip[tipi(s.mevki, s.turk)] - 1 },
     });
     tx.update(durumRef, {
       secimNo: n, saatBaslangic: simdi(), saatSure: ayar.secimSuresi,
@@ -203,7 +205,7 @@ export async function havuzuYukle(havuz) {
     ...eski.docs.filter(d => !yeniIdler.has(d.id)).map(d => b => b.delete(d.ref)),
     ...havuz.map(o => b => b.set(yol('oyuncular', o.id), {
       ad: o.ad, takim: o.takim, takimId: o.takimId, takimKod: o.takimKod ?? '', turk: !!o.turk, vpOrt: o.vpOrt, mac: o.mac,
-      sayiOrt: o.sayiOrt ?? 0, sira: o.sira, turkSira: o.turkSira ?? null,
+      sayiOrt: o.sayiOrt ?? 0, sira: o.sira, mevki: o.mevki, tipSira: o.tipSira,
     })),
   ];
   await topluYaz(islemler);
@@ -215,6 +217,19 @@ async function topluYaz(islemler) {
     islemler.slice(i, i + 400).forEach(f => f(b));
     await b.commit();
   }
+}
+
+// Havuz yüklenirken bütün oyuncuların mevkisi de lig/mevkiler'e yazılır (tahmin + yöneticinin düzeltmeleri)
+export async function mevkileriYaz(m) {
+  await F.setDoc(yol('lig', 'mevkiler'), { m });
+}
+
+// Yönetici bir oyuncunun mevkisini değiştirir (havuzdaysa havuzdaki kaydı da)
+export async function mevkiKaydet(pid, mevki, havuzda) {
+  const b = F.writeBatch(db);
+  b.update(yol('lig', 'mevkiler'), new F.FieldPath('m', pid), mevki);
+  if (havuzda) b.update(yol('oyuncular', pid), { mevki });
+  await b.commit();
 }
 
 export async function ayarlariKaydet(ayar) {

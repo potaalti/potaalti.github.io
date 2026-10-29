@@ -119,6 +119,16 @@ def ilk_mac(maclar):
     return f"{min(tarihler)}+03:00" if tarihler else None
 
 
+def mevki_tahmini(stat, boy):
+    """Ön/Arka saha tahmini (TBF'de mevki bilgisi yok). Ribaund ve blok, asistin iki katından fazlaysa Ön.
+    Kanat oyuncularında yanılabilir; kesin mevkiyi yönetici sitede belirler. Hiç oynamamışsa boydan."""
+    if stat and stat["rib"] + stat["ast"] + stat["blk"] > 0:
+        return "on" if stat["rib"] + 2 * stat["blk"] >= 2 * stat["ast"] else "arka"
+    if boy:
+        return "on" if boy >= 201 else "arka"
+    return None
+
+
 def kadrolar():
     """TBF takım kadroları: oyuncu id -> rehber kaydı (bu sezonun ortalamalarıyla)."""
     rehber = {}
@@ -136,7 +146,7 @@ def kadrolar():
                 "vpOrt": round(o.get("verimlilikPuani") or 0, 1),
                 "sayiOrt": round(o.get("sayi") or 0, 1),
                 "sureOrt": o.get("sure") or "00:00",
-                "foto": o.get("playerPhoto"),
+                "foto": o.get("playerPhoto"), "boy": o.get("height"),
             }
     return rehber
 
@@ -174,11 +184,14 @@ def main():
                     k["vp"] += o.get("efficiency") or 0
                     k["saniye"] += saniye(o.get("minutesPlayed"))
                     k["mac"] += 1
-                    s = sezon_stat.setdefault(pid, {"ad": k["ad"], "vp": 0, "mac": 0})
+                    s = sezon_stat.setdefault(pid, {"ad": k["ad"], "vp": 0, "mac": 0, "rib": 0, "blk": 0, "ast": 0})
                     s.update(takim=mac[taraf], takimId=mac[f"{taraf}Id"])
                     if saniye(o.get("minutesPlayed")) > 0:
                         s["vp"] += o.get("efficiency") or 0
                         s["mac"] += 1
+                        s["rib"] += o.get("totalRebounds") or 0
+                        s["blk"] += o.get("blocks") or 0
+                        s["ast"] += o.get("assists") or 0
         json_yaz(DATA / "hafta" / f"{hafta}.json", {"hafta": hafta, "maclar": maclar, "oyuncular": oyuncular})
         biten = sum(1 for m in maclar if m["durum"] == "bitti")
         print(f"  Hafta {hafta}: {biten}/{len(maclar)} maç bitti, {len(oyuncular)} oyuncu")
@@ -201,6 +214,12 @@ def main():
     # Daha önce listede olup artık hiçbir yerde görünmeyen oyuncu da kalır (bir fantezi takımında olabilir)
     for pid, o in eski.items():
         rehber.setdefault(pid, {**o, "aktif": False})
+    for pid, o in rehber.items():
+        s = sezon_stat.get(pid)
+        o["mevkiTahmini"] = mevki_tahmini(s, o.get("boy")) or eski.get(pid, {}).get("mevkiTahmini")
+        # Mevkileri kontrol ederken yardımcı olsun diye maç başı ribaund ve asist
+        o["ribOrt"] = round(s["rib"] / s["mac"], 1) if s and s["mac"] else 0
+        o["astOrt"] = round(s["ast"] / s["mac"], 1) if s and s["mac"] else 0
 
     liste = sorted(rehber.values(), key=lambda o: (-o["vpOrt"], -o["mac"], o["ad"]))
     json_yaz(DATA / "oyuncular.json", liste)

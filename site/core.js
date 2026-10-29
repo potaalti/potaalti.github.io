@@ -18,39 +18,127 @@ export function secimBilgisi(n, takimSayisi) {
   return { tur: Math.floor(n / takimSayisi) + 1, turSecimi: (n % takimSayisi) + 1 };
 }
 
-// Draft havuzu sırası: bu sezonun maç başı VP ortalamasına göre (eşitlikte çok maç oynayan, sonra ada göre)
-export function havuzSirala(oyuncular) {
+// Draft havuzu sırası: bu sezonun maç başı VP ortalamasına göre (eşitlikte çok maç oynayan, sonra ada göre).
+// tipSira: oyuncunun kendi tipi (Ön/Arka × Türk/yabancı) içindeki sırası (otomatik seçim kontrolü için)
+export function havuzSirala(oyuncular, mevkiBul = o => o.mevki) {
   const liste = oyuncular.filter(o => o.aktif !== false)
     .sort((a, b) => b.vpOrt - a.vpOrt || b.mac - a.mac || a.ad.localeCompare(b.ad, 'tr'));
-  let turk = 0;
-  return liste.map((o, i) => ({ ...o, sira: i + 1, turkSira: o.turk ? ++turk : null }));
+  const sayac = {};
+  return liste.map((o, i) => {
+    const mevki = mevkiBul(o);
+    const t = tipi(mevki, o.turk);
+    sayac[t] = (sayac[t] ?? 0) + 1;
+    return { ...o, mevki, sira: i + 1, tipSira: sayac[t] };
+  });
 }
 
-// Türk kuralı: As'ta (ilk 5 seçim) en az 1, Yedekte (son 2 seçim) en az 1 Türk.
-// Takımın sıradaki seçimi As'ın son yuvasıysa ve As'ta Türk yoksa (ya da Yedeğin son yuvasıysa ve
-// Yedekte Türk yoksa) sadece Türk oyuncu seçilebilir.
-export function turkZorunlu(kadro, asSayisi = 5, yedekSayisi = 2) {
-  const as = kadro?.as ?? [];
-  const yedek = kadro?.yedek ?? [];
-  if (as.length < asSayisi) return as.length === asSayisi - 1 && !(kadro?.asTurk > 0);
-  return yedek.length === yedekSayisi - 1 && !(kadro?.yedekTurk > 0);
+// ---------- Kadro kuralı: mevkiler ve Türk oyuncular ----------
+// Kadro 7 oyuncu: As 3 Ön + 2 Arka, 2 Yedek (mevki serbest). As'ta en az 1, Yedekte en az 1 Türk.
+// Oyuncu tipleri: oT (Ön, Türk), oY (Ön, yabancı), aT (Arka, Türk), aY (Arka, yabancı).
+export const TIPLER = ['oT', 'oY', 'aT', 'aY'];
+export const MEVKI_ADI = { on: 'Ön', arka: 'Arka' };
+export const varsayilanKural = { asOn: 3, asArka: 2, yedek: 2 };
+
+export function tipi(mevki, turk) {
+  return (mevki === 'on' ? 'o' : 'a') + (turk ? 'T' : 'Y');
 }
 
-// Süre dolunca: müsait en iyi 15 oyuncudan (Türk zorunluysa en iyi 15 Türk'ten) rastgele biri
-export function otomatikAdaylar(havuz, alinanlar, sadeceTurk) {
-  return havuz.filter(o => !alinanlar.has(o.id) && (!sadeceTurk || o.turk)).slice(0, OTOMATIK_ADAY);
+export const bosTip = () => ({ oT: 0, oY: 0, aT: 0, aY: 0 });
+export const tipAnahtari = t => `${t.oT}${t.oY}${t.aT}${t.aY}`;
+const tipEkle = (t, x) => ({ ...t, [x]: t[x] + 1 });
+
+// Tam (7 kişilik) kadro, kurala uygun bir As/Yedek dizilişi kurulabiliyor mu?
+function kadroKurulur({ oT, oY, aT, aY }, k) {
+  const on = oT + oY;
+  const arka = aT + aY;
+  if (on < k.asOn || arka < k.asArka) return false;
+  // Yedeğe bir Türk ayrılabilmeli ve As'ta da bir Türk kalabilmeli
+  const yedekteOnTurk = on > k.asOn && oT >= 1 && (oT >= 2 || aT >= 1);
+  const yedekteArkaTurk = arka > k.asArka && aT >= 1 && (aT >= 2 || oT >= 1);
+  return yedekteOnTurk || yedekteArkaTurk;
+}
+
+// Draftta geçerli ara durumlar: kalan seçimlerle kurala uygun bir kadroya tamamlanabilen her tip sayımı.
+// Anahtar "oT oY aT aY" rakamları; Firestore kuralları da seçimleri bu tabloyla denetler.
+export function kadroTablosu(k = varsayilanKural) {
+  const boy = k.asOn + k.asArka + k.yedek;
+  const tamamlanir = new Map();
+  const bak = t => {
+    const anahtar = tipAnahtari(t);
+    if (tamamlanir.has(anahtar)) return tamamlanir.get(anahtar);
+    const toplam = t.oT + t.oY + t.aT + t.aY;
+    // some() yerine map: bütün dallar gezilsin, tabloya hepsi girsin
+    const sonuc = toplam === boy ? kadroKurulur(t, k) : TIPLER.map(x => bak(tipEkle(t, x))).some(Boolean);
+    tamamlanir.set(anahtar, sonuc);
+    return sonuc;
+  };
+  bak(bosTip());
+  const tablo = {};
+  for (const [anahtar, ok] of tamamlanir) if (ok) tablo[anahtar] = true;
+  return tablo;
+}
+
+// Takımın sıradaki seçimde alabileceği oyuncu tipleri
+export function izinliTipler(tip, tablo) {
+  return TIPLER.filter(x => tablo[tipAnahtari(tipEkle(tip ?? bosTip(), x))]);
+}
+
+// İzinli tiplerin açıklaması: "Türk Ön ya da Türk Arka" gibi; hepsi serbestse null
+export function kisitMetni(izinli) {
+  if (izinli.length === TIPLER.length) return null;
+  if (!izinli.length) return 'kadro tamamlandı';
+  const turk = izinli.every(x => x[1] === 'T');
+  const on = izinli.every(x => x[0] === 'o');
+  const arka = izinli.every(x => x[0] === 'a');
+  if (on) return turk ? 'sadece Türk Ön oyuncu' : 'sadece Ön oyuncu';
+  if (arka) return turk ? 'sadece Türk Arka oyuncu' : 'sadece Arka oyuncu';
+  if (turk) return 'sadece Türk oyuncu';
+  return izinli.map(x => `${x[1] === 'T' ? 'Türk ' : 'yabancı '}${x[0] === 'o' ? 'Ön' : 'Arka'}`).join(' ya da ');
+}
+
+// Süre dolunca: müsait ve kadroya girebilecek en iyi 15 oyuncudan rastgele biri
+export function otomatikAdaylar(havuz, alinanlar, izinli) {
+  return havuz.filter(o => !alinanlar.has(o.id) && izinli.includes(tipi(o.mevki, o.turk))).slice(0, OTOMATIK_ADAY);
 }
 
 export function rastgele(liste, rnd = Math.random) {
   return liste[Math.floor(rnd() * liste.length)];
 }
 
-// Kadroya giren oyuncu: ilk 5 seçim As, son 2 seçim Yedek (draft sonrası diziliş serbestçe değiştirilebilir)
-export function kadroyaEkle(kadro, pid, asSayisi) {
-  const as = [...(kadro.as ?? [])];
-  const yedek = [...(kadro.yedek ?? [])];
-  if (as.length < asSayisi) as.push(pid); else yedek.push(pid);
-  return { as, yedek };
+// Draft sırasında kadroya yerleşim. oyuncular: [{ id, mevki, turk, vpOrt }] seçim sırasıyla.
+// Kadro dolunca kurala uyan en güçlü (As'ların VP ortalaması en yüksek) diziliş seçilir; o zamana kadar
+// oyuncu, As'ta mevkisine yer varsa As'a, yoksa Yedeğe girer. Draft sonrası diziliş serbestçe değişebilir.
+export function dizilisOner(oyuncular, k = varsayilanKural) {
+  const boy = k.asOn + k.asArka + k.yedek;
+  if (oyuncular.length === boy) {
+    let enIyi = null;
+    const n = oyuncular.length;
+    for (let maske = 0; maske < (1 << n); maske++) {
+      const as = oyuncular.filter((_, i) => maske & (1 << i));
+      if (as.length !== k.asOn + k.asArka) continue;
+      const yedek = oyuncular.filter((_, i) => !(maske & (1 << i)));
+      if (dizilisHatasi(as, yedek, k)) continue;
+      const guc = as.reduce((t, o) => t + (o.vpOrt ?? 0), 0);
+      if (!enIyi || guc > enIyi.guc) enIyi = { guc, as, yedek };
+    }
+    if (enIyi) return { as: enIyi.as.map(o => o.id), yedek: enIyi.yedek.map(o => o.id) };
+  }
+  const as = [];
+  const yedek = [];
+  for (const o of oyuncular) {
+    const yer = o.mevki === 'on' ? k.asOn : k.asArka;
+    if (as.filter(x => x.mevki === o.mevki).length < yer) as.push(o); else yedek.push(o);
+  }
+  return { as: as.map(o => o.id), yedek: yedek.map(o => o.id) };
+}
+
+// Diziliş kurala uyuyor mu? as/yedek: [{ mevki, turk }]. Uymuyorsa hata metni döner.
+export function dizilisHatasi(as, yedek, k = varsayilanKural) {
+  const on = as.filter(o => o.mevki === 'on').length;
+  if (as.length !== k.asOn + k.asArka || on !== k.asOn) return `As'ta ${k.asOn} Ön ve ${k.asArka} Arka oyuncu olmalı`;
+  if (!as.some(o => o.turk)) return "As'ta en az 1 Türk oyuncu olmalı";
+  if (!yedek.some(o => o.turk)) return 'Yedekte en az 1 Türk oyuncu olmalı';
+  return null;
 }
 
 // Bir oyuncunun yerine başkasını aynı yuvaya (As ya da Yedek) koyar
@@ -72,12 +160,6 @@ export function takasKadrolari(verenKadro, alanKadro, verilen, alinan) {
   return { veren: v, alan: a };
 }
 
-// Kadro Türk kuralına uyuyor mu: As'ta en az 1 ve Yedekte en az 1 Türk. Uymuyorsa hata metni döner.
-export function turkKuraliHatasi(kadro, turkMu) {
-  if (!kadro.as.some(turkMu)) return "As'ta en az 1 Türk oyuncu olmalı";
-  if (!kadro.yedek.some(turkMu)) return 'Yedekte en az 1 Türk oyuncu olmalı';
-  return null;
-}
 
 // ---------- Haftalar ----------
 

@@ -12,8 +12,12 @@ F.setLogLevel('silent');
 const PROJE = 'demo-bsl-draft';
 const SURE = Number(process.argv[2] ?? 2);
 const rehber = JSON.parse(readFileSync(new URL('../site/data/oyuncular.json', import.meta.url), 'utf-8'));
-const havuz = C.havuzSirala(rehber);
+const havuz = C.havuzSirala(rehber, o => o.mevkiTahmini ?? 'arka');
 const havuzMap = new Map(havuz.map(o => [o.id, o]));
+const tablo = C.kadroTablosu();
+const dizilis = idler => C.dizilisOner(idler.map(id => havuzMap.get(id)), C.varsayilanKural);
+const bilgi = id => havuzMap.get(id) ?? { mevki: 'arka', turk: false };
+const dizilisHatasi = k => C.dizilisHatasi(k.as.map(bilgi), k.yedek.map(bilgi));
 const bekle = ms => new Promise(r => setTimeout(r, ms));
 
 let basarili = 0;
@@ -88,11 +92,13 @@ async function main() {
   const sira = await admin.D.kuraCek(tidler);
   const durum0 = await oku(admin.db, 'lig', 'durum');
   kontrol(durum0.secimSirasi.length === 119 && durum0.secimSirasi[17] === sira[16] && durum0.secimSirasi[34] === sira[0], 'Yılan sırası doğru (18. seçim 17. takımın, 35. seçim yine 17. takımın)');
-  await reddedilmeli(() => takimlar[sira[0]].D.secimYap({ takim: sira[0], oyuncu: havuz[0], otomatik: false }), 'Draft başlamadan seçim');
+  await reddedilmeli(() => takimlar[sira[0]].D.secimYap({ takim: sira[0], oyuncu: havuz[0], otomatik: false, dizilis }), 'Draft başlamadan seçim');
   await admin.D.draftiBaslat(SURE);
 
-  // Bir takım hiç Türk seçmesin: son seçiminde Türk zorunluluğu denensin
+  // Bir takım Türk seçmekten, bir başkası Arka seçmekten kaçınsın: kural onları zorlasın
   const turksuz = sira[5];
+  const arkasiz = sira[8];
+  let kisitDenendi = 0;
   let otomatikSayisi = 0;
   let yarisTesti = false;
   let geriAlindi = false;
@@ -102,37 +108,42 @@ async function main() {
     const kadrolar = await hepsi(admin.db, 'kadrolar');
     const alinan = new Set(Object.values(kadrolar).flatMap(k => [...k.as, ...k.yedek]));
     const musait = havuz.filter(o => !alinan.has(o.id));
-    const turkZor = C.turkZorunlu(kadrolar[tid], 5, 2);
+    const izin = C.izinliTipler(kadrolar[tid].tip, tablo);
+    const izinli = o => izin.includes(C.tipi(o.mevki, o.turk));
     const ben = takimlar[tid];
     const baska = takimlar[tidler.find(t => t !== tid)];
 
     if (n === 3) {
-      await reddedilmeli(() => baska.D.secimYap({ takim: tid, oyuncu: musait[0], otomatik: false }), 'Sırası olmayan takımın başkası adına seçimi');
-      await reddedilmeli(() => baska.D.secimYap({ takim: tid, oyuncu: musait[0], otomatik: true }), 'Süre dolmadan otomatik seçim');
+      await reddedilmeli(() => baska.D.secimYap({ takim: tid, oyuncu: musait[0], otomatik: false, dizilis }), 'Sırası olmayan takımın başkası adına seçimi');
+      await reddedilmeli(() => baska.D.secimYap({ takim: tid, oyuncu: musait[0], otomatik: true, dizilis }), 'Süre dolmadan otomatik seçim');
       const alinmis = havuz.find(o => alinan.has(o.id));
       await reddedilmeli(() => sahteSecim(ben, d, tid, alinmis), 'Başka takımdaki oyuncuyu seçme (kurallar)');
       await reddedilmeli(() => sahteSecim(baska, d, tid, musait[0], { otomatik: true }), 'Süre dolmadan otomatik seçim (kurallar)');
       await bekle(SURE * 1000 + 1200);
       await reddedilmeli(() => sahteSecim(baska, d, tid, musait[40], { otomatik: true }), 'Süre dolunca otomatik seçimde en iyi 15 dışından oyuncu (kurallar)');
     }
-    if (tid === turksuz && turkZor) {
-      const yabanci = musait.find(o => !o.turk);
-      await reddedilmeli(() => sahteSecim(ben, d, tid, yabanci), `Türk almayan takımın ${kadrolar[tid].as.length < 5 ? "As'ın" : "Yedeğin"} son yuvasında yabancı seçmesi (kurallar)`);
+    if ((tid === turksuz || tid === arkasiz) && izin.length < 4) {
+      const yasak = musait.find(o => !izinli(o));
+      await reddedilmeli(() => sahteSecim(ben, d, tid, yasak), `Kadro kuralını bozacak seçim: ${C.kisitMetni(izin)} seçebilecekken ${C.MEVKI_ADI[yasak.mevki]}${yasak.turk ? ' Türk' : ' yabancı'} (kurallar)`);
+      kisitDenendi++;
     }
 
     let oyuncu;
-    const elle = Math.random() < 0.55 && n !== 20;
+    const elle = (Math.random() < 0.55 || tid === turksuz || tid === arkasiz) && n !== 20;
     if (elle) {
-      const uygun = musait.filter(o => (!turkZor || o.turk) && !(tid === turksuz && !turkZor && o.turk));
+      // Türksüz takım Türk, Arkasız takım Arka almamaya çalışır (izin varsa)
+      let uygun = musait.filter(izinli);
+      const kacin = tid === turksuz ? (o => o.turk) : tid === arkasiz ? (o => o.mevki === 'arka') : null;
+      if (kacin && uygun.some(o => !kacin(o))) uygun = uygun.filter(o => !kacin(o));
       oyuncu = uygun[Math.floor(Math.random() * Math.min(5, uygun.length))];
-      await ben.D.secimYap({ takim: tid, oyuncu, otomatik: false, beklenenNo: n });
+      await ben.D.secimYap({ takim: tid, oyuncu, otomatik: false, beklenenNo: n, dizilis });
     } else {
       // Süre dolsun; açık olan bütün ekranlar (17 menajer + yönetici) aynı anda otomatik seçimi dener
       await bekle(SURE * 1000 + 1200);
       const herkes = [admin, ...Object.values(takimlar)];
       const sonuc = await Promise.allSettled(herkes.map(k => {
-        const adaylar = C.otomatikAdaylar(havuz, alinan, turkZor);
-        return k.D.secimYap({ takim: tid, oyuncu: C.rastgele(adaylar), otomatik: true, beklenenNo: n });
+        const adaylar = C.otomatikAdaylar(havuz, alinan, izin);
+        return k.D.secimYap({ takim: tid, oyuncu: C.rastgele(adaylar), otomatik: true, beklenenNo: n, dizilis });
       }));
       const olan = sonuc.filter(r => r.status === 'fulfilled').length;
       if (olan !== 1) kontrol(false, `${n + 1}. seçimde ${olan} otomatik seçim başarılı oldu`);
@@ -160,12 +171,16 @@ async function main() {
   kontrol(new Set(tumOyuncular).size === 119, 'Her oyuncu sadece bir takımda');
   kontrol(Object.values(kadrolar).every(k => k.as.length === 5 && k.yedek.length === 2), 'Her takımda 5 As + 2 Yedek');
   const turkMu = p => !!havuzMap.get(p)?.turk;
-  kontrol(Object.values(kadrolar).every(k => !C.turkKuraliHatasi(k, turkMu)), "Her takımda As'ta en az 1, Yedekte en az 1 Türk");
-  kontrol(kadrolar[turksuz].as.filter(turkMu).length === 1 && kadrolar[turksuz].yedek.filter(turkMu).length === 1, 'Türk almayan takım 5. ve 7. seçimde Türk almak zorunda kaldı');
-  kontrol(Object.values(kadrolar).every(k => k.asTurk === k.as.filter(turkMu).length && k.yedekTurk === k.yedek.filter(turkMu).length), 'As/Yedek Türk sayaçları doğru');
+  const hatalar = Object.entries(kadrolar).map(([t, k]) => [t, dizilisHatasi(k)]).filter(([, h]) => h);
+  kontrol(!hatalar.length, `Her takımın dizilişi kurala uygun: As 3 Ön + 2 Arka, As'ta ve Yedekte Türk${hatalar.length ? ` (${hatalar.map(x => x.join(': ')).join('; ')})` : ''}`);
+  const tum = k => [...k.as, ...k.yedek];
+  kontrol(tum(kadrolar[turksuz]).filter(turkMu).length === 2, 'Türk almamaya çalışan takım tam 2 Türk almak zorunda kaldı');
+  kontrol(tum(kadrolar[arkasiz]).filter(p => havuzMap.get(p).mevki === 'arka').length === 2, 'Arka almamaya çalışan takım tam 2 Arka almak zorunda kaldı');
+  kontrol(kisitDenendi >= 2, `Kuralı bozan seçim denemeleri yapıldı (${kisitDenendi})`);
+  kontrol(Object.values(kadrolar).every(k => C.TIPLER.every(x => k.tip[x] === tum(k).filter(p => C.tipi(havuzMap.get(p).mevki, havuzMap.get(p).turk) === x).length)), 'Ön/Arka × Türk/yabancı sayaçları doğru');
   kontrol(Object.values(secimler).filter(s => s.otomatik).every(s => {
     const o = havuzMap.get(s.oyuncu);
-    return (s.turk && o.turkSira <= s.no + 15) || o.sira <= s.no + 15;
+    return o.sira <= s.no + 15 || o.tipSira <= s.no + 15;
   }), 'Otomatik seçimler hep müsait en iyi 15 içinden');
 
   const t1 = sira[0];
@@ -245,13 +260,13 @@ async function main() {
     const al = yabanci(kc);
     await takimlar[a].D.teklifGonder({ veren: a, alan: c, verilen: ver, alinan: al });
     const t3id = Object.keys(await hepsi(admin.db, 'teklifler')).find(x => x !== tid1 && x !== t2id);
-    const kontrolFn = (v, y) => C.turkKuraliHatasi(v, p => !!havuzMap.get(p)?.turk) || C.turkKuraliHatasi(y, p => !!havuzMap.get(p)?.turk);
+    const kontrolFn = (v, y) => dizilisHatasi(v) || dizilisHatasi(y);
     try {
       await takimlar[c].D.teklifKabul(t3id, 7, kontrolFn);
       const kc2 = await oku(admin.db, 'kadrolar', c);
       kontrol(ver.every(p => [...kc2.as, ...kc2.yedek].includes(p)), "3'e 3 takas kabul edildi");
     } catch (e) {
-      kontrol(/Türk/.test(e.message), `3'e 3 takas Türk kuralı yüzünden yapılmadı: ${e.message}`);
+      kontrol(/Türk|Ön/.test(e.message), `3'e 3 takas kadro kuralı yüzünden yapılmadı: ${e.message}`);
     }
   }
 
@@ -282,13 +297,13 @@ async function sahteSecim(k, d, takim, oyuncu, { otomatik = false } = {}) {
   const db = k.db;
   await F.runTransaction(db, async tx => {
     const kadro = (await tx.get(F.doc(db, 'kadrolar', takim))).data();
-    const yeni = C.kadroyaEkle(kadro, oyuncu.id, 5);
+    const yeni = dizilis([...kadro.as, ...kadro.yedek, oyuncu.id]);
+    const x = C.tipi(oyuncu.mevki, oyuncu.turk);
     tx.set(F.doc(db, 'secimler', String(n)), {
-      no: n, tur: 1, takim, oyuncu: oyuncu.id, ad: oyuncu.ad, bslTakim: oyuncu.takim, turk: !!oyuncu.turk, otomatik, zaman: F.serverTimestamp(),
+      no: n, tur: 1, takim, oyuncu: oyuncu.id, ad: oyuncu.ad, bslTakim: oyuncu.takim, turk: !!oyuncu.turk, mevki: oyuncu.mevki, otomatik, zaman: F.serverTimestamp(),
     });
     tx.set(F.doc(db, 'alinan', oyuncu.id), { takim, secim: n });
-    const asa = kadro.as.length < 5;
-    tx.update(F.doc(db, 'kadrolar', takim), { ...yeni, asTurk: kadro.asTurk + (asa && oyuncu.turk ? 1 : 0), yedekTurk: kadro.yedekTurk + (!asa && oyuncu.turk ? 1 : 0), sonSecim: n });
+    tx.update(F.doc(db, 'kadrolar', takim), { ...yeni, tip: { ...kadro.tip, [x]: kadro.tip[x] + 1 }, sonSecim: n });
     tx.update(F.doc(db, 'lig', 'durum'), { secimNo: n + 1, saatBaslangic: F.serverTimestamp(), saatSure: SURE, asama: 'draft' });
   });
 }

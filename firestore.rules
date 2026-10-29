@@ -61,28 +61,37 @@ service cloud.firestore {
       let s = request.resource.data;
       let o = get(/databases/$(database)/documents/oyuncular/$(s.oyuncu)).data;
       let k = kadro(s.takim);
-      // Türk kuralı: As'ın son yuvasında As'ta Türk yoksa, Yedeğin son yuvasında Yedekte Türk yoksa
-      // sadece Türk oyuncu seçilebilir
-      let asDolu = k.as.size() == ayar().asSayisi;
-      let turkZorunlu = asDolu ? (k.yedek.size() == ayar().yedekSayisi - 1 && k.yedekTurk == 0)
-                               : (k.as.size() == ayar().asSayisi - 1 && k.asTurk == 0);
+      // Kadro kuralı (As 3 Ön + 2 Arka; As'ta ve Yedekte en az 1'er Türk): seçimden sonraki
+      // Ön/Arka × Türk/yabancı sayımı, kalan seçimlerle kurala uygun bir kadroya tamamlanabilmeli
+      let tablo = get(/databases/$(database)/documents/lig/kadroKurali).data.gecerli;
+      let hepsiSerbest = tipAnahtari(tipEkle(k.tip, 'oT')) in tablo && tipAnahtari(tipEkle(k.tip, 'oY')) in tablo
+        && tipAnahtari(tipEkle(k.tip, 'aT')) in tablo && tipAnahtari(tipEkle(k.tip, 'aY')) in tablo;
       let suresiDoldu = request.time > d.saatBaslangic + duration.value(d.saatSure, 's');
       return d.asama == 'draft'
         && n == string(d.secimNo) && s.no == d.secimNo
         && s.takim == d.secimSirasi[d.secimNo]
-        && s.keys().hasOnly(['no', 'tur', 'takim', 'oyuncu', 'ad', 'bslTakim', 'turk', 'otomatik', 'zaman'])
+        && s.keys().hasOnly(['no', 'tur', 'takim', 'oyuncu', 'ad', 'bslTakim', 'turk', 'mevki', 'otomatik', 'zaman'])
         && s.zaman == request.time
-        && s.turk == o.turk && s.ad == o.ad
+        && s.turk == o.turk && s.mevki == o.mevki && s.ad == o.ad
         && !exists(/databases/$(database)/documents/alinan/$(s.oyuncu))
         && getAfter(/databases/$(database)/documents/alinan/$(s.oyuncu)).data.takim == s.takim
         && getAfter(/databases/$(database)/documents/lig/durum).data.secimNo == d.secimNo + 1
-        && (!turkZorunlu || s.turk == true)
+        && tipAnahtari(tipEkle(k.tip, tipAdi(s))) in tablo
         && (yonetici()
             || (s.otomatik == false && benimTakim() == s.takim)
             // Otomatik seçim: süre dolmuş olmalı ve oyuncu müsait en iyi 15 içinden olabilecek biri olmalı
+            // (kısıt varsa kendi tipindeki sırasına bakılır)
             || (s.otomatik == true && uye() && suresiDoldu
-                && (turkZorunlu ? o.turkSira : o.sira) <= d.secimNo + 15));
+                && (hepsiSerbest ? o.sira : o.tipSira) <= d.secimNo + 15));
     }
+
+    // Oyuncu tipi: Ön/Arka × Türk/yabancı (oT, oY, aT, aY)
+    function tipAdi(s) { return (s.mevki == 'on' ? 'o' : 'a') + (s.turk ? 'T' : 'Y'); }
+    function tipEkle(t, x) {
+      return { 'oT': t.oT + (x == 'oT' ? 1 : 0), 'oY': t.oY + (x == 'oY' ? 1 : 0),
+               'aT': t.aT + (x == 'aT' ? 1 : 0), 'aY': t.aY + (x == 'aY' ? 1 : 0) };
+    }
+    function tipAnahtari(t) { return string(t.oT) + string(t.oY) + string(t.aT) + string(t.aY); }
 
     // ---------- Takımı olan oyuncular (bir oyuncu tek takımda) ----------
     match /alinan/{pid} {
@@ -148,14 +157,13 @@ service cloud.firestore {
       let yeni = request.resource.data;
       let secim = /databases/$(database)/documents/secimler/$(string(yeni.sonSecim));
       let s = getAfter(secim).data;
-      // İlk 5 seçim As'a, sonrakiler Yedeğe girer
-      let asa = eski.as.size() < ayar().asSayisi;
+      // Seçilen oyuncu kadroya eklenir (As/Yedek yerleşimi mevkilere göre değişebilir), tip sayımı artar
       return !exists(secim) && s.takim == tid
-        && yeni.diff(eski).affectedKeys().hasOnly(['as', 'yedek', 'asTurk', 'yedekTurk', 'sonSecim'])
-        && oyunculari(yeni) == oyunculari(eski).concat([s.oyuncu])
-        && yeni.as.size() == eski.as.size() + (asa ? 1 : 0)
-        && yeni.asTurk == eski.asTurk + (asa && s.turk ? 1 : 0)
-        && yeni.yedekTurk == eski.yedekTurk + (!asa && s.turk ? 1 : 0);
+        && yeni.diff(eski).affectedKeys().hasOnly(['as', 'yedek', 'tip', 'sonSecim'])
+        && oyunculari(yeni).size() == oyunculari(eski).size() + 1
+        && oyunculari(yeni).toSet() == oyunculari(eski).toSet().union([s.oyuncu].toSet())
+        && yeni.as.size() <= ayar().asSayisi && yeni.yedek.size() <= ayar().yedekSayisi
+        && yeni.tip == tipEkle(eski.tip, tipAdi(s));
     }
 
     // Draft bitti, sezon başlamadı: takım As/Yedek dizilişini serbestçe kurar

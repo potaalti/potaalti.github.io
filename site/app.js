@@ -74,7 +74,9 @@ const dizilisSorunu = k => C.dizilisHatasi(k.as.map(bilgi), k.yedek.map(bilgi), 
 const draftDizilisi = idler => C.dizilisOner(idler.map(havuzBilgi), kural());
 // BSL takım adı: telefonda kısaltması (BSK, ERK...), geniş ekranda tam adı
 const bslTakimHucre = o => `<span class="uzun-ad">${esc(o.takim)}</span><span class="kisa-ad" title="${esc(o.takim)}">${esc(o.takimKod || o.takim)}</span>`;
-const mevkiRozeti = m => `<span class="rozet mv" title="${m === 'on' ? 'Ön saha (uzun/forvet)' : 'Arka saha (oyun kurucu/şutör)'}">${C.MEVKI_ADI[m]}</span>`;
+// Oyuncuların Ön/Arka mevkisi yönetici kesin listeyi yükleyene kadar gösterilmez (ayar.mevkilerHazir)
+const mevkilerHazir = () => S.ayar?.mevkilerHazir === true;
+const mevkiRozeti = m => !mevkilerHazir() ? '' : `<span class="rozet mv" title="${m === 'on' ? 'Ön saha (uzun/forvet)' : 'Arka saha (oyun kurucu/şutör)'}">${C.MEVKI_ADI[m]}</span>`;
 
 // Oyuncu id -> fantezi takımı (kadrolardan)
 function sahipler() {
@@ -149,6 +151,12 @@ function cizHemen() {
   try { secim = odak && odak.selectionStart != null ? [odak.selectionStart, odak.selectionEnd] : null; } catch { /* number input */ }
   $('#lig-adi').textContent = S.ayar?.ad ?? 'BSL Draft Ligi';
   $('#menu').innerHTML = menu();
+  // Telefonda menü yana kayar: açık sekme görünür kalsın
+  const menuEl = $('#menu');
+  const aktif = menuEl.querySelector('.aktif');
+  if (aktif && (aktif.offsetLeft + aktif.offsetWidth > menuEl.scrollLeft + menuEl.clientWidth || aktif.offsetLeft < menuEl.scrollLeft)) {
+    menuEl.scrollLeft = Math.max(0, aktif.offsetLeft - 16);
+  }
   $('#kimlik').innerHTML = kimlik();
   $('#icerik').innerHTML = gorunum();
   if (odakId) {
@@ -382,10 +390,10 @@ function benimDraftim() {
   const benimSiralarim = (S.durum.secimSirasi ?? []).map((t, i) => (t === tid ? i : -1)).filter(i => i >= S.durum.secimNo);
   const siradaki = benimSiralarim[0];
   return `<div class="kart">
-    <div class="baslik-satir"><h3>${esc(takimAdi(tid))} <span class="soluk kucuk">${oyuncular.length}/${kadroBoyu()} · Ön ${(k?.tip?.oT ?? 0) + (k?.tip?.oY ?? 0)} · Arka ${(k?.tip?.aT ?? 0) + (k?.tip?.aY ?? 0)} · Türk ${(k?.tip?.oT ?? 0) + (k?.tip?.aT ?? 0)}</span></h3>
+    <div class="baslik-satir"><h3>${esc(takimAdi(tid))} <span class="soluk kucuk">${oyuncular.length}/${kadroBoyu()}${mevkilerHazir() ? ` · Ön ${(k?.tip?.oT ?? 0) + (k?.tip?.oY ?? 0)} · Arka ${(k?.tip?.aT ?? 0) + (k?.tip?.aY ?? 0)}` : ''} · Türk ${(k?.tip?.oT ?? 0) + (k?.tip?.aT ?? 0)}</span></h3>
     ${siradaki != null && S.durum.asama !== 'kurulum' ? `<span class="soluk kucuk">Sıradaki seçimin: ${siradaki + 1}. seçim${siradaki > S.durum.secimNo ? ` (${siradaki - S.durum.secimNo} seçim sonra)` : ''}</span>` : ''}</div>
     <p class="kucuk soluk" style="margin:0 0 6px">Kadro kuralı: As ${kural().asOn} Ön + ${kural().asArka} Arka, ${kural().yedek} Yedek (mevki serbest); As'ta ve Yedekte en az 1'er Türk.</p>
-    ${secimKisiti(tid) && oyuncular.length < kadroBoyu() ? `<div class="uyari-kutu kucuk">Sıradaki seçiminde ${secimKisiti(tid)} seçebilirsin.</div>` : ''}
+    ${secimKisiti(tid) && oyuncular.length < kadroBoyu() && siradakiTakim() !== tid ? `<div class="uyari-kutu kucuk">Sıradaki seçiminde ${secimKisiti(tid)} seçebilirsin.</div>` : ''}
     ${oyuncular.length ? `<div>${[...k.as.map(p => [p, 'as']), ...k.yedek.map(p => [p, 'yedek'])].map(([p, rol]) => `<span class="secim-chip">${oyuncuAdi(p)} <span class="rozet ${rol}">${rol === 'as' ? 'As' : 'Yedek'}</span></span>`).join('')}</div>`
       : '<p class="soluk" style="margin:0">Henüz oyuncu seçmedin.</p>'}
   </div>`;
@@ -413,7 +421,7 @@ function draftOyunculari() {
     <div class="satir" style="margin-bottom:10px">
       <input type="search" id="ara" data-ui="ara" placeholder="Oyuncu ara" value="${esc(S.ui.ara)}" class="ara">
       <select id="f-takim" data-ui="bslTakim"><option value="">Bütün BSL takımları</option>${bslTakimlar.map(t => `<option ${t === S.ui.bslTakim ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select>
-      <select id="f-mevki" data-ui="mevkiFiltre"><option value="">Ön + Arka</option><option value="on" ${S.ui.mevkiFiltre === 'on' ? 'selected' : ''}>Sadece Ön</option><option value="arka" ${S.ui.mevkiFiltre === 'arka' ? 'selected' : ''}>Sadece Arka</option></select>
+      ${mevkilerHazir() ? `<select id="f-mevki" data-ui="mevkiFiltre"><option value="">Ön + Arka</option><option value="on" ${S.ui.mevkiFiltre === 'on' ? 'selected' : ''}>Sadece Ön</option><option value="arka" ${S.ui.mevkiFiltre === 'arka' ? 'selected' : ''}>Sadece Arka</option></select>` : ''}
       <label class="secenek"><input type="checkbox" id="f-turk" data-ui="sadeceTurk" ${S.ui.sadeceTurk ? 'checked' : ''}> Sadece Türkler</label>
       <label class="secenek"><input type="checkbox" id="f-alinan" data-ui="alinanlar" ${S.ui.alinanlar ? 'checked' : ''}> Seçilenleri de göster</label>
     </div>
@@ -666,7 +674,7 @@ function gorunumSerbest() {
       <div class="satir" style="margin-bottom:10px">
         <input type="search" id="ara" data-ui="ara" placeholder="Oyuncu ara" value="${esc(S.ui.ara)}" class="ara">
         <select id="f-takim" data-ui="bslTakim"><option value="">Bütün BSL takımları</option>${bslTakimlar.map(t => `<option ${t === S.ui.bslTakim ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select>
-        <select id="f-mevki" data-ui="mevkiFiltre"><option value="">Ön + Arka</option><option value="on" ${S.ui.mevkiFiltre === 'on' ? 'selected' : ''}>Sadece Ön</option><option value="arka" ${S.ui.mevkiFiltre === 'arka' ? 'selected' : ''}>Sadece Arka</option></select>
+        ${mevkilerHazir() ? `<select id="f-mevki" data-ui="mevkiFiltre"><option value="">Ön + Arka</option><option value="on" ${S.ui.mevkiFiltre === 'on' ? 'selected' : ''}>Sadece Ön</option><option value="arka" ${S.ui.mevkiFiltre === 'arka' ? 'selected' : ''}>Sadece Arka</option></select>` : ''}
         <label class="secenek"><input type="checkbox" id="f-turk" data-ui="sadeceTurk" ${S.ui.sadeceTurk ? 'checked' : ''}> Sadece Türkler</label>
       </div>
       <div class="tablo-kap"><table>
@@ -875,6 +883,8 @@ function gorunumMevkiler() {
     && (!ara || o.ad.toLocaleLowerCase('tr').includes(ara)));
   const sayim = m => tum.filter(o => mevki(o.id) === m).length;
   return `<div class="kart"><h2>Mevkiler</h2>
+    <p><button class="btn ${mevkilerHazir() ? '' : 'ana'}" data-is="mevki-goster">${mevkilerHazir() ? 'Mevkileri herkesten gizle' : 'Mevkiler kesinleşti, herkese göster'}</button>
+    <span class="soluk kucuk">${mevkilerHazir() ? 'Oyuncuların yanında Ön/Arka herkese görünüyor.' : 'Şu an oyuncuların yanında Ön/Arka yazmıyor (sadece bu sayfada görünür).'}</span></p>
     <p>TBF'de mevki bilgisi olmadığı için ilk değerler maç istatistiklerinden tahmin edildi (ribaund ve blok asistin iki katından fazlaysa Ön).
     Kanat oyuncularında ve hiç oynamamış oyuncularda (<b>?</b>) yanılabilir; draft öncesi kontrol et. Her tıklama hemen kaydedilir.</p>
     <p class="kucuk soluk">Ön: ${sayim('on')} · Arka: ${sayim('arka')} · Belirsiz: ${tum.filter(belirsizMi).length}.
@@ -1056,6 +1066,9 @@ async function eylem(is, id, el) {
       await havuzuGuncelle();
       return bildir('Oyuncu havuzu yüklendi');
     }
+    case 'mevki-goster':
+      await D.ayarlariKaydet({ mevkilerHazir: !mevkilerHazir() });
+      return bildir(mevkilerHazir() ? 'Mevkiler gizlendi' : 'Mevkiler herkese gösteriliyor');
     case 'mevki':
       await D.mevkiKaydet(id, el.dataset.mevki, S.havuzMap.has(id));
       if (S.havuzMap.has(id)) S.havuzMap.get(id).mevki = el.dataset.mevki;

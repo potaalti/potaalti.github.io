@@ -144,6 +144,7 @@ tr.alindi td { color: var(--soluk); }
 
 .secim-chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--cizgi); border-radius: 999px; padding: 4px 12px; margin: 3px; cursor: pointer; background: var(--kart); }
 .secim-chip.secili { background: var(--vurgu); color: var(--vurgu-uzeri); border-color: var(--vurgu); }
+.secim-chip.secili .rozet.mv, .secim-chip.secili .bsl { color: inherit; border-color: currentColor; opacity: .85; }
 
 .teklif { border: 1px solid var(--cizgi); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
 .teklif .yon { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center; }

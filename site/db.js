@@ -155,9 +155,14 @@ export async function secimYap({ takim, oyuncu, otomatik, beklenenNo, dizilis })
 export async function kuraCek(takimIdleri) {
   const sira = karistir(takimIdleri);
   await F.updateDoc(yol('lig', 'durum'), {
-    asama: 'kura', sira, secimSirasi: yilanSirasi(sira, 7), secimNo: 0, toplamSecim: sira.length * 7, kuraZamani: simdi(),
+    asama: 'kura', sira, secimSirasi: yilanSirasi(sira, 7), secimNo: 0, toplamSecim: sira.length * 7, kuraZamani: simdi(), ekran: 'draft',
   });
   return sira;
+}
+
+// Herkesin ana ekranı: 'draft' (kura, canlı draft) ya da 'lig' (puan durumu, takımlar, boştakiler...)
+export async function ekranDegistir(ekran) {
+  await F.updateDoc(yol('lig', 'durum'), { ekran });
 }
 
 export async function draftiBaslat(secimSuresi) {
@@ -250,7 +255,7 @@ export async function sezonuBaslat(kadrolar, baslangicHaftasi) {
   for (const [tid, k] of Object.entries(kadrolar)) {
     b.update(yol('kadrolar', tid), { gecmis: [{ hafta: baslangicHaftasi, as: k.as, yedek: k.yedek, tur: 'draft' }] });
   }
-  b.update(yol('lig', 'durum'), { asama: 'sezon', aktifHafta: baslangicHaftasi });
+  b.update(yol('lig', 'durum'), { asama: 'sezon', aktifHafta: baslangicHaftasi, ekran: 'lig' });
   await b.commit();
 }
 
@@ -275,7 +280,7 @@ export async function kodlariGetir() {
 export async function draftiSifirla(takimIdleri, secimSuresi) {
   // Önce durum: silme yarıda kalırsa bile lig "kurulum" aşamasında olur ve sıfırlama tekrarlanabilir
   await F.updateDoc(yol('lig', 'durum'), {
-    asama: 'kurulum', sira: null, secimSirasi: [], secimNo: 0, saatBaslangic: null, saatSure: secimSuresi, kalanSure: null,
+    asama: 'kurulum', sira: null, secimSirasi: [], secimNo: 0, saatBaslangic: null, saatSure: secimSuresi, kalanSure: null, ekran: 'draft',
   });
   const silinecek = [];
   for (const ad of ['secimler', 'alinan', 'teklifler', 'hareketler']) {

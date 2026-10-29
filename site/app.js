@@ -47,6 +47,9 @@ const kadroBoyu = () => (S.ayar?.asSayisi ?? 5) + (S.ayar?.yedekSayisi ?? 2);
 const benimTakimim = () => (S.ben && S.ben !== 'admin' ? S.ben : null);
 const yonetici = () => S.ben === 'admin';
 const asama = () => S.durum?.asama;
+// Herkesin ana ekranı (yönetici değiştirir): draft bitmeden hep draft ekranı, sonra 'draft' ya da 'lig'
+const ligEkraniMi = d => ['kadro', 'sezon'].includes(d?.asama) && (d.ekran ?? (d.asama === 'sezon' ? 'lig' : 'draft')) === 'lig';
+const ligEkrani = () => ligEkraniMi(S.durum);
 const tarih = ts => (ts?.toDate ? ts.toDate() : new Date(ts)).toLocaleString('tr-TR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
 
 function oyuncu(pid) {
@@ -69,6 +72,8 @@ const izinliTipler = tid => C.izinliTipler(S.kadrolar[tid]?.tip, kadroTablosu ??
 const secimKisiti = tid => C.kisitMetni(izinliTipler(tid));
 const dizilisSorunu = k => C.dizilisHatasi(k.as.map(bilgi), k.yedek.map(bilgi), kural());
 const draftDizilisi = idler => C.dizilisOner(idler.map(havuzBilgi), kural());
+// BSL takım adı: telefonda kısaltması (BSK, ERK...), geniş ekranda tam adı
+const bslTakimHucre = o => `<span class="uzun-ad">${esc(o.takim)}</span><span class="kisa-ad" title="${esc(o.takim)}">${esc(o.takimKod || o.takim)}</span>`;
 const mevkiRozeti = m => `<span class="rozet mv" title="${m === 'on' ? 'Ön saha (uzun/forvet)' : 'Arka saha (oyun kurucu/şutör)'}">${C.MEVKI_ADI[m]}</span>`;
 
 // Oyuncu id -> fantezi takımı (kadrolardan)
@@ -160,35 +165,45 @@ function cizHemen() {
 
 function rota() {
   const parcalar = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
-  return parcalar.length ? parcalar : [asama() === 'sezon' ? 'puan' : 'draft'];
+  return parcalar.length ? parcalar : [ligEkrani() ? 'puan' : 'draft'];
 }
 
 function menu() {
   if (!S.hazir || S.ligYok || S.hataMesaji) return '';
   const a = asama();
   const [sayfa] = rota();
-  const sezon = a === 'sezon';
   const gelen = Object.values(S.teklifler).filter(t => t.durum === 'bekliyor' && t.alan === benimTakimim()).length;
-  const ogeler = [
+  const yonetim = [yonetici() && ['yonetici', 'Yönetici'], yonetici() && ['mevkiler', 'Mevkiler']];
+  // Lig ekranı: draft bittikten sonra yönetici açınca. Draft ekranı: kura ve canlı draft.
+  const ogeler = (ligEkrani() ? [
+    ['puan', 'Puan Durumu'],
+    ['takimlar', 'Takımlar'],
+    benimTakimim() && ['kadrom', 'Kadrom'],
+    ['bostakiler', 'Boştakiler'],
+    ['takas', `Takas${gelen ? ` <span class="rozet uyari">${gelen}</span>` : ''}`],
+    ['hareketler', 'Hareketler'],
     ['draft', 'Draft'],
-    sezon && ['puan', 'Puan Durumu'],
+    ['kurallar', 'Kurallar'],
+    ...yonetim,
+  ] : [
+    ['draft', 'Draft'],
     ['takimlar', 'Takımlar'],
     benimTakimim() && ['kadro', 'sezon'].includes(a) && ['kadrom', 'Kadrom'],
-    sezon && ['takas', `Takas${gelen ? ` <span class="rozet uyari">${gelen}</span>` : ''}`],
-    sezon && ['serbest', 'Serbest Oyuncular'],
-    sezon && ['hareketler', 'Hareketler'],
     ['kurallar', 'Kurallar'],
-    yonetici() && ['yonetici', 'Yönetici'],
-    yonetici() && ['mevkiler', 'Mevkiler'],
-  ].filter(Boolean);
+    ...yonetim,
+  ]).filter(Boolean);
   return ogeler.map(([id, ad]) => `<a href="#/${id}" class="${sayfa === id || (sayfa === 'takim' && id === 'takimlar') ? 'aktif' : ''}">${ad}</a>`).join('');
 }
 
 function kimlik() {
   if (!S.hazir || S.ligYok) return '';
-  if (yonetici()) return `<b>Yönetici</b> · <a href="#" data-is="cikis">çıkış</a>`;
-  if (benimTakimim()) return `<b>${esc(takimAdi(benimTakimim()))}</b> · <a href="#" data-is="cikis">çıkış</a>`;
-  return 'İzleyici';
+  if (yonetici()) {
+    const dugme = ['kadro', 'sezon'].includes(asama())
+      ? `<button class="ekran-dugme" data-is="ekran" data-id="${ligEkrani() ? 'draft' : 'lig'}" title="Herkesin ana ekranını değiştirir">${ligEkrani() ? '← Draft ekranı' : 'Lig ekranı →'}</button>` : '';
+    return `${dugme}<span><b>Yönetici</b> · <a href="#" data-is="cikis">çıkış</a></span>`;
+  }
+  if (benimTakimim()) return `<span><b>${esc(takimAdi(benimTakimim()))}</b> · <a href="#" data-is="cikis">çıkış</a></span>`;
+  return '<span>İzleyici</span>';
 }
 
 function gorunum() {
@@ -203,7 +218,8 @@ function gorunum() {
     case 'takim': return gorunumTakim(p1);
     case 'kadrom': return gorunumKadrom();
     case 'takas': return gorunumTakas();
-    case 'serbest': return gorunumSerbest();
+    case 'serbest':
+    case 'bostakiler': return gorunumSerbest();
     case 'hareketler': return gorunumHareketler();
     case 'kurallar': return gorunumKurallar();
     case 'yonetici': return yonetici() ? gorunumYonetici() : '<p class="bos">Bu sayfa yönetici içindir.</p>';
@@ -305,7 +321,8 @@ function durumKarti() {
     case 'kadro':
       return `<div class="kart"><h2>Draft tamamlandı 🎉</h2>
         <p>Sezon başlayana kadar her takım As/Yedek dizilişini <a href="#/kadrom">Kadrom</a> sayfasından serbestçe kurabilir
-        (ilk 5 seçim As, son 2 seçim Yedek olarak yerleştirildi). Yönetici sezonu başlatınca dizilişler kilitlenir.</p></div>`;
+        (oyuncular mevkilerine göre yerleştirildi). Yönetici sezonu başlatınca dizilişler kilitlenir.</p>
+        ${yonetici() ? '<p style="margin-bottom:0"><button class="btn ana" data-is="ekran" data-id="lig">Herkesi lig ekranına geçir →</button> <span class="soluk kucuk">Puan durumu, takımlar, boştakiler… İstediğin an "Draft ekranı" düğmesiyle geri dönebilirsin.</span></p>' : ''}</div>`;
     default:
       return '';
   }
@@ -402,15 +419,15 @@ function draftOyunculari() {
     </div>
     <p class="kucuk soluk">${musait} müsait oyuncu · Sıralama: bu sezonun maç başı VP ortalaması</p>
     <div class="tablo-kap"><table>
-      <thead><tr><th class="sayi">#</th><th>Oyuncu</th><th>BSL takımı</th><th class="sayi">Maç</th><th class="sayi">VP ort.</th><th class="sayi">Sayı</th><th></th></tr></thead>
+      <thead><tr><th class="sayi">#</th><th>Oyuncu</th><th>BSL takımı</th><th class="sayi">Maç</th><th class="sayi">VP ort.</th><th class="sayi dar-gizle">Sayı</th><th></th></tr></thead>
       <tbody>${liste.slice(0, 300).map(o => {
         const kimde = sahip.get(o.id);
         const engel = !izin.includes(C.tipi(o.mevki, o.turk));
         return `<tr class="${kimde ? 'alindi' : ''}">
           <td class="sayi soluk">${o.sira}</td>
           <td>${esc(o.ad)} ${mevkiRozeti(o.mevki)}${o.turk ? ' <span class="rozet tr">TR</span>' : ''}</td>
-          <td class="kucuk">${esc(o.takim)}</td>
-          <td class="sayi">${o.mac}</td><td class="sayi"><b>${sayi(o.vpOrt)}</b></td><td class="sayi">${sayi(o.sayiOrt)}</td>
+          <td class="kucuk">${bslTakimHucre(o)}</td>
+          <td class="sayi">${o.mac}</td><td class="sayi"><b>${sayi(o.vpOrt)}</b></td><td class="sayi dar-gizle">${sayi(o.sayiOrt)}</td>
           <td class="sayi">${kimde ? `<span class="kucuk">${esc(takimAdi(kimde))}</span>`
             : secebilir ? `<button class="btn kucuk ${engel ? '' : 'ana'}" data-is="sec" data-id="${o.id}" ${engel ? `disabled title="Kadro kuralı: ${kisit}"` : ''}>Seç</button>` : ''}</td>
         </tr>`;
@@ -482,7 +499,7 @@ function genelTablo() {
 }
 
 function gorunumPuan(haftaNo) {
-  if (asama() !== 'sezon') return '<div class="kart"><p class="bos">Puan durumu sezon başlayınca açılır.</p></div>';
+  if (asama() !== 'sezon') return `<div class="kart"><p class="bos">Puan durumu, yönetici sezonu başlatınca açılır (puanlama ${S.ayar.baslangicHaftasi}. haftadan başlar).</p></div>`;
   if (!S.haftalarYuklendi) return '<p class="bos">Haftalık veriler yükleniyor…</p>';
   const haftalar = puanHaftalari();
   if (!haftalar.length) {
@@ -620,7 +637,8 @@ function gorunumKadrom() {
 
 // ---------- Serbest oyuncular ----------
 function gorunumSerbest() {
-  if (asama() !== 'sezon') return '<div class="kart"><p class="bos">Serbest oyuncu alımı sezon başlayınca açılır.</p></div>';
+  if (!['kadro', 'sezon'].includes(asama())) return '<div class="kart"><p class="bos">Boştaki oyuncular draft bitince burada görünür.</p></div>';
+  const alimAcik = asama() === 'sezon';
   const tid = benimTakimim();
   const k = tid && S.kadrolar[tid];
   const sahip = sahipler();
@@ -628,8 +646,9 @@ function gorunumSerbest() {
   const bslTakimlar = [...new Set([...S.rehber.values()].filter(o => o.aktif).map(o => o.takim))].sort((a, b) => a.localeCompare(b, 'tr'));
   const liste = [...S.rehber.values()].filter(o => o.aktif && !sahip.has(o.id)
     && (!S.ui.sadeceTurk || o.turk) && (!S.ui.bslTakim || o.takim === S.ui.bslTakim)
+    && (!S.ui.mevkiFiltre || mevki(o.id) === S.ui.mevkiFiltre)
     && (!ara || o.ad.toLocaleLowerCase('tr').includes(ara)));
-  const hak = k ? S.ayar.faHakki - k.fa : 0;
+  const hak = k && alimAcik ? S.ayar.faHakki - k.fa : 0;
   let panel = '';
   if (S.ui.faAl && k) {
     const al = oyuncu(S.ui.faAl);
@@ -639,20 +658,22 @@ function gorunumSerbest() {
         ${[...k.as.map(p => [p, 'As']), ...k.yedek.map(p => [p, 'Yedek'])].map(([p, rol]) => `<option value="${p}">${esc(oyuncu(p).ad)} (${rol})</option>`).join('')}</select>
       <button class="btn ana" data-is="fa-onayla">Onayla</button><button class="btn" data-is="fa-vazgec">Vazgeç</button></div></div>`;
   }
-  return `<div class="kart"><h2>Serbest oyuncular</h2>
-    <p>${tid ? `Kalan serbest oyuncu hakkın: <b>${hak}</b> / ${S.ayar.faHakki} (sezon boyunca).` : 'Takımı olmayan BSL oyuncuları.'}</p></div>
+  return `<div class="kart"><h2>Boştaki oyuncular</h2>
+    <p style="margin-bottom:0">Hiçbir takımda olmayan BSL oyuncuları. ${!alimAcik ? 'Serbest oyuncu alımı sezon başlayınca açılır.'
+      : tid ? `Kalan serbest oyuncu hakkın: <b>${hak}</b> / ${S.ayar.faHakki} (sezon boyunca).` : ''}</p></div>
     ${panel}
     <div class="kart">
       <div class="satir" style="margin-bottom:10px">
         <input type="search" id="ara" data-ui="ara" placeholder="Oyuncu ara" value="${esc(S.ui.ara)}" class="ara">
         <select id="f-takim" data-ui="bslTakim"><option value="">Bütün BSL takımları</option>${bslTakimlar.map(t => `<option ${t === S.ui.bslTakim ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select>
+        <select id="f-mevki" data-ui="mevkiFiltre"><option value="">Ön + Arka</option><option value="on" ${S.ui.mevkiFiltre === 'on' ? 'selected' : ''}>Sadece Ön</option><option value="arka" ${S.ui.mevkiFiltre === 'arka' ? 'selected' : ''}>Sadece Arka</option></select>
         <label class="secenek"><input type="checkbox" id="f-turk" data-ui="sadeceTurk" ${S.ui.sadeceTurk ? 'checked' : ''}> Sadece Türkler</label>
       </div>
       <div class="tablo-kap"><table>
-        <thead><tr><th>Oyuncu</th><th>BSL takımı</th><th class="sayi">Maç</th><th class="sayi">VP ort.</th><th class="sayi">Sayı</th><th></th></tr></thead>
+        <thead><tr><th>Oyuncu</th><th>BSL takımı</th><th class="sayi">Maç</th><th class="sayi">VP ort.</th><th class="sayi dar-gizle">Sayı</th><th></th></tr></thead>
         <tbody>${liste.slice(0, 300).map(o => `<tr>
-          <td>${esc(o.ad)}${o.turk ? ' <span class="rozet tr">TR</span>' : ''}</td><td class="kucuk">${esc(o.takim)}</td>
-          <td class="sayi">${o.mac}</td><td class="sayi"><b>${sayi(o.vpOrt)}</b></td><td class="sayi">${sayi(o.sayiOrt)}</td>
+          <td>${esc(o.ad)} ${mevkiRozeti(mevki(o.id))}${o.turk ? ' <span class="rozet tr">TR</span>' : ''}</td><td class="kucuk">${bslTakimHucre(o)}</td>
+          <td class="sayi">${o.mac}</td><td class="sayi"><b>${sayi(o.vpOrt)}</b></td><td class="sayi dar-gizle">${sayi(o.sayiOrt)}</td>
           <td class="sayi">${hak > 0 ? `<button class="btn kucuk ana" data-is="fa-al" data-id="${o.id}">Al</button>` : ''}</td></tr>`).join('')
           || '<tr><td colspan="6" class="bos">Oyuncu bulunamadı</td></tr>'}</tbody>
       </table></div>
@@ -699,7 +720,7 @@ function teklifKarti(t, butonlar = '') {
 }
 
 function gorunumTakas() {
-  if (asama() !== 'sezon') return '<div class="kart"><p class="bos">Takaslar sezon başlayınca açılır.</p></div>';
+  if (asama() !== 'sezon') return '<div class="kart"><p class="bos">Takaslar yönetici sezonu başlatınca açılır.</p></div>';
   const tid = benimTakimim();
   const hepsi = Object.values(S.teklifler).sort((a, b) => (b.zaman?.toMillis?.() ?? 0) - (a.zaman?.toMillis?.() ?? 0));
   const gelen = hepsi.filter(t => t.durum === 'bekliyor' && t.alan === tid);
@@ -869,7 +890,7 @@ function gorunumMevkiler() {
       <tbody>${liste.map(o => {
         const m = mevki(o.id);
         return `<tr><td>${esc(o.ad)}${o.turk ? ' <span class="rozet tr">TR</span>' : ''}${belirsizMi(o) ? ' <span class="rozet uyari" title="Tahmin yok">?</span>' : ''}</td>
-          <td class="kucuk">${esc(o.takim)}</td><td class="sayi">${o.mac}</td><td class="sayi">${sayi(o.vpOrt)}</td>
+          <td class="kucuk">${bslTakimHucre(o)}</td><td class="sayi">${o.mac}</td><td class="sayi">${sayi(o.vpOrt)}</td>
           <td class="sayi">${sayi(o.ribOrt)}</td><td class="sayi">${sayi(o.astOrt)}</td>
           <td><div class="satir" style="flex-wrap:nowrap">${['on', 'arka'].map(x => `<button class="btn kucuk ${m === x ? 'ana' : ''}" data-is="mevki" data-id="${o.id}" data-mevki="${x}">${C.MEVKI_ADI[x]}</button>`).join('')}</div></td></tr>`;
       }).join('') || '<tr><td colspan="7" class="bos">Oyuncu bulunamadı</td></tr>'}</tbody>
@@ -1077,6 +1098,10 @@ async function eylem(is, id, el) {
       await D.sonSecimiGeriAl();
       return bildir('Son seçim geri alındı');
     }
+    case 'ekran':
+      if (!confirm(id === 'lig' ? 'Herkesin ekranı lig ekranına (puan durumu, takımlar, boştakiler…) geçsin mi?' : 'Herkesin ekranı draft ekranına dönsün mü?')) return;
+      await D.ekranDegistir(id);
+      return;
     case 'sezon-baslat':
       if (!confirm(`Sezon başlasın mı? Dizilişler kilitlenir; puanlama ${S.ayar.baslangicHaftasi}. haftadan başlar.`)) return;
       await D.sezonuBaslat(S.kadrolar, S.ayar.baslangicHaftasi);
@@ -1146,6 +1171,7 @@ function veriGeldi(ad, v) {
   }
   const onceki = S.durum;
   S.durum = v;
+  if (onceki && ligEkraniMi(onceki) !== ligEkraniMi(v)) location.hash = ligEkraniMi(v) ? '#/puan' : '#/draft';
   S.hazir = !!(S.ayar && S.durum);
   const a = v.asama;
   if (['kura', 'draft', 'duraklatildi', 'kadro'].includes(a)) secimleriDinle();

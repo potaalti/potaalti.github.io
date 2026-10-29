@@ -1,0 +1,186 @@
+{
+ "guncelHafta": 5,
+ "haftalar": [
+  {
+   "hafta": 1,
+   "ilkMac": "2026-09-25T19:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": true
+  },
+  {
+   "hafta": 2,
+   "ilkMac": "2026-10-02T19:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": true
+  },
+  {
+   "hafta": 3,
+   "ilkMac": "2026-10-10T13:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": true
+  },
+  {
+   "hafta": 4,
+   "ilkMac": "2026-10-16T19:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": true
+  },
+  {
+   "hafta": 5,
+   "ilkMac": "2026-10-23T19:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": true
+  },
+  {
+   "hafta": 6,
+   "ilkMac": "2026-10-31T15:30:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 7,
+   "ilkMac": "2026-11-07T13:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 8,
+   "ilkMac": "2026-11-14T13:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 9,
+   "ilkMac": "2026-11-21T13:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 10,
+   "ilkMac": "2026-12-05T13:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 11,
+   "ilkMac": "2026-12-11T19:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 12,
+   "ilkMac": "2026-12-18T19:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 13,
+   "ilkMac": "2026-12-26T00:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 14,
+   "ilkMac": "2027-01-02T00:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 15,
+   "ilkMac": "2027-01-09T00:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 16,
+   "ilkMac": "2027-01-16T00:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 17,
+   "ilkMac": "2027-01-23T00:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 18,
+   "ilkMac": "2027-01-30T00:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 19,
+   "ilkMac": "2027-02-06T00:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 20,
+   "ilkMac": "2027-02-13T00:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 21,
+   "ilkMac": "2027-03-06T00:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 22,
+   "ilkMac": "2027-03-13T00:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 23,
+   "ilkMac": "2027-03-20T00:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 24,
+   "ilkMac": "2027-03-27T00:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 25,
+   "ilkMac": "2027-04-03T00:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 26,
+   "ilkMac": "2027-04-10T00:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 27,
+   "ilkMac": "2027-04-17T00:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 28,
+   "ilkMac": "2027-04-24T00:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 29,
+   "ilkMac": "2027-05-01T00:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  },
+  {
+   "hafta": 30,
+   "ilkMac": "2027-05-08T00:00:00+03:00",
+   "macSayisi": 8,
+   "bitti": false
+  }
+ ],
+ "guncelleme": "2026-10-29T21:49:55+00:00"
+}

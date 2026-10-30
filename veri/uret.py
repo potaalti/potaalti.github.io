@@ -1,0 +1,254 @@
+"""Pota Altı App veri üreticisi.
+
+TBL Fantezi Ligi sitesinin yayınladığı TBL ve BSL verisinden (maç listeleri ve kutu skorlar) uygulamanın
+herkese açık bölümü için özet dosyaları üretir:
+
+  site/data/meta.json                ligler, güncel haftalar, güncelleme zamanı
+  site/data/<lig>/tablo.json         takım puan tablosu (G/M, sayı averajı, son 5 maç)
+  site/data/<lig>/liderler.json      istatistik liderleri (maç başı ortalamalar, toplam +/-)
+  site/data/<lig>/oyuncular.json     bütün oyuncuların sezon ortalamaları
+  site/data/<lig>/takimlar.json      takımların maç başı istatistikleri, kadroları ve maçları
+  site/data/<lig>/oyuncu/<id>.json   oyuncunun maç maç istatistikleri
+
+Kaynak dosyalar internetten okunur; biten maçların kutu skorları cache/ klasöründe saklanır (bir daha indirilmez).
+  python veri/uret.py            # kaynak: https://potaalti.github.io/tbl_fantezi_lig/data
+  python veri/uret.py --kaynak C:/.../tbl-fantezi/site/data   # yerel kopyadan
+"""
+import argparse
+import json
+import math
+import re
+import sys
+import time
+import unicodedata
+import urllib.request
+from datetime import datetime, timezone
+from pathlib import Path
+
+KOK = Path(__file__).resolve().parent.parent
+CIKTI = KOK / "site" / "data"
+CACHE = KOK / "cache"
+VARSAYILAN_KAYNAK = "https://potaalti.github.io/tbl_fantezi_lig/data"
+LIGLER = {"tbl": "Türkiye Basketbol Ligi", "bsl": "Basketbol Süper Ligi"}
+
+
+def oku(kaynak, yol, kalici=False):
+    """Kaynaktan JSON okur. kalici: değişmeyecek dosya (biten maçın kutu skoru), cache'ten okunur."""
+    cache_yol = CACHE / yol
+    if kalici and cache_yol.exists():
+        return json.loads(cache_yol.read_text(encoding="utf-8"))
+    if kaynak.startswith("http"):
+        for deneme in range(3):
+            try:
+                istek = urllib.request.Request(f"{kaynak}/{yol}?t={int(time.time())}", headers={"User-Agent": "PotaAltiApp"})
+                with urllib.request.urlopen(istek, timeout=30) as y:
+                    veri = json.loads(y.read().decode("utf-8"))
+                break
+            except urllib.error.HTTPError as e:
+                if e.code == 404:
+                    return None
+                if deneme == 2:
+                    raise
+                time.sleep(2)
+            except OSError:
+                if deneme == 2:
+                    raise
+                time.sleep(2)
+    else:
+        dosya = Path(kaynak) / yol
+        if not dosya.exists():
+            return None
+        veri = json.loads(dosya.read_text(encoding="utf-8"))
+    if kalici:
+        cache_yol.parent.mkdir(parents=True, exist_ok=True)
+        cache_yol.write_text(json.dumps(veri, ensure_ascii=False), encoding="utf-8")
+    return veri
+
+
+def yaz(yol, veri):
+    yol.parent.mkdir(parents=True, exist_ok=True)
+    yol.write_text(json.dumps(veri, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+
+
+def anahtar(ad):
+    """Takım adından adres dostu kimlik: 'FENERBAHÇE BEKO' -> 'fenerbahce-beko'"""
+    s = ad.replace("İ", "I").replace("ı", "i").lower()
+    s = unicodedata.normalize("NFKD", s)
+    s = "".join(c for c in s if not unicodedata.combining(c))
+    return re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+
+
+def saniye(sure):
+    try:
+        dk, sn = str(sure or "0:00").split(":")
+        return int(dk) * 60 + int(sn)
+    except ValueError:
+        return 0
+
+
+def sayi(x):
+    try:
+        return int(x)
+    except (TypeError, ValueError):
+        return 0
+
+
+ALANLAR = ["sayi", "rib", "hr", "sr", "ast", "tc", "blk", "tk", "faul", "vp"]
+
+
+def lig_uret(kaynak, lig, bilgi):
+    haftalar = bilgi["haftalar"]
+    takimlar = {}  # anahtar -> kayıt
+    oyuncular = {}  # id -> kayıt
+    maclar_hepsi = []
+
+    def takim(ad):
+        k = anahtar(ad)
+        return takimlar.setdefault(k, {
+            "id": k, "ad": ad, "o": 0, "g": 0, "m": 0, "atilan": 0, "yenilen": 0, "seri": [], "maclar": [],
+            "toplam": {a: 0 for a in ALANLAR} | {"iki": [0, 0], "uc": [0, 0], "sa": [0, 0]}, "kutuMac": 0, "oyuncular": set(),
+        })
+
+    for h in haftalar:
+        liste = oku(kaynak, f"maclar/{lig}-{h}.json")
+        if not liste:
+            continue
+        for m in liste["maclar"]:
+            # Kaynakta saati belli olmayan ileri tarihli maçlar skorsuz "canli" gelebiliyor: oynanmadı sayılır
+            if m["durum"] == "canli" and m.get("evSkor") is None and m["tarih"] > datetime.now().isoformat():
+                m["durum"] = "oynanmadi"
+            ev, dep = takim(m["ev"]), takim(m["dep"])
+            ozet = {"id": m["id"], "hafta": h, "tarih": m["tarih"], "durum": m["durum"], "ev": ev["id"], "dep": dep["id"],
+                    "evSkor": m.get("evSkor"), "depSkor": m.get("depSkor")}
+            maclar_hepsi.append(ozet)
+            ev["maclar"].append(m["id"])
+            dep["maclar"].append(m["id"])
+            if m["durum"] == "oynanmadi":
+                continue
+            kutu = oku(kaynak, f"mac/{m['id']}.json", kalici=m["durum"] == "bitti")
+            if m["durum"] == "bitti":
+                es, ds = sayi(m.get("evSkor")), sayi(m.get("depSkor"))
+                for t, a, y in ((ev, es, ds), (dep, ds, es)):
+                    t["o"] += 1
+                    t["atilan"] += a
+                    t["yenilen"] += y
+                    kazandi = a > y
+                    t["g" if kazandi else "m"] += 1
+                    t["seri"].append({"id": m["id"], "s": "G" if kazandi else "M", "tarih": m["tarih"]})
+            if not kutu:
+                continue
+            for taraf, t, rakip in (("ev", ev, dep), ("dep", dep, ev)):
+                kt = kutu.get(taraf) or {}
+                skor, rakip_skor = sayi(kt.get("skor")), sayi((kutu.get("dep" if taraf == "ev" else "ev") or {}).get("skor"))
+                if m["durum"] == "bitti":
+                    t["kutuMac"] += 1
+                for o in kt.get("oyuncular", []):
+                    pid = str(o["id"])
+                    if pid.startswith("fiba-"):
+                        continue  # TBF kimliği henüz belli olmayan canlı oyuncu
+                    sn = saniye(o.get("sure"))
+                    if m["durum"] == "bitti":
+                        for a in ALANLAR:
+                            t["toplam"][a] += sayi(o.get(a))
+                        for a in ("iki", "uc", "sa"):
+                            t["toplam"][a][0] += sayi((o.get(a) or [0, 0])[0])
+                            t["toplam"][a][1] += sayi((o.get(a) or [0, 0])[1])
+                    t["oyuncular"].add(pid)
+                    p = oyuncular.setdefault(pid, {"id": pid, "ad": o["ad"], "takim": t["id"], "maclar": []})
+                    p["ad"] = o["ad"]
+                    p["takim"] = t["id"]  # en son oynadığı takım
+                    p["maclar"].append({
+                        "mac": m["id"], "hafta": h, "tarih": m["tarih"], "durum": m["durum"], "takim": t["id"], "rakip": rakip["id"],
+                        "evde": taraf == "ev", "skor": skor, "rakipSkor": rakip_skor, "ilk5": bool(o.get("ilk5")), "sure": o.get("sure") or "0:00",
+                        "sn": sn, **{a: sayi(o.get(a)) for a in ALANLAR}, "pm": sayi(o.get("pm")),
+                        "iki": o.get("iki") or [0, 0], "uc": o.get("uc") or [0, 0], "sa": o.get("sa") or [0, 0],
+                    })
+
+    # ---------- Oyuncu sezon ortalamaları (biten maçlar, süre aldığı maçlar) ----------
+    def ort(t, n):
+        return round(t / n, 1) if n else 0
+
+    oyuncu_ozet = []
+    for p in oyuncular.values():
+        biten = [x for x in p["maclar"] if x["durum"] == "bitti" and x["sn"] > 0]
+        n = len(biten)
+        top = {a: sum(x[a] for x in biten) for a in ALANLAR + ["pm", "sn"]}
+        atis = {a: [sum(x[a][0] for x in biten), sum(x[a][1] for x in biten)] for a in ("iki", "uc", "sa")}
+        p["ozet"] = {
+            "id": p["id"], "ad": p["ad"], "takim": p["takim"], "mac": n,
+            "ilk5": sum(1 for x in biten if x["ilk5"]),
+            "dk": ort(top["sn"] / 60, n), **{a: ort(top[a], n) for a in ALANLAR}, "pm": top["pm"], "pmOrt": ort(top["pm"], n),
+            "iki": atis["iki"], "uc": atis["uc"], "sa": atis["sa"],
+        }
+        oyuncu_ozet.append(p["ozet"])
+        yaz(CIKTI / lig / "oyuncu" / f"{p['id']}.json", {"ozet": p["ozet"], "maclar": sorted(p["maclar"], key=lambda x: x["tarih"])})
+
+    # ---------- Puan tablosu: galibiyet, eşitlikte sayı averajı ----------
+    tablo = []
+    for t in takimlar.values():
+        t["seri"].sort(key=lambda x: x["tarih"])
+        tablo.append({"id": t["id"], "ad": t["ad"], "o": t["o"], "g": t["g"], "m": t["m"], "atilan": t["atilan"], "yenilen": t["yenilen"],
+                      "averaj": t["atilan"] - t["yenilen"], "puan": t["g"] * 2 + t["m"], "son5": [x["s"] for x in t["seri"][-5:]]})
+    tablo.sort(key=lambda x: (-x["g"], x["m"], -x["averaj"], -x["atilan"]))
+    for i, s in enumerate(tablo):
+        s["sira"] = i + 1
+
+    # ---------- Liderler: maç başı ortalama (en az takımın oynadığı maçların yarısı kadar maç) ----------
+    en_cok = max((t["o"] for t in takimlar.values()), default=0)
+    esik = max(1, math.ceil(en_cok / 2))
+    uygun = [o for o in oyuncu_ozet if o["mac"] >= esik]
+    kategoriler = [
+        ("sayi", "Sayı", "ort"), ("rib", "Ribaund", "ort"), ("ast", "Asist", "ort"), ("vp", "Verimlilik (VP)", "ort"),
+        ("tc", "Top çalma", "ort"), ("blk", "Blok", "ort"), ("pm", "+/- (toplam)", "toplam"), ("dk", "Süre (dk)", "ort"),
+        ("uc", "3 sayılık (isabet)", "atis"),
+    ]
+    liderler = {"esik": esik, "kategoriler": []}
+    for anah, ad, tur in kategoriler:
+        if tur == "atis":
+            sirali = sorted(uygun, key=lambda o: (-o[anah][0], o[anah][1]))
+            deger = lambda o: o[anah][0]
+        else:
+            sirali = sorted(uygun, key=lambda o: -o[anah])
+            deger = lambda o: o[anah]
+        liderler["kategoriler"].append({"id": anah, "ad": ad, "tur": tur, "liste": [
+            {"id": o["id"], "ad": o["ad"], "takim": o["takim"], "mac": o["mac"], "deger": deger(o),
+             **({"atis": o[anah]} if tur == "atis" else {})} for o in sirali[:15]]})
+
+    # ---------- Takımlar ----------
+    takim_ozet = []
+    for t in takimlar.values():
+        n = t["kutuMac"]
+        takim_ozet.append({
+            "id": t["id"], "ad": t["ad"], "o": t["o"], "g": t["g"], "m": t["m"],
+            "ort": {a: ort(t["toplam"][a], n) for a in ALANLAR}, "atis": {a: t["toplam"][a] for a in ("iki", "uc", "sa")},
+            "kadro": sorted((o for o in oyuncu_ozet if o["takim"] == t["id"]), key=lambda o: -o["dk"]),
+            "maclar": t["maclar"],
+        })
+    takim_ozet.sort(key=lambda x: x["ad"])
+
+    yaz(CIKTI / lig / "tablo.json", tablo)
+    yaz(CIKTI / lig / "liderler.json", liderler)
+    yaz(CIKTI / lig / "oyuncular.json", sorted(oyuncu_ozet, key=lambda o: o["ad"]))
+    yaz(CIKTI / lig / "takimlar.json", {"takimlar": takim_ozet, "maclar": maclar_hepsi})
+    return {"ad": LIGLER[lig], "haftalar": haftalar, "guncel": bilgi.get("guncel"), "takimSayisi": len(takimlar),
+            "oyuncuSayisi": len(oyuncular)}
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--kaynak", default=VARSAYILAN_KAYNAK)
+    args = ap.parse_args()
+    index = oku(args.kaynak, "hafta/index.json")
+    meta = {"guncelleme": datetime.now(timezone.utc).isoformat(timespec="seconds"), "kaynakGuncelleme": index.get("guncelleme"), "ligler": {}}
+    for lig in LIGLER:
+        bilgi = (index.get("maclar") or {}).get(lig)
+        if not bilgi:
+            continue
+        meta["ligler"][lig] = lig_uret(args.kaynak, lig, bilgi)
+        print(f"{lig}: {meta['ligler'][lig]['takimSayisi']} takım, {meta['ligler'][lig]['oyuncuSayisi']} oyuncu")
+    yaz(CIKTI / "meta.json", meta)
+    print("tamam:", CIKTI)
+
+
+if __name__ == "__main__":
+    sys.exit(main())

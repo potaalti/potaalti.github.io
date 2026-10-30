@@ -204,12 +204,50 @@ canlı dinler).
 TBL Fantezi Ligi de aynı motorla `tbl/` adresinde çalışır. Farkları:
 - **Draft yok:** Yönetici ligi kurarken eski TBL Fantezi Ligi'nin takımları, menajer adları ve her haftanın kadrosu aktarılır
   ("Ligi kur ve kadroları aktar"); geçmiş haftaların puanları değişmez, sezon hemen başlar.
-- **Kurallar:** 5 As + 2 Yedek, As'ta en fazla 2 yabancı (TÜRKİYE/KKTC Türk sayılır); sezonda 2 serbest oyuncu, 36 saat talep ve kura,
-  yönetici onaylı takas, As–Yedek değişikliği sınırsız (`site/tbl/config.js` → `degisiklikHakki`).
+- **Kurallar** (`site/tbl/config.js`): 5 As + 2 Yedek, As'ta en fazla 2 yabancı (TÜRKİYE/KKTC Türk sayılır); sezonda **2 transfer hakkı**
+  — serbest oyuncu almak da As–Yedek değişikliği de 1 hak kullanır (`ortakHak`); bırakılan ya da lige yeni katılan oyuncu için
+  **24 saat** talep ve kura (`beklemeSaat`); takas ve Hareketler sayfası yok. Lisansı düşen yabancının yerine TBL takımının aldığı
+  yabancı fantezi takımına otomatik geçer, hak düşmez; yerine kimse gelmezse menajer boştakilerden zorunlu değişiklik yapar (hak düşmez).
 - **Veri:** Haftalık VP'ler, maçlar ve oyuncu listesi eski TBL Fantezi sitesinin dosyalarından okunur (Termux günceller); puanlar onunla
   birebir aynıdır. Haftaların başlangıç saatleri ve TBL kadro hareketleri `veri/uret.py` ile `site/tbl/data/`'ya yazılır.
-- **Kurulum:** BSL'den **ayrı** bir Firebase projesi aç (1. bölümdeki adımlar aynı: Google + Anonim giriş, Firestore, aynı
-  `fantezi/firestore.rules`, Authorized domains), ayarları `site/tbl/config.js`'e yapıştır. Sonra `tbl/` sayfasında Google ile giriş yap →
-  "Ligi kur ve kadroları aktar" → Yönetici sayfasındaki davet linklerini menajerlere gönder.
-- Geçiş günü: kadroları aktarmadan hemen önce eski sitede son kadro değişikliklerinin girilmiş olduğundan emin ol; aktarımdan sonra
-  değişiklikler sadece yeni sistemden yapılır (eski sitenin `kadrolar.csv` dosyası artık kullanılmaz).
+  Eski site (`potaalti.github.io/tbl_fantezi_lig`) veri kaynağı olarak yayında kalır; yeni uygulama `potaalti.github.io` kökündedir,
+  ikisi aynı anda çalışır.
+
+### Yayına alma ve menajerleri dahil etme
+
+**A. GitHub (bir kez, sen):**
+1. `potaalti` organizasyonunda yeni depo: adı tam olarak **`potaalti.github.io`**, Public, README/gitignore ekleme (boş).
+2. Depo → **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+3. Bana haber ver; bu klasörü o depoya gönderirim. `.github/workflows/yayinla.yml` `site/` klasörünü her gönderimde yayınlar:
+   ana uygulama `https://potaalti.github.io/`, TBL Fantezi `https://potaalti.github.io/tbl/`, BSL Fantezi `https://potaalti.github.io/bsl/`.
+
+**B. TBL için Firebase projesi (bir kez, sen):** 1. bölümdeki 1–8. adımlar, BSL'den **ayrı** bir proje olarak
+(ör. ad: `pota-alti-tbl-fantezi`): Firestore (eur3, production), Rules'a `fantezi/firestore.rules`'un tamamı, Authentication'da
+Google + Anonymous, Authorized domains'e `potaalti.github.io`. Web uygulamasının `firebaseConfig` değerlerini `site/tbl/config.js`'e
+yapıştır ya da bana gönder (gizli değildir).
+
+**C. Geçiş günü** (bir haftanın maçları bitmiş, sıradaki hafta başlamamışken):
+1. Eski sitede o güne kadarki bütün kadro değişikliklerinin girildiğinden emin ol (Termux güncellemesi de çalışmış olsun).
+2. (İstersen ben yaparım) Karşılaştırmayı çalıştır: emülatör ve yerel site açıkken `cd fantezi/test && npm install && node tbl-karsilastir.mjs` → "0 fark" görmelisin.
+3. `https://potaalti.github.io/tbl/` → **Google ile giriş yap** → kurulum ekranında:
+   - **Şimdiye kadarki transferler** tablosunu kontrol et (her satırda hak / hak yok ve nedeni yazar).
+   - **Kullanılan transfer hakkı** sütununu gerekirse düzelt (ör. TBF verisi gecikmiş bir otomatik değişiklik 1 hak sayıldıysa 0 yap).
+   - **Ligi kur ve kadroları aktar**. Ligi kuran Google hesabı yönetici olur.
+4. **Yönetici** sayfası → **Takımlar ve davetler**: her takımın satırındaki **WhatsApp** düğmesiyle menajerine kendi davet linkini gönder
+   (link tek kullanımlık). Sen de bir takımı yönetiyorsan "Sen de oynuyor musun?" → takımını seç → **Takıma katıl**.
+   Ortak menajerli takımlarda **+ Ortak menajer davet et**.
+5. Gruba duyuru at (aşağıdaki metin). Yönetici sayfasında kimin bağlandığını (✓ e-posta) takip et; bağlanmayanlara linki tekrar hatırlat.
+6. Bu tarihten sonra kadro değişiklikleri sadece yeni sistemden yapılır; eski sitedeki `kadrolar.csv` artık güncellenmez
+   (eski site sadece veri kaynağı olarak çalışmaya devam eder). Herkes geçince eski sitenin ana sayfasına yeni adrese yönlendiren
+   bir not/bağlantı eklenir.
+
+**Gruba duyuru metni:**
+
+> 🏀 Pota Altı TBL Fantezi Ligi yeni evine taşındı: **potaalti.github.io/tbl**
+> Takımın, kadron ve bütün puanların aynen duruyor. Artık kadro değişikliklerini kendin yapacaksın:
+> • Sezonda **2 transfer hakkın** var: serbest oyuncu almak da As–Yedek değişikliği de 1 hak.
+> • Bırakılan ya da lige yeni gelen oyuncuyu **24 saat** kimse alamaz; bu sürede talep edenler arasında kura çekilir.
+> • Yabancın lisansını kaybeder ve takımı yerine yabancı alırsa, yeni oyuncu sana **otomatik** geçer, hak gitmez.
+> • As'ta en fazla 2 yabancı.
+> Sana özel davet linkini birazdan özelden gönderiyorum. Linki aç, **Google ile giriş yap**, bitti. Sonraki girişlerde linke gerek yok,
+> aynı Google hesabıyla girmen yeterli. Telefonda "Ana ekrana ekle" dersen uygulama gibi açılır.

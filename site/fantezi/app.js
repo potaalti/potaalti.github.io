@@ -446,6 +446,34 @@ function gorunum() {
 }
 
 // ---------- İlk kurulum ----------
+// TBL: eski sitedeki kadro değişiklikleri (hak kullanıp kullanmadığıyla) ve takımların kullandığı haklar (düzenlenebilir)
+function tblAktarimKartlari(kaynak) {
+  const transferTablosu = kaynak.transferler.length ? `<div class="tablo-kap"><table>
+      <thead><tr><th>Hafta</th><th>Takım</th><th>Çıkan → Giren</th><th>Hak</th></tr></thead>
+      <tbody>${kaynak.transferler.map(x => `<tr><td>${x.hafta - kaynak.baslangic + 1}.</td><td>${esc(x.takim)}</td>
+        <td>${esc(x.cikan)} → <b>${esc(x.giren)}</b><div class="kucuk soluk">${esc(x.neden)}</div></td>
+        <td>${x.hak ? '<span class="rozet uyari">1 hak</span>' : '<span class="rozet as">hak yok</span>'}</td></tr>`).join('')}</tbody></table></div>`
+    : '<p class="soluk">Henüz kadro değişikliği yapılmamış.</p>';
+  const hakTablosu = `<div class="tablo-kap"><table><thead><tr><th>Takım</th><th class="sayi">Kullanılan ${hakAdi()}</th></tr></thead><tbody>
+    ${kaynak.takimlar.map((t, i) => `<tr><td>${esc(t.ad)}${t.menajer ? ` <span class="soluk kucuk">${esc(t.menajer)}</span>` : ''}</td>
+      <td class="sayi"><input type="number" id="fa-${i}" min="0" max="2" value="${t.fa}" style="width:64px"> / 2</td></tr>`).join('')}</tbody></table></div>`;
+  return `<div class="kart"><h2>Şimdiye kadarki transferler</h2>
+      <p class="kucuk soluk">Eski TBL Fantezi Ligi'nin haftalık kadrolarından. Lisansı düşen oyuncunun yerine alınan hak kullanmaz.</p>${transferTablosu}</div>
+    <div class="kart"><h2>Kullanılan haklar</h2><p class="kucuk soluk">Yukarıdaki listeye göre hesaplandı; aktarmadan önce değiştirebilirsin (sonra da Yönetici → takım sayfasından düzenlenebilir).</p>${hakTablosu}</div>`;
+}
+
+// TBL kurulumunda ve yeniden aktarımda yazılan lig ayarları
+const tblAktarimAyari = () => ({
+  degisiklikHakki: LIG.degisiklikHakki ?? 99, ortakHak: !!LIG.ortakHak, beklemeSaat: LIG.beklemeSaat ?? 36, asEnFazlaYabanci: 2, mevkilerHazir: false,
+});
+// Kullanılan hak kutularındaki değerleri aktarılacak takımlara yazar
+function hakKutulariniOku(kaynak) {
+  kaynak.takimlar.forEach((t, i) => {
+    const v = Number(deger(`fa-${i}`));
+    if (Number.isInteger(v) && v >= 0 && v <= 2) t.fa = v;
+  });
+}
+
 function gorunumKurulum() {
   if (S.kurulumSonucu) {
     return `<div class="kart">
@@ -469,19 +497,7 @@ function gorunumKurulum() {
       return '<p class="bos">Eski TBL Fantezi Ligi kadroları okunuyor…</p>';
     }
     if (S.tblKaynak.hata) return `<div class="kart hata-kutu">Eski TBL Fantezi Ligi okunamadı: ${esc(S.tblKaynak.hata)}</div>`;
-    const kaynak = S.tblKaynak;
-    const transferTablosu = kaynak.transferler.length ? `<div class="tablo-kap"><table>
-        <thead><tr><th>Hafta</th><th>Takım</th><th>Çıkan → Giren</th><th>Hak</th></tr></thead>
-        <tbody>${kaynak.transferler.map(x => `<tr><td>${x.hafta - kaynak.baslangic + 1}.</td><td>${esc(x.takim)}</td>
-          <td>${esc(x.cikan)} → <b>${esc(x.giren)}</b><div class="kucuk soluk">${esc(x.neden)}</div></td>
-          <td>${x.hak ? '<span class="rozet uyari">1 hak</span>' : '<span class="rozet as">hak yok</span>'}</td></tr>`).join('')}</tbody></table></div>`
-      : '<p class="soluk">Henüz kadro değişikliği yapılmamış.</p>';
-    const hakTablosu = `<div class="tablo-kap"><table><thead><tr><th>Takım</th><th class="sayi">Kullanılan ${hakAdi()}</th></tr></thead><tbody>
-      ${kaynak.takimlar.map((t, i) => `<tr><td>${esc(t.ad)}${t.menajer ? ` <span class="soluk kucuk">${esc(t.menajer)}</span>` : ''}</td>
-        <td class="sayi"><input type="number" id="fa-${i}" min="0" max="2" value="${t.fa}" style="width:64px"> / 2</td></tr>`).join('')}</tbody></table></div>`;
-    return `<div class="kart"><h2>Şimdiye kadarki transferler</h2>
-        <p class="kucuk soluk">Eski TBL Fantezi Ligi'nin haftalık kadrolarından. Lisansı düşen oyuncunun yerine alınan hak kullanmaz.</p>${transferTablosu}</div>
-      <div class="kart"><h2>Kullanılan haklar</h2><p class="kucuk soluk">Yukarıdaki listeye göre hesaplandı; aktarmadan önce değiştirebilirsin (sonra da Yönetici → takım sayfasından düzenlenebilir).</p>${hakTablosu}</div>
+    return `${tblAktarimKartlari(S.tblKaynak)}
       <div class="kart">
       <h2>Ligi kur</h2>
       <p>Ligi kuran Google hesabı (<b>${esc(auth.currentUser.email)}</b>) <b>yönetici</b> olur.</p>
@@ -1654,6 +1670,28 @@ function gorunumKurallar() {
 }
 
 // ---------- Yönetici ----------
+// TBL: geçiş gününe kadar ligi eski sitenin son haliyle tazelemek için (eski sitede kadro değişikliği girildikçe)
+function tblYenidenAktarKarti() {
+  if (!S.ui.yenidenAktarAcik) {
+    return `<div class="kart"><h3>Eski siteden yeniden aktar</h3>
+      <p class="kucuk">Geçiş gününe kadar eski TBL Fantezi sitesine kadro değişikliği girdiysen, ligi onun son haline getirir: kadrolar, haftalık geçmiş
+      ve kullanılan haklar baştan aktarılır; takımlar, davet linkleri ve bağlı hesaplar kalır. Menajerler bu sitede değişiklik yapmaya başladıktan sonra kullanma.</p>
+      <button class="btn" data-is="yeniden-aktar-ac">Eski sitedeki değişiklikleri göster</button></div>`;
+  }
+  if (!S.tblKaynak) {
+    if (!S.tblKaynakYukleniyor) {
+      S.tblKaynakYukleniyor = true;
+      tblKaynakKadrolar().then(k => { S.tblKaynak = k; }).catch(e => { S.tblKaynak = { hata: e.message }; }).finally(() => { S.tblKaynakYukleniyor = false; ciz(); });
+    }
+    return '<div class="kart"><p class="bos">Eski TBL Fantezi Ligi kadroları okunuyor…</p></div>';
+  }
+  if (S.tblKaynak.hata) return `<div class="kart hata-kutu">Eski TBL Fantezi Ligi okunamadı: ${esc(S.tblKaynak.hata)}</div>`;
+  return `<h2 style="margin-top:24px">Eski siteden yeniden aktar</h2>${tblAktarimKartlari(S.tblKaynak)}
+    <div class="kart"><div class="satir"><button class="btn tehlike" data-is="tbl-yeniden-aktar">Kadroları yeniden aktar</button>
+      <button class="btn" data-is="tbl-yeniden-oku">Eski siteyi yeniden oku</button>
+      <button class="btn" data-is="yeniden-aktar-kapat">Vazgeç</button></div></div>`;
+}
+
 function gorunumYonetici() {
   const d = S.durum;
   const a = d.asama;
@@ -1726,6 +1764,7 @@ function gorunumYonetici() {
     <div class="satir">${akis.join('') || '<span class="soluk">Bu aşamada yapılacak bir şey yok.</span>'}</div>
     ${!S.havuz.length && ['kurulum', 'kura'].includes(a) ? '<p class="kucuk soluk">Kura için önce oyuncu havuzunu yükle.</p>' : ''}
     ${a === 'sezon' ? `<p class="kucuk soluk">Kadro değişikliklerinin geçerli olabileceği en erken hafta: ${hf(d.aktifHafta)}. hafta (bu sayfa açılınca otomatik güncellenir).</p>` : ''}</div>`);
+  if (LIG.iceAktar === 'tbl' && a === 'sezon') adimlar.push(tblYenidenAktarKarti());
   if (LIG.draft) adimlar.push(`<div class="kart"><h3>Tehlikeli bölge</h3>
     <p class="kucuk">Deneme draftından sonra gerçek drafta temiz başlamak için: bütün seçimleri, kadroları, takasları ve hareketleri siler. Takım adları, menajerler ve giriş linkleri kalır.</p>
     <button class="btn tehlike" data-is="sifirla">Draftı sıfırla</button></div>`);
@@ -2144,20 +2183,28 @@ async function eylem(is, id, el) {
       el.disabled = true;
       el.textContent = 'Kadrolar aktarılıyor…';
       const kaynak = S.tblKaynak ?? await tblKaynakKadrolar();
-      kaynak.takimlar.forEach((t, i) => {
-        const v = Number(deger(`fa-${i}`));
-        if (Number.isInteger(v) && v >= 0 && v <= 2) t.fa = v;
-      });
+      hakKutulariniOku(kaynak);
       const sonuc = await D.ligiKur(S.uid, hesapBilgisi(), {
         ad: deger('k-ad') || LIG.ad, secimSuresi: 90, baslangicHaftasi: kaynak.baslangic, takimSayisi: kaynak.takimlar.length,
       });
-      await D.kadrolariIceAktar(kaynak.takimlar, {
-        aktifHafta: C.etkinHafta(S.index, kaynak.baslangic),
-        ayar: { degisiklikHakki: LIG.degisiklikHakki ?? 99, ortakHak: !!LIG.ortakHak, beklemeSaat: LIG.beklemeSaat ?? 36, asEnFazlaYabanci: 2, mevkilerHazir: false },
-      });
+      await D.kadrolariIceAktar(kaynak.takimlar, { aktifHafta: C.etkinHafta(S.index, kaynak.baslangic), ayar: tblAktarimAyari() });
       S.ben = 'admin';
       S.kurulumSonucu = sonuc;
       return ciz();
+    }
+    case 'yeniden-aktar-ac': S.ui.yenidenAktarAcik = true; return ciz();
+    case 'yeniden-aktar-kapat': S.ui.yenidenAktarAcik = false; return ciz();
+    case 'tbl-yeniden-oku': S.tblKaynak = null; S.tblKaynakYukleniyor = false; return ciz();
+    case 'tbl-yeniden-aktar': {
+      const kaynak = S.tblKaynak;
+      if (!kaynak || kaynak.hata) return;
+      if (!confirm('Bütün takımların kadroları, kullanılan hakları ve bu sitede yapılmış kadro değişiklikleri silinip eski siteden yeniden aktarılacak. Takımlar, davet linkleri ve bağlı hesaplar kalır. Emin misin?')) return;
+      el.disabled = true;
+      el.textContent = 'Aktarılıyor…';
+      hakKutulariniOku(kaynak);
+      await D.kadrolariYenidenAktar(kaynak.takimlar, { aktifHafta: C.etkinHafta(S.index, kaynak.baslangic), ayar: tblAktarimAyari() });
+      S.tblKaynak = null;
+      return bildir('Kadrolar eski siteden yeniden aktarıldı');
     }
     case 'kurulum-bitti':
       location.hash = '#/yonetici';

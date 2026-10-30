@@ -139,5 +139,22 @@ const g = (await oku(admin.db, 'kadrolar', 't01')).gecmis;
 kontrol(JSON.stringify(g.slice(0, takimlar[0].gecmis.length)) === JSON.stringify(takimlar[0].gecmis) && g.every(x => x.hafta <= AKTIF || x.hafta >= AKTIF),
   'Geçmiş haftaların kadroları değişmeden kaldı; yeni değişiklikler geçmişin sonuna eklendi');
 
+console.log('Eski siteden yeniden aktarma');
+takimlar[1].fa = 1;
+await reddedilmeli(() => menajer.D.kadrolariYenidenAktar(takimlar, { aktifHafta: AKTIF, ayar: {} }), 'Menajerin yeniden aktarması');
+await admin.D.kadrolariYenidenAktar(takimlar, { aktifHafta: AKTIF, ayar: { degisiklikHakki: 99, ortakHak: true, beklemeSaat: 24, asEnFazlaYabanci: 2, mevkilerHazir: false } });
+{
+  const k1y = await oku(admin.db, 'kadrolar', 't01');
+  const k2y = await oku(admin.db, 'kadrolar', 't02');
+  const son = takimlar[0].gecmis.at(-1);
+  const say = async ad => (await F.getDocs(F.collection(admin.db, ad))).size;
+  kontrol(JSON.stringify([k1y.as, k1y.yedek, k1y.gecmis]) === JSON.stringify([son.as, son.yedek, takimlar[0].gecmis]) && k1y.fa === 0 && k2y.fa === 1,
+    'Kadrolar, haftalık geçmiş ve haklar eski sitenin haline döndü');
+  kontrol(await say('alinan') === sahipli.length && await say('hareketler') === 0 && await say('bekleme') === 0,
+    'Sahiplikler yeniden yazıldı; hareketler, beklemeler ve talepler silindi');
+  kontrol((await oku(admin.db, 'uyeler', menajer.uid))?.takim === 't01' && (await oku(admin.db, 'uyeler', menajer2.uid))?.takim === 't02',
+    'Takımlara bağlı menajer hesapları yerinde kaldı');
+}
+
 console.log(`\nSonuç: ${basarili} kontrol geçti, ${hatali} kontrol başarısız.`);
 process.exit(hatali ? 1 : 0);

@@ -226,6 +226,11 @@ TBL Fantezi Ligi de aynı motorla `tbl/` adresinde çalışır. Farkları:
 Google + Anonymous, Authorized domains'e `potaalti.github.io`. Web uygulamasının `firebaseConfig` değerlerini `site/tbl/config.js`'e
 yapıştır ya da bana gönder (gizli değildir).
 
+**Geçiş gününden önce deneme:** Ligi istediğin zaman kurup (C.3) yönetici olarak her ekranı dolaşabilirsin; menajerlere link
+göndermediğin sürece kimse bir şey değiştiremez. Eski siteye yeni kadro değişiklikleri girdikçe **Yönetici → Eski siteden yeniden aktar**
+ligi eski sitenin son haline getirir (kadrolar, haftalık geçmiş ve haklar baştan yazılır; takımlar, davet linkleri ve bağlı hesaplar kalır).
+Geçiş gününde son bir yeniden aktarım yapıp linkleri gönderirsin. Menajerler yeni sitede değişiklik yapmaya başladıktan sonra kullanma.
+
 **C. Geçiş günü** (bir haftanın maçları bitmiş, sıradaki hafta başlamamışken):
 1. Eski sitede o güne kadarki bütün kadro değişikliklerinin girildiğinden emin ol (Termux güncellemesi de çalışmış olsun).
 2. (İstersen ben yaparım) Karşılaştırmayı çalıştır: emülatör ve yerel site açıkken `cd fantezi/test && npm install && node tbl-karsilastir.mjs` → "0 fark" görmelisin.

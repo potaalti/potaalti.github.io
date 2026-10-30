@@ -57,10 +57,9 @@ hesaplanır.
 
 1. Draft'tan hemen önce bilgisayarda `guncelle.bat`'a çift tıkla (en güncel VP ortalamaları için),
    birkaç dakika bekle.
-2. **Mevkiler** sayfasında (yönetici menüsü) oyuncuların Ön/Arka mevkilerini kontrol et. TBF'de mevki
-   bilgisi olmadığı için ilk değerler istatistikten tahmin edilir (ribaund ve blok, asistin iki katından
-   fazlaysa Ön). Kanat oyuncuları ve hiç oynamamış oyuncular (**?** işaretli) yanılabilir; her tıklama
-   hemen kaydedilir.
+2. **Mevkiler** sayfasında (yönetici menüsü) oyuncuların mevkilerini kontrol et: **Ön** = uzun/forvet,
+   **Arka** = oyun kurucu/şutör. Mevkiler yöneticinin hazırladığı listeden (`site/data/mevkiler.json`) gelir;
+   sonradan BSL'ye katılan oyuncular istatistikten tahmin edilir. Her tıklama hemen kaydedilir.
 3. Yönetici sayfası → **Oyuncu havuzunu yükle** (draftta seçilebilecek oyuncular, mevkileri ve otomatik
    seçim sıralaması bu anki VP ortalamalarıyla sabitlenir; draft başlatılırken son haliyle yeniden yüklenir).
 4. **Kurayı çek** → herkesin ekranında sıra 17'den 1'e doğru canlı açılır.

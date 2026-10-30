@@ -24,7 +24,7 @@ const S = {
   hazir: false, ligYok: false, hataMesaji: null,
   uid: null, kod: null, ben: null, saatFarki: 0,
   ayar: null, durum: null, takimlar: {}, kadrolar: {}, secimler: {}, teklifler: {}, hareketler: {},
-  havuz: [], havuzMap: new Map(), havuzYuklendi: false, mevkiler: {},
+  havuz: [], havuzMap: new Map(), havuzYuklendi: false, mevkiler: {}, mevkiListesi: {},
   rehber: new Map(), index: null, haftalar: {}, haftalarYuklendi: false,
   kodlar: null, kuraAcilan: -1, sonUyarilan: null,
   ui: {
@@ -60,8 +60,9 @@ function oyuncu(pid) {
     ?? { id: pid, ad: Object.values(S.secimler).find(s => s.oyuncu === pid)?.ad ?? `Oyuncu ${pid}`, takim: '', turk: false, vpOrt: 0, mac: 0 };
 }
 const turkMu = pid => !!oyuncu(pid).turk;
-// Oyuncunun mevkisi (Ön/Arka): yöneticinin belirlediği, yoksa istatistik tahmini
-const mevki = pid => S.mevkiler[pid] ?? S.havuzMap.get(pid)?.mevki ?? oyuncu(pid).mevkiTahmini ?? 'arka';
+// Oyuncunun mevkisi (Ön = uzun/forvet, Arka = oyun kurucu/şutör): yöneticinin sitede değiştirdiği,
+// yoksa yöneticinin listesi (data/mevkiler.json), listede olmayan yeni oyuncu için istatistik tahmini
+const mevki = pid => S.mevkiler[pid] ?? S.mevkiListesi[pid] ?? S.havuzMap.get(pid)?.mevki ?? oyuncu(pid).mevkiTahmini ?? 'arka';
 const bilgi = pid => ({ id: pid, mevki: mevki(pid), turk: turkMu(pid), vpOrt: oyuncu(pid).vpOrt ?? 0 });
 // Draftta kurallar havuzdaki mevkiye bakar
 const havuzBilgi = pid => {
@@ -77,8 +78,8 @@ const dizilisSorunu = k => C.dizilisHatasi(k.as.map(bilgi), k.yedek.map(bilgi), 
 const draftDizilisi = idler => C.dizilisOner(idler.map(havuzBilgi), kural());
 // BSL takım adı: telefonda kısaltması (BSK, ERK...), geniş ekranda tam adı
 const bslTakimHucre = o => `<span class="uzun-ad">${esc(o.takim)}</span><span class="kisa-ad" title="${esc(o.takim)}">${esc(o.takimKod || o.takim)}</span>`;
-// Oyuncuların Ön/Arka mevkisi yönetici kesin listeyi yükleyene kadar gösterilmez (ayar.mevkilerHazir)
-const mevkilerHazir = () => S.ayar?.mevkilerHazir === true;
+// Oyuncuların Ön/Arka mevkisi herkese gösterilir; yönetici Mevkiler sayfasından gizleyebilir (ayar.mevkilerHazir)
+const mevkilerHazir = () => S.ayar?.mevkilerHazir !== false;
 const mevkiRozeti = m => !mevkilerHazir() ? '' : `<span class="rozet mv" title="${m === 'on' ? 'Ön saha (uzun/forvet)' : 'Arka saha (oyun kurucu/şutör)'}">${C.MEVKI_ADI[m]}</span>`;
 
 // Oyuncu id -> fantezi takımı (kadrolardan)
@@ -928,7 +929,7 @@ function gorunumYonetici() {
 function gorunumMevkiler() {
   const ara = S.ui.ara.toLocaleLowerCase('tr');
   const tum = [...S.rehber.values()].filter(o => o.aktif);
-  const belirsizMi = o => !S.mevkiler[o.id] && !o.mevkiTahmini;
+  const belirsizMi = o => !S.mevkiler[o.id] && !S.mevkiListesi[o.id] && !o.mevkiTahmini;
   const bslTakimlar = [...new Set(tum.map(o => o.takim))].sort((a, b) => a.localeCompare(b, 'tr'));
   const liste = tum.filter(o => (!S.ui.bslTakim || o.takim === S.ui.bslTakim)
     && (!S.ui.belirsiz || belirsizMi(o)) && (!S.ui.mevkiFiltre || mevki(o.id) === S.ui.mevkiFiltre)
@@ -937,8 +938,9 @@ function gorunumMevkiler() {
   return `<div class="kart"><h2>Mevkiler</h2>
     <p><button class="btn ${mevkilerHazir() ? '' : 'ana'}" data-is="mevki-goster">${mevkilerHazir() ? 'Mevkileri herkesten gizle' : 'Mevkiler kesinleşti, herkese göster'}</button>
     <span class="soluk kucuk">${mevkilerHazir() ? 'Oyuncuların yanında Ön/Arka herkese görünüyor.' : 'Şu an oyuncuların yanında Ön/Arka yazmıyor (sadece bu sayfada görünür).'}</span></p>
-    <p>TBF'de mevki bilgisi olmadığı için ilk değerler maç istatistiklerinden tahmin edildi (ribaund ve blok asistin iki katından fazlaysa Ön).
-    Kanat oyuncularında ve hiç oynamamış oyuncularda (<b>?</b>) yanılabilir; draft öncesi kontrol et. Her tıklama hemen kaydedilir.</p>
+    <p><b>Ön</b> = uzun/forvet, <b>Arka</b> = oyun kurucu/şutör. Mevkiler yöneticinin listesinden geliyor; listede olmayan yeni
+    oyuncular istatistikten tahmin edilir (ribaund ve blok asistin iki katından fazlaysa Ön), hiç oynamamışsa <b>?</b> ile işaretlenir.
+    Buradaki her tıklama hemen kaydedilir.</p>
     <p class="kucuk soluk">Ön: ${sayim('on')} · Arka: ${sayim('arka')} · Belirsiz: ${tum.filter(belirsizMi).length}.
     ${['draft', 'duraklatildi', 'kadro', 'sezon'].includes(asama()) ? 'Draft başladıktan sonra bir takımdaki oyuncunun mevkisini değiştirmek o takımın dizilişini kurala aykırı yapabilir.' : ''}</p>
     <div class="satir" style="margin-bottom:10px">
@@ -1377,7 +1379,9 @@ async function basla() {
       history.replaceState(null, '', location.pathname + (params.toString() ? `?${params}` : '') + location.hash);
     }
     S.kod = localStorage.getItem(KOD_ANAHTARI);
-    const [index, rehber] = await Promise.all([jsonGetir('data/index.json'), jsonGetir('data/oyuncular.json')]);
+    const [index, rehber, mevkiListesi] = await Promise.all([jsonGetir('data/index.json'), jsonGetir('data/oyuncular.json'),
+      jsonGetir('data/mevkiler.json').catch(() => ({}))]);
+    S.mevkiListesi = mevkiListesi;
     S.index = index;
     S.rehber = new Map(rehber.map(o => [o.id, o]));
     if (!(await D.ligVarMi())) {

@@ -161,7 +161,7 @@ a.oyuncu-link:hover { color: var(--vurgu); text-decoration: underline; }
 @media (max-width: 900px) {
   .iki-sutun { grid-template-columns: minmax(0, 1fr); gap: 0; }
 }
-@media (max-width: 700px) {
+@media (max-width: 759px) {
   .ust-ic { padding: 0 14px; min-height: 52px; }
   .menu { display: none; }
   .icerik { padding: 14px 12px calc(84px + env(safe-area-inset-bottom)); }
@@ -219,7 +219,7 @@ a.f-satir:hover { background: var(--vurgu-acik); }
 .video-kart .canli-rozet { position: absolute; left: 8px; top: 8px; }
 .video-kart strong { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: .88rem; margin-top: 6px; line-height: 1.3; }
 .video-kart small { color: var(--soluk); font-size: .76rem; }
-@media (max-width: 700px) {
+@media (max-width: 759px) {
   .son-yayin img { width: 120px; }
   .video-izgara { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
   .video-izgara.kisalar { grid-template-columns: repeat(3, minmax(0, 1fr)); }

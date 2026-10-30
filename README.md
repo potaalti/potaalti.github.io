@@ -12,13 +12,8 @@ sayfaları; ileride TBL ve BSL fantezi ligleri ve Pota Altı YouTube yayınları
 - Telefona uygulama gibi eklenebilir (PWA), giriş gerekmez
 
 ## 2. aşama: TBL Fantezi Ligi uygulamanın içinde
-- **Fantezi → TBL Fantezi Ligi:** Takımım (takım seçimi cihazda hatırlanır), Haftalık sıralama, Genel klasman, takım sayfaları
-  (As/Yedek, yerine giren yedek, haftalar), Boştakiler; sıralamalar görsel olarak paylaşılır/indirilir.
-- Veriler (kadrolar, haftalık VP'ler, ayarlar) TBL Fantezi sitesinden okunur; geçmiş haftalar ve kadrolar aynen korunur.
-- Puanlama, TBL Fantezi sitesinin `scoring.js` dosyasının birebir kopyası (`site/tbl-puanlama.js`) ile yapılır.
-- `test/tbl-fantezi-karsilastir.mjs`: eski siteyle her haftanın sıralamasını, genel klasmanı ve her takımın her haftasındaki
-  oyuncuları birebir karşılaştırır (2026-10-30: 71 karşılaştırma, 0 fark). Eski adres, geçiş günü bu karşılaştırma tekrar
-  çalıştırıldıktan sonra uygulamaya yönlendirilecek.
+- İlk sürümdeki salt okunur TBL Fantezi bölümü kaldırıldı; TBL Fantezi artık ortak fantezi motoruyla `tbl/` adresinde çalışır
+  (bkz. "TBL Fantezi: menajerler kendi değişikliklerini yapar"). Eski `#/fantezi/tbl` adresi `tbl/` sayfasına yönlenir.
 
 ## 3. aşama: BSL Fantezi Ligi uygulamanın içinde
 - BSL Fantezi Ligi (eski `bsl-draft` deposu, bütün geçmişiyle) bu depoya alındı: web dosyaları `site/bsl/` (adres: `bsl/`),
@@ -26,7 +21,7 @@ sayfaları; ileride TBL ve BSL fantezi ligleri ve Pota Altı YouTube yayınları
 - Fantezi menüsündeki BSL kartı ve davet linkleri `bsl/` sayfasını açar; başlıktaki Pota Altı simgesi ana uygulamaya döner.
   Telefona eklenince tek uygulama kurulur (ortak manifest ve service worker).
 - `bsl/guncelle.bat` (günde 2 kez zamanlanmış) BSL verisini çeker, `veri/uret.py` ile TBL/BSL puan tablosu ve liderleri yeniler, ikisini birlikte yayınlar.
-- Testler: `fantezi/test/deneme_draft.mjs` (Firebase emülatörü `fantezi/` klasöründen başlatılır), 2026-10-30: 119 kontrol, 0 hata.
+- Testler: `fantezi/test/deneme_draft.mjs` (Firebase emülatörü `fantezi/` klasöründen başlatılır), 2026-10-30: 120 kontrol, 0 hata.
 
 ## 4. aşama: YouTube ve ana sayfa
 - **Yayın** sekmesi: Pota Altı YouTube kanalının ([@potaaltitv](https://www.youtube.com/@potaaltitv)) son canlı yayını oynatıcıda,
@@ -39,10 +34,17 @@ sayfaları; ileride TBL ve BSL fantezi ligleri ve Pota Altı YouTube yayınları
 ## TBL Fantezi: menajerler kendi değişikliklerini yapar
 - BSL Fantezi'nin motoru ortak hale getirildi (`site/fantezi/`); TBL Fantezi aynı kodla `tbl/` adresinde, kendi Firebase projesiyle çalışır.
 - Draft yok: eski TBL Fantezi'nin kadroları ve haftalık geçmişi içe aktarılır. Kurallar: 5 As + 2 Yedek, As'ta en fazla 2 yabancı,
-  sezonda 2 serbest oyuncu, 36 saat talep ve kura, yönetici onaylı takas, sınırsız As–Yedek değişikliği.
+  sezonda 2 serbest oyuncu, 36 saat talep ve kura, sınırsız As–Yedek değişikliği. TBL'de takas ve Hareketler sayfası yok
+  (`site/tbl/config.js`: `takas: false, hareketler: false`).
+- Yabancı oyuncunun lisansı düşer ve TBL takımı yerine yabancı alırsa, yeni oyuncu fantezi takımına otomatik geçer (hak düşmez).
+- Kurulum ekranı eski sitedeki transferleri listeler ve takımların kullandığı serbest oyuncu haklarını hesaplar (aktarmadan önce değiştirilebilir).
 - Puanlar eski siteyle birebir aynı (2026-10-30: 2 hafta, 17 takımın oyuncuları ve genel klasman, 37 karşılaştırma, 0 fark).
-- Testler: `fantezi/test/tbl.mjs` (19 kontrol). Kurulum: `fantezi/KURULUM.md` → "TBL Fantezi Ligi".
-- Firebase projesi açılana kadar ana uygulamadaki TBL Fantezi bölümü (salt okunur) eski sitenin verisini göstermeye devam eder.
+- Testler: `fantezi/test/tbl.mjs` (21 kontrol), `fantezi/test/tbl-karsilastir.mjs` (eski siteyle puan karşılaştırması). Kurulum: `fantezi/KURULUM.md` → "TBL Fantezi Ligi".
+
+## Arayüz: bilgisayar ve telefon ayrı düzen
+- Bilgisayarda (1100 px ve üstü) solda sabit yan menü, ana sayfada iki lig yan yana; fantezi liglerinde hesap kutusu ve ana sayfaya dönüş yan menünün altında.
+- Telefonda (760 px altı) uygulama görünümü: altta sekmeler, ana sayfada TBL | BSL seçici (seçim cihazda hatırlanır), maçlar skor uygulaması gibi alt alta.
+- Ortak görsel katman `site/cila.css` (ana uygulama ve iki fantezi ligi birlikte kullanır): gölgeli kartlar, ilk üçe madalya, degrade düğmeler.
 
 ## Veriler
 - Canlı veriler (maç listeleri, kutu skorlar) TBL Fantezi Ligi sitesinin yayınladığı dosyalardan okunur

@@ -5,7 +5,6 @@
 import {
   KAYNAK, esc, sayi, isaretli, aramaNorm, baslik, gunBasligi, saatYazisi, tarihSaat, sureSn, getir, canliYazisi,
 } from './ortak.js';
-import * as TblFantezi from './fantezi-tbl.js';
 import * as Yayin from './yayin.js';
 
 const YEREL = ['localhost', '127.0.0.1'].includes(location.hostname);
@@ -16,8 +15,13 @@ const S = {
   tablo: {}, liderler: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, // lig -> veri (oyuncu: lig -> id -> detay)
   maclar: {}, // `${lig}-${hafta}` -> maç listesi
   kutular: {}, // maç id -> kutu skor (null: yok)
-  ui: { ara: '', oyuncuSirala: 'vp', liderKategori: {} },
+  ui: { ara: '', oyuncuSirala: 'vp', liderKategori: {}, anaLig: anaLigOku() },
 };
+// Telefon ve bilgisayar ayrı düzen: telefonda ana sayfa tek lig gösterir (TBL | BSL seçici), bilgisayarda yan menü ve iki sütun
+const TELEFON = matchMedia('(max-width: 759px)');
+function anaLigOku() {
+  try { return localStorage.getItem('anaLig') === 'bsl' ? 'bsl' : 'tbl'; } catch { return 'tbl'; }
+}
 const yukleniyor = new Set();
 
 // ---------- Yardımcılar ----------
@@ -72,7 +76,7 @@ function aktifMenu() {
 }
 function menuCiz() {
   const aktif = aktifMenu();
-  $('#menu').innerHTML = MENU.map(([y, ad]) => `<a href="#/${y}" class="${y === aktif ? 'aktif' : ''}">${ad}</a>`).join('');
+  $('#menu').innerHTML = MENU.map(([y, ad, ikon]) => `<a href="#/${y}" class="${y === aktif ? 'aktif' : ''}"><span class="ikon">${ikon}</span><span>${ad}</span></a>`).join('');
   $('#alt-menu').innerHTML = MENU.map(([y, ad, ikon]) => `<a href="#/${y}" class="${y === aktif ? 'aktif' : ''}"><span class="ikon">${ikon}</span><span>${ad}</span></a>`).join('');
 }
 
@@ -102,7 +106,9 @@ function gorunum() {
     case 'takim': return `<div class="dar">${gorunumTakim(lig, b)}</div>`;
     case 'oyuncu': return `<div class="dar">${gorunumOyuncu(lig, b)}</div>`;
     case 'yayin': return `<div class="dar">${Yayin.gorunum(a)}</div>`;
-    case 'fantezi': return `<div class="dar">${a === 'tbl' ? TblFantezi.gorunum(rota().slice(2)) : gorunumFantezi()}</div>`;
+    case 'fantezi':
+      if (a === 'tbl') { location.replace('tbl/'); return ''; } // eski adres: TBL Fantezi artık kendi sayfasında
+      return `<div class="dar">${gorunumFantezi()}</div>`;
     default: return gorunumAna();
   }
 }
@@ -234,7 +240,7 @@ function tabloKarti(lig, ilk = null) {
   const t = ligVerisi(lig, 'tablo');
   if (!t) return '<p class="bos">Yükleniyor…</p>';
   const satirlar = (ilk ? t.slice(0, ilk) : t).map(s => `<tr class="tikla" onclick="location.hash='#/takim/${lig}/${s.id}'">
-      <td class="sira">${s.sira}</td><td class="takim-ad">${esc(baslik(s.ad))}</td>
+      <td class="sira"><span class="madalya m${s.sira}">${s.sira}</span></td><td class="takim-ad">${esc(baslik(s.ad))}</td>
       <td class="sayi">${s.o}</td><td class="sayi"><b>${s.g}</b></td><td class="sayi">${s.m}</td>
       <td class="sayi dar-gizle">${s.atilan}</td><td class="sayi dar-gizle">${s.yenilen}</td><td class="sayi">${isaretli(s.averaj)}</td>
       ${ilk ? '' : `<td class="dar-gizle"><span class="form">${s.son5.map(x => `<i class="${x}">${x}</i>`).join('')}</span></td>`}</tr>`).join('');
@@ -377,20 +383,27 @@ function liderOzeti(lig) {
 
 function gorunumAna() {
   const sutun = lig => `<div>${buHaftaKarti(lig)}${tabloKarti(lig, 6)}${liderOzeti(lig)}</div>`;
-  return `<div class="karsilama"><img src="icon-192.png" alt=""><div><strong>Pota Altı</strong><small>TBL ve BSL canlı skorlar, istatistikler, fantezi ligleri ve yayınlar</small></div></div>
-    ${Yayin.anaKart()}
-    <div class="iki-sutun">${sutun('tbl')}${sutun('bsl')}</div>
-    <div class="iki-sutun"><div>${TblFantezi.ozet()}</div><div>${fantezKartlari()}</div></div>${altBilgi()}`;
+  const karsilama = `<div class="karsilama"><img src="icon-192.png" alt=""><div><strong>Pota Altı</strong><small>TBL ve BSL canlı skorlar, istatistikler, fantezi ligleri ve yayınlar</small></div></div>`;
+  const fantezi = `<h2 class="bolum-baslik">Fantezi ligleri</h2><div class="fantezi-kartlari">${fantezKartlari()}</div>`;
+  if (TELEFON.matches) {
+    const lig = S.ui.anaLig;
+    const secici = `<div class="lig-secici">${Object.entries(LIGLER).map(([l, v]) => `<button class="${l === lig ? 'aktif' : ''}" data-is="ana-lig" data-id="${l}">${v.kisa}</button>`).join('')}</div>`;
+    return `${Yayin.anaKart()}${secici}${sutun(lig)}${fantezi}${altBilgi()}`;
+  }
+  return `<div class="ana-ust">${karsilama}${Yayin.anaKart()}</div>
+    <div class="iki-sutun">${sutun('tbl')}${sutun('bsl')}</div>${fantezi}${altBilgi()}`;
 }
 
 // ---------- Fantezi ----------
 function fantezKartlari() {
-  return `<a class="kart fantezi-kart" href="#/fantezi/tbl"><strong>⭐ TBL Fantezi Ligi ›</strong>
-      <span class="soluk">Takımın, haftalık VP sıralaması, genel klasman ve boştaki oyuncular.</span></a>
-    <a class="kart fantezi-kart" href="bsl/"><strong>🏀 BSL Fantezi Ligi ›</strong><span class="soluk">Canlı draft, takaslar, talep kurası, haftalık puanlama. Katıl üyelerine özel: davet linki ve Google ile giriş.</span></a>`;
+  return `<a class="kart fantezi-kart tbl" href="tbl/"><span class="fantezi-etiket">TBL</span><strong>TBL Fantezi Ligi ›</strong>
+      <span class="soluk">Puan durumu, kadron, serbest oyuncu ve talep kurası, takaslar. Menajerler kendi değişikliklerini yapar.</span></a>
+    <a class="kart fantezi-kart bsl" href="bsl/"><span class="fantezi-etiket">BSL</span><strong>BSL Fantezi Ligi ›</strong>
+      <span class="soluk">Canlı draft, takaslar, talep kurası, haftalık puanlama. Katıl üyelerine özel.</span></a>`;
 }
 function gorunumFantezi() {
-  return `<div class="sayfa-baslik"><h1>Fantezi ligleri</h1><p class="soluk">Pota Altı'nın fantezi ligleri.</p></div>${fantezKartlari()}${TblFantezi.ozet()}`;
+  return `<div class="sayfa-baslik"><h1>Fantezi ligleri</h1><p class="soluk">Pota Altı'nın fantezi ligleri. Menajerler davet linkiyle ve Google hesabıyla girer.</p></div>
+    <div class="fantezi-kartlari">${fantezKartlari()}</div>`;
 }
 
 function altBilgi() {
@@ -403,10 +416,14 @@ document.addEventListener('click', e => {
   const el = e.target.closest('[data-is]');
   if (!el) return;
   if (el.dataset.is === 'oyuncu-sirala') { S.ui.oyuncuSirala = el.dataset.id; ciz(); }
-  if (el.dataset.is === 'paylas') TblFantezi.paylas(el, el.dataset.tur, el.dataset.id, el.dataset.islem === 'indir');
+  if (el.dataset.is === 'ana-lig') {
+    S.ui.anaLig = el.dataset.id;
+    try { localStorage.setItem('anaLig', el.dataset.id); } catch { /* gizli pencere */ }
+    ciz();
+  }
 });
+TELEFON.addEventListener('change', () => ciz());
 document.addEventListener('input', e => {
-  if (e.target.dataset?.fanteziAra !== undefined) { TblFantezi.araGuncelle(e.target.value); ciz(); return; }
   const k = e.target.dataset?.ui;
   if (!k) return;
   S.ui[k] = e.target.value;
@@ -422,7 +439,6 @@ async function canliYenile() {
     if (!v?.maclar?.some(m => m.durum !== 'bitti' && !m.tarih.endsWith('T00:00:00') && simdi >= new Date(m.tarih).getTime() - 10 * 60000)) continue;
     try { S.maclar[k] = listeDuzelt(await getir(`${KAYNAK}/maclar/${k}.json`)); } catch { /* sonraki denemede */ }
   }
-  try { await TblFantezi.yenile(); } catch { /* sonraki denemede */ }
   const [s, lig, id] = rota();
   if (s === 'mac' && macBul(lig, Number(id))?.durum === 'canli') {
     try { S.kutular[Number(id)] = await getir(`${KAYNAK}/mac/${id}.json`); } catch { /* sonraki denemede */ }
@@ -432,7 +448,6 @@ async function canliYenile() {
 setInterval(canliYenile, 60 * 1000);
 document.addEventListener('visibilitychange', () => { if (!document.hidden) canliYenile(); });
 
-TblFantezi.baglan(() => ciz());
 Yayin.baglan(() => ciz());
 
 async function basla() {

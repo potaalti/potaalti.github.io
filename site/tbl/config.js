@@ -15,5 +15,7 @@ export const firebaseConfig = {
 // Hafta numaraları fantezi haftasıdır (TBL'nin başlangıç haftası 1. hafta). degisiklikHakki: sezonda As–Yedek değişikliği (99: sınırsız)
 export const lig = {
   kod: 'tbl', kisa: 'TBL', ad: 'Pota Altı TBL Fantezi Ligi', yerelProje: 'demo-tbl-fantezi',
-  kural: 'tbl', draft: false, mevki: false, fanteziHaftasi: true, iceAktar: 'tbl', degisiklikHakki: 99,
+  kural: 'tbl', draft: false, takas: false, hareketler: false, mevki: false, fanteziHaftasi: true, iceAktar: 'tbl', degisiklikHakki: 99,
+  // Lisansı düşen yabancının yerine aynı TBL takımına gelen yabancı fantezi takımına otomatik geçer (hak kullanmaz)
+  otomatikYerine: true,
 };

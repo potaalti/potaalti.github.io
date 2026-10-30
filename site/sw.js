@@ -1,7 +1,7 @@
 // Ağ öncelikli önbellek: bağlantı yokken ya da zayıfken son görülen sayfa dosyaları ve veriler açılır.
 // Sadece sitenin kendi dosyaları önbelleğe alınır (Firebase ve diğer adresler doğrudan ağa gider).
-const ONBELLEK = 'pota-alti-v2';
-const KABUK = ['./', 'index.html', 'style.css', 'app.js', 'ortak.js', 'fantezi-tbl.js', 'tbl-puanlama.js', 'yayin.js', 'manifest.webmanifest', 'icon-64.png', 'icon-192.png', 'data/meta.json'];
+const ONBELLEK = 'pota-alti-v4';
+const KABUK = ['./', 'index.html', 'style.css', 'cila.css', 'app.js', 'ortak.js', 'yayin.js', 'manifest.webmanifest', 'icon-64.png', 'icon-192.png', 'data/meta.json'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(ONBELLEK).then(c => c.addAll(KABUK)).then(() => self.skipWaiting()));

@@ -110,6 +110,21 @@ await menajer2.D.teklifKabul(teklif);
 await reddedilmeli(() => menajer2.D.takasOnayla(teklif, AKTIF), 'Yönetici olmayanın takası onaylaması');
 await admin.D.takasOnayla(teklif, AKTIF);
 kontrol((await oku(admin.db, 'kadrolar', 't01')).yedek.includes(kb.yedek[1]) && (await oku(admin.db, 'alinan', ka.yedek[1]))?.takim === 't02', 'Takas yönetici onayıyla tamamlandı');
+// Otomatik yerine geçme: lisansı düşen yabancının yerine aynı TBL takımına gelen yabancı (hak kullanılmaz)
+{
+  const kk = await oku(admin.db, 'kadrolar', 't03');
+  const cikan = kk.as.find(p => !turkMu(p)) ?? kk.as[0];
+  const s = await tumSahipli();
+  const giren = bos().find(id => !s.has(id) && !turkMu(id)) ?? bos().find(id => !s.has(id)); // boşta yabancı kalmamış olabilir
+  await F.setDoc(F.doc(admin.db, 'bekleme', giren), { zaman: F.serverTimestamp() });
+  await reddedilmeli(() => menajer.D.otomatikYerine('t03', cikan, { id: giren, ad: rehberHam[giren].ad }, AKTIF), 'Yönetici olmayanın otomatik değişiklik yapması');
+  await admin.D.otomatikYerine('t03', cikan, { id: giren, ad: rehberHam[giren].ad }, AKTIF);
+  const k3 = await oku(admin.db, 'kadrolar', 't03');
+  const h = (await F.getDocs(F.collection(admin.db, 'hareketler'))).docs.map(d => d.data()).find(x => x.tur === 'otomatik');
+  kontrol([...k3.as, ...k3.yedek].includes(giren) && !(await oku(admin.db, 'alinan', cikan)) && (await oku(admin.db, 'alinan', giren))?.takim === 't03'
+    && k3.fa === kk.fa && !(await oku(admin.db, 'bekleme', giren)) && h?.alinan === giren && k3.gecmis.at(-1).tur === 'otomatik',
+    'Lisansı düşen oyuncunun yerine gelen otomatik geçti: hak düşmedi, bekleme kalktı, hareket kaydı yazıldı');
+}
 // Geçmiş haftalar değişmedi
 const g = (await oku(admin.db, 'kadrolar', 't01')).gecmis;
 kontrol(JSON.stringify(g.slice(0, takimlar[0].gecmis.length)) === JSON.stringify(takimlar[0].gecmis) && g.every(x => x.hafta <= AKTIF || x.hafta >= AKTIF),

@@ -12,7 +12,7 @@ import * as D from './db.js';
 // TBL: kadrolar eski TBL Fantezi Ligi'nden içe aktarılır (draft yok), As'ta en fazla 2 yabancı, fantezi hafta numaraları.
 const LIG = {
   kod: 'bsl', kisa: 'BSL', ad: 'Pota Altı BSL Fantezi Ligi', yerelProje: 'demo-bsl-draft',
-  kural: 'bsl', draft: true, mevki: true, fanteziHaftasi: false, iceAktar: null, ...LIG_AYARI,
+  kural: 'bsl', draft: true, mevki: true, takas: true, hareketler: true, fanteziHaftasi: false, iceAktar: null, ...LIG_AYARI,
 };
 
 // Bilgisayarda (localhost) açılınca gerçek Firebase yerine yerel emülatör kullanılır (deneme draftı için)
@@ -312,10 +312,10 @@ function menuOgeleri() {
     ['puan', 'Puan Durumu', '🏆'],
     ['maclar', 'Maçlar', '📅'],
     benimTakimim() && ['kadrom', 'Kadrom', '📋'],
-    ['takas', 'Takas', '🔄', gelen],
+    LIG.takas && ['takas', 'Takas', '🔄', gelen],
     ['takimlar', 'Takımlar', '👥'],
     ['bostakiler', 'Boştakiler', '🧺', zorunlu],
-    ['hareketler', 'Hareketler', '📰'],
+    LIG.hareketler && ['hareketler', 'Hareketler', '📰'],
     LIG.draft && ['draft', 'Draft', '🏀'],
     ['kurallar', 'Kurallar', '📖'],
     ...yonetim,
@@ -335,7 +335,7 @@ const rozetHtml = n => (n ? ` <span class="rozet uyari">${n}</span>` : '');
 function menu() {
   const [sayfa] = rota();
   // Bildirimler bilgisayarda başlıktaki 🔔 ile açılır (menü sığsın diye üst menüde yok)
-  return menuOgeleri().filter(([id]) => id !== 'bildirimler').map(([id, ad, , n]) => `<a href="#/${id}" class="${aktifMi(id, sayfa) ? 'aktif' : ''}">${ad}${rozetHtml(n)}</a>`).join('');
+  return menuOgeleri().filter(([id]) => id !== 'bildirimler').map(([id, ad, ikon, n]) => `<a href="#/${id}" class="${aktifMi(id, sayfa) ? 'aktif' : ''}"><span class="ikon">${ikon}</span><span>${ad}</span>${rozetHtml(n)}</a>`).join('');
 }
 
 // Telefonun alt sekme çubuğu: ilk 4 öğe, gerisi "Diğer" sayfasında
@@ -383,10 +383,10 @@ function gorunum() {
     case 'mac': return gorunumMac(Number(p1));
     case 'oyuncu': return `<div class="dar">${gorunumOyuncu(decodeURIComponent(p1 ?? ''))}</div>`;
     case 'kadrom': return `<div class="dar">${gorunumKadrom()}</div>`;
-    case 'takas': return gorunumTakas();
+    case 'takas': return LIG.takas ? gorunumTakas() : '<p class="bos">Bu ligde takas yok.</p>';
     case 'serbest':
     case 'bostakiler': return gorunumSerbest();
-    case 'hareketler': return `<div class="dar">${gorunumHareketler()}</div>`;
+    case 'hareketler': return LIG.hareketler ? `<div class="dar">${gorunumHareketler()}</div>` : '<p class="bos">Bu ligde Hareketler sayfası yok.</p>';
     case 'kurallar': return `<div class="dar">${gorunumKurallar()}</div>`;
     case 'diger': return gorunumDiger();
     case 'maclar': return `<div class="dar">${gorunumMaclar(Number(p1))}</div>`;
@@ -413,12 +413,33 @@ function gorunumKurulum() {
       <button class="btn ana google-dugme" data-is="google-giris">${GOOGLE_LOGO} Google ile giriş yap</button></div>`;
   }
   if (LIG.iceAktar === 'tbl') {
-    return `<div class="kart">
+    if (!S.tblKaynak) {
+      if (!S.tblKaynakYukleniyor) {
+        S.tblKaynakYukleniyor = true;
+        tblKaynakKadrolar().then(k => { S.tblKaynak = k; }).catch(e => { S.tblKaynak = { hata: e.message }; }).finally(ciz);
+      }
+      return '<p class="bos">Eski TBL Fantezi Ligi kadroları okunuyor…</p>';
+    }
+    if (S.tblKaynak.hata) return `<div class="kart hata-kutu">Eski TBL Fantezi Ligi okunamadı: ${esc(S.tblKaynak.hata)}</div>`;
+    const kaynak = S.tblKaynak;
+    const transferTablosu = kaynak.transferler.length ? `<div class="tablo-kap"><table>
+        <thead><tr><th>Hafta</th><th>Takım</th><th>Çıkan → Giren</th><th>Hak</th></tr></thead>
+        <tbody>${kaynak.transferler.map(x => `<tr><td>${x.hafta - kaynak.baslangic + 1}.</td><td>${esc(x.takim)}</td>
+          <td>${esc(x.cikan)} → <b>${esc(x.giren)}</b><div class="kucuk soluk">${esc(x.neden)}</div></td>
+          <td>${x.hak ? '<span class="rozet uyari">1 hak</span>' : '<span class="rozet as">hak yok</span>'}</td></tr>`).join('')}</tbody></table></div>`
+      : '<p class="soluk">Henüz kadro değişikliği yapılmamış.</p>';
+    const hakTablosu = `<div class="tablo-kap"><table><thead><tr><th>Takım</th><th class="sayi">Kullanılan serbest oyuncu hakkı</th></tr></thead><tbody>
+      ${kaynak.takimlar.map((t, i) => `<tr><td>${esc(t.ad)}${t.menajer ? ` <span class="soluk kucuk">${esc(t.menajer)}</span>` : ''}</td>
+        <td class="sayi"><input type="number" id="fa-${i}" min="0" max="2" value="${t.fa}" style="width:64px"> / 2</td></tr>`).join('')}</tbody></table></div>`;
+    return `<div class="kart"><h2>Şimdiye kadarki transferler</h2>
+        <p class="kucuk soluk">Eski TBL Fantezi Ligi'nin haftalık kadrolarından. Lisansı düşen oyuncunun yerine alınan hak kullanmaz.</p>${transferTablosu}</div>
+      <div class="kart"><h2>Kullanılan haklar</h2><p class="kucuk soluk">Yukarıdaki listeye göre hesaplandı; aktarmadan önce değiştirebilirsin (sonra da Yönetici → takım sayfasından düzenlenebilir).</p>${hakTablosu}</div>
+      <div class="kart">
       <h2>Ligi kur</h2>
       <p>Ligi kuran Google hesabı (<b>${esc(auth.currentUser.email)}</b>) <b>yönetici</b> olur.</p>
       <p>Eski TBL Fantezi Ligi'nin bütün takımları, menajer adları ve <b>her haftanın kadrosu</b> aktarılır; geçmiş haftaların puanları
       değişmez. Sezon hemen başlar: menajerler davet linkleriyle girip kendi kadro değişikliklerini yapar
-      (sezonda ${2} serbest oyuncu, 36 saat talep ve kura, yönetici onaylı takas, As–Yedek değişikliği; As'ta en fazla 2 yabancı).</p>
+      (sezonda ${2} serbest oyuncu, 36 saat talep ve kura, As–Yedek değişikliği; As'ta en fazla 2 yabancı).</p>
       <div class="form-izgara"><label for="k-ad">Lig adı</label><input type="text" id="k-ad" value="${esc(LIG.ad)}"></div>
       <p style="margin-top:16px"><button class="btn ana" data-is="tbl-kur">Ligi kur ve kadroları aktar</button></p></div>`;
   }
@@ -796,13 +817,13 @@ function genelKart(haftalar) {
     <div class="baslik-satir"><h2>Genel klasman</h2>${paylasDugmeleri('genel')}</div>
     <p class="soluk kucuk">${hf(haftalar[0].hafta)}.–${hf(son.hafta)}. haftalar${devam ? ` · ${hf(son.hafta)}. hafta devam ediyor (puanlar kesin değil)` : ''} · Güncelleme: ${S.index?.guncelleme ? tarih(S.index.guncelleme) : '-'}</p>
     <div class="tablo-kap"><table>
-      <thead><tr><th class="sayi">#</th><th>Takım</th><th class="sayi">Puan</th><th class="sayi">Toplam VP</th><th class="sayi">Son hafta</th></tr></thead>
+      <thead><tr><th class="sayi">#</th><th>Takım</th><th class="sayi">Puan</th><th class="sayi">Toplam VP</th><th class="sayi dar-gizle">Son hafta</th></tr></thead>
       <tbody>${tablo.map(s => {
         const sh = s.haftalar.at(-1);
         return `<tr class="tikla ${s.id === benimTakimim() ? 'ben' : ''}" data-is="git" data-yol="#/takim/${s.id}">
-          <td class="sayi">${s.sira}</td><td><b>${esc(s.ad)}</b> <span class="soluk kucuk">${esc(s.menajer ?? '')}</span></td>
+          <td class="sayi"><span class="madalya m${s.sira}">${s.sira}</span></td><td><b>${esc(s.ad)}</b> <span class="soluk kucuk">${esc(s.menajer ?? '')}</span></td>
           <td class="sayi"><b>${s.puan}</b></td><td class="sayi">${sayi(s.vp)}</td>
-          <td class="sayi soluk">${sh ? `${sh.sira}. · ${sayi(sh.vp)} VP · +${sh.puan}` : ''}</td></tr>`;
+          <td class="sayi soluk dar-gizle">${sh ? `${sh.sira}. · ${sayi(sh.vp)} VP · +${sh.puan}` : ''}</td></tr>`;
       }).join('')}</tbody></table></div>
     <p class="kucuk soluk" style="margin-bottom:0">Haftalık sıraya göre ${C.PUAN_TABLOSU.join(', ')} puan. Eşit puanda toplam VP yüksek olan üstte.</p>
   </div>`;
@@ -1004,7 +1025,7 @@ function haftaKart(haftalar, secili) {
     <div class="tablo-kap"><table>
       <thead><tr><th class="sayi">#</th><th>Takım</th><th class="sayi">VP</th><th class="sayi">Puan</th></tr></thead>
       <tbody>${sonuc.map(s => `<tr class="tikla ${s.id === benimTakimim() ? 'ben' : ''}" data-is="ac" data-id="${s.id}">
-          <td class="sayi">${s.sira}</td><td><b>${esc(s.ad)}</b> <span class="soluk kucuk">${esc(s.menajer ?? '')}</span>
+          <td class="sayi"><span class="madalya m${s.sira}">${s.sira}</span></td><td><b>${esc(s.ad)}</b> <span class="soluk kucuk">${esc(s.menajer ?? '')}</span>
           ${s.vpEsitligi ? `<div class="kucuk soluk">${s.enIyiTurk ? `Eşitlikte en iyi Türk: ${esc(s.enIyiTurk.ad)} (${sayi(s.enIyiTurk.vp)})` : 'Eşitlikte: sayılan oyuncularda Türk yok'}</div>` : ''}</td>
           <td class="sayi"><b>${sayi(s.toplam)}</b></td><td class="sayi">${s.puan}</td></tr>
         ${S.ui.acik === s.id ? `<tr class="detay"><td colspan="4">${haftaDetayi(s)}</td></tr>` : ''}`).join('')}</tbody>
@@ -1230,7 +1251,7 @@ function gorunumKadrom() {
         </div>`
         : '<p class="soluk" style="margin:0">As–Yedek değişikliği hakkını kullandın.</p>'}
     </div>
-    <div class="kart"><p style="margin:0">Serbest oyuncu hakkın: <b>${S.ayar.faHakki - k.fa}</b> · <a href="#/serbest">Serbest oyuncular</a> · <a href="#/takas">Takas</a></p></div>`;
+    <div class="kart"><p style="margin:0">Serbest oyuncu hakkın: <b>${S.ayar.faHakki - k.fa}</b> · <a href="#/serbest">Serbest oyuncular</a>${LIG.takas ? ' · <a href="#/takas">Takas</a>' : ''}</p></div>`;
   }
   return `${takimKarti(tid)}${ana}
     <div class="kart"><h3>Takım adı</h3><div class="satir">
@@ -1422,6 +1443,7 @@ function hareketSatiri(h) {
   else if (h.tur === 'talep') metin = `<b>${esc(takimAdi(h.takim))}</b> talep kurasını kazandı: ${ad(h.alinan)} · Bıraktı: ${ad(h.birakilan)}
     <div class="kucuk soluk">Talip olanlar (${h.talipler.length}): ${h.talipler.map(t => esc(takimAdi(t))).join(', ')}</div>`;
   else if (h.tur === 'talep-yok') metin = `${ad(h.alinan)} için talep eden takımların hiçbiri o an kurala uymadığı için oyuncu boştakilere düştü.`;
+  else if (h.tur === 'otomatik') metin = `<b>${esc(takimAdi(h.takim))}</b>: lisansı düşen ${ad(h.birakilan)} yerine aynı ${LIG.kisa} takımına gelen ${ad(h.alinan)} otomatik geçti (hak kullanılmadı).`;
   else if (h.tur === 'yonetici') metin = `Yönetici, <b>${esc(takimAdi(h.takim))}</b> kadrosunda ${ad(h.birakilan)} yerine ${ad(h.alinan)} koydu.`;
   else if (h.tur === 'yonetici-dizilis') metin = `Yönetici, <b>${esc(takimAdi(h.takim))}</b> dizilişini değiştirdi. As: ${h.as.map(ad).join(', ')} · Yedek: ${h.yedek.map(ad).join(', ')}`;
   else metin = esc(h.metin ?? h.tur);
@@ -1454,12 +1476,13 @@ function gorunumKurallar() {
       <li>Seçilen oyuncular kadroya mevkilerine göre yerleşir; draft bitince sezon başlayana kadar dizilişini serbestçe değiştirebilirsin.</li>
     </ul>`}
     <h3>Sezon</h3><ul>
-      <li>Takaslar sınırsız; iki taraf da kabul etmeli ve yönetici onaylamalı (oyuncular yönetici onaylayınca yer değiştirir). İki taraftan aynı sayıda (1–3) oyuncu verilir; gelen oyuncu gidenin yerine (As/Yedek) geçer.</li>
+      ${LIG.takas ? `<li>Takaslar sınırsız; iki taraf da kabul etmeli ve yönetici onaylamalı (oyuncular yönetici onaylayınca yer değiştirir). İki taraftan aynı sayıda (1–3) oyuncu verilir; gelen oyuncu gidenin yerine (As/Yedek) geçer.</li>` : ''}
       <li>Her takım sezon boyunca en fazla ${a.faHakki} serbest oyuncu (hiçbir takımda olmayan oyuncu) alabilir; alırken bir oyuncusunu bırakır.</li>
       <li>Bir takımın bıraktığı ya da ${LIG.kisa}'ye yeni katılan (lisansı yeni çıkan) oyuncuyu 36 saat kimse alamaz. Bu sürede takımlar oyuncuya talep eder (kazanırsa bırakacağı oyuncuyu seçer); süre bitince talip olanlar arasında kura çekilir ve kazanan takımın serbest oyuncu hakkından 1 düşer. Talep eden olmazsa oyuncu boştakilere düşer ve isteyen alır. Kimlerin talip olduğu oyuncunun sayfasında görünür.</li>
-      <li>Yöneticiler gerektiğinde her takımın kadrosunu düzenleyebilir; yaptıkları değişiklikler Hareketler'de görünür.</li>
+      ${LIG.otomatikYerine ? `<li>Fantezi takımındaki yabancı bir oyuncunun lisansı düşer ve ${LIG.kisa} takımı yerine yabancı bir oyuncu alırsa, yeni oyuncu fantezi takımına <b>otomatik</b> geçer; serbest oyuncu hakkından düşmez. Yerine kimse gelmezse takım boştakilerden oyuncu almak zorundadır (bu da hakkından düşmez).</li>` : ''}
+      <li>Yöneticiler gerektiğinde her takımın kadrosunu düzenleyebilir${LIG.hareketler ? "; yaptıkları değişiklikler Hareketler'de görünür" : ''}.</li>
       <li>Her takım sezon boyunca ${hakSayisi(a.degisiklikHakki)} As–Yedek değişikliği yapabilir.</li>
-      <li>${tbl ? `As–Yedek değişikliği, takas ve serbest oyuncu sonrasında da As'ta en fazla ${kural().enFazlaYabanci} yabancı kalmalı.`
+      <li>${tbl ? `As–Yedek değişikliği${LIG.takas ? ', takas' : ''} ve serbest oyuncu sonrasında da As'ta en fazla ${kural().enFazlaYabanci} yabancı kalmalı.`
         : `Diziliş, As–Yedek değişikliği, takas ve serbest oyuncu sonrasında da As ${kural().asOn} Ön + ${kural().asArka} Arka olmalı ve As'ta en az 1, Yedekte en az 1 Türk kalmalı. Bu yüzden As'taki bir oyuncunun yerine ancak aynı mevkiden oyuncu gelebilir.`}</li>
       <li>Kadro değişiklikleri, ilk maçı henüz başlamamış ilk haftadan itibaren geçerlidir (hafta ortasında yapılan değişiklik bir sonraki haftadan sayılır). Geçmiş haftalar değişmez.</li>
     </ul>
@@ -1811,7 +1834,7 @@ function zorunluBandi() {
   if (!liste.length) return '';
   return `<div class="kart hata-kutu zorunlu-bant"><b>⚠️ Zorunlu değişiklik:</b> ${liste.map(p => `<b>${esc(oyuncu(p).ad)}</b>`).join(', ')}
     artık TBF'de lisanslı görünmüyor (ligden ayrıldı). Yerine boştakilerden kurallara uygun bir oyuncu almalısın; bu değişiklik
-    serbest oyuncu hakkından düşmez. Değişikliği yapana kadar takas ve As–Yedek değişikliği yapamazsın.
+    serbest oyuncu hakkından düşmez. Değişikliği yapana kadar ${LIG.takas ? 'takas ve ' : ''}As–Yedek değişikliği yapamazsın.
     <a class="btn kucuk ana" href="#/bostakiler">Oyuncu seç</a></div>`;
 }
 
@@ -1961,7 +1984,11 @@ async function eylem(is, id, el) {
     case 'tbl-kur': {
       el.disabled = true;
       el.textContent = 'Kadrolar aktarılıyor…';
-      const kaynak = await tblKaynakKadrolar();
+      const kaynak = S.tblKaynak ?? await tblKaynakKadrolar();
+      kaynak.takimlar.forEach((t, i) => {
+        const v = Number(deger(`fa-${i}`));
+        if (Number.isInteger(v) && v >= 0 && v <= 2) t.fa = v;
+      });
       const sonuc = await D.ligiKur(S.uid, hesapBilgisi(), {
         ad: deger('k-ad') || LIG.ad, secimSuresi: 90, baslangicHaftasi: kaynak.baslangic, takimSayisi: kaynak.takimlar.length,
       });
@@ -2338,8 +2365,10 @@ setInterval(talepKuralariniCek, 30000);
 function beklemeleriEsitle() {
   if (!yonetici() || asama() !== 'sezon' || !S.beklemeYuklendi) return;
   const sahip = sahipler();
+  const otomatik = new Set(otomatikYerineAdaylari().map(e => e.giren));
   const eksik = {};
   for (const h of S.bslHareketleri) {
+    if (otomatik.has(h.id)) continue;
     const z = new Date(h.zaman);
     if (h.tur !== 'yeni' || sahip.has(h.id) || S.beklemeYazilan.has(h.id) || z.getTime() + D.BEKLEME_MS <= simdi()) continue;
     if ((S.bekleme[h.id]?.zaman?.toMillis?.() ?? 0) >= z.getTime()) continue;
@@ -2374,6 +2403,7 @@ function veriGeldi(ad, v) {
     if (ad === 'ayar') S.hazir = !!(S.ayar && S.durum);
     if (ad === 'ayar' && asama() === 'sezon' && !S.haftalarYuklendi) haftalariYukle();
     lisanssizlariEsitle();
+    otomatikYerineCalistir(); // aday yoksa hemen döner
     return ciz();
   }
   if (!v) { // lig silinmiş
@@ -2394,6 +2424,7 @@ function veriGeldi(ad, v) {
   if (a !== 'kadro') S.ui.dizilis = null;
   if (DRAFT_ASAMALARI.includes(a)) istekListesiniDinle();
   lisanssizlariEsitle();
+  otomatikYerineCalistir();
   beklemeleriEsitle();
   // Sıra bana geldi: ses ve titreşim
   const tid = v.secimSirasi?.[v.secimNo];
@@ -2540,7 +2571,80 @@ async function tblKaynakKadrolar() {
       return x && { hafta: n, as: x.as.map(pidOf), yedek: x.yedek.map(pidOf), tur: 'aktarim' };
     }).filter(Boolean),
   }));
-  return { baslangic: ayarlar.baslangicHaftasi, takimlar };
+  // Şimdiye kadarki kadro değişiklikleri: aynı oyuncu (kimlik düzeltmesi) sayılmaz; lisansı düşen oyuncunun yerine alınan
+  // hak kullanmaz (aynı TBL takımına gelen yabancıysa otomatik kural); diğerleri serbest oyuncu hakkından 1 düşer
+  const transferler = [];
+  for (let i = 1; i < haftalar.length; i++) {
+    for (const t of dosyalar[i]) {
+      const o = dosyalar[i - 1].find(y => y.ad === t.ad);
+      if (!o) continue;
+      const eski = [...o.as, ...o.yedek];
+      const yeni = [...t.as, ...t.yedek];
+      const cikan = eski.filter(p => !yeni.some(x => pidOf(x) === pidOf(p)));
+      const giren = yeni.filter(p => !eski.some(x => pidOf(x) === pidOf(p)));
+      cikan.forEach((c, j) => {
+        const g = giren[j];
+        if (!g || c.ad === g.ad) return;
+        const rc = S.rehber.get(c.id);
+        const rg = S.rehber.get(g.id);
+        const lisansYok = !rc || rc.aktif === false;
+        const ayniTakim = rc && rg && rc.takim === rg.takim && !rc.turk && !rg.turk;
+        transferler.push({
+          hafta: haftalar[i], takim: t.ad, cikan: c.ad, giren: g.ad, hak: !lisansYok,
+          neden: !lisansYok ? 'serbest oyuncu' : ayniTakim ? 'lisansı düştü, takımı yerine aldı (otomatik)' : 'lisansı düştü (zorunlu değişiklik)',
+        });
+      });
+    }
+  }
+  for (const t of takimlar) t.fa = Math.min(2, transferler.filter(x => x.takim === t.ad && x.hak).length);
+  return { baslangic: ayarlar.baslangicHaftasi, takimlar, transferler };
+}
+
+// TBL: lisansı düşen yabancının yerine aynı TBL takımına gelen yabancı (son 30 günde lige katılan ya da takıma gelen)
+// fantezi takımına otomatik geçer. Takımda birden çok çıkan/gelen varsa sırayla eşleşir.
+const OTOMATIK_GUN = 30;
+function otomatikYerineAdaylari() {
+  if (!LIG.otomatikYerine || asama() !== 'sezon') return [];
+  const sahip = sahipler();
+  const gelenler = new Map();
+  for (const h of S.bslHareketleri) {
+    if (!['yeni', 'transfer'].includes(h.tur) || simdi() - new Date(h.zaman).getTime() > OTOMATIK_GUN * 86400000) continue;
+    const o = S.rehber.get(h.id);
+    if (!o?.aktif || o.turk || sahip.has(h.id) || o.takim !== h.yeniTakim) continue;
+    const liste = gelenler.get(o.takimId) ?? [];
+    if (!liste.some(x => x.id === h.id)) liste.push({ id: h.id, zaman: h.zaman });
+    gelenler.set(o.takimId, liste);
+  }
+  const eslesmeler = [];
+  const cikanlar = new Map();
+  for (const { pid, tid } of lisansiDusenler()) {
+    const o = oyuncu(pid);
+    if (o.turk || !o.takimId) continue;
+    cikanlar.set(o.takimId, [...(cikanlar.get(o.takimId) ?? []), { pid, tid }]);
+  }
+  for (const [takim, cik] of cikanlar) {
+    const gel = (gelenler.get(takim) ?? []).sort((a, b) => a.zaman.localeCompare(b.zaman));
+    cik.forEach((c, i) => { if (gel[i]) eslesmeler.push({ ...c, giren: gel[i].id }); });
+  }
+  return eslesmeler;
+}
+
+let otomatikCalisiyor = false;
+setInterval(() => otomatikYerineCalistir(), 60 * 1000);
+async function otomatikYerineCalistir() {
+  if (!yonetici() || otomatikCalisiyor) return;
+  const liste = otomatikYerineAdaylari();
+  if (!liste.length) return;
+  otomatikCalisiyor = true;
+  for (const e of liste) {
+    try {
+      await D.otomatikYerine(e.tid, e.pid, oyuncu(e.giren), etkinHafta());
+      bildir(`${takimAdi(e.tid)}: ${oyuncu(e.pid).ad} yerine ${oyuncu(e.giren).ad} otomatik geçti`);
+    } catch (err) {
+      if (!(err instanceof D.Hata)) console.warn('Otomatik değişiklik yapılamadı', err);
+    }
+  }
+  otomatikCalisiyor = false;
 }
 const tblMacOnbellek = new Map(); // biten maçların kutu skoru değişmez
 

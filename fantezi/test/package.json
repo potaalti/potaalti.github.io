@@ -3,6 +3,11 @@
   "private": true,
   "type": "module",
   "description": "Yerel Firebase emülatöründe deneme draftı ve güvenlik kuralı testleri (sadece geliştirme için)",
-  "scripts": { "test": "node deneme_draft.mjs" },
-  "dependencies": { "firebase": "11.10.0" }
+  "scripts": {
+    "test": "node deneme_draft.mjs"
+  },
+  "dependencies": {
+    "firebase": "11.10.0",
+    "puppeteer-core": "^24.0.0"
+  }
 }

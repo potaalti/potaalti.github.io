@@ -97,7 +97,7 @@ export async function kadrolariIceAktar(takimlar, { aktifHafta, ayar }) {
     const tid = takimId(i);
     const son = t.gecmis.at(-1);
     islemler.push(b => b.update(yol('takimlar', tid), { ad: t.ad, menajer: t.menajer ?? '' }));
-    islemler.push(b => b.update(yol('kadrolar', tid), { as: son.as, yedek: son.yedek, gecmis: t.gecmis, fa: 0, degisiklik: 0 }));
+    islemler.push(b => b.update(yol('kadrolar', tid), { as: son.as, yedek: son.yedek, gecmis: t.gecmis, fa: t.fa ?? 0, degisiklik: 0 }));
     for (const pid of [...son.as, ...son.yedek]) {
       if (!pid.startsWith('adsiz:')) islemler.push(b => b.set(yol('alinan', pid), { takim: tid, aktarim: true }));
     }
@@ -105,6 +105,23 @@ export async function kadrolariIceAktar(takimlar, { aktifHafta, ayar }) {
   islemler.push(b => b.update(yol('lig', 'ayar'), ayar));
   islemler.push(b => b.update(yol('lig', 'durum'), { asama: 'sezon', ekran: 'lig', aktifHafta }));
   await topluYaz(islemler);
+}
+
+// TBL: lisansı düşen yabancı oyuncunun yerine aynı TBL takımına gelen yabancı, fantezi takımına otomatik geçer
+// (serbest oyuncu hakkından düşmez; yeni oyuncunun beklemesi ve talepleri kalkar). Yönetici ekranı yapar.
+export async function otomatikYerine(tid, cikan, giren, hafta) {
+  return F.runTransaction(db, async tx => {
+    const ref = yol('kadrolar', tid);
+    const k = (await tx.get(ref)).data();
+    if ((await tx.get(yol('alinan', giren.id))).exists()) throw new Hata(`${giren.ad} başka bir takımda.`);
+    if (![...k.as, ...k.yedek].includes(cikan)) throw new Hata('Kadro değişmiş.');
+    const yeni = yerineKoy(k, cikan, giren.id);
+    tx.update(ref, { ...yeni, gecmis: [...k.gecmis, { hafta, as: yeni.as, yedek: yeni.yedek, tur: 'otomatik' }] });
+    tx.delete(yol('alinan', cikan));
+    tx.set(yol('alinan', giren.id), { takim: tid, otomatik: true });
+    tx.delete(yol('bekleme', giren.id));
+    hareket(tx, { tur: 'otomatik', takim: tid, alinan: giren.id, birakilan: cikan, hafta });
+  });
 }
 
 // Davet linkiyle katılma: Google hesabı takıma bağlanır, davet kodu aynı işlemde silinir (tek kullanımlık)

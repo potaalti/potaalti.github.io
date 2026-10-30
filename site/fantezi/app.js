@@ -162,10 +162,12 @@ function talepDurumu(pid) {
 const sureYazisi = ms => (ms >= 3600000 ? `${Math.ceil(ms / 3600000)} sa` : `${Math.max(1, Math.ceil(ms / 60000))} dk`);
 
 // link: adı oyuncu sayfasına bağlar (düğme içinde kullanılmaz)
+// Türk oyuncu rozeti: BSL'de kadro kuralı Türk sayısına bağlı; TBL'de gösterilmez
+const trRozeti = o => (o?.turk && LIG.kural !== 'tbl' ? ' <span class="rozet tr" title="Türk oyuncu">TR</span>' : '');
 function oyuncuAdi(pid, { takim = true, link = false } = {}) {
   const o = oyuncu(pid);
   const ad = link ? `<a href="#/oyuncu/${esc(pid)}" class="oyuncu-link">${esc(o.ad)}</a>` : esc(o.ad);
-  return `${ad} ${mevkiRozeti(mevki(pid))}${o.turk ? ' <span class="rozet tr" title="Türk oyuncu">TR</span>' : ''}${takim && o.takim ? ` <span class="bsl">${esc(o.takimKod || o.takim)}</span>` : ''}`;
+  return `${ad} ${mevkiRozeti(mevki(pid))}${trRozeti(o)}${takim && o.takim ? ` <span class="bsl">${esc(o.takimKod || o.takim)}</span>` : ''}`;
 }
 
 function bildir(mesaj, hata = false) {
@@ -532,7 +534,7 @@ function duzeltPaneli() {
     <input type="search" id="duzelt-ara" data-ui="duzeltAra" placeholder="Oyuncu ara" value="${esc(S.ui.duzeltAra)}" style="width:100%">
     <div class="tablo-kap"><table>${adaylar.map(o => {
       const sorun = duzeltSorunu(s, o);
-      return `<tr><td>${esc(o.ad)} ${mevkiRozeti(o.mevki)}${o.turk ? ' <span class="rozet tr">TR</span>' : ''}</td><td class="kucuk">${bslTakimHucre(o)}</td><td class="sayi">${sayi(o.vpOrt)}</td>
+      return `<tr><td>${esc(o.ad)} ${mevkiRozeti(o.mevki)}${trRozeti(o)}</td><td class="kucuk">${bslTakimHucre(o)}</td><td class="sayi">${sayi(o.vpOrt)}</td>
         <td class="sayi"><button class="btn kucuk ${sorun ? '' : 'ana'}" data-is="duzelt-onay" data-id="${o.id}" ${sorun ? `disabled title="${sorun}"` : ''}>Bununla değiştir</button></td></tr>`;
     }).join('') || '<tr><td class="bos">Oyuncu bulunamadı</td></tr>'}</table></div></div>`;
 }
@@ -545,7 +547,7 @@ function sonSecimler() {
   if (!liste.length) return '';
   return `<div class="kart son-secimler-kart"><h3>Son seçimler</h3><ol class="son-secimler">${liste.map(s => `<li>
     <span class="no">${s.no + 1}</span>
-    <span><b>${esc(s.ad)}</b>${s.mevki ? ` ${mevkiRozeti(s.mevki)}` : ''}${s.turk ? ' <span class="rozet tr">TR</span>' : ''}${s.otomatik ? ' <span class="rozet oto">oto</span>' : ''}
+    <span><b>${esc(s.ad)}</b>${s.mevki ? ` ${mevkiRozeti(s.mevki)}` : ''}${trRozeti(s)}${s.otomatik ? ' <span class="rozet oto">oto</span>' : ''}
       <br><span class="soluk kucuk">${esc(takimAdi(s.takim))} · ${esc(oyuncu(s.oyuncu).takimKod || s.bslTakim)}</span></span></li>`).join('')}</ol></div>`;
 }
 
@@ -674,7 +676,7 @@ function istekListesiKarti() {
     ${liste.length ? `<ol class="istek-liste">${liste.map((o, i) => {
       const kimde = sahip.get(o.id);
       const engel = !kimde && !izin.includes(C.tipi(o.mevki, o.turk));
-      return `<li class="${kimde ? 'alindi' : ''}"><span><span class="no">${i + 1}</span> ${esc(o.ad)} ${mevkiRozeti(o.mevki)}${o.turk ? ' <span class="rozet tr">TR</span>' : ''} <span class="bsl">${esc(o.takimKod || o.takim || '')}</span>
+      return `<li class="${kimde ? 'alindi' : ''}"><span><span class="no">${i + 1}</span> ${esc(o.ad)} ${mevkiRozeti(o.mevki)}${trRozeti(o)} <span class="bsl">${esc(o.takimKod || o.takim || '')}</span>
           ${kimde ? `<span class="soluk kucuk">· ${esc(takimAdi(kimde))} aldı</span>` : engel ? '<span class="soluk kucuk">· şu an kadro kuralına uymuyor</span>' : siradaki?.id === o.id ? '<span class="rozet as">sıradaki</span>' : ''}</span>
         <span class="satir" style="flex-wrap:nowrap">
           <button class="btn kucuk" data-is="istek-tasi" data-id="${o.id}" data-yon="-1" ${i === 0 ? 'disabled' : ''} title="Yukarı">↑</button>
@@ -719,7 +721,7 @@ function draftOyunculari() {
         const engel = !izin.includes(C.tipi(o.mevki, o.turk));
         return `<tr class="${kimde ? 'alindi' : ''}">
           <td class="sayi soluk">${o.sira}</td>
-          <td>${benimTakimim() && !kimde ? `<button class="yildiz ${S.istek.includes(o.id) ? 'acik' : ''}" data-is="istek" data-id="${o.id}" title="${S.istek.includes(o.id) ? 'İstek listemden çıkar' : 'İstek listeme ekle'}">${S.istek.includes(o.id) ? '★' : '☆'}</button>` : ''}<a href="#/oyuncu/${o.id}" class="oyuncu-link">${esc(o.ad)}</a> ${mevkiRozeti(o.mevki)}${o.turk ? ' <span class="rozet tr">TR</span>' : ''}</td>
+          <td>${benimTakimim() && !kimde ? `<button class="yildiz ${S.istek.includes(o.id) ? 'acik' : ''}" data-is="istek" data-id="${o.id}" title="${S.istek.includes(o.id) ? 'İstek listemden çıkar' : 'İstek listeme ekle'}">${S.istek.includes(o.id) ? '★' : '☆'}</button>` : ''}<a href="#/oyuncu/${o.id}" class="oyuncu-link">${esc(o.ad)}</a> ${mevkiRozeti(o.mevki)}${trRozeti(o)}</td>
           <td class="kucuk">${bslTakimHucre(o)}</td>
           <td class="sayi">${o.mac}</td><td class="sayi"><b>${sayi(o.vpOrt)}</b></td><td class="sayi dar-gizle">${sayi(o.sayiOrt)}</td>
           <td class="sayi">${kimde ? `<span class="kucuk">${esc(takimAdi(kimde))}</span>`
@@ -746,7 +748,7 @@ function draftTahtasi() {
       const sinif = [simdiki && 'simdi', !s && 'bos-hucre', d.sira[c] === benimTakimim() && 'ben', s && duzenlenebilir() && 'tikla',
         S.ui.duzeltNo === n && 'duzeltilen'].filter(Boolean).join(' ');
       hucreler += `<td class="${sinif}" ${s && duzenlenebilir() ? `data-is="duzelt" data-id="${n}" title="Bu seçimi değiştir"` : ''}><span class="soluk">${n + 1}.</span> ${s
-        ? `${esc(s.ad)}${s.mevki ? ` ${mevkiRozeti(s.mevki)}` : ''}${s.turk ? ' <span class="rozet tr">TR</span>' : ''}${s.otomatik ? ' <span class="rozet oto" title="Süre doldu, otomatik seçildi">oto</span>' : ''}${s.duzeltildi ? ' <span class="rozet" title="Yönetici değiştirdi">düzeltildi</span>' : ''}<div class="bsl">${esc(oyuncu(s.oyuncu).takimKod || s.bslTakim)}</div>`
+        ? `${esc(s.ad)}${s.mevki ? ` ${mevkiRozeti(s.mevki)}` : ''}${trRozeti(s)}${s.otomatik ? ' <span class="rozet oto" title="Süre doldu, otomatik seçildi">oto</span>' : ''}${s.duzeltildi ? ' <span class="rozet" title="Yönetici değiştirdi">düzeltildi</span>' : ''}<div class="bsl">${esc(oyuncu(s.oyuncu).takimKod || s.bslTakim)}</div>`
         : simdiki ? '<b>seçiyor…</b>' : ''}</td>`;
     }
     satirlar += `<tr><th>${r + 1}. tur ${r % 2 === 0 ? '→' : '←'}</th>${hucreler}</tr>`;
@@ -1042,7 +1044,7 @@ function macMetni(o) {
 }
 
 function haftaDetayi(s) {
-  const satir = o => `<tr data-oyuncu="${esc(o.id)}" data-sayildi="${o.sayildi}"><td class="${o.sayildi ? '' : o.rol === 'as' ? 'cizik' : 'soluk'}">${esc(o.ad)}${o.turk ? ' <span class="rozet tr">TR</span>' : ''}
+  const satir = o => `<tr data-oyuncu="${esc(o.id)}" data-sayildi="${o.sayildi}"><td class="${o.sayildi ? '' : o.rol === 'as' ? 'cizik' : 'soluk'}">${esc(o.ad)}${trRozeti(o)}
       <span class="rozet ${o.rol}">${o.rol === 'as' ? 'As' : 'Yedek'}</span>
       ${o.yerineGiren ? `<div class="kucuk soluk">süre almadı, yerine ${esc(o.yerineGiren)}</div>` : ''}
       ${o.yerineGirdigi ? `<div class="kucuk soluk">${esc(o.yerineGirdigi)} yerine sayıldı</div>` : ''}</td>
@@ -1203,7 +1205,7 @@ function gorunumOyuncu(pid) {
     .sort((a, b) => (b.zaman?.toMillis?.() ?? 0) - (a.zaman?.toMillis?.() ?? 0));
   return `<div class="kart oyuncu-baslik">
       ${o.foto ? `<img src="${esc(o.foto)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}
-      <div><h2 style="margin:0">${esc(o.ad)} ${mevkiRozeti(mevki(pid))}${o.turk ? ' <span class="rozet tr">TR</span>' : ''}</h2>
+      <div><h2 style="margin:0">${esc(o.ad)} ${mevkiRozeti(mevki(pid))}${trRozeti(o)}</h2>
         <div class="soluk">${esc(o.takim)}${o.ulke ? ` · ${esc(o.ulke)}` : ''}</div>
         <div style="margin-top:6px">${durum}</div>
         ${secim ? `<div class="kucuk soluk" style="margin-top:4px">Draft: ${secim.no + 1}. seçim (${esc(takimAdi(secim.takim))})${secim.otomatik ? ' · otomatik' : ''}</div>` : ''}
@@ -1286,7 +1288,7 @@ function gorunumSerbest() {
   if (S.ui.faAl && k && td?.evre === 'talep') {
     const al = oyuncu(S.ui.faAl);
     const benim = td.talepler[tid];
-    panel = `<div class="kart sira-sende"><h3>${esc(al.ad)} ${al.turk ? '<span class="rozet tr">TR</span>' : ''} <span class="soluk kucuk">${esc(al.takim)}</span></h3>
+    panel = `<div class="kart sira-sende"><h3>${esc(al.ad)} ${trRozeti(al)} <span class="soluk kucuk">${esc(al.takim)}</span></h3>
       <p>Bu oyuncu talep süresinde (<b>${sureYazisi(td.kalan)}</b> kaldı, şu an ${td.talipler.length} takım talip). Süre bitince talip olan takımlar arasında <b>kura</b> çekilir.
       Kazanırsan seçtiğin oyuncu bırakılır, ${al.ad} onun yerine (As ya da Yedek) geçer ve serbest oyuncu hakkından 1 düşer. As'taki bir oyuncunun yerine aynı mevkiden oyuncu alınmalı.</p>
       <div class="satir"><select id="fa-birak"><option value="">Kazanırsam bırakacağım oyuncu</option>
@@ -1298,7 +1300,7 @@ function gorunumSerbest() {
     const birakilabilir = [...k.as.map(p => [p, 'As']), ...k.yedek.map(p => [p, 'Yedek'])]
       .filter(([p]) => hak > 0 || zorunlu.includes(p))
       .sort(([a], [b]) => zorunlu.includes(b) - zorunlu.includes(a));
-    panel = `<div class="kart sira-sende"><h3>${esc(al.ad)} ${al.turk ? '<span class="rozet tr">TR</span>' : ''} <span class="soluk kucuk">${esc(al.takim)}</span></h3>
+    panel = `<div class="kart sira-sende"><h3>${esc(al.ad)} ${trRozeti(al)} <span class="soluk kucuk">${esc(al.takim)}</span></h3>
       <p>Kimin yerine alıyorsun? Gelen oyuncu, bıraktığın oyuncunun yerine (As ya da Yedek) geçer; ${kuralCumlesi()}. Değişiklik <b>${hf(etkinHafta())}. haftadan</b> itibaren sayılır. Bıraktığın oyuncu serbest kalır.</p>
       <div class="satir"><select id="fa-birak"><option value="">Bırakılacak oyuncu</option>
         ${birakilabilir.map(([p, rol]) => `<option value="${p}" ${zorunlu[0] === p ? 'selected' : ''}>${esc(oyuncu(p).ad)} (${rol})${zorunlu.includes(p) ? ' · lisansı düştü, hak kullanmaz' : ''}</option>`).join('')}</select>
@@ -1323,7 +1325,7 @@ function gorunumSerbest() {
         <tbody>${liste.slice(0, 300).map(o => {
           const td = talepDurumu(o.id);
           return `<tr>
-          <td><a href="#/oyuncu/${o.id}" class="oyuncu-link">${esc(o.ad)}</a> ${mevkiRozeti(mevki(o.id))}${o.turk ? ' <span class="rozet tr">TR</span>' : ''}</td><td class="kucuk">${bslTakimHucre(o)}</td>
+          <td><a href="#/oyuncu/${o.id}" class="oyuncu-link">${esc(o.ad)}</a> ${mevkiRozeti(mevki(o.id))}${trRozeti(o)}</td><td class="kucuk">${bslTakimHucre(o)}</td>
           <td class="sayi ${haftaSutunu ? 'dar-gizle' : ''}">${o.mac}</td><td class="sayi"><b>${sayi(o.vpOrt)}</b></td>${haftaSutunu ? `<td class="sayi"><b>${sonHafta.oyuncular[o.id] ? sayi(sonHafta.oyuncular[o.id].vp) : '–'}</b></td>` : `<td class="sayi dar-gizle">${sayi(o.sayiOrt)}</td>`}
           <td class="sayi">${td ? talepHucresi(o.id, td, hak > 0) : alabilir ? `<button class="btn kucuk ana" data-is="fa-al" data-id="${o.id}">Al</button>` : ''}</td></tr>`;
         }).join('')
@@ -1603,7 +1605,7 @@ function gorunumMevkiler() {
       <thead><tr><th>Oyuncu</th><th>${LIG.kisa} takımı</th><th class="sayi">Maç</th><th class="sayi">VP</th><th class="sayi">Rib.</th><th class="sayi">Ast.</th><th>Mevki</th></tr></thead>
       <tbody>${liste.map(o => {
         const m = mevki(o.id);
-        return `<tr><td>${esc(o.ad)}${o.turk ? ' <span class="rozet tr">TR</span>' : ''}${belirsizMi(o) ? ' <span class="rozet uyari" title="Tahmin yok">?</span>' : ''}</td>
+        return `<tr><td>${esc(o.ad)}${trRozeti(o)}${belirsizMi(o) ? ' <span class="rozet uyari" title="Tahmin yok">?</span>' : ''}</td>
           <td class="kucuk">${bslTakimHucre(o)}</td><td class="sayi">${o.mac}</td><td class="sayi">${sayi(o.vpOrt)}</td>
           <td class="sayi">${sayi(o.ribOrt)}</td><td class="sayi">${sayi(o.astOrt)}</td>
           <td><div class="satir" style="flex-wrap:nowrap">${['on', 'arka'].map(x => `<button class="btn kucuk ${m === x ? 'ana' : ''}" data-is="mevki" data-id="${o.id}" data-mevki="${x}">${C.MEVKI_ADI[x]}</button>`).join('')}</div></td></tr>`;
@@ -1867,7 +1869,7 @@ function gorunumBildirimler() {
     ${!LIG.mevki ? '' : `<div class="kart"><h2>Mevkisi belirlenecek oyuncular <span class="soluk">(${mevkisiz.length})</span></h2>
       <p class="kucuk soluk">Listende olmayan oyuncular (genelde yeni transferler). Mevkisini seçince bu listeden çıkar.</p>
       ${mevkisiz.length ? `<div class="tablo-kap"><table>${mevkisiz.map(o => `<tr>
-        <td><a href="#/oyuncu/${o.id}" class="oyuncu-link">${esc(o.ad)}</a>${o.turk ? ' <span class="rozet tr">TR</span>' : ''}<div class="kucuk soluk">${o.mac} maç · VP ${sayi(o.vpOrt)} · rib ${sayi(o.ribOrt)} · ast ${sayi(o.astOrt)}${o.mevkiTahmini ? ` · tahmin: ${C.MEVKI_ADI[o.mevkiTahmini]}` : ''}</div></td>
+        <td><a href="#/oyuncu/${o.id}" class="oyuncu-link">${esc(o.ad)}</a>${trRozeti(o)}<div class="kucuk soluk">${o.mac} maç · VP ${sayi(o.vpOrt)} · rib ${sayi(o.ribOrt)} · ast ${sayi(o.astOrt)}${o.mevkiTahmini ? ` · tahmin: ${C.MEVKI_ADI[o.mevkiTahmini]}` : ''}</div></td>
         <td class="kucuk">${bslTakimHucre(o)}</td>
         <td><div class="satir" style="flex-wrap:nowrap">${['on', 'arka'].map(x => `<button class="btn kucuk" data-is="mevki" data-id="${o.id}" data-mevki="${x}">${C.MEVKI_ADI[x]}</button>`).join('')}</div></td></tr>`).join('')}</table></div>`
         : '<p class="soluk" style="margin:0">Hepsi tamam ✓</p>'}</div>`}

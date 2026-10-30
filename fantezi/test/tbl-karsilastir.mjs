@@ -109,6 +109,12 @@ const yg = await yeni.evaluate(() => [...document.querySelectorAll('#icerik tr[d
   return { ad: td[1].querySelector('b').textContent.trim(), sira: Number(td[0].textContent), puan: Number(td[2].textContent) };
 }));
 esit(`Genel klasman (${eg.length} takım)`, eg, yg);
+// Bugünkü kadrolar: eski sitenin son kadro dosyasıyla birebir (As ve Yedek, sırasıyla)
+const kIndex = await (await fetch(`${ESKI}data/kadro/index.json?t=${Date.now()}`)).json();
+const sonKadro = await (await fetch(`${ESKI}data/kadro/${kIndex.haftalar.at(-1)}.json?t=${Date.now()}`)).json();
+const yk = await yeni.evaluate(() => Object.fromEntries(Object.entries(S.takimlar).map(([id, x]) => [x.ad, { as: S.kadrolar[id].as, yedek: S.kadrolar[id].yedek }])));
+const pid = p => p.id || `adsiz:${p.ad}`;
+for (const x of sonKadro) esit(`${x.ad} · bugünkü kadro`, { as: x.as.map(pid), yedek: x.yedek.map(pid) }, yk[x.ad]);
 console.log(`\nSonuç: ${kontrol} karşılaştırma, ${fark} fark. Sayfa hataları: ${hatalar.length ? hatalar.join(' | ') : 'yok'}`);
 await t.close();
 process.exit(fark ? 1 : 0);

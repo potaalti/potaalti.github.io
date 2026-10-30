@@ -7,7 +7,7 @@ import * as F from 'firebase/firestore';
 import * as C from '../../site/fantezi/core.js';
 
 F.setLogLevel('silent');
-const PROJE = 'demo-tbl-fantezi';
+const PROJE = 'demo-tbl-test'; // önizlemenin projesi (demo-tbl-fantezi) bozulmasın
 const TBL = 'https://potaalti.github.io/tbl_fantezi_lig/data';
 const getir = async yol => (await fetch(`${TBL}/${yol}?t=${Date.now()}`)).json();
 

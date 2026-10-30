@@ -9,7 +9,7 @@ import * as F from 'firebase/firestore';
 import * as C from '../../site/fantezi/core.js';
 
 F.setLogLevel('silent');
-const PROJE = 'demo-bsl-draft';
+const PROJE = 'demo-bsl-test'; // önizlemenin projesi (demo-bsl-draft) bozulmasın
 const SURE = Number(process.argv[2] ?? 2);
 const rehber = JSON.parse(readFileSync(new URL('../../site/bsl/data/oyuncular.json', import.meta.url), 'utf-8'));
 const mevkiListesi = JSON.parse(readFileSync(new URL('../../site/bsl/data/mevkiler.json', import.meta.url), 'utf-8'));

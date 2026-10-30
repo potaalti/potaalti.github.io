@@ -38,7 +38,9 @@ sayfaları; ileride TBL ve BSL fantezi ligleri ve Pota Altı YouTube yayınları
   (`site/tbl/config.js`: `takas: false, hareketler: false`).
 - Yabancı oyuncunun lisansı düşer ve TBL takımı yerine yabancı alırsa, yeni oyuncu fantezi takımına otomatik geçer (hak düşmez).
 - Kurulum ekranı eski sitedeki transferleri listeler ve takımların kullandığı serbest oyuncu haklarını hesaplar (aktarmadan önce değiştirilebilir).
-- Puanlar eski siteyle birebir aynı (2026-10-30: 2 hafta, 17 takımın oyuncuları ve genel klasman, 37 karşılaştırma, 0 fark).
+- Puanlar ve kadrolar eski siteyle birebir aynı (2026-10-30: 2 hafta, 17 takımın her haftaki oyuncuları, genel klasman ve bugünkü kadrolar, 54 karşılaştırma, 0 fark).
+- Testler emülatörde ayrı projelerde çalışır (`demo-tbl-test`, `demo-bsl-test`), yerel önizlemenin verisini bozmaz; `tbl-karsilastir.mjs` önizlemenin projesine (`demo-tbl-fantezi`) temiz aktarım yapar.
+- TBL'de oyuncuların yanında Türk (TR) rozeti gösterilmez.
 - Testler: `fantezi/test/tbl.mjs` (21 kontrol), `fantezi/test/tbl-karsilastir.mjs` (eski siteyle puan karşılaştırması). Kurulum: `fantezi/KURULUM.md` → "TBL Fantezi Ligi".
 
 ## Arayüz: bilgisayar ve telefon ayrı düzen

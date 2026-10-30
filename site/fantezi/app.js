@@ -2604,10 +2604,13 @@ async function tblKaynakKadrolar() {
         const rc = S.rehber.get(c.id);
         const rg = S.rehber.get(g.id);
         const lisansYok = !rc || rc.aktif === false;
-        const ayniTakim = rc && rg && rc.takim === rg.takim && !rc.turk && !rg.turk;
+        // Yabancının yerine aynı TBL takımının yabancısı: TBF verisi gecikse de (çıkan hâlâ lisanslı görünse, gelen henüz
+        // listede olmasa) takımı oyuncuyu değiştirmiştir → otomatik kural, hak kullanmaz. Takım adı kadro dosyasından da okunur.
+        const kulupC = c.tblTakim || rc?.takim;
+        const ayniTakim = !!kulupC && kulupC === (g.tblTakim || rg?.takim) && !rc?.turk && !rg?.turk;
         transferler.push({
-          hafta: haftalar[i], takim: t.ad, cikan: c.ad, giren: g.ad, hak: !lisansYok,
-          neden: !lisansYok ? 'serbest oyuncu' : ayniTakim ? 'lisansı düştü, takımı yerine aldı (otomatik)' : 'lisansı düştü (zorunlu değişiklik)',
+          hafta: haftalar[i], takim: t.ad, cikan: c.ad, giren: g.ad, hak: !lisansYok && !ayniTakim,
+          neden: ayniTakim ? 'yabancının yerine takımı yabancı aldı (otomatik)' : !lisansYok ? 'serbest oyuncu' : 'lisansı düştü (zorunlu değişiklik)',
         });
       });
       if (LIG.ortakHak) {

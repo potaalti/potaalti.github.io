@@ -153,6 +153,7 @@ service cloud.firestore {
     match /kadrolar/{tid} {
       allow read: if true;
       allow create: if kurulumda() || yonetici();
+      allow delete: if yonetici() && durum().asama == 'kurulum'; // kura öncesi takım çıkarma
       allow update: if yonetici() || kadroDraft(tid) || dizilisKurulumu(tid)
         || asYedekDegisikligi(tid) || serbestOyuncu(tid);
     }
@@ -298,6 +299,7 @@ service cloud.firestore {
     match /takimlar/{tid} {
       allow read: if true;
       allow create: if kurulumda() || yonetici();
+      allow delete: if yonetici() && durum().asama == 'kurulum'; // kura öncesi takım çıkarma
       allow update: if yonetici()
         || (uye() && benimTakim() == tid
             && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['ad'])

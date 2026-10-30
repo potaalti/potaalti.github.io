@@ -1,6 +1,6 @@
 # Pota Altı BSL Fantezi Ligi — Kurulum ve Kullanım Rehberi
 
-Bu proje, TBL fantezi liginden **tamamen ayrı** bir sitedir. 17 menajer BSL oyuncularını canlı draftla
+Bu proje, TBL fantezi liginden **tamamen ayrı** bir sitedir. Menajerler (takım sayısı serbest) BSL oyuncularını canlı draftla
 seçer; sezon boyunca takas, serbest oyuncu ve As–Yedek değişikliği yapar; puanlar BSL'deki VP'lerden
 hesaplanır.
 
@@ -45,7 +45,9 @@ hesaplanır.
 
 1. Siteyi aç → **Google ile giriş yap** → "Ligi kur" ekranı gelir (lig henüz kurulmadıysa).
 2. Lig adını, puanlamanın başlayacağı **BSL haftasını** (draftın bittiği haftadan sonraki ilk hafta)
-   ve seçim süresini (90 sn = 1,5 dk) gir; istersen menajer adlarını yaz → **Ligi kur**.
+   seçim süresini (90 sn = 1,5 dk) ve takım sayısını gir → **Ligi kur**. Takım sayısının sınırı yok; kura çekilene kadar
+   Yönetici sayfasından **+ Takım ekle** / **Son takımı çıkar** ile değiştirilebilir (oyuncu havuzu bütün seçimlere
+   yetmeli: takım başına 7 oyuncu).
 3. Ligi kuran **Google hesabı yönetici** olur. Başka cihazdan da aynı Google hesabıyla girmen yeterli.
 4. **Yönetici** sayfasında takım adlarını/menajerleri düzenle; her menajere kendi **davet linkini**
    **WhatsApp** düğmesiyle ya da **Linki kopyala** ile gönder.
@@ -70,7 +72,7 @@ hesaplanır.
    sonradan BSL'ye katılan oyuncular istatistikten tahmin edilir. Her tıklama hemen kaydedilir.
 3. Yönetici sayfası → **Oyuncu havuzunu yükle** (draftta seçilebilecek oyuncular, mevkileri ve otomatik
    seçim sıralaması bu anki VP ortalamalarıyla sabitlenir; draft başlatılırken son haliyle yeniden yüklenir).
-4. **Kurayı çek** → herkesin ekranında sıra 17'den 1'e doğru canlı açılır.
+4. **Kurayı çek** → herkesin ekranında sıra sondan başa doğru canlı açılır.
 5. Herkes hazır olunca **Draftı başlat**.
 6. Draft sırasında:
    - Sırası gelen menajerin ekranında "Sıra sende!" çıkar, ses ve titreşim olur.
@@ -168,7 +170,7 @@ hesaplanır.
 
 ## Ücretsiz kota
 
-Firebase Spark planı günde 50.000 okuma ve 20.000 yazma verir. 17 kişilik bir lig için draft günü
+Firebase Spark planı günde 50.000 okuma ve 20.000 yazma verir. 17 kişilik bir lig için (örnek) draft günü
 dahil bu sınırın çok altında kalınır (site, sezon boyunca draft seçimlerini değil sadece kadroları
 canlı dinler).
 

@@ -4,7 +4,7 @@
 export const PUAN_TABLOSU = [5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1, 1];
 export const OTOMATIK_ADAY = 15;
 
-// Yılan (snake) draft: 1. tur 1→17, 2. tur 17→1, ...
+// Yılan (snake) draft: 1. tur 1→N, 2. tur N→1, ...
 export function yilanSirasi(sira, turSayisi) {
   const sonuc = [];
   for (let tur = 0; tur < turSayisi; tur++) {

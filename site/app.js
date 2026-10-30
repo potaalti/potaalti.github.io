@@ -20,7 +20,7 @@ D.baglan(F, fdb);
 
 // Açılmış ama henüz kullanılmamış davet linki (Google girişi sırasında sayfa yenilenince kaybolmasın)
 const DAVET_ANAHTARI = 'bslDavet';
-const KURA_ARALIK_MS = 1500; // kurada takımlar 17. sıradan 1. sıraya doğru bu aralıkla açılır
+const KURA_ARALIK_MS = 1500; // kurada takımlar son sıradan 1. sıraya doğru bu aralıkla açılır
 const DRAFT_ASAMALARI = ['kurulum', 'kura', 'draft', 'duraklatildi'];
 
 const S = {
@@ -393,15 +393,12 @@ function gorunumKurulum() {
   const varsayilanHafta = S.index ? C.etkinHafta(S.index, 1) : 1;
   return `<div class="kart">
     <h2>Ligi kur</h2>
-    <p>Bu lig henüz kurulmamış. Ligi kuran Google hesabı (<b>${esc(auth.currentUser.email)}</b>) <b>yönetici</b> olur. Takım adları ve menajerler sonradan da değiştirilebilir.</p>
+    <p>Bu lig henüz kurulmamış. Ligi kuran Google hesabı (<b>${esc(auth.currentUser.email)}</b>) <b>yönetici</b> olur. Takım adları ve menajerler sonradan Yönetici sayfasından girilir; kura çekilene kadar takım eklenip çıkarılabilir.</p>
     <div class="form-izgara">
       <label for="k-ad">Lig adı</label><input type="text" id="k-ad" value="Pota Altı BSL Fantezi Ligi">
       <label for="k-hafta">Puanlamanın başlayacağı BSL haftası</label><input type="number" id="k-hafta" min="1" max="40" value="${varsayilanHafta}">
       <label for="k-sure">Seçim süresi (saniye)</label><input type="number" id="k-sure" min="5" max="600" value="90">
-    </div>
-    <h3 style="margin-top:16px">Menajerler (isteğe bağlı)</h3>
-    <div class="form-izgara">
-      ${Array.from({ length: 17 }, (_, i) => `<label for="k-m${i}">Takım ${i + 1}</label><input type="text" id="k-m${i}" placeholder="Menajerin adı">`).join('')}
+      <label for="k-takim">Takım sayısı</label><input type="number" id="k-takim" min="2" max="99" value="17">
     </div>
     <p style="margin-top:16px"><button class="btn ana" data-is="ligi-kur">Ligi kur</button></p>
   </div>`;
@@ -506,7 +503,7 @@ function durumKarti() {
     case 'kurulum':
       return `<div class="kart"><h2>Draft henüz başlamadı</h2>
         <p>Önce yönetici kurayı çekecek; çıkan sıra herkese burada canlı gösterilir. Sonra draft başlar.</p>
-        <p class="soluk">Yılan draft: 1. tur 1→17, 2. tur 17→1, … · Her takım 7 oyuncu (As 3 Ön + 2 Arka, 2 Yedek) ·
+        <p class="soluk">${S.ayar.takimSayisi} takım · Yılan draft: 1. tur 1→${S.ayar.takimSayisi}, 2. tur ${S.ayar.takimSayisi}→1, … · Her takım ${kadroBoyu()} oyuncu (As ${kural().asOn} Ön + ${kural().asArka} Arka, ${kural().yedek} Yedek) ·
         Seçim süresi ${sureMetni(S.ayar.secimSuresi)}</p></div>`;
     case 'kura':
       return kuraKarti(true);
@@ -573,7 +570,7 @@ function kuraKarti(canli) {
   const bitti = acilan >= T;
   return `<div class="kart">
     <h2>${canli && !bitti ? 'Kura çekiliyor…' : 'Draft sırası'}</h2>
-    ${canli && !bitti ? '<p class="soluk">Sıra 17\'den 1\'e doğru açılıyor.</p>' : ''}
+    ${canli && !bitti ? '<p class="soluk">Sıra sondan başa doğru açılıyor.</p>' : ''}
     <ol class="kura">${d.sira.map((tid, i) => {
       const acik = i >= T - acilan;
       const yeni = canli && i === T - acilan;
@@ -582,7 +579,7 @@ function kuraKarti(canli) {
         : `<li class="gizli"><span class="no">${i + 1}</span><span>?</span></li>`;
     }).join('')}</ol>
     ${canli && bitti ? '<p style="margin-bottom:0">Draft, yönetici başlatınca başlayacak.</p>' : ''}
-    <p class="kucuk soluk" style="margin-bottom:0">Yılan draft: tek turlarda 1→17, çift turlarda 17→1.</p>
+    <p class="kucuk soluk" style="margin-bottom:0">Yılan draft: tek turlarda 1→${T}, çift turlarda ${T}→1.</p>
   </div>`;
 }
 
@@ -1266,6 +1263,7 @@ function gorunumYonetici() {
         <td><input type="text" id="tm-${t.id}" value="${esc(t.menajer)}" maxlength="40" style="width:130px"></td>
         <td><div class="satir"><button class="btn kucuk" data-is="takim-kaydet" data-id="${t.id}">Kaydet</button> ${hesap}</div></td></tr>`;
     }).join('')}</tbody></table></div>
+    ${takimEkleCikar()}
     <p class="kucuk soluk" style="margin-bottom:0">Yönetici hesapları: ${uyeler.filter(u => u.takim === 'admin').map(u => esc(u.email)).join(', ') || '-'}
     (ve yönetici yetkisi verilen takımların menajerleri)</p>
     ${S.ben === 'admin' ? `<div class="uyari-kutu"><b>Sen de oynuyor musun?</b> Kendi takımını seç: Google hesabın o takıma bağlanır, takım yönetici takımı olur
@@ -1480,6 +1478,22 @@ function zorunluBandi() {
     <a class="btn kucuk ana" href="#/bostakiler">Oyuncu seç</a></div>`;
 }
 
+// Kura çekilmeden takım sayısı serbestçe değişir; havuz bütün seçimlere yetmeli
+function takimEkleCikar() {
+  const n = takimlar().length;
+  const secim = n * kadroBoyu();
+  const yetersiz = S.havuz.length && S.havuz.length < secim;
+  const son = takimlar().at(-1);
+  const sonBagli = son && (S.uyeler ?? []).some(u => u.takim === son.id);
+  if (asama() !== 'kurulum') return `<p class="kucuk soluk">${n} takım · draftta ${secim} seçim.</p>`;
+  return `<div class="satir" style="margin:10px 0">
+      <span><b>${n} takım</b> · draftta ${secim} seçim</span>
+      <button class="btn kucuk" data-is="takim-ekle">+ Takım ekle</button>
+      <button class="btn kucuk tehlike" data-is="takim-cikar" ${n <= 2 || sonBagli ? `disabled title="${sonBagli ? 'Son takıma hesap bağlı; önce Çıkar ile hesabı ayır' : 'En az 2 takım'}"` : ''}>Son takımı çıkar</button>
+    </div>
+    ${yetersiz ? `<div class="hata-kutu kucuk">Havuzda ${S.havuz.length} oyuncu var, ${n} takımın draftı için ${secim} oyuncu gerekiyor. Takım sayısını azalt.</div>` : ''}`;
+}
+
 // ---------- Yönetici: bildirimler ----------
 function gorunumBildirimler() {
   const mevkisiz = mevkisizler().sort((a, b) => b.vpOrt - a.vpOrt);
@@ -1598,11 +1612,12 @@ async function eylem(is, id, el) {
     case 'ligi-kur': {
       const hafta = Number(deger('k-hafta'));
       const sure = Number(deger('k-sure'));
+      const takimSayisi = Number(deger('k-takim'));
       if (!hafta || !sure) return bildir('Hafta ve süreyi gir.', true);
+      if (!Number.isInteger(takimSayisi) || takimSayisi < 2 || takimSayisi > 99) return bildir('Takım sayısı 2 ile 99 arasında olmalı.', true);
       el.disabled = true;
       const sonuc = await D.ligiKur(S.uid, hesapBilgisi(), {
-        ad: deger('k-ad') || 'Pota Altı BSL Fantezi Ligi', secimSuresi: sure, baslangicHaftasi: hafta,
-        menajerler: Array.from({ length: 17 }, (_, i) => deger(`k-m${i}`)),
+        ad: deger('k-ad') || 'Pota Altı BSL Fantezi Ligi', secimSuresi: sure, baslangicHaftasi: hafta, takimSayisi,
       });
       S.ben = 'admin';
       S.kurulumSonucu = sonuc;
@@ -1858,7 +1873,20 @@ async function eylem(is, id, el) {
       if (asama() !== 'sezon' && S.durum.aktifHafta !== baslangicHaftasi) await D.aktifHaftayiKaydet(baslangicHaftasi);
       return bildir('Ayarlar kaydedildi');
     }
+    case 'takim-ekle': {
+      await D.takimEkle();
+      await davetleriYenile();
+      return bildir('Takım eklendi, davet linki hazır');
+    }
+    case 'takim-cikar': {
+      const son = takimlar().at(-1);
+      if (!confirm(`${son.ad} ligden çıkarılsın mı? Davet linki de iptal olur.`)) return;
+      await D.sonTakimiCikar(S.kodlar?.[son.id]);
+      await davetleriYenile();
+      return bildir(`${son.ad} çıkarıldı`);
+    }
     case 'kura':
+      if (S.havuz.length < takimlar().length * kadroBoyu()) return bildir(`Havuzdaki oyuncu sayısı ${takimlar().length} takımın draftına yetmiyor.`, true);
       if (!confirm(asama() === 'kura' ? 'Kura yeniden çekilsin mi? Herkes yeni sırayı görecek.' : 'Kura çekilsin mi? Sıra herkese canlı gösterilecek.')) return;
       await D.kuraCek(takimlar().map(t => t.id));
       location.hash = '#/draft';

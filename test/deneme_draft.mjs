@@ -104,6 +104,16 @@ async function main() {
   await takimlar.t03.D.takimAdiKaydet('t03', 'Üçüncüler');
   kontrol((await oku(admin.db, 'takimlar', 't03')).ad === 'Üçüncüler', 'Menajer kendi takım adını değiştirdi');
 
+  // Takım sayısı serbest: kura öncesi yönetici takım ekleyip çıkarabilir
+  await reddedilmeli(() => takimlar.t03.D.takimEkle(), 'Menajerin takım eklemesi');
+  const yeniTakim = await admin.D.takimEkle();
+  kontrol(yeniTakim === 't18' && (await oku(admin.db, 'lig', 'ayar')).takimSayisi === 18 && (await oku(admin.db, 'lig', 'durum')).toplamSecim === 126
+    && !!(await oku(admin.db, 'kadrolar', 't18')), 'Yönetici 18. takımı ekledi (126 seçim)');
+  const kod18 = Object.entries(await admin.D.kodlariGetir()).find(([t]) => t === 't18')?.[1];
+  await admin.D.sonTakimiCikar(kod18);
+  kontrol((await oku(admin.db, 'lig', 'ayar')).takimSayisi === 17 && (await oku(admin.db, 'lig', 'durum')).toplamSecim === 119
+    && !(await oku(admin.db, 'takimlar', 't18')), 'Yönetici son takımı çıkardı (yine 17 takım)');
+
   await admin.D.havuzuYukle(havuz);
   kontrol(Object.keys(await hepsi(admin.db, 'oyuncular')).length === havuz.length, `Havuz yüklendi (${havuz.length} oyuncu)`);
 

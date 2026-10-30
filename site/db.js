@@ -18,7 +18,8 @@ export class Hata extends Error {}
 
 // ---------- Kurulum ----------
 
-// Ligi ilk kez kurar: ayarlar, 17 takım, kadrolar ve davet kodları. Kuran Google hesabı yönetici olur.
+// Ligi ilk kez kurar: ayarlar, takımlar, kadrolar ve davet kodları. Kuran Google hesabı yönetici olur.
+// Takım sayısı sınırsızdır; kura çekilene kadar yönetici takım ekleyip çıkarabilir.
 // hesap: { email, ad } (Google hesabı). Takımların davet kodlarını döndürür.
 export async function ligiKur(uid, hesap, { ad, takimSayisi = 17, menajerler = [], secimSuresi = 90, baslangicHaftasi }) {
   const kodlar = {};
@@ -50,6 +51,42 @@ export async function ligiKur(uid, hesap, { ad, takimSayisi = 17, menajerler = [
 
 function bosKadro() {
   return { as: [], yedek: [], tip: bosTip(), fa: 0, degisiklik: 0, gecmis: [], sonSecim: null, sonFa: null, sonTeklif: null };
+}
+
+// Yönetici, kura çekilmeden yeni takım ekler (boş kadro ve davet linkiyle)
+export async function takimEkle() {
+  return F.runTransaction(db, async tx => {
+    const ayar = (await tx.get(yol('lig', 'ayar'))).data();
+    const d = (await tx.get(yol('lig', 'durum'))).data();
+    if (d.asama !== 'kurulum') throw new Hata('Takımlar sadece kura çekilmeden önce eklenip çıkarılabilir.');
+    const i = ayar.takimSayisi;
+    const tid = takimId(i);
+    const kod = yeniKod(tid);
+    tx.set(yol('takimlar', tid), { no: i + 1, ad: `Takım ${i + 1}`, menajer: '' });
+    tx.set(yol('kadrolar', tid), bosKadro());
+    tx.set(yol('kodlar', kod), { takim: tid });
+    tx.update(yol('lig', 'ayar'), { takimSayisi: i + 1 });
+    tx.update(yol('lig', 'durum'), { toplamSecim: (i + 1) * (ayar.asSayisi + ayar.yedekSayisi) });
+    return tid;
+  });
+}
+
+// Yönetici, kura çekilmeden son takımı çıkarır (hesap bağlı değilse). kod: o takımın kullanılmamış davet kodu
+export async function sonTakimiCikar(kod) {
+  return F.runTransaction(db, async tx => {
+    const ayar = (await tx.get(yol('lig', 'ayar'))).data();
+    const d = (await tx.get(yol('lig', 'durum'))).data();
+    if (d.asama !== 'kurulum') throw new Hata('Takımlar sadece kura çekilmeden önce eklenip çıkarılabilir.');
+    const n = ayar.takimSayisi;
+    if (n <= 2) throw new Hata('Ligde en az 2 takım olmalı.');
+    const tid = takimId(n - 1);
+    tx.delete(yol('takimlar', tid));
+    tx.delete(yol('kadrolar', tid));
+    if (kod) tx.delete(yol('kodlar', kod));
+    tx.update(yol('lig', 'ayar'), { takimSayisi: n - 1, yoneticiTakimlar: (ayar.yoneticiTakimlar ?? []).filter(t => t !== tid) });
+    tx.update(yol('lig', 'durum'), { toplamSecim: (n - 1) * (ayar.asSayisi + ayar.yedekSayisi) });
+    return tid;
+  });
 }
 
 // Davet linkiyle katılma: Google hesabı takıma bağlanır, davet kodu aynı işlemde silinir (tek kullanımlık)

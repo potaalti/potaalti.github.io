@@ -384,7 +384,7 @@ function gorunumAna() {
 function fantezKartlari() {
   return `<a class="kart fantezi-kart" href="#/fantezi/tbl"><strong>⭐ TBL Fantezi Ligi ›</strong>
       <span class="soluk">Takımın, haftalık VP sıralaması, genel klasman ve boştaki oyuncular.</span></a>
-    <div class="kart fantezi-kart"><strong>🏀 BSL Fantezi Ligi</strong><span class="soluk">Canlı draft, takaslar, haftalık puanlama. Katıl üyelerine özel; yakında.</span></div>`;
+    <a class="kart fantezi-kart" href="bsl/"><strong>🏀 BSL Fantezi Ligi ›</strong><span class="soluk">Canlı draft, takaslar, talep kurası, haftalık puanlama. Katıl üyelerine özel: davet linki ve Google ile giriş.</span></a>`;
 }
 function gorunumFantezi() {
   return `<div class="sayfa-baslik"><h1>Fantezi ligleri</h1><p class="soluk">Pota Altı'nın fantezi ligleri.</p></div>${fantezKartlari()}${TblFantezi.ozet()}`;

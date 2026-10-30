@@ -4,7 +4,8 @@ Bu proje, TBL fantezi liginden **tamamen ayrı** bir sitedir. Menajerler (takım
 seçer; sezon boyunca takas, serbest oyuncu ve As–Yedek değişikliği yapar; puanlar BSL'deki VP'lerden
 hesaplanır.
 
-- **Site**: GitHub Pages'te yayınlanan statik sayfa (`site/` klasörü).
+- **Site**: Pota Altı App'in bir bölümü olarak GitHub Pages'te yayınlanır (web dosyaları `site/bsl/`, adresi uygulamanın `bsl/` sayfası).
+  Bu klasör (`bsl/`): Firebase kuralları, veri betiği, `.bat` dosyaları ve testler.
 - **Canlı veri** (draft, kadrolar, takaslar): Google'ın ücretsiz **Firebase Firestore** veritabanı
   (Spark planı, kredi kartı gerekmez).
 - **BSL verisi** (oyuncular, haftalık VP): bilgisayarda `guncelle.bat` ile TBF'den çekilir ve siteye
@@ -20,7 +21,7 @@ hesaplanır.
 3. **Web uygulaması ekle**: proje ana sayfasında `</>` simgesine bas → takma ad: `site` →
    "Firebase Hosting" kutusunu **işaretleme** → Uygulamayı kaydet.
 4. Çıkan ekranda `const firebaseConfig = { ... }` bloğunu gör. İçindeki değerleri (apiKey, authDomain,
-   projectId, storageBucket, messagingSenderId, appId) `site/config.js` dosyasına yapıştır
+   projectId, storageBucket, messagingSenderId, appId) `site/bsl/config.js` dosyasına yapıştır
    (ya da bana gönder, ben yerleştireyim — bu bilgiler gizli değildir).
 5. Sol menü **Build → Firestore Database** → **Create database** → konum: `eur3 (europe-west)` →
    **Start in production mode** → Oluştur.
@@ -68,7 +69,7 @@ hesaplanır.
 1. Draft'tan hemen önce bilgisayarda `guncelle.bat`'a çift tıkla (en güncel VP ortalamaları için),
    birkaç dakika bekle.
 2. **Mevkiler** sayfasında (yönetici menüsü) oyuncuların mevkilerini kontrol et: **Ön** = uzun/forvet,
-   **Arka** = oyun kurucu/şutör. Mevkiler yöneticinin hazırladığı listeden (`site/data/mevkiler.json`) gelir;
+   **Arka** = oyun kurucu/şutör. Mevkiler yöneticinin hazırladığı listeden (`site/bsl/data/mevkiler.json`) gelir;
    sonradan BSL'ye katılan oyuncular istatistikten tahmin edilir. Her tıklama hemen kaydedilir.
 3. Yönetici sayfası → **Oyuncu havuzunu yükle** (draftta seçilebilecek oyuncular, mevkileri ve otomatik
    seçim sıralaması bu anki VP ortalamalarıyla sabitlenir; draft başlatılırken son haliyle yeniden yüklenir).
@@ -135,7 +136,8 @@ hesaplanır.
 
 ### Haftalık veri güncellemesi
 
-- `guncelle.bat`'a çift tıkla: TBF'den verileri çeker ve siteye gönderir (birkaç dakikada yayında).
+- `bsl/guncelle.bat`'a çift tıkla: TBF'den BSL verilerini çeker, Pota Altı App'in TBL/BSL puan tablosu ve liderlerini
+  (`veri/uret.py`) yeniler ve siteye gönderir (birkaç dakikada yayında).
   Haftanın maçları bitince (genelde Pazartesi gecesi) bir kez yeterli; istersen maç günlerinde de
   çalıştırabilirsin.
 - **Otomatik güncelleme:** `gorev_kur.bat`'a bir kez çift tıkla. Bilgisayar açık ve internete bağlı olduğu sürece her gün
@@ -168,7 +170,7 @@ hesaplanır.
 
 | Sorun | Çözüm |
 |---|---|
-| "Firebase ayarları girilmemiş" | `site/config.js` doldurulmamış (1. bölüm, 4. adım). |
+| "Firebase ayarları girilmemiş" | `site/bsl/config.js` doldurulmamış (1. bölüm, 4. adım). |
 | "Bağlantı kurulamadı" / Google girişi açılmıyor | Google ve Anonymous girişi açık mı, Authorized domains'e site eklendi mi (1. bölüm, 7–8). |
 | "Bu işleme izin yok" | Sayfayı yenile. Devam ederse `firestore.rules` Firebase'e yapıştırılmış mı? |
 | Menajer davet linkini kaybetti (henüz katılmadıysa) | Yönetici → Linki kopyala → tekrar gönder. |
@@ -185,10 +187,11 @@ canlı dinler).
 ## Geliştirici notları
 
 - `veri_guncelle.py`: TBF API (BSL lig id 22214, sezon 174). Biten maçlar `cache/`'de saklanır.
-- `site/core.js`: draft sırası, otomatik seçim, Türk kuralı, puanlama (saf fonksiyonlar).
-- `site/db.js`: Firestore işlemleri (seçim, takas, serbest oyuncu… hepsi tek işlemde/transaction).
+- `site/bsl/core.js`: draft sırası, otomatik seçim, Türk kuralı, puanlama (saf fonksiyonlar).
+- `site/bsl/db.js`: Firestore işlemleri (seçim, takas, serbest oyuncu… hepsi tek işlemde/transaction).
 - `firestore.rules`: kim neyi yazabilir (sıra, süre, tek takım kuralı, haklar, Türk kuralı).
 - Yerel deneme: `localhost`'ta açılan site Firebase emülatörüne bağlanır.
   `firebase emulators:start --only firestore,auth --project demo-bsl-draft`, ardından
-  `python -m http.server 8765 --directory site` ve `cd test && npm install && node deneme_draft.mjs`
+  (bu klasörde) ve depo kökünde `python -m http.server 8790 --directory site` (BSL: `http://localhost:8790/bsl/`),
+  sonra `cd bsl/test && npm install && node deneme_draft.mjs`
   (17 takımlık tam deneme draftı ve kural testleri).

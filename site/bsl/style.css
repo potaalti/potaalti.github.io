@@ -51,6 +51,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 .ust { position: sticky; top: 0; z-index: 10; background: var(--baslik-zemin); color: #fff; }
 .ust-ic { max-width: 1360px; margin: 0 auto; padding: 0 20px; min-height: 58px; display: flex; align-items: center; gap: 20px; }
+.ana-donus { display: flex; flex: 0 0 auto; margin-right: -8px; }
+.ana-donus img { border-radius: 50%; display: block; }
 .logo { display: flex; align-items: center; gap: 8px; color: #fff; font-weight: 700; white-space: nowrap; }
 .kimlik { margin-left: auto; font-size: .85rem; color: rgba(255, 255, 255, .8); text-align: right; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 .kimlik b { color: #fff; }

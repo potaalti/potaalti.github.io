@@ -6,13 +6,13 @@ import { readFileSync } from 'node:fs';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInAnonymously, connectAuthEmulator, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import * as F from 'firebase/firestore';
-import * as C from '../site/core.js';
+import * as C from '../../site/bsl/core.js';
 
 F.setLogLevel('silent');
 const PROJE = 'demo-bsl-draft';
 const SURE = Number(process.argv[2] ?? 2);
-const rehber = JSON.parse(readFileSync(new URL('../site/data/oyuncular.json', import.meta.url), 'utf-8'));
-const mevkiListesi = JSON.parse(readFileSync(new URL('../site/data/mevkiler.json', import.meta.url), 'utf-8'));
+const rehber = JSON.parse(readFileSync(new URL('../../site/bsl/data/oyuncular.json', import.meta.url), 'utf-8'));
+const mevkiListesi = JSON.parse(readFileSync(new URL('../../site/bsl/data/mevkiler.json', import.meta.url), 'utf-8'));
 const havuz = C.havuzSirala(rehber, o => mevkiListesi[o.id] ?? o.mevkiTahmini ?? 'arka');
 const havuzMap = new Map(havuz.map(o => [o.id, o]));
 const tablo = C.kadroTablosu();
@@ -50,7 +50,7 @@ async function kullanici({ google = true } = {}) {
   } else {
     await signInAnonymously(auth);
   }
-  const D = await import(`../site/db.js?bot=${sayac}`);
+  const D = await import(`../../site/bsl/db.js?bot=${sayac}`);
   D.baglan(F, db);
   return { uid: auth.currentUser.uid, db, D };
 }
@@ -483,7 +483,7 @@ async function main() {
   }
 
   // Puanlama: 6. haftanın verisiyle (varsa) ya da 5. haftayla hesap
-  const hafta = JSON.parse(readFileSync(new URL('../site/data/hafta/5.json', import.meta.url), 'utf-8'));
+  const hafta = JSON.parse(readFileSync(new URL('../../site/bsl/data/hafta/5.json', import.meta.url), 'utf-8'));
   const ks = await hepsi(admin.db, 'kadrolar');
   const ts = Object.entries(ks).map(([id, x]) => {
     const kad = C.haftaKadrosu(x, 7);

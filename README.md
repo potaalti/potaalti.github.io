@@ -20,6 +20,14 @@ sayfaları; ileride TBL ve BSL fantezi ligleri ve Pota Altı YouTube yayınları
   oyuncuları birebir karşılaştırır (2026-10-30: 71 karşılaştırma, 0 fark). Eski adres, geçiş günü bu karşılaştırma tekrar
   çalıştırıldıktan sonra uygulamaya yönlendirilecek.
 
+## 3. aşama: BSL Fantezi Ligi uygulamanın içinde
+- BSL Fantezi Ligi (eski `bsl-draft` deposu, bütün geçmişiyle) bu depoya alındı: web dosyaları `site/bsl/` (adres: `bsl/`),
+  Firebase kuralları, veri betiği, `.bat` dosyaları, testler ve kurulum rehberi `bsl/` klasöründe (`bsl/KURULUM.md`).
+- Fantezi menüsündeki BSL kartı ve davet linkleri `bsl/` sayfasını açar; başlıktaki Pota Altı simgesi ana uygulamaya döner.
+  Telefona eklenince tek uygulama kurulur (ortak manifest ve service worker).
+- `bsl/guncelle.bat` (günde 2 kez zamanlanmış) BSL verisini çeker, `veri/uret.py` ile TBL/BSL puan tablosu ve liderleri yeniler, ikisini birlikte yayınlar.
+- Testler: `bsl/test/deneme_draft.mjs` (Firebase emülatörü `bsl/` klasöründen başlatılır), 2026-10-30: 119 kontrol, 0 hata.
+
 ## Veriler
 - Canlı veriler (maç listeleri, kutu skorlar) TBL Fantezi Ligi sitesinin yayınladığı dosyalardan okunur
   (`https://potaalti.github.io/tbl_fantezi_lig/data`); bu dosyaları telefondaki Termux güncellemesi üretir.

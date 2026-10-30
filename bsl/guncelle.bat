@@ -1,5 +1,5 @@
 @echo off
-rem BSL verilerini TBF'den ceker ve siteye gonderir (GitHub Pages birkac dakikada yayinlar).
+rem BSL verilerini TBF'den ceker, Pota Alti App'in puan tablosu ve liderlerini yeniler, siteye gonderir.
 rem Cift tiklayarak calistirin: tam guncelleme.
 rem Zamanlanmis gorevler arka planda calistirir (gizli_calistir.vbs ile, pencere acilmaz):
 rem   guncelle.bat sessiz  -> tam guncelleme (gunde 2 kez)
@@ -27,7 +27,11 @@ if errorlevel 1 (
   echo HATA: Veriler alinamadi. Internet baglantisini kontrol edip tekrar deneyin.
   exit /b 1
 )
-git add site/data
+rem Pota Alti App: TBL ve BSL puan tablosu, liderler, takim ve oyuncu istatistikleri
+if /i not "%~1"=="canli" echo Puan tablolari ve liderler hazirlaniyor...
+python ../veri/uret.py >nul
+if errorlevel 1 echo UYARI: Puan tablosu ve liderler guncellenemedi; bir sonraki guncellemede tekrar denenir.
+git add ../site/bsl/data ../site/data
 git diff --cached --quiet
 if errorlevel 1 (
   git commit -q -m "Veriler guncellendi"

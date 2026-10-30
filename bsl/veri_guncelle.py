@@ -1,6 +1,6 @@
 """Pota Altı BSL Fantezi Ligi verisi: TBF sitesinden BSL oyuncularını ve haftalık verimlilik (VP) puanlarını çeker.
 
-Çıktılar (site/data/):
+Çıktılar (site/bsl/data/):
   oyuncular.json   -> bütün BSL oyuncuları: ad, takım, ülke, Türk mü, bu sezonun maç başı VP ortalaması
   hafta/<n>.json   -> haftanın maçları ve oyuncuların o haftaki VP'si ve süresi
   index.json       -> sezonun bütün haftaları (ilk maç saatleriyle), güncel hafta, güncelleme zamanı
@@ -21,7 +21,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-DATA = ROOT / "site" / "data"
+# Web dosyaları Pota Altı App'in site/bsl/ klasöründe
+DATA = ROOT.parent / "site" / "bsl" / "data"
 CACHE = ROOT / "cache"
 
 API = "https://www.tbf.org.tr/api"
@@ -214,7 +215,7 @@ def mevki_tahmini(stat, boy):
 
 def kadro_hareketleri(eski, yeni):
     """BSL kadrolarındaki değişiklikler (yöneticiye bildirim): lige yeni gelen, takım değiştiren ve ligden
-    ayrılan oyuncular. site/data/bsl_hareketleri.json'a en yenisi başta eklenir; son 90 gün tutulur."""
+    ayrılan oyuncular. site/bsl/data/bsl_hareketleri.json'a en yenisi başta eklenir; son 90 gün tutulur."""
     simdi = datetime.now(timezone.utc)
     yeni_kayitlar = []
     for pid, o in yeni.items():

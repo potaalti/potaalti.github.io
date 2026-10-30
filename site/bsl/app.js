@@ -2629,4 +2629,5 @@ async function basla() {
 basla();
 
 // Ana ekrana eklenen uygulama gibi çalışsın: sayfa dosyaları ve veriler önbellekte (yerel denemede kapalı)
-if ('serviceWorker' in navigator && !YEREL) navigator.serviceWorker.register('sw.js').catch(() => {});
+// Pota Altı App'in ortak service worker'ı (davet linkiyle doğrudan bu sayfaya gelenler için de)
+if ('serviceWorker' in navigator && !YEREL) navigator.serviceWorker.register('../sw.js', { scope: '../' }).catch(() => {});

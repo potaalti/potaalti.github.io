@@ -288,3 +288,7 @@ button.saha-oyuncu:hover, a.saha-oyuncu:hover { border-color: color-mix(in srgb,
   /* Ana uygulama: fantezi ligleri ana menünün hemen altında (fantezi sayfalarındaki gibi), hesap/boşluk en altta */
   .menu:has(+ .fantezi-grup) { flex: 0 0 auto; }
 }
+
+/* Takımım: menajer özeti saha ve maçların üstünde, aynı genişlikte */
+.kadrom-ust { max-width: 1240px; margin: 0 auto; }
+@media (max-width: 1099px) { .kadrom-ust { max-width: 880px; } }

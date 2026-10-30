@@ -151,3 +151,9 @@ tr.ben td { background: color-mix(in srgb, var(--vurgu) 14%, transparent) !impor
   .mac .skor { grid-area: skor; min-width: 74px; padding-left: 12px; border-left: 1px solid var(--cizgi); }
   .mac > span:first-child, .mac .dep { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 }
+/* Telefonda kadro satırı: kulüp adı ismin altında, rozet ve puan sağda tek satırda */
+@media (max-width: 759px) {
+  .oyuncu-liste li > span:first-child { min-width: 0; }
+  .oyuncu-liste li .bsl { display: block; font-size: .72rem; margin-top: 1px; }
+  .oyuncu-liste li > span:last-child { white-space: nowrap; flex: 0 0 auto; }
+}

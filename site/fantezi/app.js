@@ -1320,7 +1320,7 @@ function gorunumSerbest() {
   return `<div class="kart"><h2>Boştaki oyuncular</h2>
     <p style="margin-bottom:0">Hiçbir takımda olmayan ${LIG.kisa} oyuncuları. ${!alimAcik ? 'Serbest oyuncu alımı sezon başlayınca açılır.'
       : tid ? `Kalan ${hakAdi()}n: <b>${hak}</b> / ${S.ayar.faHakki} (sezon boyunca).` : ''}
-      ${alimAcik ? ' Bir takımın bıraktığı ya da lige yeni katılan oyuncu <b>${beklemeSaati()} saat</b> kimse tarafından alınamaz (⏳); bu sürede takımlar <b>talep</b> eder, süre bitince talip olanlar arasında kura çekilir. Talep eden olmazsa oyuncu boştakilere düşer.' : ''}</p>
+      ${alimAcik ? ` Bir takımın bıraktığı ya da lige yeni katılan oyuncu <b>${beklemeSaati()} saat</b> kimse tarafından alınamaz (⏳); bu sürede takımlar <b>talep</b> eder, süre bitince talip olanlar arasında kura çekilir. Talep eden olmazsa oyuncu boştakilere düşer.` : ''}</p>
     ${zorunlu.length ? `<div class="hata-kutu"><b>Zorunlu değişiklik:</b> ${zorunlu.map(p => esc(oyuncu(p).ad)).join(', ')} artık TBF'de lisanslı görünmüyor. Aşağıdan kadro kuralına uygun bir oyuncu seçip <b>Al</b>'a bas; bu değişiklik ${hakAdi()}ndan düşmez.</div>` : ''}</div>
     ${panel}
     <div class="kart">

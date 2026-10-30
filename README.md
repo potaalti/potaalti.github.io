@@ -11,6 +11,15 @@ sayfaları; ileride TBL ve BSL fantezi ligleri ve Pota Altı YouTube yayınları
 - **Oyuncu sayfası:** sezon ortalamaları, maç maç istatistikler
 - Telefona uygulama gibi eklenebilir (PWA), giriş gerekmez
 
+## 2. aşama: TBL Fantezi Ligi uygulamanın içinde
+- **Fantezi → TBL Fantezi Ligi:** Takımım (takım seçimi cihazda hatırlanır), Haftalık sıralama, Genel klasman, takım sayfaları
+  (As/Yedek, yerine giren yedek, haftalar), Boştakiler; sıralamalar görsel olarak paylaşılır/indirilir.
+- Veriler (kadrolar, haftalık VP'ler, ayarlar) TBL Fantezi sitesinden okunur; geçmiş haftalar ve kadrolar aynen korunur.
+- Puanlama, TBL Fantezi sitesinin `scoring.js` dosyasının birebir kopyası (`site/tbl-puanlama.js`) ile yapılır.
+- `test/tbl-fantezi-karsilastir.mjs`: eski siteyle her haftanın sıralamasını, genel klasmanı ve her takımın her haftasındaki
+  oyuncuları birebir karşılaştırır (2026-10-30: 71 karşılaştırma, 0 fark). Eski adres, geçiş günü bu karşılaştırma tekrar
+  çalıştırıldıktan sonra uygulamaya yönlendirilecek.
+
 ## Veriler
 - Canlı veriler (maç listeleri, kutu skorlar) TBL Fantezi Ligi sitesinin yayınladığı dosyalardan okunur
   (`https://potaalti.github.io/tbl_fantezi_lig/data`); bu dosyaları telefondaki Termux güncellemesi üretir.

@@ -170,3 +170,30 @@ a.oyuncu-link:hover { color: var(--vurgu); text-decoration: underline; }
   .kart { padding: 13px; border-radius: 12px; }
   .mac { font-size: .85rem; padding: 10px 12px; }
 }
+
+/* Fantezi satırları (TBL Fantezi Ligi ekranları) */
+.f-satir { display: flex; align-items: center; gap: 12px; padding: 10px 2px; border-top: 1px solid var(--cizgi); color: inherit; }
+.kart > .f-satir:first-of-type, .kart > h2 + .f-satir, .kart > h3 + .f-satir, .kart > p + .f-satir, .kart > .baslik-satir + .f-satir { border-top: 0; }
+a.f-satir:hover { background: var(--vurgu-acik); }
+.f-satir.benim { background: var(--vurgu-acik); border-radius: 10px; padding-left: 8px; padding-right: 8px; }
+.f-satir .ad { flex: 1; min-width: 0; }
+.f-satir .ad strong { display: block; }
+.f-satir .ad small { display: block; color: var(--soluk); font-size: .78rem; }
+.f-satir.sayilmadi { opacity: .55; }
+.f-sira { width: 30px; height: 30px; flex: 0 0 30px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: .85rem; background: var(--zemin); font-variant-numeric: tabular-nums; }
+.f-sira.s1 { background: #ca8a04; color: #fff; }
+.f-sira.s2 { background: #8a8f98; color: #fff; }
+.f-sira.s3 { background: #b0662f; color: #fff; }
+.f-sayi { text-align: right; min-width: 52px; }
+.f-sayi strong { display: block; font-size: 1.1rem; font-variant-numeric: tabular-nums; }
+.f-sayi small { color: var(--soluk); font-size: .7rem; }
+.f-sayi.ikincil strong { font-size: .95rem; color: var(--soluk); }
+.f-cip { background: var(--vurgu); color: var(--vurgu-uzeri); font-weight: 800; border-radius: 99px; padding: 3px 9px; font-size: .85rem; font-variant-numeric: tabular-nums; }
+.etiket { display: inline-block; margin-left: 6px; font-size: .68rem; font-weight: 700; padding: 1px 6px; border-radius: 6px; vertical-align: middle; }
+.etiket.cikti { background: rgba(185, 28, 28, .12); color: var(--kirmizi); }
+.etiket.girdi { background: rgba(21, 128, 61, .14); color: var(--yesil); }
+.etiket.canli-e { background: var(--kirmizi); color: #fff; }
+.degisim { font-size: .72rem; font-weight: 700; margin-left: 4px; }
+.degisim.yukari { color: var(--yesil); }
+.degisim.asagi { color: var(--kirmizi); }
+.bildirim { position: fixed; left: 50%; bottom: 90px; transform: translateX(-50%); background: #0f1f22; color: #fff; padding: 10px 16px; border-radius: 10px; z-index: 50; font-size: .9rem; max-width: 90vw; }

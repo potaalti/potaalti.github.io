@@ -2,8 +2,11 @@
 // Canlı veriler (maç listeleri, kutu skorlar) TBL Fantezi Ligi sitesinin yayınladığı dosyalardan okunur; puan tablosu,
 // liderler ve sezon istatistikleri veri/uret.py'nin ürettiği site/data dosyalarındandır.
 
-const KAYNAK = 'https://potaalti.github.io/tbl_fantezi_lig/data';
-const TBL_FANTEZI = 'https://potaalti.github.io/tbl_fantezi_lig/';
+import {
+  KAYNAK, esc, sayi, isaretli, aramaNorm, baslik, gunBasligi, saatYazisi, tarihSaat, sureSn, getir, canliYazisi,
+} from './ortak.js';
+import * as TblFantezi from './fantezi-tbl.js';
+
 const YEREL = ['localhost', '127.0.0.1'].includes(location.hostname);
 const LIGLER = { tbl: { kisa: 'TBL', ad: 'Türkiye Basketbol Ligi' }, bsl: { kisa: 'BSL', ad: 'Basketbol Süper Ligi' } };
 
@@ -18,20 +21,7 @@ const yukleniyor = new Set();
 
 // ---------- Yardımcılar ----------
 const $ = s => document.querySelector(s);
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const sayi = n => (Math.round((Number(n) || 0) * 10) / 10).toLocaleString('tr-TR');
-const isaretli = n => (n > 0 ? `+${n}` : String(n));
 const yuzde = ([b, d]) => (d ? `%${Math.round((b / d) * 100)}` : '–');
-const aramaNorm = s => String(s ?? '').toLocaleLowerCase('tr').replace(/ı/g, 'i').normalize('NFD').replace(/[̀-ͯ]/g, '');
-// TBF'deki BÜYÜK HARF adları: "FENERBAHÇE BEKO" -> "Fenerbahçe Beko" (kısaltmalar olduğu gibi)
-const baslik = ad => String(ad ?? '').split(' ').map(k =>
-  k !== k.toLocaleUpperCase('tr') || k.replace(/\./g, '').length <= 3 ? k
-    : k.toLocaleLowerCase('tr').replace(/(^|[.\-])(\p{L})/gu, (_, a, b) => a + b.toLocaleUpperCase('tr')),
-).join(' ').replace(/Technıc/u, 'Technic');
-const gunBasligi = iso => new Date(iso).toLocaleDateString('tr-TR', { weekday: 'long', day: 'numeric', month: 'long' });
-const saatYazisi = iso => (iso.endsWith('T00:00:00') ? 'Saat belli değil' : new Date(iso).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }));
-const tarihSaat = iso => new Date(iso).toLocaleString('tr-TR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
-const sureSn = s => { const [dk, sn] = String(s || '0:00').split(':').map(Number); return (dk || 0) * 60 + (sn || 0); };
 const kazananSinifi = (m, taraf) => {
   if (m.durum !== 'bitti') return '';
   const ev = Number(m.evSkor);
@@ -44,11 +34,6 @@ const takimAnahtari = ad => String(ad).replace(/İ/g, 'I').replace(/ı/g, 'i').t
 const takimAdi = (lig, id) => baslik(S.tablo[lig]?.find(t => t.id === id)?.ad ?? id);
 const takimLinki = (lig, ad) => `<a href="#/takim/${lig}/${takimAnahtari(ad)}">${esc(baslik(ad))}</a>`;
 
-async function getir(url) {
-  const r = await fetch(`${url}?t=${Date.now()}`, { cache: 'no-store' });
-  if (!r.ok) throw new Error(`${url} okunamadı (${r.status})`);
-  return r.json();
-}
 
 // Kaynakta saati belli olmayan ileri tarihli maçlar skorsuz "canli" gelebiliyor: oynanmadı sayılır
 const durumDuzelt = m => (m.durum === 'canli' && m.evSkor == null && new Date(m.tarih).getTime() > Date.now() + 6 * 3600000 ? { ...m, durum: 'oynanmadi' } : m);
@@ -115,22 +100,12 @@ function gorunum() {
     case 'lig': return gorunumLig(lig, b ?? 'tablo');
     case 'takim': return `<div class="dar">${gorunumTakim(lig, b)}</div>`;
     case 'oyuncu': return `<div class="dar">${gorunumOyuncu(lig, b)}</div>`;
-    case 'fantezi': return `<div class="dar">${gorunumFantezi()}</div>`;
+    case 'fantezi': return `<div class="dar">${a === 'tbl' ? TblFantezi.gorunum(rota().slice(2)) : gorunumFantezi()}</div>`;
     default: return gorunumAna();
   }
 }
 
 // ---------- Maçlar ----------
-function canliYazisi(m) {
-  const c = m.canliDurum;
-  if (!c?.periyot) return 'Canlı';
-  const ad = c.uzatma ? 'Uzatma' : `${c.periyot}. Çeyrek`;
-  if (c.saat && c.saat !== '00:00') return `${ad} · ${c.saat}`;
-  if (c.uzatma) return `${ad} sonu`;
-  if (c.periyot === 2) return 'Devre arası';
-  if (c.periyot >= 4) return Number(m.evSkor) !== Number(m.depSkor) ? 'Maç sonu · kesinleşiyor' : '4. Çeyrek sonu';
-  return `${c.periyot}. Çeyrek sonu`;
-}
 
 function macSatiri(lig, m) {
   const orta = m.durum === 'oynanmadi'
@@ -402,17 +377,17 @@ function gorunumAna() {
   const sutun = lig => `<div>${buHaftaKarti(lig)}${tabloKarti(lig, 6)}${liderOzeti(lig)}</div>`;
   return `<div class="karsilama"><img src="icon-192.png" alt=""><div><strong>Pota Altı</strong><small>TBL ve BSL canlı skorlar, istatistikler ve fantezi ligleri</small></div></div>
     <div class="iki-sutun">${sutun('tbl')}${sutun('bsl')}</div>
-    <div class="iki-sutun">${fantezKartlari()}</div>${altBilgi()}`;
+    <div class="iki-sutun"><div>${TblFantezi.ozet()}</div><div>${fantezKartlari()}</div></div>${altBilgi()}`;
 }
 
 // ---------- Fantezi ----------
 function fantezKartlari() {
-  return `<a class="kart fantezi-kart" href="${TBL_FANTEZI}" target="_blank" rel="noopener"><strong>⭐ TBL Fantezi Ligi ›</strong>
-      <span class="soluk">Haftalık VP sıralaması, genel klasman, takımlar ve boştaki oyuncular.</span></a>
+  return `<a class="kart fantezi-kart" href="#/fantezi/tbl"><strong>⭐ TBL Fantezi Ligi ›</strong>
+      <span class="soluk">Takımın, haftalık VP sıralaması, genel klasman ve boştaki oyuncular.</span></a>
     <div class="kart fantezi-kart"><strong>🏀 BSL Fantezi Ligi</strong><span class="soluk">Canlı draft, takaslar, haftalık puanlama. Katıl üyelerine özel; yakında.</span></div>`;
 }
 function gorunumFantezi() {
-  return `<div class="sayfa-baslik"><h1>Fantezi ligleri</h1><p class="soluk">Pota Altı'nın fantezi ligleri. Şimdilik TBL Fantezi Ligi kendi sayfasında açılır; ligler uygulamanın içine taşınacak.</p></div>${fantezKartlari()}`;
+  return `<div class="sayfa-baslik"><h1>Fantezi ligleri</h1><p class="soluk">Pota Altı'nın fantezi ligleri.</p></div>${fantezKartlari()}${TblFantezi.ozet()}`;
 }
 
 function altBilgi() {
@@ -425,8 +400,10 @@ document.addEventListener('click', e => {
   const el = e.target.closest('[data-is]');
   if (!el) return;
   if (el.dataset.is === 'oyuncu-sirala') { S.ui.oyuncuSirala = el.dataset.id; ciz(); }
+  if (el.dataset.is === 'paylas') TblFantezi.paylas(el, el.dataset.tur, el.dataset.id, el.dataset.islem === 'indir');
 });
 document.addEventListener('input', e => {
+  if (e.target.dataset?.fanteziAra !== undefined) { TblFantezi.araGuncelle(e.target.value); ciz(); return; }
   const k = e.target.dataset?.ui;
   if (!k) return;
   S.ui[k] = e.target.value;
@@ -442,6 +419,7 @@ async function canliYenile() {
     if (!v?.maclar?.some(m => m.durum !== 'bitti' && !m.tarih.endsWith('T00:00:00') && simdi >= new Date(m.tarih).getTime() - 10 * 60000)) continue;
     try { S.maclar[k] = listeDuzelt(await getir(`${KAYNAK}/maclar/${k}.json`)); } catch { /* sonraki denemede */ }
   }
+  try { await TblFantezi.yenile(); } catch { /* sonraki denemede */ }
   const [s, lig, id] = rota();
   if (s === 'mac' && macBul(lig, Number(id))?.durum === 'canli') {
     try { S.kutular[Number(id)] = await getir(`${KAYNAK}/mac/${id}.json`); } catch { /* sonraki denemede */ }
@@ -450,6 +428,8 @@ async function canliYenile() {
 }
 setInterval(canliYenile, 60 * 1000);
 document.addEventListener('visibilitychange', () => { if (!document.hidden) canliYenile(); });
+
+TblFantezi.baglan(() => ciz());
 
 async function basla() {
   try {

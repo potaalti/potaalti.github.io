@@ -352,6 +352,16 @@ async function main() {
   kontrol((await oku(admin.db, 'lig', 'durum')).asama === 'kurulum' && Object.values(sifir).every(x => x.as.length === 0)
     && !Object.keys(await hepsi(admin.db, 'secimler')).length && !Object.keys(await hepsi(admin.db, 'teklifler')).length, 'Yönetici draftı sıfırladı');
 
+  // Yönetici de oynuyor: kendi takımına katılır, o takım yönetici takımı olur, yöneticiliği sürer
+  {
+    const kod = await admin.D.koduYenile('t17', null);
+    const ayar = await oku(admin.db, 'lig', 'ayar');
+    await admin.D.yoneticiTakimlariniKaydet([...(ayar.yoneticiTakimlar ?? []), 't17']);
+    await admin.D.davetleKatil(admin.uid, { email: 'menajer1@ornek.com', ad: 'Yönetici' }, kod, 't17');
+    await admin.D.ayarlariKaydet({ secimSuresi: SURE });
+    kontrol((await admin.D.uyelik(admin.uid)).takim === 't17', 'Yönetici kendi takımına katıldı ve yönetici işlemi yapabiliyor');
+  }
+
   console.log(`\nSonuç: ${basarili} kontrol geçti, ${hatali} kontrol başarısız.`);
   process.exit(hatali ? 1 : 0);
 }

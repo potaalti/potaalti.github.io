@@ -1045,7 +1045,12 @@ function gorunumYonetici() {
         <td><div class="satir"><button class="btn kucuk" data-is="takim-kaydet" data-id="${t.id}">Kaydet</button> ${hesap}</div></td></tr>`;
     }).join('')}</tbody></table></div>
     <p class="kucuk soluk" style="margin-bottom:0">Yönetici hesapları: ${uyeler.filter(u => u.takim === 'admin').map(u => esc(u.email)).join(', ') || '-'}
-    (ve yönetici yetkisi verilen takımların menajerleri)</p></div>`);
+    (ve yönetici yetkisi verilen takımların menajerleri)</p>
+    ${S.ben === 'admin' ? `<div class="uyari-kutu"><b>Sen de oynuyor musun?</b> Kendi takımını seç: Google hesabın o takıma bağlanır, takım yönetici takımı olur
+      ve yöneticiliğin devam eder. (Kendi takımının davet linkini açman da aynı işi yapar.)
+      <div class="satir" style="margin-top:8px"><select id="kendi-takim"><option value="">Takımını seç</option>
+      ${takimlar().filter(t => S.kodlar?.[t.id]).map(t => `<option value="${t.id}">${esc(t.ad)}</option>`).join('')}</select>
+      <button class="btn ana" data-is="kendi-takim">Takıma katıl</button></div></div>` : ''}</div>`);
   const yoneticiler = S.ayar.yoneticiTakimlar ?? [];
   adimlar.push(`<div class="kart"><h3>Yöneticiler</h3>
     <p class="kucuk soluk">Yönetici yetkisi verdiğin takımların menajerleri kendi takımlarıyla oynarken yönetici işlerini de yapar
@@ -1338,6 +1343,14 @@ async function eylem(is, id, el) {
       await signOut(auth);
       location.reload();
       return;
+    case 'kendi-takim': {
+      const tid = deger('kendi-takim');
+      if (!tid) return bildir('Takımını seç.', true);
+      if (!confirm(`${takimAdi(tid)} senin takımın olacak ve yönetici yetkisi alacak. Onaylıyor musun?`)) return;
+      await yoneticiTakimaKatil(tid, S.kodlar[tid]);
+      await davetleriYenile();
+      return;
+    }
     case 'uye-cikar': {
       const u = S.uyeler.find(x => x.uid === id);
       if (!confirm(`${u.email} hesabı ${takimAdi(u.takim)} takımından çıkarılsın mı? Takım için yeni davet linki oluşturulur.`)) return;
@@ -1782,6 +1795,18 @@ async function canliYenile() {
 }
 setInterval(canliYenile, 60 * 1000);
 
+// Yönetici kendi takımına katılır: önce takıma yönetici yetkisi verilir (yöneticilik sürsün), sonra hesap takıma bağlanır
+async function yoneticiTakimaKatil(tid, kod) {
+  // Davet linkiyle açılışta lig ayarları henüz dinlenmeye başlamamış olabilir
+  const ayar = S.ayar ?? (await F.getDoc(F.doc(fdb, 'lig', 'ayar'))).data();
+  const liste = ayar.yoneticiTakimlar ?? [];
+  if (!liste.includes(tid)) await D.yoneticiTakimlariniKaydet([...liste, tid]);
+  await D.davetleKatil(S.uid, hesapBilgisi(), kod, tid);
+  S.ben = tid;
+  bildir('Takımına katıldın; yöneticiliğin devam ediyor 🎉');
+  ciz();
+}
+
 // Yönetici sayfası: takımlara bağlı hesaplar ve kullanılmamış davet kodları
 async function davetleriYenile() {
   try {
@@ -1804,8 +1829,18 @@ async function girisYap() {
     return;
   }
   if (!googleMi()) return; // davet kartı Google ile girişi ister
-  if (u) {
+  if (u && u.takim !== 'admin') {
     if (u.takim !== tid) bildir('Bu Google hesabı zaten başka bir takıma bağlı. Davet linkini takımın menajeri kendi Google hesabıyla açmalı.', true);
+    davetiBirak();
+    return;
+  }
+  if (u?.takim === 'admin') {
+    // Yönetici kendi takımına katılıyor: yöneticiliği o takım üzerinden devam eder
+    try {
+      await yoneticiTakimaKatil(tid, S.davet);
+    } catch (e) {
+      hataGoster(e);
+    }
     davetiBirak();
     return;
   }

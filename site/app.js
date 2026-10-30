@@ -135,8 +135,9 @@ function hataGoster(e) {
   bildir(`Bir hata oluştu: ${e?.message ?? e}`, true);
 }
 
+// Veri dosyaları: GitHub Pages önbelleği (10 dk) canlı skoru geciktirmesin diye her istekte yeni adres
 async function jsonGetir(yol) {
-  const r = await fetch(yol, { cache: 'no-cache' });
+  const r = await fetch(`${yol}?t=${Date.now()}`, { cache: 'no-store' });
   if (!r.ok) throw new Error(`${yol} okunamadı`);
   return r.json();
 }
@@ -1192,10 +1193,22 @@ function gorunumMaclar(istenen) {
     <p class="soluk kucuk">Maça dokununca o maçtaki fantezi oyuncuları açılır. Skorlar veriler her güncellendiğinde yenilenir (${S.index?.guncelleme ? tarih(S.index.guncelleme) : '-'}).</p>`;
 }
 
+// Canlı maçın son güncellemedeki durumu: "3. Çeyrek · 04:12", "Devre arası", "Maç sonu · kesinleşiyor"
+function canliYazisi(m) {
+  const c = m.canliDurum;
+  if (!c?.periyot) return 'Canlı';
+  const ad = c.uzatma ? 'Uzatma' : `${c.periyot}. Çeyrek`;
+  if (c.saat && c.saat !== '00:00') return `${ad} · ${c.saat}`;
+  if (c.uzatma) return `${ad} sonu`;
+  if (c.periyot === 2) return 'Devre arası';
+  if (c.periyot >= 4) return Number(m.evSkor) !== Number(m.depSkor) ? 'Maç sonu · kesinleşiyor' : '4. Çeyrek sonu';
+  return `${c.periyot}. Çeyrek sonu`;
+}
+
 function macSatiri(m, n) {
   const orta = m.durum === 'oynanmadi'
     ? `<strong>${saatYazisi(m.tarih)}</strong>${m.yayin ? `<small>${esc(m.yayin)}</small>` : ''}`
-    : `<strong>${m.evSkor ?? 0} - ${m.depSkor ?? 0}</strong><small>${m.durum === 'canli' ? '<span class="canli-yazi">Canlı</span>' : 'MS'}</small>`;
+    : `<strong>${m.evSkor ?? 0} - ${m.depSkor ?? 0}</strong><small>${m.durum === 'canli' ? `<span class="canli-yazi">${canliYazisi(m)}</span>` : 'MS'}</small>`;
   const acik = S.ui.acikMac === m.id;
   return `<div class="mac tikla ${acik ? 'acik' : ''}" data-is="mac-ac" data-id="${m.id}">
       <span class="${kazananSinifi(m, 'ev')}">${esc(baslik(m.ev))}</span>
@@ -1695,6 +1708,34 @@ setInterval(() => {
 // Sunucu saati farkını arada bir tazele (bilgisayarın saati kayabilir)
 setInterval(() => { if (S.uid && !S.ligYok) D.saatFarki(S.uid).then(f => { S.saatFarki = f; }).catch(() => {}); }, 5 * 60 * 1000);
 
+// ---------- Canlı maçlar: maç saatlerinde veriler dakikada bir yenilenir ----------
+// Bilgisayardaki güncelleme maç saatlerinde 3 dakikada bir canlı skoru ve VP'leri siteye gönderir.
+function canliMaclar() {
+  const g = S.index?.guncelHafta;
+  const simdiMs = Date.now();
+  return [g, g + 1].flatMap(n => S.maclar[n] ?? []).filter(m => m.durum === 'canli' || (m.durum !== 'bitti'
+    && !m.tarih.endsWith('T00:00:00') && simdiMs >= new Date(m.tarih).getTime() - 10 * 60000
+    && simdiMs <= new Date(m.tarih).getTime() + 4 * 3600000));
+}
+
+async function canliYenile() {
+  if (!S.index || document.hidden || !canliMaclar().length) return;
+  try {
+    S.index = await jsonGetir('data/index.json');
+    const g = S.index.guncelHafta;
+    await Promise.all([g, g + 1].map(async n => {
+      try { S.maclar[n] = (await jsonGetir(`data/maclar/${n}.json`)).maclar; } catch { /* henüz yazılmamış */ }
+      if (S.haftalar[n] || (S.ayar && n >= S.ayar.baslangicHaftasi)) {
+        try { S.haftalar[n] = await jsonGetir(`data/hafta/${n}.json`); } catch { /* henüz yazılmamış */ }
+      }
+    }));
+    ciz();
+  } catch (e) {
+    console.warn('Canlı veri yenilenemedi', e);
+  }
+}
+setInterval(canliYenile, 60 * 1000);
+
 // Yönetici sayfası: takımlara bağlı hesaplar ve kullanılmamış davet kodları
 async function davetleriYenile() {
   try {
@@ -1765,6 +1806,9 @@ async function basla() {
     S.bslHareketleri = bslHareketleri;
     S.index = index;
     S.rehber = new Map(rehber.map(o => [o.id, o]));
+    // Bu ve sıradaki haftanın maçları: canlı maç olup olmadığını bilmek için
+    [index.guncelHafta, index.guncelHafta + 1].forEach(n => jsonGetir(`data/maclar/${n}.json`)
+      .then(d => { S.maclar[n] = d.maclar; ciz(); }).catch(() => {}));
     if (!(await D.ligVarMi())) {
       S.ligYok = true;
       S.hazir = true;

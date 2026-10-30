@@ -105,9 +105,14 @@ hesaplanır.
 - `guncelle.bat`'a çift tıkla: TBF'den verileri çeker ve siteye gönderir (birkaç dakikada yayında).
   Haftanın maçları bitince (genelde Pazartesi gecesi) bir kez yeterli; istersen maç günlerinde de
   çalıştırabilirsin.
-- Otomatik olsun istersen `gorev_kur.bat`'a bir kez çift tıkla: bilgisayar açıkken her gün **12:30 ve 23:45'te**
-  güncelleme yapılır (BSL'de transfer çok olduğu için günde 2 kez). Kaldırmak için:
-  `schtasks /Delete /TN "BSL Fantezi Veri Oglen" /F` ve `schtasks /Delete /TN "BSL Fantezi Veri Gece" /F`.
+- **Otomatik güncelleme ve canlı skor:** `gorev_kur.bat`'a bir kez çift tıkla. Bilgisayar açık ve internete bağlı
+  olduğu sürece arka planda (pencere açılmadan) çalışır:
+  - Her gün **12:30 ve 23:45'te** tam güncelleme: oyuncu listesi, transferler, fikstür, skorlar.
+  - **3 dakikada bir maç saati kontrolü**: BSL maçı başlamadan 10 dakika önceden maç TBF'de kesinleşene kadar canlı
+    skor, çeyrek ve oyuncuların anlık VP'leri FIBA LiveStats'ten çekilip siteye gönderilir (site 1–2 dakikada yayınlar).
+    Maç yokken internete bile çıkmadan hemen kapanır.
+  - Sitedeki puan durumu ve Maçlar sekmesi canlı maç varken dakikada bir kendini yeniler.
+  - Ne olduğunu görmek için klasördeki `guncelle.log` dosyasına bakabilirsin. Kaldırmak için `gorev_kaldir.bat`.
 
 ### Yöneticiler ve bildirimler
 

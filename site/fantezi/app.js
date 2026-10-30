@@ -445,33 +445,10 @@ function gorunum() {
 }
 
 // ---------- İlk kurulum ----------
-// TBL: eski sitedeki kadro değişiklikleri (hak kullanıp kullanmadığıyla) ve takımların kullandığı haklar (düzenlenebilir)
-function tblAktarimKartlari(kaynak) {
-  const transferTablosu = kaynak.transferler.length ? `<div class="tablo-kap"><table>
-      <thead><tr><th>Hafta</th><th>Takım</th><th>Çıkan → Giren</th><th>Hak</th></tr></thead>
-      <tbody>${kaynak.transferler.map(x => `<tr><td>${x.hafta - kaynak.baslangic + 1}.</td><td>${esc(x.takim)}</td>
-        <td>${esc(x.cikan)} → <b>${esc(x.giren)}</b><div class="kucuk soluk">${esc(x.neden)}</div></td>
-        <td>${x.hak ? '<span class="rozet uyari">1 hak</span>' : '<span class="rozet as">hak yok</span>'}</td></tr>`).join('')}</tbody></table></div>`
-    : '<p class="soluk">Henüz kadro değişikliği yapılmamış.</p>';
-  const hakTablosu = `<div class="tablo-kap"><table><thead><tr><th>Takım</th><th class="sayi">Kullanılan ${hakAdi()}</th></tr></thead><tbody>
-    ${kaynak.takimlar.map((t, i) => `<tr><td>${esc(t.ad)}${t.menajer ? ` <span class="soluk kucuk">${esc(t.menajer)}</span>` : ''}</td>
-      <td class="sayi"><input type="number" id="fa-${i}" min="0" max="2" value="${t.fa}" style="width:64px"> / 2</td></tr>`).join('')}</tbody></table></div>`;
-  return `<div class="kart"><h2>Şimdiye kadarki transferler</h2>
-      <p class="kucuk soluk">Eski TBL Fantezi Ligi'nin haftalık kadrolarından. Lisansı düşen oyuncunun yerine alınan hak kullanmaz.</p>${transferTablosu}</div>
-    <div class="kart"><h2>Kullanılan haklar</h2><p class="kucuk soluk">Yukarıdaki listeye göre hesaplandı; aktarmadan önce değiştirebilirsin (sonra da Yönetici → takım sayfasından düzenlenebilir).</p>${hakTablosu}</div>`;
-}
-
-// TBL kurulumunda ve yeniden aktarımda yazılan lig ayarları
+// TBL kurulumunda yazılan lig ayarları
 const tblAktarimAyari = () => ({
   degisiklikHakki: LIG.degisiklikHakki ?? 99, ortakHak: !!LIG.ortakHak, beklemeSaat: LIG.beklemeSaat ?? 36, asEnFazlaYabanci: 2, mevkilerHazir: false,
 });
-// Kullanılan hak kutularındaki değerleri aktarılacak takımlara yazar
-function hakKutulariniOku(kaynak) {
-  kaynak.takimlar.forEach((t, i) => {
-    const v = Number(deger(`fa-${i}`));
-    if (Number.isInteger(v) && v >= 0 && v <= 2) t.fa = v;
-  });
-}
 
 function gorunumKurulum() {
   if (S.kurulumSonucu) {
@@ -499,13 +476,12 @@ function gorunumKurulum() {
     return `<div class="kart sira-sende">
       <h2>Ligi kur</h2>
       <p>Puan durumu, haftalık sonuçlar, takımlar ve kadrolar lig kurulunca açılır. Ligi kuran Google hesabı
-      (<b>${esc(auth.currentUser.email)}</b>) <b>yönetici</b> olur. Kurmadan önce aşağıdaki <b>kullanılan haklar</b>ı kontrol et.</p>
-      <p>Eski TBL Fantezi Ligi'nin bütün takımları, menajer adları ve <b>her haftanın kadrosu</b> aktarılır; geçmiş haftaların puanları
-      değişmez. Sezon hemen başlar: menajerler davet linkleriyle girip kendi kadro değişikliklerini yapar
-      (sezonda ${2} transfer hakkı: serbest oyuncu ya da As–Yedek değişikliği; ${beklemeSaati()} saat talep ve kura; As'ta en fazla 2 yabancı).</p>
+      (<b>${esc(auth.currentUser.email)}</b>) <b>yönetici</b> olur.</p>
+      <p>Eski TBL Fantezi Ligi'nin ${S.tblKaynak.takimlar.length} takımı, menajer adları ve <b>her haftanın kadrosu</b> aktarılır; geçmiş haftaların
+      puanları değişmez. Kullanılan transfer hakları eski sitedeki değişikliklerden hesaplanır; sonra takım sayfasından düzeltebilirsin.
+      Kurulunca menajerlerin davet linklerinin olduğu sayfa açılır.</p>
       <div class="form-izgara"><label for="k-ad">Lig adı</label><input type="text" id="k-ad" value="${esc(LIG.ad)}"></div>
-      <p style="margin-top:16px"><button class="btn ana" data-is="tbl-kur">Ligi kur ve kadroları aktar</button></p></div>
-      ${tblAktarimKartlari(S.tblKaynak)}`;
+      <p style="margin-top:16px"><button class="btn ana" data-is="tbl-kur">Ligi kur ve kadroları aktar</button></p></div>`;
   }
   const varsayilanHafta = S.index ? C.etkinHafta(S.index, 1) : 1;
   return `<div class="kart">
@@ -2160,14 +2136,14 @@ async function eylem(is, id, el) {
       el.disabled = true;
       el.textContent = 'Kadrolar aktarılıyor…';
       const kaynak = S.tblKaynak ?? await tblKaynakKadrolar();
-      hakKutulariniOku(kaynak);
-      const sonuc = await D.ligiKur(S.uid, hesapBilgisi(), {
+      await D.ligiKur(S.uid, hesapBilgisi(), {
         ad: deger('k-ad') || LIG.ad, secimSuresi: 90, baslangicHaftasi: kaynak.baslangic, takimSayisi: kaynak.takimlar.length,
       });
       await D.kadrolariIceAktar(kaynak.takimlar, { aktifHafta: C.etkinHafta(S.index, kaynak.baslangic), ayar: tblAktarimAyari() });
-      S.ben = 'admin';
-      S.kurulumSonucu = sonuc;
-      return ciz();
+      // Kurulunca doğrudan takımlar, menajerler ve davet linklerinin olduğu Yönetici sayfası
+      location.hash = '#/yonetici';
+      location.reload();
+      return;
     }
     case 'kurulum-bitti':
       location.hash = '#/yonetici';

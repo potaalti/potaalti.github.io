@@ -37,10 +37,11 @@ await yeni.waitForNavigation({ waitUntil: 'networkidle2', timeout: 20000 }).catc
 await yeni.waitForFunction(() => window.S?.hazir, { timeout: 20000 });
 await bekle(1500);
 console.log('kurulum ekranı:', await yeni.evaluate(() => document.querySelector('#icerik').innerText.replace(/\s+/g, ' ').slice(0, 160)));
-await yeni.evaluate(() => document.querySelector('[data-is=tbl-kur]').click());
-await yeni.waitForFunction(() => document.querySelector('[data-is=kurulum-bitti]'), { timeout: 30000 });
-await Promise.all([yeni.waitForNavigation({ waitUntil: 'networkidle2' }), yeni.evaluate(() => document.querySelector('[data-is=kurulum-bitti]').click())]);
+// Kurulunca sayfa kendiliğinden Yönetici sayfasına (takımlar ve davetler) geçer
+await Promise.all([yeni.waitForNavigation({ waitUntil: 'networkidle2', timeout: 60000 }), yeni.evaluate(() => document.querySelector('[data-is=tbl-kur]').click())]);
 await yeni.waitForFunction(() => window.S?.hazir && Object.keys(window.S.kadrolar).length, { timeout: 20000 });
+await bekle(1500);
+console.log('kurulumdan sonra:', await yeni.evaluate(() => `${location.hash} · ${document.querySelector('#icerik h3')?.textContent} · ${document.querySelectorAll('[data-is=kopyala]').length} davet linki`));
 await bekle(2000);
 console.log('durum:', await yeni.evaluate(() => JSON.stringify({ asama: S.durum.asama, aktifHafta: S.durum.aktifHafta, takim: Object.keys(S.takimlar).length, ayar: { baslangic: S.ayar.baslangicHaftasi, deg: S.ayar.degisiklikHakki, yab: S.ayar.asEnFazlaYabanci } })));
 

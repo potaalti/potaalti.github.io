@@ -3,3 +3,4 @@ __pycache__/
 *.log
 .claude/
 test/node_modules/
+fantezi/test/node_modules/

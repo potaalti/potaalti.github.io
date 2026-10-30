@@ -5,7 +5,8 @@ seçer; sezon boyunca takas, serbest oyuncu ve As–Yedek değişikliği yapar; 
 hesaplanır.
 
 - **Site**: Pota Altı App'in bir bölümü olarak GitHub Pages'te yayınlanır (web dosyaları `site/bsl/`, adresi uygulamanın `bsl/` sayfası).
-  Bu klasör (`bsl/`): Firebase kuralları, veri betiği, `.bat` dosyaları ve testler.
+  Ortak fantezi lig motoru `site/fantezi/` (BSL ve TBL aynı kodu kullanır), Firebase kuralları ve testler `fantezi/`,
+  BSL veri betiği ve `.bat` dosyaları `bsl/` klasöründe.
 - **Canlı veri** (draft, kadrolar, takaslar): Google'ın ücretsiz **Firebase Firestore** veritabanı
   (Spark planı, kredi kartı gerekmez).
 - **BSL verisi** (oyuncular, haftalık VP): bilgisayarda `guncelle.bat` ile TBF'den çekilir ve siteye
@@ -25,7 +26,7 @@ hesaplanır.
    (ya da bana gönder, ben yerleştireyim — bu bilgiler gizli değildir).
 5. Sol menü **Build → Firestore Database** → **Create database** → konum: `eur3 (europe-west)` →
    **Start in production mode** → Oluştur.
-6. Aynı sayfada **Rules** sekmesi → oradaki her şeyi sil → bu projedeki `firestore.rules` dosyasının
+6. Aynı sayfada **Rules** sekmesi → oradaki her şeyi sil → bu projedeki `fantezi/firestore.rules` dosyasının
    tamamını yapıştır → **Publish**.
 7. Sol menü **Build → Authentication** → **Get started** → **Sign-in method**:
    - **Google** → **Enable** → "Project support email" olarak kendi Gmail adresini seç → Save.
@@ -187,11 +188,28 @@ canlı dinler).
 ## Geliştirici notları
 
 - `veri_guncelle.py`: TBF API (BSL lig id 22214, sezon 174). Biten maçlar `cache/`'de saklanır.
-- `site/bsl/core.js`: draft sırası, otomatik seçim, Türk kuralı, puanlama (saf fonksiyonlar).
-- `site/bsl/db.js`: Firestore işlemleri (seçim, takas, serbest oyuncu… hepsi tek işlemde/transaction).
-- `firestore.rules`: kim neyi yazabilir (sıra, süre, tek takım kuralı, haklar, Türk kuralı).
+- `site/fantezi/`: iki ligin ortak motoru. `core.js`: draft sırası, otomatik seçim, kadro kuralları, puanlama;
+  `db.js`: Firestore işlemleri (seçim, takas, serbest oyuncu… hepsi tek işlemde/transaction); `app.js`: ekranlar.
+  Her ligin klasörü (`site/bsl/`, `site/tbl/`) sadece sayfa, `config.js` (Firebase projesi + lig ayarı) ve veri tutar;
+  sayfadaki import map (`lig-ayar`) motora hangi ligin ayarını kullanacağını söyler.
+- `fantezi/firestore.rules`: kim neyi yazabilir (sıra, süre, tek takım kuralı, haklar). İki ligin projesine de aynı kurallar yüklenir.
 - Yerel deneme: `localhost`'ta açılan site Firebase emülatörüne bağlanır.
-  `firebase emulators:start --only firestore,auth --project demo-bsl-draft`, ardından
-  (bu klasörde) ve depo kökünde `python -m http.server 8790 --directory site` (BSL: `http://localhost:8790/bsl/`),
-  sonra `cd bsl/test && npm install && node deneme_draft.mjs`
-  (17 takımlık tam deneme draftı ve kural testleri).
+  `fantezi/` klasöründe `firebase emulators:start --only firestore,auth --project demo-bsl-draft` (iki ligin deneme
+  projesi birlikte çalışır), depo kökünde `python -m http.server 8790 --directory site`
+  (BSL: `http://localhost:8790/bsl/`, TBL: `http://localhost:8790/tbl/`), sonra `cd fantezi/test && npm install` ve
+  `node deneme_draft.mjs` (17 takımlık tam BSL draftı ve kural testleri), `node tbl.mjs` (TBL içe aktarma ve menajer işlemleri).
+
+## TBL Fantezi Ligi (menajer girişli)
+
+TBL Fantezi Ligi de aynı motorla `tbl/` adresinde çalışır. Farkları:
+- **Draft yok:** Yönetici ligi kurarken eski TBL Fantezi Ligi'nin takımları, menajer adları ve her haftanın kadrosu aktarılır
+  ("Ligi kur ve kadroları aktar"); geçmiş haftaların puanları değişmez, sezon hemen başlar.
+- **Kurallar:** 5 As + 2 Yedek, As'ta en fazla 2 yabancı (TÜRKİYE/KKTC Türk sayılır); sezonda 2 serbest oyuncu, 36 saat talep ve kura,
+  yönetici onaylı takas, As–Yedek değişikliği sınırsız (`site/tbl/config.js` → `degisiklikHakki`).
+- **Veri:** Haftalık VP'ler, maçlar ve oyuncu listesi eski TBL Fantezi sitesinin dosyalarından okunur (Termux günceller); puanlar onunla
+  birebir aynıdır. Haftaların başlangıç saatleri ve TBL kadro hareketleri `veri/uret.py` ile `site/tbl/data/`'ya yazılır.
+- **Kurulum:** BSL'den **ayrı** bir Firebase projesi aç (1. bölümdeki adımlar aynı: Google + Anonim giriş, Firestore, aynı
+  `fantezi/firestore.rules`, Authorized domains), ayarları `site/tbl/config.js`'e yapıştır. Sonra `tbl/` sayfasında Google ile giriş yap →
+  "Ligi kur ve kadroları aktar" → Yönetici sayfasındaki davet linklerini menajerlere gönder.
+- Geçiş günü: kadroları aktarmadan hemen önce eski sitede son kadro değişikliklerinin girilmiş olduğundan emin ol; aktarımdan sonra
+  değişiklikler sadece yeni sistemden yapılır (eski sitenin `kadrolar.csv` dosyası artık kullanılmaz).

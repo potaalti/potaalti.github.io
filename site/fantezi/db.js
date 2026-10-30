@@ -89,6 +89,24 @@ export async function sonTakimiCikar(kod) {
   });
 }
 
+// TBL: eski TBL Fantezi Ligi'nden aktarılan takımlar (ligiKur'dan sonra, yönetici olarak).
+// takimlar: [{ ad, menajer, gecmis: [{ hafta, as, yedek, tur }] }] — kadro son haftanınkidir, geçmiş haftalar puanlamada aynen kullanılır.
+export async function kadrolariIceAktar(takimlar, { aktifHafta, ayar }) {
+  const islemler = [];
+  takimlar.forEach((t, i) => {
+    const tid = takimId(i);
+    const son = t.gecmis.at(-1);
+    islemler.push(b => b.update(yol('takimlar', tid), { ad: t.ad, menajer: t.menajer ?? '' }));
+    islemler.push(b => b.update(yol('kadrolar', tid), { as: son.as, yedek: son.yedek, gecmis: t.gecmis, fa: 0, degisiklik: 0 }));
+    for (const pid of [...son.as, ...son.yedek]) {
+      if (!pid.startsWith('adsiz:')) islemler.push(b => b.set(yol('alinan', pid), { takim: tid, aktarim: true }));
+    }
+  });
+  islemler.push(b => b.update(yol('lig', 'ayar'), ayar));
+  islemler.push(b => b.update(yol('lig', 'durum'), { asama: 'sezon', ekran: 'lig', aktifHafta }));
+  await topluYaz(islemler);
+}
+
 // Davet linkiyle katılma: Google hesabı takıma bağlanır, davet kodu aynı işlemde silinir (tek kullanımlık)
 export async function davetleKatil(uid, hesap, kod, takim) {
   const b = F.writeBatch(db);

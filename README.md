@@ -22,11 +22,11 @@ sayfaları; ileride TBL ve BSL fantezi ligleri ve Pota Altı YouTube yayınları
 
 ## 3. aşama: BSL Fantezi Ligi uygulamanın içinde
 - BSL Fantezi Ligi (eski `bsl-draft` deposu, bütün geçmişiyle) bu depoya alındı: web dosyaları `site/bsl/` (adres: `bsl/`),
-  Firebase kuralları, veri betiği, `.bat` dosyaları, testler ve kurulum rehberi `bsl/` klasöründe (`bsl/KURULUM.md`).
+  veri betiği ve `.bat` dosyaları `bsl/` klasöründe; ortak motorun Firebase kuralları, testleri ve kurulum rehberi `fantezi/` klasöründe (`fantezi/KURULUM.md`).
 - Fantezi menüsündeki BSL kartı ve davet linkleri `bsl/` sayfasını açar; başlıktaki Pota Altı simgesi ana uygulamaya döner.
   Telefona eklenince tek uygulama kurulur (ortak manifest ve service worker).
 - `bsl/guncelle.bat` (günde 2 kez zamanlanmış) BSL verisini çeker, `veri/uret.py` ile TBL/BSL puan tablosu ve liderleri yeniler, ikisini birlikte yayınlar.
-- Testler: `bsl/test/deneme_draft.mjs` (Firebase emülatörü `bsl/` klasöründen başlatılır), 2026-10-30: 119 kontrol, 0 hata.
+- Testler: `fantezi/test/deneme_draft.mjs` (Firebase emülatörü `fantezi/` klasöründen başlatılır), 2026-10-30: 119 kontrol, 0 hata.
 
 ## 4. aşama: YouTube ve ana sayfa
 - **Yayın** sekmesi: Pota Altı YouTube kanalının ([@potaaltitv](https://www.youtube.com/@potaaltitv)) son canlı yayını oynatıcıda,
@@ -35,6 +35,14 @@ sayfaları; ileride TBL ve BSL fantezi ligleri ve Pota Altı YouTube yayınları
   birkaç dakikada bir sayfada kontrol edilir (API anahtarı gerekmez).
 - Liste `veri/uret.py` ile üretilir (`site/data/youtube.json`): video akışı (RSS) ve kanalın Canlı sekmesi. Kanal `veri/uret.py`
   içindeki `YOUTUBE` ayarındadır.
+
+## TBL Fantezi: menajerler kendi değişikliklerini yapar
+- BSL Fantezi'nin motoru ortak hale getirildi (`site/fantezi/`); TBL Fantezi aynı kodla `tbl/` adresinde, kendi Firebase projesiyle çalışır.
+- Draft yok: eski TBL Fantezi'nin kadroları ve haftalık geçmişi içe aktarılır. Kurallar: 5 As + 2 Yedek, As'ta en fazla 2 yabancı,
+  sezonda 2 serbest oyuncu, 36 saat talep ve kura, yönetici onaylı takas, sınırsız As–Yedek değişikliği.
+- Puanlar eski siteyle birebir aynı (2026-10-30: 2 hafta, 17 takımın oyuncuları ve genel klasman, 37 karşılaştırma, 0 fark).
+- Testler: `fantezi/test/tbl.mjs` (19 kontrol). Kurulum: `fantezi/KURULUM.md` → "TBL Fantezi Ligi".
+- Firebase projesi açılana kadar ana uygulamadaki TBL Fantezi bölümü (salt okunur) eski sitenin verisini göstermeye devam eder.
 
 ## Veriler
 - Canlı veriler (maç listeleri, kutu skorlar) TBL Fantezi Ligi sitesinin yayınladığı dosyalardan okunur

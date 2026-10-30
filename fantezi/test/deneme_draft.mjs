@@ -6,7 +6,7 @@ import { readFileSync } from 'node:fs';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInAnonymously, connectAuthEmulator, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import * as F from 'firebase/firestore';
-import * as C from '../../site/bsl/core.js';
+import * as C from '../../site/fantezi/core.js';
 
 F.setLogLevel('silent');
 const PROJE = 'demo-bsl-draft';
@@ -50,7 +50,7 @@ async function kullanici({ google = true } = {}) {
   } else {
     await signInAnonymously(auth);
   }
-  const D = await import(`../../site/bsl/db.js?bot=${sayac}`);
+  const D = await import(`../../site/fantezi/db.js?bot=${sayac}`);
   D.baglan(F, db);
   return { uid: auth.currentUser.uid, db, D };
 }

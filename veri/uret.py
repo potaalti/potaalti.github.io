@@ -102,6 +102,7 @@ ALANLAR = ["sayi", "rib", "hr", "sr", "ast", "tc", "blk", "tk", "faul", "vp"]
 
 def lig_uret(kaynak, lig, bilgi):
     haftalar = bilgi["haftalar"]
+    hafta_ozet = []  # TBL Fantezi için: haftaların ilk maç saati ve maç sayısı
     takimlar = {}  # anahtar -> kayıt
     oyuncular = {}  # id -> kayıt
     maclar_hepsi = []
@@ -117,6 +118,9 @@ def lig_uret(kaynak, lig, bilgi):
         liste = oku(kaynak, f"maclar/{lig}-{h}.json")
         if not liste:
             continue
+        saatli = sorted(m["tarih"] for m in liste["maclar"] if not m["tarih"].endswith("T00:00:00"))
+        hafta_ozet.append({"hafta": h, "ilkMac": f"{saatli[0]}+03:00" if saatli else None, "macSayisi": len(liste["maclar"]),
+                           "bitti": bool(liste["maclar"]) and all(m["durum"] == "bitti" for m in liste["maclar"])})
         for m in liste["maclar"]:
             # Kaynakta saati belli olmayan ileri tarihli maçlar skorsuz "canli" gelebiliyor: oynanmadı sayılır
             if m["durum"] == "canli" and m.get("evSkor") is None and m["tarih"] > datetime.now().isoformat():
@@ -235,7 +239,38 @@ def lig_uret(kaynak, lig, bilgi):
     yaz(CIKTI / lig / "oyuncular.json", sorted(oyuncu_ozet, key=lambda o: o["ad"]))
     yaz(CIKTI / lig / "takimlar.json", {"takimlar": takim_ozet, "maclar": maclar_hepsi})
     return {"ad": LIGLER[lig], "haftalar": haftalar, "guncel": bilgi.get("guncel"), "takimSayisi": len(takimlar),
-            "oyuncuSayisi": len(oyuncular)}
+            "oyuncuSayisi": len(oyuncular), "_haftaOzet": hafta_ozet}
+
+
+def tbl_fantezi_uret(kaynak, bilgi, hafta_ozet):
+    """TBL Fantezi Ligi (ortak motor, site/tbl/) için: haftaların ilk maç saatleri (değişikliğin geçerli olacağı hafta)
+    ve TBL kadro hareketleri (lige katılan / takım değiştiren / ayrılan; yeni katılana 36 saat bekleme başlar)."""
+    hedef = KOK / "site" / "tbl" / "data"
+    yaz(hedef / "index.json", {"guncelHafta": bilgi.get("guncel"), "haftalar": hafta_ozet,
+                               "guncelleme": datetime.now(timezone.utc).isoformat(timespec="seconds")})
+    rehber = oku(kaynak, "oyuncular.json") or {}
+    onceki_yol = CACHE / "tbl_rehber.json"
+    hareket_yol = hedef / "hareketler.json"
+    hareketler = json.loads(hareket_yol.read_text(encoding="utf-8")) if hareket_yol.exists() else []
+    if onceki_yol.exists():
+        onceki = json.loads(onceki_yol.read_text(encoding="utf-8"))
+        zaman = datetime.now(timezone.utc).isoformat(timespec="seconds")
+        yeni = []
+        for pid, o in rehber.items():
+            e = onceki.get(pid)
+            if o.get("aktif") and (not e or not e.get("aktif")):
+                yeni.append({"zaman": zaman, "id": pid, "ad": o["ad"], "tur": "yeni", "yeniTakim": o.get("takim")})
+            elif o.get("aktif") and e.get("takim") != o.get("takim"):
+                yeni.append({"zaman": zaman, "id": pid, "ad": o["ad"], "tur": "transfer", "eskiTakim": e.get("takim"), "yeniTakim": o.get("takim")})
+        for pid, e in onceki.items():
+            if e.get("aktif") and not (rehber.get(pid) or {}).get("aktif"):
+                yeni.append({"zaman": zaman, "id": pid, "ad": e["ad"], "tur": "ayrildi", "eskiTakim": e.get("takim")})
+        sinir = (datetime.now(timezone.utc).timestamp() - 90 * 86400)
+        hareketler = [h for h in yeni + hareketler if datetime.fromisoformat(h["zaman"]).timestamp() >= sinir]
+    yaz(hareket_yol, hareketler)
+    CACHE.mkdir(parents=True, exist_ok=True)
+    onceki_yol.write_text(json.dumps({pid: {"ad": o["ad"], "takim": o.get("takim"), "aktif": o.get("aktif")} for pid, o in rehber.items()},
+                                     ensure_ascii=False), encoding="utf-8")
 
 
 def youtube_uret():
@@ -296,6 +331,9 @@ def main():
         if not bilgi:
             continue
         meta["ligler"][lig] = lig_uret(args.kaynak, lig, bilgi)
+        hafta_ozet = meta["ligler"][lig].pop("_haftaOzet")
+        if lig == "tbl":
+            tbl_fantezi_uret(args.kaynak, bilgi, hafta_ozet)
         print(f"{lig}: {meta['ligler'][lig]['takimSayisi']} takım, {meta['ligler'][lig]['oyuncuSayisi']} oyuncu")
     try:
         y, v = youtube_uret()

@@ -12,7 +12,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Pota Altı">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <link rel="stylesheet" href="style.css">
+  <!-- Ortak fantezi lig motoru (site/fantezi/); bu ligin ayarı ve Firebase projesi config.js'te -->
+  <script type="importmap">{ "imports": { "lig-ayar": "./config.js" } }</script>
+  <link rel="stylesheet" href="../fantezi/style.css">
 </head>
 <body>
   <header class="ust">
@@ -26,6 +28,6 @@
   <main id="icerik" class="icerik"><p class="bos">Yükleniyor…</p></main>
   <nav id="alt-menu" class="alt-menu"></nav>
   <div id="bildirim" class="bildirim" role="status" aria-live="polite"></div>
-  <script type="module" src="app.js"></script>
+  <script type="module" src="../fantezi/app.js"></script>
 </body>
 </html>

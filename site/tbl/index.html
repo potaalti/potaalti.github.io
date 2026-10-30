@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Pota Altı TBL Fantezi Ligi</title>
+  <meta name="theme-color" content="#0a8a99">
+  <!-- Telefona eklenince tek uygulama: Pota Altı (BSL Fantezi onun içindeki bölüm) -->
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Pota Altı">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <!-- Ortak fantezi lig motoru (site/fantezi/); bu ligin ayarı ve Firebase projesi config.js'te -->
+  <script type="importmap">{ "imports": { "lig-ayar": "./config.js" } }</script>
+  <link rel="stylesheet" href="../fantezi/style.css">
+</head>
+<body>
+  <header class="ust">
+    <div class="ust-ic">
+      <a href="../" class="ana-donus" title="Pota Altı ana sayfa" aria-label="Pota Altı ana sayfa"><img src="../icon-64.png" alt="" width="30" height="30"></a>
+      <a href="#/" class="logo"><img src="icon.svg" alt="" width="28" height="28"><span id="lig-adi">Pota Altı TBL Fantezi Ligi</span></a>
+      <nav id="menu" class="menu"></nav>
+      <div id="kimlik" class="kimlik"></div>
+    </div>
+  </header>
+  <main id="icerik" class="icerik"><p class="bos">Yükleniyor…</p></main>
+  <nav id="alt-menu" class="alt-menu"></nav>
+  <div id="bildirim" class="bildirim" role="status" aria-live="polite"></div>
+  <script type="module" src="../fantezi/app.js"></script>
+</body>
+</html>

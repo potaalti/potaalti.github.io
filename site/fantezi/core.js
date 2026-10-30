@@ -133,7 +133,12 @@ export function dizilisOner(oyuncular, k = varsayilanKural) {
 }
 
 // Diziliş kurala uyuyor mu? as/yedek: [{ mevki, turk }]. Uymuyorsa hata metni döner.
+// k.tur 'tbl': As'ta en fazla k.enFazlaYabanci yabancı (mevki ve Yedek serbest)
 export function dizilisHatasi(as, yedek, k = varsayilanKural) {
+  if (k.tur === 'tbl') {
+    const yabanci = as.filter(o => !o.turk).length;
+    return yabanci > (k.enFazlaYabanci ?? 2) ? `As'ta en fazla ${k.enFazlaYabanci ?? 2} yabancı oyuncu olabilir (şu an ${yabanci})` : null;
+  }
   const on = as.filter(o => o.mevki === 'on').length;
   if (as.length !== k.asOn + k.asArka || on !== k.asOn) return `As'ta ${k.asOn} Ön ve ${k.asArka} Arka oyuncu olmalı`;
   if (!as.some(o => o.turk)) return "As'ta en az 1 Türk oyuncu olmalı";

@@ -10,3 +10,6 @@ export const firebaseConfig = {
   messagingSenderId: '000000000000',
   appId: 'BURAYA_YAPISTIRIN',
 };
+
+// Lig ayarı (ortak motor): BSL draftla kurulur; As 3 Ön + 2 Arka, As'ta ve Yedekte en az 1'er Türk
+export const lig = { kod: 'bsl', kisa: 'BSL', ad: 'Pota Altı BSL Fantezi Ligi', yerelProje: 'demo-bsl-draft', kural: 'bsl', draft: true, mevki: true };

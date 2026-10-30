@@ -102,8 +102,22 @@ hesaplanır.
 - `guncelle.bat`'a çift tıkla: TBF'den verileri çeker ve siteye gönderir (birkaç dakikada yayında).
   Haftanın maçları bitince (genelde Pazartesi gecesi) bir kez yeterli; istersen maç günlerinde de
   çalıştırabilirsin.
-- Otomatik olsun istersen `gorev_kur.bat`'a bir kez çift tıkla: bilgisayar açıkken her gece 23:45'te
-  güncelleme yapılır. Kaldırmak için: `schtasks /Delete /TN "BSL Fantezi Veri" /F`.
+- Otomatik olsun istersen `gorev_kur.bat`'a bir kez çift tıkla: bilgisayar açıkken her gün **12:30 ve 23:45'te**
+  güncelleme yapılır (BSL'de transfer çok olduğu için günde 2 kez). Kaldırmak için:
+  `schtasks /Delete /TN "BSL Fantezi Veri Oglen" /F` ve `schtasks /Delete /TN "BSL Fantezi Veri Gece" /F`.
+
+### Yöneticiler ve bildirimler
+
+- **Yönetici sayfası → Yöneticiler**: seçtiğin takımların menajerleri kendi takımlarıyla oynarken yönetici de olur
+  (sen ve arkadaşın için). Yönetici linki her zaman yöneticidir.
+- Yöneticilerin başlığında **🔔** var: mevkisi belirlenmemiş oyuncular (yeni transferler, Ön/Arka tek dokunuşla seçilir),
+  lisansı düşen oyuncular ve BSL kadro hareketleri (lige katılan, takım değiştiren, ayrılan) orada görünür.
+- **Lisansı düşen oyuncu**: bir takımdaki oyuncu TBF kadrolarından çıkarsa (ligden ayrılırsa) o takımın menajerine her
+  sayfada uyarı çıkar; boştakilerden kurallara uygun bir oyuncu almak zorundadır (serbest oyuncu hakkından düşmez).
+  Bu değişikliği yapana kadar takas ve As–Yedek değişikliği yapamaz. (Listeyi bir yöneticinin siteyi açması günceller.)
+- **Draft sırasında** yöneticilerin yan panelinde araç kutusu var: duraklat/devam, +30 sn, saati baştan başlat,
+  son seçimi geri al. Draft tahtasında bir seçime dokunarak o seçimi başka bir oyuncuyla değiştirebilirsin
+  (sezon başlayana kadar).
 
 ## Sorun giderme
 

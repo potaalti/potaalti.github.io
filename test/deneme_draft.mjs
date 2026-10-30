@@ -96,6 +96,18 @@ async function main() {
   await reddedilmeli(() => takimlar[sira[0]].D.secimYap({ takim: sira[0], oyuncu: havuz[0], otomatik: false, dizilis }), 'Draft başlamadan seçim');
   await admin.D.draftiBaslat(SURE);
 
+  // Yönetici yetkisi verilen takım (hem oynar hem yönetir)
+  // Hile denemelerinde kullanılan takımlardan farklı bir takım (t01/t02 testlerde "başka takım" olarak kullanılıyor)
+  const yonTakim = sira.find((t, i) => i >= 9 && !['t01', 't02'].includes(t));
+  const siradanTakim = sira[3];
+  await reddedilmeli(() => takimlar[siradanTakim].D.yoneticiTakimlariniKaydet([siradanTakim]), 'Menajerin kendine yönetici yetkisi vermesi');
+  await admin.D.yoneticiTakimlariniKaydet([yonTakim]);
+  await takimlar[yonTakim].D.duraklat(SURE);
+  kontrol((await oku(admin.db, 'lig', 'durum')).asama === 'duraklatildi', 'Yönetici takım menajeri draftı duraklattı');
+  await reddedilmeli(() => takimlar[siradanTakim].D.devamEt(SURE), 'Yönetici olmayan menajerin draftı devam ettirmesi');
+  await takimlar[yonTakim].D.devamEt(SURE);
+  kontrol((await oku(admin.db, 'lig', 'durum')).asama === 'draft', 'Yönetici takım menajeri draftı devam ettirdi');
+
   // Bir takım Türk seçmekten, bir başkası Arka seçmekten kaçınsın: kural onları zorlasın
   const turksuz = sira[5];
   const arkasiz = sira[8];
@@ -192,6 +204,21 @@ async function main() {
   await reddedilmeli(() => takimlar[sira[1]].D.dizilisKaydet(t1, k1.as, k1.yedek), 'Başka takımın dizilişini değiştirme');
   await reddedilmeli(() => takimlar[t1].D.dizilisKaydet(t1, [...k1.as, k1.yedek[0]], [k1.yedek[1]]), '6 As ile diziliş');
 
+  // Yönetici takım menajeri yapılmış bir seçimi başka oyuncuyla değiştirir (kadro kuralına uygun: aynı tip)
+  {
+    const s5 = await oku(admin.db, 'secimler', '5');
+    const tip = C.tipi(s5.mevki, s5.turk);
+    const ks = await hepsi(admin.db, 'kadrolar');
+    const al = new Set(Object.values(ks).flatMap(x => [...x.as, ...x.yedek]));
+    const yerine = havuz.find(o => !al.has(o.id) && C.tipi(o.mevki, o.turk) === tip);
+    await reddedilmeli(() => takimlar[siradanTakim].D.secimDuzelt({ n: 5, oyuncu: yerine, dizilis }), 'Yönetici olmayan menajerin seçim değiştirmesi');
+    await takimlar[yonTakim].D.secimDuzelt({ n: 5, oyuncu: yerine, dizilis });
+    const k5 = await oku(admin.db, 'kadrolar', s5.takim);
+    kontrol((await oku(admin.db, 'secimler', '5')).oyuncu === yerine.id && [...k5.as, ...k5.yedek].includes(yerine.id)
+      && ![...k5.as, ...k5.yedek].includes(s5.oyuncu) && !(await oku(admin.db, 'alinan', s5.oyuncu))
+      && (await oku(admin.db, 'alinan', yerine.id)).takim === s5.takim, 'Yönetici 6. seçimi başka oyuncuyla değiştirdi');
+  }
+
   console.log('Sezon');
   await admin.D.sezonuBaslat(await hepsi(admin.db, 'kadrolar'), 6);
   await reddedilmeli(() => takimlar[t1].D.dizilisKaydet(t1, k1.as, k1.yedek), 'Sezon başladıktan sonra ücretsiz diziliş değişikliği');
@@ -231,6 +258,25 @@ async function main() {
     await reddedilmeli(() => sahteSerbest(takimlar[t3], t3, k3, k3.as[0], baskasinin), 'Başka takımdaki oyuncuyu serbest gibi alma (kurallar)');
     await reddedilmeli(() => sahteSerbest(takimlar[t3], t3, k3, k3.as[0], al.id, { bedava: true }), 'Hak kullanmadan serbest oyuncu alma (kurallar)');
     await reddedilmeli(() => F.deleteDoc(F.doc(takimlar[t3].db, 'alinan', baskasinin)), 'Başka takımın oyuncusunu serbest bırakma');
+  }
+
+  // Lisansı düşen oyuncu: takım yerine boştakilerden oyuncu alır, serbest oyuncu hakkından düşmez
+  {
+    const tz = sira[5];
+    const kz = await oku(admin.db, 'kadrolar', tz);
+    const dusen = kz.as[0];
+    const tip = C.tipi(havuzMap.get(dusen).mevki, havuzMap.get(dusen).turk);
+    const yerine = (await serbestler()).find(o => C.tipi(o.mevki, o.turk) === tip);
+    const baska = sira[7];
+    const kb7 = await oku(admin.db, 'kadrolar', baska);
+    const yerine2 = (await serbestler()).find(o => o.id !== yerine.id);
+    await reddedilmeli(() => takimlar[tz].D.lisanssizlariKaydet([dusen]), 'Menajerin lisansı düşen listesini yazması');
+    await admin.D.lisanssizlariKaydet([dusen]);
+    await reddedilmeli(() => takimlar[baska].D.serbestAl(baska, kb7.as[0], yerine2, 7, true), 'Lisansı düşmeyen oyuncu için hak kullanmadan değişiklik (kurallar)');
+    await takimlar[tz].D.serbestAl(tz, dusen, yerine, 7, true);
+    const kz2 = await oku(admin.db, 'kadrolar', tz);
+    kontrol(kz2.as[0] === yerine.id && kz2.fa === kz.fa && (await oku(admin.db, 'alinan', yerine.id))?.takim === tz,
+      'Lisansı düşen oyuncunun yerine oyuncu alındı, serbest oyuncu hakkı düşmedi');
   }
 
   // Takas

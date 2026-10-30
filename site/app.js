@@ -24,13 +24,13 @@ const S = {
   hazir: false, ligYok: false, hataMesaji: null,
   uid: null, kod: null, ben: null, saatFarki: 0,
   ayar: null, durum: null, takimlar: {}, kadrolar: {}, secimler: {}, teklifler: {}, hareketler: {},
-  havuz: [], havuzMap: new Map(), havuzYuklendi: false, mevkiler: {}, mevkiListesi: {},
+  havuz: [], havuzMap: new Map(), havuzYuklendi: false, mevkiler: {}, mevkiListesi: {}, lisanssiz: [], bslHareketleri: [],
   rehber: new Map(), index: null, haftalar: {}, haftalarYuklendi: false,
   kodlar: null, kuraAcilan: -1, sonUyarilan: null,
   ui: {
     draftSekme: 'oyuncular', ara: '', bslTakim: '', sadeceTurk: false, alinanlar: false, mevkiFiltre: '', belirsiz: false,
     puanSekme: 'genel', acik: null, faAl: null, dizilis: null,
-    takasTakim: '', verilen: [], alinan: [],
+    takasTakim: '', verilen: [], alinan: [], duzeltNo: null, duzeltAra: '',
   },
 };
 let secimDinleyici = null;
@@ -48,7 +48,8 @@ const takimlar = () => Object.values(S.takimlar).sort((a, b) => a.no - b.no);
 const takimAdi = tid => S.takimlar[tid]?.ad ?? tid;
 const kadroBoyu = () => (S.ayar?.asSayisi ?? 5) + (S.ayar?.yedekSayisi ?? 2);
 const benimTakimim = () => (S.ben && S.ben !== 'admin' ? S.ben : null);
-const yonetici = () => S.ben === 'admin';
+// Yönetici: yönetici linkiyle girenler ve yönetici yetkisi verilen takımların menajerleri (hem oynar hem yönetir)
+const yonetici = () => S.ben === 'admin' || (!!S.ben && (S.ayar?.yoneticiTakimlar ?? []).includes(S.ben));
 const asama = () => S.durum?.asama;
 // Herkesin ana ekranı (yönetici değiştirir): draft bitmeden hep draft ekranı, sonra 'draft' ya da 'lig'
 const ligEkraniMi = d => ['kadro', 'sezon'].includes(d?.asama) && (d.ekran ?? (d.asama === 'sezon' ? 'lig' : 'draft')) === 'lig';
@@ -88,6 +89,28 @@ function sahipler() {
   for (const [tid, k] of Object.entries(S.kadrolar)) for (const p of [...(k.as ?? []), ...(k.yedek ?? [])]) m.set(p, tid);
   return m;
 }
+
+// Takımlardaki oyunculardan lisansı TBF'de artık görünmeyenler (ligden ayrılanlar): [{ pid, tid }]
+function lisansiDusenler() {
+  return [...sahipler()].filter(([pid]) => S.rehber.get(pid)?.aktif === false).map(([pid, tid]) => ({ pid, tid }));
+}
+
+// Takımın zorunlu değişiklik bekleyen oyuncuları (yöneticinin ekranının onayladığı liste)
+function zorunluBekleyen(tid) {
+  const k = S.kadrolar[tid];
+  if (!k || asama() !== 'sezon') return [];
+  return [...k.as, ...k.yedek].filter(p => S.lisanssiz.includes(p));
+}
+
+// Mevkisi henüz belirlenmemiş (yöneticinin listesinde olmayan) oyuncular: genelde yeni transferler
+const mevkisizler = () => [...S.rehber.values()].filter(o => o.aktif && !S.mevkiler[o.id] && !S.mevkiListesi[o.id]);
+
+const GORULDU_ANAHTARI = 'bslBildirimGoruldu';
+function bildirimGoruldu() {
+  try { return localStorage.getItem(GORULDU_ANAHTARI) ?? ''; } catch { return ''; }
+}
+const gorulmemisHareketler = () => S.bslHareketleri.filter(h => h.zaman > bildirimGoruldu());
+const bildirimSayisi = () => (yonetici() ? mevkisizler().length + gorulmemisHareketler().length : 0);
 
 function oyuncuAdi(pid, { takim = true } = {}) {
   const o = oyuncu(pid);
@@ -163,7 +186,7 @@ function cizHemen() {
     menuEl.scrollLeft = Math.max(0, aktif.offsetLeft - 16);
   }
   $('#kimlik').innerHTML = kimlik();
-  $('#icerik').innerHTML = gorunum();
+  $('#icerik').innerHTML = (S.hazir && !S.ligYok && !['bostakiler', 'serbest'].includes(rota()[0]) ? zorunluBandi() : '') + gorunum();
   if (odakId) {
     const el = document.getElementById(odakId);
     if (el) {
@@ -186,13 +209,15 @@ function menuOgeleri() {
   if (!S.hazir || S.ligYok || S.hataMesaji) return [];
   const a = asama();
   const gelen = Object.values(S.teklifler).filter(t => t.durum === 'bekliyor' && t.alan === benimTakimim()).length;
-  const yonetim = [yonetici() && ['yonetici', 'Yönetici', '⚙️'], yonetici() && ['mevkiler', 'Mevkiler', '🧭']];
+  const yonetim = [yonetici() && ['bildirimler', 'Bildirimler', '🔔', bildirimSayisi()],
+    yonetici() && ['yonetici', 'Yönetici', '⚙️'], yonetici() && ['mevkiler', 'Mevkiler', '🧭']];
+  const zorunlu = benimTakimim() ? zorunluBekleyen(benimTakimim()).length : 0;
   return (ligEkrani() ? [
     ['puan', 'Puan Durumu', '🏆'],
     ['takimlar', 'Takımlar', '👥'],
     benimTakimim() && ['kadrom', 'Kadrom', '📋'],
     ['takas', 'Takas', '🔄', gelen],
-    ['bostakiler', 'Boştakiler', '🧺'],
+    ['bostakiler', 'Boştakiler', '🧺', zorunlu],
     ['hareketler', 'Hareketler', '📰'],
     ['draft', 'Draft', '🏀'],
     ['kurallar', 'Kurallar', '📖'],
@@ -236,7 +261,10 @@ function kimlik() {
   if (yonetici()) {
     const dugme = ['kadro', 'sezon'].includes(asama())
       ? `<button class="ekran-dugme" data-is="ekran" data-id="${ligEkrani() ? 'draft' : 'lig'}" title="Herkesin ana ekranını değiştirir">${ligEkrani() ? '← Draft ekranı' : 'Lig ekranı →'}</button>` : '';
-    return `${dugme}<span><b>Yönetici</b> · <a href="#" data-is="cikis">çıkış</a></span>`;
+    const n = bildirimSayisi();
+    const zil = `<a href="#/bildirimler" class="zil" title="Bildirimler">🔔${n ? `<i>${n}</i>` : ''}</a>`;
+    const ad = benimTakimim() ? `${esc(takimAdi(benimTakimim()))} <span class="rozet yonetici-rozet">Yönetici</span>` : 'Yönetici';
+    return `${dugme}${zil}<span><b>${ad}</b> · <a href="#" data-is="cikis">çıkış</a></span>`;
   }
   if (benimTakimim()) return `<span><b>${esc(takimAdi(benimTakimim()))}</b> · <a href="#" data-is="cikis">çıkış</a></span>`;
   return '<span>İzleyici</span>';
@@ -261,6 +289,7 @@ function gorunum() {
     case 'diger': return gorunumDiger();
     case 'yonetici': return yonetici() ? `<div class="dar">${gorunumYonetici()}</div>` : '<p class="bos">Bu sayfa yönetici içindir.</p>';
     case 'mevkiler': return yonetici() ? gorunumMevkiler() : '<p class="bos">Bu sayfa yönetici içindir.</p>';
+    case 'bildirimler': return yonetici() ? `<div class="dar">${gorunumBildirimler()}</div>` : '<p class="bos">Bu sayfa yönetici içindir.</p>';
     default: return gorunumDraft();
   }
 }
@@ -322,11 +351,56 @@ function gorunumDraft() {
   const sekmeHtml = `<div class="sekmeler">${sekmeler.map(([id, ad]) => `<button data-is="draft-sekme" data-id="${id}" class="${S.ui.draftSekme === id ? 'aktif' : ''}">${ad}</button>`).join('')}</div>`;
   if (['draft', 'duraklatildi'].includes(a)) {
     return `<div class="draft-duzen">
-      <aside class="draft-yan">${durumKarti()}${sonSecimler()}${benimDraftim()}</aside>
+      <aside class="draft-yan">${durumKarti()}${yoneticiAraclari()}${sonSecimler()}${benimDraftim()}</aside>
       <section class="draft-ana">${sekmeHtml}${icerik}</section>
     </div>`;
   }
   return `${durumKarti()}${benimDraftim()}${sekmeHtml}${icerik}`;
+}
+
+// Draft sırasında yöneticilerin araç kutusu
+function yoneticiAraclari() {
+  if (!yonetici()) return '';
+  const d = S.durum;
+  const durdu = d.asama === 'duraklatildi';
+  return `<div class="kart yonetici-araclari"><h3>Yönetici araçları</h3>
+    <div class="satir">
+      ${durdu ? '<button class="btn ana kucuk" data-is="devam">▶ Devam ettir</button>' : '<button class="btn kucuk" data-is="duraklat">⏸ Duraklat</button>'}
+      <button class="btn kucuk" data-is="saat-ekle">+30 sn</button>
+      <button class="btn kucuk" data-is="saat-bastan">⟲ Saati baştan başlat</button>
+      ${d.secimNo > 0 ? '<button class="btn kucuk tehlike" data-is="geri-al">↶ Son seçimi geri al</button>' : ''}
+    </div>
+    <p class="kucuk soluk" style="margin:8px 0 0">Sıradaki takım adına seçmek için oyuncu listesinde <b>Seç</b>'e bas. Yapılmış bir seçimi değiştirmek için <b>Draft tahtası</b>'nda o seçime dokun.</p>
+  </div>`;
+}
+
+const duzenlenebilir = () => yonetici() && ['draft', 'duraklatildi', 'kadro'].includes(asama());
+const kuralTablosu = () => (kadroTablosu ??= C.kadroTablosu(kural()));
+
+// Yapılmış seçimin yerine konacak oyuncu kadro kuralını bozuyor mu
+function duzeltSorunu(s, o) {
+  const k = S.kadrolar[s.takim];
+  const tip = { ...k.tip };
+  tip[C.tipi(s.mevki, s.turk)] -= 1;
+  tip[C.tipi(o.mevki, o.turk)] += 1;
+  return kuralTablosu()[C.tipAnahtari(tip)] ? null : 'Bu takımın kadro kuralını bozar (mevki ya da Türk oyuncu)';
+}
+
+function duzeltPaneli() {
+  const n = S.ui.duzeltNo;
+  const s = S.secimler[n];
+  if (n == null || !s || !duzenlenebilir()) return '';
+  const sahip = sahipler();
+  const ara = S.ui.duzeltAra.toLocaleLowerCase('tr');
+  const adaylar = S.havuz.filter(o => !sahip.has(o.id) && (!ara || o.ad.toLocaleLowerCase('tr').includes(ara))).slice(0, 12);
+  return `<div class="kart sira-sende"><div class="baslik-satir"><h3>${n + 1}. seçimi değiştir</h3><button class="btn kucuk" data-is="duzelt-vazgec">Vazgeç</button></div>
+    <p style="margin-top:0">${esc(takimAdi(s.takim))}: <b>${esc(s.ad)}</b> yerine kimi koymak istiyorsun? Sıra ve saat değişmez; çıkan oyuncu boşa düşer.</p>
+    <input type="search" id="duzelt-ara" data-ui="duzeltAra" placeholder="Oyuncu ara" value="${esc(S.ui.duzeltAra)}" style="width:100%">
+    <div class="tablo-kap"><table>${adaylar.map(o => {
+      const sorun = duzeltSorunu(s, o);
+      return `<tr><td>${esc(o.ad)} ${mevkiRozeti(o.mevki)}${o.turk ? ' <span class="rozet tr">TR</span>' : ''}</td><td class="kucuk">${bslTakimHucre(o)}</td><td class="sayi">${sayi(o.vpOrt)}</td>
+        <td class="sayi"><button class="btn kucuk ${sorun ? '' : 'ana'}" data-is="duzelt-onay" data-id="${o.id}" ${sorun ? `disabled title="${sorun}"` : ''}>Bununla değiştir</button></td></tr>`;
+    }).join('') || '<tr><td class="bos">Oyuncu bulunamadı</td></tr>'}</table></div></div>`;
 }
 
 // Bilgisayarın yan panelinde son seçimler (ana ekranda draftı izleyenler için)
@@ -503,14 +577,15 @@ function draftTahtasi() {
       const n = r * T + p;
       const s = S.secimler[n];
       const simdiki = ['draft', 'duraklatildi'].includes(d.asama) && n === d.secimNo;
-      const sinif = [simdiki && 'simdi', !s && 'bos-hucre', d.sira[c] === benimTakimim() && 'ben'].filter(Boolean).join(' ');
-      hucreler += `<td class="${sinif}"><span class="soluk">${n + 1}.</span> ${s
-        ? `${esc(s.ad)}${s.mevki ? ` ${mevkiRozeti(s.mevki)}` : ''}${s.turk ? ' <span class="rozet tr">TR</span>' : ''}${s.otomatik ? ' <span class="rozet oto" title="Süre doldu, otomatik seçildi">oto</span>' : ''}<div class="bsl">${esc(oyuncu(s.oyuncu).takimKod || s.bslTakim)}</div>`
+      const sinif = [simdiki && 'simdi', !s && 'bos-hucre', d.sira[c] === benimTakimim() && 'ben', s && duzenlenebilir() && 'tikla',
+        S.ui.duzeltNo === n && 'duzeltilen'].filter(Boolean).join(' ');
+      hucreler += `<td class="${sinif}" ${s && duzenlenebilir() ? `data-is="duzelt" data-id="${n}" title="Bu seçimi değiştir"` : ''}><span class="soluk">${n + 1}.</span> ${s
+        ? `${esc(s.ad)}${s.mevki ? ` ${mevkiRozeti(s.mevki)}` : ''}${s.turk ? ' <span class="rozet tr">TR</span>' : ''}${s.otomatik ? ' <span class="rozet oto" title="Süre doldu, otomatik seçildi">oto</span>' : ''}${s.duzeltildi ? ' <span class="rozet" title="Yönetici değiştirdi">düzeltildi</span>' : ''}<div class="bsl">${esc(oyuncu(s.oyuncu).takimKod || s.bslTakim)}</div>`
         : simdiki ? '<b>seçiyor…</b>' : ''}</td>`;
     }
     satirlar += `<tr><th>${r + 1}. tur ${r % 2 === 0 ? '→' : '←'}</th>${hucreler}</tr>`;
   }
-  return `<div class="kart"><div class="tablo-kap"><table class="tahta">
+  return `${duzeltPaneli()}<div class="kart"><div class="tablo-kap"><table class="tahta">
     <thead><tr><th></th>${d.sira.map((t, i) => `<th>${i + 1}. ${esc(takimAdi(t))}</th>`).join('')}</tr></thead>
     <tbody>${satirlar}</tbody></table></div></div>`;
 }
@@ -709,18 +784,25 @@ function gorunumSerbest() {
     && (!S.ui.mevkiFiltre || mevki(o.id) === S.ui.mevkiFiltre)
     && (!ara || o.ad.toLocaleLowerCase('tr').includes(ara)));
   const hak = k && alimAcik ? S.ayar.faHakki - k.fa : 0;
+  const zorunlu = tid ? zorunluBekleyen(tid) : [];
+  const alabilir = hak > 0 || zorunlu.length > 0;
   let panel = '';
   if (S.ui.faAl && k) {
     const al = oyuncu(S.ui.faAl);
+    // Hakkı bittiyse sadece lisansı düşen oyuncunun yerine alabilir
+    const birakilabilir = [...k.as.map(p => [p, 'As']), ...k.yedek.map(p => [p, 'Yedek'])]
+      .filter(([p]) => hak > 0 || zorunlu.includes(p))
+      .sort(([a], [b]) => zorunlu.includes(b) - zorunlu.includes(a));
     panel = `<div class="kart sira-sende"><h3>${esc(al.ad)} ${al.turk ? '<span class="rozet tr">TR</span>' : ''} <span class="soluk kucuk">${esc(al.takim)}</span></h3>
       <p>Kimin yerine alıyorsun? Gelen oyuncu, bıraktığın oyuncunun yerine (As ya da Yedek) geçer; As'taki bir oyuncunun yerine aynı mevkiden oyuncu alınmalı ve <b>${etkinHafta()}. haftadan</b> itibaren sayılır. Bıraktığın oyuncu serbest kalır.</p>
       <div class="satir"><select id="fa-birak"><option value="">Bırakılacak oyuncu</option>
-        ${[...k.as.map(p => [p, 'As']), ...k.yedek.map(p => [p, 'Yedek'])].map(([p, rol]) => `<option value="${p}">${esc(oyuncu(p).ad)} (${rol})</option>`).join('')}</select>
+        ${birakilabilir.map(([p, rol]) => `<option value="${p}" ${zorunlu[0] === p ? 'selected' : ''}>${esc(oyuncu(p).ad)} (${rol})${zorunlu.includes(p) ? ' · lisansı düştü, hak kullanmaz' : ''}</option>`).join('')}</select>
       <button class="btn ana" data-is="fa-onayla">Onayla</button><button class="btn" data-is="fa-vazgec">Vazgeç</button></div></div>`;
   }
   return `<div class="kart"><h2>Boştaki oyuncular</h2>
     <p style="margin-bottom:0">Hiçbir takımda olmayan BSL oyuncuları. ${!alimAcik ? 'Serbest oyuncu alımı sezon başlayınca açılır.'
-      : tid ? `Kalan serbest oyuncu hakkın: <b>${hak}</b> / ${S.ayar.faHakki} (sezon boyunca).` : ''}</p></div>
+      : tid ? `Kalan serbest oyuncu hakkın: <b>${hak}</b> / ${S.ayar.faHakki} (sezon boyunca).` : ''}</p>
+    ${zorunlu.length ? `<div class="hata-kutu"><b>Zorunlu değişiklik:</b> ${zorunlu.map(p => esc(oyuncu(p).ad)).join(', ')} artık TBF'de lisanslı görünmüyor. Aşağıdan kurallara uygun (aynı mevki, Türk kuralı) bir oyuncu seçip <b>Al</b>'a bas; bu değişiklik serbest oyuncu hakkından düşmez.</div>` : ''}</div>
     ${panel}
     <div class="kart">
       <div class="satir" style="margin-bottom:10px">
@@ -734,7 +816,7 @@ function gorunumSerbest() {
         <tbody>${liste.slice(0, 300).map(o => `<tr>
           <td>${esc(o.ad)} ${mevkiRozeti(mevki(o.id))}${o.turk ? ' <span class="rozet tr">TR</span>' : ''}</td><td class="kucuk">${bslTakimHucre(o)}</td>
           <td class="sayi">${o.mac}</td><td class="sayi"><b>${sayi(o.vpOrt)}</b></td><td class="sayi dar-gizle">${sayi(o.sayiOrt)}</td>
-          <td class="sayi">${hak > 0 ? `<button class="btn kucuk ana" data-is="fa-al" data-id="${o.id}">Al</button>` : ''}</td></tr>`).join('')
+          <td class="sayi">${alabilir ? `<button class="btn kucuk ana" data-is="fa-al" data-id="${o.id}">Al</button>` : ''}</td></tr>`).join('')
           || '<tr><td colspan="6" class="bos">Oyuncu bulunamadı</td></tr>'}</tbody>
       </table></div>
     </div>`;
@@ -825,7 +907,8 @@ function gorunumTakas() {
 // ---------- Hareketler ----------
 function hareketSatiri(h) {
   let metin = '';
-  if (h.tur === 'serbest') metin = `<b>${esc(takimAdi(h.takim))}</b> serbest oyuncu aldı: ${oyuncuAdi(h.alinan)} · Bıraktı: ${oyuncuAdi(h.birakilan)}`;
+  if (h.tur === 'zorunlu') metin = `<b>${esc(takimAdi(h.takim))}</b> lisansı düşen ${oyuncuAdi(h.birakilan)} yerine ${oyuncuAdi(h.alinan)} aldı (zorunlu değişiklik).`;
+  else if (h.tur === 'serbest') metin = `<b>${esc(takimAdi(h.takim))}</b> serbest oyuncu aldı: ${oyuncuAdi(h.alinan)} · Bıraktı: ${oyuncuAdi(h.birakilan)}`;
   else if (h.tur === 'degisiklik') metin = `<b>${esc(takimAdi(h.takim))}</b> As–Yedek değişikliği: As'a geçen ${oyuncuAdi(h.asaGecen)} · Yedeğe geçen ${oyuncuAdi(h.yedegeGecen)}`;
   else if (h.tur === 'takas') metin = `<b>${esc(takimAdi(h.veren))}</b> ⇄ <b>${esc(takimAdi(h.takim))}</b> takası: ${h.verilen.map(p => oyuncuAdi(p)).join(', ')} ⇄ ${h.alinan.map(p => oyuncuAdi(p)).join(', ')}`;
   else metin = esc(h.metin ?? h.tur);
@@ -903,6 +986,11 @@ function gorunumYonetici() {
           <button class="btn kucuk tehlike" data-is="kod-yenile" data-id="${t.id}">Yenile</button>` : '<span class="soluk kucuk">yükleniyor…</span>'}</div></td></tr>`;
     }).join('')}</tbody></table></div>
     <p class="kucuk soluk" style="margin-bottom:0">Senin yönetici linkin: <button class="btn kucuk" data-is="kopyala" data-metin="${esc(S.kodlar?.admin ? girisLinki(S.kodlar.admin) : '')}">Yönetici linkini kopyala</button></p></div>`);
+  const yoneticiler = S.ayar.yoneticiTakimlar ?? [];
+  adimlar.push(`<div class="kart"><h3>Yöneticiler</h3>
+    <p class="kucuk soluk">Yönetici yetkisi verdiğin takımların menajerleri kendi takımlarıyla oynarken yönetici işlerini de yapar
+    (draftı duraklatma, seçimi geri alma ya da değiştirme, mevkiler, bildirimler…). Yönetici linki her zaman yöneticidir.</p>
+    <div>${takimlar().map(t => `<button class="secim-chip ${yoneticiler.includes(t.id) ? 'secili' : ''}" data-is="yonetici-takim" data-id="${t.id}">${yoneticiler.includes(t.id) ? '✓ ' : ''}${esc(t.ad)}${t.menajer ? ` <span class="kucuk">(${esc(t.menajer)})</span>` : ''}</button>`).join('')}</div></div>`);
   adimlar.push(`<div class="kart"><h3>Ayarlar</h3><div class="form-izgara">
       <label for="ay-sure">Seçim süresi (saniye)</label><input type="number" id="ay-sure" min="5" max="600" value="${S.ayar.secimSuresi}">
       <label for="ay-hafta">Puanlamanın başlayacağı BSL haftası</label><input type="number" id="ay-hafta" min="1" max="40" value="${S.ayar.baslangicHaftasi}" ${a === 'sezon' ? 'disabled' : ''}>
@@ -959,6 +1047,46 @@ function gorunumMevkiler() {
           <td><div class="satir" style="flex-wrap:nowrap">${['on', 'arka'].map(x => `<button class="btn kucuk ${m === x ? 'ana' : ''}" data-is="mevki" data-id="${o.id}" data-mevki="${x}">${C.MEVKI_ADI[x]}</button>`).join('')}</div></td></tr>`;
       }).join('') || '<tr><td colspan="7" class="bos">Oyuncu bulunamadı</td></tr>'}</tbody>
     </table></div></div>`;
+}
+
+// ---------- Zorunlu değişiklik bandı (lisansı düşen oyuncusu olan takıma her sayfada) ----------
+function zorunluBandi() {
+  const tid = benimTakimim();
+  const liste = tid ? zorunluBekleyen(tid) : [];
+  if (!liste.length) return '';
+  return `<div class="kart hata-kutu zorunlu-bant"><b>⚠️ Zorunlu değişiklik:</b> ${liste.map(p => `<b>${esc(oyuncu(p).ad)}</b>`).join(', ')}
+    artık TBF'de lisanslı görünmüyor (ligden ayrıldı). Yerine boştakilerden kurallara uygun bir oyuncu almalısın; bu değişiklik
+    serbest oyuncu hakkından düşmez. Değişikliği yapana kadar takas ve As–Yedek değişikliği yapamazsın.
+    <a class="btn kucuk ana" href="#/bostakiler">Oyuncu seç</a></div>`;
+}
+
+// ---------- Yönetici: bildirimler ----------
+function gorunumBildirimler() {
+  const mevkisiz = mevkisizler().sort((a, b) => b.vpOrt - a.vpOrt);
+  const dusen = lisansiDusenler();
+  const goruldu = bildirimGoruldu();
+  const sahip = sahipler();
+  const turAdi = { yeni: '🆕 Lige katıldı', transfer: '🔁 Takım değiştirdi', ayrildi: '👋 Ligden ayrıldı' };
+  return `<div class="kart"><h2>Mevkisi belirlenecek oyuncular <span class="soluk">(${mevkisiz.length})</span></h2>
+      <p class="kucuk soluk">Listende olmayan oyuncular (genelde yeni transferler). Mevkisini seçince bu listeden çıkar.</p>
+      ${mevkisiz.length ? `<div class="tablo-kap"><table>${mevkisiz.map(o => `<tr>
+        <td>${esc(o.ad)}${o.turk ? ' <span class="rozet tr">TR</span>' : ''}<div class="kucuk soluk">${o.mac} maç · VP ${sayi(o.vpOrt)} · rib ${sayi(o.ribOrt)} · ast ${sayi(o.astOrt)}${o.mevkiTahmini ? ` · tahmin: ${C.MEVKI_ADI[o.mevkiTahmini]}` : ''}</div></td>
+        <td class="kucuk">${bslTakimHucre(o)}</td>
+        <td><div class="satir" style="flex-wrap:nowrap">${['on', 'arka'].map(x => `<button class="btn kucuk" data-is="mevki" data-id="${o.id}" data-mevki="${x}">${C.MEVKI_ADI[x]}</button>`).join('')}</div></td></tr>`).join('')}</table></div>`
+        : '<p class="soluk" style="margin:0">Hepsi tamam ✓</p>'}</div>
+    <div class="kart"><h2>Lisansı düşen oyuncular <span class="soluk">(${dusen.length})</span></h2>
+      <p class="kucuk soluk">Bir fantezi takımında olup TBF'de artık lisanslı görünmeyenler. O takımın menajeri yerine boştakilerden oyuncu almak zorunda (hakkından düşmez).</p>
+      ${dusen.length ? dusen.map(({ pid, tid }) => `<div class="teklif"><b>${esc(oyuncu(pid).ad)}</b> <span class="soluk kucuk">${esc(oyuncu(pid).takim)}</span>
+        → <b>${esc(takimAdi(tid))}</b> <span class="rozet ${S.lisanssiz.includes(pid) ? 'uyari' : ''}">${asama() === 'sezon' ? 'değişiklik bekleniyor' : 'sezon başlayınca'}</span></div>`).join('')
+        : '<p class="soluk" style="margin:0">Yok ✓</p>'}</div>
+    <div class="kart"><div class="baslik-satir"><h2>BSL kadro hareketleri</h2>
+      ${gorulmemisHareketler().length ? '<button class="btn kucuk" data-is="bildirim-gordum">Hepsini gördüm</button>' : ''}</div>
+      <p class="kucuk soluk">TBF kadrolarındaki değişiklikler (veriler her güncellendiğinde, son 90 gün).</p>
+      ${S.bslHareketleri.length ? S.bslHareketleri.map(h => `<div class="teklif ${h.zaman > goruldu ? 'yeni-bildirim' : ''}">
+        <div class="kucuk soluk">${tarih(h.zaman)} · ${turAdi[h.tur] ?? h.tur}</div>
+        <b>${esc(h.ad)}</b> ${h.tur === 'transfer' ? `${esc(h.eskiTakim)} → ${esc(h.yeniTakim)}` : esc(h.yeniTakim ?? h.eskiTakim ?? '')}
+        ${sahip.has(h.id) ? ` · <span class="rozet">${esc(takimAdi(sahip.get(h.id)))}</span>` : ''}</div>`).join('')
+        : '<p class="soluk" style="margin:0">Henüz hareket yok.</p>'}</div>`;
 }
 
 // ---------- Olaylar ----------
@@ -1055,6 +1183,7 @@ async function eylem(is, id, el) {
       return bildir('Diziliş kaydedildi');
     }
     case 'degistir': {
+      if (zorunluBekleyen(benimTakimim()).length) return bildir('Önce lisansı düşen oyuncunun yerine boştakilerden oyuncu almalısın.', true);
       const asP = deger('dg-as');
       const yP = deger('dg-yedek');
       if (!asP || !yP) return bildir('Bir As ve bir Yedek seç.', true);
@@ -1083,8 +1212,9 @@ async function eylem(is, id, el) {
       const turkHata = dizilisSorunu(yeni);
       if (turkHata) return bildir(`Bu değişiklik olmaz: ${turkHata}.`, true);
       const h = etkinHafta();
-      if (!confirm(`${al.ad} alınacak, ${oyuncu(birak).ad} bırakılacak (${h}. haftadan itibaren). Serbest oyuncu hakkından 1 kullanılacak. Onaylıyor musun?`)) return;
-      await D.serbestAl(tid, birak, al, h);
+      const zorunlu = zorunluBekleyen(tid).includes(birak);
+      if (!confirm(`${al.ad} alınacak, ${oyuncu(birak).ad} bırakılacak (${h}. haftadan itibaren). ${zorunlu ? 'Lisansı düşen oyuncunun yerine alındığı için hakkından düşmez.' : 'Serbest oyuncu hakkından 1 kullanılacak.'} Onaylıyor musun?`)) return;
+      await D.serbestAl(tid, birak, al, h, zorunlu);
       S.ui.faAl = null;
       return bildir(`${al.ad} takımına katıldı`);
     }
@@ -1096,6 +1226,7 @@ async function eylem(is, id, el) {
       return ciz();
     }
     case 'teklif-gonder': {
+      if (zorunluBekleyen(benimTakimim()).length) return bildir('Önce lisansı düşen oyuncunun yerine boştakilerden oyuncu almalısın.', true);
       const tid = benimTakimim();
       const y = C.takasKadrolari(S.kadrolar[tid], S.kadrolar[S.ui.takasTakim], S.ui.verilen, S.ui.alinan);
       const sorun = takasSorunu(tid, S.ui.takasTakim, y.veren, y.alan);
@@ -1106,6 +1237,7 @@ async function eylem(is, id, el) {
       return bildir('Teklif gönderildi');
     }
     case 'teklif-kabul': {
+      if (zorunluBekleyen(benimTakimim()).length) return bildir('Önce lisansı düşen oyuncunun yerine boştakilerden oyuncu almalısın.', true);
       const t = S.teklifler[id];
       const h = etkinHafta();
       if (!confirm(`Takası kabul ediyor musun? ${h}. haftadan itibaren geçerli olacak.`)) return;
@@ -1122,6 +1254,39 @@ async function eylem(is, id, el) {
       await havuzuGuncelle();
       return bildir('Oyuncu havuzu yüklendi');
     }
+    case 'saat-ekle': {
+      const kalan = S.durum.asama === 'duraklatildi' ? (S.durum.kalanSure ?? 0) : Math.max(0, (kalanMs() ?? 0) / 1000);
+      await D.saatEkle(S.durum, kalan, 30);
+      return bildir('Süreye 30 saniye eklendi');
+    }
+    case 'saat-bastan':
+      await D.devamEt(S.ayar.secimSuresi);
+      return bildir('Saat baştan başladı');
+    case 'duzelt':
+      S.ui.duzeltNo = Number(id);
+      S.ui.duzeltAra = '';
+      ciz();
+      window.scrollTo(0, 0);
+      return;
+    case 'duzelt-vazgec': S.ui.duzeltNo = null; return ciz();
+    case 'duzelt-onay': {
+      const s = S.secimler[S.ui.duzeltNo];
+      const o = S.havuzMap.get(id);
+      if (!confirm(`${S.ui.duzeltNo + 1}. seçim: ${s.ad} yerine ${o.ad} (${takimAdi(s.takim)}). Onaylıyor musun?`)) return;
+      await D.secimDuzelt({ n: S.ui.duzeltNo, oyuncu: o, dizilis: draftDizilisi });
+      S.ui.duzeltNo = null;
+      return bildir(`Seçim değiştirildi: ${o.ad}`);
+    }
+    case 'yonetici-takim': {
+      const liste = S.ayar.yoneticiTakimlar ?? [];
+      const ver = !liste.includes(id);
+      if (!confirm(`${takimAdi(id)} menajerine yönetici yetkisi ${ver ? 'verilsin' : 'alınsın'} mı?`)) return;
+      await D.yoneticiTakimlariniKaydet(ver ? [...liste, id] : liste.filter(t => t !== id));
+      return bildir(ver ? 'Yönetici yetkisi verildi' : 'Yönetici yetkisi alındı');
+    }
+    case 'bildirim-gordum':
+      try { localStorage.setItem(GORULDU_ANAHTARI, S.bslHareketleri[0]?.zaman ?? new Date().toISOString()); } catch { /* tarayıcı izin vermiyorsa */ }
+      return ciz();
     case 'mevki-goster':
       await D.ayarlariKaydet({ mevkilerHazir: !mevkilerHazir() });
       return bildir(mevkilerHazir() ? 'Mevkiler gizlendi' : 'Mevkiler herkese gösteriliyor');
@@ -1231,6 +1396,7 @@ function veriGeldi(ad, v) {
     S[ad] = v;
     if (ad === 'ayar') S.hazir = !!(S.ayar && S.durum);
     if (ad === 'ayar' && asama() === 'sezon' && !S.haftalarYuklendi) haftalariYukle();
+    lisanssizlariEsitle();
     return ciz();
   }
   if (!v) { // lig silinmiş
@@ -1245,9 +1411,11 @@ function veriGeldi(ad, v) {
   const a = v.asama;
   if (['kura', 'draft', 'duraklatildi', 'kadro'].includes(a)) secimleriDinle();
   if (DRAFT_ASAMALARI.includes(a) && (!S.havuzYuklendi || (onceki && onceki.asama !== a && a === 'draft'))) havuzuYukleIstemci(true);
+  if (a === 'kadro' && yonetici() && !S.havuzYuklendi) havuzuYukleIstemci(true); // seçim düzeltme için
   if (a === 'sezon' && !S.haftalarYuklendi) haftalariYukle();
   if (a === 'kurulum' && onceki && onceki.asama !== 'kurulum') S.secimler = {};
   if (a !== 'kadro') S.ui.dizilis = null;
+  lisanssizlariEsitle();
   // Sıra bana geldi: ses ve titreşim
   const tid = v.secimSirasi?.[v.secimNo];
   if (a === 'draft' && tid && tid === benimTakimim() && S.sonUyarilan !== v.secimNo) {
@@ -1265,6 +1433,17 @@ function veriGeldi(ad, v) {
     }
   }
   ciz();
+}
+
+// Yönetici ekranı: takımlarda olup lisansı düşen oyuncuların listesini Firestore'a yazar; ilgili takım
+// zorunlu değişikliği bu listeyle yapar (kurallar serbest oyuncu hakkından düşmemesine bu listeyle izin verir)
+function lisanssizlariEsitle() {
+  if (!yonetici() || asama() !== 'sezon' || !S.rehber.size || !Object.keys(S.kadrolar).length) return;
+  const liste = lisansiDusenler().map(x => x.pid).sort();
+  const yazi = JSON.stringify(liste);
+  if (yazi === JSON.stringify([...S.lisanssiz].sort()) || yazi === S.lisanssizYazilan) return;
+  S.lisanssizYazilan = yazi;
+  D.lisanssizlariKaydet(liste).catch(hataGoster);
 }
 
 function dinlemeHatasi(e) {
@@ -1379,9 +1558,10 @@ async function basla() {
       history.replaceState(null, '', location.pathname + (params.toString() ? `?${params}` : '') + location.hash);
     }
     S.kod = localStorage.getItem(KOD_ANAHTARI);
-    const [index, rehber, mevkiListesi] = await Promise.all([jsonGetir('data/index.json'), jsonGetir('data/oyuncular.json'),
-      jsonGetir('data/mevkiler.json').catch(() => ({}))]);
+    const [index, rehber, mevkiListesi, bslHareketleri] = await Promise.all([jsonGetir('data/index.json'), jsonGetir('data/oyuncular.json'),
+      jsonGetir('data/mevkiler.json').catch(() => ({})), jsonGetir('data/bsl_hareketleri.json').catch(() => [])]);
     S.mevkiListesi = mevkiListesi;
+    S.bslHareketleri = bslHareketleri;
     S.index = index;
     S.rehber = new Map(rehber.map(o => [o.id, o]));
     if (!(await D.ligVarMi())) {

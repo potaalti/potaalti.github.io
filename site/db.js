@@ -30,6 +30,7 @@ export async function ligiKur(uid, { ad, takimSayisi = 17, menajerler = [], seci
   // Draftta geçerli kadro durumları (Ön/Arka × Türk/yabancı sayıları); kurallar seçimleri bununla denetler
   b.set(yol('lig', 'kadroKurali'), { gecerli: kadroTablosu(varsayilanKural) });
   b.set(yol('lig', 'mevkiler'), { m: {} });
+  b.set(yol('lig', 'lisanssiz'), { liste: [] });
   b.set(yol('lig', 'durum'), {
     asama: 'kurulum', sira: null, secimSirasi: [], secimNo: 0, toplamSecim: takimSayisi * 7,
     saatBaslangic: null, saatSure: secimSuresi, aktifHafta: baslangicHaftasi,
@@ -88,6 +89,7 @@ export function dinle(cb, hata) {
   }, hata));
   tekil('ayar', yol('lig', 'ayar'));
   tekil('durum', yol('lig', 'durum'));
+  kapat.push(F.onSnapshot(yol('lig', 'lisanssiz'), s => cb('lisanssiz', s.data()?.liste ?? []), hata));
   kapat.push(F.onSnapshot(yol('lig', 'mevkiler'), s => cb('mevkiler', s.data()?.m ?? {}), hata));
   coklu('takimlar', koleksiyon('takimlar'));
   coklu('kadrolar', koleksiyon('kadrolar'));
@@ -200,6 +202,49 @@ export async function sonSecimiGeriAl() {
     });
     return s;
   });
+}
+
+// Yönetici, yapılmış bir seçimi başka bir (müsait) oyuncuyla değiştirir; sıra ve saat etkilenmez.
+// dizilis(idler): takımın yeni As/Yedek yerleşimi
+export async function secimDuzelt({ n, oyuncu, dizilis }) {
+  return F.runTransaction(db, async tx => {
+    const secimRef = yol('secimler', String(n));
+    const sS = await tx.get(secimRef);
+    if (!sS.exists()) throw new Hata('Bu seçim bulunamadı.');
+    const s = sS.data();
+    const kadroRef = yol('kadrolar', s.takim);
+    const k = (await tx.get(kadroRef)).data();
+    if ((await tx.get(yol('alinan', oyuncu.id))).exists()) throw new Hata(`${oyuncu.ad} başka bir takımda.`);
+    const yeni = dizilis([...k.as, ...k.yedek].map(p => (p === s.oyuncu ? oyuncu.id : p)));
+    const eskiTip = tipi(s.mevki, s.turk);
+    const yeniTip = tipi(oyuncu.mevki, oyuncu.turk);
+    const tip = { ...k.tip, [eskiTip]: k.tip[eskiTip] - 1 };
+    tip[yeniTip] += 1;
+    tx.update(secimRef, {
+      oyuncu: oyuncu.id, ad: oyuncu.ad, bslTakim: oyuncu.takim, turk: !!oyuncu.turk, mevki: oyuncu.mevki,
+      duzeltildi: true, eskiOyuncu: s.oyuncu,
+    });
+    tx.delete(yol('alinan', s.oyuncu));
+    tx.set(yol('alinan', oyuncu.id), { takim: s.takim, secim: n });
+    tx.update(kadroRef, { as: yeni.as, yedek: yeni.yedek, tip });
+    return s;
+  });
+}
+
+// Yönetici: sürenin kalanına saniye ekler (duraklatılmışsa kalan süreye)
+export async function saatEkle(d, kalanSn, ekSn) {
+  if (d.asama === 'duraklatildi') await F.updateDoc(yol('lig', 'durum'), { kalanSure: Math.round(kalanSn + ekSn) });
+  else await devamEt(Math.round(kalanSn + ekSn));
+}
+
+// Yönetici: takımlarda olup lisansı TBF'den düşen oyuncuların listesi (zorunlu değişiklik için)
+export async function lisanssizlariKaydet(liste) {
+  await F.setDoc(yol('lig', 'lisanssiz'), { liste });
+}
+
+// Yönetici yetkisi verilen takımlar (menajerleri hem oynar hem yönetir)
+export async function yoneticiTakimlariniKaydet(takimlar) {
+  await F.updateDoc(yol('lig', 'ayar'), { yoneticiTakimlar: takimlar });
 }
 
 // Draft havuzunu (oyuncu listesi) Firestore'a yükler: kurallar Türk oyuncu ve otomatik seçim kontrolünde kullanır
@@ -318,21 +363,22 @@ export async function asYedekDegistir(tid, asPid, yedekPid, hafta) {
   });
 }
 
-// Serbest oyuncu al: birak takımdan çıkar, al aynı yuvaya girer
-export async function serbestAl(tid, birak, al, hafta) {
+// Serbest oyuncu al: birak takımdan çıkar, al aynı yuvaya girer.
+// zorunlu: bırakılan oyuncunun lisansı düştü; serbest oyuncu hakkından düşmez
+export async function serbestAl(tid, birak, al, hafta, zorunlu = false) {
   return F.runTransaction(db, async tx => {
     const ref = yol('kadrolar', tid);
     const k = (await tx.get(ref)).data();
     const ayar = (await tx.get(yol('lig', 'ayar'))).data();
     const alS = await tx.get(yol('alinan', al.id));
-    if (k.fa >= ayar.faHakki) throw new Hata('Serbest oyuncu alma hakkın kalmadı.');
+    if (!zorunlu && k.fa >= ayar.faHakki) throw new Hata('Serbest oyuncu alma hakkın kalmadı.');
     if (alS.exists()) throw new Hata(`${al.ad} artık serbest değil.`);
     if (![...k.as, ...k.yedek].includes(birak)) throw new Hata('Kadro değişmiş, sayfayı yenile.');
     const yeni = yerineKoy(k, birak, al.id);
-    tx.update(ref, { ...yeni, fa: k.fa + 1, sonFa: al.id, gecmis: [...k.gecmis, { hafta, ...yeni, tur: 'serbest' }] });
+    tx.update(ref, { ...yeni, fa: k.fa + (zorunlu ? 0 : 1), sonFa: al.id, gecmis: [...k.gecmis, { hafta, ...yeni, tur: zorunlu ? 'zorunlu' : 'serbest' }] });
     tx.delete(yol('alinan', birak));
     tx.set(yol('alinan', al.id), { takim: tid, fa: true });
-    hareket(tx, { tur: 'serbest', takim: tid, alinan: al.id, birakilan: birak, hafta });
+    hareket(tx, { tur: zorunlu ? 'zorunlu' : 'serbest', takim: tid, alinan: al.id, birakilan: birak, hafta });
   });
 }
 

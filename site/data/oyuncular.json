@@ -4009,6 +4009,25 @@
   "astOrt": 0
  },
  {
+  "id": "735812",
+  "ad": "Brandon Boston Jr.",
+  "takim": "TRABZONSPOR",
+  "takimId": 266029,
+  "takimKod": "TS",
+  "ulke": "ABD",
+  "turk": false,
+  "aktif": true,
+  "mac": 0,
+  "vpOrt": 0,
+  "sayiOrt": 0,
+  "sureOrt": "00:00:00",
+  "foto": "https://tbf.org.tr/res/4a5bdf36-28d3-482b-af3c-9ec5b0f1b15a_6575.jpg",
+  "boy": null,
+  "mevkiTahmini": null,
+  "ribOrt": 0,
+  "astOrt": 0
+ },
+ {
   "id": "497055",
   "ad": "Bulut Yenice",
   "takim": "YUKATEL DENİZLİ BASKET",

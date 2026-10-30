@@ -129,6 +129,28 @@ def mevki_tahmini(stat, boy):
     return None
 
 
+def kadro_hareketleri(eski, yeni):
+    """BSL kadrolarındaki değişiklikler (yöneticiye bildirim): lige yeni gelen, takım değiştiren ve ligden
+    ayrılan oyuncular. site/data/bsl_hareketleri.json'a en yenisi başta eklenir; son 90 gün tutulur."""
+    simdi = datetime.now(timezone.utc)
+    yeni_kayitlar = []
+    for pid, o in yeni.items():
+        e = eski.get(pid)
+        kayit = {"zaman": simdi.isoformat(timespec="seconds"), "id": pid, "ad": o["ad"]}
+        if o.get("aktif") and not (e and e.get("aktif")):
+            yeni_kayitlar.append({**kayit, "tur": "yeni", "yeniTakim": o["takim"]})
+        elif o.get("aktif") and e.get("takim") != o["takim"]:
+            yeni_kayitlar.append({**kayit, "tur": "transfer", "eskiTakim": e.get("takim"), "yeniTakim": o["takim"]})
+        elif e and e.get("aktif") and not o.get("aktif"):
+            yeni_kayitlar.append({**kayit, "tur": "ayrildi", "eskiTakim": e.get("takim")})
+    yol = DATA / "bsl_hareketleri.json"
+    eskiler = json.loads(yol.read_text(encoding="utf-8")) if yol.exists() else []
+    sinir = (simdi - timedelta(days=90)).isoformat(timespec="seconds")
+    json_yaz(yol, yeni_kayitlar + [k for k in eskiler if k["zaman"] >= sinir])
+    for k in yeni_kayitlar:
+        print(f"  Kadro hareketi: {k['ad']} ({k['tur']})")
+
+
 def kadrolar():
     """TBF takım kadroları: oyuncu id -> rehber kaydı (bu sezonun ortalamalarıyla)."""
     rehber = {}
@@ -222,6 +244,8 @@ def main():
         o["astOrt"] = round(s["ast"] / s["mac"], 1) if s and s["mac"] else 0
 
     liste = sorted(rehber.values(), key=lambda o: (-o["vpOrt"], -o["mac"], o["ad"]))
+    if eski:
+        kadro_hareketleri(eski, rehber)
     json_yaz(DATA / "oyuncular.json", liste)
     json_yaz(DATA / "index.json", {
         "guncelHafta": guncel, "haftalar": takvim,

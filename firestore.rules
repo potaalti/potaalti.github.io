@@ -13,7 +13,10 @@ service cloud.firestore {
     function uyeYolu() { return /databases/$(database)/documents/uyeler/$(request.auth.uid); }
     function uye() { return request.auth != null && exists(uyeYolu()); }
     function benimTakim() { return get(uyeYolu()).data.takim; }
-    function yonetici() { return uye() && benimTakim() == 'admin'; }
+    // Yönetici: yönetici koduyla girenler ve yönetici yetkisi verilen takımların menajerleri
+    function yonetici() {
+      return uye() && (benimTakim() == 'admin' || benimTakim() in ayar().get('yoneticiTakimlar', []));
+    }
     function durum() { return get(/databases/$(database)/documents/lig/durum).data; }
     function ayar() { return get(/databases/$(database)/documents/lig/ayar).data; }
     function kadro(tid) { return get(/databases/$(database)/documents/kadrolar/$(tid)).data; }
@@ -30,8 +33,15 @@ service cloud.firestore {
     // ---------- Lig ayarları ve draft durumu ----------
     match /lig/{doc} {
       allow read: if true;
-      allow create: if kurulumda();
+      allow create: if kurulumda() || (doc == 'lisanssiz' && yonetici());
       allow update: if yonetici() || (doc == 'durum' && secimIlerlemesi());
+    }
+
+    // Lisansı TBF'den düşen (ligden ayrılan) ve bir takımda olan oyuncular: yöneticinin ekranı günceller.
+    // Takımı bu oyuncuyu boştakilerden biriyle değiştirmek zorunda; bu değişiklik serbest oyuncu hakkından düşmez.
+    function lisanssizListe() { return get(/databases/$(database)/documents/lig/lisanssiz).data.liste; }
+    function lisanssizDegisim(tid) {
+      return oyunculari(kadro(tid)).toSet().difference(oyunculari(kadroSonra(tid)).toSet()).hasOnly(lisanssizListe());
     }
 
     // Bir seçim yapılınca sıra bir sonraki seçime geçer, saat yeniden başlar
@@ -53,6 +63,7 @@ service cloud.firestore {
     match /secimler/{n} {
       allow read: if true;
       allow create: if secimGecerli(n);
+      allow update: if yonetici(); // seçimi başka oyuncuyla değiştirme
       allow delete: if yonetici(); // son seçimi geri alma
     }
 
@@ -110,14 +121,16 @@ service cloud.firestore {
     function faAlimi(pid) {
       let tid = request.resource.data.takim;
       return uye() && tid == benimTakim() && durum().asama == 'sezon'
-        && kadroSonra(tid).sonFa == pid && kadroSonra(tid).fa == kadro(tid).fa + 1
+        && kadroSonra(tid).sonFa == pid
+        && (kadroSonra(tid).fa == kadro(tid).fa + 1 || (kadroSonra(tid).fa == kadro(tid).fa && lisanssizDegisim(tid)))
         && request.resource.data.keys().hasOnly(['takim', 'fa']);
     }
 
     function faBirakma(pid) {
       let tid = resource.data.takim;
       return uye() && tid == benimTakim() && durum().asama == 'sezon'
-        && !(pid in oyunculari(kadroSonra(tid))) && kadroSonra(tid).fa == kadro(tid).fa + 1;
+        && !(pid in oyunculari(kadroSonra(tid)))
+        && (kadroSonra(tid).fa == kadro(tid).fa + 1 || pid in lisanssizListe());
     }
 
     function takasla(pid) {
@@ -186,7 +199,8 @@ service cloud.firestore {
         && gecmisEklendi(eski, yeni);
     }
 
-    // Serbest oyuncu: bir oyuncu bırakılır, takımı olmayan bir oyuncu alınır (sezonda en fazla 2)
+    // Serbest oyuncu: bir oyuncu bırakılır, takımı olmayan bir oyuncu alınır (sezonda en fazla 2;
+    // lisansı düşen oyuncunun yerine alınan hak kullanmaz)
     function serbestOyuncu(tid) {
       let eski = resource.data;
       let yeni = request.resource.data;
@@ -195,7 +209,8 @@ service cloud.firestore {
       let alinan = /databases/$(database)/documents/alinan/$(yeni.sonFa);
       return uye() && benimTakim() == tid && durum().asama == 'sezon'
         && yeni.diff(eski).affectedKeys().hasOnly(['as', 'yedek', 'fa', 'sonFa', 'gecmis'])
-        && yeni.fa == eski.fa + 1 && yeni.fa <= ayar().faHakki
+        && ((yeni.fa == eski.fa + 1 && yeni.fa <= ayar().faHakki)
+            || (yeni.fa == eski.fa && eskiSet.difference(yeniSet).hasOnly(lisanssizListe())))
         && kadroDuzgun(yeni)
         && yeniSet.difference(eskiSet) == [yeni.sonFa].toSet() && eskiSet.difference(yeniSet).size() == 1
         && !exists(alinan) && getAfter(alinan).data.takim == tid

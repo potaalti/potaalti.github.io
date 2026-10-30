@@ -12,10 +12,10 @@ export const firebaseConfig = {
 };
 
 // Lig ayarı (ortak motor): draft yok, kadrolar eski TBL Fantezi Ligi'nden içe aktarılır; As'ta en fazla 2 yabancı.
-// Hafta numaraları fantezi haftasıdır (TBL'nin başlangıç haftası 1. hafta). degisiklikHakki: sezonda As–Yedek değişikliği (99: sınırsız)
+// Hafta numaraları fantezi haftasıdır (TBL'nin başlangıç haftası 1. hafta). ortakHak: serbest oyuncu ve As–Yedek değişikliği aynı 2 transfer hakkından düşer
 export const lig = {
   kod: 'tbl', kisa: 'TBL', ad: 'Pota Altı TBL Fantezi Ligi', yerelProje: 'demo-tbl-fantezi',
-  kural: 'tbl', draft: false, takas: false, hareketler: false, mevki: false, fanteziHaftasi: true, iceAktar: 'tbl', degisiklikHakki: 99,
+  kural: 'tbl', draft: false, takas: false, hareketler: false, mevki: false, fanteziHaftasi: true, iceAktar: 'tbl', ortakHak: true, beklemeSaat: 24,
   // Lisansı düşen yabancının yerine aynı TBL takımına gelen yabancı fantezi takımına otomatik geçer (hak kullanmaz)
   otomatikYerine: true,
 };

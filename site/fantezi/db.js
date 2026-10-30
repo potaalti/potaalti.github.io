@@ -439,11 +439,15 @@ export async function asYedekDegistir(tid, asPid, yedekPid, hafta) {
     const ref = yol('kadrolar', tid);
     const k = (await tx.get(ref)).data();
     const ayar = (await tx.get(yol('lig', 'ayar'))).data();
-    if (k.degisiklik >= ayar.degisiklikHakki) throw new Hata('As–Yedek değişikliği hakkın kalmadı.');
+    // TBL: As–Yedek değişikliği de serbest oyuncu gibi transfer hakkından düşer (ortak hak)
+    if (ayar.ortakHak ? k.fa >= ayar.faHakki : k.degisiklik >= ayar.degisiklikHakki) {
+      throw new Hata(ayar.ortakHak ? 'Transfer hakkın kalmadı.' : 'As–Yedek değişikliği hakkın kalmadı.');
+    }
     if (!k.as.includes(asPid) || !k.yedek.includes(yedekPid)) throw new Hata('Kadro değişmiş, sayfayı yenile.');
     const as = k.as.map(p => (p === asPid ? yedekPid : p));
     const yedek = k.yedek.map(p => (p === yedekPid ? asPid : p));
-    tx.update(ref, { as, yedek, degisiklik: k.degisiklik + 1, gecmis: [...k.gecmis, { hafta, as, yedek, tur: 'degisiklik' }] });
+    const sayac = ayar.ortakHak ? { fa: k.fa + 1 } : { degisiklik: k.degisiklik + 1 };
+    tx.update(ref, { as, yedek, ...sayac, gecmis: [...k.gecmis, { hafta, as, yedek, tur: 'degisiklik' }] });
     hareket(tx, { tur: 'degisiklik', takim: tid, asaGecen: yedekPid, yedegeGecen: asPid, hafta });
   });
 }
@@ -470,10 +474,12 @@ export async function serbestAl(tid, birak, al, hafta, zorunlu = false) {
   });
 }
 
-// ---------- Bekleme ve talep: bırakılan ya da lige yeni gelen oyuncu 36 saat kimse tarafından alınamaz ----------
+// ---------- Bekleme ve talep: bırakılan ya da lige yeni gelen oyuncu belli bir süre (lig ayarı beklemeSaat, yoksa 36 saat)
+// kimse tarafından alınamaz ----------
 // Bu sürede takımlar talepte bulunur; süre bitince yöneticinin ekranı talip olanlar arasında kura çeker.
 
-export const BEKLEME_MS = 36 * 3600 * 1000;
+export let BEKLEME_MS = 36 * 3600 * 1000;
+export function beklemeSaatiniAyarla(saat) { BEKLEME_MS = (saat || 36) * 3600 * 1000; }
 let saatFarkiMs = 0;
 export function saatFarkiniAyarla(ms) { saatFarkiMs = ms || 0; }
 // b: bekleme belgesi ({ zaman }); bekleme bitmediyse kalan ms, bittiyse 0

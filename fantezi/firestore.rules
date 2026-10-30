@@ -196,13 +196,16 @@ service cloud.firestore {
         && kadroDuzgun(yeni) && oyunculari(yeni).toSet() == oyunculari(eski).toSet();
     }
 
-    // Sezon boyunca tek As–Yedek değişikliği
+    // Sezon boyunca As–Yedek değişikliği: kendi hakkından ya da (TBL, ortakHak) transfer hakkından (fa) düşer
     function asYedekDegisikligi(tid) {
       let eski = resource.data;
       let yeni = request.resource.data;
+      let ortak = ayar().get('ortakHak', false) == true;
       return uye() && benimTakim() == tid && durum().asama == 'sezon'
-        && yeni.diff(eski).affectedKeys().hasOnly(['as', 'yedek', 'degisiklik', 'gecmis'])
-        && yeni.degisiklik == eski.degisiklik + 1 && yeni.degisiklik <= ayar().degisiklikHakki
+        && ((!ortak && yeni.diff(eski).affectedKeys().hasOnly(['as', 'yedek', 'degisiklik', 'gecmis'])
+              && yeni.degisiklik == eski.degisiklik + 1 && yeni.degisiklik <= ayar().degisiklikHakki)
+          || (ortak && yeni.diff(eski).affectedKeys().hasOnly(['as', 'yedek', 'fa', 'gecmis'])
+              && yeni.fa == eski.fa + 1 && yeni.fa <= ayar().faHakki))
         && kadroDuzgun(yeni) && oyunculari(yeni).toSet() == oyunculari(eski).toSet()
         && gecmisEklendi(eski, yeni);
     }
@@ -226,10 +229,10 @@ service cloud.firestore {
         && gecmisEklendi(eski, yeni);
     }
 
-    // ---------- Bekleme ve talep: serbest kalan ya da lige yeni gelen oyuncu 36 saat alınamaz ----------
+    // ---------- Bekleme ve talep: serbest kalan ya da lige yeni gelen oyuncu beklemeSaat (yoksa 36) saat alınamaz ----------
     // Bu sürede takımlar talepte bulunur (talepler: { takım: bırakacağı oyuncu }). Süre bitince yöneticinin ekranı
     // talip olanlar arasında kura çeker ve belgeyi siler; talep yoksa oyuncu süre bitince boştakilere düşer.
-    function beklemeSuresi() { return duration.value(36, 'h'); }
+    function beklemeSuresi() { return duration.value(ayar().get('beklemeSaat', 36), 'h'); }
     function beklemeBitti(pid) {
       let yol = /databases/$(database)/documents/bekleme/$(pid);
       return !exists(yol)

@@ -34,7 +34,8 @@ sayfaları; ileride TBL ve BSL fantezi ligleri ve Pota Altı YouTube yayınları
 ## TBL Fantezi: menajerler kendi değişikliklerini yapar
 - BSL Fantezi'nin motoru ortak hale getirildi (`site/fantezi/`); TBL Fantezi aynı kodla `tbl/` adresinde, kendi Firebase projesiyle çalışır.
 - Draft yok: eski TBL Fantezi'nin kadroları ve haftalık geçmişi içe aktarılır. Kurallar: 5 As + 2 Yedek, As'ta en fazla 2 yabancı,
-  sezonda 2 serbest oyuncu, 36 saat talep ve kura, sınırsız As–Yedek değişikliği. TBL'de takas ve Hareketler sayfası yok
+  sezonda 2 transfer hakkı (serbest oyuncu almak da As–Yedek değişikliği de 1 hak kullanır; `ortakHak`), bırakılan ya da
+  lige yeni katılan oyuncu için 24 saat talep ve kura (`beklemeSaat`; BSL'de 36 saat). TBL'de takas ve Hareketler sayfası yok
   (`site/tbl/config.js`: `takas: false, hareketler: false`).
 - Yabancı oyuncunun lisansı düşer ve TBL takımı yerine yabancı alırsa, yeni oyuncu fantezi takımına otomatik geçer (hak düşmez).
 - Kurulum ekranı eski sitedeki transferleri listeler ve takımların kullandığı serbest oyuncu haklarını hesaplar (aktarmadan önce değiştirilebilir).

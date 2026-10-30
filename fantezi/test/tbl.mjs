@@ -59,7 +59,7 @@ await menajer.D.davetleKatil(menajer.uid, { email: menajer.email }, kodlar.t01, 
 await menajer2.D.davetleKatil(menajer2.uid, { email: menajer2.email }, kodlar.t02, 't02');
 await reddedilmeli(() => menajer.D.kadrolariIceAktar(takimlar, { aktifHafta: 9, ayar: {} }), 'Menajerin kadroları içe aktarması');
 const AKTIF = haftalar.at(-1);
-await admin.D.kadrolariIceAktar(takimlar, { aktifHafta: AKTIF, ayar: { degisiklikHakki: 99, asEnFazlaYabanci: 2, mevkilerHazir: false } });
+await admin.D.kadrolariIceAktar(takimlar, { aktifHafta: AKTIF, ayar: { degisiklikHakki: 99, ortakHak: true, beklemeSaat: 24, asEnFazlaYabanci: 2, mevkilerHazir: false } });
 const durum = await oku(admin.db, 'lig', 'durum');
 const k1 = await oku(admin.db, 'kadrolar', 't01');
 const alinanlar = (await F.getDocs(F.collection(admin.db, 'alinan'))).size;
@@ -89,13 +89,22 @@ kontrol((await oku(admin.db, 'alinan', s1.al))?.takim === 't01' && !!(await oku(
 await serbest(menajer, 't01');
 kontrol((await oku(admin.db, 'kadrolar', 't01')).fa === 2, '2. serbest oyuncu alındı (sezonluk 2 hak doldu)');
 await reddedilmeli(() => serbest(menajer, 't01'), '3. serbest oyuncu');
-// As–Yedek değişikliği: sınırsız (birden çok kez)
-for (let i = 1; i <= 3; i++) {
-  const kk = await oku(admin.db, 'kadrolar', 't02');
+// As–Yedek değişikliği: serbest oyuncuyla aynı transfer hakkından (fa) düşer
+const asYedek = async (kim, tid) => {
+  const kk = await oku(admin.db, 'kadrolar', tid);
   const asP = kk.as.find(p => turkMu(p) || !turkMu(kk.yedek[0])) ?? kk.as[0];
-  await menajer2.D.asYedekDegistir('t02', asP, kk.yedek[0], AKTIF);
-}
-kontrol((await oku(admin.db, 'kadrolar', 't02')).degisiklik === 3, 'As–Yedek değişikliği 3 kez yapılabildi (sınırsız)');
+  await kim.D.asYedekDegistir(tid, asP, kk.yedek[0], AKTIF);
+};
+await asYedek(menajer2, 't02');
+const kd = await oku(admin.db, 'kadrolar', 't02');
+kontrol(kd.fa === 1 && kd.degisiklik === 0, 'As–Yedek değişikliği transfer hakkından 1 düştü');
+await reddedilmeli(() => asYedek(menajer, 't01'), 'Transfer hakkı bitmiş takımın As–Yedek değişikliği');
+await reddedilmeli(async () => {
+  const kk = await oku(admin.db, 'kadrolar', 't02');
+  const as = [kk.yedek[0], ...kk.as.slice(1)];
+  const yedek = [kk.as[0], ...kk.yedek.slice(1)];
+  await F.updateDoc(F.doc(menajer2.db, 'kadrolar', 't02'), { as, yedek, degisiklik: kk.degisiklik + 1, gecmis: [...kk.gecmis, { hafta: AKTIF, as, yedek, tur: 'degisiklik' }] });
+}, 'Transfer hakkını kullanmadan (ayrı sayaçla) As–Yedek değişikliği');
 await reddedilmeli(async () => { const kk = await oku(admin.db, 'kadrolar', 't02'); await menajer.D.asYedekDegistir('t02', kk.as[0], kk.yedek[0], AKTIF); }, 'Başka takımın As–Yedek değişikliği');
 // Talep: t02 bırakılan oyuncuya talip olur
 const k2 = await oku(admin.db, 'kadrolar', 't02');

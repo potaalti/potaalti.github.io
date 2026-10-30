@@ -1,4 +1,4 @@
-# BSL Draft Ligi — Kurulum ve Kullanım Rehberi
+# Pota Altı BSL Fantezi Ligi — Kurulum ve Kullanım Rehberi
 
 Bu proje, TBL fantezi liginden **tamamen ayrı** bir sitedir. 17 menajer BSL oyuncularını canlı draftla
 seçer; sezon boyunca takas, serbest oyuncu ve As–Yedek değişikliği yapar; puanlar BSL'deki VP'lerden
@@ -104,7 +104,7 @@ hesaplanır.
   Haftanın maçları bitince (genelde Pazartesi gecesi) bir kez yeterli; istersen maç günlerinde de
   çalıştırabilirsin.
 - Otomatik olsun istersen `gorev_kur.bat`'a bir kez çift tıkla: bilgisayar açıkken her gece 23:45'te
-  güncelleme yapılır. Kaldırmak için: `schtasks /Delete /TN "BSL Draft Veri" /F`.
+  güncelleme yapılır. Kaldırmak için: `schtasks /Delete /TN "BSL Fantezi Veri" /F`.
 
 ## Sorun giderme
 

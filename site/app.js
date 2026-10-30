@@ -152,7 +152,7 @@ function cizHemen() {
   const odakId = odak?.id;
   let secim = null;
   try { secim = odak && odak.selectionStart != null ? [odak.selectionStart, odak.selectionEnd] : null; } catch { /* number input */ }
-  $('#lig-adi').textContent = S.ayar?.ad ?? 'BSL Draft Ligi';
+  $('#lig-adi').textContent = S.ayar?.ad ?? 'Pota Altı BSL Fantezi Ligi';
   $('#menu').innerHTML = menu();
   $('#alt-menu').innerHTML = altMenu();
   // Telefonda menü yana kayar: açık sekme görünür kalsın
@@ -171,7 +171,7 @@ function cizHemen() {
     }
   }
   const benimSiram = siradakiTakim() && siradakiTakim() === benimTakimim() && asama() === 'draft';
-  document.title = benimSiram ? '🔔 Sıra sende! · BSL Draft' : (S.ayar?.ad ?? 'BSL Draft Ligi');
+  document.title = benimSiram ? '🔔 Sıra sende! · BSL Fantezi' : (S.ayar?.ad ?? 'Pota Altı BSL Fantezi Ligi');
   sayacGuncelle();
 }
 
@@ -283,7 +283,7 @@ function gorunumKurulum() {
     <h2>Ligi kur</h2>
     <p>Bu lig henüz kurulmamış. Ligi kuran cihaz <b>yönetici</b> olur. Takım adları ve menajerler sonradan da değiştirilebilir.</p>
     <div class="form-izgara">
-      <label for="k-ad">Lig adı</label><input type="text" id="k-ad" value="Pota Altı BSL Draft Ligi">
+      <label for="k-ad">Lig adı</label><input type="text" id="k-ad" value="Pota Altı BSL Fantezi Ligi">
       <label for="k-hafta">Puanlamanın başlayacağı BSL haftası</label><input type="number" id="k-hafta" min="1" max="40" value="${varsayilanHafta}">
       <label for="k-sure">Seçim süresi (saniye)</label><input type="number" id="k-sure" min="5" max="600" value="90">
     </div>
@@ -1017,7 +1017,7 @@ async function eylem(is, id, el) {
       if (!hafta || !sure) return bildir('Hafta ve süreyi gir.', true);
       el.disabled = true;
       const sonuc = await D.ligiKur(S.uid, {
-        ad: deger('k-ad') || 'BSL Draft Ligi', secimSuresi: sure, baslangicHaftasi: hafta,
+        ad: deger('k-ad') || 'Pota Altı BSL Fantezi Ligi', secimSuresi: sure, baslangicHaftasi: hafta,
         menajerler: Array.from({ length: 17 }, (_, i) => deger(`k-m${i}`)),
       });
       localStorage.setItem(KOD_ANAHTARI, sonuc.adminKod);

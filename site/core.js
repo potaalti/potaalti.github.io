@@ -1,4 +1,4 @@
-// BSL Draft Ligi kuralları: draft sırası, otomatik seçim, Türk oyuncu kuralı ve puanlama.
+// Pota Altı BSL Fantezi Ligi kuralları: draft sırası, otomatik seçim, Türk oyuncu kuralı ve puanlama.
 // Saf fonksiyonlar (Firebase'e bağlı değil), tarayıcıda ve testlerde aynen kullanılır.
 
 export const PUAN_TABLOSU = [5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1, 1];

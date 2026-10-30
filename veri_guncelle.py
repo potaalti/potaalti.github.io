@@ -1,4 +1,4 @@
-"""BSL Draft Ligi verisi: TBF sitesinden BSL oyuncularını ve haftalık verimlilik (VP) puanlarını çeker.
+"""Pota Altı BSL Fantezi Ligi verisi: TBF sitesinden BSL oyuncularını ve haftalık verimlilik (VP) puanlarını çeker.
 
 Çıktılar (site/data/):
   oyuncular.json   -> bütün BSL oyuncuları: ad, takım, ülke, Türk mü, bu sezonun maç başı VP ortalaması

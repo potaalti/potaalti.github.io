@@ -1,4 +1,4 @@
-# BSL Draft Ligi
+# Pota Altı BSL Fantezi Ligi
 
 Türkiye Sigorta Basketbol Süper Ligi (BSL) için 17 takımlık, tamamen çevrim içi draft usulü fantezi lig.
 

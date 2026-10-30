@@ -246,3 +246,29 @@ tr.alindi td { color: var(--soluk); }
 .detay table td { padding: 5px 8px; }
 .cizik { text-decoration: line-through; color: var(--soluk); }
 .kurallar li { margin-bottom: 6px; }
+
+/* Maçlar (TBL fantezi ligindeki gibi) */
+.hafta-secici { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.hafta-secici a, .hafta-secici span.pasif { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: var(--kart); font-size: 1.2rem; border: 1px solid var(--cizgi); color: var(--yazi); }
+.hafta-secici span.pasif { opacity: .3; }
+.hafta-secici .baslik { text-align: center; }
+.hafta-secici .baslik strong { display: block; font-size: 1.05rem; }
+.hafta-secici .baslik small { color: var(--soluk); font-size: .78rem; }
+.secenekler { display: flex; gap: 8px; margin-bottom: 12px; }
+.secenek { padding: 6px 12px; border-radius: 99px; font-size: .8rem; font-weight: 600; background: var(--kart); border: 1px solid var(--cizgi); color: var(--soluk); }
+.secenek.aktif { background: var(--vurgu); border-color: var(--vurgu); color: var(--vurgu-uzeri); }
+.hafta-cipleri { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 2px; scrollbar-width: none; }
+.hafta-cipleri::-webkit-scrollbar { display: none; }
+.hafta-cipleri .secenek { flex: 0 0 auto; white-space: nowrap; }
+.kart.mac-gun { padding: 0; overflow: hidden; }
+.mac-gun h2 { margin: 0; padding: 12px 14px 4px; font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--soluk); }
+.mac { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; padding: 12px 14px; border-top: 1px solid var(--cizgi); font-size: .9rem; cursor: pointer; }
+.mac-gun h2 + .mac { border-top: 0; }
+.mac:hover, .mac.acik { background: var(--vurgu-acik); }
+.mac .dep { text-align: right; }
+.mac .skor { text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; min-width: 76px; }
+.mac .skor small { display: block; font-weight: 400; color: var(--soluk); font-size: .72rem; }
+.mac .kazanan { font-weight: 700; }
+.canli-yazi { color: var(--vurgu); font-weight: 700; }
+.mac-detay { padding: 10px 14px 14px; background: var(--zemin); border-top: 1px dashed var(--cizgi); }
+.mac-detay .oyuncu-liste li { font-size: .88rem; }

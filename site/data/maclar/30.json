@@ -1,0 +1,109 @@
+{
+ "hafta": 30,
+ "maclar": [
+  {
+   "id": 346506,
+   "tarih": "2027-05-08T00:00:00",
+   "durum": "canli",
+   "ev": "GALATASARAY MCT TECHNIC",
+   "evId": 266026,
+   "evSkor": null,
+   "dep": "BAHÇEŞEHİR KOLEJİ",
+   "depId": 265991,
+   "depSkor": null,
+   "salon": "Sinan Erdem Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346507,
+   "tarih": "2027-05-08T00:00:00",
+   "durum": "canli",
+   "ev": "TÜRK TELEKOM",
+   "evId": 266030,
+   "evSkor": null,
+   "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "depId": 265994,
+   "depSkor": null,
+   "salon": "Ankara Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346508,
+   "tarih": "2027-05-08T00:00:00",
+   "durum": "canli",
+   "ev": "TRABZONSPOR",
+   "evId": 266029,
+   "evSkor": null,
+   "dep": "KARŞIYAKA",
+   "depId": 266027,
+   "depSkor": null,
+   "salon": "Hayri Gür Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346509,
+   "tarih": "2027-05-08T00:00:00",
+   "durum": "canli",
+   "ev": "ANADOLU EFES",
+   "evId": 265990,
+   "evSkor": null,
+   "dep": "BURSASPOR BASKETBOL",
+   "depId": 266176,
+   "depSkor": null,
+   "salon": "Turkcell Basketbol Gelişim Merkezi",
+   "yayin": ""
+  },
+  {
+   "id": 346510,
+   "tarih": "2027-05-08T00:00:00",
+   "durum": "canli",
+   "ev": "TOFAŞ",
+   "evId": 265995,
+   "evSkor": null,
+   "dep": "BEŞİKTAŞ",
+   "depId": 265992,
+   "depSkor": null,
+   "salon": "Tofaş Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346511,
+   "tarih": "2027-05-08T00:00:00",
+   "durum": "canli",
+   "ev": "ALİAĞA PETKİM SPOR",
+   "evId": 266048,
+   "evSkor": null,
+   "dep": "PİZZABULLS BORDO BANDIRMA",
+   "depId": 265993,
+   "depSkor": null,
+   "salon": "Enka Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346512,
+   "tarih": "2027-05-08T00:00:00",
+   "durum": "canli",
+   "ev": "BİOTEKNO KÖRFEZ BASKET",
+   "evId": 268222,
+   "evSkor": null,
+   "dep": "YUKATEL DENİZLİ BASKET",
+   "depId": 266028,
+   "depSkor": null,
+   "salon": "Şehit Polis Recep Topaloğlu Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346513,
+   "tarih": "2027-05-08T00:00:00",
+   "durum": "canli",
+   "ev": "FENERBAHÇE TARFİN",
+   "evId": 266025,
+   "evSkor": null,
+   "dep": "ESENLER EROKSPOR",
+   "depId": 266024,
+   "depSkor": null,
+   "salon": "Ülker Spor ve Etkinlik Salonu",
+   "yayin": ""
+  }
+ ]
+}

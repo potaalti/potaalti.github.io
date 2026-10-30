@@ -10,7 +10,9 @@
    "evSkor": "90",
    "dep": "PİZZABULLS BORDO BANDIRMA",
    "depId": 265993,
-   "depSkor": "89"
+   "depSkor": "89",
+   "salon": "Tofaş Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346276,
@@ -21,7 +23,9 @@
    "evSkor": "73",
    "dep": "KARŞIYAKA",
    "depId": 266027,
-   "depSkor": "72"
+   "depSkor": "72",
+   "salon": "Ankara Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346280,
@@ -32,7 +36,9 @@
    "evSkor": "85",
    "dep": "YUKATEL DENİZLİ BASKET",
    "depId": 266028,
-   "depSkor": "81"
+   "depSkor": "81",
+   "salon": "Enka Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346275,
@@ -43,7 +49,9 @@
    "evSkor": "102",
    "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
    "depId": 265994,
-   "depSkor": "79"
+   "depSkor": "79",
+   "salon": "Sinan Erdem Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346277,
@@ -54,7 +62,9 @@
    "evSkor": "82",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
-   "depSkor": "76"
+   "depSkor": "76",
+   "salon": "Hayri Gür Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346274,
@@ -65,7 +75,9 @@
    "evSkor": "98",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": "83"
+   "depSkor": "83",
+   "salon": "Sinan Erdem Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346278,
@@ -76,7 +88,9 @@
    "evSkor": "95",
    "dep": "BEŞİKTAŞ",
    "depId": 265992,
-   "depSkor": "81"
+   "depSkor": "81",
+   "salon": "Turkcell Basketbol Gelişim Merkezi",
+   "yayin": "beINSports"
   },
   {
    "id": 346281,
@@ -87,7 +101,9 @@
    "evSkor": "88",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": "79"
+   "depSkor": "79",
+   "salon": "Şehit Polis Recep Topaloğlu Spor Salonu",
+   "yayin": "beINSports"
   }
  ],
  "oyuncular": {

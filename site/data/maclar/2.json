@@ -1,0 +1,109 @@
+{
+ "hafta": 2,
+ "maclar": [
+  {
+   "id": 346283,
+   "tarih": "2026-10-02T19:00:00",
+   "durum": "bitti",
+   "ev": "KARŞIYAKA",
+   "evId": 266027,
+   "evSkor": "78",
+   "dep": "GALATASARAY MCT TECHNIC",
+   "depId": 266026,
+   "depSkor": "71",
+   "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346287,
+   "tarih": "2026-10-03T13:00:00",
+   "durum": "bitti",
+   "ev": "YUKATEL DENİZLİ BASKET",
+   "evId": 266028,
+   "evSkor": "101",
+   "dep": "TOFAŞ",
+   "depId": 265995,
+   "depSkor": "87",
+   "salon": "Pamukkale Üniversitesi Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346284,
+   "tarih": "2026-10-03T15:30:00",
+   "durum": "bitti",
+   "ev": "BURSASPOR BASKETBOL",
+   "evId": 266176,
+   "evSkor": "69",
+   "dep": "TÜRK TELEKOM",
+   "depId": 266030,
+   "depSkor": "78",
+   "salon": "Tofaş Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346288,
+   "tarih": "2026-10-03T18:00:00",
+   "durum": "bitti",
+   "ev": "ESENLER EROKSPOR",
+   "evId": 266024,
+   "evSkor": "96",
+   "dep": "ALİAĞA PETKİM SPOR",
+   "depId": 266048,
+   "depSkor": "87",
+   "salon": "Beşiktaş Akatlar Spor Kompleksi",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346282,
+   "tarih": "2026-10-04T13:00:00",
+   "durum": "bitti",
+   "ev": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "evId": 265994,
+   "evSkor": "76",
+   "dep": "BAHÇEŞEHİR KOLEJİ",
+   "depId": 265991,
+   "depSkor": "84",
+   "salon": "Çayırova Belediyesi Spor Kompleksi",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346289,
+   "tarih": "2026-10-04T15:30:00",
+   "durum": "bitti",
+   "ev": "FENERBAHÇE TARFİN",
+   "evId": 266025,
+   "evSkor": "85",
+   "dep": "BİOTEKNO KÖRFEZ BASKET",
+   "depId": 268222,
+   "depSkor": "84",
+   "salon": "Ülker Spor ve Etkinlik Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346286,
+   "tarih": "2026-10-04T18:00:00",
+   "durum": "bitti",
+   "ev": "PİZZABULLS BORDO BANDIRMA",
+   "evId": 265993,
+   "evSkor": "79",
+   "dep": "ANADOLU EFES",
+   "depId": 265990,
+   "depSkor": "85",
+   "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346285,
+   "tarih": "2026-10-05T19:00:00",
+   "durum": "bitti",
+   "ev": "BEŞİKTAŞ",
+   "evId": 265992,
+   "evSkor": "90",
+   "dep": "TRABZONSPOR",
+   "depId": 266029,
+   "depSkor": "81",
+   "salon": "Turkcell Basketbol Gelişim Merkezi",
+   "yayin": "beINSports"
+  }
+ ]
+}

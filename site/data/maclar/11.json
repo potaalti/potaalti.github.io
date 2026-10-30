@@ -1,0 +1,109 @@
+{
+ "hafta": 11,
+ "maclar": [
+  {
+   "id": 346357,
+   "tarih": "2026-12-11T19:00:00",
+   "durum": "oynanmadi",
+   "ev": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "evId": 265994,
+   "evSkor": null,
+   "dep": "ALİAĞA PETKİM SPOR",
+   "depId": 266048,
+   "depSkor": null,
+   "salon": "Çayırova Belediyesi Spor Kompleksi",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346361,
+   "tarih": "2026-12-12T13:00:00",
+   "durum": "oynanmadi",
+   "ev": "PİZZABULLS BORDO BANDIRMA",
+   "evId": 265993,
+   "evSkor": null,
+   "dep": "FENERBAHÇE TARFİN",
+   "depId": 266025,
+   "depSkor": null,
+   "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346354,
+   "tarih": "2026-12-12T15:30:00",
+   "durum": "oynanmadi",
+   "ev": "BAHÇEŞEHİR KOLEJİ",
+   "evId": 265991,
+   "evSkor": null,
+   "dep": "TOFAŞ",
+   "depId": 265995,
+   "depSkor": null,
+   "salon": "Sinan Erdem Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346358,
+   "tarih": "2026-12-12T18:00:00",
+   "durum": "oynanmadi",
+   "ev": "KARŞIYAKA",
+   "evId": 266027,
+   "evSkor": null,
+   "dep": "BİOTEKNO KÖRFEZ BASKET",
+   "depId": 268222,
+   "depSkor": null,
+   "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346355,
+   "tarih": "2026-12-12T20:30:00",
+   "durum": "oynanmadi",
+   "ev": "GALATASARAY MCT TECHNIC",
+   "evId": 266026,
+   "evSkor": null,
+   "dep": "ANADOLU EFES",
+   "depId": 265990,
+   "depSkor": null,
+   "salon": "Sinan Erdem Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346356,
+   "tarih": "2026-12-13T13:00:00",
+   "durum": "oynanmadi",
+   "ev": "TÜRK TELEKOM",
+   "evId": 266030,
+   "evSkor": null,
+   "dep": "TRABZONSPOR",
+   "depId": 266029,
+   "depSkor": null,
+   "salon": "Ankara Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346359,
+   "tarih": "2026-12-13T15:30:00",
+   "durum": "oynanmadi",
+   "ev": "BURSASPOR BASKETBOL",
+   "evId": 266176,
+   "evSkor": null,
+   "dep": "ESENLER EROKSPOR",
+   "depId": 266024,
+   "depSkor": null,
+   "salon": "Tofaş Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346360,
+   "tarih": "2026-12-13T18:00:00",
+   "durum": "oynanmadi",
+   "ev": "BEŞİKTAŞ",
+   "evId": 265992,
+   "evSkor": null,
+   "dep": "YUKATEL DENİZLİ BASKET",
+   "depId": 266028,
+   "depSkor": null,
+   "salon": "Beşiktaş Akatlar Spor Kompleksi",
+   "yayin": "beINSports"
+  }
+ ]
+}

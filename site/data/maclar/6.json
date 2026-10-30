@@ -1,0 +1,109 @@
+{
+ "hafta": 6,
+ "maclar": [
+  {
+   "id": 346317,
+   "tarih": "2026-10-31T15:30:00",
+   "durum": "oynanmadi",
+   "ev": "BİOTEKNO KÖRFEZ BASKET",
+   "evId": 268222,
+   "evSkor": null,
+   "dep": "TRABZONSPOR",
+   "depId": 266029,
+   "depSkor": null,
+   "salon": "Şehit Polis Recep Topaloğlu Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346314,
+   "tarih": "2026-10-31T18:00:00",
+   "durum": "oynanmadi",
+   "ev": "PİZZABULLS BORDO BANDIRMA",
+   "evId": 265993,
+   "evSkor": null,
+   "dep": "BAHÇEŞEHİR KOLEJİ",
+   "depId": 265991,
+   "depSkor": null,
+   "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346315,
+   "tarih": "2026-10-31T20:30:00",
+   "durum": "oynanmadi",
+   "ev": "YUKATEL DENİZLİ BASKET",
+   "evId": 266028,
+   "evSkor": null,
+   "dep": "GALATASARAY MCT TECHNIC",
+   "depId": 266026,
+   "depSkor": null,
+   "salon": "Pamukkale Üniversitesi Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346316,
+   "tarih": "2026-11-01T13:00:00",
+   "durum": "oynanmadi",
+   "ev": "ESENLER EROKSPOR",
+   "evId": 266024,
+   "evSkor": null,
+   "dep": "TÜRK TELEKOM",
+   "depId": 266030,
+   "depSkor": null,
+   "salon": "Beşiktaş Akatlar Spor Kompleksi",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346319,
+   "tarih": "2026-11-01T15:30:00",
+   "durum": "oynanmadi",
+   "ev": "FENERBAHÇE TARFİN",
+   "evId": 266025,
+   "evSkor": null,
+   "dep": "TOFAŞ",
+   "depId": 265995,
+   "depSkor": null,
+   "salon": "Ülker Spor ve Etkinlik Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346321,
+   "tarih": "2026-11-01T18:00:00",
+   "durum": "oynanmadi",
+   "ev": "BURSASPOR BASKETBOL",
+   "evId": 266176,
+   "evSkor": null,
+   "dep": "KARŞIYAKA",
+   "depId": 266027,
+   "depSkor": null,
+   "salon": "Tofaş Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346318,
+   "tarih": "2026-11-02T18:00:00",
+   "durum": "oynanmadi",
+   "ev": "ALİAĞA PETKİM SPOR",
+   "evId": 266048,
+   "evSkor": null,
+   "dep": "ANADOLU EFES",
+   "depId": 265990,
+   "depSkor": null,
+   "salon": "Enka Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346320,
+   "tarih": "2026-11-02T20:30:00",
+   "durum": "oynanmadi",
+   "ev": "BEŞİKTAŞ",
+   "evId": 265992,
+   "evSkor": null,
+   "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "depId": 265994,
+   "depSkor": null,
+   "salon": "Turkcell Basketbol Gelişim Merkezi",
+   "yayin": "beINSports"
+  }
+ ]
+}

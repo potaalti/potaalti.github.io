@@ -10,7 +10,9 @@
    "evSkor": "78",
    "dep": "GALATASARAY MCT TECHNIC",
    "depId": 266026,
-   "depSkor": "71"
+   "depSkor": "71",
+   "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346287,
@@ -21,7 +23,9 @@
    "evSkor": "101",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "87"
+   "depSkor": "87",
+   "salon": "Pamukkale Üniversitesi Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346284,
@@ -32,7 +36,9 @@
    "evSkor": "69",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
-   "depSkor": "78"
+   "depSkor": "78",
+   "salon": "Tofaş Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346288,
@@ -43,7 +49,9 @@
    "evSkor": "96",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
-   "depSkor": "87"
+   "depSkor": "87",
+   "salon": "Beşiktaş Akatlar Spor Kompleksi",
+   "yayin": "beINSports"
   },
   {
    "id": 346282,
@@ -54,7 +62,9 @@
    "evSkor": "76",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
-   "depSkor": "84"
+   "depSkor": "84",
+   "salon": "Çayırova Belediyesi Spor Kompleksi",
+   "yayin": "beINSports"
   },
   {
    "id": 346289,
@@ -65,7 +75,9 @@
    "evSkor": "85",
    "dep": "BİOTEKNO KÖRFEZ BASKET",
    "depId": 268222,
-   "depSkor": "84"
+   "depSkor": "84",
+   "salon": "Ülker Spor ve Etkinlik Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346286,
@@ -76,7 +88,9 @@
    "evSkor": "79",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "85"
+   "depSkor": "85",
+   "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346285,
@@ -87,7 +101,9 @@
    "evSkor": "90",
    "dep": "TRABZONSPOR",
    "depId": 266029,
-   "depSkor": "81"
+   "depSkor": "81",
+   "salon": "Turkcell Basketbol Gelişim Merkezi",
+   "yayin": "beINSports"
   }
  ],
  "oyuncular": {

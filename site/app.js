@@ -27,13 +27,13 @@ const S = {
   hazir: false, ligYok: false, hataMesaji: null,
   uid: null, kod: null, ben: null, saatFarki: 0,
   ayar: null, durum: null, takimlar: {}, kadrolar: {}, secimler: {}, teklifler: {}, hareketler: {},
-  havuz: [], havuzMap: new Map(), havuzYuklendi: false, mevkiler: {}, mevkiListesi: {}, lisanssiz: [], bslHareketleri: [],
+  havuz: [], havuzMap: new Map(), havuzYuklendi: false, mevkiler: {}, mevkiListesi: {}, lisanssiz: [], bslHareketleri: [], maclar: {},
   rehber: new Map(), index: null, haftalar: {}, haftalarYuklendi: false,
   kodlar: null, kuraAcilan: -1, sonUyarilan: null,
   ui: {
     draftSekme: 'oyuncular', ara: '', bslTakim: '', sadeceTurk: false, alinanlar: false, mevkiFiltre: '', belirsiz: false,
     puanSekme: 'genel', acik: null, faAl: null, dizilis: null,
-    takasTakim: '', verilen: [], alinan: [], duzeltNo: null, duzeltAra: '',
+    takasTakim: '', verilen: [], alinan: [], duzeltNo: null, duzeltAra: '', acikMac: null,
   },
 };
 let secimDinleyici = null;
@@ -230,6 +230,7 @@ function cizHemen() {
     menuEl.scrollLeft = Math.max(0, aktif.offsetLeft - 16);
   }
   $('#kimlik').innerHTML = kimlik();
+  requestAnimationFrame(haftaCipiniOrtala);
   $('#icerik').innerHTML = (S.hazir && !S.ligYok ? girisKarti() : '')
     + (S.hazir && !S.ligYok && !['bostakiler', 'serbest'].includes(rota()[0]) ? zorunluBandi() : '') + gorunum();
   if (odakId) {
@@ -259,9 +260,10 @@ function menuOgeleri() {
   const zorunlu = benimTakimim() ? zorunluBekleyen(benimTakimim()).length : 0;
   return (ligEkrani() ? [
     ['puan', 'Puan Durumu', '🏆'],
-    ['takimlar', 'Takımlar', '👥'],
+    ['maclar', 'Maçlar', '📅'],
     benimTakimim() && ['kadrom', 'Kadrom', '📋'],
     ['takas', 'Takas', '🔄', gelen],
+    ['takimlar', 'Takımlar', '👥'],
     ['bostakiler', 'Boştakiler', '🧺', zorunlu],
     ['hareketler', 'Hareketler', '📰'],
     ['draft', 'Draft', '🏀'],
@@ -269,6 +271,7 @@ function menuOgeleri() {
     ...yonetim,
   ] : [
     ['draft', 'Draft', '🏀'],
+    ['maclar', 'Maçlar', '📅'],
     ['takimlar', 'Takımlar', '👥'],
     benimTakimim() && ['kadro', 'sezon'].includes(a) && ['kadrom', 'Kadrom', '📋'],
     ['kurallar', 'Kurallar', '📖'],
@@ -333,6 +336,7 @@ function gorunum() {
     case 'hareketler': return `<div class="dar">${gorunumHareketler()}</div>`;
     case 'kurallar': return `<div class="dar">${gorunumKurallar()}</div>`;
     case 'diger': return gorunumDiger();
+    case 'maclar': return `<div class="dar">${gorunumMaclar(Number(p1))}</div>`;
     case 'yonetici': return yonetici() ? `<div class="dar">${gorunumYonetici()}</div>` : '<p class="bos">Bu sayfa yönetici içindir.</p>';
     case 'mevkiler': return yonetici() ? gorunumMevkiler() : '<p class="bos">Bu sayfa yönetici içindir.</p>';
     case 'bildirimler': return yonetici() ? `<div class="dar">${gorunumBildirimler()}</div>` : '<p class="bos">Bu sayfa yönetici içindir.</p>';
@@ -1104,6 +1108,125 @@ function gorunumMevkiler() {
     </table></div></div>`;
 }
 
+// ---------- Maçlar: BSL fikstürü ve sonuçlar (TBL fantezi ligindeki Maçlar sekmesi gibi) ----------
+// BÜYÜK HARFLİ takım adlarını okunur yapar: "FENERBAHÇE TARFİN" -> "Fenerbahçe Tarfin" (kısaltmalar kalır)
+const baslik = ad => String(ad ?? '').split(' ').map(k =>
+  k !== k.toLocaleUpperCase('tr') || k.replace(/\./g, '').length <= 3 ? k
+    : k.toLocaleLowerCase('tr').replace(/(^|[.\-])(\p{L})/gu, (_, a, b) => a + b.toLocaleUpperCase('tr'))
+).join(' ').replace(/Technıc/u, 'Technic');
+const gunBasligi = iso => new Date(iso).toLocaleDateString('tr-TR', { weekday: 'long', day: 'numeric', month: 'long' });
+// TBF saati henüz belli olmayan maçları 00:00 olarak verir
+const saatYazisi = iso => (iso.endsWith('T00:00:00') ? 'Saat belli değil'
+  : new Date(iso).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }));
+const kazananSinifi = (m, taraf) => {
+  if (m.durum !== 'bitti') return '';
+  const ev = Number(m.evSkor);
+  const dep = Number(m.depSkor);
+  return (taraf === 'ev' ? ev > dep : dep > ev) ? 'kazanan' : '';
+};
+
+// Varsayılan hafta: TBF'nin güncel haftası; o hafta bittiyse sıradaki
+function maclarVarsayilanHafta() {
+  const hs = S.index?.haftalar ?? [];
+  const g = S.index?.guncelHafta ?? hs[0]?.hafta;
+  return hs.find(h => h.hafta === g)?.bitti && hs.some(h => h.hafta === g + 1) ? g + 1 : g;
+}
+
+async function maclariYukle(n) {
+  if (S.maclarYukleniyor === n) return;
+  S.maclarYukleniyor = n;
+  try {
+    S.maclar[n] = (await jsonGetir(`data/maclar/${n}.json`)).maclar;
+  } catch {
+    S.maclar[n] = [];
+  }
+  S.maclarYukleniyor = null;
+  ciz();
+}
+
+async function haftaVerisiYukle(n) {
+  if (S.haftalar[n] || S.haftaYukleniyor === n) return;
+  S.haftaYukleniyor = n;
+  try { S.haftalar[n] = await jsonGetir(`data/hafta/${n}.json`); } catch { /* oynanmamış hafta */ }
+  S.haftaYukleniyor = null;
+  ciz();
+}
+
+function haftaCipiniOrtala() {
+  const aktif = document.querySelector('.kaydir-ortala .aktif');
+  if (!aktif) return;
+  const satir = aktif.parentElement;
+  satir.scrollLeft = aktif.offsetLeft - satir.offsetLeft - (satir.clientWidth - aktif.offsetWidth) / 2;
+}
+
+function gorunumMaclar(istenen) {
+  const haftalar = (S.index?.haftalar ?? []).map(h => h.hafta);
+  if (!haftalar.length) return '<p class="bos">Fikstür henüz yok.</p>';
+  const n = haftalar.includes(istenen) ? istenen : maclarVarsayilanHafta();
+  const cipler = `<div class="secenekler hafta-cipleri kaydir-ortala">${haftalar.map(k =>
+    `<a class="secenek ${k === n ? 'aktif' : ''}" href="#/maclar/${k}">${k}. hafta</a>`).join('')}</div>`;
+  const maclar = S.maclar[n];
+  if (!maclar) {
+    maclariYukle(n);
+    return `${cipler}<p class="bos">Yükleniyor…</p>`;
+  }
+  const i = haftalar.indexOf(n);
+  const bitti = maclar.filter(m => m.durum === 'bitti').length;
+  const durum = !maclar.length ? 'Fikstür belli değil' : bitti === maclar.length ? 'Tamamlandı'
+    : `${bitti}/${maclar.length} maç bitti${maclar.some(m => m.durum === 'canli') ? ' · canlı' : ''}`;
+  const fantezi = S.ayar && n >= S.ayar.baslangicHaftasi ? 'Fantezi puanına sayılır · ' : '';
+  const ok = (hedef, isaret) => (hedef === undefined ? `<span class="pasif">${isaret}</span>`
+    : `<a href="#/maclar/${hedef}" aria-label="${hedef}. hafta">${isaret}</a>`);
+  const secici = `<div class="hafta-secici">${ok(haftalar[i - 1], '‹')}
+    <div class="baslik"><strong>BSL ${n}. Hafta</strong><small>${fantezi}${durum}</small></div>${ok(haftalar[i + 1], '›')}</div>`;
+  const gunler = new Map();
+  for (const m of maclar) gunler.set(m.tarih.slice(0, 10), [...(gunler.get(m.tarih.slice(0, 10)) ?? []), m]);
+  const bloklar = [...gunler.values()].map(g => `<section class="kart mac-gun"><h2>${gunBasligi(g[0].tarih)}</h2>
+    ${g.map(m => macSatiri(m, n)).join('')}</section>`).join('');
+  // Bay geçen takımlar
+  const oynayan = new Set(maclar.flatMap(m => [m.evId, m.depId]));
+  const takimAdlari = new Map([...S.rehber.values()].filter(o => o.aktif).map(o => [o.takimId, o.takim]));
+  const bay = [...takimAdlari].filter(([id]) => !oynayan.has(id)).map(([, ad]) => baslik(ad));
+  return `${cipler}${secici}${bloklar || '<p class="bos">Bu haftanın maçları henüz belli değil.</p>'}
+    ${maclar.length && bay.length ? `<p class="soluk kucuk">Bay: ${bay.map(esc).join(', ')}</p>` : ''}
+    <p class="soluk kucuk">Maça dokununca o maçtaki fantezi oyuncuları açılır. Skorlar veriler her güncellendiğinde yenilenir (${S.index?.guncelleme ? tarih(S.index.guncelleme) : '-'}).</p>`;
+}
+
+function macSatiri(m, n) {
+  const orta = m.durum === 'oynanmadi'
+    ? `<strong>${saatYazisi(m.tarih)}</strong>${m.yayin ? `<small>${esc(m.yayin)}</small>` : ''}`
+    : `<strong>${m.evSkor ?? 0} - ${m.depSkor ?? 0}</strong><small>${m.durum === 'canli' ? '<span class="canli-yazi">Canlı</span>' : 'MS'}</small>`;
+  const acik = S.ui.acikMac === m.id;
+  return `<div class="mac tikla ${acik ? 'acik' : ''}" data-is="mac-ac" data-id="${m.id}">
+      <span class="${kazananSinifi(m, 'ev')}">${esc(baslik(m.ev))}</span>
+      <span class="skor">${orta}</span>
+      <span class="dep ${kazananSinifi(m, 'dep')}">${esc(baslik(m.dep))}</span>
+    </div>${acik ? macDetayi(m, n) : ''}`;
+}
+
+// Maçtaki fantezi oyuncuları: iki BSL takımında olup bir fantezi takımında olan oyuncular ve o haftaki VP'leri
+function macDetayi(m, n) {
+  const sahip = sahipler();
+  const hafta = S.haftalar[n];
+  if (!hafta && m.durum !== 'oynanmadi') haftaVerisiYukle(n);
+  const taraf = id => [...sahip].map(([pid, tid]) => ({ o: oyuncu(pid), pid, tid }))
+    .filter(x => (hafta?.oyuncular[x.pid]?.takimId ?? x.o.takimId) === id)
+    .sort((a, b) => (hafta?.oyuncular[b.pid]?.vp ?? b.o.vpOrt) - (hafta?.oyuncular[a.pid]?.vp ?? a.o.vpOrt));
+  const satir = x => {
+    const st = hafta?.oyuncular[x.pid];
+    const deger = m.durum === 'oynanmadi' ? `<span class="soluk">ort. ${sayi(x.o.vpOrt)}</span>`
+      : st ? `<b>${sayi(st.vp)}</b> <span class="soluk">VP · ${Math.floor(st.saniye / 60)} dk</span>` : '<span class="soluk">oynamadı</span>';
+    return `<li><span>${oyuncuAdi(x.pid, { takim: false })} <span class="soluk kucuk">${esc(takimAdi(x.tid))}</span></span><span class="kucuk">${deger}</span></li>`;
+  };
+  const blok = (ad, id) => {
+    const liste = taraf(id);
+    return `<div><b class="kucuk">${esc(baslik(ad))}</b>${liste.length ? `<ul class="oyuncu-liste">${liste.map(satir).join('')}</ul>`
+      : '<p class="soluk kucuk" style="margin:4px 0">Fantezi takımlarında oyuncusu yok.</p>'}</div>`;
+  };
+  return `<div class="mac-detay">${m.salon ? `<p class="soluk kucuk" style="margin:0 0 8px">${esc(m.salon)}${m.yayin ? ` · ${esc(m.yayin)}` : ''}</p>` : ''}
+    <div class="iki-kolon">${blok(m.ev, m.evId)}${blok(m.dep, m.depId)}</div></div>`;
+}
+
 // ---------- Zorunlu değişiklik bandı (lisansı düşen oyuncusu olan takıma her sayfada) ----------
 function zorunluBandi() {
   const tid = benimTakimim();
@@ -1172,6 +1295,7 @@ window.addEventListener('hashchange', () => {
   S.ui.faAl = null;
   S.ui.acik = S.ui.acikSonraki ?? null;
   S.ui.acikSonraki = null;
+  S.ui.acikMac = null;
   ciz();
   window.scrollTo(0, 0);
 });
@@ -1186,6 +1310,7 @@ async function eylem(is, id, el) {
       return;
     case 'ac': S.ui.acik = S.ui.acik === id ? null : id; return ciz();
     case 'draft-sekme': S.ui.draftSekme = id; return ciz();
+    case 'mac-ac': S.ui.acikMac = S.ui.acikMac === Number(id) ? null : Number(id); return ciz();
     case 'puan-sekme': S.ui.puanSekme = id; if (id === 'genel' && rota()[1]) location.hash = '#/puan'; return ciz();
     case 'kopyala':
       await navigator.clipboard.writeText(el.dataset.metin);

@@ -4,6 +4,7 @@
   oyuncular.json   -> bütün BSL oyuncuları: ad, takım, ülke, Türk mü, bu sezonun maç başı VP ortalaması
   hafta/<n>.json   -> haftanın maçları ve oyuncuların o haftaki VP'si ve süresi
   index.json       -> sezonun bütün haftaları (ilk maç saatleriyle), güncel hafta, güncelleme zamanı
+  maclar/<n>.json  -> Maçlar sekmesi: haftanın fikstürü ve skorları (sezonun bütün haftaları)
 
 Biten maçların istatistikleri cache/ klasöründe saklanır, tekrar indirilmez.
 Kullanım:  python veri_guncelle.py
@@ -110,6 +111,7 @@ def mac_kaydi(m):
         "id": m["matchId"], "tarih": m["matchDate"], "durum": durum_adi(m["matchStatusId"]),
         "ev": m["homeTeam"]["name"], "evId": m["homeTeam"]["id"], "evSkor": m["homeTeam"]["score"] or None,
         "dep": m["awayTeam"]["name"], "depId": m["awayTeam"]["id"], "depSkor": m["awayTeam"]["score"] or None,
+        "salon": m.get("salonAdi"), "yayin": m.get("broadcastChannel"),
     }
 
 
@@ -191,6 +193,8 @@ def main():
         maclar = [mac_kaydi(m) for m in sorted(hafta_maclari(hafta, guncel), key=lambda x: x["matchDate"])]
         takvim.append({"hafta": hafta, "ilkMac": ilk_mac(maclar), "macSayisi": len(maclar),
                        "bitti": bool(maclar) and all(m["durum"] == "bitti" for m in maclar)})
+        # Maçlar sekmesi: sezonun bütün haftalarının fikstürü ve skorları
+        json_yaz(DATA / "maclar" / f"{hafta}.json", {"hafta": hafta, "maclar": maclar})
         if hafta > guncel + 1:
             continue
         oyuncular = {}

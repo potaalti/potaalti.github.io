@@ -10,7 +10,9 @@
    "evSkor": "83",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
-   "depSkor": "64"
+   "depSkor": "64",
+   "salon": "Çayırova Belediyesi Spor Kompleksi",
+   "yayin": "beINSports"
   },
   {
    "id": 346309,
@@ -21,7 +23,9 @@
    "evSkor": "90",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": "93"
+   "depSkor": "93",
+   "salon": "Hayri Gür Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346308,
@@ -32,7 +36,9 @@
    "evSkor": "97",
    "dep": "YUKATEL DENİZLİ BASKET",
    "depId": 266028,
-   "depSkor": "76"
+   "depSkor": "76",
+   "salon": "Ankara Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346306,
@@ -43,7 +49,9 @@
    "evSkor": "100",
    "dep": "BEŞİKTAŞ",
    "depId": 265992,
-   "depSkor": "96"
+   "depSkor": "96",
+   "salon": "Sinan Erdem Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346310,
@@ -54,7 +62,9 @@
    "evSkor": "93",
    "dep": "BİOTEKNO KÖRFEZ BASKET",
    "depId": 268222,
-   "depSkor": "77"
+   "depSkor": "77",
+   "salon": "Turkcell Basketbol Gelişim Merkezi",
+   "yayin": "beINSports"
   },
   {
    "id": 346313,
@@ -65,7 +75,9 @@
    "evSkor": "72",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": "97"
+   "depSkor": "97",
+   "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346311,
@@ -76,7 +88,9 @@
    "evSkor": "72",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
-   "depSkor": "74"
+   "depSkor": "74",
+   "salon": "Tofaş Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346307,
@@ -87,7 +101,9 @@
    "evSkor": "102",
    "dep": "PİZZABULLS BORDO BANDIRMA",
    "depId": 265993,
-   "depSkor": "68"
+   "depSkor": "68",
+   "salon": "Sinan Erdem Spor Salonu",
+   "yayin": "beINSports"
   }
  ],
  "oyuncular": {

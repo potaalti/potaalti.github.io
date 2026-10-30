@@ -10,7 +10,9 @@
    "evSkor": "95",
    "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
    "depId": 265994,
-   "depSkor": "79"
+   "depSkor": "79",
+   "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346300,
@@ -21,7 +23,9 @@
    "evSkor": "79",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
-   "depSkor": "66"
+   "depSkor": "66",
+   "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346298,
@@ -32,7 +36,9 @@
    "evSkor": "80",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
-   "depSkor": "90"
+   "depSkor": "90",
+   "salon": "Tofaş Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346303,
@@ -43,7 +49,9 @@
    "evSkor": "69",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "71"
+   "depSkor": "71",
+   "salon": "Şehit Polis Recep Topaloğlu Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346301,
@@ -54,7 +62,9 @@
    "evSkor": "70",
    "dep": "TRABZONSPOR",
    "depId": 266029,
-   "depSkor": "75"
+   "depSkor": "75",
+   "salon": "Pamukkale Üniversitesi Spor Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346304,
@@ -65,7 +75,9 @@
    "evSkor": "77",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
-   "depSkor": "82"
+   "depSkor": "82",
+   "salon": "Ülker Spor ve Etkinlik Salonu",
+   "yayin": "beINSports"
   },
   {
    "id": 346299,
@@ -76,7 +88,9 @@
    "evSkor": "83",
    "dep": "GALATASARAY MCT TECHNIC",
    "depId": 266026,
-   "depSkor": "80"
+   "depSkor": "80",
+   "salon": "Turkcell Basketbol Gelişim Merkezi",
+   "yayin": "beINSports"
   },
   {
    "id": 346302,
@@ -87,7 +101,9 @@
    "evSkor": "73",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "70"
+   "depSkor": "70",
+   "salon": "Beşiktaş Akatlar Spor Kompleksi",
+   "yayin": "beINSports"
   }
  ],
  "oyuncular": {

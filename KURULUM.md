@@ -74,7 +74,10 @@ hesaplanır.
 5. Herkes hazır olunca **Draftı başlat**.
 6. Draft sırasında:
    - Sırası gelen menajerin ekranında "Sıra sende!" çıkar, ses ve titreşim olur.
-   - Süre dolarsa müsait en iyi 15 oyuncudan (sezon VP ortalamasına göre) rastgele biri otomatik seçilir.
+   - **İstek listesi**: her menajer draft öncesinde ve sırasında oyuncu listesinde ☆'a basarak kendi
+     sıralı listesini hazırlar (**İstek listem** sekmesinde ↑↓ ile sıralanır). Listeyi sadece o takım görür.
+   - Süre dolarsa takımın istek listesindeki ilk müsait (ve kadro kuralına uyan) oyuncu seçilir; listede
+     uygun oyuncu yoksa müsait en iyi 15 oyuncudan (sezon VP ortalamasına göre) rastgele biri otomatik seçilir.
      Bunu açık olan herhangi bir menajer ekranı yapar; en az bir menajerin (ya da yöneticinin) sayfası
      açık olmalı.
    - **Kadro kuralı**: As beşi **3 Ön + 2 Arka**, 2 Yedeğin mevkisi serbest. As'ta en az 1, Yedekte
@@ -98,9 +101,24 @@ hesaplanır.
   5,5,5,4,4,4,4,3,3,3,3,2,2,2,1,1,1. Puanlar TBL fantezi ligiyle aynı kurallarla hesaplanır
   (As'ların VP toplamı; süre almayan As'ın yerine en yüksek VP'li yedek sayılır; eşitlikte en iyi
   Türk oyuncunun VP'si).
-- **Takas**: sınırsız, iki taraf kabul etmeli, iki taraftan 1–3'er oyuncu. Gelen oyuncu gidenin yerine
-  geçer; As'taki bir oyuncunun yerine aynı mevkiden oyuncu gelmeli.
-- **Serbest Oyuncular**: sezon boyunca takım başına 2.
+- **Takas**: sınırsız, iki taraftan 1–3'er oyuncu. Karşı taraf kabul edince takas **yönetici onayına** gider:
+  yöneticilerin 🔔 ve Takas sayfasında "Onayını bekleyen takaslar" çıkar, **Onayla** deyince oyuncular yer
+  değiştirir, **Reddet** deyince takas iptal olur. Onay beklerken teklifi veren geri çekebilir. Gelen oyuncu
+  gidenin yerine geçer; As'taki bir oyuncunun yerine aynı mevkiden oyuncu gelmeli.
+- **Serbest Oyuncular**: sezon boyunca takım başına 2. Bir takımın bıraktığı ya da BSL'ye yeni katılan oyuncuyu
+  **36 saat** kimse alamaz (⏳). Bu sürede takımlar Boştakiler'den ya da oyuncunun sayfasından **Talep et** der ve
+  kazanırsa bırakacağı oyuncuyu seçer (serbest oyuncu hakkı kalmış olmalı). Kimlerin, kaç takımın talip olduğu
+  oyuncunun sayfasında görünür. Süre bitince **talip olanlar arasında kura** çekilir: kazananın serbest oyuncu
+  hakkından 1 düşer, bıraktığı oyuncunun 36 saati başlar; sonuç Hareketler'de talip olanlarla birlikte yazar.
+  Talep eden olmazsa oyuncu boştakilere düşer ve isteyen doğrudan alır.
+  - Kurayı bir **yöneticinin ekranı** otomatik çeker (site açıkken yarım dakikada bir bakar); süre bittiğinde
+    hiçbir yönetici siteyi açmamışsa kura, bir yönetici açınca çekilir. Oyuncu sayfasında "Kurayı şimdi çek" de var.
+  - Kura anında kurala uymayan talep (bırakacağı oyuncu artık kadrosunda değil, hakkı bitmiş, kadro kuralı
+    bozuluyor) kuraya girmez.
+  - Yeni katılanların 36 saatini de bir yöneticinin siteyi açması başlatır; yönetici oyuncu sayfasından beklemeyi
+    kaldırabilir (talepler de silinir).
+- **Oyuncu sayfası**: listelerde oyuncu adına dokununca sezon ortalamaları, maç maç VP/süre, sıradaki maçlar,
+  hangi fantezi takımında olduğu (ya da beklemede/boşta) ve fantezi hareketleri görünür.
 - **Kadrom → As–Yedek değişikliği**: sezon boyunca takım başına 1.
 - Bütün değişiklikler, ilk maçı henüz başlamamış ilk haftadan itibaren geçerlidir.
 - **Hareketler**: herkesin görebildiği işlem geçmişi.
@@ -131,6 +149,10 @@ hesaplanır.
 - **Draft sırasında** yöneticilerin yan panelinde araç kutusu var: duraklat/devam, +30 sn, saati baştan başlat,
   son seçimi geri al. Draft tahtasında bir seçime dokunarak o seçimi başka bir oyuncuyla değiştirebilirsin
   (sezon başlayana kadar).
+- **Tam yetki (draft sonrası)**: bir takımın sayfasında (Takımlar → takım) "Yönetici: kadroyu düzenle" kutusu var:
+  takımın herhangi bir oyuncusunu boştaki biriyle değiştir (hak ve bekleme aranmaz), As/Yedek dizilişini doğrudan
+  kur, kullanılan serbest oyuncu / As–Yedek haklarını düzelt. Kural dışı bir kadro olacaksa site uyarır ama
+  engellemez. Yönetici değişiklikleri Hareketler'de görünür.
 
 ## Sorun giderme
 

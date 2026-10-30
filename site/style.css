@@ -70,6 +70,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .menu a.aktif { color: #fff; border-bottom-color: #fff; }
 .menu a:hover { color: #fff; }
 .menu a .rozet { margin-left: 4px; }
+/* Yöneticinin uzun menüsü dizüstü genişliğinde de sığsın */
+@media (max-width: 1600px) { .menu a { padding: 0 6px; font-size: .87rem; } }
 
 .icerik { max-width: 1360px; margin: 0 auto; padding: 20px 20px 64px; }
 .dar { max-width: 880px; margin: 0 auto; }
@@ -272,3 +274,24 @@ tr.alindi td { color: var(--soluk); }
 .canli-yazi { color: var(--vurgu); font-weight: 700; }
 .mac-detay { padding: 10px 14px 14px; background: var(--zemin); border-top: 1px dashed var(--cizgi); }
 .mac-detay .oyuncu-liste li { font-size: .88rem; }
+/* İstek listesi, oyuncu sayfası, yönetici kadro paneli */
+.yildiz { background: none; border: 0; padding: 0 6px 0 0; font-size: 1.05rem; line-height: 1; cursor: pointer; color: var(--soluk); }
+.yildiz.acik { color: var(--turuncu); }
+.istek-liste { list-style: none; margin: 0; padding: 0; }
+.istek-liste li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px dashed var(--cizgi); }
+.istek-liste li:last-child { border-bottom: 0; }
+.istek-liste li.alindi > span:first-child { color: var(--soluk); text-decoration: line-through; }
+.istek-liste .no { font-weight: 800; color: var(--vurgu); display: inline-block; min-width: 1.6em; text-align: right; font-variant-numeric: tabular-nums; }
+.istek-liste .bsl { color: var(--soluk); font-size: .8rem; }
+a.oyuncu-link { color: inherit; text-decoration: none; }
+a.oyuncu-link:hover { color: var(--vurgu); text-decoration: underline; }
+.oyuncu-baslik { display: flex; gap: 14px; align-items: center; }
+.oyuncu-baslik img { width: 84px; height: 84px; object-fit: cover; object-position: top; border-radius: 12px; background: var(--zemin); flex: 0 0 auto; }
+.istatistik { display: grid; grid-template-columns: repeat(auto-fit, minmax(76px, 1fr)); gap: 8px; }
+.istatistik div { background: var(--zemin); border-radius: 8px; padding: 8px; text-align: center; }
+.istatistik b { display: block; font-size: 1.15rem; font-variant-numeric: tabular-nums; }
+.istatistik span { color: var(--soluk); font-size: .75rem; }
+.kirmizi-yazi { color: var(--kirmizi); font-weight: 700; }
+.yesil-yazi { color: var(--yesil); font-weight: 700; }
+.yonetici-araclari h4 { margin: 14px 0 6px; font-size: .9rem; }
+.talep-hucre { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; white-space: nowrap; }

@@ -93,7 +93,23 @@ service cloud.firestore {
             // Otomatik seçim: süre dolmuş olmalı ve oyuncu müsait en iyi 15 içinden olabilecek biri olmalı
             // (kısıt varsa kendi tipindeki sırasına bakılır)
             || (s.otomatik == true && uye() && suresiDoldu
-                && (hepsiSerbest ? o.sira : o.tipSira) <= d.secimNo + 15));
+                && ((hepsiSerbest ? o.sira : o.tipSira) <= d.secimNo + 15 || s.oyuncu in istekListesi(s.takim))));
+    }
+
+    // ---------- Draft istek listeleri: takımın sıralı oyuncu listesi; süre dolunca otomatik seçim buradan ----------
+    // Liste gizlidir: takımın kendisi ve yöneticiler görür; sadece o takımın seçim süresi dolunca otomatik seçimi
+    // yapacak ekranlar okuyabilir.
+    function istekListesi(tid) { return get(/databases/$(database)/documents/istekler/$(tid)).data.liste; }
+    function listeAcik(tid) {
+      let d = durum();
+      return d.asama == 'draft' && d.secimSirasi[d.secimNo] == tid
+        && request.time > d.saatBaslangic + duration.value(d.saatSure, 's');
+    }
+    match /istekler/{tid} {
+      allow read: if request.auth != null && (listeAcik(tid) || benimTakim() == tid || yonetici());
+      allow create, update: if uye() && (benimTakim() == tid || yonetici())
+        && request.resource.data.keys().hasOnly(['liste']) && request.resource.data.liste.size() <= 150;
+      allow delete: if yonetici(); // draftı sıfırlama
     }
 
     // Oyuncu tipi: Ön/Arka × Türk/yabancı (oT, oY, aT, aY)
@@ -108,7 +124,7 @@ service cloud.firestore {
     match /alinan/{pid} {
       allow read: if true;
       allow create: if yonetici() || draftAlimi(pid) || faAlimi(pid);
-      allow update: if yonetici() || takasla(pid);
+      allow update: if yonetici();
       allow delete: if yonetici() || faBirakma(pid);
     }
 
@@ -133,21 +149,12 @@ service cloud.firestore {
         && (kadroSonra(tid).fa == kadro(tid).fa + 1 || pid in lisanssizListe());
     }
 
-    function takasla(pid) {
-      let tyol = /databases/$(database)/documents/teklifler/$(request.resource.data.teklif);
-      let t = getAfter(tyol).data;
-      return uye() && get(tyol).data.durum == 'bekliyor' && t.durum == 'kabul' && benimTakim() == t.alan
-        && request.resource.data.keys().hasOnly(['takim', 'secim', 'fa', 'teklif'])
-        && ((pid in t.verilen && resource.data.takim == t.veren && request.resource.data.takim == t.alan)
-            || (pid in t.alinan && resource.data.takim == t.alan && request.resource.data.takim == t.veren));
-    }
-
     // ---------- Fantezi takım kadroları ----------
     match /kadrolar/{tid} {
       allow read: if true;
       allow create: if kurulumda() || yonetici();
       allow update: if yonetici() || kadroDraft(tid) || dizilisKurulumu(tid)
-        || asYedekDegisikligi(tid) || serbestOyuncu(tid) || takasKadrosu(tid);
+        || asYedekDegisikligi(tid) || serbestOyuncu(tid);
     }
 
     function kadroDuzgun(k) {
@@ -214,32 +221,50 @@ service cloud.firestore {
         && kadroDuzgun(yeni)
         && yeniSet.difference(eskiSet) == [yeni.sonFa].toSet() && eskiSet.difference(yeniSet).size() == 1
         && !exists(alinan) && getAfter(alinan).data.takim == tid
+        && beklemeBitti(yeni.sonFa)
         && gecmisEklendi(eski, yeni);
     }
 
-    // Kabul edilen takas: iki takımın kadrosu da kabul eden takımın tek işleminde değişir
-    function takasKadrosu(tid) {
+    // ---------- Bekleme ve talep: serbest kalan ya da lige yeni gelen oyuncu 36 saat alınamaz ----------
+    // Bu sürede takımlar talepte bulunur (talepler: { takım: bırakacağı oyuncu }). Süre bitince yöneticinin ekranı
+    // talip olanlar arasında kura çeker ve belgeyi siler; talep yoksa oyuncu süre bitince boştakilere düşer.
+    function beklemeSuresi() { return duration.value(36, 'h'); }
+    function beklemeBitti(pid) {
+      let yol = /databases/$(database)/documents/bekleme/$(pid);
+      return !exists(yol)
+        || (request.time > get(yol).data.zaman + beklemeSuresi() && get(yol).data.get('talepler', {}).size() == 0);
+    }
+    // Takım oyuncusunu bırakırken (serbest oyuncu işleminde) o oyuncunun beklemesi başlar
+    function birakilinca(pid) {
+      return uye() && request.resource.data.keys().hasOnly(['zaman']) && request.resource.data.zaman == request.time
+        && pid in oyunculari(kadro(benimTakim())) && !(pid in oyunculari(kadroSonra(benimTakim())));
+    }
+    // Takım kendi talebini ekler/değiştirir/geri çeker; bırakacağı oyuncu kendi kadrosunda olmalı ve serbest
+    // oyuncu hakkı kalmış olmalı (kurayı kazanırsa hakkından 1 düşer)
+    function talepGuncelleme(pid) {
       let eski = resource.data;
       let yeni = request.resource.data;
-      let tyol = /databases/$(database)/documents/teklifler/$(yeni.sonTeklif);
-      let t = getAfter(tyol).data;
-      let giden = tid == t.veren ? t.verilen : t.alinan;
-      let gelen = tid == t.veren ? t.alinan : t.verilen;
-      return uye() && benimTakim() == t.alan && durum().asama == 'sezon'
-        && get(tyol).data.durum == 'bekliyor' && t.durum == 'kabul'
-        && (tid == t.veren || tid == t.alan)
-        && yeni.diff(eski).affectedKeys().hasOnly(['as', 'yedek', 'sonTeklif', 'gecmis'])
-        && kadroDuzgun(yeni)
-        && oyunculari(eski).toSet().hasAll(giden)
-        && oyunculari(yeni).toSet() == oyunculari(eski).toSet().difference(giden.toSet()).union(gelen.toSet())
-        && gecmisEklendi(eski, yeni);
+      let t = benimTakim();
+      let talepler = yeni.get('talepler', {});
+      return uye() && durum().asama == 'sezon'
+        && request.time < eski.zaman + beklemeSuresi()
+        && !exists(/databases/$(database)/documents/alinan/$(pid))
+        && yeni.diff(eski).affectedKeys().hasOnly(['talepler'])
+        && talepler.diff(eski.get('talepler', {})).affectedKeys().hasOnly([t])
+        && (!(t in talepler) || (talepler[t] in oyunculari(kadro(t)) && kadro(t).fa < ayar().faHakki));
+    }
+    match /bekleme/{pid} {
+      allow read: if true;
+      allow create: if yonetici() || birakilinca(pid);
+      allow update: if yonetici() || birakilinca(pid) || talepGuncelleme(pid);
+      allow delete: if yonetici();
     }
 
     // ---------- Takas teklifleri ----------
     match /teklifler/{id} {
       allow read: if true;
       allow create: if uye() && durum().asama == 'sezon' && teklifGecerli(request.resource.data);
-      allow update: if yonetici() || teklifYaniti(id) || teklifIptali();
+      allow update: if yonetici() || teklifYaniti() || teklifIptali();
       allow delete: if yonetici(); // draftı sıfırlama
     }
 
@@ -252,20 +277,19 @@ service cloud.firestore {
         && (!('not' in t) || (t['not'] is string && t['not'].size() <= 200));
     }
 
-    function teklifYaniti(id) {
+    // Teklifi alan takım reddeder ya da kabul eder; kabul edilen takas yönetici onayına gider ('onay').
+    // Oyuncuları yönetici onaylayınca yöneticinin işlemi taşır (durum 'kabul'), reddederse 'yonetici-red'.
+    function teklifYaniti() {
       let t = request.resource.data;
       return uye() && benimTakim() == resource.data.alan && resource.data.durum == 'bekliyor'
         && t.diff(resource.data).affectedKeys().hasOnly(['durum', 'yanitZamani'])
         && t.yanitZamani == request.time
-        && (t.durum == 'red'
-            || (t.durum == 'kabul' && durum().asama == 'sezon'
-                && kadroSonra(resource.data.veren).sonTeklif == id
-                && kadroSonra(resource.data.alan).sonTeklif == id));
+        && (t.durum == 'red' || (t.durum == 'onay' && durum().asama == 'sezon'));
     }
 
     function teklifIptali() {
       let t = request.resource.data;
-      return uye() && benimTakim() == resource.data.veren && resource.data.durum == 'bekliyor'
+      return uye() && benimTakim() == resource.data.veren && resource.data.durum in ['bekliyor', 'onay']
         && t.diff(resource.data).affectedKeys().hasOnly(['durum', 'yanitZamani'])
         && t.durum == 'iptal' && t.yanitZamani == request.time;
     }

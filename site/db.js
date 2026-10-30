@@ -341,7 +341,7 @@ export async function draftiSifirla(takimIdleri, secimSuresi) {
     asama: 'kurulum', sira: null, secimSirasi: [], secimNo: 0, saatBaslangic: null, saatSure: secimSuresi, kalanSure: null, ekran: 'draft',
   });
   const silinecek = [];
-  for (const ad of ['secimler', 'alinan', 'teklifler', 'hareketler']) {
+  for (const ad of ['secimler', 'alinan', 'teklifler', 'hareketler', 'bekleme', 'istekler']) {
     (await F.getDocs(koleksiyon(ad))).forEach(d => silinecek.push(b => b.delete(d.ref)));
   }
   await topluYaz([
@@ -384,15 +384,158 @@ export async function serbestAl(tid, birak, al, hafta, zorunlu = false) {
     const k = (await tx.get(ref)).data();
     const ayar = (await tx.get(yol('lig', 'ayar'))).data();
     const alS = await tx.get(yol('alinan', al.id));
+    const bS = await tx.get(yol('bekleme', al.id));
     if (!zorunlu && k.fa >= ayar.faHakki) throw new Hata('Serbest oyuncu alma hakkın kalmadı.');
     if (alS.exists()) throw new Hata(`${al.ad} artık serbest değil.`);
+    if (beklemede(bS.data())) throw new Hata(`${al.ad} bekleme süresinde, henüz alınamaz.`);
     if (![...k.as, ...k.yedek].includes(birak)) throw new Hata('Kadro değişmiş, sayfayı yenile.');
     const yeni = yerineKoy(k, birak, al.id);
     tx.update(ref, { ...yeni, fa: k.fa + (zorunlu ? 0 : 1), sonFa: al.id, gecmis: [...k.gecmis, { hafta, ...yeni, tur: zorunlu ? 'zorunlu' : 'serbest' }] });
     tx.delete(yol('alinan', birak));
     tx.set(yol('alinan', al.id), { takim: tid, fa: true });
+    tx.set(yol('bekleme', birak), { zaman: simdi() });
     hareket(tx, { tur: zorunlu ? 'zorunlu' : 'serbest', takim: tid, alinan: al.id, birakilan: birak, hafta });
   });
+}
+
+// ---------- Bekleme ve talep: bırakılan ya da lige yeni gelen oyuncu 36 saat kimse tarafından alınamaz ----------
+// Bu sürede takımlar talepte bulunur; süre bitince yöneticinin ekranı talip olanlar arasında kura çeker.
+
+export const BEKLEME_MS = 36 * 3600 * 1000;
+let saatFarkiMs = 0;
+export function saatFarkiniAyarla(ms) { saatFarkiMs = ms || 0; }
+// b: bekleme belgesi ({ zaman }); bekleme bitmediyse kalan ms, bittiyse 0
+export function beklemeKalan(b) {
+  const z = b?.zaman?.toMillis?.();
+  return z ? Math.max(0, z + BEKLEME_MS - (Date.now() + saatFarkiMs)) : 0;
+}
+const beklemede = b => beklemeKalan(b) > 0;
+
+export function beklemeleriDinle(cb, hata) {
+  return F.onSnapshot(koleksiyon('bekleme'), s => {
+    const v = {};
+    s.forEach(d => { v[d.id] = d.data({ serverTimestamps: 'estimate' }); });
+    cb(v);
+  }, hata);
+}
+
+// Yönetici: lige yeni gelen oyuncular için bekleme başlatır. zamanlar: { pid: Date (lisans/transfer zamanı) }
+export async function beklemeleriBaslat(zamanlar) {
+  await topluYaz(Object.entries(zamanlar).map(([pid, z]) => b => b.set(yol('bekleme', pid), { zaman: F.Timestamp.fromDate(z) })));
+}
+
+export async function beklemeyiKaldir(pid) {
+  await F.deleteDoc(yol('bekleme', pid));
+}
+
+// Takım bekleme süresindeki oyuncuya talip olur; kurayı kazanırsa birak kadrosundan çıkar
+export async function talepEt(pid, tid, birak) {
+  await F.updateDoc(yol('bekleme', pid), new F.FieldPath('talepler', tid), birak);
+}
+
+export async function talepGeriCek(pid, tid) {
+  await F.updateDoc(yol('bekleme', pid), new F.FieldPath('talepler', tid), F.deleteField());
+}
+
+// Yönetici ekranı: talep süresi biten oyuncu için talip olanlar arasında kura çeker. Kazanan takımın bırakacağı
+// oyuncu yerine geçer (serbest oyuncu hakkından 1 düşer), bırakılan oyuncunun beklemesi başlar. O an kurala
+// uymayan (oyuncusu gitmiş, hakkı bitmiş, kadro kuralı bozuluyor) talepler kuraya girmez.
+// kontrol(yeniKadro): kural ihlali varsa hata mesajı. Dönüş: { kazanan, talipler } ya da kimse kazanmadıysa null
+export async function talepKurasi(pid, hafta, kontrol) {
+  return F.runTransaction(db, async tx => {
+    const bRef = yol('bekleme', pid);
+    const bS = await tx.get(bRef);
+    if (!bS.exists() || !Object.keys(bS.data().talepler ?? {}).length) throw new Hata('Bu oyuncu için kura yok.');
+    const b = bS.data();
+    if (beklemeKalan(b) > 0) throw new Hata('Talep süresi henüz bitmedi.');
+    const ayar = (await tx.get(yol('lig', 'ayar'))).data();
+    const alinmis = (await tx.get(yol('alinan', pid))).exists();
+    const talipler = Object.keys(b.talepler);
+    const kadrolar = {};
+    for (const t of talipler) kadrolar[t] = (await tx.get(yol('kadrolar', t))).data();
+    const gecerli = alinmis ? [] : talipler.filter(t => {
+      const k = kadrolar[t];
+      const birak = b.talepler[t];
+      return k && [...k.as, ...k.yedek].includes(birak) && k.fa < ayar.faHakki && !kontrol?.(yerineKoy(k, birak, pid));
+    });
+    tx.delete(bRef);
+    if (!gecerli.length) {
+      if (!alinmis) hareket(tx, { tur: 'talep-yok', alinan: pid, talipler, hafta });
+      return null;
+    }
+    const kazanan = karistir(gecerli)[0];
+    const k = kadrolar[kazanan];
+    const birak = b.talepler[kazanan];
+    const yeni = yerineKoy(k, birak, pid);
+    tx.update(yol('kadrolar', kazanan), { ...yeni, fa: k.fa + 1, sonFa: pid, gecmis: [...k.gecmis, { hafta, ...yeni, tur: 'talep' }] });
+    tx.delete(yol('alinan', birak));
+    tx.set(yol('alinan', pid), { takim: kazanan, fa: true, talep: true });
+    tx.set(yol('bekleme', birak), { zaman: simdi() });
+    hareket(tx, { tur: 'talep', takim: kazanan, alinan: pid, birakilan: birak, talipler, gecerli, hafta });
+    return { kazanan, talipler };
+  });
+}
+
+// ---------- Yönetici: kadrolara tam yetki (haklar, bekleme ve sıra kuralı aranmaz) ----------
+
+function yoneticiGecmisi(k, yeni, hafta, sezonda) {
+  return sezonda ? { gecmis: [...k.gecmis, { hafta, as: yeni.as, yedek: yeni.yedek, tur: 'yonetici' }] } : {};
+}
+
+// Takımdan birak çıkar, takımı olmayan al aynı yuvaya girer
+export async function yoneticiOyuncuDegistir(tid, birak, al, hafta) {
+  return F.runTransaction(db, async tx => {
+    const ref = yol('kadrolar', tid);
+    const k = (await tx.get(ref)).data();
+    const d = (await tx.get(yol('lig', 'durum'))).data();
+    if ((await tx.get(yol('alinan', al.id))).exists()) throw new Hata(`${al.ad} başka bir takımda.`);
+    if (![...k.as, ...k.yedek].includes(birak)) throw new Hata('Kadro değişmiş, sayfayı yenile.');
+    const yeni = yerineKoy(k, birak, al.id);
+    tx.update(ref, { ...yeni, ...yoneticiGecmisi(k, yeni, hafta, d.asama === 'sezon') });
+    tx.delete(yol('alinan', birak));
+    tx.set(yol('alinan', al.id), { takim: tid, yonetici: true });
+    if (d.asama === 'sezon') tx.set(yol('bekleme', birak), { zaman: simdi() });
+    hareket(tx, { tur: 'yonetici', takim: tid, alinan: al.id, birakilan: birak, hafta });
+  });
+}
+
+// As/Yedek dizilişini doğrudan kurar (hak kullanılmaz)
+export async function yoneticiDizilis(tid, as, yedek, hafta) {
+  return F.runTransaction(db, async tx => {
+    const ref = yol('kadrolar', tid);
+    const k = (await tx.get(ref)).data();
+    const d = (await tx.get(yol('lig', 'durum'))).data();
+    const once = new Set([...k.as, ...k.yedek]);
+    if (once.size !== as.length + yedek.length || ![...as, ...yedek].every(p => once.has(p))) throw new Hata('Kadro değişmiş, sayfayı yenile.');
+    tx.update(ref, { as, yedek, ...yoneticiGecmisi(k, { as, yedek }, hafta, d.asama === 'sezon') });
+    hareket(tx, { tur: 'yonetici-dizilis', takim: tid, as, yedek, hafta });
+  });
+}
+
+// Kalan hakları ayarlar: fa (kullanılan serbest oyuncu), degisiklik (kullanılan As–Yedek değişikliği)
+export async function yoneticiHaklar(tid, { fa, degisiklik }) {
+  await F.updateDoc(yol('kadrolar', tid), { fa, degisiklik });
+}
+
+// ---------- Draft istek listesi (gizli; süre dolunca otomatik seçim önce buradan) ----------
+
+export async function istekListesiKaydet(tid, liste) {
+  await F.setDoc(yol('istekler', tid), { liste });
+}
+
+export function istekListesiDinle(tid, cb, hata) {
+  return F.onSnapshot(yol('istekler', tid), s => cb(s.data()?.liste ?? []), hata);
+}
+
+// Süresi dolan takımın listesi (sadece süre dolunca okunabilir); okunamazsa boş liste.
+// İşlem (transaction) içinde okunur: sürekli açık dinleme bağlantısında kurallar süreyi bağlantının açıldığı ana göre
+// değerlendirebiliyor, tek seferlik okuma o anki saate bakar.
+export async function istekListesiGetir(tid) {
+  try {
+    return await F.runTransaction(db, async tx => (await tx.get(yol('istekler', tid))).data()?.liste ?? []);
+  } catch {
+    return [];
+  }
 }
 
 // ---------- Takaslar ----------
@@ -411,13 +554,22 @@ export async function teklifReddet(id) {
   await F.updateDoc(yol('teklifler', id), { durum: 'red', yanitZamani: simdi() });
 }
 
-// Kabul: iki takımın kadrosu ve oyuncuların takımı tek işlemde değişir.
+// Teklifi alan takım kabul eder: takas yönetici onayına gider (oyuncular henüz yer değiştirmez)
+export async function teklifKabul(id) {
+  await F.updateDoc(yol('teklifler', id), { durum: 'onay', yanitZamani: simdi() });
+}
+
+export async function takasReddet(id) {
+  await F.updateDoc(yol('teklifler', id), { durum: 'yonetici-red', onayZamani: simdi() });
+}
+
+// Yönetici onayı: iki takımın kadrosu ve oyuncuların takımı tek işlemde değişir.
 // kontrol(verenYeni, alanYeni) kural ihlali varsa hata mesajı döndürür (ör. Türk oyuncu kalmıyor).
-export async function teklifKabul(id, hafta, kontrol) {
+export async function takasOnayla(id, hafta, kontrol) {
   return F.runTransaction(db, async tx => {
     const tRef = yol('teklifler', id);
     const t = (await tx.get(tRef)).data();
-    if (t.durum !== 'bekliyor') throw new Hata('Bu teklif artık geçerli değil.');
+    if (t.durum !== 'onay') throw new Hata('Bu takas artık onay beklemiyor.');
     const vRef = yol('kadrolar', t.veren);
     const aRef = yol('kadrolar', t.alan);
     const v = (await tx.get(vRef)).data();
@@ -436,7 +588,7 @@ export async function teklifKabul(id, hafta, kontrol) {
       const yeniTakim = t.verilen.includes(pid) ? t.alan : t.veren;
       tx.set(yol('alinan', pid), { ...eski, takim: yeniTakim, teklif: id });
     }
-    tx.update(tRef, { durum: 'kabul', yanitZamani: simdi() });
+    tx.update(tRef, { durum: 'kabul', onayZamani: simdi() });
     hareket(tx, { tur: 'takas', takim: t.alan, veren: t.veren, verilen: t.verilen, alinan: t.alinan, teklif: id, hafta });
   });
 }

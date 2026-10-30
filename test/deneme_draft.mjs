@@ -133,6 +133,7 @@ async function main() {
   let otomatikSayisi = 0;
   let yarisTesti = false;
   let geriAlindi = false;
+  let istekNo = null;
   for (let n = 0; n < 119; n++) {
     const d = await oku(admin.db, 'lig', 'durum');
     const tid = d.secimSirasi[n];
@@ -157,6 +158,26 @@ async function main() {
       const yasak = musait.find(o => !izinli(o));
       await reddedilmeli(() => sahteSecim(ben, d, tid, yasak), `Kadro kuralını bozacak seçim: ${C.kisitMetni(izin)} seçebilecekken ${C.MEVKI_ADI[yasak.mevki]}${yasak.turk ? ' Türk' : ' yabancı'} (kurallar)`);
       kisitDenendi++;
+    }
+
+    if (istekNo == null && n >= 25 && tid !== turksuz && tid !== arkasiz) {
+      // İstek listesi: süre dolunca takımın listesindeki (en iyi 15 dışından da olabilir) oyuncu seçilir; liste o ana kadar gizli
+      istekNo = n;
+      const uygunlar = musait.filter(izinli);
+      const istenen = uygunlar[45];
+      const alinmis = havuz.find(o => alinan.has(o.id));
+      await ben.D.istekListesiKaydet(tid, [alinmis.id, istenen.id]);
+      await reddedilmeli(() => F.getDoc(F.doc(baska.db, 'istekler', tid)), 'Başka takımın istek listesini süre dolmadan okuma');
+      await reddedilmeli(() => baska.D.istekListesiKaydet(tid, []), 'Başka takımın istek listesini değiştirme');
+      kontrol((await ben.D.istekListesiGetir(tid)).length === 2, 'Takım kendi istek listesini okuyabiliyor');
+      await bekle(SURE * 1000 + 1200);
+      const liste = await baska.D.istekListesiGetir(tid);
+      kontrol(liste.includes(istenen.id), 'Süre dolunca istek listesi otomatik seçim için okunabildi');
+      await reddedilmeli(() => sahteSecim(baska, d, tid, uygunlar[46], { otomatik: true }), 'İstek listesinde olmayan, en iyi 15 dışından oyuncuyu otomatik seçme (kurallar)');
+      const secilecek = liste.map(id => havuzMap.get(id)).find(o => !alinan.has(o.id) && izinli(o));
+      await baska.D.secimYap({ takim: tid, oyuncu: secilecek, otomatik: true, beklenenNo: n, dizilis });
+      kontrol((await oku(admin.db, 'secimler', String(n))).oyuncu === istenen.id, `Süre dolunca istek listesindeki ilk müsait oyuncu (${istenen.ad}, ${istenen.sira}. sıradaki) otomatik seçildi`);
+      continue;
     }
 
     let oyuncu;
@@ -209,10 +230,10 @@ async function main() {
   kontrol(tum(kadrolar[arkasiz]).filter(p => havuzMap.get(p).mevki === 'arka').length === 2, 'Arka almamaya çalışan takım tam 2 Arka almak zorunda kaldı');
   kontrol(kisitDenendi >= 2, `Kuralı bozan seçim denemeleri yapıldı (${kisitDenendi})`);
   kontrol(Object.values(kadrolar).every(k => C.TIPLER.every(x => k.tip[x] === tum(k).filter(p => C.tipi(havuzMap.get(p).mevki, havuzMap.get(p).turk) === x).length)), 'Ön/Arka × Türk/yabancı sayaçları doğru');
-  kontrol(Object.values(secimler).filter(s => s.otomatik).every(s => {
+  kontrol(Object.values(secimler).filter(s => s.otomatik && s.no !== istekNo).every(s => {
     const o = havuzMap.get(s.oyuncu);
     return o.sira <= s.no + 15 || o.tipSira <= s.no + 15;
-  }), 'Otomatik seçimler hep müsait en iyi 15 içinden');
+  }), 'Otomatik seçimler (istek listesinden olan hariç) hep müsait en iyi 15 içinden');
 
   const t1 = sira[0];
   const k1 = kadrolar[t1];
@@ -254,17 +275,86 @@ async function main() {
   await reddedilmeli(() => F.updateDoc(F.doc(takimlar[t1].db, 'kadrolar', t1), { gecmis: [{ hafta: 6, as: k.as, yedek: k.yedek }] }), 'Geçmiş haftaların kadrosunu değiştirme');
 
   // Serbest oyuncu: 2 hak
-  const serbestler = () => hepsi(admin.db, 'kadrolar').then(ks => {
+  const serbestler = async () => {
+    const ks = await hepsi(admin.db, 'kadrolar');
+    const beklemede = await hepsi(admin.db, 'bekleme');
     const al = new Set(Object.values(ks).flatMap(x => [...x.as, ...x.yedek]));
-    return havuz.filter(o => !al.has(o.id));
-  });
+    return havuz.filter(o => !al.has(o.id) && !beklemede[o.id]);
+  };
   const t2 = sira[1];
+  const birakilanlar = [];
   for (let i = 0; i < 2; i++) {
     const kk = await oku(admin.db, 'kadrolar', t2);
     const birak = [...kk.as, ...kk.yedek].find(p => !havuzMap.get(p).turk);
     const al = (await serbestler())[0];
     await takimlar[t2].D.serbestAl(t2, birak, al, 7);
+    birakilanlar.push(birak);
     kontrol((await oku(admin.db, 'alinan', al.id))?.takim === t2 && !(await oku(admin.db, 'alinan', birak)), `${i + 1}. serbest oyuncu alındı, bırakılan serbest kaldı`);
+  }
+  // Bekleme: bırakılan oyuncu 24 saat alınamaz
+  {
+    const birak = birakilanlar[0];
+    kontrol(!!(await oku(admin.db, 'bekleme', birak))?.zaman, 'Bırakılan oyuncu için 24 saatlik bekleme başladı');
+    const t3 = sira[2];
+    const k3 = await oku(admin.db, 'kadrolar', t3);
+    const tip = C.tipi(havuzMap.get(birak).mevki, havuzMap.get(birak).turk);
+    const yeri = [...k3.as, ...k3.yedek].find(p => C.tipi(havuzMap.get(p).mevki, havuzMap.get(p).turk) === tip);
+    if (yeri) {
+      await reddedilmeli(() => sahteSerbest(takimlar[t3], t3, k3, yeri, birak), 'Beklemedeki oyuncuyu serbest oyuncu olarak alma (kurallar)');
+      await reddedilmeli(() => takimlar[t3].D.serbestAl(t3, yeri, havuzMap.get(birak), 7), 'Beklemedeki oyuncuyu alma (uygulama)');
+      await reddedilmeli(() => F.deleteDoc(F.doc(takimlar[t3].db, 'bekleme', birak)), 'Menajerin beklemeyi kaldırması');
+      const keyfi = (await serbestler())[0].id;
+      await reddedilmeli(() => F.setDoc(F.doc(takimlar[t3].db, 'bekleme', keyfi), { zaman: F.serverTimestamp() }), 'Menajerin keyfi bir oyuncuya bekleme koyması');
+      await takimlar[yonTakim].D.beklemeyiKaldir(birak);
+      await takimlar[t3].D.serbestAl(t3, yeri, havuzMap.get(birak), 7);
+      kontrol((await oku(admin.db, 'alinan', birak))?.takim === t3, 'Yönetici beklemeyi kaldırınca oyuncu alınabildi');
+      // Talep ve kura: bekleme süresindeki oyuncuya takımlar talip olur, süre bitince kura çekilir
+      const talepli = birakilanlar[1];
+      const tipOf = pid => C.tipi(havuzMap.get(pid).mevki, havuzMap.get(pid).turk);
+      const ayniTip = (kk, pid) => [...kk.as, ...kk.yedek].find(p => tipOf(p) === tipOf(pid));
+      const [ta, tb, tc] = sira.slice(8).filter(t => t !== yonTakim);
+      const kad = async t => oku(admin.db, 'kadrolar', t);
+      const yeriA = ayniTip(await kad(ta), talepli);
+      const yeriB = ayniTip(await kad(tb), talepli);
+      await takimlar[ta].D.talepEt(talepli, ta, yeriA);
+      await takimlar[tb].D.talepEt(talepli, tb, yeriB);
+      kontrol(Object.keys((await oku(admin.db, 'bekleme', talepli)).talepler).length === 2, 'İki takım bekleme süresindeki oyuncuya talip oldu');
+      await reddedilmeli(() => F.updateDoc(F.doc(takimlar[ta].db, 'bekleme', talepli), new F.FieldPath('talepler', tb), yeriA), 'Başka takımın talebini değiştirme');
+      await reddedilmeli(() => takimlar[tc].D.talepEt(talepli, tc, yeriA), 'Kadrosunda olmayan oyuncuyu bırakacağını söyleyerek talep');
+      await admin.D.yoneticiHaklar(tc, { fa: 2, degisiklik: 0 });
+      await reddedilmeli(async () => takimlar[tc].D.talepEt(talepli, tc, ayniTip(await kad(tc), talepli)), 'Serbest oyuncu hakkı bitmiş takımın talebi');
+      await admin.D.yoneticiHaklar(tc, { fa: 0, degisiklik: 0 });
+      await takimlar[tb].D.talepGeriCek(talepli, tb);
+      kontrol(!(await oku(admin.db, 'bekleme', talepli)).talepler[tb], 'Takım talebini geri çekti');
+      await takimlar[tb].D.talepEt(talepli, tb, yeriB);
+      await reddedilmeli(() => admin.D.talepKurasi(talepli, 7, dizilisHatasi), 'Talep süresi bitmeden kura');
+      await reddedilmeli(async () => sahteSerbest(takimlar[ta], ta, await kad(ta), yeriA, talepli), 'Talep süresindeki oyuncuyu doğrudan alma (kurallar)');
+      // 36 saat geçmiş gibi
+      await F.updateDoc(F.doc(admin.db, 'bekleme', talepli), { zaman: F.Timestamp.fromMillis(Date.now() - 37 * 3600 * 1000) });
+      await reddedilmeli(async () => takimlar[tc].D.talepEt(talepli, tc, ayniTip(await kad(tc), talepli)), 'Süre bittikten sonra talep');
+      await reddedilmeli(async () => sahteSerbest(takimlar[ta], ta, await kad(ta), yeriA, talepli), 'Kura çekilmeden talepli oyuncuyu doğrudan alma (kurallar)');
+      const faOnce = { [ta]: (await kad(ta)).fa, [tb]: (await kad(tb)).fa };
+      const sonuc = await takimlar[yonTakim].D.talepKurasi(talepli, 7, dizilisHatasi);
+      const kazanan = sonuc?.kazanan;
+      const kk = await kad(kazanan);
+      const birakti = kazanan === ta ? yeriA : yeriB;
+      kontrol([ta, tb].includes(kazanan) && (await oku(admin.db, 'alinan', talepli))?.takim === kazanan && [...kk.as, ...kk.yedek].includes(talepli)
+        && !(await oku(admin.db, 'bekleme', talepli)) && kk.fa === faOnce[kazanan] + 1 && !!(await oku(admin.db, 'bekleme', birakti)),
+        `Kura çekildi: oyuncu talip olanlardan ${kazanan}'e gitti, hakkı düştü, bıraktığı oyuncunun beklemesi başladı`);
+      const th = Object.values(await hepsi(admin.db, 'hareketler')).find(h => h.tur === 'talep');
+      kontrol(th?.takim === kazanan && th.talipler.length === 2, 'Kura, talip olanlarla birlikte Hareketler sayfasına yazıldı');
+      // Kimse talep etmezse süre bitince boştakilere düşer
+      await F.updateDoc(F.doc(admin.db, 'bekleme', birakti), { zaman: F.Timestamp.fromMillis(Date.now() - 37 * 3600 * 1000) });
+      const kc0 = await kad(tc);
+      await takimlar[tc].D.serbestAl(tc, ayniTip(kc0, birakti), havuzMap.get(birakti), 7);
+      kontrol((await oku(admin.db, 'alinan', birakti))?.takim === tc, 'Talep edilmeyen oyuncu süre bitince boştakilerden alınabildi');
+    } else {
+      kontrol(false, 'Bekleme testi için uygun yuva bulunamadı');
+    }
+    // Lige yeni katılan oyuncu: yönetici ekranı bekleme yazar
+    const yeni = (await serbestler())[0];
+    await admin.D.beklemeleriBaslat({ [yeni.id]: new Date() });
+    kontrol((await serbestler()).every(o => o.id !== yeni.id), 'Lige yeni katılan oyuncu için bekleme başlatıldı');
   }
   {
     const kk = await oku(admin.db, 'kadrolar', t2);
@@ -304,35 +394,82 @@ async function main() {
   await takimlar[a].D.teklifGonder({ veren: a, alan: b, verilen: [ka.as[0], ka.yedek[0]], alinan: [kb.as[2], kb.as[3]], not: 'Deneme' });
   const teklifler = await hepsi(admin.db, 'teklifler');
   const [tid1] = Object.keys(teklifler);
-  await reddedilmeli(() => takimlar[c].D.teklifKabul(tid1, 7), 'Üçüncü takımın başkasının teklifini kabul etmesi');
-  await reddedilmeli(() => takimlar[a].D.teklifKabul(tid1, 7), 'Teklif verenin kendi teklifini kabul etmesi');
+  await reddedilmeli(() => takimlar[c].D.teklifKabul(tid1), 'Üçüncü takımın başkasının teklifini kabul etmesi');
+  await reddedilmeli(() => takimlar[a].D.teklifKabul(tid1), 'Teklif verenin kendi teklifini kabul etmesi');
   await reddedilmeli(() => F.addDoc(F.collection(takimlar[c].db, 'teklifler'), { veren: a, alan: b, verilen: [ka.as[1]], alinan: [kb.as[1]], durum: 'bekliyor', zaman: F.serverTimestamp() }), 'Başka takım adına teklif');
-  await takimlar[b].D.teklifKabul(tid1, 7);
+  await reddedilmeli(() => admin.D.takasOnayla(tid1, 7), 'Karşı taraf kabul etmeden yönetici onayı');
+  await takimlar[b].D.teklifKabul(tid1);
+  kontrol((await oku(admin.db, 'teklifler', tid1)).durum === 'onay' && (await oku(admin.db, 'kadrolar', a)).as[0] === ka.as[0],
+    'Karşı taraf kabul etti: takas yönetici onayına gitti, oyuncular henüz yer değiştirmedi');
+  await reddedilmeli(() => takimlar[b].D.takasOnayla(tid1, 7), 'Yönetici olmayan menajerin takası onaylaması');
+  await reddedilmeli(() => F.updateDoc(F.doc(takimlar[b].db, 'teklifler', tid1), { durum: 'kabul' }), 'Menajerin teklifi kendisi "kabul" yapması');
+  await admin.D.takasOnayla(tid1, 7);
   const ka2 = await oku(admin.db, 'kadrolar', a);
   const kb2 = await oku(admin.db, 'kadrolar', b);
   kontrol(ka2.as[0] === kb.as[2] && ka2.yedek[0] === kb.as[3] && kb2.as[2] === ka.as[0] && kb2.as[3] === ka.yedek[0], '2\'ye 2 takas: oyuncular birbirinin yuvasına geçti');
   kontrol((await oku(admin.db, 'alinan', ka.as[0])).takim === b && (await oku(admin.db, 'teklifler', tid1)).durum === 'kabul', 'Oyuncuların takımı ve teklif durumu güncellendi');
-  await reddedilmeli(() => takimlar[b].D.teklifKabul(tid1, 7), 'Aynı teklifi ikinci kez kabul etme');
+  await reddedilmeli(() => admin.D.takasOnayla(tid1, 7), 'Aynı takası ikinci kez onaylama');
+  await reddedilmeli(() => takimlar[b].D.teklifKabul(tid1), 'Tamamlanan teklifi yeniden kabul etme');
   ka = ka2; kb = kb2;
   await takimlar[a].D.teklifGonder({ veren: a, alan: c, verilen: [ka.as[1]], alinan: [(await oku(admin.db, 'kadrolar', c)).as[0]] });
   const t2id = Object.keys(await hepsi(admin.db, 'teklifler')).find(x => x !== tid1);
   await takimlar[c].D.teklifReddet(t2id);
   kontrol((await oku(admin.db, 'teklifler', t2id)).durum === 'red', 'Teklif reddedildi');
+  const yeniTeklif = async (verilen, alinan) => {
+    const once = new Set(Object.keys(await hepsi(admin.db, 'teklifler')));
+    await takimlar[a].D.teklifGonder({ veren: a, alan: c, verilen, alinan });
+    return Object.keys(await hepsi(admin.db, 'teklifler')).find(x => !once.has(x));
+  };
+  {
+    const kc = await oku(admin.db, 'kadrolar', c);
+    const tr = await yeniTeklif([ka.as[1]], [kc.as[0]]);
+    await takimlar[c].D.teklifKabul(tr);
+    await takimlar[yonTakim].D.takasReddet(tr);
+    kontrol((await oku(admin.db, 'teklifler', tr)).durum === 'yonetici-red' && (await oku(admin.db, 'kadrolar', c)).as[0] === kc.as[0], 'Yönetici takası reddetti, oyuncular yer değiştirmedi');
+    const tg = await yeniTeklif([ka.as[1]], [kc.as[0]]);
+    await takimlar[c].D.teklifKabul(tg);
+    await takimlar[a].D.teklifIptal(tg);
+    kontrol((await oku(admin.db, 'teklifler', tg)).durum === 'iptal', 'Teklif veren, yönetici onayı beklerken teklifi geri çekti');
+    await reddedilmeli(() => admin.D.takasOnayla(tg, 7), 'Geri çekilen takası onaylama');
+  }
   {
     const kc = await oku(admin.db, 'kadrolar', c);
     const yabanci = x => [...x.as, ...x.yedek].filter(p => !havuzMap.get(p)?.turk).slice(0, 3);
     const ver = yabanci(await oku(admin.db, 'kadrolar', a));
     const al = yabanci(kc);
     await takimlar[a].D.teklifGonder({ veren: a, alan: c, verilen: ver, alinan: al });
-    const t3id = Object.keys(await hepsi(admin.db, 'teklifler')).find(x => x !== tid1 && x !== t2id);
+    const t3id = Object.entries(await hepsi(admin.db, 'teklifler')).find(([, x]) => x.durum === 'bekliyor')[0];
     const kontrolFn = (v, y) => dizilisHatasi(v) || dizilisHatasi(y);
     try {
-      await takimlar[c].D.teklifKabul(t3id, 7, kontrolFn);
+      await takimlar[c].D.teklifKabul(t3id);
+      await admin.D.takasOnayla(t3id, 7, kontrolFn);
       const kc2 = await oku(admin.db, 'kadrolar', c);
       kontrol(ver.every(p => [...kc2.as, ...kc2.yedek].includes(p)), "3'e 3 takas kabul edildi");
     } catch (e) {
       kontrol(/Türk|Ön/.test(e.message), `3'e 3 takas kadro kuralı yüzünden yapılmadı: ${e.message}`);
     }
+  }
+
+  // Yönetici: kadrolara tam yetki (haklar ve bekleme aranmaz)
+  {
+    const kc = await oku(admin.db, 'kadrolar', c);
+    const al = (await serbestler())[0];
+    const birak = kc.yedek[0];
+    await reddedilmeli(() => takimlar[siradanTakim].D.yoneticiOyuncuDegistir(c, birak, al, 7), 'Yönetici olmayan menajerin başka takımın kadrosunu değiştirmesi');
+    await takimlar[yonTakim].D.yoneticiOyuncuDegistir(c, birak, al, 7);
+    const kc2 = await oku(admin.db, 'kadrolar', c);
+    kontrol(kc2.yedek[0] === al.id && (await oku(admin.db, 'alinan', al.id))?.takim === c && !(await oku(admin.db, 'alinan', birak))
+      && kc2.fa === kc.fa && kc2.gecmis.at(-1).tur === 'yonetici', 'Yönetici takıma boştan oyuncu koydu (hak düşmedi, geçmişe yazıldı)');
+    const as = [kc2.yedek[1], ...kc2.as.slice(1)];
+    const yedek = [kc2.as[0], kc2.yedek[0]];
+    await reddedilmeli(() => takimlar[c].D.yoneticiDizilis(c, as, yedek, 7), 'Menajerin hakkı olmadan dizilişi değiştirmesi');
+    await admin.D.yoneticiDizilis(c, as, yedek, 7);
+    kontrol((await oku(admin.db, 'kadrolar', c)).as[0] === kc2.yedek[1], 'Yönetici dizilişi doğrudan değiştirdi');
+    await admin.D.yoneticiHaklar(t2, { fa: 0, degisiklik: 0 });
+    kontrol((await oku(admin.db, 'kadrolar', t2)).fa === 0, 'Yönetici takımın kullanılan haklarını sıfırladı');
+    await reddedilmeli(() => takimlar[t2].D.yoneticiHaklar(t2, { fa: 0, degisiklik: 0 }), 'Menajerin kendi haklarını sıfırlaması');
+    const yh = Object.values(await hepsi(admin.db, 'hareketler')).filter(h => h.tur === 'yonetici');
+    kontrol(yh.length === 1 && yh[0].alinan === al.id, 'Yönetici değişikliği Hareketler\'e yazıldı');
   }
 
   // Puanlama: 6. haftanın verisiyle (varsa) ya da 5. haftayla hesap
@@ -350,7 +487,8 @@ async function main() {
   await admin.D.draftiSifirla(tidler, SURE);
   const sifir = await hepsi(admin.db, 'kadrolar');
   kontrol((await oku(admin.db, 'lig', 'durum')).asama === 'kurulum' && Object.values(sifir).every(x => x.as.length === 0)
-    && !Object.keys(await hepsi(admin.db, 'secimler')).length && !Object.keys(await hepsi(admin.db, 'teklifler')).length, 'Yönetici draftı sıfırladı');
+    && !Object.keys(await hepsi(admin.db, 'secimler')).length && !Object.keys(await hepsi(admin.db, 'teklifler')).length
+    && !Object.keys(await hepsi(admin.db, 'bekleme')).length && !Object.keys(await hepsi(admin.db, 'istekler')).length, 'Yönetici draftı sıfırladı');
 
   // Yönetici de oynuyor: kendi takımına katılır, o takım yönetici takımı olur, yöneticiliği sürer
   {

@@ -28,6 +28,14 @@ sayfaları; ileride TBL ve BSL fantezi ligleri ve Pota Altı YouTube yayınları
 - `bsl/guncelle.bat` (günde 2 kez zamanlanmış) BSL verisini çeker, `veri/uret.py` ile TBL/BSL puan tablosu ve liderleri yeniler, ikisini birlikte yayınlar.
 - Testler: `bsl/test/deneme_draft.mjs` (Firebase emülatörü `bsl/` klasöründen başlatılır), 2026-10-30: 119 kontrol, 0 hata.
 
+## 4. aşama: YouTube ve ana sayfa
+- **Yayın** sekmesi: Pota Altı YouTube kanalının ([@potaaltitv](https://www.youtube.com/@potaaltitv)) son canlı yayını oynatıcıda,
+  altında geçmiş canlı yayınlar, videolar ve kısa videolar; dokunulan video uygulamanın içinde oynar. Kanala git / Katıl bağlantıları.
+- **Ana sayfa:** en üstte son yayın; kanal canlıysa "🔴 Pota Altı şu an canlı" kartı. Canlı yayın, YouTube'un gömülü oynatıcısıyla
+  birkaç dakikada bir sayfada kontrol edilir (API anahtarı gerekmez).
+- Liste `veri/uret.py` ile üretilir (`site/data/youtube.json`): video akışı (RSS) ve kanalın Canlı sekmesi. Kanal `veri/uret.py`
+  içindeki `YOUTUBE` ayarındadır.
+
 ## Veriler
 - Canlı veriler (maç listeleri, kutu skorlar) TBL Fantezi Ligi sitesinin yayınladığı dosyalardan okunur
   (`https://potaalti.github.io/tbl_fantezi_lig/data`); bu dosyaları telefondaki Termux güncellemesi üretir.

@@ -9,6 +9,7 @@ herkese açık bölümü için özet dosyaları üretir:
   site/data/<lig>/oyuncular.json     bütün oyuncuların sezon ortalamaları
   site/data/<lig>/takimlar.json      takımların maç başı istatistikleri, kadroları ve maçları
   site/data/<lig>/oyuncu/<id>.json   oyuncunun maç maç istatistikleri
+  site/data/youtube.json             Pota Altı YouTube kanalının son canlı yayınları ve son videoları
 
 Kaynak dosyalar internetten okunur; biten maçların kutu skorları cache/ klasöründe saklanır (bir daha indirilmez).
   python veri/uret.py            # kaynak: https://potaalti.github.io/tbl_fantezi_lig/data
@@ -30,6 +31,9 @@ CIKTI = KOK / "site" / "data"
 CACHE = KOK / "cache"
 VARSAYILAN_KAYNAK = "https://potaalti.github.io/tbl_fantezi_lig/data"
 LIGLER = {"tbl": "Türkiye Basketbol Ligi", "bsl": "Basketbol Süper Ligi"}
+# Pota Altı YouTube kanalı (youtube.com/@potaaltitv)
+YOUTUBE = {"id": "UCIkf6xlbhB23cSYr57ltiPA", "kullanici": "potaaltitv", "ad": "Pota Altı"}
+TARAYICI = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36"
 
 
 def oku(kaynak, yol, kalici=False):
@@ -234,6 +238,53 @@ def lig_uret(kaynak, lig, bilgi):
             "oyuncuSayisi": len(oyuncular)}
 
 
+def youtube_uret():
+    """Kanalın video akışından (RSS) son videolar, Canlı sekmesinden son canlı yayınlar. API anahtarı gerekmez."""
+    import xml.etree.ElementTree as ET
+
+    def indir(url):
+        istek = urllib.request.Request(url, headers={"User-Agent": TARAYICI, "Accept-Language": "tr-TR"})
+        with urllib.request.urlopen(istek, timeout=30) as y:
+            return y.read()
+
+    ns = {"a": "http://www.w3.org/2005/Atom", "yt": "http://www.youtube.com/xml/schemas/2015", "m": "http://search.yahoo.com/mrss/"}
+    kok = ET.fromstring(indir(f"https://www.youtube.com/feeds/videos.xml?channel_id={YOUTUBE['id']}"))
+    videolar = []
+    for e in kok.findall("a:entry", ns):
+        ist = e.find("m:group/m:community/m:statistics", ns)
+        videolar.append({
+            "id": e.find("yt:videoId", ns).text, "baslik": e.find("a:title", ns).text, "tarih": e.find("a:published", ns).text,
+            "kisa": "/shorts/" in (e.find("a:link", ns).get("href") or ""), "izlenme": int(ist.get("views")) if ist is not None else None,
+        })
+    # Canlı sekmesi: sayfadaki ilk veri (ytInitialData) içindeki yayın kartları, en yenisi başta
+    sayfa = indir(f"https://www.youtube.com/@{YOUTUBE['kullanici']}/streams").decode("utf-8", "replace")
+    m = re.search(r"var ytInitialData = (\{.*?\});</script>", sayfa)
+    yayinlar = []
+
+    def gez(o):
+        if isinstance(o, dict):
+            if "lockupViewModel" in o:
+                v = o["lockupViewModel"]
+                md = v.get("metadata", {}).get("lockupMetadataViewModel", {})
+                satirlar = [p.get("text", {}).get("content", "") for r in md.get("metadata", {}).get("contentMetadataViewModel", {}).get("metadataRows", [])
+                            for p in r.get("metadataParts", [])]
+                metin = " ".join(satirlar).lower()
+                yayinlar.append({"id": v.get("contentId"), "baslik": md.get("title", {}).get("content", ""), "bilgi": " · ".join(x for x in satirlar if x),
+                                 "canli": "izliyor" in metin or "watching" in metin, "planli": "planlan" in metin or "scheduled" in metin})
+            for x in o.values():
+                gez(x)
+        elif isinstance(o, list):
+            for x in o:
+                gez(x)
+
+    if m:
+        gez(json.loads(m.group(1)))
+    yayinlar = [y for y in yayinlar if y["id"]][:12]
+    yaz(CIKTI / "youtube.json", {"kanal": YOUTUBE, "guncelleme": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                                 "yayinlar": yayinlar, "videolar": videolar})
+    return len(yayinlar), len(videolar)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--kaynak", default=VARSAYILAN_KAYNAK)
@@ -246,6 +297,11 @@ def main():
             continue
         meta["ligler"][lig] = lig_uret(args.kaynak, lig, bilgi)
         print(f"{lig}: {meta['ligler'][lig]['takimSayisi']} takım, {meta['ligler'][lig]['oyuncuSayisi']} oyuncu")
+    try:
+        y, v = youtube_uret()
+        print(f"youtube: {y} canlı yayın, {v} video")
+    except Exception as e:  # YouTube okunamazsa önceki dosya kalır; ligler etkilenmez
+        print("youtube okunamadı:", e)
     yaz(CIKTI / "meta.json", meta)
     print("tamam:", CIKTI)
 

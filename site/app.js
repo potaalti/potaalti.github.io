@@ -6,6 +6,7 @@ import {
   KAYNAK, esc, sayi, isaretli, aramaNorm, baslik, gunBasligi, saatYazisi, tarihSaat, sureSn, getir, canliYazisi,
 } from './ortak.js';
 import * as TblFantezi from './fantezi-tbl.js';
+import * as Yayin from './yayin.js';
 
 const YEREL = ['localhost', '127.0.0.1'].includes(location.hostname);
 const LIGLER = { tbl: { kisa: 'TBL', ad: 'Türkiye Basketbol Ligi' }, bsl: { kisa: 'BSL', ad: 'Basketbol Süper Ligi' } };
@@ -58,7 +59,7 @@ function varsayilanHafta(lig) {
 }
 
 // ---------- Menü ----------
-const MENU = [['', 'Ana Sayfa', '🏠'], ['maclar', 'Maçlar', '📅'], ['lig/tbl', 'TBL', '🏀'], ['lig/bsl', 'BSL', '🏆'], ['fantezi', 'Fantezi', '⭐']];
+const MENU = [['', 'Ana Sayfa', '🏠'], ['maclar', 'Maçlar', '📅'], ['lig/tbl', 'TBL', '🏀'], ['lig/bsl', 'BSL', '🏆'], ['fantezi', 'Fantezi', '⭐'], ['yayin', 'Yayın', '▶️']];
 function rota() {
   return location.hash.replace(/^#\/?/, '').split('/').filter(Boolean).map(decodeURIComponent);
 }
@@ -100,6 +101,7 @@ function gorunum() {
     case 'lig': return gorunumLig(lig, b ?? 'tablo');
     case 'takim': return `<div class="dar">${gorunumTakim(lig, b)}</div>`;
     case 'oyuncu': return `<div class="dar">${gorunumOyuncu(lig, b)}</div>`;
+    case 'yayin': return `<div class="dar">${Yayin.gorunum(a)}</div>`;
     case 'fantezi': return `<div class="dar">${a === 'tbl' ? TblFantezi.gorunum(rota().slice(2)) : gorunumFantezi()}</div>`;
     default: return gorunumAna();
   }
@@ -375,7 +377,8 @@ function liderOzeti(lig) {
 
 function gorunumAna() {
   const sutun = lig => `<div>${buHaftaKarti(lig)}${tabloKarti(lig, 6)}${liderOzeti(lig)}</div>`;
-  return `<div class="karsilama"><img src="icon-192.png" alt=""><div><strong>Pota Altı</strong><small>TBL ve BSL canlı skorlar, istatistikler ve fantezi ligleri</small></div></div>
+  return `<div class="karsilama"><img src="icon-192.png" alt=""><div><strong>Pota Altı</strong><small>TBL ve BSL canlı skorlar, istatistikler, fantezi ligleri ve yayınlar</small></div></div>
+    ${Yayin.anaKart()}
     <div class="iki-sutun">${sutun('tbl')}${sutun('bsl')}</div>
     <div class="iki-sutun"><div>${TblFantezi.ozet()}</div><div>${fantezKartlari()}</div></div>${altBilgi()}`;
 }
@@ -430,6 +433,7 @@ setInterval(canliYenile, 60 * 1000);
 document.addEventListener('visibilitychange', () => { if (!document.hidden) canliYenile(); });
 
 TblFantezi.baglan(() => ciz());
+Yayin.baglan(() => ciz());
 
 async function basla() {
   try {

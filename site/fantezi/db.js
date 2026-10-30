@@ -107,19 +107,6 @@ export async function kadrolariIceAktar(takimlar, { aktifHafta, ayar }) {
   await topluYaz(islemler);
 }
 
-// TBL: kadroları eski siteden baştan aktarır (geçiş gününden önce yönetici ligi kurup denedikten sonra). Takımlar, davet
-// linkleri, bağlı hesaplar ve yöneticiler kalır; kadrolar, haklar, sahiplikler, beklemeler/talepler ve hareketler yeniden yazılır.
-export async function kadrolariYenidenAktar(takimlar, secenekler) {
-  const mevcut = await F.getDocs(F.collection(db, 'takimlar'));
-  if (mevcut.size !== takimlar.length) throw new Hata(`Takım sayısı değişmiş (ligde ${mevcut.size}, eski sitede ${takimlar.length}).`);
-  const sil = [];
-  for (const ad of ['alinan', 'bekleme', 'hareketler']) {
-    (await F.getDocs(F.collection(db, ad))).forEach(d => sil.push(b => b.delete(d.ref)));
-  }
-  await topluYaz(sil);
-  await kadrolariIceAktar(takimlar, secenekler);
-}
-
 // TBL: lisansı düşen yabancı oyuncunun yerine aynı TBL takımına gelen yabancı, fantezi takımına otomatik geçer
 // (serbest oyuncu hakkından düşmez; yeni oyuncunun beklemesi ve talepleri kalkar). Yönetici ekranı yapar.
 export async function otomatikYerine(tid, cikan, giren, hafta) {

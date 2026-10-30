@@ -4,7 +4,7 @@ TBL ve BSL için tek uygulama: canlı skorlar, kutu skorlar, puan tablosu, istat
 sayfaları; ileride TBL ve BSL fantezi ligleri ve Pota Altı YouTube yayınları.
 
 ## 1. aşama (bu sürüm): herkese açık bölüm
-- **Ana sayfa:** iki ligin bu haftaki maçları (canlı), puan tablosu özeti, liderler, fantezi bağlantıları
+- **Ana sayfa:** iki ligin bu haftaki maçları (canlı), puan tablosu özeti, fantezi bağlantıları (liderler TBL/BSL sayfalarında)
 - **Maçlar:** lig ve hafta seçimi, canlı skor (maç saatlerinde dakikada bir yenilenir), maç sayfasında çeyrekler ve kutu skor (+/- dahil)
 - **TBL / BSL:** puan tablosu (G/M, averaj, son 5 maç), istatistik liderleri, takımlar, oyuncular (arama ve sıralama)
 - **Takım sayfası:** maç başı takım istatistikleri, maçlar, kadro

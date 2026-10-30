@@ -373,16 +373,8 @@ function buHaftaKarti(lig) {
     ${sirali.map(m => macSatiri(lig, m)).join('')}</div>`;
 }
 
-function liderOzeti(lig) {
-  const l = ligVerisi(lig, 'liderler');
-  if (!l) return '';
-  const kat = l.kategoriler.filter(k => ['sayi', 'rib', 'ast', 'vp'].includes(k.id));
-  return `<div class="kart"><div class="baslik-satir"><h2>${LIGLER[lig].kisa} liderleri</h2><a href="#/lig/${lig}/liderler">Tümü ›</a></div>
-    ${kat.map(k => `<p class="soluk kucuk" style="margin:10px 0 2px;font-weight:700">${esc(k.ad)}</p>${liderListesi(lig, k, 3)}`).join('')}</div>`;
-}
-
 function gorunumAna() {
-  const sutun = lig => `<div>${buHaftaKarti(lig)}${tabloKarti(lig, 6)}${liderOzeti(lig)}</div>`;
+  const sutun = lig => `<div>${buHaftaKarti(lig)}${tabloKarti(lig, 6)}</div>`;
   const karsilama = `<div class="karsilama"><img src="icon-192.png" alt=""><div><strong>Pota Altı</strong><small>TBL ve BSL canlı skorlar, istatistikler, fantezi ligleri ve yayınlar</small></div></div>`;
   const fantezi = `<h2 class="bolum-baslik">Fantezi ligleri</h2><div class="fantezi-kartlari">${fantezKartlari()}</div>`;
   if (TELEFON.matches) {

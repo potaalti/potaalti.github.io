@@ -284,7 +284,7 @@ function cizHemen() {
   let secim = null;
   try { secim = odak && odak.selectionStart != null ? [odak.selectionStart, odak.selectionEnd] : null; } catch { /* number input */ }
   $('#lig-adi').innerHTML = `<span class="uzun-baslik">${esc(S.ayar?.ad ?? LIG.ad)}</span><span class="kisa-baslik">${LIG.kisa} Fantezi</span>`;
-  if ($('#lig-gecis')) $('#lig-gecis').innerHTML = ligGecisi();
+  yanMenuCiz();
   $('#menu').innerHTML = menu();
   $('#alt-menu').innerHTML = altMenu();
   // Telefonda menü yana kayar: açık sekme görünür kalsın
@@ -374,11 +374,19 @@ function gorunumDiger() {
   return `${hesapKarti()}<div class="kart diger-liste">${(kes ? ogeler.slice(4) : []).map(([id, ad, ikon, n]) => `<a href="#/${id}"><span class="ikon">${ikon}</span><span>${ad}${rozetHtml(n)}</span><span class="ok">›</span></a>`).join('')}</div>`;
 }
 
-// Yan menünün altı (bilgisayar): fantezi ligleri arası geçiş
-function ligGecisi() {
-  const l = (yol, ad, aktif) => `<a href="${yol}" class="${aktif ? 'aktif' : ''}">${ad}</a>`;
-  return `<span class="lig-gecis-baslik">Fantezi ligleri</span>
-    ${l('../tbl/', '🏀 TBL Fantezi', LIG.kod === 'tbl')}${l('../bsl/', '🏆 BSL Fantezi', LIG.kod === 'bsl')}`;
+// Bilgisayarın yan menüsü: üstte Pota Altı'nın bölümleri (ana uygulama), altında fantezi ligleri; açık olan lig genişler ve
+// sayfaları (#menu) altında görünür. Tablet ve telefonda bu kısımlar gizli, sadece ligin menüsü kalır.
+const ANA_MENU = [['', 'Ana Sayfa', '🏠'], ['maclar', 'Maçlar', '📅'], ['lig/tbl', 'TBL', '🏀'], ['lig/bsl', 'BSL', '🏆'], ['yayin', 'Yayın', '▶️']];
+const FANTEZI_LIGLERI = [['tbl', 'TBL Fantezi'], ['bsl', 'BSL Fantezi']];
+function yanMenuCiz() {
+  if (!$('#ana-menu')) return;
+  $('#ana-menu').innerHTML = ANA_MENU.map(([y, ad, ikon]) => `<a href="../#/${y}"><span class="ikon">${ikon}</span><span>${ad}</span></a>`).join('');
+  const i = FANTEZI_LIGLERI.findIndex(([kod]) => kod === LIG.kod);
+  const lig = ([kod, ad]) => (kod === LIG.kod
+    ? `<a href="#/" class="grup-baslik aktif"><span class="ikon">⭐</span><span>${ad}</span><span class="ok">▾</span></a>`
+    : `<a href="../${kod}/" class="grup-baslik"><span class="ikon">⭐</span><span>${ad}</span><span class="ok">›</span></a>`);
+  $('#grup-ust').innerHTML = `<span class="grup-ad">Fantezi ligleri</span>${FANTEZI_LIGLERI.slice(0, i + 1).map(lig).join('')}`;
+  $('#grup-alt').innerHTML = FANTEZI_LIGLERI.slice(i + 1).map(lig).join('');
 }
 
 const basHarfler = ad => String(ad ?? '').replace(/[^\p{L}\p{N}\s]/gu, ' ').split(/\s+/).filter(Boolean).slice(0, 2)

@@ -119,8 +119,16 @@ hesaplanır.
     bozuluyor) kuraya girmez.
   - Yeni katılanların 36 saatini de bir yöneticinin siteyi açması başlatır; yönetici oyuncu sayfasından beklemeyi
     kaldırabilir (talepler de silinir).
-- **Oyuncu sayfası**: listelerde oyuncu adına dokununca sezon ortalamaları, maç maç VP/süre, sıradaki maçlar,
-  hangi fantezi takımında olduğu (ya da beklemede/boşta) ve fantezi hareketleri görünür.
+- **Oyuncu sayfası**: listelerde oyuncu adına dokununca sezon ortalamaları, maç maç dakika/sayı/ribaund/asist/VP
+  (maça dokununca kutu skor), sıradaki maçlar, hangi fantezi takımında olduğu (ya da talepte/boşta) ve fantezi hareketleri görünür.
+- **Maçlar**: maça dokununca çeyrek skorları ve iki takımın tam kutu skoru açılır; her oyuncunun altında fantezi takımı yazar,
+  kendi oyuncuların vurgulanır. Kutu skorlar ve maç maç istatistikler TBL Fantezi Ligi sitesinin yayınladığı BSL verisinden okunur.
+- **Puan durumu paylaşımı**: Genel klasman ve haftalık sıralamada **📤 Paylaş** (telefonda WhatsApp/Instagram menüsü açılır)
+  ve **⬇** (görseli indir) düğmeleri var.
+- **Boştakiler**: VP ortalaması, son haftanın VP'si ya da sayı ortalamasına göre sıralanır; aramada Türkçe karakter gerekmez
+  ("sertac" yazınca "Sertaç" bulunur).
+- **Telefona uygulama gibi ekleme**: Android'de Chrome menüsü → *Ana ekrana ekle*, iPhone'da Safari → Paylaş → *Ana Ekrana Ekle*.
+  Bağlantı yokken ya da zayıfken son görülen veriler açılır.
 - **Kadrom → As–Yedek değişikliği**: sezon boyunca takım başına 1.
 - Bütün değişiklikler, ilk maçı henüz başlamamış ilk haftadan itibaren geçerlidir.
 - **Hareketler**: herkesin görebildiği işlem geçmişi.

@@ -55,6 +55,11 @@ hesaplanır.
    - Yönetici sayfasında her takımın hangi Google hesabına bağlı olduğu görünür. Yanlış hesap bağlandıysa
      **Çıkar** → takım için yeni davet linki oluşur, onu gönder.
    - Davet linki yanlış kişiye gittiyse (henüz kullanılmadan) **Yeni link** → eskisi iptal olur.
+   - **Sen de oynuyorsan:** Yönetici sayfasında "Sen de oynuyor musun?" → takımını seç → **Takıma katıl**. Takımın
+     yönetici takımı olur, yöneticiliğin sürer.
+   - **Ortak menajer:** Bir takımı iki kişi yönetecekse takımın satırında **+ Ortak menajer davet et** → linki gönder.
+     İkisi de takım adına her şeyi yapabilir; haklar (2 serbest oyuncu, 1 As–Yedek değişikliği) takımındır, kişi başı değil.
+     Takım yönetici takımıysa ortak menajer de yönetici olur (ör. sen ve arkadaşın aynı takımda).
 
 ## 4. Draft günü
 

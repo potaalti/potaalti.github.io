@@ -1025,20 +1025,24 @@ function gorunumYonetici() {
   const uyeler = S.uyeler ?? [];
   adimlar.push(`<div class="kart"><h3>Takımlar ve davetler</h3>
     <p class="kucuk soluk">Her menajere kendi davet linkini gönder. Menajer linki açıp Google hesabıyla girince hesabı takıma bağlanır ve
-    link bir daha kullanılamaz. Sonra her cihazdan aynı Google hesabıyla girer. Yanlış hesap bağlandıysa "Çıkar" de; takım için yeni davet linki oluşur.</p>
+    link bir daha kullanılamaz. Sonra her cihazdan aynı Google hesabıyla girer. Bir takımı iki kişi yönetecekse "Ortak menajer davet et".
+    Yanlış hesap bağlandıysa "Çıkar" de.</p>
     <div class="tablo-kap"><table><thead><tr><th>#</th><th>Takım adı</th><th>Menajer</th><th>Hesap / davet</th></tr></thead><tbody>
     ${takimlar().map(t => {
       const kod = S.kodlar?.[t.id];
       const link = kod ? girisLinki(kod) : '';
       const mesaj = `${S.ayar.ad} davetin (${t.ad}): linki aç ve Google hesabınla giriş yap. Link tek kullanımlık, kimseyle paylaşma: ${link}`;
       const bagli = uyeler.filter(u => u.takim === t.id);
-      const hesap = bagli.length
-        ? bagli.map(u => `<span class="kucuk">✓ ${esc(u.email)}</span> <button class="btn kucuk tehlike" data-is="uye-cikar" data-id="${u.uid}">Çıkar</button>`).join('<br>')
-        : kod ? `<span class="rozet">davet bekliyor</span>
+      // Bağlı hesaplar (ortak menajerler dahil) ve varsa kullanılmamış davet linki
+      const hesaplar = bagli.map(u => `<span class="kucuk">✓ ${esc(u.email)}</span> <button class="btn kucuk tehlike" data-is="uye-cikar" data-id="${u.uid}">Çıkar</button>`).join('<br>');
+      const davet = kod ? `<span class="rozet">${bagli.length ? 'ortak menajer daveti bekliyor' : 'davet bekliyor'}</span>
           <button class="btn kucuk" data-is="kopyala" data-metin="${esc(link)}">Linki kopyala</button>
           <a class="btn kucuk" href="https://wa.me/?text=${encodeURIComponent(mesaj)}" target="_blank" rel="noopener">WhatsApp</a>
-          <button class="btn kucuk tehlike" data-is="kod-yenile" data-id="${t.id}" title="Eski link iptal olur">Yeni link</button>`
-          : S.uyeler ? `<button class="btn kucuk" data-is="kod-yenile" data-id="${t.id}">Davet linki oluştur</button>` : '<span class="soluk kucuk">yükleniyor…</span>';
+          <button class="btn kucuk tehlike" data-is="kod-yenile" data-id="${t.id}" title="Eski link iptal olur">${bagli.length ? 'Daveti iptal et' : 'Yeni link'}</button>`
+        : !S.uyeler ? '<span class="soluk kucuk">yükleniyor…</span>'
+          : bagli.length ? `<button class="btn kucuk" data-is="ortak-davet" data-id="${t.id}">+ Ortak menajer davet et</button>`
+            : `<button class="btn kucuk" data-is="kod-yenile" data-id="${t.id}">Davet linki oluştur</button>`;
+      const hesap = [hesaplar, davet].filter(Boolean).join('<br>');
       return `<tr><td>${t.no}</td>
         <td><input type="text" id="ta-${t.id}" value="${esc(t.ad)}" maxlength="30" style="width:150px"></td>
         <td><input type="text" id="tm-${t.id}" value="${esc(t.menajer)}" maxlength="40" style="width:130px"></td>
@@ -1352,12 +1356,22 @@ async function eylem(is, id, el) {
       return;
     }
     case 'uye-cikar': {
+      if (id === S.uid) return bildir('Kendi hesabını çıkaramazsın; bunu diğer yönetici yapabilir.', true);
       const u = S.uyeler.find(x => x.uid === id);
-      if (!confirm(`${u.email} hesabı ${takimAdi(u.takim)} takımından çıkarılsın mı? Takım için yeni davet linki oluşturulur.`)) return;
+      const kalan = S.uyeler.filter(x => x.takim === u.takim && x.uid !== id).length;
+      if (!confirm(`${u.email} hesabı ${takimAdi(u.takim)} takımından çıkarılsın mı?${kalan ? '' : ' Takım için yeni davet linki oluşturulur.'}`)) return;
       await D.uyeyiCikar(id);
-      if (u.takim !== 'admin') S.kodlar[u.takim] = await D.koduYenile(u.takim, S.kodlar[u.takim]);
+      // Takımda başka menajer kalmadıysa takım için yeni davet linki
+      if (u.takim !== 'admin' && !kalan && !S.kodlar[u.takim]) S.kodlar[u.takim] = await D.koduYenile(u.takim, null);
       await davetleriYenile();
-      return bildir('Hesap takımdan çıkarıldı, yeni davet linki oluştu');
+      return bildir(kalan ? 'Hesap takımdan çıkarıldı' : 'Hesap takımdan çıkarıldı, yeni davet linki oluştu');
+    }
+    case 'ortak-davet': {
+      const yonetimde = (S.ayar.yoneticiTakimlar ?? []).includes(id);
+      if (!confirm(`${takimAdi(id)} için ortak menajer davet linki oluşturulsun mu? Linki açıp Google ile giren kişi bu takımı da yönetir${yonetimde ? ' ve takım yönetici takımı olduğu için yönetici olur' : ''}.`)) return;
+      S.kodlar[id] = await D.koduYenile(id, null);
+      ciz();
+      return bildir('Ortak menajer davet linki oluşturuldu; Linki kopyala ya da WhatsApp ile gönder');
     }
     case 'ligi-kur': {
       const hafta = Number(deger('k-hafta'));

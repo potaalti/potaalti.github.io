@@ -105,14 +105,14 @@ hesaplanır.
 - `guncelle.bat`'a çift tıkla: TBF'den verileri çeker ve siteye gönderir (birkaç dakikada yayında).
   Haftanın maçları bitince (genelde Pazartesi gecesi) bir kez yeterli; istersen maç günlerinde de
   çalıştırabilirsin.
-- **Otomatik güncelleme ve canlı skor:** `gorev_kur.bat`'a bir kez çift tıkla. Bilgisayar açık ve internete bağlı
-  olduğu sürece arka planda (pencere açılmadan) çalışır:
-  - Her gün **12:30 ve 23:45'te** tam güncelleme: oyuncu listesi, transferler, fikstür, skorlar.
-  - **3 dakikada bir maç saati kontrolü**: BSL maçı başlamadan 10 dakika önceden maç TBF'de kesinleşene kadar canlı
-    skor, çeyrek ve oyuncuların anlık VP'leri FIBA LiveStats'ten çekilip siteye gönderilir (site 1–2 dakikada yayınlar).
-    Maç yokken internete bile çıkmadan hemen kapanır.
-  - Sitedeki puan durumu ve Maçlar sekmesi canlı maç varken dakikada bir kendini yeniler.
-  - Ne olduğunu görmek için klasördeki `guncelle.log` dosyasına bakabilirsin. Kaldırmak için `gorev_kaldir.bat`.
+- **Otomatik güncelleme:** `gorev_kur.bat`'a bir kez çift tıkla. Bilgisayar açık ve internete bağlı olduğu sürece her gün
+  **12:30 ve 23:45'te** arka planda (pencere açılmadan) tam güncelleme yapılır: oyuncu listesi, transferler, fikstür,
+  biten haftaların kesin VP'leri. Ne olduğunu klasördeki `guncelle.log` dosyasında görebilirsin. Kaldırmak için `gorev_kaldir.bat`.
+- **Canlı skor ve VP:** Bilgisayarda bir şey gerekmez. TBL Fantezi Ligi'nin telefondaki (Termux) güncellemesi maç
+  saatlerinde 3 dakikada bir BSL'nin canlı skorlarını ve kutu skorlarını yayınlıyor; BSL Fantezi sitesi, bu haftanın
+  başlamış ama kesinleşmemiş maçlarını oradan dakikada bir okur. Puan durumu ve Maçlar sekmesi canlı değişir.
+  - TBL tarafındaki güncelleme durursa canlı veri de durur (günde 2 güncelleme kesin sonuçları yine getirir). O durumda
+    yedek olarak bilgisayardan 3 dakikalık canlı güncelleme açılabilir: komut isteminde `gorev_kur.bat canli`.
 
 ### Yöneticiler ve bildirimler
 

@@ -1190,7 +1190,9 @@ function gorunumMaclar(istenen) {
   const bay = [...takimAdlari].filter(([id]) => !oynayan.has(id)).map(([, ad]) => baslik(ad));
   return `${cipler}${secici}${bloklar || '<p class="bos">Bu haftanın maçları henüz belli değil.</p>'}
     ${maclar.length && bay.length ? `<p class="soluk kucuk">Bay: ${bay.map(esc).join(', ')}</p>` : ''}
-    <p class="soluk kucuk">Maça dokununca o maçtaki fantezi oyuncuları açılır. Skorlar veriler her güncellendiğinde yenilenir (${S.index?.guncelleme ? tarih(S.index.guncelleme) : '-'}).</p>`;
+    <p class="soluk kucuk">Maça dokununca o maçtaki fantezi oyuncuları açılır. ${S.tblVerisi && eksikHaftalar().includes(n)
+      ? `Canlı skorlar TBL Fantezi Ligi'nin güncellemesinden, dakikada bir yenilenir (son: ${S.tblVerisi.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}).`
+      : `Son güncelleme: ${S.index?.guncelleme ? tarih(S.index.guncelleme) : '-'}.`}</p>`;
 }
 
 // Canlı maçın son güncellemedeki durumu: "3. Çeyrek · 04:12", "Devre arası", "Maç sonu · kesinleşiyor"
@@ -1590,6 +1592,7 @@ async function haftalariYukle() {
   S.haftalarYuklendi = true;
   S.haftalarYukleniyor = false;
   ciz();
+  canliYenile(); // dosyadaki haftalar TBL'nin daha yeni canlı verisinin üstüne yazılmasın
 }
 
 function veriGeldi(ad, v) {
@@ -1708,31 +1711,74 @@ setInterval(() => {
 // Sunucu saati farkını arada bir tazele (bilgisayarın saati kayabilir)
 setInterval(() => { if (S.uid && !S.ligYok) D.saatFarki(S.uid).then(f => { S.saatFarki = f; }).catch(() => {}); }, 5 * 60 * 1000);
 
-// ---------- Canlı maçlar: maç saatlerinde veriler dakikada bir yenilenir ----------
-// Bilgisayardaki güncelleme maç saatlerinde 3 dakikada bir canlı skoru ve VP'leri siteye gönderir.
-function canliMaclar() {
+// ---------- Canlı maçlar: TBL Fantezi Ligi'nin yayınladığı BSL verisinden ----------
+// TBL Fantezi Ligi'nin telefondaki güncellemesi maç saatlerinde 3 dakikada bir BSL'nin canlı skorlarını ve kutu
+// skorlarını (oyuncu VP'leri) yayınlıyor. Bu ve sıradaki haftanın başlamış ama bizim verimizde henüz kesinleşmemiş
+// maçları oradan okunur (dakikada bir); kesin sonuçlar günde 2 bizim güncellememizle gelir.
+const TBL_VERI = 'https://potaalti.github.io/tbl_fantezi_lig/data';
+const tblMacOnbellek = new Map(); // biten maçların kutu skoru değişmez
+
+// Saati gelmiş ama bizim verimizde henüz bitmemiş maçı olan haftalar
+function eksikHaftalar() {
   const g = S.index?.guncelHafta;
+  if (g == null) return [];
   const simdiMs = Date.now();
-  return [g, g + 1].flatMap(n => S.maclar[n] ?? []).filter(m => m.durum === 'canli' || (m.durum !== 'bitti'
-    && !m.tarih.endsWith('T00:00:00') && simdiMs >= new Date(m.tarih).getTime() - 10 * 60000
-    && simdiMs <= new Date(m.tarih).getTime() + 4 * 3600000));
+  return [g, g + 1].filter(n => (S.maclar[n] ?? []).some(m => m.durum !== 'bitti' && !m.tarih.endsWith('T00:00:00')
+    && simdiMs >= new Date(m.tarih).getTime() - 10 * 60000));
+}
+
+const sureSn = sure => {
+  const [dk, sn] = String(sure ?? '0:00').split(':').map(Number);
+  return (dk || 0) * 60 + (sn || 0);
+};
+
+// TBL sitesindeki BSL haftası bizim hafta biçimimize: maçlar (takım kimlikleriyle) ve oyuncuların haftalık VP'si
+async function tblHaftasi(n) {
+  const liste = (await jsonGetir(`${TBL_VERI}/maclar/bsl-${n}.json`)).maclar;
+  const bizim = new Map((S.maclar[n] ?? []).map(m => [m.id, m]));
+  const takimId = new Map([...S.rehber.values()].map(o => [o.takim, o.takimId]));
+  const maclar = liste.map(m => ({
+    id: m.id, tarih: m.tarih, durum: m.durum, ev: m.ev, dep: m.dep, evSkor: m.evSkor, depSkor: m.depSkor,
+    salon: m.salon, yayin: m.yayin, canliDurum: m.canliDurum,
+    evId: bizim.get(m.id)?.evId ?? takimId.get(m.ev), depId: bizim.get(m.id)?.depId ?? takimId.get(m.dep),
+  }));
+  const oyuncular = {};
+  await Promise.all(maclar.filter(m => m.durum !== 'oynanmadi').map(async m => {
+    let kutu = tblMacOnbellek.get(m.id);
+    if (!kutu) {
+      kutu = await jsonGetir(`${TBL_VERI}/mac/${m.id}.json`);
+      if (m.durum === 'bitti') tblMacOnbellek.set(m.id, kutu);
+    }
+    for (const taraf of ['ev', 'dep']) {
+      for (const o of kutu[taraf]?.oyuncular ?? []) {
+        if (String(o.id).startsWith('fiba-')) continue; // TBF kimliği henüz bilinmeyen canlı oyuncu
+        const x = (oyuncular[o.id] ??= { ad: o.ad, takim: m[taraf], takimId: m[`${taraf}Id`], vp: 0, saniye: 0, mac: 0 });
+        x.vp += o.vp ?? 0;
+        x.saniye += sureSn(o.sure);
+        x.mac += 1;
+      }
+    }
+  }));
+  return { hafta: n, maclar, oyuncular };
 }
 
 async function canliYenile() {
-  if (!S.index || document.hidden || !canliMaclar().length) return;
+  if (!S.index || document.hidden || S.canliYenileniyor) return;
+  const haftalar = eksikHaftalar();
+  if (!haftalar.length) return;
+  S.canliYenileniyor = true;
   try {
-    S.index = await jsonGetir('data/index.json');
-    const g = S.index.guncelHafta;
-    await Promise.all([g, g + 1].map(async n => {
-      try { S.maclar[n] = (await jsonGetir(`data/maclar/${n}.json`)).maclar; } catch { /* henüz yazılmamış */ }
-      if (S.haftalar[n] || (S.ayar && n >= S.ayar.baslangicHaftasi)) {
-        try { S.haftalar[n] = await jsonGetir(`data/hafta/${n}.json`); } catch { /* henüz yazılmamış */ }
-      }
-    }));
+    for (const n of haftalar) {
+      const h = await tblHaftasi(n);
+      S.maclar[n] = h.maclar;
+      if (S.haftalar[n] || (S.ayar && n >= S.ayar.baslangicHaftasi)) S.haftalar[n] = h;
+    }
+    S.tblVerisi = new Date();
     ciz();
   } catch (e) {
-    console.warn('Canlı veri yenilenemedi', e);
+    console.warn('TBL Fantezi Ligi verisi okunamadı', e);
   }
+  S.canliYenileniyor = false;
 }
 setInterval(canliYenile, 60 * 1000);
 
@@ -1806,9 +1852,9 @@ async function basla() {
     S.bslHareketleri = bslHareketleri;
     S.index = index;
     S.rehber = new Map(rehber.map(o => [o.id, o]));
-    // Bu ve sıradaki haftanın maçları: canlı maç olup olmadığını bilmek için
-    [index.guncelHafta, index.guncelHafta + 1].forEach(n => jsonGetir(`data/maclar/${n}.json`)
-      .then(d => { S.maclar[n] = d.maclar; ciz(); }).catch(() => {}));
+    // Bu ve sıradaki haftanın maçları: başlamış ama bizim verimizde bitmemiş maç varsa TBL'nin canlı verisi okunur
+    Promise.all([index.guncelHafta, index.guncelHafta + 1].map(n => jsonGetir(`data/maclar/${n}.json`)
+      .then(d => { S.maclar[n] = d.maclar; }).catch(() => {}))).then(() => { ciz(); canliYenile(); });
     if (!(await D.ligVarMi())) {
       S.ligYok = true;
       S.hazir = true;

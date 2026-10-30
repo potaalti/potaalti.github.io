@@ -157,3 +157,107 @@ tr.ben td { background: color-mix(in srgb, var(--vurgu) 14%, transparent) !impor
   .oyuncu-liste li .bsl { display: block; font-size: .72rem; margin-top: 1px; }
   .oyuncu-liste li > span:last-child { white-space: nowrap; flex: 0 0 auto; }
 }
+
+/* ===================== Fantezi ligleri: menajer ekranları ===================== */
+/* Menajerin özeti (puan durumunun üstünde) */
+.benim-ozet { background: linear-gradient(135deg, color-mix(in srgb, var(--vurgu) 10%, var(--kart)), var(--kart) 60%); }
+.benim-ozet h2 { margin: 0; }
+.ozet-kutular { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+.ozet-kutu { background: var(--kart); border: 1px solid var(--cizgi); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ozet-kutu b { font-size: 1.6rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.ozet-kutu > span:not(.degisim) { color: var(--soluk); font-size: .78rem; font-weight: 600; }
+.ozet-kutu small { color: var(--soluk); font-size: .75rem; }
+.ozet-kutu .degisim { margin: 0; font-size: .8rem; }
+
+/* Sıra değişimi ve haftalık puan çubukları */
+.degisim { font-size: .72rem; font-weight: 800; margin-left: 2px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.degisim.yukari { color: var(--yesil); }
+.degisim.asagi { color: var(--kirmizi); }
+.cubuklar { display: inline-flex; align-items: flex-end; gap: 2px; height: 22px; vertical-align: middle; }
+.cubuklar i { width: 8px; background: var(--vurgu); border-radius: 3px 3px 0 0; opacity: .8; }
+.cubuklar i:hover { opacity: 1; }
+
+/* Kadrom: saha ve yedek kulübesi */
+.kadrom-duzen { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 20px; align-items: start; max-width: 1240px; margin: 0 auto; }
+.saha-kart h2 { margin: 0; }
+.saha { position: relative; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; padding: 22px 16px; margin-top: 12px; border-radius: 14px;
+  background: repeating-linear-gradient(90deg, #d6a468 0 46px, #cf9b5d 46px 92px); }
+.saha-cizgi { position: absolute; inset: 8px; border: 2px solid rgba(255, 255, 255, .6); border-radius: 10px; pointer-events: none; }
+.saha-cizgi::before { content: ""; position: absolute; left: 50%; top: -2px; width: 36%; height: 52%; transform: translateX(-50%);
+  border: 2px solid rgba(255, 255, 255, .6); border-top: 0; border-radius: 0 0 50% 50% / 0 0 34% 34%; }
+.saha > .saha-oyuncu:nth-child(2), .saha > .saha-oyuncu:nth-child(3), .saha > .saha-oyuncu:nth-child(4) { grid-column: span 2; }
+.saha > .saha-oyuncu:nth-child(5) { grid-column: 2 / span 2; }
+.saha > .saha-oyuncu:nth-child(6) { grid-column: 4 / span 2; }
+.saha-oyuncu { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 2px;
+  padding: 10px 8px; border-radius: 12px; background: var(--kart); border: 2px solid transparent; color: var(--yazi); box-shadow: 0 2px 8px rgba(0, 0, 0, .16);
+  font: inherit; cursor: pointer; min-width: 0; transition: transform .12s, border-color .12s, box-shadow .12s; }
+.saha-oyuncu b { font-size: .92rem; line-height: 1.2; overflow-wrap: anywhere; }
+.saha-oyuncu small { color: var(--soluk); font-size: .7rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.saha-oyuncu .saha-vp { font-weight: 800; color: var(--vurgu); font-variant-numeric: tabular-nums; }
+.saha-oyuncu .saha-vp i { font-style: normal; font-size: .65rem; color: var(--soluk); font-weight: 600; }
+a.saha-oyuncu { text-decoration: none; }
+button.saha-oyuncu:hover, a.saha-oyuncu:hover { border-color: color-mix(in srgb, var(--vurgu) 45%, transparent); }
+.saha-oyuncu.secili { border-color: var(--vurgu); box-shadow: 0 0 0 3px color-mix(in srgb, var(--vurgu) 35%, transparent), 0 6px 14px rgba(0, 0, 0, .2); transform: translateY(-3px); }
+.saha-oyuncu.uyari { border-color: var(--kirmizi); }
+.kulube { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr); gap: 12px; margin-top: 10px; padding: 10px; border-radius: 14px; background: var(--zemin); }
+.kulube .saha-oyuncu { box-shadow: none; border-color: var(--cizgi); }
+.kulube .saha-oyuncu.secili { border-color: var(--vurgu); }
+.kulube-ad { writing-mode: vertical-rl; transform: rotate(180deg); font-size: .68rem; font-weight: 800; letter-spacing: .12em; color: var(--soluk); text-transform: uppercase; align-self: center; }
+.degisim-cubugu { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-top: 12px; padding: 10px 12px; border-radius: 12px; background: var(--vurgu-acik); }
+.hafta-maclari li { align-items: center; padding: 7px 0; }
+
+/* Boştakiler: telefonda kart satırları */
+.fa-liste { display: flex; flex-direction: column; }
+.fa-kart { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 11px 2px; border-top: 1px solid var(--cizgi); }
+.fa-kart:first-child { border-top: 0; }
+.fa-kart .ad { min-width: 0; }
+.fa-kart .ad a { font-weight: 700; }
+.fa-kart .ad small { display: block; color: var(--soluk); font-size: .75rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fa-vp { text-align: right; }
+.fa-vp b { display: block; font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+.fa-vp small { color: var(--soluk); font-size: .65rem; white-space: nowrap; }
+
+/* Boştakiler: bilgisayarda oyuncu sağdan açılan panelde */
+.cekmece-arka { position: fixed; inset: 0; background: rgba(4, 20, 24, .38); z-index: 40; animation: belir .15s; }
+.cekmece { position: fixed; top: 0; right: 0; bottom: 0; width: min(500px, 92vw); z-index: 41; overflow-y: auto; background: var(--zemin); padding: 0 16px 16px;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, .25); animation: kay .2s ease-out; }
+.cekmece-ust { display: flex; align-items: center; gap: 8px; justify-content: flex-end; position: sticky; top: 0; background: var(--zemin); padding: 14px 0 10px; z-index: 2; }
+.cekmece-ust a { margin-right: auto; font-weight: 600; }
+@keyframes kay { from { transform: translateX(40px); opacity: 0; } }
+@keyframes belir { from { opacity: 0; } }
+
+/* Başlık: telefonda kısa lig adı ve hesap simgesi; bilgisayarda yan menünün altında lig geçişi */
+.kisa-baslik, .lig-gecis, .hesap-simge { display: none; }
+.hesap-simge { place-items: center; width: 34px; height: 34px; border-radius: 50%; background: rgba(255, 255, 255, .2); color: #fff !important;
+  font-weight: 800; font-size: .8rem; text-decoration: none !important; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .35); flex: 0 0 auto; }
+.hesap-simge.buyuk { display: grid; width: 48px; height: 48px; font-size: 1rem; background: var(--ana-degrade); box-shadow: none; }
+.hesap-kart { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.hesap-kart .ad { flex: 1; min-width: 0; }
+.hesap-kart .ad b { display: block; }
+.hesap-kart .ad small { color: var(--soluk); font-size: .8rem; overflow-wrap: anywhere; }
+@media (min-width: 1100px) {
+  .lig-gecis { display: flex; flex-direction: column; gap: 2px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, .14); }
+  .lig-gecis-baslik { font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: rgba(255, 255, 255, .55); padding: 0 14px 4px; }
+  .lig-gecis a { color: rgba(255, 255, 255, .82); padding: 7px 14px; border-radius: 10px; font-size: .88rem; font-weight: 600; }
+  .lig-gecis a:hover { background: rgba(255, 255, 255, .1); color: #fff; }
+  .lig-gecis a.aktif { color: #fff; background: rgba(255, 255, 255, .12); }
+}
+@media (max-width: 1099px) {
+  .kadrom-duzen { grid-template-columns: minmax(0, 1fr); gap: 0; max-width: 880px; }
+}
+@media (max-width: 759px) {
+  .uzun-baslik { display: none; }
+  .kisa-baslik { display: inline; }
+  .kimlik-yazi { display: none !important; }
+  .hesap-simge { display: grid; }
+  .ozet-kutular { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .ozet-kutu { padding: 10px 12px; }
+  .ozet-kutu b { font-size: 1.35rem; }
+  .saha { gap: 7px; padding: 16px 8px; background: repeating-linear-gradient(90deg, #d6a468 0 30px, #cf9b5d 30px 60px); }
+  .saha-oyuncu { padding: 8px 4px; }
+  .saha-oyuncu b { font-size: .8rem; }
+  .kulube { gap: 7px; }
+}
+
+/* Genel klasman: sıra madalyası ve yanında değişim oku */
+.sira-hucre { display: inline-flex; align-items: center; gap: 4px; min-width: 52px; }

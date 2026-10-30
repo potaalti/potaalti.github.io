@@ -106,7 +106,7 @@ await yeni.evaluate(() => document.querySelector('[data-is=puan-sekme][data-id=g
 await bekle(300);
 const yg = await yeni.evaluate(() => [...document.querySelectorAll('#icerik tr[data-is=git][data-yol^="#/takim/"]')].map(tr => {
   const td = tr.querySelectorAll('td');
-  return { ad: td[1].querySelector('b').textContent.trim(), sira: Number(td[0].textContent), puan: Number(td[2].textContent) };
+  return { ad: td[1].querySelector('b').textContent.trim(), sira: Number(td[0].querySelector('.madalya')?.textContent ?? td[0].textContent), puan: Number(td[2].textContent) };
 }));
 esit(`Genel klasman (${eg.length} takım)`, eg, yg);
 // Bugünkü kadrolar: eski sitenin son kadro dosyasıyla birebir (As ve Yedek, sırasıyla)

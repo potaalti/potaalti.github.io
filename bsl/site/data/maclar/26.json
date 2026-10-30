@@ -1,0 +1,109 @@
+{
+ "hafta": 26,
+ "maclar": [
+  {
+   "id": 346474,
+   "tarih": "2027-04-10T00:00:00",
+   "durum": "canli",
+   "ev": "TOFAŞ",
+   "evId": 265995,
+   "evSkor": null,
+   "dep": "BAHÇEŞEHİR KOLEJİ",
+   "depId": 265991,
+   "depSkor": null,
+   "salon": "Tofaş Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346475,
+   "tarih": "2027-04-10T00:00:00",
+   "durum": "canli",
+   "ev": "ANADOLU EFES",
+   "evId": 265990,
+   "evSkor": null,
+   "dep": "GALATASARAY MCT TECHNIC",
+   "depId": 266026,
+   "depSkor": null,
+   "salon": "Turkcell Basketbol Gelişim Merkezi",
+   "yayin": ""
+  },
+  {
+   "id": 346476,
+   "tarih": "2027-04-10T00:00:00",
+   "durum": "canli",
+   "ev": "TRABZONSPOR",
+   "evId": 266029,
+   "evSkor": null,
+   "dep": "TÜRK TELEKOM",
+   "depId": 266030,
+   "depSkor": null,
+   "salon": "Hayri Gür Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346477,
+   "tarih": "2027-04-10T00:00:00",
+   "durum": "canli",
+   "ev": "ALİAĞA PETKİM SPOR",
+   "evId": 266048,
+   "evSkor": null,
+   "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "depId": 265994,
+   "depSkor": null,
+   "salon": "Enka Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346478,
+   "tarih": "2027-04-10T00:00:00",
+   "durum": "canli",
+   "ev": "BİOTEKNO KÖRFEZ BASKET",
+   "evId": 268222,
+   "evSkor": null,
+   "dep": "KARŞIYAKA",
+   "depId": 266027,
+   "depSkor": null,
+   "salon": "Şehit Polis Recep Topaloğlu Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346479,
+   "tarih": "2027-04-10T00:00:00",
+   "durum": "canli",
+   "ev": "ESENLER EROKSPOR",
+   "evId": 266024,
+   "evSkor": null,
+   "dep": "BURSASPOR BASKETBOL",
+   "depId": 266176,
+   "depSkor": null,
+   "salon": "Beşiktaş Akatlar Spor Kompleksi",
+   "yayin": ""
+  },
+  {
+   "id": 346480,
+   "tarih": "2027-04-10T00:00:00",
+   "durum": "canli",
+   "ev": "YUKATEL DENİZLİ BASKET",
+   "evId": 266028,
+   "evSkor": null,
+   "dep": "BEŞİKTAŞ",
+   "depId": 265992,
+   "depSkor": null,
+   "salon": "Pamukkale Üniversitesi Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346481,
+   "tarih": "2027-04-10T00:00:00",
+   "durum": "canli",
+   "ev": "FENERBAHÇE TARFİN",
+   "evId": 266025,
+   "evSkor": null,
+   "dep": "PİZZABULLS BORDO BANDIRMA",
+   "depId": 265993,
+   "depSkor": null,
+   "salon": "Ülker Spor ve Etkinlik Salonu",
+   "yayin": ""
+  }
+ ]
+}

@@ -1,0 +1,109 @@
+{
+ "hafta": 5,
+ "maclar": [
+  {
+   "id": 346312,
+   "tarih": "2026-10-23T19:00:00",
+   "durum": "bitti",
+   "ev": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "evId": 265994,
+   "evSkor": "83",
+   "dep": "BURSASPOR BASKETBOL",
+   "depId": 266176,
+   "depSkor": "64",
+   "salon": "Çayırova Belediyesi Spor Kompleksi",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346309,
+   "tarih": "2026-10-24T13:00:00",
+   "durum": "bitti",
+   "ev": "TRABZONSPOR",
+   "evId": 266029,
+   "evSkor": "90",
+   "dep": "ESENLER EROKSPOR",
+   "depId": 266024,
+   "depSkor": "93",
+   "salon": "Hayri Gür Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346308,
+   "tarih": "2026-10-24T15:30:00",
+   "durum": "bitti",
+   "ev": "TÜRK TELEKOM",
+   "evId": 266030,
+   "evSkor": "97",
+   "dep": "YUKATEL DENİZLİ BASKET",
+   "depId": 266028,
+   "depSkor": "76",
+   "salon": "Ankara Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346306,
+   "tarih": "2026-10-24T20:30:00",
+   "durum": "bitti",
+   "ev": "BAHÇEŞEHİR KOLEJİ",
+   "evId": 265991,
+   "evSkor": "100",
+   "dep": "BEŞİKTAŞ",
+   "depId": 265992,
+   "depSkor": "96",
+   "salon": "Sinan Erdem Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346310,
+   "tarih": "2026-10-25T13:00:00",
+   "durum": "bitti",
+   "ev": "ANADOLU EFES",
+   "evId": 265990,
+   "evSkor": "93",
+   "dep": "BİOTEKNO KÖRFEZ BASKET",
+   "depId": 268222,
+   "depSkor": "77",
+   "salon": "Turkcell Basketbol Gelişim Merkezi",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346313,
+   "tarih": "2026-10-25T15:30:00",
+   "durum": "bitti",
+   "ev": "KARŞIYAKA",
+   "evId": 266027,
+   "evSkor": "72",
+   "dep": "FENERBAHÇE TARFİN",
+   "depId": 266025,
+   "depSkor": "97",
+   "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346311,
+   "tarih": "2026-10-25T18:00:00",
+   "durum": "bitti",
+   "ev": "TOFAŞ",
+   "evId": 265995,
+   "evSkor": "72",
+   "dep": "ALİAĞA PETKİM SPOR",
+   "depId": 266048,
+   "depSkor": "74",
+   "salon": "Tofaş Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346307,
+   "tarih": "2026-10-25T20:30:00",
+   "durum": "bitti",
+   "ev": "GALATASARAY MCT TECHNIC",
+   "evId": 266026,
+   "evSkor": "102",
+   "dep": "PİZZABULLS BORDO BANDIRMA",
+   "depId": 265993,
+   "depSkor": "68",
+   "salon": "Sinan Erdem Spor Salonu",
+   "yayin": "beINSports"
+  }
+ ]
+}

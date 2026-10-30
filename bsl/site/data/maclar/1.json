@@ -1,0 +1,109 @@
+{
+ "hafta": 1,
+ "maclar": [
+  {
+   "id": 346279,
+   "tarih": "2026-09-25T19:00:00",
+   "durum": "bitti",
+   "ev": "TOFAŞ",
+   "evId": 265995,
+   "evSkor": "90",
+   "dep": "PİZZABULLS BORDO BANDIRMA",
+   "depId": 265993,
+   "depSkor": "89",
+   "salon": "Tofaş Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346276,
+   "tarih": "2026-09-26T13:00:00",
+   "durum": "bitti",
+   "ev": "TÜRK TELEKOM",
+   "evId": 266030,
+   "evSkor": "73",
+   "dep": "KARŞIYAKA",
+   "depId": 266027,
+   "depSkor": "72",
+   "salon": "Ankara Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346280,
+   "tarih": "2026-09-26T15:30:00",
+   "durum": "bitti",
+   "ev": "ALİAĞA PETKİM SPOR",
+   "evId": 266048,
+   "evSkor": "85",
+   "dep": "YUKATEL DENİZLİ BASKET",
+   "depId": 266028,
+   "depSkor": "81",
+   "salon": "Enka Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346275,
+   "tarih": "2026-09-26T18:00:00",
+   "durum": "bitti",
+   "ev": "GALATASARAY MCT TECHNIC",
+   "evId": 266026,
+   "evSkor": "102",
+   "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "depId": 265994,
+   "depSkor": "79",
+   "salon": "Sinan Erdem Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346277,
+   "tarih": "2026-09-27T15:30:00",
+   "durum": "bitti",
+   "ev": "TRABZONSPOR",
+   "evId": 266029,
+   "evSkor": "82",
+   "dep": "BURSASPOR BASKETBOL",
+   "depId": 266176,
+   "depSkor": "76",
+   "salon": "Hayri Gür Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346274,
+   "tarih": "2026-09-27T18:00:00",
+   "durum": "bitti",
+   "ev": "BAHÇEŞEHİR KOLEJİ",
+   "evId": 265991,
+   "evSkor": "98",
+   "dep": "FENERBAHÇE TARFİN",
+   "depId": 266025,
+   "depSkor": "83",
+   "salon": "Sinan Erdem Spor Salonu",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346278,
+   "tarih": "2026-09-27T20:30:00",
+   "durum": "bitti",
+   "ev": "ANADOLU EFES",
+   "evId": 265990,
+   "evSkor": "95",
+   "dep": "BEŞİKTAŞ",
+   "depId": 265992,
+   "depSkor": "81",
+   "salon": "Turkcell Basketbol Gelişim Merkezi",
+   "yayin": "beINSports"
+  },
+  {
+   "id": 346281,
+   "tarih": "2026-09-28T19:00:00",
+   "durum": "bitti",
+   "ev": "BİOTEKNO KÖRFEZ BASKET",
+   "evId": 268222,
+   "evSkor": "88",
+   "dep": "ESENLER EROKSPOR",
+   "depId": 266024,
+   "depSkor": "79",
+   "salon": "Şehit Polis Recep Topaloğlu Spor Salonu",
+   "yayin": "beINSports"
+  }
+ ]
+}

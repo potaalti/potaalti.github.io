@@ -1,0 +1,354 @@
+rules_version = '2';
+
+// BSL Draft Ligi güvenlik kuralları.
+// - Herkes (giriş kodu olmayan izleyiciler dahil) ligi okuyabilir.
+// - Her menajer kendi gizli koduyla takımına bağlanır (uyeler/{uid}); sadece kendi takımı adına işlem yapar.
+// - Draftta sırası gelen takım seçer; süre dolunca herhangi bir menajerin ekranı otomatik seçimi yapar.
+// - Bir oyuncu tek takımda olabilir (alinan/{oyuncu} belgesi bir kez oluşturulabilir).
+// - Sezon boyunca: 2 serbest oyuncu alma, 1 As–Yedek değişikliği; takaslar iki tarafın onayıyla.
+// - Yönetici (admin kodu) her şeyi düzeltebilir.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function uyeYolu() { return /databases/$(database)/documents/uyeler/$(request.auth.uid); }
+    function uye() { return request.auth != null && exists(uyeYolu()); }
+    function benimTakim() { return get(uyeYolu()).data.takim; }
+    // Yönetici: yönetici koduyla girenler ve yönetici yetkisi verilen takımların menajerleri
+    function yonetici() {
+      return uye() && (benimTakim() == 'admin' || benimTakim() in ayar().get('yoneticiTakimlar', []));
+    }
+    function durum() { return get(/databases/$(database)/documents/lig/durum).data; }
+    function ayar() { return get(/databases/$(database)/documents/lig/ayar).data; }
+    function kadro(tid) { return get(/databases/$(database)/documents/kadrolar/$(tid)).data; }
+    function kadroSonra(tid) { return getAfter(/databases/$(database)/documents/kadrolar/$(tid)).data; }
+    function oyunculari(k) { return k.as.concat(k.yedek); }
+
+    // İlk kurulum: lig/ayar henüz yokken, onu oluşturan tek toplu yazmanın parçası
+    function kurulumda() {
+      return google()
+        && !exists(/databases/$(database)/documents/lig/ayar)
+        && existsAfter(/databases/$(database)/documents/lig/ayar);
+    }
+
+    // ---------- Lig ayarları ve draft durumu ----------
+    match /lig/{doc} {
+      allow read: if true;
+      allow create: if kurulumda() || (doc == 'lisanssiz' && yonetici());
+      allow update: if yonetici() || (doc == 'durum' && secimIlerlemesi());
+    }
+
+    // Lisansı TBF'den düşen (ligden ayrılan) ve bir takımda olan oyuncular: yöneticinin ekranı günceller.
+    // Takımı bu oyuncuyu boştakilerden biriyle değiştirmek zorunda; bu değişiklik serbest oyuncu hakkından düşmez.
+    function lisanssizListe() { return get(/databases/$(database)/documents/lig/lisanssiz).data.liste; }
+    function lisanssizDegisim(tid) {
+      return oyunculari(kadro(tid)).toSet().difference(oyunculari(kadroSonra(tid)).toSet()).hasOnly(lisanssizListe());
+    }
+
+    // Bir seçim yapılınca sıra bir sonraki seçime geçer, saat yeniden başlar
+    function secimIlerlemesi() {
+      let eski = resource.data;
+      let yeni = request.resource.data;
+      let n = eski.secimNo;
+      let secim = /databases/$(database)/documents/secimler/$(string(n));
+      return uye() && eski.asama == 'draft'
+        && !exists(secim) && existsAfter(secim)
+        && yeni.diff(eski).affectedKeys().hasOnly(['secimNo', 'saatBaslangic', 'saatSure', 'asama'])
+        && yeni.secimNo == n + 1
+        && yeni.saatBaslangic == request.time
+        && yeni.saatSure == ayar().secimSuresi
+        && yeni.asama == (n + 1 == eski.toplamSecim ? 'kadro' : 'draft');
+    }
+
+    // ---------- Draft seçimleri ----------
+    match /secimler/{n} {
+      allow read: if true;
+      allow create: if secimGecerli(n);
+      allow update: if yonetici(); // seçimi başka oyuncuyla değiştirme
+      allow delete: if yonetici(); // son seçimi geri alma
+    }
+
+    function secimGecerli(n) {
+      let d = durum();
+      let s = request.resource.data;
+      let o = get(/databases/$(database)/documents/oyuncular/$(s.oyuncu)).data;
+      let k = kadro(s.takim);
+      // Kadro kuralı (As 3 Ön + 2 Arka; As'ta ve Yedekte en az 1'er Türk): seçimden sonraki
+      // Ön/Arka × Türk/yabancı sayımı, kalan seçimlerle kurala uygun bir kadroya tamamlanabilmeli
+      let tablo = get(/databases/$(database)/documents/lig/kadroKurali).data.gecerli;
+      let hepsiSerbest = tipAnahtari(tipEkle(k.tip, 'oT')) in tablo && tipAnahtari(tipEkle(k.tip, 'oY')) in tablo
+        && tipAnahtari(tipEkle(k.tip, 'aT')) in tablo && tipAnahtari(tipEkle(k.tip, 'aY')) in tablo;
+      let suresiDoldu = request.time > d.saatBaslangic + duration.value(d.saatSure, 's');
+      return d.asama == 'draft'
+        && n == string(d.secimNo) && s.no == d.secimNo
+        && s.takim == d.secimSirasi[d.secimNo]
+        && s.keys().hasOnly(['no', 'tur', 'takim', 'oyuncu', 'ad', 'bslTakim', 'turk', 'mevki', 'otomatik', 'zaman'])
+        && s.zaman == request.time
+        && s.turk == o.turk && s.mevki == o.mevki && s.ad == o.ad
+        && !exists(/databases/$(database)/documents/alinan/$(s.oyuncu))
+        && getAfter(/databases/$(database)/documents/alinan/$(s.oyuncu)).data.takim == s.takim
+        && getAfter(/databases/$(database)/documents/lig/durum).data.secimNo == d.secimNo + 1
+        && tipAnahtari(tipEkle(k.tip, tipAdi(s))) in tablo
+        && (yonetici()
+            || (s.otomatik == false && benimTakim() == s.takim)
+            // Otomatik seçim: süre dolmuş olmalı ve oyuncu müsait en iyi 15 içinden olabilecek biri olmalı
+            // (kısıt varsa kendi tipindeki sırasına bakılır)
+            || (s.otomatik == true && uye() && suresiDoldu
+                && ((hepsiSerbest ? o.sira : o.tipSira) <= d.secimNo + 15 || s.oyuncu in istekListesi(s.takim))));
+    }
+
+    // ---------- Draft istek listeleri: takımın sıralı oyuncu listesi; süre dolunca otomatik seçim buradan ----------
+    // Liste gizlidir: takımın kendisi ve yöneticiler görür; sadece o takımın seçim süresi dolunca otomatik seçimi
+    // yapacak ekranlar okuyabilir.
+    function istekListesi(tid) { return get(/databases/$(database)/documents/istekler/$(tid)).data.liste; }
+    function listeAcik(tid) {
+      let d = durum();
+      return d.asama == 'draft' && d.secimSirasi[d.secimNo] == tid
+        && request.time > d.saatBaslangic + duration.value(d.saatSure, 's');
+    }
+    match /istekler/{tid} {
+      allow read: if request.auth != null && (listeAcik(tid) || benimTakim() == tid || yonetici());
+      allow create, update: if uye() && (benimTakim() == tid || yonetici())
+        && request.resource.data.keys().hasOnly(['liste']) && request.resource.data.liste.size() <= 150;
+      allow delete: if yonetici(); // draftı sıfırlama
+    }
+
+    // Oyuncu tipi: Ön/Arka × Türk/yabancı (oT, oY, aT, aY)
+    function tipAdi(s) { return (s.mevki == 'on' ? 'o' : 'a') + (s.turk ? 'T' : 'Y'); }
+    function tipEkle(t, x) {
+      return { 'oT': t.oT + (x == 'oT' ? 1 : 0), 'oY': t.oY + (x == 'oY' ? 1 : 0),
+               'aT': t.aT + (x == 'aT' ? 1 : 0), 'aY': t.aY + (x == 'aY' ? 1 : 0) };
+    }
+    function tipAnahtari(t) { return string(t.oT) + string(t.oY) + string(t.aT) + string(t.aY); }
+
+    // ---------- Takımı olan oyuncular (bir oyuncu tek takımda) ----------
+    match /alinan/{pid} {
+      allow read: if true;
+      allow create: if yonetici() || draftAlimi(pid) || faAlimi(pid);
+      allow update: if yonetici();
+      allow delete: if yonetici() || faBirakma(pid);
+    }
+
+    function draftAlimi(pid) {
+      let secim = /databases/$(database)/documents/secimler/$(string(request.resource.data.secim));
+      return !exists(secim) && getAfter(secim).data.oyuncu == pid
+        && request.resource.data.keys().hasOnly(['takim', 'secim']);
+    }
+
+    function faAlimi(pid) {
+      let tid = request.resource.data.takim;
+      return uye() && tid == benimTakim() && durum().asama == 'sezon'
+        && kadroSonra(tid).sonFa == pid
+        && (kadroSonra(tid).fa == kadro(tid).fa + 1 || (kadroSonra(tid).fa == kadro(tid).fa && lisanssizDegisim(tid)))
+        && request.resource.data.keys().hasOnly(['takim', 'fa']);
+    }
+
+    function faBirakma(pid) {
+      let tid = resource.data.takim;
+      return uye() && tid == benimTakim() && durum().asama == 'sezon'
+        && !(pid in oyunculari(kadroSonra(tid)))
+        && (kadroSonra(tid).fa == kadro(tid).fa + 1 || pid in lisanssizListe());
+    }
+
+    // ---------- Fantezi takım kadroları ----------
+    match /kadrolar/{tid} {
+      allow read: if true;
+      allow create: if kurulumda() || yonetici();
+      allow delete: if yonetici() && durum().asama == 'kurulum'; // kura öncesi takım çıkarma
+      allow update: if yonetici() || kadroDraft(tid) || dizilisKurulumu(tid)
+        || asYedekDegisikligi(tid) || serbestOyuncu(tid);
+    }
+
+    function kadroDuzgun(k) {
+      return k.as.size() == ayar().asSayisi && k.yedek.size() == ayar().yedekSayisi
+        && oyunculari(k).toSet().size() == oyunculari(k).size();
+    }
+
+    // Kadro geçmişi: her değişiklik sona yeni bir giriş ekler; eski haftalar değişmez
+    function gecmisEklendi(eski, yeni) {
+      let n = eski.gecmis.size();
+      let son = yeni.gecmis[n];
+      return yeni.gecmis.size() == n + 1 && yeni.gecmis[0:n] == eski.gecmis
+        && son.keys().hasOnly(['hafta', 'as', 'yedek', 'tur'])
+        && son.hafta >= durum().aktifHafta && son.as == yeni.as && son.yedek == yeni.yedek;
+    }
+
+    // Draftta seçilen oyuncu takımın kadrosuna eklenir
+    function kadroDraft(tid) {
+      let eski = resource.data;
+      let yeni = request.resource.data;
+      let secim = /databases/$(database)/documents/secimler/$(string(yeni.sonSecim));
+      let s = getAfter(secim).data;
+      // Seçilen oyuncu kadroya eklenir (As/Yedek yerleşimi mevkilere göre değişebilir), tip sayımı artar
+      return !exists(secim) && s.takim == tid
+        && yeni.diff(eski).affectedKeys().hasOnly(['as', 'yedek', 'tip', 'sonSecim'])
+        && oyunculari(yeni).size() == oyunculari(eski).size() + 1
+        && oyunculari(yeni).toSet() == oyunculari(eski).toSet().union([s.oyuncu].toSet())
+        && yeni.as.size() <= ayar().asSayisi && yeni.yedek.size() <= ayar().yedekSayisi
+        && yeni.tip == tipEkle(eski.tip, tipAdi(s));
+    }
+
+    // Draft bitti, sezon başlamadı: takım As/Yedek dizilişini serbestçe kurar
+    function dizilisKurulumu(tid) {
+      let eski = resource.data;
+      let yeni = request.resource.data;
+      return uye() && benimTakim() == tid && durum().asama == 'kadro'
+        && yeni.diff(eski).affectedKeys().hasOnly(['as', 'yedek'])
+        && kadroDuzgun(yeni) && oyunculari(yeni).toSet() == oyunculari(eski).toSet();
+    }
+
+    // Sezon boyunca tek As–Yedek değişikliği
+    function asYedekDegisikligi(tid) {
+      let eski = resource.data;
+      let yeni = request.resource.data;
+      return uye() && benimTakim() == tid && durum().asama == 'sezon'
+        && yeni.diff(eski).affectedKeys().hasOnly(['as', 'yedek', 'degisiklik', 'gecmis'])
+        && yeni.degisiklik == eski.degisiklik + 1 && yeni.degisiklik <= ayar().degisiklikHakki
+        && kadroDuzgun(yeni) && oyunculari(yeni).toSet() == oyunculari(eski).toSet()
+        && gecmisEklendi(eski, yeni);
+    }
+
+    // Serbest oyuncu: bir oyuncu bırakılır, takımı olmayan bir oyuncu alınır (sezonda en fazla 2;
+    // lisansı düşen oyuncunun yerine alınan hak kullanmaz)
+    function serbestOyuncu(tid) {
+      let eski = resource.data;
+      let yeni = request.resource.data;
+      let eskiSet = oyunculari(eski).toSet();
+      let yeniSet = oyunculari(yeni).toSet();
+      let alinan = /databases/$(database)/documents/alinan/$(yeni.sonFa);
+      return uye() && benimTakim() == tid && durum().asama == 'sezon'
+        && yeni.diff(eski).affectedKeys().hasOnly(['as', 'yedek', 'fa', 'sonFa', 'gecmis'])
+        && ((yeni.fa == eski.fa + 1 && yeni.fa <= ayar().faHakki)
+            || (yeni.fa == eski.fa && eskiSet.difference(yeniSet).hasOnly(lisanssizListe())))
+        && kadroDuzgun(yeni)
+        && yeniSet.difference(eskiSet) == [yeni.sonFa].toSet() && eskiSet.difference(yeniSet).size() == 1
+        && !exists(alinan) && getAfter(alinan).data.takim == tid
+        && beklemeBitti(yeni.sonFa)
+        && gecmisEklendi(eski, yeni);
+    }
+
+    // ---------- Bekleme ve talep: serbest kalan ya da lige yeni gelen oyuncu 36 saat alınamaz ----------
+    // Bu sürede takımlar talepte bulunur (talepler: { takım: bırakacağı oyuncu }). Süre bitince yöneticinin ekranı
+    // talip olanlar arasında kura çeker ve belgeyi siler; talep yoksa oyuncu süre bitince boştakilere düşer.
+    function beklemeSuresi() { return duration.value(36, 'h'); }
+    function beklemeBitti(pid) {
+      let yol = /databases/$(database)/documents/bekleme/$(pid);
+      return !exists(yol)
+        || (request.time > get(yol).data.zaman + beklemeSuresi() && get(yol).data.get('talepler', {}).size() == 0);
+    }
+    // Takım oyuncusunu bırakırken (serbest oyuncu işleminde) o oyuncunun beklemesi başlar
+    function birakilinca(pid) {
+      return uye() && request.resource.data.keys().hasOnly(['zaman']) && request.resource.data.zaman == request.time
+        && pid in oyunculari(kadro(benimTakim())) && !(pid in oyunculari(kadroSonra(benimTakim())));
+    }
+    // Takım kendi talebini ekler/değiştirir/geri çeker; bırakacağı oyuncu kendi kadrosunda olmalı ve serbest
+    // oyuncu hakkı kalmış olmalı (kurayı kazanırsa hakkından 1 düşer)
+    function talepGuncelleme(pid) {
+      let eski = resource.data;
+      let yeni = request.resource.data;
+      let t = benimTakim();
+      let talepler = yeni.get('talepler', {});
+      return uye() && durum().asama == 'sezon'
+        && request.time < eski.zaman + beklemeSuresi()
+        && !exists(/databases/$(database)/documents/alinan/$(pid))
+        && yeni.diff(eski).affectedKeys().hasOnly(['talepler'])
+        && talepler.diff(eski.get('talepler', {})).affectedKeys().hasOnly([t])
+        && (!(t in talepler) || (talepler[t] in oyunculari(kadro(t)) && kadro(t).fa < ayar().faHakki));
+    }
+    match /bekleme/{pid} {
+      allow read: if true;
+      allow create: if yonetici() || birakilinca(pid);
+      allow update: if yonetici() || birakilinca(pid) || talepGuncelleme(pid);
+      allow delete: if yonetici();
+    }
+
+    // ---------- Takas teklifleri ----------
+    match /teklifler/{id} {
+      allow read: if true;
+      allow create: if uye() && durum().asama == 'sezon' && teklifGecerli(request.resource.data);
+      allow update: if yonetici() || teklifYaniti() || teklifIptali();
+      allow delete: if yonetici(); // draftı sıfırlama
+    }
+
+    function teklifGecerli(t) {
+      return t.keys().hasOnly(['veren', 'alan', 'verilen', 'alinan', 'durum', 'zaman', 'not'])
+        && t.veren == benimTakim() && t.alan != t.veren
+        && exists(/databases/$(database)/documents/takimlar/$(t.alan))
+        && t.durum == 'bekliyor' && t.zaman == request.time
+        && t.verilen.size() >= 1 && t.verilen.size() <= 3 && t.verilen.size() == t.alinan.size()
+        && (!('not' in t) || (t['not'] is string && t['not'].size() <= 200));
+    }
+
+    // Teklifi alan takım reddeder ya da kabul eder; kabul edilen takas yönetici onayına gider ('onay').
+    // Oyuncuları yönetici onaylayınca yöneticinin işlemi taşır (durum 'kabul'), reddederse 'yonetici-red'.
+    function teklifYaniti() {
+      let t = request.resource.data;
+      return uye() && benimTakim() == resource.data.alan && resource.data.durum == 'bekliyor'
+        && t.diff(resource.data).affectedKeys().hasOnly(['durum', 'yanitZamani'])
+        && t.yanitZamani == request.time
+        && (t.durum == 'red' || (t.durum == 'onay' && durum().asama == 'sezon'));
+    }
+
+    function teklifIptali() {
+      let t = request.resource.data;
+      return uye() && benimTakim() == resource.data.veren && resource.data.durum in ['bekliyor', 'onay']
+        && t.diff(resource.data).affectedKeys().hasOnly(['durum', 'yanitZamani'])
+        && t.durum == 'iptal' && t.yanitZamani == request.time;
+    }
+
+    // ---------- Takımlar (ad ve menajer) ----------
+    match /takimlar/{tid} {
+      allow read: if true;
+      allow create: if kurulumda() || yonetici();
+      allow delete: if yonetici() && durum().asama == 'kurulum'; // kura öncesi takım çıkarma
+      allow update: if yonetici()
+        || (uye() && benimTakim() == tid
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['ad'])
+            && request.resource.data.ad is string
+            && request.resource.data.ad.size() >= 2 && request.resource.data.ad.size() <= 30);
+    }
+
+    // ---------- Hareket kaydı (herkesin görebildiği işlem geçmişi) ----------
+    match /hareketler/{id} {
+      allow read: if true;
+      allow create: if uye() && request.resource.data.zaman == request.time
+        && (yonetici() || request.resource.data.takim == benimTakim());
+      allow update, delete: if yonetici();
+    }
+
+    // ---------- Draft havuzu (yönetici draft öncesi yükler) ----------
+    match /oyuncular/{pid} {
+      allow read: if true;
+      allow write: if yonetici();
+    }
+
+    // ---------- Davet kodları (tek kullanımlık) ve üyeler (Google hesabı -> takım) ----------
+    // Menajer davet linkini açıp Google ile girer; aynı işlemde hesabı takıma bağlanır ve davet kodu silinir.
+    function google() { return request.auth != null && request.auth.token.firebase.sign_in_provider == 'google.com'; }
+
+    match /kodlar/{kod} {
+      allow read: if yonetici();
+      allow create: if kurulumda() || yonetici();
+      allow update: if yonetici();
+      allow delete: if yonetici()
+        || (google() && getAfter(/databases/$(database)/documents/uyeler/$(request.auth.uid)).data.kod == kod);
+    }
+
+    match /uyeler/{uid} {
+      allow read: if request.auth != null && (request.auth.uid == uid || yonetici());
+      allow create, update: if google() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['takim', 'kod', 'email', 'ad'])
+        && request.resource.data.email == request.auth.token.email
+        && ((kurulumda() && request.resource.data.takim == 'admin')
+            || (get(/databases/$(database)/documents/kodlar/$(request.resource.data.kod)).data.takim == request.resource.data.takim
+                && !existsAfter(/databases/$(database)/documents/kodlar/$(request.resource.data.kod))));
+      allow delete: if request.auth != null && (request.auth.uid == uid || yonetici());
+    }
+
+    // ---------- Sunucu saati (geri sayımın herkeste aynı olması için) ----------
+    match /saat/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['t']) && request.resource.data.t == request.time;
+    }
+  }
+}

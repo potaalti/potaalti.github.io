@@ -1,0 +1,9 @@
+cache/
+__pycache__/
+test/node_modules/
+*.log
+.firebase/
+.claude/
+mevki_kontrol.csv
+bsl_oyuncular.csv
+instagram/

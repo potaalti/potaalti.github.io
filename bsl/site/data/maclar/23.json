@@ -1,0 +1,109 @@
+{
+ "hafta": 23,
+ "maclar": [
+  {
+   "id": 346450,
+   "tarih": "2027-03-20T00:00:00",
+   "durum": "canli",
+   "ev": "BAHÇEŞEHİR KOLEJİ",
+   "evId": 265991,
+   "evSkor": null,
+   "dep": "ESENLER EROKSPOR",
+   "depId": 266024,
+   "depSkor": null,
+   "salon": "Sinan Erdem Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346451,
+   "tarih": "2027-03-20T00:00:00",
+   "durum": "canli",
+   "ev": "GALATASARAY MCT TECHNIC",
+   "evId": 266026,
+   "evSkor": null,
+   "dep": "BİOTEKNO KÖRFEZ BASKET",
+   "depId": 268222,
+   "depSkor": null,
+   "salon": "Sinan Erdem Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346452,
+   "tarih": "2027-03-20T00:00:00",
+   "durum": "canli",
+   "ev": "TÜRK TELEKOM",
+   "evId": 266030,
+   "evSkor": null,
+   "dep": "ALİAĞA PETKİM SPOR",
+   "depId": 266048,
+   "depSkor": null,
+   "salon": "Ankara Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346453,
+   "tarih": "2027-03-20T00:00:00",
+   "durum": "canli",
+   "ev": "TRABZONSPOR",
+   "evId": 266029,
+   "evSkor": null,
+   "dep": "TOFAŞ",
+   "depId": 265995,
+   "depSkor": null,
+   "salon": "Hayri Gür Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346454,
+   "tarih": "2027-03-20T00:00:00",
+   "durum": "canli",
+   "ev": "ANADOLU EFES",
+   "evId": 265990,
+   "evSkor": null,
+   "dep": "FENERBAHÇE TARFİN",
+   "depId": 266025,
+   "depSkor": null,
+   "salon": "Turkcell Basketbol Gelişim Merkezi",
+   "yayin": ""
+  },
+  {
+   "id": 346455,
+   "tarih": "2027-03-20T00:00:00",
+   "durum": "canli",
+   "ev": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "evId": 265994,
+   "evSkor": null,
+   "dep": "YUKATEL DENİZLİ BASKET",
+   "depId": 266028,
+   "depSkor": null,
+   "salon": "Atanmadı",
+   "yayin": ""
+  },
+  {
+   "id": 346456,
+   "tarih": "2027-03-20T00:00:00",
+   "durum": "canli",
+   "ev": "KARŞIYAKA",
+   "evId": 266027,
+   "evSkor": null,
+   "dep": "PİZZABULLS BORDO BANDIRMA",
+   "depId": 265993,
+   "depSkor": null,
+   "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346457,
+   "tarih": "2027-03-20T00:00:00",
+   "durum": "canli",
+   "ev": "BURSASPOR BASKETBOL",
+   "evId": 266176,
+   "evSkor": null,
+   "dep": "BEŞİKTAŞ",
+   "depId": 265992,
+   "depSkor": null,
+   "salon": "Tofaş Spor Salonu",
+   "yayin": ""
+  }
+ ]
+}

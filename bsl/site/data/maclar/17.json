@@ -1,0 +1,109 @@
+{
+ "hafta": 17,
+ "maclar": [
+  {
+   "id": 346402,
+   "tarih": "2027-01-23T00:00:00",
+   "durum": "canli",
+   "ev": "BAHÇEŞEHİR KOLEJİ",
+   "evId": 265991,
+   "evSkor": null,
+   "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "depId": 265994,
+   "depSkor": null,
+   "salon": "Sinan Erdem Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346403,
+   "tarih": "2027-01-23T00:00:00",
+   "durum": "canli",
+   "ev": "GALATASARAY MCT TECHNIC",
+   "evId": 266026,
+   "evSkor": null,
+   "dep": "KARŞIYAKA",
+   "depId": 266027,
+   "depSkor": null,
+   "salon": "Sinan Erdem Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346404,
+   "tarih": "2027-01-23T00:00:00",
+   "durum": "canli",
+   "ev": "TÜRK TELEKOM",
+   "evId": 266030,
+   "evSkor": null,
+   "dep": "BURSASPOR BASKETBOL",
+   "depId": 266176,
+   "depSkor": null,
+   "salon": "Ankara Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346405,
+   "tarih": "2027-01-23T00:00:00",
+   "durum": "canli",
+   "ev": "TRABZONSPOR",
+   "evId": 266029,
+   "evSkor": null,
+   "dep": "BEŞİKTAŞ",
+   "depId": 265992,
+   "depSkor": null,
+   "salon": "Hayri Gür Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346406,
+   "tarih": "2027-01-23T00:00:00",
+   "durum": "canli",
+   "ev": "ANADOLU EFES",
+   "evId": 265990,
+   "evSkor": null,
+   "dep": "PİZZABULLS BORDO BANDIRMA",
+   "depId": 265993,
+   "depSkor": null,
+   "salon": "Turkcell Basketbol Gelişim Merkezi",
+   "yayin": ""
+  },
+  {
+   "id": 346407,
+   "tarih": "2027-01-23T00:00:00",
+   "durum": "canli",
+   "ev": "TOFAŞ",
+   "evId": 265995,
+   "evSkor": null,
+   "dep": "YUKATEL DENİZLİ BASKET",
+   "depId": 266028,
+   "depSkor": null,
+   "salon": "Tofaş Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346408,
+   "tarih": "2027-01-23T00:00:00",
+   "durum": "canli",
+   "ev": "ALİAĞA PETKİM SPOR",
+   "evId": 266048,
+   "evSkor": null,
+   "dep": "ESENLER EROKSPOR",
+   "depId": 266024,
+   "depSkor": null,
+   "salon": "Enka Spor Salonu",
+   "yayin": ""
+  },
+  {
+   "id": 346409,
+   "tarih": "2027-01-23T00:00:00",
+   "durum": "canli",
+   "ev": "BİOTEKNO KÖRFEZ BASKET",
+   "evId": 268222,
+   "evSkor": null,
+   "dep": "FENERBAHÇE TARFİN",
+   "depId": 266025,
+   "depSkor": null,
+   "salon": "Şehit Polis Recep Topaloğlu Spor Salonu",
+   "yayin": ""
+  }
+ ]
+}

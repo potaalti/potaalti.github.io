@@ -26,8 +26,10 @@ hesaplanır.
    **Start in production mode** → Oluştur.
 6. Aynı sayfada **Rules** sekmesi → oradaki her şeyi sil → bu projedeki `firestore.rules` dosyasının
    tamamını yapıştır → **Publish**.
-7. Sol menü **Build → Authentication** → **Get started** → **Sign-in method** → **Anonymous** →
-   **Enable** → Save. (Menajerler şifre girmez; kişiye özel link + anonim giriş kullanılır.)
+7. Sol menü **Build → Authentication** → **Get started** → **Sign-in method**:
+   - **Google** → **Enable** → "Project support email" olarak kendi Gmail adresini seç → Save.
+     (Menajerler davet linkini açıp Google hesabıyla girer; şifre yok.)
+   - **Anonymous** → **Enable** → Save. (Giriş yapmayanlar siteyi izleyici olarak görebilsin diye.)
 8. Authentication → **Settings** → **Authorized domains** → **Add domain** → `potaalti.github.io`.
 
 > `firestore.rules` ileride değişirse 6. adımı tekrarla (kuralları yeniden yapıştır, Publish).
@@ -41,17 +43,18 @@ hesaplanır.
 
 ## 3. Ligi kur (bir kez)
 
-1. Siteyi aç. "Ligi kur" ekranı gelir (lig henüz kurulmadıysa).
+1. Siteyi aç → **Google ile giriş yap** → "Ligi kur" ekranı gelir (lig henüz kurulmadıysa).
 2. Lig adını, puanlamanın başlayacağı **BSL haftasını** (draftın bittiği haftadan sonraki ilk hafta)
    ve seçim süresini (90 sn = 1,5 dk) gir; istersen menajer adlarını yaz → **Ligi kur**.
-3. Ligi kuran cihaz **yönetici** olur. Ekranda çıkan **yönetici linkini** güvenli bir yere kaydet
-   (başka cihazdan yönetici olarak girmek için).
-4. **Yönetici** sayfasında takım adlarını/menajerleri düzenle; her menajere kendi linkini
+3. Ligi kuran **Google hesabı yönetici** olur. Başka cihazdan da aynı Google hesabıyla girmen yeterli.
+4. **Yönetici** sayfasında takım adlarını/menajerleri düzenle; her menajere kendi **davet linkini**
    **WhatsApp** düğmesiyle ya da **Linki kopyala** ile gönder.
-   - Link = o takımın şifresi. Başkasıyla paylaşılmamalı.
-   - Link yanlış kişiye giderse **Yenile** → eski link çalışmaz olur, yenisini gönder.
-   - Menajer linke bir kez tıklayınca o cihaz takımına bağlanır; telefonda ve bilgisayarda ayrı ayrı
-     tıklayabilir.
+   - Menajer linki açar → **Google ile giriş yap** → Google hesabı takımına bağlanır.
+   - Davet linki **tek kullanımlıktır**: kullanıldıktan sonra başkası açsa da işe yaramaz.
+   - Sonra menajer telefondan ya da bilgisayardan aynı Google hesabıyla **Giriş yap** der; link gerekmez.
+   - Yönetici sayfasında her takımın hangi Google hesabına bağlı olduğu görünür. Yanlış hesap bağlandıysa
+     **Çıkar** → takım için yeni davet linki oluşur, onu gönder.
+   - Davet linki yanlış kişiye gittiyse (henüz kullanılmadan) **Yeni link** → eskisi iptal olur.
 
 ## 4. Draft günü
 
@@ -109,7 +112,7 @@ hesaplanır.
 ### Yöneticiler ve bildirimler
 
 - **Yönetici sayfası → Yöneticiler**: seçtiğin takımların menajerleri kendi takımlarıyla oynarken yönetici de olur
-  (sen ve arkadaşın için). Yönetici linki her zaman yöneticidir.
+  (sen ve arkadaşın için). Ligi kuran Google hesabı her zaman yöneticidir.
 - Yöneticilerin başlığında **🔔** var: mevkisi belirlenmemiş oyuncular (yeni transferler, Ön/Arka tek dokunuşla seçilir),
   lisansı düşen oyuncular ve BSL kadro hareketleri (lige katılan, takım değiştiren, ayrılan) orada görünür.
 - **Lisansı düşen oyuncu**: bir takımdaki oyuncu TBF kadrolarından çıkarsa (ligden ayrılırsa) o takımın menajerine her
@@ -124,12 +127,12 @@ hesaplanır.
 | Sorun | Çözüm |
 |---|---|
 | "Firebase ayarları girilmemiş" | `site/config.js` doldurulmamış (1. bölüm, 4. adım). |
-| "Bağlantı kurulamadı" | Anonymous girişi açık mı, Authorized domains'e site eklendi mi (1. bölüm, 7–8). |
+| "Bağlantı kurulamadı" / Google girişi açılmıyor | Google ve Anonymous girişi açık mı, Authorized domains'e site eklendi mi (1. bölüm, 7–8). |
 | "Bu işleme izin yok" | Sayfayı yenile. Devam ederse `firestore.rules` Firebase'e yapıştırılmış mı? |
-| Menajer linkini kaybetti | Yönetici → Linki kopyala → tekrar gönder. |
-| Link başkasının eline geçti | Yönetici → Yenile → yeni linki menajere gönder. |
+| Menajer davet linkini kaybetti (henüz katılmadıysa) | Yönetici → Linki kopyala → tekrar gönder. |
+| Davet linki başkasının eline geçti | Kullanılmadıysa: Yönetici → Yeni link. Kullanıldıysa: o hesabı **Çıkar**, yeni linki doğru kişiye gönder. |
+| "Bu Google hesabı bir takıma bağlı değil" | Kişi davet linkini açtığı hesaptan farklı bir Google hesabıyla girmiş; doğru hesapla çıkış/giriş yapsın. |
 | Yanlış seçim yapıldı | Yönetici → Son seçimi geri al (sadece en son seçim). |
-| Yönetici linki kayboldu | Firebase konsolu → Firestore → `kodlar` koleksiyonunda `takim: "admin"` olan belgenin adı yönetici kodudur: `https://…/?kod=<o ad>` |
 
 ## Ücretsiz kota
 

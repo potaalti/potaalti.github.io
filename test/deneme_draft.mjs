@@ -4,7 +4,7 @@
 //   2) cd test && npm install && node deneme_draft.mjs [seçim süresi sn, varsayılan 2]
 import { readFileSync } from 'node:fs';
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInAnonymously, connectAuthEmulator } from 'firebase/auth';
+import { getAuth, signInAnonymously, connectAuthEmulator, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import * as F from 'firebase/firestore';
 import * as C from '../site/core.js';
 
@@ -35,15 +35,21 @@ async function reddedilmeli(is, mesaj) {
   }
 }
 
-// Her kullanıcı (bot) kendi Firebase uygulaması ve kendi db.js kopyasıyla çalışır
+// Her kullanıcı (bot) kendi Firebase uygulaması ve kendi db.js kopyasıyla çalışır.
+// Menajerler ve yönetici Google hesabıyla (emülatörün sahte Google hesapları), izleyici anonim girer.
 let sayac = 0;
-async function kullanici() {
+async function kullanici({ google = true } = {}) {
   const app = initializeApp({ projectId: PROJE, apiKey: 'demo-key' }, `bot${sayac++}`);
   const auth = getAuth(app);
   connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
   const db = F.getFirestore(app);
   F.connectFirestoreEmulator(db, '127.0.0.1', 8080);
-  await signInAnonymously(auth);
+  const hesap = { email: `menajer${sayac}@ornek.com`, ad: `Menajer ${sayac}` };
+  if (google) {
+    await signInWithCredential(auth, GoogleAuthProvider.credential(JSON.stringify({ sub: `g${sayac}`, email: hesap.email, email_verified: true, name: hesap.ad })));
+  } else {
+    await signInAnonymously(auth);
+  }
   const D = await import(`../site/db.js?bot=${sayac}`);
   D.baglan(F, db);
   return { uid: auth.currentUser.uid, db, D };
@@ -63,22 +69,34 @@ async function main() {
 
   console.log('Kurulum');
   const admin = await kullanici();
-  const { adminKod, kodlar } = await admin.D.ligiKur(admin.uid, { ad: 'Deneme Ligi', secimSuresi: SURE, baslangicHaftasi: 6 });
-  kontrol(C.kodTakimi(adminKod) === 'admin', 'Lig kuruldu, yönetici kodu oluştu');
+  const anonimKurucu = await kullanici({ google: false });
+  await reddedilmeli(() => anonimKurucu.D.ligiKur(anonimKurucu.uid, { email: null }, { ad: 'Anonim', baslangicHaftasi: 6 }), 'Google hesabı olmadan lig kurma');
+  const { kodlar } = await admin.D.ligiKur(admin.uid, { email: 'menajer1@ornek.com', ad: 'Yönetici' }, { ad: 'Deneme Ligi', secimSuresi: SURE, baslangicHaftasi: 6 });
+  kontrol((await admin.D.uyelik(admin.uid))?.takim === 'admin', 'Lig kuruldu, kuran Google hesabı yönetici');
   const izleyici = await kullanici();
-  await reddedilmeli(() => izleyici.D.ligiKur(izleyici.uid, { ad: 'Korsan', baslangicHaftasi: 6 }), 'Lig kurulduktan sonra ikinci kurulum');
+  await reddedilmeli(() => izleyici.D.ligiKur(izleyici.uid, { email: 'menajer2@ornek.com' }, { ad: 'Korsan', baslangicHaftasi: 6 }), 'Lig kurulduktan sonra ikinci kurulum');
 
+  // Davetler: anonim (Google'sız) katılım olmaz, davet linki tek kullanımlık
+  const anonim = await kullanici({ google: false });
+  await reddedilmeli(() => anonim.D.davetleKatil(anonim.uid, { email: null }, kodlar.t01, 't01'), 'Google hesabı olmadan davetle katılma');
   const takimlar = {};
   for (const [tid, kod] of Object.entries(kodlar)) {
     const k = await kullanici();
-    await k.D.koduBagla(k.uid, kod, tid);
+    await k.D.davetleKatil(k.uid, { email: `menajer${sayac}@ornek.com`, ad: '' }, kod, tid);
     takimlar[tid] = k;
   }
   const tidler = Object.keys(takimlar);
-  kontrol(tidler.length === 17, '17 menajer kendi koduyla bağlandı');
-  await reddedilmeli(() => izleyici.D.koduBagla(izleyici.uid, 't01-uydurmakod1234', 't01'), 'Uydurma kodla giriş');
-  await reddedilmeli(() => izleyici.D.koduBagla(izleyici.uid, kodlar.t02, 't01'), 't02 koduyla t01 olarak giriş');
-  await reddedilmeli(() => izleyici.D.koduBagla(izleyici.uid, kodlar.t02, 'admin'), 'Takım koduyla yönetici olarak giriş');
+  kontrol(tidler.length === 17 && Object.keys(await hepsi(admin.db, 'kodlar')).length === 0, '17 menajer davetle katıldı, bütün davet kodları kullanıldı');
+  await reddedilmeli(() => izleyici.D.davetleKatil(izleyici.uid, { email: 'menajer2@ornek.com' }, kodlar.t05, 't05'), 'Kullanılmış davet linkiyle ikinci kişinin katılması');
+  await reddedilmeli(() => izleyici.D.davetleKatil(izleyici.uid, { email: 'menajer2@ornek.com' }, 't01-uydurmakod1234', 't01'), 'Uydurma davetle katılma');
+  const yeniKod = await admin.D.koduYenile('t17', null);
+  await reddedilmeli(() => izleyici.D.davetleKatil(izleyici.uid, { email: 'menajer2@ornek.com' }, yeniKod, 't01'), 't17 davetiyle t01 olarak katılma');
+  await reddedilmeli(() => izleyici.D.davetleKatil(izleyici.uid, { email: 'menajer2@ornek.com' }, yeniKod, 'admin'), 'Takım davetiyle yönetici olarak katılma');
+  await reddedilmeli(() => izleyici.D.davetleKatil(izleyici.uid, { email: 'baskasi@ornek.com' }, yeniKod, 't17'), 'Başkasının e-postasıyla katılma');
+  await reddedilmeli(() => takimlar.t04.D.uyeyiCikar(takimlar.t05.uid), 'Menajerin başka menajeri takımdan çıkarması');
+  const uyeler = await admin.D.uyeleriGetir();
+  kontrol(uyeler.filter(u => u.takim !== 'admin').length === 17 && uyeler.every(u => u.email), 'Yönetici takımlara bağlı hesapları görüyor');
+  await admin.D.koduYenile('t17', yeniKod);
   await reddedilmeli(() => takimlar.t03.D.kodlariGetir(), 'Menajerin giriş kodlarını okuması');
   await reddedilmeli(() => takimlar.t03.D.havuzuYukle(havuz.slice(0, 3)), 'Menajerin oyuncu havuzunu değiştirmesi');
   await reddedilmeli(() => takimlar.t03.D.kuraCek(tidler), 'Menajerin kura çekmesi');

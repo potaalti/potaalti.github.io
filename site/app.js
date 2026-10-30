@@ -1,5 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
-import { getAuth, signInAnonymously, signOut, connectAuthEmulator } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
+import {
+  getAuth, signInAnonymously, signOut, connectAuthEmulator, GoogleAuthProvider, signInWithPopup, signInWithRedirect,
+} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
 import * as F from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
 import { firebaseConfig } from './config.js';
 import * as C from './core.js';
@@ -7,7 +9,7 @@ import * as D from './db.js';
 
 // Bilgisayarda (localhost) açılınca gerçek Firebase yerine yerel emülatör kullanılır (deneme draftı için)
 const YEREL = ['localhost', '127.0.0.1'].includes(location.hostname);
-const app = initializeApp(YEREL ? { projectId: 'demo-bsl-draft', apiKey: 'demo-key' } : firebaseConfig);
+const app = initializeApp(YEREL ? { projectId: 'demo-bsl-draft', apiKey: 'demo-key', authDomain: 'demo-bsl-draft.firebaseapp.com' } : firebaseConfig);
 const auth = getAuth(app);
 const fdb = F.getFirestore(app);
 if (YEREL) {
@@ -16,7 +18,8 @@ if (YEREL) {
 }
 D.baglan(F, fdb);
 
-const KOD_ANAHTARI = 'bslDraftKod';
+// Açılmış ama henüz kullanılmamış davet linki (Google girişi sırasında sayfa yenilenince kaybolmasın)
+const DAVET_ANAHTARI = 'bslDavet';
 const KURA_ARALIK_MS = 1500; // kurada takımlar 17. sıradan 1. sıraya doğru bu aralıkla açılır
 const DRAFT_ASAMALARI = ['kurulum', 'kura', 'draft', 'duraklatildi'];
 
@@ -155,6 +158,47 @@ function siradakiTakim() {
   return d && ['draft', 'duraklatildi'].includes(d.asama) ? d.secimSirasi[d.secimNo] : null;
 }
 
+// ---------- Giriş: davet linki + Google ----------
+// Menajer davet linkini açar, Google hesabıyla girer; hesap takıma bağlanır ve davet kodu silinir (tek kullanımlık).
+// Sonra her cihazdan aynı Google hesabıyla girer. Girmeyenler siteyi izleyici olarak görür.
+const googleMi = () => !!auth.currentUser && !auth.currentUser.isAnonymous;
+const hesapBilgisi = () => ({ email: auth.currentUser.email, ad: auth.currentUser.displayName ?? '' });
+
+async function googleIleGir() {
+  const saglayici = new GoogleAuthProvider();
+  saglayici.setCustomParameters({ prompt: 'select_account' });
+  try {
+    await signInWithPopup(auth, saglayici);
+  } catch (e) {
+    if (['auth/popup-closed-by-user', 'auth/cancelled-popup-request'].includes(e.code)) return;
+    // Açılır pencereye izin vermeyen tarayıcılarda sayfa Google'a gidip geri döner
+    if (['auth/popup-blocked', 'auth/operation-not-supported-in-this-environment'].includes(e.code)) return signInWithRedirect(auth, saglayici);
+    throw e;
+  }
+  location.reload();
+}
+
+function davetiBirak() {
+  S.davet = null;
+  try { localStorage.removeItem(DAVET_ANAHTARI); } catch { /* tarayıcı izin vermiyorsa */ }
+}
+
+// Her sayfanın üstünde: davet linkiyle gelen ama henüz Google ile girmemiş kişiye, ya da takıma bağlı olmayan hesaba
+function girisKarti() {
+  if (S.davet && !googleMi()) {
+    return `<div class="kart sira-sende davet-kart"><h2>🏀 ${esc(S.ayar?.ad ?? 'Pota Altı BSL Fantezi Ligi')}'ne davet edildin!</h2>
+      <p>Takımına bağlanmak için Google hesabınla giriş yap. Sonraki girişlerde, telefondan ya da bilgisayardan, aynı Google hesabıyla girmen yeterli.</p>
+      <button class="btn ana google-dugme" data-is="google-giris">${GOOGLE_LOGO} Google ile giriş yap</button></div>`;
+  }
+  if (googleMi() && !S.ben) {
+    return `<div class="kart"><p style="margin:0"><b>${esc(auth.currentUser.email)}</b> ile giriş yaptın ama bu hesap bir takıma bağlı değil.
+      Takımına katılmak için yöneticinin gönderdiği davet linkini aç.</p></div>`;
+  }
+  return '';
+}
+
+const GOOGLE_LOGO = '<svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>';
+
 // ---------- Çizim ----------
 let cizimBekliyor = false;
 function ciz() {
@@ -186,7 +230,8 @@ function cizHemen() {
     menuEl.scrollLeft = Math.max(0, aktif.offsetLeft - 16);
   }
   $('#kimlik').innerHTML = kimlik();
-  $('#icerik').innerHTML = (S.hazir && !S.ligYok && !['bostakiler', 'serbest'].includes(rota()[0]) ? zorunluBandi() : '') + gorunum();
+  $('#icerik').innerHTML = (S.hazir && !S.ligYok ? girisKarti() : '')
+    + (S.hazir && !S.ligYok && !['bostakiler', 'serbest'].includes(rota()[0]) ? zorunluBandi() : '') + gorunum();
   if (odakId) {
     const el = document.getElementById(odakId);
     if (el) {
@@ -267,7 +312,8 @@ function kimlik() {
     return `${dugme}${zil}<span><b>${ad}</b> · <a href="#" data-is="cikis">çıkış</a></span>`;
   }
   if (benimTakimim()) return `<span><b>${esc(takimAdi(benimTakimim()))}</b> · <a href="#" data-is="cikis">çıkış</a></span>`;
-  return '<span>İzleyici</span>';
+  if (googleMi()) return `<span>${esc(auth.currentUser.email)} · <a href="#" data-is="cikis">çıkış</a></span>`;
+  return '<button class="ekran-dugme google-dugme" data-is="google-giris">Giriş yap</button>';
 }
 
 function gorunum() {
@@ -297,21 +343,22 @@ function gorunum() {
 // ---------- İlk kurulum ----------
 function gorunumKurulum() {
   if (S.kurulumSonucu) {
-    const { adminKod } = S.kurulumSonucu;
     return `<div class="kart">
       <h2>Lig kuruldu 🎉</h2>
-      <p>Bu cihaz artık <b>yönetici</b>. Aşağıdaki yönetici linkini kimseyle paylaşma, güvenli bir yere kaydet
-      (başka cihazdan yönetici olarak girmek için gerekir):</p>
-      <p class="link-kutu">${esc(girisLinki(adminKod))}</p>
-      <p><button class="btn" data-is="kopyala" data-metin="${esc(girisLinki(adminKod))}">Linki kopyala</button></p>
-      <p>Menajerlerin giriş linkleri <b>Yönetici</b> sayfasında.</p>
+      <p><b>${esc(auth.currentUser.email)}</b> Google hesabı artık <b>yönetici</b>. Başka bir cihazdan da aynı Google hesabıyla giriş yapman yeterli.</p>
+      <p>Menajerlerin davet linkleri <b>Yönetici</b> sayfasında.</p>
       <p><a class="btn ana" href="#/yonetici" data-is="kurulum-bitti">Yönetici sayfasına git</a></p>
     </div>`;
+  }
+  if (!googleMi()) {
+    return `<div class="kart"><h2>Ligi kur</h2>
+      <p>Bu lig henüz kurulmamış. Ligi kuran Google hesabı <b>yönetici</b> olur; önce Google hesabınla giriş yap.</p>
+      <button class="btn ana google-dugme" data-is="google-giris">${GOOGLE_LOGO} Google ile giriş yap</button></div>`;
   }
   const varsayilanHafta = S.index ? C.etkinHafta(S.index, 1) : 1;
   return `<div class="kart">
     <h2>Ligi kur</h2>
-    <p>Bu lig henüz kurulmamış. Ligi kuran cihaz <b>yönetici</b> olur. Takım adları ve menajerler sonradan da değiştirilebilir.</p>
+    <p>Bu lig henüz kurulmamış. Ligi kuran Google hesabı (<b>${esc(auth.currentUser.email)}</b>) <b>yönetici</b> olur. Takım adları ve menajerler sonradan da değiştirilebilir.</p>
     <div class="form-izgara">
       <label for="k-ad">Lig adı</label><input type="text" id="k-ad" value="Pota Altı BSL Fantezi Ligi">
       <label for="k-hafta">Puanlamanın başlayacağı BSL haftası</label><input type="number" id="k-hafta" min="1" max="40" value="${varsayilanHafta}">
@@ -326,7 +373,7 @@ function gorunumKurulum() {
 }
 
 function girisLinki(kod) {
-  return `${location.origin}${location.pathname}?kod=${encodeURIComponent(kod)}`;
+  return `${location.origin}${location.pathname}?davet=${encodeURIComponent(kod)}`;
 }
 
 // ---------- Draft ----------
@@ -958,7 +1005,7 @@ function gorunumYonetici() {
   const a = d.asama;
   if (!S.kodlar) {
     S.kodlar = {};
-    D.kodlariGetir().then(k => { S.kodlar = k; ciz(); }).catch(hataGoster);
+    davetleriYenile();
   }
   if (!S.havuzYuklendi) havuzuYukleIstemci();
   const adimlar = [];
@@ -970,22 +1017,30 @@ function gorunumYonetici() {
       <p class="soluk kucuk">Yüklü havuz: ${S.havuz.length} oyuncu · Sitedeki veri: ${rehberHavuz.length} aktif oyuncu (${rehberHavuz.filter(o => o.turk).length} Türk), güncelleme ${S.index?.guncelleme ? tarih(S.index.guncelleme) : '-'}</p>
       <button class="btn ${S.havuz.length ? '' : 'ana'}" data-is="havuz-yukle" ${['kurulum', 'kura'].includes(a) ? '' : 'disabled'}>Oyuncu havuzunu yükle</button></div>`);
   }
-  adimlar.push(`<div class="kart"><h3>Takımlar ve giriş linkleri</h3>
-    <p class="kucuk soluk">Her menajere kendi linkini gönder. Link, takımın adına işlem yapma yetkisidir; başkasıyla paylaşılmamalı. Bir link yanlış kişiye gittiyse "Yenile" ile eskisini iptal et.</p>
-    <div class="tablo-kap"><table><thead><tr><th>#</th><th>Takım adı</th><th>Menajer</th><th>Giriş linki</th></tr></thead><tbody>
+  const uyeler = S.uyeler ?? [];
+  adimlar.push(`<div class="kart"><h3>Takımlar ve davetler</h3>
+    <p class="kucuk soluk">Her menajere kendi davet linkini gönder. Menajer linki açıp Google hesabıyla girince hesabı takıma bağlanır ve
+    link bir daha kullanılamaz. Sonra her cihazdan aynı Google hesabıyla girer. Yanlış hesap bağlandıysa "Çıkar" de; takım için yeni davet linki oluşur.</p>
+    <div class="tablo-kap"><table><thead><tr><th>#</th><th>Takım adı</th><th>Menajer</th><th>Hesap / davet</th></tr></thead><tbody>
     ${takimlar().map(t => {
       const kod = S.kodlar?.[t.id];
       const link = kod ? girisLinki(kod) : '';
-      const mesaj = `${S.ayar.ad} giriş linkin (${t.ad}). Kimseyle paylaşma: ${link}`;
+      const mesaj = `${S.ayar.ad} davetin (${t.ad}): linki aç ve Google hesabınla giriş yap. Link tek kullanımlık, kimseyle paylaşma: ${link}`;
+      const bagli = uyeler.filter(u => u.takim === t.id);
+      const hesap = bagli.length
+        ? bagli.map(u => `<span class="kucuk">✓ ${esc(u.email)}</span> <button class="btn kucuk tehlike" data-is="uye-cikar" data-id="${u.uid}">Çıkar</button>`).join('<br>')
+        : kod ? `<span class="rozet">davet bekliyor</span>
+          <button class="btn kucuk" data-is="kopyala" data-metin="${esc(link)}">Linki kopyala</button>
+          <a class="btn kucuk" href="https://wa.me/?text=${encodeURIComponent(mesaj)}" target="_blank" rel="noopener">WhatsApp</a>
+          <button class="btn kucuk tehlike" data-is="kod-yenile" data-id="${t.id}" title="Eski link iptal olur">Yeni link</button>`
+          : S.uyeler ? `<button class="btn kucuk" data-is="kod-yenile" data-id="${t.id}">Davet linki oluştur</button>` : '<span class="soluk kucuk">yükleniyor…</span>';
       return `<tr><td>${t.no}</td>
         <td><input type="text" id="ta-${t.id}" value="${esc(t.ad)}" maxlength="30" style="width:150px"></td>
         <td><input type="text" id="tm-${t.id}" value="${esc(t.menajer)}" maxlength="40" style="width:130px"></td>
-        <td><div class="satir"><button class="btn kucuk" data-is="takim-kaydet" data-id="${t.id}">Kaydet</button>
-          ${kod ? `<button class="btn kucuk" data-is="kopyala" data-metin="${esc(link)}">Linki kopyala</button>
-          <a class="btn kucuk" href="https://wa.me/?text=${encodeURIComponent(mesaj)}" target="_blank" rel="noopener">WhatsApp</a>
-          <button class="btn kucuk tehlike" data-is="kod-yenile" data-id="${t.id}">Yenile</button>` : '<span class="soluk kucuk">yükleniyor…</span>'}</div></td></tr>`;
+        <td><div class="satir"><button class="btn kucuk" data-is="takim-kaydet" data-id="${t.id}">Kaydet</button> ${hesap}</div></td></tr>`;
     }).join('')}</tbody></table></div>
-    <p class="kucuk soluk" style="margin-bottom:0">Senin yönetici linkin: <button class="btn kucuk" data-is="kopyala" data-metin="${esc(S.kodlar?.admin ? girisLinki(S.kodlar.admin) : '')}">Yönetici linkini kopyala</button></p></div>`);
+    <p class="kucuk soluk" style="margin-bottom:0">Yönetici hesapları: ${uyeler.filter(u => u.takim === 'admin').map(u => esc(u.email)).join(', ') || '-'}
+    (ve yönetici yetkisi verilen takımların menajerleri)</p></div>`);
   const yoneticiler = S.ayar.yoneticiTakimlar ?? [];
   adimlar.push(`<div class="kart"><h3>Yöneticiler</h3>
     <p class="kucuk soluk">Yönetici yetkisi verdiğin takımların menajerleri kendi takımlarıyla oynarken yönetici işlerini de yapar
@@ -1135,23 +1190,31 @@ async function eylem(is, id, el) {
     case 'kopyala':
       await navigator.clipboard.writeText(el.dataset.metin);
       return bildir('Kopyalandı');
+    case 'google-giris':
+      await googleIleGir();
+      return;
     case 'cikis':
-      if (!confirm('Bu cihazdaki girişin silinsin mi? Tekrar girmek için linkine ihtiyacın olacak.')) return;
-      localStorage.removeItem(KOD_ANAHTARI);
-      await F.deleteDoc(F.doc(fdb, 'uyeler', S.uid)).catch(() => {});
+      if (!confirm('Çıkış yapılsın mı? Tekrar girmek için Google ile giriş yapman yeterli.')) return;
+      await signOut(auth);
       location.reload();
       return;
+    case 'uye-cikar': {
+      const u = S.uyeler.find(x => x.uid === id);
+      if (!confirm(`${u.email} hesabı ${takimAdi(u.takim)} takımından çıkarılsın mı? Takım için yeni davet linki oluşturulur.`)) return;
+      await D.uyeyiCikar(id);
+      if (u.takim !== 'admin') S.kodlar[u.takim] = await D.koduYenile(u.takim, S.kodlar[u.takim]);
+      await davetleriYenile();
+      return bildir('Hesap takımdan çıkarıldı, yeni davet linki oluştu');
+    }
     case 'ligi-kur': {
       const hafta = Number(deger('k-hafta'));
       const sure = Number(deger('k-sure'));
       if (!hafta || !sure) return bildir('Hafta ve süreyi gir.', true);
       el.disabled = true;
-      const sonuc = await D.ligiKur(S.uid, {
+      const sonuc = await D.ligiKur(S.uid, hesapBilgisi(), {
         ad: deger('k-ad') || 'Pota Altı BSL Fantezi Ligi', secimSuresi: sure, baslangicHaftasi: hafta,
         menajerler: Array.from({ length: 17 }, (_, i) => deger(`k-m${i}`)),
       });
-      localStorage.setItem(KOD_ANAHTARI, sonuc.adminKod);
-      S.kod = sonuc.adminKod;
       S.ben = 'admin';
       S.kurulumSonucu = sonuc;
       return ciz();
@@ -1298,10 +1361,10 @@ async function eylem(is, id, el) {
       await D.takimiKaydet(id, { ad: deger(`ta-${id}`) || S.takimlar[id].ad, menajer: deger(`tm-${id}`) });
       return bildir('Kaydedildi');
     case 'kod-yenile': {
-      if (!confirm(`${takimAdi(id)} için yeni link oluşturulsun mu? Eski link artık çalışmaz.`)) return;
+      if (S.kodlar[id] && !confirm(`${takimAdi(id)} için yeni davet linki oluşturulsun mu? Eski link artık çalışmaz.`)) return;
       S.kodlar[id] = await D.koduYenile(id, S.kodlar[id]);
       ciz();
-      return bildir('Yeni link oluşturuldu');
+      return bildir('Yeni davet linki oluşturuldu');
     }
     case 'ayar-kaydet': {
       const secimSuresi = Number(deger('ay-sure'));
@@ -1507,31 +1570,42 @@ setInterval(() => {
 // Sunucu saati farkını arada bir tazele (bilgisayarın saati kayabilir)
 setInterval(() => { if (S.uid && !S.ligYok) D.saatFarki(S.uid).then(f => { S.saatFarki = f; }).catch(() => {}); }, 5 * 60 * 1000);
 
+// Yönetici sayfası: takımlara bağlı hesaplar ve kullanılmamış davet kodları
+async function davetleriYenile() {
+  try {
+    [S.kodlar, S.uyeler] = await Promise.all([D.kodlariGetir(), D.uyeleriGetir()]);
+    ciz();
+  } catch (e) {
+    hataGoster(e);
+  }
+}
+
 // ---------- Başlangıç ----------
 async function girisYap() {
-  const u = await D.uyelik(S.uid);
-  if (S.kod) {
-    const tid = C.kodTakimi(S.kod);
-    if (!tid) {
-      localStorage.removeItem(KOD_ANAHTARI);
-      S.kod = null;
-      bildir('Giriş linki hatalı.', true);
-    } else if (u?.kod === S.kod) {
-      S.ben = u.takim;
-    } else {
-      try {
-        await D.koduBagla(S.uid, S.kod, tid);
-        S.ben = tid;
-        bildir(tid === 'admin' ? 'Yönetici olarak giriş yapıldı' : 'Takımına giriş yapıldı');
-      } catch (e) {
-        console.warn(e);
-        localStorage.removeItem(KOD_ANAHTARI);
-        S.kod = null;
-        bildir('Giriş linki geçersiz ya da yenilenmiş. Yöneticiden yeni link iste.', true);
-      }
-    }
+  const u = googleMi() ? await D.uyelik(S.uid) : null;
+  if (u) S.ben = u.takim;
+  if (!S.davet) return;
+  const tid = C.kodTakimi(S.davet);
+  if (!tid || tid === 'admin') {
+    davetiBirak();
+    bildir('Davet linki hatalı.', true);
+    return;
   }
-  if (!S.ben && u) S.ben = u.takim;
+  if (!googleMi()) return; // davet kartı Google ile girişi ister
+  if (u) {
+    if (u.takim !== tid) bildir('Bu Google hesabı zaten başka bir takıma bağlı. Davet linkini takımın menajeri kendi Google hesabıyla açmalı.', true);
+    davetiBirak();
+    return;
+  }
+  try {
+    await D.davetleKatil(S.uid, hesapBilgisi(), S.davet, tid);
+    S.ben = tid;
+    bildir('Takımına katıldın 🎉');
+  } catch (e) {
+    console.warn(e);
+    bildir('Bu davet linki kullanılmış ya da iptal edilmiş. Yöneticiden yeni davet iste.', true);
+  }
+  davetiBirak();
 }
 
 async function basla() {
@@ -1540,9 +1614,10 @@ async function basla() {
     return ciz();
   }
   try {
-    await signInAnonymously(auth);
-    // Tarayıcıda kayıtlı anonim kullanıcı geçersizse (silinmişse) yeni bir anonim girişle devam et;
-    // menajer kodu cihazda saklı olduğu için takım bağlantısı aşağıda yeniden kurulur
+    // Google ile girmiş kullanıcı tarayıcıda kayıtlıdır; yoksa izleyici olarak anonim girilir
+    await auth.authStateReady();
+    if (!auth.currentUser) await signInAnonymously(auth);
+    // Tarayıcıda kayıtlı kullanıcı geçersizse (silinmişse) yeniden anonim gir
     try {
       await auth.currentUser.getIdToken(true);
     } catch {
@@ -1551,13 +1626,14 @@ async function basla() {
     }
     S.uid = auth.currentUser.uid;
     const params = new URLSearchParams(location.search);
-    const linkKodu = params.get('kod');
+    const linkKodu = params.get('davet') ?? params.get('kod');
     if (linkKodu) {
-      localStorage.setItem(KOD_ANAHTARI, linkKodu);
+      try { localStorage.setItem(DAVET_ANAHTARI, linkKodu); } catch { /* tarayıcı izin vermiyorsa sadece bu açılışta */ }
+      params.delete('davet');
       params.delete('kod');
       history.replaceState(null, '', location.pathname + (params.toString() ? `?${params}` : '') + location.hash);
     }
-    S.kod = localStorage.getItem(KOD_ANAHTARI);
+    try { S.davet = linkKodu ?? localStorage.getItem(DAVET_ANAHTARI); } catch { S.davet = linkKodu; }
     const [index, rehber, mevkiListesi, bslHareketleri] = await Promise.all([jsonGetir('data/index.json'), jsonGetir('data/oyuncular.json'),
       jsonGetir('data/mevkiler.json').catch(() => ({})), jsonGetir('data/bsl_hareketleri.json').catch(() => [])]);
     S.mevkiListesi = mevkiListesi;
@@ -1575,7 +1651,7 @@ async function basla() {
     D.saatFarki(S.uid).then(f => { S.saatFarki = f; }).catch(e => console.warn('Sunucu saati alınamadı', e));
   } catch (e) {
     console.error(e);
-    S.hataMesaji = `Bağlantı kurulamadı: ${esc(e.message)}. ${YEREL ? 'Firebase emülatörü çalışıyor mu?' : 'Firebase ayarlarını ve Anonim girişin açık olduğunu kontrol edin.'}`;
+    S.hataMesaji = `Bağlantı kurulamadı: ${esc(e.message)}. ${YEREL ? 'Firebase emülatörü çalışıyor mu?' : 'Firebase ayarlarını, Google ve Anonim girişin açık olduğunu kontrol edin.'}`;
     ciz();
   }
 }

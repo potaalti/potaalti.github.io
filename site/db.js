@@ -18,9 +18,9 @@ export class Hata extends Error {}
 
 // ---------- Kurulum ----------
 
-// Ligi ilk kez kurar: ayarlar, 17 takım, kadrolar ve giriş kodları. Yönetici kodunu ve takım kodlarını döndürür.
-export async function ligiKur(uid, { ad, takimSayisi = 17, menajerler = [], secimSuresi = 90, baslangicHaftasi }) {
-  const adminKod = yeniKod('admin');
+// Ligi ilk kez kurar: ayarlar, 17 takım, kadrolar ve davet kodları. Kuran Google hesabı yönetici olur.
+// hesap: { email, ad } (Google hesabı). Takımların davet kodlarını döndürür.
+export async function ligiKur(uid, hesap, { ad, takimSayisi = 17, menajerler = [], secimSuresi = 90, baslangicHaftasi }) {
   const kodlar = {};
   const b = F.writeBatch(db);
   b.set(yol('lig', 'ayar'), {
@@ -35,8 +35,7 @@ export async function ligiKur(uid, { ad, takimSayisi = 17, menajerler = [], seci
     asama: 'kurulum', sira: null, secimSirasi: [], secimNo: 0, toplamSecim: takimSayisi * 7,
     saatBaslangic: null, saatSure: secimSuresi, aktifHafta: baslangicHaftasi,
   });
-  b.set(yol('kodlar', adminKod), { takim: 'admin' });
-  b.set(yol('uyeler', uid), { takim: 'admin', kod: adminKod });
+  b.set(yol('uyeler', uid), { takim: 'admin', kod: 'kurulum', email: hesap.email, ad: hesap.ad ?? '' });
   for (let i = 0; i < takimSayisi; i++) {
     const tid = takimId(i);
     const kod = yeniKod(tid);
@@ -46,16 +45,30 @@ export async function ligiKur(uid, { ad, takimSayisi = 17, menajerler = [], seci
     b.set(yol('kodlar', kod), { takim: tid });
   }
   await b.commit();
-  return { adminKod, kodlar };
+  return { kodlar };
 }
 
 function bosKadro() {
   return { as: [], yedek: [], tip: bosTip(), fa: 0, degisiklik: 0, gecmis: [], sonSecim: null, sonFa: null, sonTeklif: null };
 }
 
-// Menajerin cihazını takımına bağlar (kod linkteki gizli koddur)
-export async function koduBagla(uid, kod, takim) {
-  await F.setDoc(yol('uyeler', uid), { takim, kod });
+// Davet linkiyle katılma: Google hesabı takıma bağlanır, davet kodu aynı işlemde silinir (tek kullanımlık)
+export async function davetleKatil(uid, hesap, kod, takim) {
+  const b = F.writeBatch(db);
+  b.set(yol('uyeler', uid), { takim, kod, email: hesap.email, ad: hesap.ad ?? '' });
+  b.delete(yol('kodlar', kod));
+  await b.commit();
+}
+
+// Yönetici: takımlara bağlı Google hesapları { uid, takim, email, ad }
+export async function uyeleriGetir() {
+  const s = await F.getDocs(koleksiyon('uyeler'));
+  return s.docs.map(d => ({ uid: d.id, ...d.data() }));
+}
+
+// Yönetici: hesabı takımdan çıkarır (o kişi artık takım adına işlem yapamaz; yeni davet gönderilir)
+export async function uyeyiCikar(uid) {
+  await F.deleteDoc(yol('uyeler', uid));
 }
 
 export async function uyelik(uid) {
@@ -304,7 +317,7 @@ export async function sezonuBaslat(kadrolar, baslangicHaftasi) {
   await b.commit();
 }
 
-// Takımın giriş kodunu yeniler (eski link artık çalışmaz)
+// Takımın davet kodunu yeniler (eski davet linki artık çalışmaz)
 export async function koduYenile(tid, eskiKod) {
   const kod = yeniKod(tid);
   const b = F.writeBatch(db);

@@ -61,6 +61,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .yeni-bildirim { border-color: var(--vurgu); background: var(--vurgu-acik); }
 .tahta td.duzeltilen { outline: 2px dashed var(--turuncu); outline-offset: -2px; }
 .zorunlu-bant .btn { margin-left: 6px; }
+.google-dugme { display: inline-flex; align-items: center; gap: 8px; }
+.davet-kart h2 { margin-bottom: .3em; }
 .ekran-dugme { border: 0; background: #fff; color: #06505b; font-weight: 700; padding: 4px 10px; border-radius: 99px; cursor: pointer; font-size: .8rem; }
 .menu { flex: 1; min-width: 0; align-self: stretch; display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
 .menu::-webkit-scrollbar { display: none; }

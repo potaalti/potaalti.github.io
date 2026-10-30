@@ -3,12 +3,12 @@
 // "SDK setup and configuration" > "Config" kısmındaki değerleri aşağıya yapıştırın.
 // Bu bilgiler gizli değildir; güvenliği firestore.rules sağlar.
 export const firebaseConfig = {
-  apiKey: 'BURAYA_YAPISTIRIN',
-  authDomain: 'BURAYA_YAPISTIRIN.firebaseapp.com',
-  projectId: 'BURAYA_YAPISTIRIN',
-  storageBucket: 'BURAYA_YAPISTIRIN.firebasestorage.app',
-  messagingSenderId: '000000000000',
-  appId: 'BURAYA_YAPISTIRIN',
+  apiKey: 'AIzaSyBscz7xgCz_A8f0UcjPjYgxkNX5h3pri4w',
+  authDomain: 'pota-alti-tbl-fantezi.firebaseapp.com',
+  projectId: 'pota-alti-tbl-fantezi',
+  storageBucket: 'pota-alti-tbl-fantezi.firebasestorage.app',
+  messagingSenderId: '493370099196',
+  appId: '1:493370099196:web:9f0d3af1defae497e41e79',
 };
 
 // Lig ayarı (ortak motor): draft yok, kadrolar eski TBL Fantezi Ligi'nden içe aktarılır; As'ta en fazla 2 yabancı.

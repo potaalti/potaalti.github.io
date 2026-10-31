@@ -1935,7 +1935,7 @@ function gorunumMaclar(istenen) {
   const takimAdlari = new Map([...S.rehber.values()].filter(o => o.aktif).map(o => [o.takimId, o.takim]));
   const bay = [...takimAdlari].filter(([id]) => !oynayan.has(id)).map(([, ad]) => baslik(ad));
   return `${cipler}${secici}${bloklar || '<p class="bos">Bu haftanın maçları henüz belli değil.</p>'}
-    ${maclar.length && bay.length ? `<p class="soluk kucuk">Bay: ${bay.map(esc).join(', ')}</p>` : ''}
+    ${maclar.length && bay.length ? `<p class="bay-yazisi">Bay: ${bay.map(esc).join(', ')}</p>` : ''}
     <p class="soluk kucuk">Maça dokununca kutu skor ve o maçtaki fantezi oyuncuları açılır. ${S.tblVerisi && eksikHaftalar().includes(n)
       ? `Canlı skorlar TBL Fantezi Ligi'nin güncellemesinden, dakikada bir yenilenir (son: ${S.tblVerisi.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}).`
       : `Son güncelleme: ${S.index?.guncelleme ? tarih(S.index.guncelleme) : '-'}.`}</p>`;

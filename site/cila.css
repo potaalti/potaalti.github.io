@@ -145,14 +145,6 @@ tr.ben td { background: color-mix(in srgb, var(--vurgu) 14%, transparent) !impor
   tr.tikla td { padding-top: 10px; padding-bottom: 10px; }
   .btn { min-height: 38px; }
 }
-/* Telefonda maç satırı skor uygulaması gibi: takımlar alt alta, saat/skor sağda */
-@media (max-width: 759px) {
-  .mac { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "ev skor" "dep skor"; row-gap: 3px; column-gap: 12px; padding: 10px 14px; }
-  .mac > span:first-child { grid-area: ev; }
-  .mac .dep { grid-area: dep; text-align: left; }
-  .mac .skor { grid-area: skor; min-width: 74px; padding-left: 12px; border-left: 1px solid var(--cizgi); }
-  .mac > span:first-child, .mac .dep { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-}
 /* Telefonda kadro satırı: kulüp adı ismin altında, rozet ve puan sağda tek satırda */
 @media (max-width: 759px) {
   .oyuncu-liste li > span:first-child { min-width: 0; }
@@ -303,3 +295,6 @@ button.saha-oyuncu:hover, a.saha-oyuncu:hover { border-color: color-mix(in srgb,
 .saha-not.canli-yazi, .hafta-toplam .canli-yazi { color: var(--kirmizi); }
 .saha-not.canli-yazi::before, .hafta-toplam .canli-yazi::before { content: "● "; animation: canli-yanip 1.4s infinite; }
 @keyframes canli-yanip { 50% { opacity: .2; } }
+
+/* Fikstürde bay geçen takım */
+.bay-yazisi { text-align: center; color: var(--soluk); font-size: .85rem; margin: 4px 0 12px; }

@@ -155,7 +155,17 @@ function gorunumMaclar(istenenLig, istenenHafta) {
   return `${ligSec}<div class="hafta-secici">${ok(haftalar[i - 1], '‹')}
       <div class="baslik"><strong>${LIGLER[lig].kisa} ${n}. Hafta</strong><small>${maclar ? haftaDurumu(maclar) : 'Yükleniyor…'}</small></div>${ok(haftalar[i + 1], '›')}</div>
     ${!maclar ? '<p class="bos">Yükleniyor…</p>' : maclar.length ? gunlereGore(lig, maclar) : '<p class="bos">Bu haftanın maçları henüz belli değil.</p>'}
+    ${maclar?.length ? bayYazisi(lig, maclar) : ''}
     <p class="soluk kucuk">Maça dokununca kutu skor açılır. Maç saatlerinde skorlar dakikada bir yenilenir.</p>`;
+}
+
+// Haftanın maçında olmayan takım(lar): ligin puan tablosundaki takımlardan
+function bayYazisi(lig, maclar) {
+  const tablo = ligVerisi(lig, 'tablo');
+  if (!tablo) return '';
+  const oynayan = new Set(maclar.flatMap(m => [m.ev, m.dep]));
+  const bay = tablo.filter(s => !oynayan.has(s.ad)).map(s => esc(baslik(s.ad)));
+  return bay.length ? `<p class="bay-yazisi">Bay: ${bay.join(', ')}</p>` : '';
 }
 
 // ---------- Maç sayfası (kutu skor) ----------

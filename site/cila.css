@@ -320,7 +320,7 @@ button.saha-oyuncu:hover, a.saha-oyuncu:hover { border-color: color-mix(in srgb,
   table.kutu .fantezi-sahip { overflow: hidden; text-overflow: ellipsis; }
 }
 
-/* Kutu skorda benim fantezi takımımın oyuncuları: adın solunda şerit (eski TBL Fantezi'deki gibi) */
-table.kutu tr.ben th, table.kutu tr.benim-oyuncu th { box-shadow: inset 3px 0 0 var(--vurgu); background: var(--vurgu-acik) !important; }
+/* Kutu skorda benim fantezi takımımın oyuncuları: satır renkli şerit */
+table.kutu tr.ben th, table.kutu tr.benim-oyuncu th { background: var(--vurgu-acik) !important; }
 table.kutu tr.ben td, table.kutu tr.benim-oyuncu td { background: color-mix(in srgb, var(--vurgu) 10%, transparent) !important; }
 table.kutu .fantezi-sahip { font-size: .68rem; color: var(--vurgu); font-weight: 600; }

@@ -7,7 +7,6 @@ import * as F from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestor
 import { firebaseConfig, lig as LIG_AYARI } from 'lig-ayar';
 import * as C from './core.js';
 import * as D from './db.js';
-import * as AE from './artieksi.js';
 
 // Aynı motor iki lig için çalışır. BSL: draftla kurulur, As 3 Ön + 2 Arka ve Türk kuralı.
 // TBL: kadrolar eski TBL Fantezi Ligi'nden içe aktarılır (draft yok), As'ta en fazla 2 yabancı, fantezi hafta numaraları.
@@ -352,6 +351,7 @@ function cizHemen() {
 // Benim takımımın oyuncuları bu tarayıcıda saklanır: ana uygulamanın maç sayfası da onları şeritle işaretler (aynı site)
 const TAKIMIM_ANAHTARI = `potaAltiTakimim-${LIG.kod}`;
 function takimimiKaydet() {
+  try { if (S.hazir && yonetici()) localStorage.setItem('potaAltiYonetici', '1'); } catch { /* gizli pencere */ }
   const tid = benimTakimim();
   const k = tid && S.kadrolar[tid];
   if (!k) return;
@@ -371,7 +371,7 @@ function menuOgeleri() {
   const gelen = Object.values(S.teklifler).filter(t => t.durum === 'bekliyor' && t.alan === benimTakimim()).length
     + (yonetici() ? onayBekleyen().length : 0);
   const yonetim = [yonetici() && ['bildirimler', 'Bildirimler', '🔔', bildirimSayisi()],
-    yonetici() && ['yonetici', 'Yönetici', '⚙️'], yonetici() && ['artieksi', '+/- Liderleri', '📈'], LIG.mevki && yonetici() && ['mevkiler', 'Mevkiler', '🧭']];
+    yonetici() && ['yonetici', 'Yönetici', '⚙️'], LIG.mevki && yonetici() && ['mevkiler', 'Mevkiler', '🧭']];
   const zorunlu = benimTakimim() ? zorunluBekleyen(benimTakimim()).length : 0;
   return (ligEkrani() ? [
     benimTakimim() && ['kadrom', 'Takımım', '📋'],
@@ -505,7 +505,6 @@ function gorunum() {
     case 'yonetici': return yonetici() ? `<div class="dar">${gorunumYonetici()}</div>` : '<p class="bos">Bu sayfa yönetici içindir.</p>';
     case 'mevkiler': return yonetici() ? gorunumMevkiler() : '<p class="bos">Bu sayfa yönetici içindir.</p>';
     case 'bildirimler': return yonetici() ? `<div class="dar">${gorunumBildirimler()}</div>` : '<p class="bos">Bu sayfa yönetici içindir.</p>';
-    case 'artieksi': return yonetici() ? `<div class="dar">${gorunumArtieksi(p1, p2)}</div>` : '<p class="bos">Bu sayfa yönetici içindir.</p>';
     default: return gorunumDraft();
   }
 }
@@ -1097,11 +1096,6 @@ async function siralamaGorseli({ baslik: ustYazi, altBaslik, sutunlar, satirlar 
 }
 
 function gorselVerisi(tur, n) {
-  if (tur === 'artieksi') {
-    const [lig, donem] = n.split('-');
-    return { dosyaAdi: `pota-alti-arti-eksi-${n}.png`, cizici: AE.artieksiGorseli,
-      bilgi: { ...AE.gorselBasligi(lig, donem), satirlar: artieksiListesi(S.artieksi[lig], donem === 'sezon' ? 'sezon' : Number(donem)).map(AE.gorselSatiri) } };
-  }
   if (tur === 'genel') {
     const haftalar = puanHaftalari();
     const tablo = genelTablo();
@@ -1147,8 +1141,8 @@ async function siralamayiPaylas(dugme, tur, n, indir = false) {
   try {
     if (!hazir) {
       dugme.textContent = '…';
-      const { bilgi, dosyaAdi, cizici } = gorselVerisi(tur, n);
-      const blob = await (cizici ?? siralamaGorseli)(bilgi);
+      const { bilgi, dosyaAdi } = gorselVerisi(tur, n);
+      const blob = await siralamaGorseli(bilgi);
       hazir = hazirGorsel = { anahtar, zaman: Date.now(), dosya: new File([blob], dosyaAdi, { type: 'image/png' }), bilgi };
     }
     const { dosya, bilgi } = hazir;
@@ -1487,10 +1481,7 @@ function gorunumKadrom() {
       ${sorun ? `<div class="hata-kutu kucuk">${sorun}</div>` : ''}
       <button class="btn ana" data-is="dizilis-kaydet" ${secili.size === S.ayar.asSayisi && !sorun ? '' : 'disabled'}>Dizilişi kaydet</button></div>`;
   }
-  const adKarti = `<div class="kart"><h3>Takım adı</h3><div class="satir">
-      <input type="text" id="takim-adi" maxlength="30" value="${esc(t.ad)}" class="ara">
-      <button class="btn" data-is="takim-adi">Kaydet</button></div></div>`;
-  if (asama() !== 'sezon') return `${takimKarti(tid)}${ana}${adKarti}`;
+  if (asama() !== 'sezon') return `${takimKarti(tid)}${ana}`;
   const hak = ortakHak() ? S.ayar.faHakki - k.fa : S.ayar.degisiklikHakki - k.degisiklik;
   const zorunlu = zorunluBekleyen(tid).length > 0;
   const aciklama = `<div class="kart"><h3>As–Yedek değişikliği</h3>
@@ -1503,7 +1494,7 @@ function gorunumKadrom() {
         : `<p class="soluk" style="margin:0">${ortakHak() ? 'Transfer hakkın kalmadı.' : 'As–Yedek değişikliği hakkını kullandın.'}</p>`}
     <p class="kucuk" style="margin:10px 0 0">${HakAdi()}n: <b>${S.ayar.faHakki - k.fa}</b> / ${S.ayar.faHakki} · <a href="#/bostakiler">Boştaki oyuncular ›</a>${LIG.takas ? ' · <a href="#/takas">Takas ›</a>' : ''}</p></div>`;
   return `<div class="kadrom-ust">${benimOzetKarti()}</div><div class="kadrom-duzen"><div>${sahaKarti(tid, k, hak > 0 && !zorunlu)}</div>
-    <div>${haftaMaclariKarti(tid)}${adKarti}</div></div><div class="kadrom-ust">${aciklama}</div>`;
+    <div>${haftaMaclariKarti(tid)}</div></div><div class="kadrom-ust">${aciklama}</div>`;
 }
 
 // ---------- Serbest oyuncular ----------
@@ -1764,43 +1755,6 @@ function gorunumKurallar() {
       <li>Haftalık eşitlikte, sayılan oyuncular içindeki en yüksek VP'li Türk oyuncusu daha yüksek olan takım üstte yer alır; bu da eşitse aynı sırayı ve puanı paylaşırlar.</li>
       <li>Genel klasman haftalık lig puanlarının toplamıdır; eşitlikte toplam VP yüksek olan üstte.</li>
     </ul></div>`;
-}
-
-// ---------- +/- liderleri (yönetici) ----------
-// TBL ve BSL oyuncularının haftalık ya da sezon boyu +/- toplamı (eski TBL Fantezi sitesinin verisi), ilk 10.
-// Eşit +/-'de takımının skor farkı daha kötü olan üstte; 10. ile aynı +/- yapanlar da listeye girer.
-function artieksiListesi(d, donem) {
-  const tum = (donem === 'sezon' ? d?.sezon : d?.haftalar?.[donem]) ?? [];
-  const onuncu = tum[9];
-  return (onuncu ? tum.filter((k, i) => i < 10 || k.pm === onuncu.pm) : tum).map((k, i) => ({ ...k, sira: i + 1 }));
-}
-async function artieksiYukle(lig) {
-  if (S.artieksiYukleniyor?.[lig]) return;
-  (S.artieksiYukleniyor ??= {})[lig] = true;
-  try { S.artieksi[lig] = await jsonGetir(`${TBL_VERI}/artieksi/${lig}.json`); } catch { S.artieksi[lig] = { haftalar: {}, sezon: [] }; }
-  S.artieksiYukleniyor[lig] = false;
-  ciz();
-}
-function gorunumArtieksi(istenenLig, istenenDonem) {
-  const lig = istenenLig === 'bsl' ? 'bsl' : 'tbl';
-  S.artieksi ??= {};
-  const d = S.artieksi[lig];
-  const ligSec = `<div class="secenekler">${[['tbl', 'TBL'], ['bsl', 'BSL']].map(([l, ad]) =>
-    `<a class="secenek ${l === lig ? 'aktif' : ''}" href="#/artieksi/${l}">${ad}</a>`).join('')}</div>`;
-  if (!d) { artieksiYukle(lig); return `${ligSec}<p class="bos">Yükleniyor…</p>`; }
-  const haftalar = Object.keys(d.haftalar ?? {}).map(Number).sort((a, b) => a - b);
-  const donem = istenenDonem === 'sezon' ? 'sezon' : haftalar.includes(Number(istenenDonem)) ? Number(istenenDonem) : haftalar.at(-1) ?? 'sezon';
-  const cipler = `<div class="secenekler hafta-cipleri kaydir-ortala">${['sezon', ...haftalar].map(k =>
-    `<a class="secenek ${k === donem ? 'aktif' : ''}" href="#/artieksi/${lig}/${k}">${k === 'sezon' ? 'Sezon' : `${k}. hafta`}</a>`).join('')}</div>`;
-  const liste = artieksiListesi(d, donem);
-  const satirlar = liste.map(k => `<div class="f-satir">
-      <span class="f-sira ${k.sira <= 3 ? `s${k.sira}` : ''}">${k.sira}</span>
-      <div class="ad"><strong>${esc(k.ad)}</strong><small>${esc(baslik(k.takim))}${donem === 'sezon' ? ` · ${k.mac} maç` : ''}</small></div>
-      <div class="f-sayi"><strong>${k.pm > 0 ? `+${k.pm}` : k.pm}</strong><small>+/-</small></div></div>`).join('');
-  return `${ligSec}${cipler}
-    <div class="kart"><div class="baslik-satir"><h2>${lig.toUpperCase()} · ${donem === 'sezon' ? 'Sezon' : `${donem}. hafta`} · +/- ilk 10</h2>${liste.length ? paylasDugmeleri('artieksi', `${lig}-${donem}`) : ''}</div>
-    ${satirlar || '<p class="bos">Henüz veri yok.</p>'}
-    <p class="kucuk soluk" style="margin-bottom:0">Sadece yöneticiler görür. Eşit +/-'de takımının skor farkı daha kötü olan üstte. Paylaş/İndir yayın şablonundaki görseli verir.</p></div>`;
 }
 
 // ---------- Yönetici ----------
@@ -2069,7 +2023,7 @@ const KUTU_SUTUNLARI = [
   ['HR', o => o.hr ?? '', 'hr', '', 'Hücum ribaundu'], ['SR', o => o.sr ?? '', 'sr', '', 'Savunma ribaundu'],
   ['Rb', o => o.rib, 'rib', 'rb', 'Toplam ribaund'], ['As', o => o.ast, 'ast', '', 'Asist'], ['Tç', o => o.tc, 'tc', '', 'Top çalma'],
   ['Bl', o => o.blk, 'blk', '', 'Blok'], ['Tk', o => o.tk, 'tk', '', 'Top kaybı'], ['F', o => o.faul, 'faul', '', 'Faul'],
-  ['+/-', o => o.pm ?? '', null, '', 'Sahadayken skor farkı'], ['VP', o => o.vp, 'vp', 'vp', 'Verimlilik puanı'],
+  ['VP', o => o.vp, 'vp', 'vp', 'Verimlilik puanı'],
 ];
 const kutuHucresi = (o, [, f, , sinif]) => `<td class="${sinif}">${esc(f(o))}</td>`;
 const kutuBasligi = () => KUTU_SUTUNLARI.map(([b, , , sinif, aciklama]) => `<td class="${sinif}" title="${aciklama}">${b}</td>`).join('');
@@ -2087,7 +2041,7 @@ function kutuSkorTablosu(t) {
     const tid = sahip.get(String(o.id));
     const ad = oyuncuLinki(o.id, o.ad);
     return `<tr class="${sureSn(o.sure) > 0 ? '' : 'oynamadi'} ${tid && tid === benim ? 'ben' : ''}">
-      <th>${o.ilk5 ? `<b>${ad}</b>` : ad}${tid ? `<div class="fantezi-sahip">${esc(takimAdi(tid))}</div>` : ''}</th>
+      <th>${o.ilk5 ? `<b>${ad}</b>` : ad}${tid && tid !== benim ? `<div class="fantezi-sahip">${esc(takimAdi(tid))}</div>` : ''}</th>
       ${KUTU_SUTUNLARI.map(c => kutuHucresi(o, c)).join('')}</tr>`;
   }).join('');
   return `<div class="kart"><h3>${esc(baslik(t.ad))}</h3><div class="tablo-kap"><table class="kutu">
@@ -2264,7 +2218,7 @@ async function eylem(is, id, el) {
       return;
     case 'cikis':
       if (!confirm('Çıkış yapılsın mı? Tekrar girmek için Google ile giriş yapman yeterli.')) return;
-      try { localStorage.removeItem(TAKIMIM_ANAHTARI); } catch { /* gizli pencere */ }
+      try { localStorage.removeItem(TAKIMIM_ANAHTARI); localStorage.removeItem('potaAltiYonetici'); } catch { /* gizli pencere */ }
       await signOut(auth);
       location.reload();
       return;
@@ -2389,7 +2343,7 @@ async function eylem(is, id, el) {
       return ciz();
     case 'panel-kapat': S.ui.panel = null; return ciz();
     case 'fa-sirala': S.ui.faSirala = id; return ciz();
-    case 'paylas': return siralamayiPaylas(el, el.dataset.tur, el.dataset.tur === 'artieksi' ? id : Number(id), el.dataset.islem === 'indir');
+    case 'paylas': return siralamayiPaylas(el, el.dataset.tur, Number(id), el.dataset.islem === 'indir');
     case 'talep-git': S.ui.faAlSonraki = id; location.hash = '#/bostakiler'; return;
     case 'talep-onayla': {
       const birak = deger('fa-birak');

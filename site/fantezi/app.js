@@ -1421,7 +1421,7 @@ function sahaKarti(tid, k, secilebilir) {
       ${yabanci != null ? `<span class="rozet ${yabanci > kural().enFazlaYabanci ? 'uyari' : ''}">As'ta yabancı: ${yabanci}/${kural().enFazlaYabanci}</span>` : ''}</span></div>
     <div class="saha"><div class="saha-cizgi"></div>${k.as.map(p => kart(p, 'as')).join('')}</div>
     <div class="kulube"><span class="kulube-ad">Yedek</span>${k.yedek.map(p => kart(p, 'yedek')).join('')}</div>
-    ${secilebilir && !secimModu ? '<div class="degisim-cubugu"><span class="kucuk soluk">Oyuncuya dokununca hafta hafta performansı açılır.</span><button class="btn ana" data-is="degisim-modu">⇄ As–Yedek değişikliği yap</button></div>' : cubuk}
+    ${secimModu ? cubuk : '<p class="kucuk soluk" style="margin:10px 0 0">Oyuncuya dokununca hafta hafta performansı açılır.</p>'}
   </div>`;
 }
 
@@ -1476,6 +1476,9 @@ function gorunumKadrom() {
   const hak = ortakHak() ? S.ayar.faHakki - k.fa : S.ayar.degisiklikHakki - k.degisiklik;
   const zorunlu = zorunluBekleyen(tid).length > 0;
   const aciklama = `<div class="kart"><h3>As–Yedek değişikliği</h3>
+    ${hak > 0 && !zorunlu ? `<p style="margin:0 0 10px">${S.ui.degisimModu
+      ? '<span class="kucuk soluk">Sahadan bir As\'a ve kulübeden bir Yedeğe dokun.</span>'
+      : '<button class="btn ana" data-is="degisim-modu">⇄ As–Yedek değişikliği yap</button>'}</p>` : ''}
     ${zorunlu ? '<p class="kirmizi-yazi" style="margin:0">Önce lisansı düşen oyuncunun yerine <a href="#/bostakiler">boştakilerden</a> oyuncu almalısın.</p>'
       : hak > 0 ? `<p style="margin:0"><b>⇄ As–Yedek değişikliği yap</b>'a bas, sonra sahadan bir As'a ve kulübeden bir Yedeğe dokun; ikisi yer değiştirir. ${ortakHak() ? `Her değişiklik <b>transfer hakkından 1</b> düşer (kalan: <b>${hak}</b>).`
         : `Sezon boyunca <b>${hakYazisi(S.ayar.degisiklikHakki)}</b> değiştirebilirsin.`} ${kuralCumlesi()}. Değişiklik <b>${hf(etkinHafta())}. haftadan</b> itibaren geçerli olur.</p>`
@@ -2309,7 +2312,12 @@ async function eylem(is, id, el) {
     case 'sec-as': S.ui.secAs = S.ui.secAs === id ? null : id; return ciz();
     case 'sec-yedek': S.ui.secYedek = S.ui.secYedek === id ? null : id; return ciz();
     case 'sec-temizle': S.ui.secAs = null; S.ui.secYedek = null; S.ui.degisimModu = false; return ciz();
-    case 'degisim-modu': S.ui.degisimModu = true; return ciz();
+    case 'degisim-modu':
+      // Düğme sayfanın altında: seçim sahada yapılır, oraya kaydır
+      S.ui.degisimModu = true;
+      ciz();
+      requestAnimationFrame(() => document.querySelector('.saha-kart')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+      return;
     // Bilgisayarda oyuncu sağdan açılan panelde, telefonda kendi sayfasında
     case 'oyuncu-panel':
       if (!genis()) { location.hash = `#/oyuncu/${id}`; return; }

@@ -1221,7 +1221,7 @@ function haftaDetayi(s, h) {
 function gorunumTakimlar() {
   const sezon = asama() === 'sezon' && S.haftalarYuklendi;
   const tablo = sezon ? new Map(genelTablo().map(s => [s.id, s])) : new Map();
-  const sirali = sezon && tablo.size ? takimlar().sort((a, b) => tablo.get(a.id).sira - tablo.get(b.id).sira) : takimlar();
+  const sirali = takimlar().sort((a, b) => (a.ad ?? '').localeCompare(b.ad ?? '', 'tr')); // isim sırası
   return `<div class="izgara">${sirali.map(t => {
     const g = tablo.get(t.id);
     const k = S.kadrolar[t.id];
@@ -2691,10 +2691,12 @@ const talepIstisnasi = (pid, b) => {
   const ist = LIG.talepIstisnalari?.[pid];
   return ist && b?.zaman?.toMillis?.() === Date.parse(ist.bitis) - D.BEKLEME_MS ? ist : null;
 };
+// Süresi istisnaya göre henüz değiştirilmemiş talep (değiştirilene kadar kurası çekilmez)
+const istisnaBekliyor = (pid, b) => [LIG.talepIstisnalari?.[pid]?.baslangic ?? []].flat().map(Date.parse).includes(b?.zaman?.toMillis?.());
 function talepKuralariniCek() {
   if (!yonetici() || asama() !== 'sezon' || !S.beklemeYuklendi) return;
   for (const [pid, b] of Object.entries(S.bekleme)) {
-    if (!Object.keys(b.talepler ?? {}).length || D.beklemeKalan(b) > 0 || Date.now() - (kuraDenenen.get(pid) ?? 0) < 60000) continue;
+    if (!Object.keys(b.talepler ?? {}).length || D.beklemeKalan(b) > 0 || istisnaBekliyor(pid, b) || Date.now() - (kuraDenenen.get(pid) ?? 0) < 60000) continue;
     kuraDenenen.set(pid, Date.now());
     D.talepKurasi(pid, talepIstisnasi(pid, b)?.hafta ?? etkinHafta(), dizilisSorunu)
       .then(sonuc => bildir(sonuc ? `Talep kurası: ${oyuncu(pid).ad} → ${takimAdi(sonuc.kazanan)} (${sonuc.talipler.length} talip)` : `${oyuncu(pid).ad}: uygun talep yoktu, boştakilere düştü`))
@@ -2728,10 +2730,10 @@ function beklemeleriEsitle() {
   }
   // Talep istisnası: o tarihte başlamış talep süresi istisnadaki bitişe çekilir (bir kez)
   for (const [pid, ist] of Object.entries(LIG.talepIstisnalari ?? {})) {
-    if (S.bekleme[pid]?.zaman?.toMillis?.() !== Date.parse(ist.baslangic) || S.beklemeYazilan.has(`istisna-${pid}`)) continue;
+    if (!istisnaBekliyor(pid, S.bekleme[pid]) || S.beklemeYazilan.has(`istisna-${pid}`)) continue;
     S.beklemeYazilan.add(`istisna-${pid}`);
     D.beklemeZamaniniDegistir(pid, new Date(Date.parse(ist.bitis) - D.BEKLEME_MS))
-      .then(() => bildir(`${oyuncu(pid)?.ad ?? pid}: talep süresi ${new Date(ist.bitis).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}'te bitecek şekilde kısaltıldı`))
+      .then(() => bildir(`${oyuncu(pid)?.ad ?? pid}: talep süresi ${new Date(ist.bitis).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}'te bitecek şekilde değiştirildi`))
       .catch(hataGoster);
   }
   if (Object.keys(eksik).length || acilis) {

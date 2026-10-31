@@ -1244,7 +1244,7 @@ function gorunumTakim(tid) {
       <tr><td><b>Toplam</b> (${g.sira}. sırada)</td><td class="sayi"><b>${sayi(g.vp)}</b></td><td></td><td class="sayi"><b>${g.puan}</b></td></tr></tbody></table></div></div>` : '';
   }
   const hareket = Object.values(S.hareketler).filter(h => h.takim === tid || h.veren === tid);
-  const alt = `${yoneticiKadroPaneli(tid)}${haftalik}${hareket.length ? `<div class="kart"><h3>Hareketler</h3>${hareket.map(hareketSatiri).join('')}</div>` : ''}`;
+  const alt = `${haftalik}${hareket.length ? `<div class="kart"><h3>Hareketler</h3>${hareket.map(hareketSatiri).join('')}</div>` : ''}${yoneticiKadroPaneli(tid)}`; // yönetici paneli en altta
   if (asama() !== 'sezon' || !k) return `${takimKarti(tid)}${alt}`;
   const ozet = takimOzetKarti(tid) || `<div class="kart"><h2 style="margin:0">${esc(t.ad)}</h2><p class="kucuk soluk" style="margin:4px 0 0">${hakOzeti(k)}</p></div>`;
   return `<div class="kadrom-ust">${ozet}</div><div class="kadrom-duzen"><div>${sahaKarti(tid, k, false)}</div>

@@ -332,7 +332,7 @@ async function yoneticiyiTani() {
 function gorunumLig(lig, sekme, donem) {
   const sekmeListesi = yoneticiMi() ? [...SEKMELER, ['artieksi', '+/-']] : SEKMELER;
   const sekmeler = `<div class="secenekler">${sekmeListesi.map(([s, ad]) => `<a class="secenek ${s === sekme ? 'aktif' : ''}" href="#/lig/${lig}/${s}">${ad}</a>`).join('')}</div>`;
-  const baslikHtml = `<div class="sayfa-baslik"><h1>${LIGLER[lig].ad}</h1><p class="soluk kucuk" style="margin:0 0 12px">2025-26 sezonu · ${LIGLER[lig].kisa}</p></div>`;
+  const baslikHtml = `<div class="sayfa-baslik"><h1>${LIGLER[lig].ad}</h1><p class="soluk kucuk" style="margin:0 0 12px">2026-27 sezonu · ${LIGLER[lig].kisa}</p></div>`;
   let icerik;
   switch (sekme) {
     case 'liderler': icerik = liderlerKarti(lig); break;
@@ -386,11 +386,44 @@ async function artieksiGorseliniPaylas(anahtar, indir) {
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
 }
 
+// Puan tablosu canlı: veri/uret.py tabloyu saatte bir üretir; ondan sonra biten maçlar (bu ve sıradaki haftanın listesi, maç
+// saatlerinde dakikada bir yenilenir) burada eklenir ve sıra yeniden hesaplanır. Maçı süren takım "canlı" işaretlenir.
+function canliTablo(lig, tablo) {
+  if (!tablo?.length || !tablo[0].sayilan) return tablo;
+  const b = S.index?.maclar?.[lig];
+  const maclar = [...new Set([b?.guncel, varsayilanHafta(lig)].filter(Boolean))].flatMap(h => macListesi(lig, h) ?? []);
+  const satir = new Map(tablo.map(s => [s.ad, { ...s, son5: [...s.son5], sayilan: new Set(s.sayilan), canli: false }]));
+  let degisti = false;
+  for (const m of [...maclar].sort((x, y) => x.tarih.localeCompare(y.tarih))) {
+    const ev = satir.get(m.ev);
+    const dep = satir.get(m.dep);
+    if (!ev || !dep) continue;
+    if (m.durum === 'canli') { ev.canli = dep.canli = true; continue; }
+    if (m.durum !== 'bitti' || ev.sayilan.has(m.id) || m.evSkor == null) continue;
+    for (const [t, a, y] of [[ev, Number(m.evSkor), Number(m.depSkor)], [dep, Number(m.depSkor), Number(m.evSkor)]]) {
+      t.o += 1;
+      t.atilan += a;
+      t.yenilen += y;
+      t[a > y ? 'g' : 'm'] += 1;
+      t.averaj = t.atilan - t.yenilen;
+      t.son5 = [...t.son5, a > y ? 'G' : 'M'].slice(-5);
+      t.sayilan.add(m.id);
+    }
+    degisti = true;
+  }
+  const liste = [...satir.values()];
+  if (degisti) {
+    liste.sort((x, y) => y.g - x.g || x.m - y.m || y.averaj - x.averaj || y.atilan - x.atilan);
+    liste.forEach((s, i) => { s.sira = i + 1; });
+  }
+  return liste;
+}
+
 function tabloKarti(lig, ilk = null) {
-  const t = ligVerisi(lig, 'tablo');
+  const t = canliTablo(lig, ligVerisi(lig, 'tablo'));
   if (!t) return '<p class="bos">Yükleniyor…</p>';
   const satirlar = (ilk ? t.slice(0, ilk) : t).map(s => `<tr class="tikla" onclick="location.hash='#/takim/${lig}/${s.id}'">
-      <td class="sira"><span class="madalya m${s.sira}">${s.sira}</span></td><td class="takim-ad">${esc(baslik(s.ad))}</td>
+      <td class="sira"><span class="madalya m${s.sira}">${s.sira}</span></td><td class="takim-ad">${esc(baslik(s.ad))}${s.canli ? ' <span class="canli-yazi kucuk">canlı</span>' : ''}</td>
       <td class="sayi">${s.o}</td><td class="sayi"><b>${s.g}</b></td><td class="sayi">${s.m}</td>
       <td class="sayi dar-gizle">${s.atilan}</td><td class="sayi dar-gizle">${s.yenilen}</td><td class="sayi">${isaretli(s.averaj)}</td>
       ${ilk ? '' : `<td class="dar-gizle"><span class="form">${s.son5.map(x => `<i class="${x}">${x}</i>`).join('')}</span></td>`}</tr>`).join('');

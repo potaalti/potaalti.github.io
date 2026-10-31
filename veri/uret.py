@@ -196,7 +196,9 @@ def lig_uret(kaynak, lig, bilgi):
     for t in takimlar.values():
         t["seri"].sort(key=lambda x: x["tarih"])
         tablo.append({"id": t["id"], "ad": t["ad"], "o": t["o"], "g": t["g"], "m": t["m"], "atilan": t["atilan"], "yenilen": t["yenilen"],
-                      "averaj": t["atilan"] - t["yenilen"], "puan": t["g"] * 2 + t["m"], "son5": [x["s"] for x in t["seri"][-5:]]})
+                      "averaj": t["atilan"] - t["yenilen"], "puan": t["g"] * 2 + t["m"], "son5": [x["s"] for x in t["seri"][-5:]],
+                      # tabloya giren maçlar: uygulama bundan sonra biten maçları canlı ekler
+                      "sayilan": [x["id"] for x in t["seri"]]})
     tablo.sort(key=lambda x: (-x["g"], x["m"], -x["averaj"], -x["atilan"]))
     for i, s in enumerate(tablo):
         s["sira"] = i + 1

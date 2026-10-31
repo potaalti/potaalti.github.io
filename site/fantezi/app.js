@@ -383,6 +383,7 @@ function menuOgeleri() {
     LIG.hareketler && ['hareketler', 'Hareketler', '📰'],
     ['takimlar', 'Takımlar', '👥'],
     LIG.draft && ['draft', 'Draft', '🏀'],
+    yonetici() && asama() === 'sezon' && ['transferler', 'Transferler', '🔁'],
     ['kurallar', 'Kurallar', '📖'],
     ...yonetim,
   ] : [
@@ -500,6 +501,7 @@ function gorunum() {
     case 'bostakiler': return gorunumSerbest();
     case 'hareketler': return LIG.hareketler ? `<div class="dar">${gorunumHareketler()}</div>` : '<p class="bos">Bu ligde Hareketler sayfası yok.</p>';
     case 'kurallar': return `<div class="dar">${gorunumKurallar()}</div>`;
+    case 'transferler': return yonetici() ? `<div class="dar">${gorunumTransferler()}</div>` : '<p class="bos">Bu sayfa yönetici içindir.</p>';
     case 'diger': return gorunumDiger();
     case 'maclar': return `<div class="dar">${gorunumMaclar(Number(p1))}</div>`;
     case 'yonetici': return yonetici() ? `<div class="dar">${gorunumYonetici()}</div>` : '<p class="bos">Bu sayfa yönetici içindir.</p>';
@@ -1741,6 +1743,31 @@ function hareketSatiri(h) {
   else if (h.tur === 'yonetici-dizilis') metin = `Yönetici, <b>${esc(takimAdi(h.takim))}</b> dizilişini değiştirdi. As: ${h.as.map(ad).join(', ')} · Yedek: ${h.yedek.map(ad).join(', ')}`;
   else metin = esc(h.metin ?? h.tur);
   return `<div class="teklif"><div class="kucuk soluk">${h.zaman ? tarih(h.zaman) : ''}${h.hafta ? ` · ${hf(h.hafta)}. haftadan geçerli` : ''}</div>${metin}</div>`;
+}
+
+// Yönetici: bütün takımların transfer hakları, süren talepler (kim kime talip, kimi bırakacak) ve hamlelerin tamamı
+function gorunumTransferler() {
+  const haklar = takimlar().sort((a, b) => (a.ad ?? '').localeCompare(b.ad ?? '', 'tr')).map(t => {
+    const k = S.kadrolar[t.id] ?? {};
+    const son = Object.values(S.hareketler).filter(h => h.takim === t.id || h.veren === t.id)
+      .sort((a, b) => (b.zaman?.toMillis?.() ?? 0) - (a.zaman?.toMillis?.() ?? 0))[0];
+    return `<tr><td><a href="#/takim/${t.id}"><b>${esc(t.ad)}</b></a></td>
+      <td class="sayi">${k.fa ?? 0}/${S.ayar.faHakki}</td>${ortakHak() ? '' : `<td class="sayi">${k.degisiklik ?? 0}</td>`}
+      <td class="kucuk soluk">${son?.zaman ? tarih(son.zaman) : '—'}</td></tr>`;
+  }).join('');
+  const talepler = Object.entries(S.bekleme).filter(([, b]) => Object.keys(b.talepler ?? {}).length).map(([pid, b]) => {
+    const kalan = D.beklemeKalan(b);
+    return `<div class="teklif"><div class="baslik-satir"><b>${oyuncuAdi(pid, { link: true })}</b>
+      <span class="kucuk ${kalan ? 'soluk' : 'kirmizi-yazi'}">${kalan ? `⏳ ${sureYazisi(kalan)} kaldı` : 'süre bitti · kura bekliyor'}</span></div>
+      <ul class="kucuk" style="margin:4px 0 0;padding-left:18px">${Object.entries(b.talepler).map(([tid, birak]) =>
+        `<li><b>${esc(takimAdi(tid))}</b> · kazanırsa bırakacak: ${oyuncuAdi(birak, { link: true })}</li>`).join('')}</ul></div>`;
+  }).join('');
+  const liste = Object.values(S.hareketler).sort((a, b) => (b.zaman?.toMillis?.() ?? 0) - (a.zaman?.toMillis?.() ?? 0));
+  return `<div class="kart"><h2>Transferler</h2><p class="kucuk soluk" style="margin-top:0">Sadece yöneticiler görür.</p>
+      <div class="tablo-kap"><table><thead><tr><th>Takım</th><th class="sayi">${ortakHak() ? 'Transfer hakkı' : 'Serbest'}</th>${ortakHak() ? '' : '<th class="sayi">As–Yedek</th>'}<th>Son hamle</th></tr></thead>
+      <tbody>${haklar}</tbody></table></div></div>
+    <div class="kart"><h3>Süren talepler</h3>${talepler || '<p class="soluk" style="margin:0">Şu an talep edilen oyuncu yok.</p>'}</div>
+    <div class="kart"><h3>Bütün hamleler</h3>${liste.length ? liste.map(hareketSatiri).join('') : '<p class="soluk" style="margin:0">Henüz hamle yok.</p>'}</div>`;
 }
 
 function gorunumHareketler() {

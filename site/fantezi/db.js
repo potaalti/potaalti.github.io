@@ -179,7 +179,7 @@ export function dinle(cb, hata) {
   coklu('takimlar', koleksiyon('takimlar'));
   coklu('kadrolar', koleksiyon('kadrolar'));
   coklu('teklifler', F.query(koleksiyon('teklifler'), F.orderBy('zaman', 'desc'), F.limit(60)));
-  coklu('hareketler', F.query(koleksiyon('hareketler'), F.orderBy('zaman', 'desc'), F.limit(60)));
+  coklu('hareketler', F.query(koleksiyon('hareketler'), F.orderBy('zaman', 'desc'), F.limit(300))); // sezonun tamamı (Transferler sayfası)
   return () => kapat.forEach(f => f());
 }
 

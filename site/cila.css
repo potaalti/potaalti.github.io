@@ -324,3 +324,12 @@ button.saha-oyuncu:hover, a.saha-oyuncu:hover { border-color: color-mix(in srgb,
 table.kutu tr.ben th, table.kutu tr.benim-oyuncu th { box-shadow: inset 3px 0 0 var(--vurgu); background: var(--vurgu-acik) !important; }
 table.kutu tr.ben td, table.kutu tr.benim-oyuncu td { background: color-mix(in srgb, var(--vurgu) 10%, transparent) !important; }
 table.kutu .fantezi-sahip { font-size: .68rem; color: var(--vurgu); font-weight: 600; }
+
+/* Kutu skor: hücum/savunma ribaundu bilgisayarda ayrı sütun, telefonda Rb'nin altında küçük */
+.rb-ayrinti { display: none; }
+@media (max-width: 759px) {
+  table.kutu .tel-gizle { display: none; }
+  table.kutu .rb-ayrinti { display: block; font-size: .5rem; color: var(--soluk); line-height: 1.1; font-weight: 600; }
+}
+.kutu-not { display: none; }
+@media (max-width: 759px) { .kutu-not { display: block; margin: 6px 4px 0; font-size: .7rem; color: var(--soluk); } }

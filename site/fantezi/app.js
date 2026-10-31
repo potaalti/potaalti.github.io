@@ -2018,10 +2018,25 @@ async function kutuYukle(id) {
 }
 
 const atis = ([b, d] = [0, 0]) => `${b}/${d}`;
+// Kutu skor sütunları: [başlık, değer, toplam alanı, hücre sınıfı, açıklama]. HR/SR telefonda ayrı sütun değil,
+// Rb'nin altında küçük "hücum+savunma" olarak görünür (tablo telefonda tek ekrana sığsın)
 const KUTU_SUTUNLARI = [
-  ['Dk', o => o.sure], ['Sy', o => o.sayi], ['2S', o => atis(o.iki)], ['3S', o => atis(o.uc)], ['SA', o => atis(o.sa)],
-  ['Rb', o => o.rib], ['As', o => o.ast], ['Tç', o => o.tc], ['Bl', o => o.blk], ['Tk', o => o.tk], ['F', o => o.faul], ['VP', o => o.vp],
+  ['Dk', o => o.sure, null, '', 'Süre'], ['Sy', o => o.sayi, 'sayi', '', 'Sayı'],
+  ['2S', o => atis(o.iki), 'iki', '', '2 sayılık atış'], ['3S', o => atis(o.uc), 'uc', '', '3 sayılık atış'], ['SA', o => atis(o.sa), 'sa', '', 'Serbest atış'],
+  ['HR', o => o.hr ?? '', 'hr', 'tel-gizle', 'Hücum ribaundu'], ['SR', o => o.sr ?? '', 'sr', 'tel-gizle', 'Savunma ribaundu'],
+  ['Rb', o => o.rib, 'rib', 'rb', 'Toplam ribaund'], ['As', o => o.ast, 'ast', '', 'Asist'], ['Tç', o => o.tc, 'tc', '', 'Top çalma'],
+  ['Bl', o => o.blk, 'blk', '', 'Blok'], ['Tk', o => o.tk, 'tk', '', 'Top kaybı'], ['F', o => o.faul, 'faul', '', 'Faul'],
+  ['VP', o => o.vp, 'vp', 'vp', 'Verimlilik puanı'],
 ];
+const rbAyrinti = (hr, sr) => (hr != null && sr != null ? `<small class="rb-ayrinti">${hr}+${sr}</small>` : '');
+const kutuHucresi = (o, [b, f, , sinif]) => `<td class="${sinif}">${esc(f(o))}${b === 'Rb' ? rbAyrinti(o.hr, o.sr) : ''}</td>`;
+const kutuBasligi = () => KUTU_SUTUNLARI.map(([b, , , sinif, aciklama]) => `<td class="${sinif}" title="${aciklama}">${b}</td>`).join('');
+function kutuToplami(oyuncular) {
+  const topla = alan => oyuncular.reduce((x, o) => x + (Number(o[alan]) || 0), 0);
+  const toplaAtis = alan => atis([0, 1].map(i => oyuncular.reduce((x, o) => x + (o[alan]?.[i] ?? 0), 0)));
+  return KUTU_SUTUNLARI.map(([b, , alan, sinif]) => `<td class="${sinif}">${!alan ? '' : ['iki', 'uc', 'sa'].includes(alan) ? toplaAtis(alan) : topla(alan)}${
+    b === 'Rb' ? rbAyrinti(topla('hr'), topla('sr')) : ''}</td>`).join('');
+}
 
 function kutuSkorTablosu(t) {
   const sahip = sahipler();
@@ -2032,15 +2047,12 @@ function kutuSkorTablosu(t) {
     const ad = oyuncuLinki(o.id, o.ad);
     return `<tr class="${sureSn(o.sure) > 0 ? '' : 'oynamadi'} ${tid && tid === benim ? 'ben' : ''}">
       <th>${o.ilk5 ? `<b>${ad}</b>` : ad}${tid ? `<div class="fantezi-sahip">${esc(takimAdi(tid))}</div>` : ''}</th>
-      ${KUTU_SUTUNLARI.map(([b, f]) => `<td class="${b === 'VP' ? 'vp' : ''}">${esc(f(o))}</td>`).join('')}</tr>`;
+      ${KUTU_SUTUNLARI.map(c => kutuHucresi(o, c)).join('')}</tr>`;
   }).join('');
-  const topla = alan => oyuncular.reduce((x, o) => x + (Number(o[alan]) || 0), 0);
-  const toplaAtis = alan => atis([0, 1].map(i => oyuncular.reduce((x, o) => x + (o[alan]?.[i] ?? 0), 0)));
   return `<div class="kart"><h3>${esc(baslik(t.ad))}</h3><div class="tablo-kap"><table class="kutu">
-    <thead><tr><th>Oyuncu</th>${KUTU_SUTUNLARI.map(([b]) => `<td>${b}</td>`).join('')}</tr></thead>
-    <tbody>${satirlar}<tr class="toplam"><th>Toplam</th><td></td><td>${topla('sayi')}</td><td>${toplaAtis('iki')}</td><td>${toplaAtis('uc')}</td>
-      <td>${toplaAtis('sa')}</td><td>${topla('rib')}</td><td>${topla('ast')}</td><td>${topla('tc')}</td><td>${topla('blk')}</td>
-      <td>${topla('tk')}</td><td>${topla('faul')}</td><td class="vp">${topla('vp')}</td></tr></tbody></table></div></div>`;
+    <thead><tr><th>Oyuncu</th>${kutuBasligi()}</tr></thead>
+    <tbody>${satirlar}<tr class="toplam"><th>Toplam</th>${kutuToplami(oyuncular)}</tr></tbody></table></div>
+    <p class="kutu-not">RB altındaki küçük sayılar: hücum + savunma ribaundu</p></div>`;
 }
 
 function ceyrekTablosu(k) {

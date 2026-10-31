@@ -17,7 +17,7 @@
   {
    "id": 346314,
    "tarih": "2026-10-31T18:00:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "PİZZABULLS BORDO BANDIRMA",
    "evId": 265993,
    "evSkor": "103",
@@ -25,12 +25,7 @@
    "depId": 265991,
    "depSkor": "88",
    "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "00:23",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346315,
@@ -348,8 +343,8 @@
    "ad": "Okben Ulubay",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 7,
-   "saniye": 1253,
+   "vp": 8,
+   "saniye": 1276,
    "mac": 1
   },
   "159631": {
@@ -373,15 +368,15 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 23,
    "mac": 1
   },
   "85925": {
    "ad": "Özgür Şahin",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 0,
-   "saniye": 0,
+   "vp": -2,
+   "saniye": 23,
    "mac": 1
   },
   "473261": {
@@ -389,7 +384,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 13,
-   "saniye": 1532,
+   "saniye": 1555,
    "mac": 1
   },
   "778310": {
@@ -397,7 +392,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 19,
-   "saniye": 1256,
+   "saniye": 1279,
    "mac": 1
   },
   "609095": {
@@ -405,7 +400,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 19,
-   "saniye": 1557,
+   "saniye": 1580,
    "mac": 1
   },
   "608898": {
@@ -437,7 +432,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 16,
-   "saniye": 1468,
+   "saniye": 1475,
    "mac": 1
   },
   "776935": {
@@ -445,7 +440,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 8,
-   "saniye": 1350,
+   "saniye": 1373,
    "mac": 1
   },
   "358272": {
@@ -460,8 +455,8 @@
    "ad": "Mustafa Yiğit Açar",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 0,
-   "saniye": 0,
+   "vp": -1,
+   "saniye": 16,
    "mac": 1
   },
   "283725": {
@@ -481,19 +476,19 @@
    "mac": 1
   },
   "776655": {
-   "ad": "David Dileo",
+   "ad": "David DiLeo",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 1,
-   "saniye": 908,
+   "saniye": 931,
    "mac": 1
   },
   "780954": {
    "ad": "Luka Mitrovic",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 1,
-   "saniye": 353,
+   "vp": 2,
+   "saniye": 376,
    "mac": 1
   }
  }

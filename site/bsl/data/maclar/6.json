@@ -4,28 +4,33 @@
   {
    "id": 346317,
    "tarih": "2026-10-31T15:30:00",
-   "durum": "oynanmadi",
+   "durum": "bitti",
    "ev": "BİOTEKNO KÖRFEZ BASKET",
    "evId": 268222,
-   "evSkor": null,
+   "evSkor": "83",
    "dep": "TRABZONSPOR",
    "depId": 266029,
-   "depSkor": null,
+   "depSkor": "89",
    "salon": "Şehit Polis Recep Topaloğlu Spor Salonu",
    "yayin": "beINSports"
   },
   {
    "id": 346314,
    "tarih": "2026-10-31T18:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "PİZZABULLS BORDO BANDIRMA",
    "evId": 265993,
-   "evSkor": null,
+   "evSkor": "20",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
-   "depSkor": null,
+   "depSkor": "14",
    "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "02:31",
+    "uzatma": false
+   }
   },
   {
    "id": 346315,

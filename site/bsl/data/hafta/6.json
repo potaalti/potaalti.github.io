@@ -4,28 +4,33 @@
   {
    "id": 346317,
    "tarih": "2026-10-31T15:30:00",
-   "durum": "oynanmadi",
+   "durum": "bitti",
    "ev": "BİOTEKNO KÖRFEZ BASKET",
    "evId": 268222,
-   "evSkor": null,
+   "evSkor": "83",
    "dep": "TRABZONSPOR",
    "depId": 266029,
-   "depSkor": null,
+   "depSkor": "89",
    "salon": "Şehit Polis Recep Topaloğlu Spor Salonu",
    "yayin": "beINSports"
   },
   {
    "id": 346314,
    "tarih": "2026-10-31T18:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "PİZZABULLS BORDO BANDIRMA",
    "evId": 265993,
-   "evSkor": null,
+   "evSkor": "20",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
-   "depSkor": null,
+   "depSkor": "14",
    "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "02:31",
+    "uzatma": false
+   }
   },
   {
    "id": 346315,
@@ -106,5 +111,390 @@
    "yayin": "beINSports"
   }
  ],
- "oyuncular": {}
+ "oyuncular": {
+  "778181": {
+   "ad": "Boo Buie",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 14,
+   "saniye": 2219,
+   "mac": 1
+  },
+  "609266": {
+   "ad": "Matt Mitchell",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 11,
+   "saniye": 1489,
+   "mac": 1
+  },
+  "397073": {
+   "ad": "Altan Çamoğlu",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 1,
+   "saniye": 791,
+   "mac": 1
+  },
+  "778184": {
+   "ad": "Oscar Cluff",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 35,
+   "saniye": 2175,
+   "mac": 1
+  },
+  "470601": {
+   "ad": "Filip Barna",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 12,
+   "saniye": 1945,
+   "mac": 1
+  },
+  "778161": {
+   "ad": "Johnny Davis",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "254785": {
+   "ad": "Mert Akay",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 1,
+   "saniye": 462,
+   "mac": 1
+  },
+  "419874": {
+   "ad": "Berk Can Akın",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 9,
+   "saniye": 1157,
+   "mac": 1
+  },
+  "217226": {
+   "ad": "Atahan Demirtaş",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "358964": {
+   "ad": "Efe Sarıca",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "778182": {
+   "ad": "Alex Reese",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 8,
+   "saniye": 1094,
+   "mac": 1
+  },
+  "778183": {
+   "ad": "Paulius Danusevicius",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 1,
+   "saniye": 668,
+   "mac": 1
+  },
+  "501871": {
+   "ad": "Isaiah Canaan",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 8,
+   "saniye": 1444,
+   "mac": 1
+  },
+  "779255": {
+   "ad": "Marcus Keene",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 19,
+   "saniye": 1879,
+   "mac": 1
+  },
+  "105532": {
+   "ad": "Yiğit Arslan",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 14,
+   "saniye": 1449,
+   "mac": 1
+  },
+  "473256": {
+   "ad": "Emanuel Terry",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 4,
+   "saniye": 991,
+   "mac": 1
+  },
+  "590409": {
+   "ad": "Brady Manek",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 18,
+   "saniye": 1571,
+   "mac": 1
+  },
+  "735812": {
+   "ad": "Brandon Boston Jr.",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 20,
+   "saniye": 1201,
+   "mac": 1
+  },
+  "133530": {
+   "ad": "Tolga Geçim",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": -1,
+   "saniye": 211,
+   "mac": 1
+  },
+  "512899": {
+   "ad": "Akwasi Yeboah",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 5,
+   "saniye": 1221,
+   "mac": 1
+  },
+  "741031": {
+   "ad": "Royce Hamm Jr.",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 4,
+   "saniye": 954,
+   "mac": 1
+  },
+  "129295": {
+   "ad": "Ege Arar",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 5,
+   "saniye": 339,
+   "mac": 1
+  },
+  "369269": {
+   "ad": "Yiğit Hamza Mestoğlu",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "192987": {
+   "ad": "Rıdvan Öncel",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 5,
+   "saniye": 740,
+   "mac": 1
+  },
+  "666515": {
+   "ad": "Ty Gordon",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 7,
+   "saniye": 449,
+   "mac": 1
+  },
+  "512379": {
+   "ad": "Boubacar Toure",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 1,
+   "saniye": 403,
+   "mac": 1
+  },
+  "667625": {
+   "ad": "Damien Jefferson",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 4,
+   "saniye": 403,
+   "mac": 1
+  },
+  "307500": {
+   "ad": "Mehmet Oğuzhan Kızıl",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 0,
+   "saniye": 403,
+   "mac": 1
+  },
+  "501076": {
+   "ad": "Quentin Peterson",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 8,
+   "saniye": 449,
+   "mac": 1
+  },
+  "130898": {
+   "ad": "Okben Ulubay",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": -1,
+   "saniye": 46,
+   "mac": 1
+  },
+  "159631": {
+   "ad": "Akın Kandemir",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "106461": {
+   "ad": "Kadir Bayram",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "354404": {
+   "ad": "Doğan Bozveli",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "85925": {
+   "ad": "Özgür Şahin",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "473261": {
+   "ad": "Peyton Aldridge",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 1,
+   "saniye": 46,
+   "mac": 1
+  },
+  "778310": {
+   "ad": "Zach Hankins",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 0,
+   "saniye": 46,
+   "mac": 1
+  },
+  "609095": {
+   "ad": "Marcquise Reed",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 331,
+   "mac": 1
+  },
+  "608898": {
+   "ad": "Tyler Cavanaugh",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 6,
+   "saniye": 356,
+   "mac": 1
+  },
+  "384595": {
+   "ad": "Mateusz Ponitka",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 3,
+   "saniye": 369,
+   "mac": 1
+  },
+  "734505": {
+   "ad": "Trevion Williams",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 8,
+   "saniye": 331,
+   "mac": 1
+  },
+  "131296": {
+   "ad": "Kenan Sipahi",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 1,
+   "saniye": 302,
+   "mac": 1
+  },
+  "776935": {
+   "ad": "Aleksa Avramovic",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 173,
+   "mac": 1
+  },
+  "358272": {
+   "ad": "İsmet Akpınar",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 147,
+   "mac": 1
+  },
+  "447092": {
+   "ad": "Mustafa Yiğit Açar",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "283725": {
+   "ad": "Furkan Haltalı",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": -1,
+   "saniye": 118,
+   "mac": 1
+  },
+  "47659": {
+   "ad": "Maxim Mutaf",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "776655": {
+   "ad": "David Dileo",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 1,
+   "saniye": 118,
+   "mac": 1
+  },
+  "780954": {
+   "ad": "Luka Mitrovic",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  }
+ }
 }

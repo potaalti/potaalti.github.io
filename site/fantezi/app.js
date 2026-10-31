@@ -928,8 +928,9 @@ function haftaCubuklari(s) {
 }
 
 // Menajerin özeti: sırası, puanı, bu haftası, kalan hakkı ve varsa zorunlu değişiklik uyarısı
-function benimOzetKarti() {
-  const tid = benimTakimim();
+// Takımın özet kartı (genel sıra, puan, son hafta, hak); Takımım'da kendi takımım, takım sayfasında o takım
+const benimOzetKarti = () => takimOzetKarti(benimTakimim());
+function takimOzetKarti(tid) {
   const k = tid && S.kadrolar[tid];
   const haftalar = puanHaftalari();
   if (!k || asama() !== 'sezon' || !S.haftalarYuklendi || !haftalar.length) return '';
@@ -938,10 +939,11 @@ function benimOzetKarti() {
   const son = haftalar.at(-1);
   const hs = C.haftaSiralamasi(haftaTakimlari(son.hafta), son).find(s => s.id === tid);
   const surdu = !C.haftaDurumu(son).tamamlandi;
-  const zorunlu = zorunluBekleyen(tid);
+  const zorunlu = tid === benimTakimim() ? zorunluBekleyen(tid) : [];
+  const menajer = S.takimlar[tid]?.menajer;
   const kutu = (deger, ad, ek = '') => `<div class="ozet-kutu"><b>${deger}</b><span>${ad}</span>${ek}</div>`;
   return `<div class="kart benim-ozet">
-    <div class="baslik-satir"><h2>${esc(takimAdi(tid))}</h2><a href="#/puan">Genel klasman ›</a></div>
+    <div class="baslik-satir"><h2>${esc(takimAdi(tid))}${menajer && tid !== benimTakimim() ? ` <span class="soluk kucuk">${esc(menajer)}</span>` : ''}</h2><a href="#/puan">Genel klasman ›</a></div>
     <div class="ozet-kutular">
       ${kutu(`${g.sira}.`, 'Genel sıra', degisimHtml(siraDegisimleri().get(tid) ?? 0))}
       ${kutu(g.puan, 'Puan', `<small>${sayi(g.vp)} VP</small>`)}
@@ -1183,26 +1185,36 @@ function haftaKart(haftalar, secili) {
           <td class="sayi"><span class="madalya m${s.sira}">${s.sira}</span></td><td><b>${esc(s.ad)}</b> <span class="soluk kucuk">${esc(s.menajer ?? '')}</span>
           ${s.vpEsitligi ? `<div class="kucuk soluk">${s.enIyiTurk ? `Eşitlikte en iyi Türk: ${esc(s.enIyiTurk.ad)} (${sayi(s.enIyiTurk.vp)})` : 'Eşitlikte: sayılan oyuncularda Türk yok'}</div>` : ''}</td>
           <td class="sayi"><b>${sayi(s.toplam)}</b></td><td class="sayi">${s.puan}</td></tr>
-        ${S.ui.acik === s.id ? `<tr class="detay"><td colspan="4">${haftaDetayi(s)}</td></tr>` : ''}`).join('')}</tbody>
+        ${S.ui.acik === s.id ? `<tr class="detay"><td colspan="4">${haftaDetayi(s, h)}</td></tr>` : ''}`).join('')}</tbody>
     </table></div>
     <p class="kucuk soluk" style="margin-bottom:0">Satıra dokununca takımın o haftaki oyuncuları açılır.</p>
   </div>`;
 }
 
-function macMetni(o) {
-  if (o.macDurumu === 'bay') return 'bay';
-  if (o.macDurumu === 'oynanmadi') return 'maçı oynanmadı';
-  const dk = Math.floor(o.saniye / 60);
-  return `${o.macDurumu === 'canli' ? 'canlı · ' : ''}${dk} dk`;
-}
-
-function haftaDetayi(s) {
-  const satir = o => `<tr data-oyuncu="${esc(o.id)}" data-sayildi="${o.sayildi}"><td class="${o.sayildi ? '' : o.rol === 'as' ? 'cizik' : 'soluk'}">${oyuncuLinki(o.id, o.ad)}${trRozeti(o)}
-      <span class="rozet ${o.rol}">${o.rol === 'as' ? 'As' : 'Yedek'}</span>
-      ${o.yerineGiren ? `<div class="kucuk soluk">süre almadı, yerine ${esc(o.yerineGiren)}</div>` : ''}
-      ${o.yerineGirdigi ? `<div class="kucuk soluk">${esc(o.yerineGirdigi)} yerine sayıldı</div>` : ''}</td>
-    <td class="kucuk soluk">${esc(o.takimKod || o.takim || '')}</td><td class="kucuk soluk">${macMetni(o)}</td><td class="sayi">${sayi(o.vp)}</td></tr>`;
-  return `<table>${s.aslar.map(satir).join('')}${s.yedekler.map(satir).join('')}</table>`;
+// Haftalık sıralamada satıra dokununca açılan takım: As'lar ve yedekler; her oyuncunun maçı (gün-saat, canlı, oynadığı dakika
+// ya da bay) ve o haftaki VP'si. Süre almayan As soluk ve yerine sayılan yazar; sayılmayan yedek soluk.
+const kisaGun = iso => new Date(iso).toLocaleDateString('tr-TR', { weekday: 'short', day: 'numeric', month: 'short' });
+function haftaDetayi(s, h) {
+  const macBilgisi = o => {
+    const tk = oyuncu(o.id).takimId;
+    const m = tk && h?.maclar?.find(x => x.evId === tk || x.depId === tk);
+    if (o.macDurumu === 'bay' || !m) return 'Bu hafta maçı yok';
+    if (o.macDurumu === 'oynanmadi') return `${kisaGun(m.tarih)} ${saatYazisi(m.tarih)}`;
+    const dk = `${Math.floor(o.saniye / 60)} dk`;
+    return o.macDurumu === 'canli' ? `<span class="canli-yazi">canlı</span> · ${dk}` : dk;
+  };
+  const satir = o => {
+    const oynanmadi = ['oynanmadi', 'bay'].includes(o.macDurumu);
+    const not = o.yerineGirdigi ? `<span class="detay-not yesil">${esc(o.yerineGirdigi)} yerine sayıldı</span>`
+      : o.yerineGiren ? `<span class="detay-not">süre almadı · yerine ${esc(o.yerineGiren)}</span>` : '';
+    return `<div class="detay-satir ${o.sayildi ? '' : 'soluk-satir'}">
+      <div class="detay-ad">${oyuncuLinki(o.id, o.ad)}${trRozeti(o)} ${not}
+        <small>${esc(baslik(o.takimKod || o.takim || ''))} · ${macBilgisi(o)}</small></div>
+      <b class="detay-vp">${oynanmadi && !o.vp ? '–' : sayi(o.vp)}</b></div>`;
+  };
+  return `<div class="hafta-detay"><div class="detay-grup">As</div>${s.aslar.map(satir).join('')}
+    <div class="detay-grup">Yedek</div>${s.yedekler.map(satir).join('')}
+    <a class="detay-link" href="#/takim/${esc(s.id)}">Takım sayfası ›</a></div>`;
 }
 
 // ---------- Takımlar ----------
@@ -1232,10 +1244,11 @@ function gorunumTakim(tid) {
       <tr><td><b>Toplam</b> (${g.sira}. sırada)</td><td class="sayi"><b>${sayi(g.vp)}</b></td><td></td><td class="sayi"><b>${g.puan}</b></td></tr></tbody></table></div></div>` : '';
   }
   const hareket = Object.values(S.hareketler).filter(h => h.takim === tid || h.veren === tid);
-  return `${takimKarti(tid, asama() === 'sezon' ? `<p class="kucuk soluk" style="margin:0 0 6px">${hakOzeti(k)}</p>` : '')}
-    ${yoneticiKadroPaneli(tid)}
-    ${haftalik}
-    ${hareket.length ? `<div class="kart"><h3>Hareketler</h3>${hareket.map(hareketSatiri).join('')}</div>` : ''}`;
+  const alt = `${yoneticiKadroPaneli(tid)}${haftalik}${hareket.length ? `<div class="kart"><h3>Hareketler</h3>${hareket.map(hareketSatiri).join('')}</div>` : ''}`;
+  if (asama() !== 'sezon' || !k) return `${takimKarti(tid)}${alt}`;
+  const ozet = takimOzetKarti(tid) || `<div class="kart"><h2 style="margin:0">${esc(t.ad)}</h2><p class="kucuk soluk" style="margin:4px 0 0">${hakOzeti(k)}</p></div>`;
+  return `<div class="kadrom-ust">${ozet}</div><div class="kadrom-duzen"><div>${sahaKarti(tid, k, false)}</div>
+    <div>${haftaMaclariKarti(tid)}</div></div><div class="kadrom-ust">${alt}</div>`;
 }
 
 // Yönetici: takımın kadrosunu doğrudan düzenler (haklar, bekleme ve değişiklik kuralı aranmaz)
@@ -1387,9 +1400,25 @@ function surenHafta() {
 // Sahada 5 As, altında yedek kulübesi. Hak varsa bir As'a ve bir Yedeğe dokunarak yer değiştirilir.
 // Hafta başlamadan kartlarda sezon ortalaması; hafta başlayınca o haftanın VP'si (maçı oynanmamışsa "–", canlı maçta anlık),
 // süre almayan As soluk, yerine sayılan yedekte "… yerine sayıldı". Hafta bitince bu değerler sıradaki haftaya geçilene kadar kalır.
-function sahaKarti(tid, k, secilebilir) {
+// Sahada gösterilen hafta: seçilmediyse süren hafta (başlamadıysa null: ortalamalar). ‹ › ile başlamış haftalar arasında gezilir.
+function sahaHaftasi() {
+  const baslamis = puanHaftalari();
+  const varsayilan = surenHafta();
+  const secili = S.ui.sahaHafta != null && baslamis.find(h => h.hafta === S.ui.sahaHafta);
+  const sira = baslamis.map(h => h.hafta);
+  if (!varsayilan) sira.push('sonraki');
+  const hafta = secili || varsayilan || null;
+  const i = hafta ? sira.indexOf(hafta.hafta) : sira.length - 1;
+  return { hafta, n: hafta?.hafta ?? maclarVarsayilanHafta(), onceki: sira[i - 1], sonraki: sira[i + 1] };
+}
+
+function sahaKarti(tid, kGuncel, secilebilir) {
   const zorunlu = zorunluBekleyen(tid);
-  const hafta = surenHafta();
+  const secimModu = secilebilir && S.ui.degisimModu;
+  const gez = sahaHaftasi();
+  // Değişiklik modunda şimdiki kadro; yoksa gösterilen haftanın kadrosu (hafta ortası değişiklikler sonraki haftadan sayılır)
+  const hafta = secimModu ? surenHafta() : gez.hafta;
+  const k = hafta && !secimModu ? C.haftaKadrosu(kGuncel, hafta.hafta) : kGuncel;
   const sonuc = hafta && C.haftaSiralamasi(haftaTakimlari(hafta.hafta), hafta).find(s => s.id === tid);
   const durum = new Map(sonuc ? [...sonuc.aslar, ...sonuc.yedekler].map(o => [o.id, o]) : []);
   const deger = p => {
@@ -1406,7 +1435,6 @@ function sahaKarti(tid, k, secilebilir) {
     if (d.yerineGirdigi) return `<span class="saha-not yerine">${esc(d.yerineGirdigi)} yerine sayıldı</span>`;
     return '';
   };
-  const secimModu = secilebilir && S.ui.degisimModu;
   const kart = (p, rol) => {
     const o = oyuncu(p);
     const d = hafta && durum.get(p);
@@ -1428,9 +1456,15 @@ function sahaKarti(tid, k, secilebilir) {
       ${sorun ? `<span class="kirmizi-yazi kucuk">Olmaz: ${esc(sorun)}</span>` : ''}
       <span class="satir"><button class="btn ana" data-is="degistir" ${asP && yP && !sorun ? '' : 'disabled'}>Değiştir${ortakHak() ? ' (1 hak)' : ''}</button><button class="btn" data-is="sec-temizle">Vazgeç</button></span></div>`;
   }
+  const hd = hafta && C.haftaDurumu(hafta);
+  const ok = (yon, h) => `<button class="hafta-ok" data-is="saha-hafta" data-id="${h ?? ''}" ${h == null || secimModu ? 'disabled' : ''} aria-label="${yon === '‹' ? 'Önceki' : 'Sonraki'} hafta">${yon}</button>`;
+  const gezgin = gez.n ? `<div class="hafta-gezgin">${ok('‹', gez.onceki)}
+      <div><b>${hf(gez.n)}. hafta${sonuc ? ` · ${sayi(sonuc.toplam)} VP` : ''}</b>
+        <small>${sonuc ? `${sonuc.sira}. sırada · ` : ''}${LIG.fanteziHaftasi ? `${LIG.kisa} ${gez.n}. hafta · ` : ''}${hd ? `${hd.bitti}/${hd.toplam} maç bitti${hd.canli ? ' · <span class="canli-yazi">canlı</span>' : ''}` : 'başlamadı · VP ortalamaları'}</small></div>
+      ${ok('›', gez.sonraki)}</div>` : '';
   return `<div class="kart saha-kart">
-    <div class="baslik-satir"><h2>Kadro</h2><span class="satir">${sonuc ? `<span class="hafta-toplam">${hf(hafta.hafta)}. hafta: <b>${sayi(sonuc.toplam)} VP</b> · ${sonuc.sira}. sırada${C.haftaDurumu(hafta).canli ? ' · <span class="canli-yazi">canlı</span>' : ''}</span>` : ''}
-      ${yabanci != null ? `<span class="rozet ${yabanci > kural().enFazlaYabanci ? 'uyari' : ''}">As'ta yabancı: ${yabanci}/${kural().enFazlaYabanci}</span>` : ''}</span></div>
+    <div class="baslik-satir"><h2>Kadro</h2>${yabanci != null ? `<span class="rozet ${yabanci > kural().enFazlaYabanci ? 'uyari' : ''}">As'ta yabancı: ${yabanci}/${kural().enFazlaYabanci}</span>` : ''}</div>
+    ${secimModu ? '' : gezgin}
     <div class="saha"><div class="saha-cizgi"></div>${k.as.map(p => kart(p, 'as')).join('')}</div>
     <div class="kulube"><span class="kulube-ad">Yedek</span>${k.yedek.map(p => kart(p, 'yedek')).join('')}</div>
     ${secimModu ? cubuk : '<p class="kucuk soluk" style="margin:10px 0 0">Oyuncuya dokununca hafta hafta performansı açılır.</p>'}
@@ -1439,8 +1473,9 @@ function sahaKarti(tid, k, secilebilir) {
 
 // Kadrodaki oyuncuların bu haftaki maçları; maç başladıysa VP'leri
 function haftaMaclariKarti(tid) {
-  const k = S.kadrolar[tid];
-  const n = maclarVarsayilanHafta();
+  const gez = sahaHaftasi();
+  const n = gez.n;
+  const k = S.kadrolar[tid] && (gez.hafta ? C.haftaKadrosu(S.kadrolar[tid], n) : S.kadrolar[tid]);
   if (n && S.maclar[n] === undefined) maclariYukle(n);
   const maclar = n && S.maclar[n];
   if (!k || !maclar?.length) return '';
@@ -2041,7 +2076,7 @@ function kutuSkorTablosu(t) {
     const tid = sahip.get(String(o.id));
     const ad = oyuncuLinki(o.id, o.ad);
     return `<tr class="${sureSn(o.sure) > 0 ? '' : 'oynamadi'} ${tid && tid === benim ? 'ben' : ''}">
-      <th>${o.ilk5 ? `<b>${ad}</b>` : ad}${tid && tid !== benim ? `<div class="fantezi-sahip">${esc(takimAdi(tid))}</div>` : ''}</th>
+      <th>${o.ilk5 ? `<b>${ad}</b>` : ad}</th>
       ${KUTU_SUTUNLARI.map(c => kutuHucresi(o, c)).join('')}</tr>`;
   }).join('');
   return `<div class="kart"><h3>${esc(baslik(t.ad))}</h3><div class="tablo-kap"><table class="kutu">
@@ -2330,6 +2365,7 @@ async function eylem(is, id, el) {
     case 'sec-as': S.ui.secAs = S.ui.secAs === id ? null : id; return ciz();
     case 'sec-yedek': S.ui.secYedek = S.ui.secYedek === id ? null : id; return ciz();
     case 'sec-temizle': S.ui.secAs = null; S.ui.secYedek = null; S.ui.degisimModu = false; return ciz();
+    case 'saha-hafta': S.ui.sahaHafta = id === 'sonraki' ? null : Number(id); return ciz();
     case 'degisim-modu':
       // Düğme sayfanın altında: seçim sahada yapılır, oraya kaydır
       S.ui.degisimModu = true;

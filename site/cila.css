@@ -324,3 +324,26 @@ button.saha-oyuncu:hover, a.saha-oyuncu:hover { border-color: color-mix(in srgb,
 table.kutu tr.ben th, table.kutu tr.benim-oyuncu th { background: var(--vurgu-acik) !important; }
 table.kutu tr.ben td, table.kutu tr.benim-oyuncu td { background: color-mix(in srgb, var(--vurgu) 10%, transparent) !important; }
 table.kutu .fantezi-sahip { font-size: .68rem; color: var(--vurgu); font-weight: 600; }
+
+/* Haftalık sıralamada açılan takım (eski TBL Fantezi'nin takım görünümü gibi): oyuncu, kulübü ve maçı, sağda VP */
+.hafta-detay { padding: 2px 0 6px; }
+.detay-grup { font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--soluk); margin: 10px 0 2px; }
+.detay-satir { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--cizgi); }
+.detay-grup + .detay-satir { border-top: 0; }
+.detay-ad { flex: 1; min-width: 0; font-weight: 700; }
+.detay-ad small { display: block; font-weight: 400; color: var(--soluk); font-size: .76rem; margin-top: 2px; }
+.detay-vp { font-size: 1.05rem; min-width: 2.2em; text-align: right; }
+.detay-not { display: inline-block; font-size: .68rem; font-weight: 700; padding: 1px 7px; border-radius: 999px; vertical-align: 1px;
+  background: color-mix(in srgb, var(--kirmizi) 16%, transparent); color: var(--kirmizi); }
+.detay-not.yesil { background: color-mix(in srgb, var(--yesil, #22c55e) 16%, transparent); color: var(--yesil, #22c55e); }
+.soluk-satir .detay-ad > a, .soluk-satir .detay-vp { opacity: .5; }
+.detay-link { display: inline-block; margin-top: 8px; font-size: .85rem; font-weight: 600; }
+
+/* Sahada hafta geçişi: ‹ 3. hafta › (Takımım ve takım sayfası) */
+.hafta-gezgin { display: flex; align-items: center; gap: 10px; margin: 2px 0 12px; text-align: center; }
+.hafta-gezgin > div { flex: 1; min-width: 0; }
+.hafta-gezgin b { display: block; font-size: 1.05rem; }
+.hafta-gezgin small { display: block; color: var(--soluk); font-size: .78rem; margin-top: 2px; }
+.hafta-ok { width: 40px; height: 40px; flex: 0 0 40px; border-radius: 50%; border: 1px solid var(--cizgi); background: var(--kart, transparent);
+  color: inherit; font-size: 1.3rem; line-height: 1; cursor: pointer; }
+.hafta-ok:disabled { opacity: .3; cursor: default; }

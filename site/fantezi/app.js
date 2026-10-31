@@ -1331,6 +1331,7 @@ function gorunumOyuncu(pid) {
         <div style="margin-top:6px">${durum}</div>
         ${secim ? `<div class="kucuk soluk" style="margin-top:4px">Draft: ${secim.no + 1}. seçim (${esc(takimAdi(secim.takim))})${secim.otomatik ? ' · otomatik' : ''}</div>` : ''}
         ${yonetici() && !sahip && kalan && S.bekleme[pid] ? `<button class="btn kucuk" data-is="bekleme-kaldir" data-id="${esc(pid)}" style="margin-top:6px">Beklemeyi kaldır</button>` : ''}
+        ${yonetici() && asama() === 'sezon' && !sahip && !td && o.aktif !== false ? `<button class="btn kucuk" data-is="bekleme-baslat" data-id="${esc(pid)}" style="margin-top:6px">⏳ ${beklemeSaati()} saat talep süresi başlat</button>` : ''}
       </div></div>
     ${talepKarti}
     <div class="kart"><h3>Sezon ortalamaları</h3><div class="istatistik">${istatistik.map(([ad, d]) => `<div><b>${d}</b><span>${ad}</span></div>`).join('')}</div></div>
@@ -1531,9 +1532,7 @@ function gorunumSerbest() {
       </table></div>`;
   // Sezon boyunca hep görünür (boşsa da), menajerler yerini bilsin
   const talepKarti = alimAcik ? `<div class="kart talep-kart"><h3>Talep süresindeki oyuncular <span class="soluk">(${talepte.length})</span></h3>
-    <p class="kucuk soluk" style="margin-top:0">Bırakılan ya da lige yeni katılan oyuncuyu ${beklemeSaati()} saat kimse alamaz. Bu sürede talep edenler
-    arasında süre bitince kura çekilir; talep eden olmazsa oyuncu boştakilere düşer.</p>
-    ${talepte.length ? '' : '<p class="soluk" style="margin:0">Şu an talep süresinde oyuncu yok. Bir takım oyuncu bıraktığında ya da TBF\'de yeni bir oyuncunun lisansı çıktığında burada görünür.</p>'}
+    ${talepte.length ? '' : '<p class="soluk kucuk" style="margin:0">Şu an talep süresinde oyuncu yok.</p>'}
     <div class="fa-liste">${talepte.map(({ pid, td }) => {
       const o = S.rehber.get(pid);
       return `<div class="fa-kart">
@@ -1548,14 +1547,12 @@ function gorunumSerbest() {
         ${!sahip.has(panelOyuncu.id) && !talepDurumu(panelOyuncu.id) && alabilir ? `<button class="btn ana" data-is="fa-al" data-id="${panelOyuncu.id}">Al</button>` : ''}
         <button class="btn" data-is="panel-kapat" aria-label="Kapat">✕</button></div>
       ${gorunumOyuncu(panelOyuncu.id)}</aside>` : '';
-  return `<div class="kart"><h2>Boştaki oyuncular</h2>
-    <p style="margin-bottom:0">Hiçbir takımda olmayan ${LIG.kisa} oyuncuları. ${!alimAcik ? 'Serbest oyuncu alımı sezon başlayınca açılır.'
-      : tid ? `Kalan ${hakAdi()}n: <b>${hak}</b> / ${S.ayar.faHakki} (sezon boyunca).` : ''}
-</p>
-    ${zorunlu.length ? `<div class="hata-kutu"><b>Zorunlu değişiklik:</b> ${zorunlu.map(p => esc(oyuncu(p).ad)).join(', ')} artık TBF'de lisanslı görünmüyor. Aşağıdan kadro kuralına uygun bir oyuncu seçip <b>Al</b>'a bas; bu değişiklik ${hakAdi()}ndan düşmez.</div>` : ''}</div>
+  return `${zorunlu.length ? `<div class="kart hata-kutu"><b>Zorunlu değişiklik:</b> ${zorunlu.map(p => esc(oyuncu(p).ad)).join(', ')} artık TBF'de lisanslı görünmüyor. Aşağıdan kadro kuralına uygun bir oyuncu seçip <b>Al</b>'a bas; bu değişiklik ${hakAdi()}ndan düşmez.</div>` : ''}
     ${panel}
     ${talepKarti}
     <div class="kart">
+      <div class="baslik-satir"><h2>Boştaki oyuncular</h2>${!alimAcik ? '<span class="soluk kucuk">Serbest oyuncu alımı sezon başlayınca açılır.</span>'
+        : tid ? `<span class="rozet">${HakAdi()}: ${hak}/${S.ayar.faHakki}</span>` : ''}</div>
       <div class="satir" style="margin-bottom:10px">
         <input type="search" id="ara" data-ui="ara" placeholder="Oyuncu ara" value="${esc(S.ui.ara)}" class="ara">
         <select id="f-takim" data-ui="bslTakim"><option value="">Bütün ${LIG.kisa} takımları</option>${bslTakimlar.map(t => `<option ${t === S.ui.bslTakim ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select>
@@ -1714,6 +1711,8 @@ function gorunumKurallar() {
       ${LIG.takas ? `<li>Takaslar sınırsız; iki taraf da kabul etmeli ve yönetici onaylamalı (oyuncular yönetici onaylayınca yer değiştirir). İki taraftan aynı sayıda (1–3) oyuncu verilir; gelen oyuncu gidenin yerine (As/Yedek) geçer.</li>` : ''}
       ${ortakHak() ? `<li>Her takımın sezon boyunca <b>${a.faHakki} transfer hakkı</b> var. Serbest oyuncu almak (hiçbir takımda olmayan oyuncu; alırken bir oyuncunu bırakırsın) ve As–Yedek değişikliği yapmak 1'er hak kullanır.</li>`
         : `<li>Her takım sezon boyunca en fazla ${a.faHakki} serbest oyuncu (hiçbir takımda olmayan oyuncu) alabilir; alırken bir oyuncusunu bırakır.</li>`}
+      <li><b>Boştakiler</b> sayfasında hiçbir fantezi takımında olmayan ${LIG.kisa} oyuncuları listelenir; serbest oyuncu oradan alınır.
+        Talep süresindeki oyuncular sayfanın en üstünde ayrı görünür (kim bıraktı ya da lisansı yeni mi çıktı, kalan süre, talip sayısı).</li>
       <li>Bir takımın bıraktığı ya da ${LIG.kisa}'ye yeni katılan (lisansı yeni çıkan) oyuncuyu ${beklemeSaati()} saat kimse alamaz. Bu sürede takımlar oyuncuya talep eder (kazanırsa bırakacağı oyuncuyu seçer); süre bitince talip olanlar arasında kura çekilir ve kazanan takımın ${hakAdi()}ndan 1 düşer. Talep eden olmazsa oyuncu boştakilere düşer ve isteyen alır. Kimlerin talip olduğu oyuncunun sayfasında görünür.</li>
       ${LIG.otomatikYerine ? `<li>Fantezi takımındaki yabancı bir oyuncunun lisansı düşer ve ${LIG.kisa} takımı yerine yabancı bir oyuncu alırsa, yeni oyuncu fantezi takımına <b>otomatik</b> geçer; ${hakAdi()}ndan düşmez. Yerine kimse gelmezse takım boştakilerden oyuncu almak zorundadır (bu da hakkından düşmez).</li>` : ''}
       <li>Yöneticiler gerektiğinde her takımın kadrosunu düzenleyebilir${LIG.hareketler ? "; yaptıkları değişiklikler Hareketler'de görünür" : ''}.</li>
@@ -2390,6 +2389,11 @@ async function eylem(is, id, el) {
     case 'istek-temizle': {
       const sahip = sahipler();
       return istekKaydet(S.istek.filter(p => !sahip.has(p)));
+    }
+    case 'bekleme-baslat': {
+      if (!confirm(`${oyuncu(id).ad} için ${beklemeSaati()} saatlik talep süresi başlasın mı? Bu sürede kimse doğrudan alamaz, talep edenler arasında kura çekilir.`)) return;
+      await D.beklemeleriBaslat({ [id]: new Date(simdi()) });
+      return bildir(`${oyuncu(id).ad} talep süresinde`);
     }
     case 'bekleme-kaldir': {
       if (!confirm(`${oyuncu(id).ad} için bekleme kaldırılsın mı? Varsa talepler de silinir ve oyuncu hemen alınabilir olur.`)) return;

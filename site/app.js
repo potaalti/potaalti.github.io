@@ -377,16 +377,17 @@ function buHaftaKarti(lig) {
 }
 
 function gorunumAna() {
-  const sutun = lig => `<div>${buHaftaKarti(lig)}${tabloKarti(lig, 6)}</div>`;
+  // Ana sayfada solda BSL, sağda TBL; puan tablosunun ilk 8'i
+  const sutun = lig => `<div>${buHaftaKarti(lig)}${tabloKarti(lig, 8)}</div>`;
   const karsilama = `<div class="karsilama"><img src="icon-192.png" alt=""><div><strong>Pota Altı</strong><small>TBL ve BSL canlı skorlar, istatistikler, fantezi ligleri ve yayınlar</small></div></div>`;
   const fantezi = `<h2 class="bolum-baslik">Fantezi ligleri</h2><div class="fantezi-kartlari">${fantezKartlari()}</div>`;
   if (TELEFON.matches) {
     const lig = S.ui.anaLig;
-    const secici = `<div class="lig-secici">${Object.entries(LIGLER).map(([l, v]) => `<button class="${l === lig ? 'aktif' : ''}" data-is="ana-lig" data-id="${l}">${v.kisa}</button>`).join('')}</div>`;
+    const secici = `<div class="lig-secici">${['bsl', 'tbl'].map(l => [l, LIGLER[l]]).map(([l, v]) => `<button class="${l === lig ? 'aktif' : ''}" data-is="ana-lig" data-id="${l}">${v.kisa}</button>`).join('')}</div>`;
     return `${Yayin.anaKart()}${secici}${sutun(lig)}${fantezi}${altBilgi()}`;
   }
   return `<div class="ana-ust">${karsilama}${Yayin.anaKart()}</div>
-    <div class="iki-sutun">${sutun('tbl')}${sutun('bsl')}</div>${fantezi}${altBilgi()}`;
+    <div class="iki-sutun">${sutun('bsl')}${sutun('tbl')}</div>${fantezi}${altBilgi()}`;
 }
 
 // ---------- Fantezi ----------

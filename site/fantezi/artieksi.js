@@ -63,6 +63,9 @@ const HAZIR_SABLON = {
     baslikY: 250, baslikGen: 775, baslikBoy: 110,
     kutuUst: 354, kutuAdim: 114.2, kutuSol: 322, kutuSag: 925, kayma: 0.78,
     degerX: 1027, satirSayisi: 10,
+    // 10. ile eşit +/- yapan 11., 12.… oyuncular şeritsiz alt alta: görsel uzar; kesY'den sonrası (alt bant) en alta taşınır,
+    // aradaki boşluk şablonun düz zemininden (dolguUst..dolguAlt) döşenir
+    kesY: 1500, dolguUst: 1490, dolguAlt: 1526, ekSatirYuk: 92,
     turkuaz: '#0e6a88', acikTurkuaz: '#36c3d6',
   },
 };
@@ -81,11 +84,21 @@ async function hazirSablonla(g, { baslik: baslikYazisi, satirlar }) {
   const [zemin] = await Promise.all([gorselYukle(g.zemin), Promise.race([yaziTipleriniBagla(), new Promise(ok => setTimeout(ok, 4000))])]);
   await Promise.race([Promise.all([document.fonts.load(`${g.baslikBoy}px ${SABLON.baslikYazi}`, 'İ+'), document.fonts.load(`700 44px ${FARRO}`, 'İŞ+1')]),
     new Promise(ok => setTimeout(ok, 4000))]).catch(() => {});
+  const ekler = satirlar.slice(g.satirSayisi);
+  const ekYuk = ekler.length ? ekler.length * g.ekSatirYuk + 16 : 0;
   const tuval = document.createElement('canvas');
-  tuval.width = zemin.naturalWidth;
-  tuval.height = zemin.naturalHeight;
+  const W = zemin.naturalWidth;
+  const H = zemin.naturalHeight;
+  tuval.width = W;
+  tuval.height = H + ekYuk;
   const ctx = tuval.getContext('2d');
-  ctx.drawImage(zemin, 0, 0);
+  if (!ekYuk) ctx.drawImage(zemin, 0, 0);
+  else {
+    ctx.drawImage(zemin, 0, 0, W, g.kesY, 0, 0, W, g.kesY);
+    const dilim = g.dolguAlt - g.dolguUst;
+    for (let y = g.kesY; y < g.kesY + ekYuk; y += dilim) ctx.drawImage(zemin, 0, g.dolguUst, W, dilim, 0, y, W, dilim);
+    ctx.drawImage(zemin, 0, g.kesY, W, H - g.kesY, 0, g.kesY + ekYuk, W, H - g.kesY);
+  }
   ctx.textAlign = 'center';
   ctx.lineJoin = 'round';
 
@@ -131,6 +144,35 @@ async function hazirSablonla(g, { baslik: baslikYazisi, satirlar }) {
     ctx.shadowColor = 'transparent';
     ctx.fillStyle = g.turkuaz;
     ctx.fillText(s.deger, g.degerX, ust + 86);
+  });
+
+  // Şeritsiz ek satırlar: solda sıra, ortada koyu oyuncu adı ve turkuaz takım, sağda +/-
+  const gen = g.kutuSag - g.kutuSol;
+  ekler.forEach((s, j) => {
+    const ust = g.kesY + 8 + j * g.ekSatirYuk;
+    const orta = g.kutuSol + g.satirSayisi * g.kayma + gen / 2;
+    const kenarli = (metin, x, y, boy, hiza) => {
+      ctx.textAlign = hiza;
+      sigdir(ctx, metin, boy, 220, `700 {}px ${FARRO}`);
+      ctx.shadowColor = 'rgba(0,0,0,.25)';
+      ctx.shadowBlur = 5;
+      ctx.lineWidth = 6;
+      ctx.strokeStyle = '#ffffff';
+      ctx.strokeText(metin, x, y);
+      ctx.shadowColor = 'transparent';
+      ctx.fillStyle = g.turkuaz;
+      ctx.fillText(metin, x, y);
+    };
+    kenarli(`${s.sira}.`, g.kutuSol - 14, ust + 70, 76, 'right');
+    kenarli(s.deger, g.degerX, ust + 72, 80, 'center');
+    ctx.textAlign = 'center';
+    ctx.shadowColor = 'transparent';
+    ctx.fillStyle = '#0a1f29';
+    sigdir(ctx, s.ad, 37, gen - 40, `700 {}px ${FARRO}`);
+    ctx.fillText(s.ad, orta, ust + 38);
+    ctx.fillStyle = g.turkuaz;
+    sigdir(ctx, s.takim, 35, gen - 40, `700 {}px ${FARRO}`);
+    ctx.fillText(s.takim, orta, ust + 76);
   });
   return new Promise(ok => tuval.toBlob(ok, 'image/png'));
 }

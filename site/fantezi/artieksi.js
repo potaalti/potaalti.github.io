@@ -1,5 +1,5 @@
-// +/- liderleri yayın görseli. TBL: Pota Altı'nın hazır şablonu (sablon/artieksi-tbl.webp, 1280x1600, 10 boş şerit) doldurulur;
-// oyuncu, takım ve +/- Farro, başlık Heading Now yerine Anton. Şablonu olmayan lig (BSL) eski TBL Fantezi'deki çizimle oluşur.
+// +/- liderleri yayın görseli: Pota Altı'nın hazır şablonları (sablon/artieksi-<lig>.webp, 1280x1600, 10 boş şerit) doldurulur;
+// oyuncu, takım ve +/- Farro, başlık Heading Now yerine Anton. Şablonu olmayan lig eski TBL Fantezi'deki çizimle oluşur.
 // Ana uygulamanın TBL/BSL sayfasındaki +/- sekmesi kullanır; yazı tipleri ilk görselde yüklenir.
 const TURK_ULKELER = new Set(['TÜRKİYE', 'KKTC']);
 const baslik = s => String(s ?? '').split(' ').map(k =>
@@ -25,13 +25,19 @@ const LIG_TAM_ADI = { tbl: 'TÜRKİYE SİGORTA TBL', bsl: 'TÜRKİYE SİGORTA BS
 const kisaTakim = ad => baslik(ad).replace(/Büyükşehir Belediye(si)? Spor/u, 'BŞB');
 // Görseldeki isim: Türk oyuncular Türkçe büyük harfle (ALİ), yabancılar Türkçe harf olmadan (MIKE) ve
 // göbek adı olmadan ("Jaquan Elijah Scott" -> "JAQUAN SCOTT"; "Jr." gibi ekler kalır)
+// Soyadının parçası olan önekler kalır ("Keye van der Vuurst" -> "KEYE VAN DER VUURST").
+// Türk vatandaşı yabancı kökenli oyuncular yabancı gibi yazılır ("SHANE LARKIN", "LARKİN" değil).
 const ISIM_EKI = /^(jr\.?|sr\.?|ii|iii|iv)$/i;
+const SOYAD_ONEKI = /^(van|von|der|den|de|da|di|del|della|dos|du|la|le|mc|st\.?)$/i;
+const YABANCI_KOKENLI = new Set(['shane larkin', 'scottie wilbekin', 'bobi klintman']);
 function gorselIsmi(k) {
-  const turk = TURK_ULKELER.has(k.ulke) || /[çğıöşüÇĞİÖŞÜ]/.test(k.ad);
+  const turk = (TURK_ULKELER.has(k.ulke) && !YABANCI_KOKENLI.has(k.ad.toLowerCase())) || /[çğıöşüÇĞİÖŞÜ]/.test(k.ad);
   if (turk) return k.ad.toLocaleUpperCase('tr');
   const kelimeler = k.ad.split(/\s+/);
   const ek = kelimeler.length > 2 && ISIM_EKI.test(kelimeler.at(-1)) ? kelimeler.pop() : null;
-  const kisa = kelimeler.length > 2 ? [kelimeler[0], kelimeler.at(-1)] : kelimeler;
+  let soyadBasi = kelimeler.length - 1;
+  while (soyadBasi > 1 && SOYAD_ONEKI.test(kelimeler[soyadBasi - 1])) soyadBasi--;
+  const kisa = kelimeler.length > 2 ? [kelimeler[0], ...kelimeler.slice(soyadBasi)] : kelimeler;
   return [...kisa, ek].filter(Boolean).join(' ').toUpperCase();
 }
 
@@ -64,6 +70,14 @@ const HAZIR_SABLON = {
     kutuUst: 354, kutuAdim: 114.2, kutuSol: 322, kutuSag: 925, kayma: 0.78,
     degerX: 1027, satirSayisi: 10,
     turkuaz: '#0e6a88', acikTurkuaz: '#36c3d6',
+  },
+  // BSL: aynı yerleşim, lacivert şablon (sablon/artieksi-bsl.webp); başlık ve +/- şablondaki numaraların lacivertinde
+  bsl: {
+    zemin: new URL('./sablon/artieksi-bsl.webp', import.meta.url).href,
+    baslikY: 250, baslikGen: 775, baslikBoy: 110,
+    kutuUst: 354, kutuAdim: 114.2, kutuSol: 311, kutuSag: 913, kayma: 0.78,
+    degerX: 1022, satirSayisi: 10,
+    turkuaz: '#063a7e', acikTurkuaz: '#4fcadc',
   },
 };
 const FARRO = 'Farro, "Arial Narrow", Arial, sans-serif';

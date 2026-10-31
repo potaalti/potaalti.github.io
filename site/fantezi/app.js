@@ -2061,7 +2061,33 @@ const KUTU_SUTUNLARI = [
   ['VP', o => o.vp, 'vp', 'vp', 'Verimlilik puanı'],
 ];
 const kutuHucresi = (o, [, f, , sinif]) => `<td class="${sinif}">${esc(f(o))}</td>`;
-const kutuBasligi = () => KUTU_SUTUNLARI.map(([b, , , sinif, aciklama]) => `<td class="${sinif}" title="${aciklama}">${b}</td>`).join('');
+// Başlığa dokununca sıralanır: önce çoktan aza, sonra azdan çoka, üçüncüde ilk haline döner (S.ui.kutuSirala: { b, artan })
+const kutuBasligi = () => KUTU_SUTUNLARI.map(([b, , , sinif, aciklama]) => {
+  const s = S.ui.kutuSirala?.b === b ? S.ui.kutuSirala : null;
+  return `<td class="${sinif} sirala ${s ? 'aktif' : ''}" title="${aciklama}" data-is="kutu-sirala" data-id="${b}">${b}${s ? (s.artan ? '▲' : '▼') : ''}</td>`;
+}).join('');
+// Sıralama değeri: süre saniye, atışlarda isabet (eşitse deneme), yoksa sayı; değeri olmayan (ör. +/- gelmemiş) hep sonda
+function kutuDegeri([b, f, alan], o) {
+  if (b === 'Dk') return sureSn(o.sure);
+  if (['iki', 'uc', 'sa'].includes(alan)) return (o[alan]?.[0] ?? 0) * 1000 + (o[alan]?.[1] ?? 0);
+  const v = f(o);
+  return v === '' || v == null ? null : Number(v) || 0;
+}
+function kutuSirasi(oyuncular) {
+  const s = S.ui.kutuSirala;
+  const c = s && KUTU_SUTUNLARI.find(([b]) => b === s.b);
+  if (!c) return oyuncular;
+  return [...oyuncular].sort((x, y) => {
+    const a = kutuDegeri(c, x);
+    const b = kutuDegeri(c, y);
+    if (a == null || b == null) return (a == null) - (b == null);
+    return s.artan ? a - b : b - a;
+  });
+}
+const kutuSiralamaDegistir = b => {
+  const s = S.ui.kutuSirala;
+  S.ui.kutuSirala = s?.b !== b ? { b, artan: false } : !s.artan ? { b, artan: true } : null;
+};
 function kutuToplami(oyuncular) {
   const topla = alan => oyuncular.reduce((x, o) => x + (Number(o[alan]) || 0), 0);
   const toplaAtis = alan => atis([0, 1].map(i => oyuncular.reduce((x, o) => x + (o[alan]?.[i] ?? 0), 0)));
@@ -2072,7 +2098,7 @@ function kutuSkorTablosu(t) {
   const sahip = sahipler();
   const benim = benimTakimim();
   const oyuncular = t.oyuncular ?? [];
-  const satirlar = oyuncular.map(o => {
+  const satirlar = kutuSirasi(oyuncular).map(o => {
     const tid = sahip.get(String(o.id));
     const ad = oyuncuLinki(o.id, o.ad);
     return `<tr class="${sureSn(o.sure) > 0 ? '' : 'oynamadi'} ${tid && tid === benim ? 'ben' : ''}">
@@ -2227,6 +2253,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && S.ui.panel
 
 window.addEventListener('hashchange', () => {
   S.ui.panel = null;
+  S.ui.kutuSirala = null;
   S.ui.faAl = S.ui.faAlSonraki ?? null;
   S.ui.faAlSonraki = null;
   S.ui.acik = S.ui.acikSonraki ?? null;
@@ -2365,6 +2392,7 @@ async function eylem(is, id, el) {
     case 'sec-as': S.ui.secAs = S.ui.secAs === id ? null : id; return ciz();
     case 'sec-yedek': S.ui.secYedek = S.ui.secYedek === id ? null : id; return ciz();
     case 'sec-temizle': S.ui.secAs = null; S.ui.secYedek = null; S.ui.degisimModu = false; return ciz();
+    case 'kutu-sirala': kutuSiralamaDegistir(id); return ciz();
     case 'saha-hafta': S.ui.sahaHafta = id === 'sonraki' ? null : Number(id); return ciz();
     case 'degisim-modu':
       // Düğme sayfanın altında: seçim sahada yapılır, oraya kaydır

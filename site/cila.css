@@ -347,3 +347,7 @@ table.kutu .fantezi-sahip { font-size: .68rem; color: var(--vurgu); font-weight:
 .hafta-ok { width: 40px; height: 40px; flex: 0 0 40px; border-radius: 50%; border: 1px solid var(--cizgi); background: var(--kart, transparent);
   color: inherit; font-size: 1.3rem; line-height: 1; cursor: pointer; }
 .hafta-ok:disabled { opacity: .3; cursor: default; }
+
+/* Kutu skor: sütun başlığına dokununca sıralama (▼ çoktan aza, ▲ azdan çoka) */
+table.kutu thead td.sirala { cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
+table.kutu thead td.sirala.aktif { color: var(--vurgu); }

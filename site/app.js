@@ -181,7 +181,33 @@ const KUTU_SUTUNLARI = [
   ['+/-', o => o.pm ?? '', null, '', 'Sahadayken skor farkı'], ['VP', o => o.vp, 'vp', 'vp', 'Verimlilik puanı'],
 ];
 const kutuHucresi = (o, [, f, , sinif]) => `<td class="${sinif}">${esc(f(o))}</td>`;
-const kutuBasligi = () => KUTU_SUTUNLARI.map(([b, , , sinif, aciklama]) => `<td class="${sinif}" title="${aciklama}">${b}</td>`).join('');
+// Başlığa dokununca sıralanır: önce çoktan aza, sonra azdan çoka, üçüncüde ilk haline döner (S.ui.kutuSirala: { b, artan })
+const kutuBasligi = () => KUTU_SUTUNLARI.map(([b, , , sinif, aciklama]) => {
+  const s = S.ui.kutuSirala?.b === b ? S.ui.kutuSirala : null;
+  return `<td class="${sinif} sirala ${s ? 'aktif' : ''}" title="${aciklama}" data-is="kutu-sirala" data-id="${b}">${b}${s ? (s.artan ? '▲' : '▼') : ''}</td>`;
+}).join('');
+// Sıralama değeri: süre saniye, atışlarda isabet (eşitse deneme), yoksa sayı; değeri olmayan (ör. +/- gelmemiş) hep sonda
+function kutuDegeri([b, f, alan], o) {
+  if (b === 'Dk') return sureSn(o.sure);
+  if (['iki', 'uc', 'sa'].includes(alan)) return (o[alan]?.[0] ?? 0) * 1000 + (o[alan]?.[1] ?? 0);
+  const v = f(o);
+  return v === '' || v == null ? null : Number(v) || 0;
+}
+function kutuSirasi(oyuncular) {
+  const s = S.ui.kutuSirala;
+  const c = s && KUTU_SUTUNLARI.find(([b]) => b === s.b);
+  if (!c) return oyuncular;
+  return [...oyuncular].sort((x, y) => {
+    const a = kutuDegeri(c, x);
+    const b = kutuDegeri(c, y);
+    if (a == null || b == null) return (a == null) - (b == null);
+    return s.artan ? a - b : b - a;
+  });
+}
+const kutuSiralamaDegistir = b => {
+  const s = S.ui.kutuSirala;
+  S.ui.kutuSirala = s?.b !== b ? { b, artan: false } : !s.artan ? { b, artan: true } : null;
+};
 function kutuToplami(oyuncular) {
   const topla = alan => oyuncular.reduce((x, o) => x + (Number(o[alan]) || 0), 0);
   const toplaAtis = alan => atis([0, 1].map(i => oyuncular.reduce((x, o) => x + (o[alan]?.[i] ?? 0), 0)));
@@ -199,7 +225,7 @@ function takimim(lig) {
 function kutuSkorTablosu(lig, t) {
   const oyuncular = t.oyuncular ?? [];
   const benim = takimim(lig);
-  const satirlar = oyuncular.map(o => {
+  const satirlar = kutuSirasi(oyuncular).map(o => {
     const id = String(o.id);
     const ad = id.startsWith('fiba-') ? esc(o.ad) : `<a href="#/oyuncu/${lig}/${id}" class="oyuncu-link">${esc(o.ad)}</a>`;
     const benimki = benim?.oyuncular.has(id);
@@ -533,6 +559,7 @@ document.addEventListener('click', e => {
   const el = e.target.closest('[data-is]');
   if (!el) return;
   if (el.dataset.is === 'oyuncu-sirala') { S.ui.oyuncuSirala = el.dataset.id; ciz(); }
+  if (el.dataset.is === 'kutu-sirala') { kutuSiralamaDegistir(el.dataset.id); ciz(); }
   if (el.dataset.is === 'ae-paylas' || el.dataset.is === 'ae-indir') {
     const yazi = el.textContent;
     el.disabled = true;
@@ -553,7 +580,7 @@ document.addEventListener('input', e => {
   S.ui[k] = e.target.value;
   ciz();
 });
-window.addEventListener('hashchange', () => { ciz(); window.scrollTo(0, 0); });
+window.addEventListener('hashchange', () => { S.ui.kutuSirala = null; ciz(); window.scrollTo(0, 0); });
 
 // ---------- Canlı yenileme: başlamış ama bitmemiş maçı olan haftaların listesi ve açık kutu skor ----------
 async function canliYenile() {

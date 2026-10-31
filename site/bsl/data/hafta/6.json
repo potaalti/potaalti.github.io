@@ -20,15 +20,15 @@
    "durum": "canli",
    "ev": "PİZZABULLS BORDO BANDIRMA",
    "evId": 265993,
-   "evSkor": "62",
+   "evSkor": "71",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
-   "depSkor": "45",
+   "depSkor": "61",
    "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "06:03",
+    "saat": "00:27",
     "uzatma": false
    }
   },
@@ -308,24 +308,24 @@
    "ad": "Ty Gordon",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 18,
-   "saniye": 1137,
+   "vp": 17,
+   "saniye": 1262,
    "mac": 1
   },
   "512379": {
    "ad": "Boubacar Toure",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 6,
-   "saniye": 780,
+   "vp": 9,
+   "saniye": 1061,
    "mac": 1
   },
   "667625": {
    "ad": "Damien Jefferson",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 6,
-   "saniye": 920,
+   "vp": 9,
+   "saniye": 1245,
    "mac": 1
   },
   "307500": {
@@ -341,15 +341,15 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 10,
-   "saniye": 1210,
+   "saniye": 1476,
    "mac": 1
   },
   "130898": {
    "ad": "Okben Ulubay",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": -2,
-   "saniye": 324,
+   "vp": 3,
+   "saniye": 649,
    "mac": 1
   },
   "159631": {
@@ -389,31 +389,31 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 9,
-   "saniye": 1045,
+   "saniye": 1304,
    "mac": 1
   },
   "778310": {
    "ad": "Zach Hankins",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 13,
-   "saniye": 635,
+   "vp": 12,
+   "saniye": 679,
    "mac": 1
   },
   "609095": {
    "ad": "Marcquise Reed",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 5,
-   "saniye": 843,
+   "vp": 9,
+   "saniye": 953,
    "mac": 1
   },
   "608898": {
    "ad": "Tyler Cavanaugh",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 11,
-   "saniye": 1144,
+   "vp": 16,
+   "saniye": 1434,
    "mac": 1
   },
   "384595": {
@@ -421,31 +421,31 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 3,
-   "saniye": 1170,
+   "saniye": 1495,
    "mac": 1
   },
   "734505": {
    "ad": "Trevion Williams",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 16,
-   "saniye": 799,
+   "vp": 18,
+   "saniye": 1089,
    "mac": 1
   },
   "131296": {
    "ad": "Kenan Sipahi",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 7,
-   "saniye": 770,
+   "vp": 13,
+   "saniye": 1029,
    "mac": 1
   },
   "776935": {
    "ad": "Aleksa Avramovic",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 2,
-   "saniye": 790,
+   "vp": 1,
+   "saniye": 1005,
    "mac": 1
   },
   "358272": {
@@ -453,7 +453,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": -2,
-   "saniye": 548,
+   "saniye": 614,
    "mac": 1
   },
   "447092": {
@@ -468,8 +468,8 @@
    "ad": "Furkan Haltalı",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 2,
-   "saniye": 472,
+   "vp": 3,
+   "saniye": 507,
    "mac": 1
   },
   "47659": {
@@ -484,8 +484,8 @@
    "ad": "David Dileo",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 0,
-   "saniye": 541,
+   "vp": 3,
+   "saniye": 576,
    "mac": 1
   },
   "780954": {

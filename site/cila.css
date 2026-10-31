@@ -309,3 +309,13 @@ button.saha-oyuncu:hover, a.saha-oyuncu:hover { border-color: color-mix(in srgb,
 .indir-dugme { border: 0; border-radius: 999px; padding: 8px 16px; font-weight: 800; color: #fff; background: var(--ana-degrade); cursor: pointer; font: inherit; font-weight: 800; }
 .indir-kapat { border: 0; background: transparent; color: var(--soluk); font-size: 1.1rem; padding: 4px 6px; cursor: pointer; }
 .indir-tarif { flex-basis: 100%; font-size: .85rem; background: var(--vurgu-acik); border-radius: 10px; padding: 8px 10px; }
+
+/* Telefonda kutu skor tek ekranda: küçük yazı, dar hücreler, uzun adlar kısalır */
+@media (max-width: 759px) {
+  .kart:has(table.kutu) { padding-left: 6px; padding-right: 6px; }
+  table.kutu { font-size: .6rem; }
+  table.kutu th, table.kutu td { padding: 4px 1px !important; }
+  table.kutu thead th, table.kutu thead td { font-size: .55rem !important; letter-spacing: 0; }
+  table.kutu tbody th { max-width: 72px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .62rem; }
+  table.kutu .fantezi-sahip { overflow: hidden; text-overflow: ellipsis; }
+}

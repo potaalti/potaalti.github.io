@@ -220,13 +220,13 @@ button.saha-oyuncu:hover, a.saha-oyuncu:hover { border-color: color-mix(in srgb,
 .fa-vp small { color: var(--soluk); font-size: .65rem; white-space: nowrap; }
 
 /* Boştakiler: bilgisayarda oyuncu sağdan açılan panelde */
-.cekmece-arka { position: fixed; inset: 0; background: rgba(4, 20, 24, .38); z-index: 40; animation: belir .15s; }
+.cekmece-arka { position: fixed; inset: 0; background: rgba(4, 20, 24, .38); z-index: 40; animation: arka-belir .15s; }
 .cekmece { position: fixed; top: 0; right: 0; bottom: 0; width: min(500px, 92vw); z-index: 41; overflow-y: auto; background: var(--zemin); padding: 0 16px 16px;
   box-shadow: -10px 0 30px rgba(0, 0, 0, .25); animation: kay .2s ease-out; }
 .cekmece-ust { display: flex; align-items: center; gap: 8px; justify-content: flex-end; position: sticky; top: 0; background: var(--zemin); padding: 14px 0 10px; z-index: 2; }
 .cekmece-ust a { margin-right: auto; font-weight: 600; }
 @keyframes kay { from { transform: translateX(40px); opacity: 0; } }
-@keyframes belir { from { opacity: 0; } }
+@keyframes arka-belir { from { opacity: 0; } }
 
 /* Başlık: telefonda kısa lig adı ve hesap simgesi; bilgisayarda yan menünün altında lig geçişi */
 .kisa-baslik, .lig-gecis, .hesap-simge { display: none; }
@@ -292,3 +292,14 @@ button.saha-oyuncu:hover, a.saha-oyuncu:hover { border-color: color-mix(in srgb,
 /* Takımım: menajer özeti saha ve maçların üstünde, aynı genişlikte */
 .kadrom-ust { max-width: 1240px; margin: 0 auto; }
 @media (max-width: 1099px) { .kadrom-ust { max-width: 880px; } }
+
+/* Takımım sahası: hafta sürerken o haftanın VP'si, notlar ve toplam */
+.saha-oyuncu .saha-not { font-size: .68rem; font-weight: 700; color: var(--soluk); line-height: 1.2; }
+.saha-oyuncu .saha-not.yerine { color: var(--yesil); }
+.saha-oyuncu.soluk-kart { opacity: .5; }
+.saha-oyuncu.sayilan { border-color: color-mix(in srgb, var(--yesil) 55%, transparent); }
+.hafta-toplam { font-size: .85rem; color: var(--soluk); }
+.hafta-toplam b { color: var(--vurgu); font-size: 1rem; }
+.saha-not.canli-yazi, .hafta-toplam .canli-yazi { color: var(--kirmizi); }
+.saha-not.canli-yazi::before, .hafta-toplam .canli-yazi::before { content: "● "; animation: canli-yanip 1.4s infinite; }
+@keyframes canli-yanip { 50% { opacity: .2; } }

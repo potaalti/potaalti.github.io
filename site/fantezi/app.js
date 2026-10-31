@@ -1312,14 +1312,41 @@ function gorunumOyuncu(pid) {
 }
 
 // ---------- Kadrom ----------
+// Süren hafta: maçları başlamış ama hepsi bitmemiş son puanlama haftası (yoksa null: kartlarda sezon ortalaması yazar)
+function surenHafta() {
+  const son = puanHaftalari().at(-1);
+  return son && !C.haftaDurumu(son).tamamlandi ? son : null;
+}
+
 // Sahada 5 As, altında yedek kulübesi. Hak varsa bir As'a ve bir Yedeğe dokunarak yer değiştirilir.
+// Hafta başlamadan kartlarda sezon ortalaması; hafta başlayınca o haftanın VP'si (maçı oynanmamışsa "–", canlı maçta anlık),
+// süre almayan As soluk, yerine sayılan yedekte "… yerine sayıldı".
 function sahaKarti(tid, k, secilebilir) {
   const zorunlu = zorunluBekleyen(tid);
+  const hafta = surenHafta();
+  const sonuc = hafta && C.haftaSiralamasi(haftaTakimlari(hafta.hafta), hafta).find(s => s.id === tid);
+  const durum = new Map(sonuc ? [...sonuc.aslar, ...sonuc.yedekler].map(o => [o.id, o]) : []);
+  const deger = p => {
+    if (!hafta) return `${sayi(oyuncu(p).vpOrt)} <i>VP ort.</i>`;
+    const d = durum.get(p);
+    if (!d || ['oynanmadi', 'bay'].includes(d.macDurumu)) return '– <i>VP</i>';
+    return `${sayi(d.vp)} <i>VP</i>`;
+  };
+  const not = p => {
+    const d = hafta && durum.get(p);
+    if (!d) return '';
+    if (d.macDurumu === 'canli') return '<span class="saha-not canli-yazi">canlı</span>';
+    if (d.rol === 'as' && !d.sayildi) return `<span class="saha-not">${d.macDurumu === 'bay' ? 'bu hafta maçı yok' : 'süre almadı'}</span>`;
+    if (d.yerineGirdigi) return `<span class="saha-not yerine">${esc(d.yerineGirdigi)} yerine sayıldı</span>`;
+    return '';
+  };
   const kart = (p, rol) => {
     const o = oyuncu(p);
+    const d = hafta && durum.get(p);
     const secili = rol === 'as' ? S.ui.secAs === p : S.ui.secYedek === p;
-    const ic = `<b>${esc(o.ad)}</b><small>${esc(baslik(o.takimKod || o.takim || ''))}</small><span class="saha-vp">${sayi(o.vpOrt)} <i>VP</i></span>${mevkiRozeti(mevki(p))}`;
-    const sinif = `saha-oyuncu ${rol} ${secili ? 'secili' : ''} ${zorunlu.includes(p) ? 'uyari' : ''}`;
+    const ic = `<b>${esc(o.ad)}</b><small>${esc(baslik(o.takimKod || o.takim || ''))}</small><span class="saha-vp">${deger(p)}</span>${not(p)}${mevkiRozeti(mevki(p))}`;
+    const soluk = d && d.rol === 'as' && !d.sayildi;
+    const sinif = `saha-oyuncu ${rol} ${secili ? 'secili' : ''} ${zorunlu.includes(p) ? 'uyari' : ''} ${soluk ? 'soluk-kart' : ''} ${d?.yerineGirdigi ? 'sayilan' : ''}`;
     return secilebilir ? `<button class="${sinif}" data-is="sec-${rol}" data-id="${esc(p)}" aria-pressed="${secili}">${ic}</button>`
       : `<a class="${sinif}" href="#/oyuncu/${esc(p)}">${ic}</a>`;
   };
@@ -1335,7 +1362,8 @@ function sahaKarti(tid, k, secilebilir) {
       <span class="satir"><button class="btn ana" data-is="degistir" ${asP && yP && !sorun ? '' : 'disabled'}>Değiştir${ortakHak() ? ' (1 hak)' : ''}</button><button class="btn" data-is="sec-temizle">Vazgeç</button></span></div>`;
   }
   return `<div class="kart saha-kart">
-    <div class="baslik-satir"><h2>Kadro</h2>${yabanci != null ? `<span class="rozet ${yabanci > kural().enFazlaYabanci ? 'uyari' : ''}">As'ta yabancı: ${yabanci}/${kural().enFazlaYabanci}</span>` : ''}</div>
+    <div class="baslik-satir"><h2>Kadro</h2><span class="satir">${sonuc ? `<span class="hafta-toplam">${hf(hafta.hafta)}. hafta: <b>${sayi(sonuc.toplam)} VP</b> · ${sonuc.sira}. sırada${C.haftaDurumu(hafta).canli ? ' · <span class="canli-yazi">canlı</span>' : ''}</span>` : ''}
+      ${yabanci != null ? `<span class="rozet ${yabanci > kural().enFazlaYabanci ? 'uyari' : ''}">As'ta yabancı: ${yabanci}/${kural().enFazlaYabanci}</span>` : ''}</span></div>
     <div class="saha"><div class="saha-cizgi"></div>${k.as.map(p => kart(p, 'as')).join('')}</div>
     <div class="kulube"><span class="kulube-ad">Yedek</span>${k.yedek.map(p => kart(p, 'yedek')).join('')}</div>
     ${cubuk}

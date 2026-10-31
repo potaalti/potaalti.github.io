@@ -298,3 +298,14 @@ button.saha-oyuncu:hover, a.saha-oyuncu:hover { border-color: color-mix(in srgb,
 
 /* Fikstürde bay geçen takım */
 .bay-yazisi { text-align: center; color: var(--soluk); font-size: .85rem; margin: 4px 0 12px; }
+
+/* Telefonda en üstte "uygulamayı ekle" şeridi (indir.js) */
+.indir-serit { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px 12px; background: var(--kart); border-bottom: 1px solid var(--cizgi);
+  box-shadow: 0 2px 10px rgba(6, 80, 91, .08); position: relative; z-index: 11; }
+.indir-serit img { border-radius: 9px; flex: 0 0 auto; }
+.indir-yazi { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.25; }
+.indir-yazi b { font-size: .92rem; }
+.indir-yazi span { font-size: .78rem; color: var(--soluk); }
+.indir-dugme { border: 0; border-radius: 999px; padding: 8px 16px; font-weight: 800; color: #fff; background: var(--ana-degrade); cursor: pointer; font: inherit; font-weight: 800; }
+.indir-kapat { border: 0; background: transparent; color: var(--soluk); font-size: 1.1rem; padding: 4px 6px; cursor: pointer; }
+.indir-tarif { flex-basis: 100%; font-size: .85rem; background: var(--vurgu-acik); border-radius: 10px; padding: 8px 10px; }

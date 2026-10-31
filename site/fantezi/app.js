@@ -1528,7 +1528,7 @@ function gorunumSerbest() {
     const benim = td.talepler[tid];
     panel = `<div class="kart sira-sende"><h3>${esc(al.ad)} ${trRozeti(al)} <span class="soluk kucuk">${esc(al.takim)}</span></h3>
       <p>Bu oyuncu talep süresinde (<b>${sureYazisi(td.kalan)}</b> kaldı, şu an ${td.talipler.length} takım talip). Süre bitince talip olan takımlar arasında <b>kura</b> çekilir.
-      Kazanırsan seçtiğin oyuncu bırakılır, ${al.ad} onun yerine (As ya da Yedek) geçer ve ${hakAdi()}ndan 1 düşer. As'taki bir oyuncunun yerine aynı mevkiden oyuncu alınmalı.</p>
+      Kazanırsan seçtiğin oyuncu bırakılır, ${al.ad} onun yerine (As ya da Yedek) geçer ve ${hakAdi()}ndan 1 düşer. ${kuralCumlesi()}.</p>
       <div class="satir"><select id="fa-birak"><option value="">Kazanırsam bırakacağım oyuncu</option>
         ${[...k.as.map(p => [p, 'As']), ...k.yedek.map(p => [p, 'Yedek'])].map(([p, rol]) => `<option value="${p}" ${benim === p ? 'selected' : ''}>${esc(oyuncu(p).ad)} (${rol})</option>`).join('')}</select>
       <button class="btn ana" data-is="talep-onayla">${benim ? 'Talebi güncelle' : 'Talep et'}</button><button class="btn" data-is="fa-vazgec">Vazgeç</button></div></div>`;

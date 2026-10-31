@@ -30,15 +30,20 @@
   {
    "id": 346315,
    "tarih": "2026-10-31T20:30:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "YUKATEL DENİZLİ BASKET",
    "evId": 266028,
-   "evSkor": null,
+   "evSkor": "2",
    "dep": "GALATASARAY MCT TECHNIC",
    "depId": 266026,
-   "depSkor": null,
+   "depSkor": "4",
    "salon": "Pamukkale Üniversitesi Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "08:52",
+    "uzatma": false
+   }
   },
   {
    "id": 346316,
@@ -489,6 +494,190 @@
    "takimId": 265991,
    "vp": 2,
    "saniye": 376,
+   "mac": 1
+  },
+  "778996": {
+   "ad": "Brae Ivey",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 0,
+   "saniye": 68,
+   "mac": 1
+  },
+  "373162": {
+   "ad": "Marko Pecarski",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": -1,
+   "saniye": 68,
+   "mac": 1
+  },
+  "779010": {
+   "ad": "Victor Bailey Jr.",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 0,
+   "saniye": 68,
+   "mac": 1
+  },
+  "736366": {
+   "ad": "John Meeks",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 1,
+   "saniye": 68,
+   "mac": 1
+  },
+  "470765": {
+   "ad": "Mahir Ağva",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 3,
+   "saniye": 68,
+   "mac": 1
+  },
+  "779011": {
+   "ad": "Jhonathan Dunn",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "379563": {
+   "ad": "Mustafa Yılmaz",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "392627": {
+   "ad": "Yaman Alişan",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "278617": {
+   "ad": "Erten Gazi",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "124128": {
+   "ad": "Egemen Güven",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "779012": {
+   "ad": "Mustapha Amzil",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "250129": {
+   "ad": "Şehmus Hazer",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 3,
+   "saniye": 68,
+   "mac": 1
+  },
+  "502492": {
+   "ad": "Aleksej Nikolic",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 68,
+   "mac": 1
+  },
+  "779275": {
+   "ad": "Chimezie Metu",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 1,
+   "saniye": 68,
+   "mac": 1
+  },
+  "779274": {
+   "ad": "Oumar Ballo",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 68,
+   "mac": 1
+  },
+  "500054": {
+   "ad": "Dyshawn Pierre",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 2,
+   "saniye": 68,
+   "mac": 1
+  },
+  "736340": {
+   "ad": "Jerome Robinson Jr.",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "128768": {
+   "ad": "Berkan Durmaz",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "221447": {
+   "ad": "Can Korkmaz",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "779278": {
+   "ad": "Alen Smailagic",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "363559": {
+   "ad": "Efe Şekeroğlu",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "54128": {
+   "ad": "Buğrahan Tuncer",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "781548": {
+   "ad": "Kj Simpson",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
    "mac": 1
   }
  }

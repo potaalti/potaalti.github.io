@@ -30,15 +30,20 @@
   {
    "id": 346315,
    "tarih": "2026-10-31T20:30:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "YUKATEL DENİZLİ BASKET",
    "evId": 266028,
-   "evSkor": null,
+   "evSkor": "2",
    "dep": "GALATASARAY MCT TECHNIC",
    "depId": 266026,
-   "depSkor": null,
+   "depSkor": "4",
    "salon": "Pamukkale Üniversitesi Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "08:52",
+    "uzatma": false
+   }
   },
   {
    "id": 346316,

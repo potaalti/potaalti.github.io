@@ -1735,7 +1735,7 @@ function gorunumKurallar() {
     </ul>`}
     <h3>Sezon</h3><ul>
       ${LIG.takas ? `<li>Takaslar sınırsız; iki taraf da kabul etmeli ve yönetici onaylamalı (oyuncular yönetici onaylayınca yer değiştirir). İki taraftan aynı sayıda (1–3) oyuncu verilir; gelen oyuncu gidenin yerine (As/Yedek) geçer.</li>` : ''}
-      ${ortakHak() ? `<li>Her takımın sezon boyunca <b>${a.faHakki} transfer hakkı</b> var. Serbest oyuncu almak (hiçbir takımda olmayan oyuncu; alırken bir oyuncunu bırakırsın) ve As–Yedek değişikliği yapmak 1'er hak kullanır.</li>`
+      ${ortakHak() ? `<li>Her takımın sezon boyunca <b>${a.faHakki} transfer hakkı</b> var. As–Yedek değişikliği için ayrı bir hak yoktur: serbest oyuncu almak (hiçbir takımda olmayan oyuncu; alırken bir oyuncunu bırakırsın) da As–Yedek değişikliği de bu ${a.faHakki} transfer hakkından 1'er düşer.</li>`
         : `<li>Her takım sezon boyunca en fazla ${a.faHakki} serbest oyuncu (hiçbir takımda olmayan oyuncu) alabilir; alırken bir oyuncusunu bırakır.</li>`}
       <li><b>Boştakiler</b> sayfasında hiçbir fantezi takımında olmayan ${LIG.kisa} oyuncuları listelenir; serbest oyuncu oradan alınır.
         Talep süresindeki oyuncular sayfanın en üstünde ayrı görünür (kim bıraktı ya da lisansı yeni mi çıktı, kalan süre, talip sayısı).</li>

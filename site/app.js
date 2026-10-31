@@ -257,6 +257,52 @@ const SEKMELER = [['tablo', 'Puan Tablosu'], ['liderler', 'Liderler'], ['takimla
 // Fantezi ligine bu tarayıcıda yönetici olarak girilmişse +/- sekmesi (en sağda) görünür
 const yoneticiMi = () => { try { return localStorage.getItem('potaAltiYonetici') === '1'; } catch { return false; } };
 
+// Fantezi uygulaması o anahtarı yazar; yazılmamışsa (fantezi bu tarayıcıda yeni sürümle henüz açılmadı) Firebase'in
+// bu tarayıcıda sakladığı Google oturumundan bakılır: uyeler/{uid} 'admin' ya da yönetici takımı ise anahtar yazılır.
+// Oturumu olmayan ziyaretçide hiçbir istek yapılmaz; sonuç oturum boyunca bir kez aranır.
+async function fanteziOturumu(apiKey) {
+  if (indexedDB.databases && !(await indexedDB.databases()).some(d => d.name === 'firebaseLocalStorageDb')) return null;
+  const db = await new Promise((ok, hata) => {
+    const r = indexedDB.open('firebaseLocalStorageDb');
+    r.onupgradeneeded = () => r.transaction.abort(); // yoksa boş veritabanı oluşturma
+    r.onsuccess = () => ok(r.result);
+    r.onerror = () => hata(r.error);
+  });
+  try {
+    const kayit = await new Promise((ok, hata) => {
+      const r = db.transaction('firebaseLocalStorage', 'readonly').objectStore('firebaseLocalStorage').get(`firebase:authUser:${apiKey}:[DEFAULT]`);
+      r.onsuccess = () => ok(r.result?.value);
+      r.onerror = () => hata(r.error);
+    });
+    return kayit && !kayit.isAnonymous ? kayit : null;
+  } finally { db.close(); }
+}
+async function yoneticiyiTani() {
+  try {
+    if (yoneticiMi() || sessionStorage.getItem('potaAltiYoneticiBakildi')) return;
+    sessionStorage.setItem('potaAltiYoneticiBakildi', '1');
+    const { firebaseConfig: fb } = await import('./tbl/config.js');
+    const u = await fanteziOturumu(fb.apiKey);
+    if (!u) return;
+    let jeton = u.stsTokenManager?.accessToken;
+    if (!jeton || (u.stsTokenManager.expirationTime ?? 0) < Date.now() + 60e3) {
+      const r = await fetch(`https://securetoken.googleapis.com/v1/token?key=${fb.apiKey}`, {
+        method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ grant_type: 'refresh_token', refresh_token: u.stsTokenManager.refreshToken }),
+      });
+      jeton = (await r.json()).id_token;
+    }
+    const belge = (yol, yetki) => fetch(`https://firestore.googleapis.com/v1/projects/${fb.projectId}/databases/(default)/documents/${yol}`,
+      yetki ? { headers: { Authorization: `Bearer ${jeton}` } } : {}).then(r => r.json());
+    const takim = (await belge(`uyeler/${u.uid}`, true)).fields?.takim?.stringValue;
+    if (!takim) return;
+    const yoneticiTakimlar = (await belge('lig/ayar')).fields?.yoneticiTakimlar?.arrayValue?.values?.map(v => v.stringValue) ?? [];
+    if (takim !== 'admin' && !yoneticiTakimlar.includes(takim)) return;
+    localStorage.setItem('potaAltiYonetici', '1');
+    ciz();
+  } catch { /* gizli pencere ya da bağlantı yok: sekme görünmez */ }
+}
+
 function gorunumLig(lig, sekme, donem) {
   const sekmeListesi = yoneticiMi() ? [...SEKMELER, ['artieksi', '+/-']] : SEKMELER;
   const sekmeler = `<div class="secenekler">${sekmeListesi.map(([s, ad]) => `<a class="secenek ${s === sekme ? 'aktif' : ''}" href="#/lig/${lig}/${s}">${ad}</a>`).join('')}</div>`;
@@ -535,6 +581,7 @@ async function basla() {
     S.hata = `Veriler yüklenemedi: ${e.message}`;
   }
   ciz();
+  yoneticiyiTani();
 }
 basla();
 

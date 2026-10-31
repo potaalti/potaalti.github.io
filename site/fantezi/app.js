@@ -830,8 +830,21 @@ function takimKarti(tid, ek = '') {
 }
 
 // ---------- Puanlama ----------
+// Başlamış bir puanlama haftasının dosyası gelmemişse (ağ hatası, yükleme sırası) yeniden yüklenir; yoksa genel klasman eksik kalır
+function eksikHaftalariTamamla() {
+  if (!S.index || !S.ayar || S.haftalarYukleniyor || Date.now() - (S.sonTamamlama ?? 0) < 15000) return;
+  const t = simdi();
+  const eksik = S.index.haftalar.filter(h => h.hafta >= S.ayar.baslangicHaftasi && h.ilkMac && new Date(h.ilkMac).getTime() <= t && !S.haftalar[h.hafta]);
+  if (!eksik.length) return;
+  S.sonTamamlama = Date.now();
+  S.haftalarYukleniyor = true;
+  Promise.all(eksik.map(h => VERI.hafta(h.hafta).then(v => { S.haftalar[h.hafta] = v; }).catch(() => {})))
+    .finally(() => { S.haftalarYukleniyor = false; S.haftalarYuklendi = true; ciz(); });
+}
+
 function puanHaftalari() {
   if (!S.ayar) return [];
+  eksikHaftalariTamamla();
   return Object.values(S.haftalar)
     .filter(h => h.hafta >= S.ayar.baslangicHaftasi && h.maclar.some(m => m.durum !== 'oynanmadi'))
     .sort((a, b) => a.hafta - b.hafta);
@@ -891,7 +904,7 @@ function benimOzetKarti() {
 
 function gorunumPuan(tur, haftaNo = null) {
   if (asama() !== 'sezon') return `<div class="kart"><p class="bos">Puan durumu, yönetici sezonu başlatınca açılır (puanlama ${LIG.kisa} ${S.ayar.baslangicHaftasi}. haftasından başlar).</p></div>`;
-  if (!S.haftalarYuklendi) return '<p class="bos">Haftalık veriler yükleniyor…</p>';
+  if (!S.haftalarYuklendi) { eksikHaftalariTamamla(); return '<p class="bos">Haftalık veriler yükleniyor…</p>'; }
   const haftalar = puanHaftalari();
   if (!haftalar.length) {
     return `<div class="kart"><p class="bos">${hf(S.ayar.baslangicHaftasi)}. hafta maçları başlayınca puanlar burada görünür.</p></div>`;
@@ -1313,14 +1326,16 @@ function gorunumOyuncu(pid) {
 
 // ---------- Kadrom ----------
 // Süren hafta: maçları başlamış ama hepsi bitmemiş son puanlama haftası (yoksa null: kartlarda sezon ortalaması yazar)
+// Gösterilen hafta başladıysa o haftanın verisi (bitmişse de, sıradaki haftaya geçilene kadar), yoksa null
 function surenHafta() {
-  const son = puanHaftalari().at(-1);
-  return son && !C.haftaDurumu(son).tamamlandi ? son : null;
+  const n = maclarVarsayilanHafta();
+  const h = n && S.ayar && n >= S.ayar.baslangicHaftasi ? S.haftalar[n] : null;
+  return h && h.maclar.some(m => m.durum !== 'oynanmadi') ? h : null;
 }
 
 // Sahada 5 As, altında yedek kulübesi. Hak varsa bir As'a ve bir Yedeğe dokunarak yer değiştirilir.
 // Hafta başlamadan kartlarda sezon ortalaması; hafta başlayınca o haftanın VP'si (maçı oynanmamışsa "–", canlı maçta anlık),
-// süre almayan As soluk, yerine sayılan yedekte "… yerine sayıldı".
+// süre almayan As soluk, yerine sayılan yedekte "… yerine sayıldı". Hafta bitince bu değerler sıradaki haftaya geçilene kadar kalır.
 function sahaKarti(tid, k, secilebilir) {
   const zorunlu = zorunluBekleyen(tid);
   const hafta = surenHafta();
@@ -1374,6 +1389,7 @@ function sahaKarti(tid, k, secilebilir) {
 function haftaMaclariKarti(tid) {
   const k = S.kadrolar[tid];
   const n = maclarVarsayilanHafta();
+  if (n && S.maclar[n] === undefined) maclariYukle(n);
   const maclar = n && S.maclar[n];
   if (!k || !maclar?.length) return '';
   const hv = S.haftalar[n];
@@ -1816,10 +1832,19 @@ const kazananSinifi = (m, taraf) => {
 };
 
 // Varsayılan hafta: TBF'nin güncel haftası; o hafta bittiyse sıradaki
+// Gösterilen hafta (fikstür, Takımım): son başlamış hafta; o hafta bittiyse sıradaki haftanın ilk maçına 2 gün kala sıradaki hafta
+const HAFTA_GECISI_MS = 2 * 86400000;
 function maclarVarsayilanHafta() {
-  const hs = S.index?.haftalar ?? [];
-  const g = S.index?.guncelHafta ?? hs[0]?.hafta;
-  return hs.find(h => h.hafta === g)?.bitti && hs.some(h => h.hafta === g + 1) ? g + 1 : g;
+  const hs = (S.index?.haftalar ?? []).filter(h => h.ilkMac);
+  if (!hs.length) return S.index?.guncelHafta ?? null;
+  const t = simdi();
+  const baslamis = hs.filter(h => new Date(h.ilkMac).getTime() <= t);
+  if (!baslamis.length) return hs[0].hafta;
+  const guncel = baslamis.at(-1);
+  const siradaki = hs.find(h => h.hafta > guncel.hafta);
+  const maclar = S.maclar[guncel.hafta];
+  const bitti = guncel.bitti || (maclar?.length > 0 && maclar.every(m => m.durum === 'bitti'));
+  return siradaki && bitti && t >= new Date(siradaki.ilkMac).getTime() - HAFTA_GECISI_MS ? siradaki.hafta : guncel.hafta;
 }
 
 async function maclariYukle(n) {

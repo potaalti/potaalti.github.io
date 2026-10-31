@@ -55,11 +55,14 @@ function yukle(hedef, anahtar, url, { bosDeger = null, donustur = v => v } = {})
 const ligVerisi = (lig, ad) => { yukle(S[ad], lig, `data/${lig}/${ad}.json`); return S[ad][lig]; };
 const macListesi = (lig, h) => { yukle(S.maclar, `${lig}-${h}`, `${KAYNAK}/maclar/${lig}-${h}.json`, { donustur: listeDuzelt }); return S.maclar[`${lig}-${h}`]?.maclar; };
 
-// Ligin gösterilecek haftası: sıradaki hafta gösterime girdiyse o, yoksa güncel hafta
+// Ligin gösterilecek haftası: güncel hafta bittiyse sıradaki haftanın ilk maçına 2 gün kala sıradaki hafta, yoksa güncel hafta
 function varsayilanHafta(lig) {
   const b = S.index?.maclar?.[lig];
   if (!b) return S.meta?.ligler?.[lig]?.guncel ?? 1;
-  return b.siradaki && new Date(b.siradaki.gosterim).getTime() <= Date.now() ? b.siradaki.hafta : b.guncel;
+  if (!b.siradaki || !b.guncelBitti) return b.guncel;
+  const ilk = (S.index.macSaatleri ?? []).filter(m => m.lig === lig && !m.bitti).map(m => new Date(m.tarih).getTime()).sort((x, y) => x - y)[0];
+  const gecis = ilk ? ilk - 2 * 86400000 : new Date(b.siradaki.gosterim).getTime();
+  return Date.now() >= gecis ? b.siradaki.hafta : b.guncel;
 }
 
 // ---------- Menü ----------

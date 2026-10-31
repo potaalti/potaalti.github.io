@@ -1529,9 +1529,11 @@ function gorunumSerbest() {
           <td class="sayi">${alHucresi(o)}</td></tr>`).join('')
           || '<tr><td colspan="6" class="bos">Oyuncu bulunamadı</td></tr>'}</tbody>
       </table></div>`;
-  const talepKarti = talepte.length ? `<div class="kart talep-kart"><h3>Talep süresindeki oyuncular <span class="soluk">(${talepte.length})</span></h3>
+  // Sezon boyunca hep görünür (boşsa da), menajerler yerini bilsin
+  const talepKarti = alimAcik ? `<div class="kart talep-kart"><h3>Talep süresindeki oyuncular <span class="soluk">(${talepte.length})</span></h3>
     <p class="kucuk soluk" style="margin-top:0">Bırakılan ya da lige yeni katılan oyuncuyu ${beklemeSaati()} saat kimse alamaz. Bu sürede talep edenler
     arasında süre bitince kura çekilir; talep eden olmazsa oyuncu boştakilere düşer.</p>
+    ${talepte.length ? '' : '<p class="soluk" style="margin:0">Şu an talep süresinde oyuncu yok. Bir takım oyuncu bıraktığında ya da TBF\'de yeni bir oyuncunun lisansı çıktığında burada görünür.</p>'}
     <div class="fa-liste">${talepte.map(({ pid, td }) => {
       const o = S.rehber.get(pid);
       return `<div class="fa-kart">
@@ -1549,7 +1551,7 @@ function gorunumSerbest() {
   return `<div class="kart"><h2>Boştaki oyuncular</h2>
     <p style="margin-bottom:0">Hiçbir takımda olmayan ${LIG.kisa} oyuncuları. ${!alimAcik ? 'Serbest oyuncu alımı sezon başlayınca açılır.'
       : tid ? `Kalan ${hakAdi()}n: <b>${hak}</b> / ${S.ayar.faHakki} (sezon boyunca).` : ''}
-      ${alimAcik && !talepte.length ? ` Bir takımın bıraktığı ya da lige yeni katılan oyuncu <b>${beklemeSaati()} saat</b> kimse tarafından alınamaz (⏳); bu sürede takımlar <b>talep</b> eder, süre bitince talip olanlar arasında kura çekilir. Talep eden olmazsa oyuncu boştakilere düşer.` : ''}</p>
+</p>
     ${zorunlu.length ? `<div class="hata-kutu"><b>Zorunlu değişiklik:</b> ${zorunlu.map(p => esc(oyuncu(p).ad)).join(', ')} artık TBF'de lisanslı görünmüyor. Aşağıdan kadro kuralına uygun bir oyuncu seçip <b>Al</b>'a bas; bu değişiklik ${hakAdi()}ndan düşmez.</div>` : ''}</div>
     ${panel}
     ${talepKarti}

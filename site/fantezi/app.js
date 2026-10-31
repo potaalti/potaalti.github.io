@@ -7,6 +7,7 @@ import * as F from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestor
 import { firebaseConfig, lig as LIG_AYARI } from 'lig-ayar';
 import * as C from './core.js';
 import * as D from './db.js';
+import * as AE from './artieksi.js';
 
 // Aynı motor iki lig için çalışır. BSL: draftla kurulur, As 3 Ön + 2 Arka ve Türk kuralı.
 // TBL: kadrolar eski TBL Fantezi Ligi'nden içe aktarılır (draft yok), As'ta en fazla 2 yabancı, fantezi hafta numaraları.
@@ -370,7 +371,7 @@ function menuOgeleri() {
   const gelen = Object.values(S.teklifler).filter(t => t.durum === 'bekliyor' && t.alan === benimTakimim()).length
     + (yonetici() ? onayBekleyen().length : 0);
   const yonetim = [yonetici() && ['bildirimler', 'Bildirimler', '🔔', bildirimSayisi()],
-    yonetici() && ['yonetici', 'Yönetici', '⚙️'], LIG.mevki && yonetici() && ['mevkiler', 'Mevkiler', '🧭']];
+    yonetici() && ['yonetici', 'Yönetici', '⚙️'], yonetici() && ['artieksi', '+/- Liderleri', '📈'], LIG.mevki && yonetici() && ['mevkiler', 'Mevkiler', '🧭']];
   const zorunlu = benimTakimim() ? zorunluBekleyen(benimTakimim()).length : 0;
   return (ligEkrani() ? [
     benimTakimim() && ['kadrom', 'Takımım', '📋'],
@@ -504,6 +505,7 @@ function gorunum() {
     case 'yonetici': return yonetici() ? `<div class="dar">${gorunumYonetici()}</div>` : '<p class="bos">Bu sayfa yönetici içindir.</p>';
     case 'mevkiler': return yonetici() ? gorunumMevkiler() : '<p class="bos">Bu sayfa yönetici içindir.</p>';
     case 'bildirimler': return yonetici() ? `<div class="dar">${gorunumBildirimler()}</div>` : '<p class="bos">Bu sayfa yönetici içindir.</p>';
+    case 'artieksi': return yonetici() ? `<div class="dar">${gorunumArtieksi(p1, p2)}</div>` : '<p class="bos">Bu sayfa yönetici içindir.</p>';
     default: return gorunumDraft();
   }
 }
@@ -1095,6 +1097,11 @@ async function siralamaGorseli({ baslik: ustYazi, altBaslik, sutunlar, satirlar 
 }
 
 function gorselVerisi(tur, n) {
+  if (tur === 'artieksi') {
+    const [lig, donem] = n.split('-');
+    return { dosyaAdi: `pota-alti-arti-eksi-${n}.png`, cizici: AE.artieksiGorseli,
+      bilgi: { ...AE.gorselBasligi(lig, donem), satirlar: artieksiListesi(S.artieksi[lig], donem === 'sezon' ? 'sezon' : Number(donem)).map(AE.gorselSatiri) } };
+  }
   if (tur === 'genel') {
     const haftalar = puanHaftalari();
     const tablo = genelTablo();
@@ -1140,8 +1147,8 @@ async function siralamayiPaylas(dugme, tur, n, indir = false) {
   try {
     if (!hazir) {
       dugme.textContent = '…';
-      const { bilgi, dosyaAdi } = gorselVerisi(tur, n);
-      const blob = await siralamaGorseli(bilgi);
+      const { bilgi, dosyaAdi, cizici } = gorselVerisi(tur, n);
+      const blob = await (cizici ?? siralamaGorseli)(bilgi);
       hazir = hazirGorsel = { anahtar, zaman: Date.now(), dosya: new File([blob], dosyaAdi, { type: 'image/png' }), bilgi };
     }
     const { dosya, bilgi } = hazir;
@@ -1759,6 +1766,43 @@ function gorunumKurallar() {
     </ul></div>`;
 }
 
+// ---------- +/- liderleri (yönetici) ----------
+// TBL ve BSL oyuncularının haftalık ya da sezon boyu +/- toplamı (eski TBL Fantezi sitesinin verisi), ilk 10.
+// Eşit +/-'de takımının skor farkı daha kötü olan üstte; 10. ile aynı +/- yapanlar da listeye girer.
+function artieksiListesi(d, donem) {
+  const tum = (donem === 'sezon' ? d?.sezon : d?.haftalar?.[donem]) ?? [];
+  const onuncu = tum[9];
+  return (onuncu ? tum.filter((k, i) => i < 10 || k.pm === onuncu.pm) : tum).map((k, i) => ({ ...k, sira: i + 1 }));
+}
+async function artieksiYukle(lig) {
+  if (S.artieksiYukleniyor?.[lig]) return;
+  (S.artieksiYukleniyor ??= {})[lig] = true;
+  try { S.artieksi[lig] = await jsonGetir(`${TBL_VERI}/artieksi/${lig}.json`); } catch { S.artieksi[lig] = { haftalar: {}, sezon: [] }; }
+  S.artieksiYukleniyor[lig] = false;
+  ciz();
+}
+function gorunumArtieksi(istenenLig, istenenDonem) {
+  const lig = istenenLig === 'bsl' ? 'bsl' : 'tbl';
+  S.artieksi ??= {};
+  const d = S.artieksi[lig];
+  const ligSec = `<div class="secenekler">${[['tbl', 'TBL'], ['bsl', 'BSL']].map(([l, ad]) =>
+    `<a class="secenek ${l === lig ? 'aktif' : ''}" href="#/artieksi/${l}">${ad}</a>`).join('')}</div>`;
+  if (!d) { artieksiYukle(lig); return `${ligSec}<p class="bos">Yükleniyor…</p>`; }
+  const haftalar = Object.keys(d.haftalar ?? {}).map(Number).sort((a, b) => a - b);
+  const donem = istenenDonem === 'sezon' ? 'sezon' : haftalar.includes(Number(istenenDonem)) ? Number(istenenDonem) : haftalar.at(-1) ?? 'sezon';
+  const cipler = `<div class="secenekler hafta-cipleri kaydir-ortala">${['sezon', ...haftalar].map(k =>
+    `<a class="secenek ${k === donem ? 'aktif' : ''}" href="#/artieksi/${lig}/${k}">${k === 'sezon' ? 'Sezon' : `${k}. hafta`}</a>`).join('')}</div>`;
+  const liste = artieksiListesi(d, donem);
+  const satirlar = liste.map(k => `<div class="f-satir">
+      <span class="f-sira ${k.sira <= 3 ? `s${k.sira}` : ''}">${k.sira}</span>
+      <div class="ad"><strong>${esc(k.ad)}</strong><small>${esc(baslik(k.takim))}${donem === 'sezon' ? ` · ${k.mac} maç` : ''}</small></div>
+      <div class="f-sayi"><strong>${k.pm > 0 ? `+${k.pm}` : k.pm}</strong><small>+/-</small></div></div>`).join('');
+  return `${ligSec}${cipler}
+    <div class="kart"><div class="baslik-satir"><h2>${lig.toUpperCase()} · ${donem === 'sezon' ? 'Sezon' : `${donem}. hafta`} · +/- ilk 10</h2>${liste.length ? paylasDugmeleri('artieksi', `${lig}-${donem}`) : ''}</div>
+    ${satirlar || '<p class="bos">Henüz veri yok.</p>'}
+    <p class="kucuk soluk" style="margin-bottom:0">Sadece yöneticiler görür. Eşit +/-'de takımının skor farkı daha kötü olan üstte. Paylaş/İndir yayın şablonundaki görseli verir.</p></div>`;
+}
+
 // ---------- Yönetici ----------
 function gorunumYonetici() {
   const d = S.durum;
@@ -2349,7 +2393,7 @@ async function eylem(is, id, el) {
       return ciz();
     case 'panel-kapat': S.ui.panel = null; return ciz();
     case 'fa-sirala': S.ui.faSirala = id; return ciz();
-    case 'paylas': return siralamayiPaylas(el, el.dataset.tur, Number(id), el.dataset.islem === 'indir');
+    case 'paylas': return siralamayiPaylas(el, el.dataset.tur, el.dataset.tur === 'artieksi' ? id : Number(id), el.dataset.islem === 'indir');
     case 'talep-git': S.ui.faAlSonraki = id; location.hash = '#/bostakiler'; return;
     case 'talep-onayla': {
       const birak = deger('fa-birak');

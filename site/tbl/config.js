@@ -21,4 +21,7 @@ export const lig = {
   // Yeni sisteme geçerken kadrolardan çıkmış ama talep süresi hiç başlamamış oyuncular (Alp Karahan, Troy Şav, Josh Nzeakor):
   // yönetici uygulamayı ilk açtığında 24 saatlik talep süreleri bir kez başlar (lig/ayar.acilisTalepleriBasladi)
   acilisTalepleri: ['123649', '225810', '778243'],
+  // Tek seferlik istisna: Alp Karahan'ın talep süresi 2 saate indirildi (31 Ekim 15:35'te biter); kurayı kazanan onu bu hafta
+  // (TBL 9. hafta, Mersin Spor 16:00'da oynuyor) kullanır. Sadece o tarihte başlamış talep süresine uygulanır.
+  talepIstisnalari: { 123649: { baslangic: '2026-10-31T10:35:14.455Z', bitis: '2026-10-31T12:35:14.455Z', hafta: 9 } },
 };

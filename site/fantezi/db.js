@@ -502,6 +502,10 @@ export async function beklemeleriBaslat(zamanlar) {
   await topluYaz(Object.entries(zamanlar).map(([pid, z]) => b => b.set(yol('bekleme', pid), { zaman: F.Timestamp.fromDate(z) })));
 }
 
+export async function beklemeZamaniniDegistir(pid, zaman) {
+  await F.updateDoc(yol('bekleme', pid), { zaman: F.Timestamp.fromDate(zaman) });
+}
+
 export async function beklemeyiKaldir(pid) {
   await F.deleteDoc(yol('bekleme', pid));
 }

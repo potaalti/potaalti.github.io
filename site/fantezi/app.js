@@ -2650,12 +2650,17 @@ function istekListesiniDinle() {
 // Yönetici ekranı: talep süresi biten oyuncular için talip olanlar arasında kura çeker (iki yönetici ekranı aynı anda
 // denerse işlem sayesinde sadece biri çeker)
 const kuraDenenen = new Map();
+// Config'teki talep istisnası (talepIstisnalari): süresi kısaltılan talep, kurada istisnadaki haftadan geçerli olur
+const talepIstisnasi = (pid, b) => {
+  const ist = LIG.talepIstisnalari?.[pid];
+  return ist && b?.zaman?.toMillis?.() === Date.parse(ist.bitis) - D.BEKLEME_MS ? ist : null;
+};
 function talepKuralariniCek() {
   if (!yonetici() || asama() !== 'sezon' || !S.beklemeYuklendi) return;
   for (const [pid, b] of Object.entries(S.bekleme)) {
     if (!Object.keys(b.talepler ?? {}).length || D.beklemeKalan(b) > 0 || Date.now() - (kuraDenenen.get(pid) ?? 0) < 60000) continue;
     kuraDenenen.set(pid, Date.now());
-    D.talepKurasi(pid, etkinHafta(), dizilisSorunu)
+    D.talepKurasi(pid, talepIstisnasi(pid, b)?.hafta ?? etkinHafta(), dizilisSorunu)
       .then(sonuc => bildir(sonuc ? `Talep kurası: ${oyuncu(pid).ad} → ${takimAdi(sonuc.kazanan)} (${sonuc.talipler.length} talip)` : `${oyuncu(pid).ad}: uygun talep yoktu, boştakilere düştü`))
       .catch(e => { if (!(e instanceof D.Hata)) console.warn('Talep kurası çekilemedi', e); });
   }
@@ -2684,6 +2689,14 @@ function beklemeleriEsitle() {
     for (const pid of LIG.acilisTalepleri) {
       if (!sahip.has(pid) && !S.bekleme[pid] && S.rehber.get(pid)?.aktif !== false) eksik[pid] = new Date(simdi());
     }
+  }
+  // Talep istisnası: o tarihte başlamış talep süresi istisnadaki bitişe çekilir (bir kez)
+  for (const [pid, ist] of Object.entries(LIG.talepIstisnalari ?? {})) {
+    if (S.bekleme[pid]?.zaman?.toMillis?.() !== Date.parse(ist.baslangic) || S.beklemeYazilan.has(`istisna-${pid}`)) continue;
+    S.beklemeYazilan.add(`istisna-${pid}`);
+    D.beklemeZamaniniDegistir(pid, new Date(Date.parse(ist.bitis) - D.BEKLEME_MS))
+      .then(() => bildir(`${oyuncu(pid)?.ad ?? pid}: talep süresi ${new Date(ist.bitis).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}'te bitecek şekilde kısaltıldı`))
+      .catch(hataGoster);
   }
   if (Object.keys(eksik).length || acilis) {
     D.beklemeleriBaslat(eksik)

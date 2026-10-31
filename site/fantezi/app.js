@@ -2660,7 +2660,7 @@ function talepKuralariniCek() {
       .catch(e => { if (!(e instanceof D.Hata)) console.warn('Talep kurası çekilemedi', e); });
   }
 }
-setInterval(talepKuralariniCek, 30000);
+setInterval(() => { talepKuralariniCek(); beklemeleriEsitle(); }, 30000); // giriş/kadrolar sonradan gelirse
 
 // Yönetici ekranı: lige yeni katılan oyuncular için beklemeyi Firestore'a yazar (kurallar buna bakar)
 function beklemeleriEsitle() {
@@ -2676,7 +2676,21 @@ function beklemeleriEsitle() {
     eksik[h.id] = z;
     S.beklemeYazilan.add(h.id);
   }
-  if (Object.keys(eksik).length) D.beklemeleriBaslat(eksik).catch(hataGoster);
+  // Açılış talepleri (config: acilisTalepleri): kadrolar yüklendikten sonra bir kez; boşta ve beklemesi olmayanlar için
+  let acilis = false;
+  if (LIG.acilisTalepleri?.length && S.ayar && !S.ayar.acilisTalepleriBasladi && Object.keys(S.kadrolar).length && !S.beklemeYazilan.has('acilis')) {
+    S.beklemeYazilan.add('acilis');
+    acilis = true;
+    for (const pid of LIG.acilisTalepleri) {
+      if (!sahip.has(pid) && !S.bekleme[pid] && S.rehber.get(pid)?.aktif !== false) eksik[pid] = new Date(simdi());
+    }
+  }
+  if (Object.keys(eksik).length || acilis) {
+    D.beklemeleriBaslat(eksik)
+      .then(() => acilis && D.ayarlariKaydet({ acilisTalepleriBasladi: true }))
+      .then(() => acilis && bildir(`Talep süresi başladı: ${LIG.acilisTalepleri.map(pid => oyuncu(pid)?.ad ?? pid).join(', ')}`))
+      .catch(hataGoster);
+  }
 }
 
 function secimleriDinle() {

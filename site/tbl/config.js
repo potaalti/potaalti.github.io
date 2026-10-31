@@ -18,4 +18,7 @@ export const lig = {
   kural: 'tbl', draft: false, takas: false, hareketler: false, mevki: false, fanteziHaftasi: true, iceAktar: 'tbl', ortakHak: true, beklemeSaat: 24,
   // Lisansı düşen yabancının yerine aynı TBL takımına gelen yabancı fantezi takımına otomatik geçer (hak kullanmaz)
   otomatikYerine: true,
+  // Yeni sisteme geçerken kadrolardan çıkmış ama talep süresi hiç başlamamış oyuncular (Alp Karahan, Troy Şav, Josh Nzeakor):
+  // yönetici uygulamayı ilk açtığında 24 saatlik talep süreleri bir kez başlar (lig/ayar.acilisTalepleriBasladi)
+  acilisTalepleri: ['123649', '225810', '778243'],
 };

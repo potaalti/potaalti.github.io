@@ -345,6 +345,17 @@ function cizHemen() {
   const benimSiram = siradakiTakim() && siradakiTakim() === benimTakimim() && asama() === 'draft';
   document.title = benimSiram ? '🔔 Sıra sende! · Fantezi' : (S.ayar?.ad ?? LIG.ad);
   sayacGuncelle();
+  takimimiKaydet();
+}
+
+// Benim takımımın oyuncuları bu tarayıcıda saklanır: ana uygulamanın maç sayfası da onları şeritle işaretler (aynı site)
+const TAKIMIM_ANAHTARI = `potaAltiTakimim-${LIG.kod}`;
+function takimimiKaydet() {
+  const tid = benimTakimim();
+  const k = tid && S.kadrolar[tid];
+  if (!k) return;
+  const deger = JSON.stringify({ ad: takimAdi(tid), oyuncular: [...k.as, ...k.yedek] });
+  try { if (localStorage.getItem(TAKIMIM_ANAHTARI) !== deger) localStorage.setItem(TAKIMIM_ANAHTARI, deger); } catch { /* gizli pencere */ }
 }
 
 function rota() {
@@ -2201,6 +2212,7 @@ async function eylem(is, id, el) {
       return;
     case 'cikis':
       if (!confirm('Çıkış yapılsın mı? Tekrar girmek için Google ile giriş yapman yeterli.')) return;
+      try { localStorage.removeItem(TAKIMIM_ANAHTARI); } catch { /* gizli pencere */ }
       await signOut(auth);
       location.reload();
       return;

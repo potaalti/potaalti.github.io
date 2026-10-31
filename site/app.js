@@ -175,12 +175,22 @@ const KUTU_SUTUNLARI = [
   ['Rb', o => o.rib], ['As', o => o.ast], ['Tç', o => o.tc], ['Bl', o => o.blk], ['Tk', o => o.tk], ['F', o => o.faul], ['+/-', o => o.pm ?? ''], ['VP', o => o.vp],
 ];
 
+// Fantezi ligine giriş yapılmışsa (bu tarayıcıda) benim takımımın oyuncuları: { ad, oyuncular: Set }
+function takimim(lig) {
+  try {
+    const t = JSON.parse(localStorage.getItem(`potaAltiTakimim-${lig}`) ?? 'null');
+    return t && { ad: t.ad, oyuncular: new Set(t.oyuncular.map(String)) };
+  } catch { return null; }
+}
+
 function kutuSkorTablosu(lig, t) {
   const oyuncular = t.oyuncular ?? [];
+  const benim = takimim(lig);
   const satirlar = oyuncular.map(o => {
     const id = String(o.id);
     const ad = id.startsWith('fiba-') ? esc(o.ad) : `<a href="#/oyuncu/${lig}/${id}" class="oyuncu-link">${esc(o.ad)}</a>`;
-    return `<tr class="${sureSn(o.sure) > 0 ? '' : 'oynamadi'}"><th>${o.ilk5 ? `<b>${ad}</b>` : ad}</th>
+    const benimki = benim?.oyuncular.has(id);
+    return `<tr class="${sureSn(o.sure) > 0 ? '' : 'oynamadi'} ${benimki ? 'benim-oyuncu' : ''}"><th>${o.ilk5 ? `<b>${ad}</b>` : ad}${benimki ? `<div class="fantezi-sahip">${esc(benim.ad)}</div>` : ''}</th>
       ${KUTU_SUTUNLARI.map(([b, f]) => `<td class="${b === 'VP' ? 'vp' : ''}">${esc(f(o))}</td>`).join('')}</tr>`;
   }).join('');
   const topla = alan => oyuncular.reduce((x, o) => x + (Number(o[alan]) || 0), 0);

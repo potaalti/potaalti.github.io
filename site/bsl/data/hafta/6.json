@@ -30,20 +30,15 @@
   {
    "id": 346315,
    "tarih": "2026-10-31T20:30:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "YUKATEL DENİZLİ BASKET",
    "evId": 266028,
-   "evSkor": "2",
+   "evSkor": "74",
    "dep": "GALATASARAY MCT TECHNIC",
    "depId": 266026,
-   "depSkor": "4",
+   "depSkor": "87",
    "salon": "Pamukkale Üniversitesi Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 1,
-    "saat": "08:52",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346316,
@@ -500,48 +495,48 @@
    "ad": "Brae Ivey",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 0,
-   "saniye": 68,
+   "vp": 4,
+   "saniye": 1653,
    "mac": 1
   },
   "373162": {
    "ad": "Marko Pecarski",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": -1,
-   "saniye": 68,
+   "vp": 18,
+   "saniye": 2134,
    "mac": 1
   },
   "779010": {
    "ad": "Victor Bailey Jr.",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 0,
-   "saniye": 68,
+   "vp": 10,
+   "saniye": 2126,
    "mac": 1
   },
   "736366": {
    "ad": "John Meeks",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 1,
-   "saniye": 68,
+   "vp": 20,
+   "saniye": 2045,
    "mac": 1
   },
   "470765": {
    "ad": "Mahir Ağva",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 3,
-   "saniye": 68,
+   "vp": 18,
+   "saniye": 1852,
    "mac": 1
   },
   "779011": {
    "ad": "Jhonathan Dunn",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 6,
+   "saniye": 552,
    "mac": 1
   },
   "379563": {
@@ -549,7 +544,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 1,
    "mac": 1
   },
   "392627": {
@@ -564,12 +559,20 @@
    "ad": "Erten Gazi",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 0,
-   "saniye": 0,
+   "vp": -2,
+   "saniye": 750,
    "mac": 1
   },
   "124128": {
    "ad": "Egemen Güven",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 5,
+   "saniye": 621,
+   "mac": 1
+  },
+  "497055": {
+   "ad": "Bulut Yenice",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 0,
@@ -580,64 +583,64 @@
    "ad": "Mustapha Amzil",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 2,
+   "saniye": 266,
    "mac": 1
   },
   "250129": {
    "ad": "Şehmus Hazer",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 3,
-   "saniye": 68,
+   "vp": 6,
+   "saniye": 1607,
    "mac": 1
   },
   "502492": {
    "ad": "Aleksej Nikolic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 0,
-   "saniye": 68,
+   "vp": 7,
+   "saniye": 1455,
    "mac": 1
   },
   "779275": {
    "ad": "Chimezie Metu",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 1,
-   "saniye": 68,
+   "vp": 14,
+   "saniye": 1562,
    "mac": 1
   },
   "779274": {
    "ad": "Oumar Ballo",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 0,
-   "saniye": 68,
+   "vp": 9,
+   "saniye": 933,
    "mac": 1
   },
   "500054": {
    "ad": "Dyshawn Pierre",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 2,
-   "saniye": 68,
+   "vp": 6,
+   "saniye": 1147,
    "mac": 1
   },
   "736340": {
    "ad": "Jerome Robinson Jr.",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 1,
+   "saniye": 1033,
    "mac": 1
   },
   "128768": {
    "ad": "Berkan Durmaz",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 10,
+   "saniye": 938,
    "mac": 1
   },
   "221447": {
@@ -652,8 +655,8 @@
    "ad": "Alen Smailagic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 24,
+   "saniye": 1202,
    "mac": 1
   },
   "363559": {
@@ -668,16 +671,16 @@
    "ad": "Buğrahan Tuncer",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 6,
+   "saniye": 793,
    "mac": 1
   },
   "781548": {
-   "ad": "Kj Simpson",
+   "ad": "KJ Simpson",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 12,
+   "saniye": 1330,
    "mac": 1
   }
  }

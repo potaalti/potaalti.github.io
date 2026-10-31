@@ -171,6 +171,24 @@ function talepDurumu(pid) {
   if (talipler.length) return { evre: 'kura', kalan: 0, talipler, talepler };
   return null;
 }
+// Talep süresindeki (ya da kurası bekleyen) boştaki oyuncular; kurası bekleyenler ve süresi azalanlar üstte
+function talepteOyuncular() {
+  if (asama() !== 'sezon') return [];
+  const sahip = sahipler();
+  const idler = new Set([...Object.keys(S.bekleme), ...S.bslHareketleri.filter(h => h.tur === 'yeni').map(h => h.id)]);
+  const sira = td => (td.evre === 'kura' ? -1 : td.kalan);
+  return [...idler].filter(pid => !sahip.has(pid) && S.rehber.get(pid)?.aktif)
+    .map(pid => ({ pid, td: talepDurumu(pid) })).filter(x => x.td)
+    .sort((a, b) => sira(a.td) - sira(b.td));
+}
+// Oyuncu nereden geldi: bir fantezi takımı mı bıraktı, lisansı mı yeni çıktı
+function talepKaynagi(pid) {
+  const birakma = Object.values(S.hareketler).filter(h => h.birakilan === pid)
+    .sort((a, b) => (b.zaman?.toMillis?.() ?? 0) - (a.zaman?.toMillis?.() ?? 0))[0];
+  if (birakma) return `${takimAdi(birakma.takim)} bıraktı`;
+  const yeni = S.bslHareketleri.find(h => h.id === pid && h.tur === 'yeni');
+  return yeni ? `yeni lisans · ${baslik(yeni.yeniTakim ?? '')}` : 'bırakıldı';
+}
 const sureYazisi = ms => (ms >= 3600000 ? `${Math.ceil(ms / 3600000)} sa` : `${Math.max(1, Math.ceil(ms / 60000))} dk`);
 
 // link: adı oyuncu sayfasına bağlar (düğme içinde kullanılmaz)
@@ -328,7 +346,7 @@ function menuOgeleri() {
     ['haftalik', 'Haftalık', '📊'],
     ['puan', 'Genel', '🏆'],
     ['maclar', 'Maçlar', '📅'],
-    ['bostakiler', 'Boştakiler', '🧺', zorunlu],
+    ['bostakiler', 'Boştakiler', '🧺', zorunlu + talepteOyuncular().length],
     LIG.takas && ['takas', 'Takas', '🔄', gelen],
     LIG.hareketler && ['hareketler', 'Hareketler', '📰'],
     ['takimlar', 'Takımlar', '👥'],
@@ -1454,7 +1472,9 @@ function gorunumSerbest() {
   const sahip = sahipler();
   const ara = aramaNorm(S.ui.ara);
   const bslTakimlar = [...new Set([...S.rehber.values()].filter(o => o.aktif).map(o => o.takim))].sort((a, b) => a.localeCompare(b, 'tr'));
-  const liste = [...S.rehber.values()].filter(o => o.aktif && !sahip.has(o.id)
+  const talepte = talepteOyuncular();
+  const talepteIdler = new Set(talepte.map(x => x.pid));
+  const liste = [...S.rehber.values()].filter(o => o.aktif && !sahip.has(o.id) && !talepteIdler.has(o.id)
     && (!S.ui.sadeceTurk || o.turk) && (!S.ui.bslTakim || o.takim === S.ui.bslTakim)
     && (!S.ui.mevkiFiltre || mevki(o.id) === S.ui.mevkiFiltre)
     && (!ara || aramaNorm(o.ad).includes(ara)));
@@ -1509,6 +1529,16 @@ function gorunumSerbest() {
           <td class="sayi">${alHucresi(o)}</td></tr>`).join('')
           || '<tr><td colspan="6" class="bos">Oyuncu bulunamadı</td></tr>'}</tbody>
       </table></div>`;
+  const talepKarti = talepte.length ? `<div class="kart talep-kart"><h3>Talep süresindeki oyuncular <span class="soluk">(${talepte.length})</span></h3>
+    <p class="kucuk soluk" style="margin-top:0">Bırakılan ya da lige yeni katılan oyuncuyu ${beklemeSaati()} saat kimse alamaz. Bu sürede talep edenler
+    arasında süre bitince kura çekilir; talep eden olmazsa oyuncu boştakilere düşer.</p>
+    <div class="fa-liste">${talepte.map(({ pid, td }) => {
+      const o = S.rehber.get(pid);
+      return `<div class="fa-kart">
+        <div class="ad">${adLinki(o)} ${mevkiRozeti(mevki(pid))}${trRozeti(o)}<small>${esc(talepKaynagi(pid))} · ${esc(baslik(o.takim ?? ''))}</small></div>
+        <div class="fa-vp"><b>${sayi(o.vpOrt)}</b><small>VP ort.</small></div>
+        <div class="fa-al">${talepHucresi(pid, td, hak > 0)}</div></div>`;
+    }).join('')}</div></div>` : '';
   const panelOyuncu = genis() && S.ui.panel && S.rehber.get(S.ui.panel);
   const cekmece = panelOyuncu ? `<div class="cekmece-arka" data-is="panel-kapat"></div>
     <aside class="cekmece" aria-label="${esc(panelOyuncu.ad)}">
@@ -1519,9 +1549,10 @@ function gorunumSerbest() {
   return `<div class="kart"><h2>Boştaki oyuncular</h2>
     <p style="margin-bottom:0">Hiçbir takımda olmayan ${LIG.kisa} oyuncuları. ${!alimAcik ? 'Serbest oyuncu alımı sezon başlayınca açılır.'
       : tid ? `Kalan ${hakAdi()}n: <b>${hak}</b> / ${S.ayar.faHakki} (sezon boyunca).` : ''}
-      ${alimAcik ? ` Bir takımın bıraktığı ya da lige yeni katılan oyuncu <b>${beklemeSaati()} saat</b> kimse tarafından alınamaz (⏳); bu sürede takımlar <b>talep</b> eder, süre bitince talip olanlar arasında kura çekilir. Talep eden olmazsa oyuncu boştakilere düşer.` : ''}</p>
+      ${alimAcik && !talepte.length ? ` Bir takımın bıraktığı ya da lige yeni katılan oyuncu <b>${beklemeSaati()} saat</b> kimse tarafından alınamaz (⏳); bu sürede takımlar <b>talep</b> eder, süre bitince talip olanlar arasında kura çekilir. Talep eden olmazsa oyuncu boştakilere düşer.` : ''}</p>
     ${zorunlu.length ? `<div class="hata-kutu"><b>Zorunlu değişiklik:</b> ${zorunlu.map(p => esc(oyuncu(p).ad)).join(', ')} artık TBF'de lisanslı görünmüyor. Aşağıdan kadro kuralına uygun bir oyuncu seçip <b>Al</b>'a bas; bu değişiklik ${hakAdi()}ndan düşmez.</div>` : ''}</div>
     ${panel}
+    ${talepKarti}
     <div class="kart">
       <div class="satir" style="margin-bottom:10px">
         <input type="search" id="ara" data-ui="ara" placeholder="Oyuncu ara" value="${esc(S.ui.ara)}" class="ara">

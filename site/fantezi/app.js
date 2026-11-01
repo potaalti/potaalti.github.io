@@ -2751,7 +2751,7 @@ const istisnaBekliyor = (pid, b) => [LIG.talepIstisnalari?.[pid]?.baslangic ?? [
 function talepKuralariniCek() {
   if (!yonetici() || asama() !== 'sezon' || !S.beklemeYuklendi) return;
   for (const [pid, b] of Object.entries(S.bekleme)) {
-    if (!Object.keys(b.talepler ?? {}).length || D.beklemeKalan(b) > 0 || istisnaBekliyor(pid, b) || Date.now() - (kuraDenenen.get(pid) ?? 0) < 60000) continue;
+    if (!Object.keys(b.talepler ?? {}).length || D.beklemeKalan(b) > 0 || istisnaBekliyor(pid, b) || LIG.haricOyuncular?.includes(pid) || Date.now() - (kuraDenenen.get(pid) ?? 0) < 60000) continue;
     kuraDenenen.set(pid, Date.now());
     D.talepKurasi(pid, talepIstisnasi(pid, b)?.hafta ?? etkinHafta(), dizilisSorunu)
       .then(sonuc => bildir(sonuc ? `Talep kurası: ${oyuncu(pid).ad} → ${takimAdi(sonuc.kazanan)} (${sonuc.talipler.length} talip)` : `${oyuncu(pid).ad}: uygun talep yoktu, boştakilere düştü`))
@@ -2769,7 +2769,7 @@ function beklemeleriEsitle() {
   for (const h of S.bslHareketleri) {
     if (otomatik.has(h.id)) continue;
     const z = new Date(h.zaman);
-    if (h.tur !== 'yeni' || sahip.has(h.id) || S.beklemeYazilan.has(h.id) || z.getTime() + D.BEKLEME_MS <= simdi()) continue;
+    if (h.tur !== 'yeni' || S.rehber.get(h.id)?.haric || sahip.has(h.id) || S.beklemeYazilan.has(h.id) || z.getTime() + D.BEKLEME_MS <= simdi()) continue;
     if ((S.bekleme[h.id]?.zaman?.toMillis?.() ?? 0) >= z.getTime()) continue;
     eksik[h.id] = z;
     S.beklemeYazilan.add(h.id);
@@ -2782,6 +2782,12 @@ function beklemeleriEsitle() {
     for (const pid of LIG.acilisTalepleri) {
       if (!sahip.has(pid) && !S.bekleme[pid] && S.rehber.get(pid)?.aktif !== false) eksik[pid] = new Date(simdi());
     }
+  }
+  // Ligden çıkarılan oyuncunun beklemesi ve talepleri silinir (kura çekilmez)
+  for (const pid of LIG.haricOyuncular ?? []) {
+    if (!S.bekleme[pid] || S.beklemeYazilan.has(`haric-${pid}`)) continue;
+    S.beklemeYazilan.add(`haric-${pid}`);
+    D.beklemeyiKaldir(pid).then(() => bildir(`${oyuncu(pid)?.ad ?? pid} ligden çıkarıldı; talep süresi ve talepleri silindi`)).catch(hataGoster);
   }
   // Talep istisnası: o tarihte başlamış talep süresi istisnadaki bitişe çekilir (bir kez)
   for (const [pid, ist] of Object.entries(LIG.talepIstisnalari ?? {})) {
@@ -3246,7 +3252,8 @@ async function basla() {
     S.mevkiListesi = mevkiListesi;
     S.bslHareketleri = bslHareketleri;
     S.index = index;
-    S.rehber = new Map(rehber.map(o => [o.id, o]));
+    const haric = new Set(LIG.haricOyuncular ?? []);
+    S.rehber = new Map(rehber.map(o => [o.id, haric.has(o.id) ? { ...o, aktif: false, haric: true } : o]));
     // Bu ve sıradaki haftanın maçları: başlamış ama bizim verimizde bitmemiş maç varsa TBL'nin canlı verisi okunur
     Promise.all([index.guncelHafta, index.guncelHafta + 1].map(n => VERI.maclar(n)
       .then(m => { S.maclar[n] = m; }).catch(() => {}))).then(() => { ciz(); canliYenile(); });

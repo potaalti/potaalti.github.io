@@ -62,12 +62,12 @@
    "evSkor": "2",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "0",
+   "depSkor": "3",
    "salon": "Ülker Spor ve Etkinlik Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "09:30",
+    "saat": "09:04",
     "uzatma": false
    }
   },
@@ -885,7 +885,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 29,
+   "saniye": 54,
    "mac": 1
   },
   "777679": {
@@ -893,7 +893,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 29,
+   "saniye": 54,
    "mac": 1
   },
   "777704": {
@@ -901,7 +901,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 29,
+   "saniye": 54,
    "mac": 1
   },
   "777675": {
@@ -909,7 +909,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 3,
-   "saniye": 29,
+   "saniye": 54,
    "mac": 1
   },
   "346709": {
@@ -917,7 +917,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 29,
+   "saniye": 54,
    "mac": 1
   },
   "442131": {
@@ -981,7 +981,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 29,
+   "saniye": 54,
    "mac": 1
   },
   "508900": {
@@ -989,7 +989,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 29,
+   "saniye": 54,
    "mac": 1
   },
   "736069": {
@@ -997,7 +997,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 29,
+   "saniye": 54,
    "mac": 1
   },
   "389934": {
@@ -1005,15 +1005,15 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 29,
+   "saniye": 54,
    "mac": 1
   },
   "778401": {
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 0,
-   "saniye": 29,
+   "vp": 3,
+   "saniye": 54,
    "mac": 1
   },
   "452216": {

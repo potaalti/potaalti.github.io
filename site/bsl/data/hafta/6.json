@@ -43,20 +43,15 @@
   {
    "id": 346316,
    "tarih": "2026-11-01T13:00:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "ESENLER EROKSPOR",
    "evId": 266024,
-   "evSkor": "36",
+   "evSkor": "71",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
-   "depSkor": "42",
+   "depSkor": "89",
    "salon": "Beşiktaş Akatlar Spor Kompleksi",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 3,
-    "saat": "10:00",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346319,
@@ -692,32 +687,32 @@
    "ad": "Mike Davis Jr.",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 4,
-   "saniye": 587,
+   "vp": 12,
+   "saniye": 1318,
    "mac": 1
   },
   "776570": {
    "ad": "Kevin Yebo",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": -2,
-   "saniye": 470,
+   "vp": 4,
+   "saniye": 1033,
    "mac": 1
   },
   "778079": {
    "ad": "Amadou Sow",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 1,
-   "saniye": 471,
+   "vp": 8,
+   "saniye": 828,
    "mac": 1
   },
   "778080": {
    "ad": "Dallas Moore",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 15,
-   "saniye": 1011,
+   "vp": 18,
+   "saniye": 1985,
    "mac": 1
   },
   "351474": {
@@ -729,35 +724,35 @@
    "mac": 1
   },
   "359434": {
-   "ad": "Errick Mccollum",
+   "ad": "Errick McCollum",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": -1,
-   "saniye": 618,
+   "vp": -3,
+   "saniye": 1036,
    "mac": 1
   },
   "502518": {
    "ad": "Jordan Usher",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 9,
-   "saniye": 600,
+   "vp": 19,
+   "saniye": 1521,
    "mac": 1
   },
   "667498": {
-   "ad": "James Webb Iii",
+   "ad": "James Webb III",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 6,
-   "saniye": 654,
+   "vp": 4,
+   "saniye": 1344,
    "mac": 1
   },
   "120437": {
    "ad": "Egehan Arna",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": -1,
-   "saniye": 498,
+   "vp": 6,
+   "saniye": 1061,
    "mac": 1
   },
   "57737": {
@@ -765,15 +760,15 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 184,
+   "saniye": 461,
    "mac": 1
   },
   "249031": {
    "ad": "Metehan Akyel",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 4,
-   "saniye": 184,
+   "vp": 3,
+   "saniye": 690,
    "mac": 1
   },
   "151935": {
@@ -789,15 +784,15 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 3,
-   "saniye": 665,
+   "saniye": 822,
    "mac": 1
   },
   "778728": {
    "ad": "Jerrick Harding",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 6,
-   "saniye": 832,
+   "vp": 12,
+   "saniye": 1600,
    "mac": 1
   },
   "112715": {
@@ -805,55 +800,55 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 0,
-   "saniye": 283,
+   "saniye": 409,
    "mac": 1
   },
   "418533": {
    "ad": "Uros Trifunovic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 13,
-   "saniye": 940,
+   "vp": 34,
+   "saniye": 1956,
    "mac": 1
   },
   "129216": {
    "ad": "Doğuş Özdemiroğlu",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 5,
-   "saniye": 733,
+   "vp": 14,
+   "saniye": 1862,
    "mac": 1
   },
   "202579": {
    "ad": "Ata Kahraman",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 5,
-   "saniye": 520,
+   "vp": 9,
+   "saniye": 1249,
    "mac": 1
   },
   "778726": {
    "ad": "Anthony Lamb",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": -2,
-   "saniye": 535,
+   "vp": -3,
+   "saniye": 664,
    "mac": 1
   },
   "778727": {
    "ad": "Ismael Bako",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 12,
-   "saniye": 884,
+   "vp": 14,
+   "saniye": 1079,
    "mac": 1
   },
   "668012": {
    "ad": "Kris Bankston",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 0,
-   "saniye": 33,
+   "vp": 11,
+   "saniye": 912,
    "mac": 1
   },
   "272903": {
@@ -873,11 +868,11 @@
    "mac": 1
   },
   "386159": {
-   "ad": "Shaquille Mckissic",
+   "ad": "Shaquille McKissic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 7,
-   "saniye": 575,
+   "vp": 13,
+   "saniye": 1447,
    "mac": 1
   }
  }

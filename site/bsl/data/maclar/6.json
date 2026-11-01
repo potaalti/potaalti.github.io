@@ -43,20 +43,15 @@
   {
    "id": 346316,
    "tarih": "2026-11-01T13:00:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "ESENLER EROKSPOR",
    "evId": 266024,
-   "evSkor": "36",
+   "evSkor": "71",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
-   "depSkor": "42",
+   "depSkor": "89",
    "salon": "Beşiktaş Akatlar Spor Kompleksi",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 3,
-    "saat": "10:00",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346319,

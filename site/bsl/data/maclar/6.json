@@ -69,7 +69,7 @@
   {
    "id": 346321,
    "tarih": "2026-11-01T18:00:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "BURSASPOR BASKETBOL",
    "evId": 266176,
    "evSkor": "83",
@@ -77,12 +77,7 @@
    "depId": 266027,
    "depSkor": "86",
    "salon": "Tofaş Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "01:25",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346318,

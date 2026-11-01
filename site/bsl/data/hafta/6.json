@@ -69,7 +69,7 @@
   {
    "id": 346321,
    "tarih": "2026-11-01T18:00:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "BURSASPOR BASKETBOL",
    "evId": 266176,
    "evSkor": "83",
@@ -77,12 +77,7 @@
    "depId": 266027,
    "depSkor": "86",
    "salon": "Tofaş Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "01:25",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346318,
@@ -1084,8 +1079,8 @@
    "ad": "Javon Freeman-Liberty",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 23,
-   "saniye": 1867,
+   "vp": 24,
+   "saniye": 1952,
    "mac": 1
   },
   "778461": {
@@ -1101,23 +1096,23 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 3,
-   "saniye": 967,
+   "saniye": 1052,
    "mac": 1
   },
   "778460": {
    "ad": "Brandon Taylor",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 19,
-   "saniye": 1601,
+   "vp": 17,
+   "saniye": 1686,
    "mac": 1
   },
   "736260": {
    "ad": "Micheal Moore",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 11,
-   "saniye": 1229,
+   "vp": 12,
+   "saniye": 1314,
    "mac": 1
   },
   "198380": {
@@ -1157,7 +1152,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 12,
-   "saniye": 1322,
+   "saniye": 1407,
    "mac": 1
   },
   "502519": {
@@ -1181,7 +1176,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 12,
-   "saniye": 2134,
+   "saniye": 2220,
    "mac": 1
   },
   "500079": {
@@ -1189,15 +1184,15 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 23,
-   "saniye": 2048,
+   "saniye": 2133,
    "mac": 1
   },
   "254789": {
    "ad": "Yavuz Gültekin",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 6,
-   "saniye": 1298,
+   "vp": 5,
+   "saniye": 1303,
    "mac": 1
   },
   "609083": {
@@ -1205,23 +1200,23 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 26,
-   "saniye": 1766,
+   "saniye": 1851,
    "mac": 1
   },
   "228502": {
    "ad": "Muhaymin Mustafa",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 16,
-   "saniye": 755,
+   "vp": 17,
+   "saniye": 835,
    "mac": 1
   },
   "410874": {
    "ad": "Markel Starks",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 6,
-   "saniye": 1397,
+   "vp": 5,
+   "saniye": 1482,
    "mac": 1
   },
   "218536": {

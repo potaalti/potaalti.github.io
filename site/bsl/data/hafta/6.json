@@ -59,15 +59,15 @@
    "durum": "canli",
    "ev": "FENERBAHÇE TARFİN",
    "evId": 266025,
-   "evSkor": "28",
+   "evSkor": "41",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "25",
+   "depSkor": "38",
    "salon": "Ülker Spor ve Etkinlik Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "07:23",
+    "saat": "02:29",
     "uzatma": false
    }
   },
@@ -884,8 +884,8 @@
    "ad": "Sertaç Şanlı",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 0,
-   "saniye": 260,
+   "vp": 4,
+   "saniye": 414,
    "mac": 1
   },
   "777679": {
@@ -900,24 +900,24 @@
    "ad": "Trent Forrest",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 8,
-   "saniye": 421,
+   "vp": 10,
+   "saniye": 673,
    "mac": 1
   },
   "777675": {
    "ad": "Braxton Key",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 12,
-   "saniye": 380,
+   "vp": 15,
+   "saniye": 533,
    "mac": 1
   },
   "346709": {
    "ad": "Ignas Sargiunas",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 5,
-   "saniye": 320,
+   "vp": 7,
+   "saniye": 614,
    "mac": 1
   },
   "442131": {
@@ -932,8 +932,8 @@
    "ad": "Marcus Bingham Jr.",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 6,
-   "saniye": 457,
+   "vp": 5,
+   "saniye": 597,
    "mac": 1
   },
   "735811": {
@@ -941,7 +941,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 336,
+   "saniye": 378,
    "mac": 1
   },
   "27541": {
@@ -949,7 +949,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 60,
+   "saniye": 354,
    "mac": 1
   },
   "144725": {
@@ -964,8 +964,8 @@
    "ad": "Will Clyburn",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": -1,
-   "saniye": 418,
+   "vp": 2,
+   "saniye": 558,
    "mac": 1
   },
   "318204": {
@@ -980,8 +980,8 @@
    "ad": "Sadık Kabaca",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 6,
-   "saniye": 663,
+   "vp": 7,
+   "saniye": 783,
    "mac": 1
   },
   "508900": {
@@ -996,24 +996,24 @@
    "ad": "Tre'shawn Thurman",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 0,
-   "saniye": 304,
+   "vp": 4,
+   "saniye": 598,
    "mac": 1
   },
   "389934": {
    "ad": "Efe Postel",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 0,
-   "saniye": 227,
+   "vp": 2,
+   "saniye": 473,
    "mac": 1
   },
   "778401": {
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 10,
-   "saniye": 596,
+   "vp": 12,
+   "saniye": 660,
    "mac": 1
   },
   "452216": {
@@ -1037,7 +1037,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 2,
-   "saniye": 530,
+   "saniye": 578,
    "mac": 1
   },
   "434482": {
@@ -1045,15 +1045,15 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 1,
-   "saniye": 198,
+   "saniye": 372,
    "mac": 1
   },
   "778399": {
    "ad": "Shavar Reynolds Jr.",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": -1,
-   "saniye": 243,
+   "vp": 3,
+   "saniye": 537,
    "mac": 1
   },
   "450092": {
@@ -1068,8 +1068,8 @@
    "ad": "Leon Apaydın",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": -1,
-   "saniye": 410,
+   "vp": 0,
+   "saniye": 640,
    "mac": 1
   }
  }

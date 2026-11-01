@@ -354,3 +354,11 @@ table.kutu thead td.sirala.aktif { color: var(--vurgu); }
 
 /* Kutu skor: takım satırı (oyuncuya yazılmayan ribaund, top kaybı, faul) */
 table.kutu tr.takim-satir th, table.kutu tr.takim-satir td { color: var(--soluk); font-style: italic; }
+
+/* Telefon/tablet: fantezi sayfasında ana sayfaya dönüş belirgin bir düğme (telefonun geri tuşu sayfa sayfa geri gider) */
+@media (max-width: 1099px) {
+  .ana-donus { align-items: center; gap: 4px; margin-right: -4px; padding: 3px 4px 3px 8px; border-radius: 999px; background: rgba(255, 255, 255, .18); color: #fff; font-size: 1.5rem; font-weight: 700; line-height: 1; }
+  .ana-donus::before { content: "‹"; margin-top: -3px; }
+  .ana-donus img { width: 26px; height: 26px; }
+  .ana-donus:active { background: rgba(255, 255, 255, .3); }
+}

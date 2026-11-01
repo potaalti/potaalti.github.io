@@ -13,7 +13,7 @@ const LIGLER = { tbl: { kisa: 'TBL', ad: 'Türkiye Basketbol Ligi' }, bsl: { kis
 
 const S = {
   meta: null, index: null, hata: null,
-  tablo: {}, liderler: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, artieksi: {}, // lig -> veri (oyuncu: lig -> id -> detay)
+  tablo: {}, liderler: {}, takimIst: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, artieksi: {}, // lig -> veri (oyuncu: lig -> id -> detay)
   maclar: {}, // `${lig}-${hafta}` -> maç listesi
   kutular: {}, // maç id -> kutu skor (null: yok)
   ui: { ara: '', oyuncuSirala: 'vp', liderKategori: {}, anaLig: anaLigOku() },
@@ -53,6 +53,7 @@ function yukle(hedef, anahtar, url, { bosDeger = null, donustur = v => v } = {})
   getir(url).then(v => { hedef[anahtar] = donustur(v); }).catch(() => { hedef[anahtar] = bosDeger; })
     .finally(() => { yukleniyor.delete(k); ciz(); });
 }
+const takimIstatistigi = (lig, id) => { yukle(S.takimIst, lig, `data/${lig}/takim-istatistik.json`, { bosDeger: {} }); return S.takimIst[lig]?.[id]; };
 const ligVerisi = (lig, ad) => { yukle(S[ad], lig, `data/${lig}/${ad}.json`); return S[ad][lig]; };
 const macListesi = (lig, h) => { yukle(S.maclar, `${lig}-${h}`, `${KAYNAK}/maclar/${lig}-${h}.json`, { donustur: listeDuzelt }); return S.maclar[`${lig}-${h}`]?.maclar; };
 
@@ -208,8 +209,12 @@ const kutuSiralamaDegistir = b => {
   const s = S.ui.kutuSirala;
   S.ui.kutuSirala = s?.b !== b ? { b, artan: false } : !s.artan ? { b, artan: true } : null;
 };
-function kutuToplami(oyuncular) {
-  const topla = alan => oyuncular.reduce((x, o) => x + (Number(o[alan]) || 0), 0);
+// Takım satırı: oyuncuya yazılmayan takım ribaundu, takım top kaybı ve takım faulü (biten maçlarda, TBF'den); toplama da girer
+const TAKIM_ALANLARI = ['hr', 'sr', 'rib', 'tk', 'faul'];
+const takimSatiri = takim => (!takim ? '' : `<tr class="takim-satir"><th>Takım</th>${KUTU_SUTUNLARI.map(([, , alan, sinif]) =>
+  `<td class="${sinif}">${TAKIM_ALANLARI.includes(alan) ? takim[alan] ?? 0 : ''}</td>`).join('')}</tr>`);
+function kutuToplami(oyuncular, takim) {
+  const topla = alan => oyuncular.reduce((x, o) => x + (Number(o[alan]) || 0), 0) + (takim?.[alan] ?? 0);
   const toplaAtis = alan => atis([0, 1].map(i => oyuncular.reduce((x, o) => x + (o[alan]?.[i] ?? 0), 0)));
   return KUTU_SUTUNLARI.map(([, , alan, sinif]) => `<td class="${sinif}">${!alan ? '' : ['iki', 'uc', 'sa'].includes(alan) ? toplaAtis(alan) : topla(alan)}</td>`).join('');
 }
@@ -222,7 +227,7 @@ function takimim(lig) {
   } catch { return null; }
 }
 
-function kutuSkorTablosu(lig, t) {
+function kutuSkorTablosu(lig, t, takim) {
   const oyuncular = t.oyuncular ?? [];
   const benim = takimim(lig);
   const satirlar = kutuSirasi(oyuncular).map(o => {
@@ -234,7 +239,7 @@ function kutuSkorTablosu(lig, t) {
   }).join('');
   return `<div class="kart"><h3>${takimLinki(lig, t.ad)}</h3><div class="tablo-kap"><table class="kutu">
     <thead><tr><th>Oyuncu</th>${kutuBasligi()}</tr></thead>
-    <tbody>${satirlar}<tr class="toplam"><th>Toplam</th>${kutuToplami(oyuncular)}</tr></tbody></table></div></div>`;
+    <tbody>${satirlar}${takimSatiri(takim)}<tr class="toplam"><th>Toplam</th>${kutuToplami(oyuncular, takim)}</tr></tbody></table></div></div>`;
 }
 
 function ceyrekTablosu(lig, k) {
@@ -274,7 +279,7 @@ function gorunumMac(lig, id) {
       <a class="${kazananSinifi(m, 'dep')}" href="#/takim/${lig}/${takimAnahtari(m.dep)}">${esc(baslik(m.dep))}</a></div>
       <p class="soluk kucuk" style="margin:10px 0 0;text-align:center"><span class="lig-etiket">${LIGLER[lig].kisa}</span> ${hafta}. hafta · ${bilgi}</p></div>`;
   if (!kutu) return `${ust}<p class="bos">${m.durum === 'oynanmadi' ? 'Maç henüz oynanmadı.' : kutu === null ? 'Kutu skor henüz gelmedi.' : 'Yükleniyor…'}</p>`;
-  return `${ust}${ceyrekTablosu(lig, kutu)}${kutuSkorTablosu(lig, kutu.ev)}${kutuSkorTablosu(lig, kutu.dep)}
+  return `${ust}${ceyrekTablosu(lig, kutu)}${kutuSkorTablosu(lig, kutu.ev, takimIstatistigi(lig, kutu.id)?.ev)}${kutuSkorTablosu(lig, kutu.dep, takimIstatistigi(lig, kutu.id)?.dep)}
     <p class="soluk kucuk">Kalın: ilk 5 · 2S/3S/SA: isabet/deneme · Tç: top çalma · Bl: blok · Tk: top kaybı · VP: verimlilik</p>`;
 }
 

@@ -351,3 +351,6 @@ table.kutu .fantezi-sahip { font-size: .68rem; color: var(--vurgu); font-weight:
 /* Kutu skor: sütun başlığına dokununca sıralama (▼ çoktan aza, ▲ azdan çoka) */
 table.kutu thead td.sirala { cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
 table.kutu thead td.sirala.aktif { color: var(--vurgu); }
+
+/* Kutu skor: takım satırı (oyuncuya yazılmayan ribaund, top kaybı, faul) */
+table.kutu tr.takim-satir th, table.kutu tr.takim-satir td { color: var(--soluk); font-style: italic; }

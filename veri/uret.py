@@ -9,6 +9,7 @@ herkese açık bölümü için özet dosyaları üretir:
   site/data/<lig>/oyuncular.json     bütün oyuncuların sezon ortalamaları
   site/data/<lig>/takimlar.json      takımların maç başı istatistikleri, kadroları ve maçları
   site/data/<lig>/oyuncu/<id>.json   oyuncunun maç maç istatistikleri
+  site/data/<lig>/takim-istatistik.json  biten maçlarda oyuncuya yazılmayan takım istatistikleri (TBF'den)
   site/data/youtube.json             Pota Altı YouTube kanalının son canlı yayınları ve son videoları
 
 Kaynak dosyalar internetten okunur; biten maçların kutu skorları cache/ klasöründe saklanır (bir daha indirilmez).
@@ -72,6 +73,36 @@ def oku(kaynak, yol, kalici=False):
 def yaz(yol, veri):
     yol.parent.mkdir(parents=True, exist_ok=True)
     yol.write_text(json.dumps(veri, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+
+
+# Takım istatistikleri (takım ribaundu, takım top kaybı, takım faulü) kaynak kutu skorlarda yok: TBF'nin maç istatistiğinden
+TBF_API = "https://www.tbf.org.tr/api"
+TBF_SAYFA = {"tbl": "https://www.tbf.org.tr/ligler/tbl-2026-2027/maclar", "bsl": "https://www.tbf.org.tr/ligler/bsl-2026-2027/maclar"}
+TAKIM_ALANLARI = {"hr": "offensiveRebounds", "sr": "defensiveRebounds", "rib": "totalRebounds", "tk": "turnovers", "faul": "fouls"}
+
+
+def takim_istatistik_uret(lig, maclar, en_fazla=80):
+    """Biten maçların takım istatistiklerini çıktı dosyasına ekler; dosyadaki maçlar bir daha çekilmez. TBF istatistiği
+    henüz yayınlamadıysa maç atlanır, sonraki çalışmada yeniden denenir. Bir çalışmada en fazla en_fazla maç çekilir."""
+    yol = CIKTI / lig / "takim-istatistik.json"
+    kayit = json.loads(yol.read_text(encoding="utf-8")) if yol.exists() else {}
+    eksik = [m for m in maclar if m["durum"] == "bitti" and str(m["id"]) not in kayit][:en_fazla]
+    for m in eksik:
+        try:
+            req = urllib.request.Request(f"{TBF_API}/Match/mac-istatistik?matchId={m['id']}",
+                                         headers={"User-Agent": TARAYICI, "Accept": "application/json", "Referer": TBF_SAYFA[lig]})
+            with urllib.request.urlopen(req, timeout=30) as yanit:
+                veri = json.load(yanit).get("data") or {}
+            time.sleep(0.3)
+        except Exception as e:  # noqa: BLE001 - TBF'ye ulaşılamazsa sonraki çalışmada devam edilir
+            print(f"{lig}: takım istatistiği alınamadı ({m['id']}):", e)
+            break
+        ev, dep = veri.get("homeTeamStats"), veri.get("awayTeamStats")
+        if not ev or not dep:
+            continue
+        kayit[str(m["id"])] = {t: {k: sayi(d.get(a)) for k, a in TAKIM_ALANLARI.items()} for t, d in (("ev", ev), ("dep", dep))}
+    if eksik or not yol.exists():
+        yaz(yol, kayit)
 
 
 def anahtar(ad):
@@ -240,6 +271,7 @@ def lig_uret(kaynak, lig, bilgi):
     yaz(CIKTI / lig / "liderler.json", liderler)
     yaz(CIKTI / lig / "oyuncular.json", sorted(oyuncu_ozet, key=lambda o: o["ad"]))
     yaz(CIKTI / lig / "takimlar.json", {"takimlar": takim_ozet, "maclar": maclar_hepsi})
+    takim_istatistik_uret(lig, maclar_hepsi)
     return {"ad": LIGLER[lig], "haftalar": haftalar, "guncel": bilgi.get("guncel"), "takimSayisi": len(takimlar),
             "oyuncuSayisi": len(oyuncular), "_haftaOzet": hafta_ozet}
 

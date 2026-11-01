@@ -2115,13 +2115,27 @@ const kutuSiralamaDegistir = b => {
   const s = S.ui.kutuSirala;
   S.ui.kutuSirala = s?.b !== b ? { b, artan: false } : !s.artan ? { b, artan: true } : null;
 };
-function kutuToplami(oyuncular) {
-  const topla = alan => oyuncular.reduce((x, o) => x + (Number(o[alan]) || 0), 0);
+// Takım satırı: oyuncuya yazılmayan takım ribaundu, takım top kaybı ve takım faulü (biten maçlarda, TBF'den); toplama da girer
+const TAKIM_ALANLARI = ['hr', 'sr', 'rib', 'tk', 'faul'];
+const takimSatiri = takim => (!takim ? '' : `<tr class="takim-satir"><th>Takım</th>${KUTU_SUTUNLARI.map(([, , alan, sinif]) =>
+  `<td class="${sinif}">${TAKIM_ALANLARI.includes(alan) ? takim[alan] ?? 0 : ''}</td>`).join('')}</tr>`);
+function kutuToplami(oyuncular, takim) {
+  const topla = alan => oyuncular.reduce((x, o) => x + (Number(o[alan]) || 0), 0) + (takim?.[alan] ?? 0);
   const toplaAtis = alan => atis([0, 1].map(i => oyuncular.reduce((x, o) => x + (o[alan]?.[i] ?? 0), 0)));
   return KUTU_SUTUNLARI.map(([, , alan, sinif]) => `<td class="${sinif}">${!alan ? '' : ['iki', 'uc', 'sa'].includes(alan) ? toplaAtis(alan) : topla(alan)}</td>`).join('');
 }
 
-function kutuSkorTablosu(t) {
+// Takım istatistikleri ana uygulamanın verisinden (data/<lig>/takim-istatistik.json, saatte bir güncellenir); oturumda bir kez okunur
+function takimIstatistigi(id) {
+  if (S.takimIst === undefined) {
+    S.takimIst = null;
+    fetch(new URL(`../data/${LIG.kod}/takim-istatistik.json`, location.href)).then(r => (r.ok ? r.json() : {})).catch(() => ({}))
+      .then(v => { S.takimIst = v; ciz(); });
+  }
+  return S.takimIst?.[id];
+}
+
+function kutuSkorTablosu(t, takim) {
   const sahip = sahipler();
   const benim = benimTakimim();
   const oyuncular = t.oyuncular ?? [];
@@ -2134,7 +2148,7 @@ function kutuSkorTablosu(t) {
   }).join('');
   return `<div class="kart"><h3>${esc(baslik(t.ad))}</h3><div class="tablo-kap"><table class="kutu">
     <thead><tr><th>Oyuncu</th>${kutuBasligi()}</tr></thead>
-    <tbody>${satirlar}<tr class="toplam"><th>Toplam</th>${kutuToplami(oyuncular)}</tr></tbody></table></div></div>`;
+    <tbody>${satirlar}${takimSatiri(takim)}<tr class="toplam"><th>Toplam</th>${kutuToplami(oyuncular, takim)}</tr></tbody></table></div></div>`;
 }
 
 function ceyrekTablosu(k) {
@@ -2167,7 +2181,7 @@ function gorunumMac(id) {
   if (!kutu) {
     return `${ust}${kutu === null || m.durum === 'oynanmadi' ? `<p class="bos">${m.durum === 'oynanmadi' ? 'Maç henüz oynanmadı.' : 'Kutu skor henüz gelmedi.'}</p>` : '<p class="bos">Kutu skor yükleniyor…</p>'}${fantezi}`;
   }
-  return `${ust}${ceyrekTablosu(kutu)}${kutuSkorTablosu(kutu.ev)}${kutuSkorTablosu(kutu.dep)}
+  return `${ust}${ceyrekTablosu(kutu)}${kutuSkorTablosu(kutu.ev, takimIstatistigi(kutu.id)?.ev)}${kutuSkorTablosu(kutu.dep, takimIstatistigi(kutu.id)?.dep)}
     <p class="soluk kucuk">Kalın: ilk 5 · 2S/3S/SA: isabet/deneme · Oyuncunun altında fantezi takımı yazar${benimTakimim() ? ', senin oyuncuların vurgulu' : ''}.</p>`;
 }
 

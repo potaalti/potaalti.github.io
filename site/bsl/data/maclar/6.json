@@ -59,15 +59,15 @@
    "durum": "canli",
    "ev": "FENERBAHÇE TARFİN",
    "evId": 266025,
-   "evSkor": "24",
+   "evSkor": "28",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "17",
+   "depSkor": "25",
    "salon": "Ülker Spor ve Etkinlik Salonu",
    "yayin": "beINSports",
    "canliDurum": {
-    "periyot": 1,
-    "saat": "01:22",
+    "periyot": 2,
+    "saat": "07:23",
     "uzatma": false
    }
   },

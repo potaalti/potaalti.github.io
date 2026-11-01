@@ -72,15 +72,15 @@
    "durum": "canli",
    "ev": "BURSASPOR BASKETBOL",
    "evId": 266176,
-   "evSkor": "35",
+   "evSkor": "39",
    "dep": "KARŞIYAKA",
    "depId": 266027,
-   "depSkor": "29",
+   "depSkor": "42",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "04:22",
+    "saat": "00:00",
     "uzatma": false
    }
   },
@@ -1076,8 +1076,8 @@
    "ad": "Leyton Hammonds",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": -1,
-   "saniye": 542,
+   "vp": 0,
+   "saniye": 788,
    "mac": 1
   },
   "666871": {
@@ -1085,15 +1085,15 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 7,
-   "saniye": 585,
+   "saniye": 831,
    "mac": 1
   },
   "778461": {
    "ad": "Nate Watson",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 2,
-   "saniye": 442,
+   "vp": 1,
+   "saniye": 562,
    "mac": 1
   },
   "247547": {
@@ -1101,23 +1101,23 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 1,
-   "saniye": 146,
+   "saniye": 171,
    "mac": 1
   },
   "778460": {
    "ad": "Brandon Taylor",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": -1,
-   "saniye": 758,
+   "vp": 0,
+   "saniye": 808,
    "mac": 1
   },
   "736260": {
    "ad": "Micheal Moore",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 7,
-   "saniye": 412,
+   "vp": 9,
+   "saniye": 538,
    "mac": 1
   },
   "198380": {
@@ -1141,15 +1141,15 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 1,
-   "saniye": 332,
+   "saniye": 354,
    "mac": 1
   },
   "227653": {
    "ad": "Ömer Can İlyasoğlu",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 3,
-   "saniye": 476,
+   "vp": 2,
+   "saniye": 675,
    "mac": 1
   },
   "778459": {
@@ -1164,8 +1164,8 @@
    "ad": "Bryce Brown",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 11,
-   "saniye": 565,
+   "vp": 10,
+   "saniye": 761,
    "mac": 1
   },
   "573226": {
@@ -1173,7 +1173,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 2,
-   "saniye": 638,
+   "saniye": 884,
    "mac": 1
   },
   "779071": {
@@ -1181,31 +1181,31 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 5,
-   "saniye": 779,
+   "saniye": 1025,
    "mac": 1
   },
   "500079": {
    "ad": "Rashard Kelly",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 5,
-   "saniye": 692,
+   "vp": 12,
+   "saniye": 938,
    "mac": 1
   },
   "254789": {
    "ad": "Yavuz Gültekin",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 2,
-   "saniye": 634,
+   "vp": 3,
+   "saniye": 880,
    "mac": 1
   },
   "609083": {
    "ad": "Steven Enoch",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 10,
-   "saniye": 818,
+   "vp": 13,
+   "saniye": 876,
    "mac": 1
   },
   "228502": {
@@ -1229,15 +1229,15 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 3,
-   "saniye": 262,
+   "saniye": 336,
    "mac": 1
   },
   "779069": {
    "ad": "Kendall Munson",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 0,
-   "saniye": 136,
+   "vp": 2,
+   "saniye": 212,
    "mac": 1
   },
   "400519": {
@@ -1261,7 +1261,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": -1,
-   "saniye": 369,
+   "saniye": 407,
    "mac": 1
   }
  }

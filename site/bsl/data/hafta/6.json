@@ -56,33 +56,33 @@
   {
    "id": 346319,
    "tarih": "2026-11-01T15:30:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "FENERBAHÇE TARFİN",
    "evId": 266025,
-   "evSkor": "57",
+   "evSkor": "88",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "46",
+   "depSkor": "77",
    "salon": "Ülker Spor ve Etkinlik Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 3,
-    "saat": "06:35",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346321,
    "tarih": "2026-11-01T18:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "BURSASPOR BASKETBOL",
    "evId": 266176,
-   "evSkor": null,
+   "evSkor": "0",
    "dep": "KARŞIYAKA",
    "depId": 266027,
-   "depSkor": null,
+   "depSkor": "3",
    "salon": "Tofaş Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "08:30",
+    "uzatma": false
+   }
   },
   {
    "id": 346318,
@@ -884,8 +884,8 @@
    "ad": "Sertaç Şanlı",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 7,
-   "saniye": 670,
+   "vp": 5,
+   "saniye": 869,
    "mac": 1
   },
   "777679": {
@@ -893,31 +893,31 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 6,
-   "saniye": 713,
+   "saniye": 912,
    "mac": 1
   },
   "777704": {
    "ad": "Trent Forrest",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 14,
-   "saniye": 878,
+   "vp": 15,
+   "saniye": 1378,
    "mac": 1
   },
   "777675": {
    "ad": "Braxton Key",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 21,
-   "saniye": 888,
+   "vp": 28,
+   "saniye": 1503,
    "mac": 1
   },
   "346709": {
    "ad": "Ignas Sargiunas",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 6,
-   "saniye": 870,
+   "vp": 7,
+   "saniye": 1544,
    "mac": 1
   },
   "442131": {
@@ -932,32 +932,32 @@
    "ad": "Marcus Bingham Jr.",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 6,
-   "saniye": 695,
+   "vp": 9,
+   "saniye": 1359,
    "mac": 1
   },
   "735811": {
    "ad": "Talen Horton-Tucker",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 2,
-   "saniye": 527,
+   "vp": 19,
+   "saniye": 1154,
    "mac": 1
   },
   "27541": {
    "ad": "Melih Mahmutoğlu",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 1,
-   "saniye": 405,
+   "vp": 3,
+   "saniye": 726,
    "mac": 1
   },
   "144725": {
    "ad": "Onuralp Bitim",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 1,
-   "saniye": 264,
+   "vp": 6,
+   "saniye": 1060,
    "mac": 1
   },
   "386832": {
@@ -965,7 +965,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 558,
+   "saniye": 938,
    "mac": 1
   },
   "318204": {
@@ -980,12 +980,12 @@
    "ad": "Sadık Kabaca",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 7,
-   "saniye": 988,
+   "vp": 11,
+   "saniye": 1822,
    "mac": 1
   },
   "508900": {
-   "ad": "Jamuni Mcneace",
+   "ad": "Jamuni McNeace",
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 1,
@@ -996,24 +996,24 @@
    "ad": "Tre'shawn Thurman",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 5,
-   "saniye": 952,
+   "vp": 11,
+   "saniye": 1728,
    "mac": 1
   },
   "389934": {
    "ad": "Efe Postel",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 2,
-   "saniye": 622,
+   "vp": 1,
+   "saniye": 1207,
    "mac": 1
   },
   "778401": {
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 13,
-   "saniye": 865,
+   "vp": 21,
+   "saniye": 1528,
    "mac": 1
   },
   "452216": {
@@ -1025,7 +1025,7 @@
    "mac": 1
   },
   "485299": {
-   "ad": "Terrell Carter Ii",
+   "ad": "Terrell Carter II",
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 5,
@@ -1036,24 +1036,24 @@
    "ad": "Zach Nutall",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 4,
-   "saniye": 835,
+   "vp": 8,
+   "saniye": 1654,
    "mac": 1
   },
   "434482": {
    "ad": "Emirhan Serbest",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 2,
-   "saniye": 616,
+   "vp": 4,
+   "saniye": 895,
    "mac": 1
   },
   "778399": {
    "ad": "Shavar Reynolds Jr.",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 3,
-   "saniye": 730,
+   "vp": 12,
+   "saniye": 1330,
    "mac": 1
   },
   "450092": {
@@ -1068,8 +1068,200 @@
    "ad": "Leon Apaydın",
    "takim": "TOFAŞ",
    "takimId": 265995,
+   "vp": 3,
+   "saniye": 1112,
+   "mac": 1
+  },
+  "510723": {
+   "ad": "Leyton Hammonds",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": -1,
+   "saniye": 92,
+   "mac": 1
+  },
+  "666871": {
+   "ad": "Javon Freeman-Liberty",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": -1,
+   "saniye": 92,
+   "mac": 1
+  },
+  "778461": {
+   "ad": "Nate Watson",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
    "vp": 0,
-   "saniye": 693,
+   "saniye": 92,
+   "mac": 1
+  },
+  "247547": {
+   "ad": "Ergi Tırpancı",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 92,
+   "mac": 1
+  },
+  "778460": {
+   "ad": "Brandon Taylor",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 92,
+   "mac": 1
+  },
+  "736260": {
+   "ad": "Micheal Moore",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "198380": {
+   "ad": "Tevfik Akdamar",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "443749": {
+   "ad": "Ahmet Aldin Türkoğlu",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "303549": {
+   "ad": "Buğra Çal",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "227653": {
+   "ad": "Ömer Can İlyasoğlu",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "778459": {
+   "ad": "Warren Washington",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "502519": {
+   "ad": "Bryce Brown",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "573226": {
+   "ad": "Briante Weber",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 2,
+   "saniye": 92,
+   "mac": 1
+  },
+  "779071": {
+   "ad": "Ishmael El-Amin",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": -2,
+   "saniye": 92,
+   "mac": 1
+  },
+  "500079": {
+   "ad": "Rashard Kelly",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 1,
+   "saniye": 92,
+   "mac": 1
+  },
+  "254789": {
+   "ad": "Yavuz Gültekin",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 3,
+   "saniye": 92,
+   "mac": 1
+  },
+  "609083": {
+   "ad": "Steven Enoch",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 1,
+   "saniye": 92,
+   "mac": 1
+  },
+  "228502": {
+   "ad": "Muhaymin Mustafa",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "410874": {
+   "ad": "Markel Starks",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "218536": {
+   "ad": "Hakan Sayılı",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "779069": {
+   "ad": "Kendall Munson",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "400519": {
+   "ad": "Yalın Yıldız",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "444058": {
+   "ad": "Egemen Yapıcı",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "781757": {
+   "ad": "Yakuba Ouattara",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 0,
    "mac": 1
   }
  }

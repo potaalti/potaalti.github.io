@@ -72,15 +72,15 @@
    "durum": "canli",
    "ev": "BURSASPOR BASKETBOL",
    "evId": 266176,
-   "evSkor": "43",
+   "evSkor": "50",
    "dep": "KARŞIYAKA",
    "depId": 266027,
-   "depSkor": "44",
+   "depSkor": "58",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "08:25",
+    "saat": "02:28",
     "uzatma": false
    }
   },

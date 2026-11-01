@@ -56,15 +56,20 @@
   {
    "id": 346319,
    "tarih": "2026-11-01T15:30:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "FENERBAHÇE TARFİN",
    "evId": 266025,
-   "evSkor": null,
+   "evSkor": "2",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": null,
+   "depSkor": "0",
    "salon": "Ülker Spor ve Etkinlik Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "09:30",
+    "uzatma": false
+   }
   },
   {
    "id": 346321,

@@ -56,15 +56,20 @@
   {
    "id": 346319,
    "tarih": "2026-11-01T15:30:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "FENERBAHÇE TARFİN",
    "evId": 266025,
-   "evSkor": null,
+   "evSkor": "2",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": null,
+   "depSkor": "0",
    "salon": "Ülker Spor ve Etkinlik Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "09:30",
+    "uzatma": false
+   }
   },
   {
    "id": 346321,
@@ -873,6 +878,198 @@
    "takimId": 266030,
    "vp": 13,
    "saniye": 1447,
+   "mac": 1
+  },
+  "54659": {
+   "ad": "Sertaç Şanlı",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 29,
+   "mac": 1
+  },
+  "777679": {
+   "ad": "Johnny  Juzang",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 29,
+   "mac": 1
+  },
+  "777704": {
+   "ad": "Trent Forrest",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 29,
+   "mac": 1
+  },
+  "777675": {
+   "ad": "Braxton Key",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 3,
+   "saniye": 29,
+   "mac": 1
+  },
+  "346709": {
+   "ad": "Ignas Sargiunas",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": -1,
+   "saniye": 29,
+   "mac": 1
+  },
+  "442131": {
+   "ad": "Shane Larkin",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "777676": {
+   "ad": "Marcus Bingham Jr.",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "735811": {
+   "ad": "Talen Horton-Tucker",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "27541": {
+   "ad": "Melih Mahmutoğlu",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "144725": {
+   "ad": "Onuralp Bitim",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "386832": {
+   "ad": "Will Clyburn",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "318204": {
+   "ad": "Demircan Demir",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "227173": {
+   "ad": "Sadık Kabaca",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 0,
+   "saniye": 29,
+   "mac": 1
+  },
+  "508900": {
+   "ad": "Jamuni Mcneace",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 0,
+   "saniye": 29,
+   "mac": 1
+  },
+  "736069": {
+   "ad": "Tre'shawn Thurman",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 0,
+   "saniye": 29,
+   "mac": 1
+  },
+  "389934": {
+   "ad": "Efe Postel",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 0,
+   "saniye": 29,
+   "mac": 1
+  },
+  "778401": {
+   "ad": "Bryce Jones",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 0,
+   "saniye": 29,
+   "mac": 1
+  },
+  "452216": {
+   "ad": "Kerem Çorumlular",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "485299": {
+   "ad": "Terrell Carter Ii",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "778402": {
+   "ad": "Zach Nutall",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "434482": {
+   "ad": "Emirhan Serbest",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "778399": {
+   "ad": "Shavar Reynolds Jr.",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "450092": {
+   "ad": "Poyraz Paşaoğlu",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "197570": {
+   "ad": "Leon Apaydın",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 0,
+   "saniye": 0,
    "mac": 1
   }
  }

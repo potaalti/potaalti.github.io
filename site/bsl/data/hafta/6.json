@@ -72,15 +72,15 @@
    "durum": "canli",
    "ev": "BURSASPOR BASKETBOL",
    "evId": 266176,
-   "evSkor": "0",
+   "evSkor": "12",
    "dep": "KARŞIYAKA",
    "depId": 266027,
-   "depSkor": "3",
+   "depSkor": "12",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "08:30",
+    "saat": "03:57",
     "uzatma": false
    }
   },
@@ -1076,32 +1076,32 @@
    "ad": "Leyton Hammonds",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": -1,
-   "saniye": 92,
+   "vp": 0,
+   "saniye": 363,
    "mac": 1
   },
   "666871": {
    "ad": "Javon Freeman-Liberty",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": -1,
-   "saniye": 92,
+   "vp": 7,
+   "saniye": 363,
    "mac": 1
   },
   "778461": {
    "ad": "Nate Watson",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 0,
-   "saniye": 92,
+   "vp": 2,
+   "saniye": 363,
    "mac": 1
   },
   "247547": {
    "ad": "Ergi Tırpancı",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 0,
-   "saniye": 92,
+   "vp": 1,
+   "saniye": 146,
    "mac": 1
   },
   "778460": {
@@ -1109,7 +1109,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 92,
+   "saniye": 363,
    "mac": 1
   },
   "736260": {
@@ -1140,8 +1140,8 @@
    "ad": "Buğra Çal",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 1,
+   "saniye": 217,
    "mac": 1
   },
   "227653": {
@@ -1172,40 +1172,40 @@
    "ad": "Briante Weber",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 2,
-   "saniye": 92,
+   "vp": 4,
+   "saniye": 363,
    "mac": 1
   },
   "779071": {
    "ad": "Ishmael El-Amin",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": -2,
-   "saniye": 92,
+   "vp": 1,
+   "saniye": 363,
    "mac": 1
   },
   "500079": {
    "ad": "Rashard Kelly",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 1,
-   "saniye": 92,
+   "vp": 2,
+   "saniye": 363,
    "mac": 1
   },
   "254789": {
    "ad": "Yavuz Gültekin",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 3,
-   "saniye": 92,
+   "vp": 2,
+   "saniye": 363,
    "mac": 1
   },
   "609083": {
    "ad": "Steven Enoch",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 1,
-   "saniye": 92,
+   "vp": 5,
+   "saniye": 363,
    "mac": 1
   },
   "228502": {

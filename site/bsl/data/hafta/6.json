@@ -59,15 +59,15 @@
    "durum": "canli",
    "ev": "FENERBAHÇE TARFİN",
    "evId": 266025,
-   "evSkor": "41",
+   "evSkor": "47",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "38",
+   "depSkor": "43",
    "salon": "Ülker Spor ve Etkinlik Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "02:29",
+    "saat": "00:00",
     "uzatma": false
    }
   },
@@ -884,16 +884,16 @@
    "ad": "Sertaç Şanlı",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 4,
-   "saniye": 414,
+   "vp": 6,
+   "saniye": 465,
    "mac": 1
   },
   "777679": {
    "ad": "Johnny  Juzang",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 2,
-   "saniye": 410,
+   "vp": 3,
+   "saniye": 508,
    "mac": 1
   },
   "777704": {
@@ -908,16 +908,16 @@
    "ad": "Braxton Key",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 15,
-   "saniye": 533,
+   "vp": 18,
+   "saniye": 683,
    "mac": 1
   },
   "346709": {
    "ad": "Ignas Sargiunas",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 7,
-   "saniye": 614,
+   "vp": 6,
+   "saniye": 665,
    "mac": 1
   },
   "442131": {
@@ -925,15 +925,15 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 460,
+   "saniye": 558,
    "mac": 1
   },
   "777676": {
    "ad": "Marcus Bingham Jr.",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 5,
-   "saniye": 597,
+   "vp": 6,
+   "saniye": 695,
    "mac": 1
   },
   "735811": {
@@ -941,15 +941,15 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 378,
+   "saniye": 527,
    "mac": 1
   },
   "27541": {
    "ad": "Melih Mahmutoğlu",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 0,
-   "saniye": 354,
+   "vp": 1,
+   "saniye": 405,
    "mac": 1
   },
   "144725": {
@@ -997,7 +997,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 598,
+   "saniye": 747,
    "mac": 1
   },
   "389934": {
@@ -1005,7 +1005,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 2,
-   "saniye": 473,
+   "saniye": 622,
    "mac": 1
   },
   "778401": {
@@ -1036,8 +1036,8 @@
    "ad": "Zach Nutall",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 2,
-   "saniye": 578,
+   "vp": 4,
+   "saniye": 727,
    "mac": 1
   },
   "434482": {
@@ -1045,15 +1045,15 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 1,
-   "saniye": 372,
+   "saniye": 521,
    "mac": 1
   },
   "778399": {
    "ad": "Shavar Reynolds Jr.",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 3,
-   "saniye": 537,
+   "vp": 5,
+   "saniye": 633,
    "mac": 1
   },
   "450092": {
@@ -1069,7 +1069,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 640,
+   "saniye": 693,
    "mac": 1
   }
  }

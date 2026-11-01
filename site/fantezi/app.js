@@ -1173,6 +1173,15 @@ async function siralamayiPaylas(dugme, tur, n, indir = false) {
   }
 }
 
+// Hafta sürerken: puanı sayılan oyunculardan kaçının maçı başladı/bitti ("4/5 oynadı · 1 canlı").
+// Takımı bay geçen ya da süre almayıp yerine kimse giremeyen oyuncunun puanı da belli olduğu için oynamış sayılır.
+function ilerlemeYazisi(s) {
+  const sayilan = [...s.aslar, ...s.yedekler].filter(o => o.sayildi);
+  const oynadi = sayilan.filter(o => o.macDurumu !== 'oynanmadi').length;
+  const canli = sayilan.filter(o => o.macDurumu === 'canli').length;
+  return `${oynadi}/${sayilan.length} oynadı${canli ? ` · <span class="canli-yazi">${canli} canlı</span>` : ''}`;
+}
+
 function haftaKart(haftalar, secili) {
   const h = S.haftalar[secili];
   const sonuc = C.haftaSiralamasi(haftaTakimlari(secili), h);
@@ -1185,6 +1194,7 @@ function haftaKart(haftalar, secili) {
       <thead><tr><th class="sayi">#</th><th>Takım</th><th class="sayi">VP</th><th class="sayi">Puan</th></tr></thead>
       <tbody>${sonuc.map(s => `<tr class="tikla ${s.id === benimTakimim() ? 'ben' : ''}" data-is="ac" data-id="${s.id}">
           <td class="sayi"><span class="madalya m${s.sira}">${s.sira}</span></td><td><b>${esc(s.ad)}</b> <span class="soluk kucuk">${esc(s.menajer ?? '')}</span>
+          ${hd.tamamlandi ? '' : `<div class="kucuk soluk ilerleme">${ilerlemeYazisi(s)}</div>`}
           ${s.vpEsitligi ? `<div class="kucuk soluk">${s.enIyiTurk ? `Eşitlikte en iyi Türk: ${esc(s.enIyiTurk.ad)} (${sayi(s.enIyiTurk.vp)})` : 'Eşitlikte: sayılan oyuncularda Türk yok'}</div>` : ''}</td>
           <td class="sayi"><b>${sayi(s.toplam)}</b></td><td class="sayi">${s.puan}</td></tr>
         ${S.ui.acik === s.id ? `<tr class="detay"><td colspan="4">${haftaDetayi(s, h)}</td></tr>` : ''}`).join('')}</tbody>

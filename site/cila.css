@@ -292,8 +292,8 @@ button.saha-oyuncu:hover, a.saha-oyuncu:hover { border-color: color-mix(in srgb,
 .saha-oyuncu.sayilan { border-color: color-mix(in srgb, var(--yesil) 55%, transparent); }
 .hafta-toplam { font-size: .85rem; color: var(--soluk); }
 .hafta-toplam b { color: var(--vurgu); font-size: 1rem; }
-.saha-not.canli-yazi, .hafta-toplam .canli-yazi { color: var(--kirmizi); }
-.saha-not.canli-yazi::before, .hafta-toplam .canli-yazi::before { content: "● "; animation: canli-yanip 1.4s infinite; }
+.saha-not.canli-yazi, .ilerleme .canli-yazi, .hafta-toplam .canli-yazi { color: var(--kirmizi); }
+.saha-not.canli-yazi::before, .ilerleme .canli-yazi::before, .hafta-toplam .canli-yazi::before { content: "● "; animation: canli-yanip 1.4s infinite; }
 @keyframes canli-yanip { 50% { opacity: .2; } }
 
 /* Fikstürde bay geçen takım */

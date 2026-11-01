@@ -43,15 +43,20 @@
   {
    "id": 346316,
    "tarih": "2026-11-01T13:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "ESENLER EROKSPOR",
    "evId": 266024,
-   "evSkor": null,
+   "evSkor": "36",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
-   "depSkor": null,
+   "depSkor": "42",
    "salon": "Beşiktaş Akatlar Spor Kompleksi",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 3,
+    "saat": "10:00",
+    "uzatma": false
+   }
   },
   {
    "id": 346319,
@@ -681,6 +686,198 @@
    "takimId": 266026,
    "vp": 12,
    "saniye": 1330,
+   "mac": 1
+  },
+  "606624": {
+   "ad": "Mike Davis Jr.",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 4,
+   "saniye": 587,
+   "mac": 1
+  },
+  "776570": {
+   "ad": "Kevin Yebo",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": -2,
+   "saniye": 470,
+   "mac": 1
+  },
+  "778079": {
+   "ad": "Amadou Sow",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 1,
+   "saniye": 471,
+   "mac": 1
+  },
+  "778080": {
+   "ad": "Dallas Moore",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 15,
+   "saniye": 1011,
+   "mac": 1
+  },
+  "351474": {
+   "ad": "Melih Tunca",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 308,
+   "mac": 1
+  },
+  "359434": {
+   "ad": "Errick Mccollum",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": -1,
+   "saniye": 618,
+   "mac": 1
+  },
+  "502518": {
+   "ad": "Jordan Usher",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 9,
+   "saniye": 600,
+   "mac": 1
+  },
+  "667498": {
+   "ad": "James Webb Iii",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 6,
+   "saniye": 654,
+   "mac": 1
+  },
+  "120437": {
+   "ad": "Egehan Arna",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": -1,
+   "saniye": 498,
+   "mac": 1
+  },
+  "57737": {
+   "ad": "Yunus Emre Sonsırma",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 184,
+   "mac": 1
+  },
+  "249031": {
+   "ad": "Metehan Akyel",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 4,
+   "saniye": 184,
+   "mac": 1
+  },
+  "151935": {
+   "ad": "Muhsin Yaşar",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 1,
+   "saniye": 415,
+   "mac": 1
+  },
+  "384165": {
+   "ad": "Tim Schneider",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 3,
+   "saniye": 665,
+   "mac": 1
+  },
+  "778728": {
+   "ad": "Jerrick Harding",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 6,
+   "saniye": 832,
+   "mac": 1
+  },
+  "112715": {
+   "ad": "Emircan Koşut",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 0,
+   "saniye": 283,
+   "mac": 1
+  },
+  "418533": {
+   "ad": "Uros Trifunovic",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 13,
+   "saniye": 940,
+   "mac": 1
+  },
+  "129216": {
+   "ad": "Doğuş Özdemiroğlu",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 5,
+   "saniye": 733,
+   "mac": 1
+  },
+  "202579": {
+   "ad": "Ata Kahraman",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 5,
+   "saniye": 520,
+   "mac": 1
+  },
+  "778726": {
+   "ad": "Anthony Lamb",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": -2,
+   "saniye": 535,
+   "mac": 1
+  },
+  "778727": {
+   "ad": "Ismael Bako",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 12,
+   "saniye": 884,
+   "mac": 1
+  },
+  "668012": {
+   "ad": "Kris Bankston",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 0,
+   "saniye": 33,
+   "mac": 1
+  },
+  "272903": {
+   "ad": "Mete Tekçevik",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "277894": {
+   "ad": "Göktuğ Baş",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "386159": {
+   "ad": "Shaquille Mckissic",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 7,
+   "saniye": 575,
    "mac": 1
   }
  }

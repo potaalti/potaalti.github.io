@@ -72,15 +72,15 @@
    "durum": "canli",
    "ev": "BURSASPOR BASKETBOL",
    "evId": 266176,
-   "evSkor": "39",
+   "evSkor": "43",
    "dep": "KARŞIYAKA",
    "depId": 266027,
-   "depSkor": "42",
+   "depSkor": "44",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
-    "periyot": 2,
-    "saat": "00:00",
+    "periyot": 3,
+    "saat": "08:25",
     "uzatma": false
    }
   },
@@ -1085,7 +1085,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 7,
-   "saniye": 831,
+   "saniye": 926,
    "mac": 1
   },
   "778461": {
@@ -1093,23 +1093,23 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 1,
-   "saniye": 562,
+   "saniye": 657,
    "mac": 1
   },
   "247547": {
    "ad": "Ergi Tırpancı",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 1,
-   "saniye": 171,
+   "vp": 2,
+   "saniye": 266,
    "mac": 1
   },
   "778460": {
    "ad": "Brandon Taylor",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 0,
-   "saniye": 808,
+   "vp": 4,
+   "saniye": 903,
    "mac": 1
   },
   "736260": {
@@ -1117,7 +1117,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 9,
-   "saniye": 538,
+   "saniye": 633,
    "mac": 1
   },
   "198380": {
@@ -1172,8 +1172,8 @@
    "ad": "Briante Weber",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 2,
-   "saniye": 884,
+   "vp": 3,
+   "saniye": 979,
    "mac": 1
   },
   "779071": {
@@ -1181,7 +1181,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 5,
-   "saniye": 1025,
+   "saniye": 1120,
    "mac": 1
   },
   "500079": {
@@ -1189,7 +1189,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 12,
-   "saniye": 938,
+   "saniye": 1033,
    "mac": 1
   },
   "254789": {
@@ -1197,15 +1197,15 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 3,
-   "saniye": 880,
+   "saniye": 975,
    "mac": 1
   },
   "609083": {
    "ad": "Steven Enoch",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 13,
-   "saniye": 876,
+   "vp": 14,
+   "saniye": 971,
    "mac": 1
   },
   "228502": {

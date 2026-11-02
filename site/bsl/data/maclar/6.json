@@ -85,15 +85,15 @@
    "durum": "canli",
    "ev": "ALİAĞA PETKİM SPOR",
    "evId": 266048,
-   "evSkor": "44",
+   "evSkor": "60",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "51",
+   "depSkor": "65",
    "salon": "Enka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
-    "periyot": 3,
-    "saat": "04:59",
+    "periyot": 4,
+    "saat": "08:32",
     "uzatma": false
    }
   },

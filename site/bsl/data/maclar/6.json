@@ -82,20 +82,15 @@
   {
    "id": 346318,
    "tarih": "2026-11-02T18:00:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "ALİAĞA PETKİM SPOR",
    "evId": 266048,
-   "evSkor": "70",
+   "evSkor": "77",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "83",
+   "depSkor": "87",
    "salon": "Enka Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "02:24",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346320,

@@ -82,20 +82,15 @@
   {
    "id": 346318,
    "tarih": "2026-11-02T18:00:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "ALİAĞA PETKİM SPOR",
    "evId": 266048,
-   "evSkor": "70",
+   "evSkor": "77",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "83",
+   "depSkor": "87",
    "salon": "Enka Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "02:24",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346320,
@@ -1269,7 +1264,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 9,
-   "saniye": 1642,
+   "saniye": 1786,
    "mac": 1
   },
   "778249": {
@@ -1284,8 +1279,8 @@
    "ad": "Chris Horton",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 18,
-   "saniye": 1571,
+   "vp": 22,
+   "saniye": 1715,
    "mac": 1
   },
   "310250": {
@@ -1300,8 +1295,8 @@
    "ad": "Olivier Hanlan",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 13,
-   "saniye": 1486,
+   "vp": 15,
+   "saniye": 1630,
    "mac": 1
   },
   "778246": {
@@ -1309,15 +1304,15 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 3,
-   "saniye": 1298,
+   "saniye": 1442,
    "mac": 1
   },
   "269217": {
    "ad": "Tibet Görener",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 5,
-   "saniye": 1137,
+   "vp": 9,
+   "saniye": 1281,
    "mac": 1
   },
   "284983": {
@@ -1380,8 +1375,8 @@
    "ad": "Collin Malcolm",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 10,
-   "saniye": 1425,
+   "vp": 12,
+   "saniye": 1548,
    "mac": 1
   },
   "281408": {
@@ -1404,8 +1399,8 @@
    "ad": "Darius Karutasu",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 0,
-   "saniye": 0,
+   "vp": -1,
+   "saniye": 54,
    "mac": 1
   },
   "736126": {
@@ -1413,7 +1408,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 17,
-   "saniye": 1964,
+   "saniye": 2055,
    "mac": 1
   },
   "137459": {
@@ -1421,7 +1416,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 54,
    "mac": 1
   },
   "782949": {
@@ -1429,15 +1424,15 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 19,
-   "saniye": 1206,
+   "saniye": 1227,
    "mac": 1
   },
   "778421": {
    "ad": "Matthew Strazel",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 12,
-   "saniye": 1102,
+   "vp": 13,
+   "saniye": 1246,
    "mac": 1
   },
   "157002": {
@@ -1445,7 +1440,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 9,
-   "saniye": 806,
+   "saniye": 950,
    "mac": 1
   },
   "735850": {
@@ -1453,7 +1448,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 6,
-   "saniye": 678,
+   "saniye": 768,
    "mac": 1
   }
  }

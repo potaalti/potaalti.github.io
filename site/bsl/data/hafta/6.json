@@ -98,15 +98,15 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ",
    "evId": 265992,
-   "evSkor": "3",
+   "evSkor": "27",
    "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
    "depId": 265994,
-   "depSkor": "0",
+   "depSkor": "15",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "09:35",
+    "saat": "00:14",
     "uzatma": false
    }
   }
@@ -1460,40 +1460,40 @@
    "ad": "David Dejulius",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 0,
-   "saniye": 23,
+   "vp": 2,
+   "saniye": 234,
    "mac": 1
   },
   "133112": {
    "ad": "Metecan Birsen",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 3,
-   "saniye": 23,
+   "vp": 10,
+   "saniye": 365,
    "mac": 1
   },
   "501381": {
    "ad": "Anthony Brown",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 0,
-   "saniye": 23,
+   "vp": 6,
+   "saniye": 512,
    "mac": 1
   },
   "777637": {
    "ad": "Jaylen Nowell",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 0,
-   "saniye": 23,
+   "vp": 4,
+   "saniye": 365,
    "mac": 1
   },
   "777635": {
    "ad": "Wenyen Gabriel",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 0,
-   "saniye": 23,
+   "vp": 8,
+   "saniye": 365,
    "mac": 1
   },
   "114257": {
@@ -1501,7 +1501,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 352,
    "mac": 1
   },
   "445794": {
@@ -1516,8 +1516,8 @@
    "ad": "Conor Morgan",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 5,
+   "saniye": 221,
    "mac": 1
   },
   "381972": {
@@ -1533,31 +1533,31 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 221,
    "mac": 1
   },
   "777636": {
    "ad": "Eugene Omoruyi",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 4,
+   "saniye": 221,
    "mac": 1
   },
   "163489": {
    "ad": "Furkan Korkmaz",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 1,
+   "saniye": 74,
    "mac": 1
   },
   "756112": {
    "ad": "Nysier Brooks",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 0,
-   "saniye": 23,
+   "vp": 1,
+   "saniye": 234,
    "mac": 1
   },
   "501134": {
@@ -1565,7 +1565,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 0,
-   "saniye": 23,
+   "saniye": 365,
    "mac": 1
   },
   "666080": {
@@ -1573,31 +1573,31 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 0,
-   "saniye": 23,
+   "saniye": 365,
    "mac": 1
   },
   "160245": {
    "ad": "Enes Berkay Taşkıran",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 0,
-   "saniye": 23,
+   "vp": -1,
+   "saniye": 586,
    "mac": 1
   },
   "501690": {
    "ad": "Roberto Gallinat",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 0,
-   "saniye": 23,
+   "vp": -1,
+   "saniye": 283,
    "mac": 1
   },
   "107520": {
    "ad": "Kartal Özmızrak",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 3,
+   "saniye": 221,
    "mac": 1
   },
   "127089": {
@@ -1612,16 +1612,16 @@
    "ad": "Rasheed Sulaimon",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 0,
-   "saniye": 0,
+   "vp": -2,
+   "saniye": 303,
    "mac": 1
   },
   "500074": {
    "ad": "Jeremy Simmons",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 4,
+   "saniye": 352,
    "mac": 1
   },
   "122136": {
@@ -1644,8 +1644,8 @@
    "ad": "Michal Sokolowski",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 8,
+   "saniye": 221,
    "mac": 1
   }
  }

@@ -95,20 +95,15 @@
   {
    "id": 346320,
    "tarih": "2026-11-02T20:30:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "BEŞİKTAŞ",
    "evId": 265992,
-   "evSkor": "84",
+   "evSkor": "93",
    "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
    "depId": 265994,
-   "depSkor": "68",
+   "depSkor": "76",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "03:22",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   }
  ]
 }

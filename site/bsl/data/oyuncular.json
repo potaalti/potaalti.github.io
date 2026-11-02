@@ -395,7 +395,7 @@
   "foto": "https://tbf.org.tr/res/13564b4f-96dd-41ba-8872-3b4f99dfed11_5.webp",
   "boy": 207,
   "mevkiTahmini": "on",
-  "ribOrt": 4.5,
+  "ribOrt": 5.0,
   "astOrt": 2.2
  },
  {
@@ -566,7 +566,7 @@
   "foto": "https://tbf.org.tr/res/74ae5bfa-8c31-4f91-b0bb-2bcdae052873_ChrisHorton.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 5.0,
+  "ribOrt": 5.2,
   "astOrt": 1.8
  },
  {
@@ -1478,7 +1478,7 @@
   "foto": "https://tbf.org.tr/res/593d4a5c-38a0-4973-956f-bc7abbc8c77f_24.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 3.2,
+  "ribOrt": 3.3,
   "astOrt": 0.8
  },
  {
@@ -1896,7 +1896,7 @@
   "foto": "https://tbf.org.tr/res/6623a38b-e8f9-4c4d-954c-a84f913e34d9_3.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 1.2,
+  "ribOrt": 2.0,
   "astOrt": 1.2
  },
  {
@@ -2238,7 +2238,7 @@
   "foto": "https://tbf.org.tr/res/21712c63-cc74-4595-ad66-0aaec8871458_OlivierHanlan.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 1.3,
+  "ribOrt": 1.7,
   "astOrt": 2.8
  },
  {
@@ -2637,7 +2637,7 @@
   "foto": "https://tbf.org.tr/res/56e97691-cae0-40c7-8b5b-35763f157a2e_AnzejsPasecniks.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 1.8,
+  "ribOrt": 2.0,
   "astOrt": 1.0
  },
  {

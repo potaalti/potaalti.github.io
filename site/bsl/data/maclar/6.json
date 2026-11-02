@@ -88,12 +88,12 @@
    "evSkor": "44",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "41",
+   "depSkor": "51",
    "salon": "Enka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
-    "periyot": 2,
-    "saat": "00:00",
+    "periyot": 3,
+    "saat": "04:59",
     "uzatma": false
    }
   },

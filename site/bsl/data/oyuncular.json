@@ -16,7 +16,7 @@
   "boy": null,
   "mevkiTahmini": "arka",
   "ribOrt": 2.8,
-  "astOrt": 6.5
+  "astOrt": 6.8
  },
  {
   "id": "734505",
@@ -756,7 +756,7 @@
   "foto": "https://tbf.org.tr/res/6f51ca2a-9b1b-499d-b988-595545c5946e_cayrova_0004_11.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 4.2,
+  "ribOrt": 4.3,
   "astOrt": 1.7
  },
  {
@@ -1174,8 +1174,8 @@
   "foto": "https://tbf.org.tr/res/5839b688-3a94-487d-b6f1-f4e799312c0b_BJK5WEB.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 1.0,
-  "astOrt": 3.0
+  "ribOrt": 1.2,
+  "astOrt": 3.6
  },
  {
   "id": "777636",
@@ -1211,9 +1211,9 @@
   "sureOrt": "22:05",
   "foto": "https://tbf.org.tr/res/df4ef8e1-c345-4a16-bd81-76de1ec9fc85_BJK21WEB.webp",
   "boy": null,
-  "mevkiTahmini": "on",
-  "ribOrt": 3.5,
-  "astOrt": 1.7
+  "mevkiTahmini": "arka",
+  "ribOrt": 3.8,
+  "astOrt": 2.0
  },
  {
   "id": "346709",
@@ -2467,7 +2467,7 @@
   "boy": null,
   "mevkiTahmini": "arka",
   "ribOrt": 1.7,
-  "astOrt": 1.5
+  "astOrt": 1.7
  },
  {
   "id": "386832",
@@ -2523,7 +2523,7 @@
   "foto": "https://tbf.org.tr/res/bd5cdf78-a346-4c3c-8094-4d28103bca42_BJK32WEB.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 3.0,
+  "ribOrt": 3.5,
   "astOrt": 0.8
  },
  {
@@ -2561,7 +2561,7 @@
   "foto": "https://tbf.org.tr/res/421acce6-49c4-4fae-808d-057f8e177a48_BJK11WEB.webp",
   "boy": 205,
   "mevkiTahmini": "on",
-  "ribOrt": 4.2,
+  "ribOrt": 4.7,
   "astOrt": 1.0
  },
  {
@@ -2884,7 +2884,7 @@
   "foto": "https://tbf.org.tr/res/fb07939e-34e0-46df-ab31-04a5b13bdbd4_cayrova_0001_24.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 2.2,
+  "ribOrt": 2.3,
   "astOrt": 0.3
  },
  {
@@ -2980,7 +2980,7 @@
   "boy": 187,
   "mevkiTahmini": "arka",
   "ribOrt": 0.8,
-  "astOrt": 1.2
+  "astOrt": 1.5
  },
  {
   "id": "434482",
@@ -3150,8 +3150,8 @@
   "foto": "https://tbf.org.tr/res/0a1cb3e2-e15d-46c5-b964-fbf25067bc02_cayrova_0003_12.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 1.0,
-  "astOrt": 0.5
+  "ribOrt": 0.7,
+  "astOrt": 0.3
  },
  {
   "id": "408785",

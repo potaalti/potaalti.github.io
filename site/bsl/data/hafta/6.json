@@ -85,15 +85,15 @@
    "durum": "canli",
    "ev": "ALİAĞA PETKİM SPOR",
    "evId": 266048,
-   "evSkor": "60",
+   "evSkor": "70",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "65",
+   "depSkor": "83",
    "salon": "Enka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "08:32",
+    "saat": "02:24",
     "uzatma": false
    }
   },
@@ -1268,8 +1268,8 @@
    "ad": "Khyri Thomas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 7,
-   "saniye": 1286,
+   "vp": 9,
+   "saniye": 1642,
    "mac": 1
   },
   "778249": {
@@ -1277,15 +1277,15 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 10,
-   "saniye": 1111,
+   "saniye": 1214,
    "mac": 1
   },
   "778279": {
    "ad": "Chris Horton",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 14,
-   "saniye": 1215,
+   "vp": 18,
+   "saniye": 1571,
    "mac": 1
   },
   "310250": {
@@ -1300,16 +1300,16 @@
    "ad": "Olivier Hanlan",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 8,
-   "saniye": 1233,
+   "vp": 13,
+   "saniye": 1486,
    "mac": 1
   },
   "778246": {
    "ad": "Max Abmas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 5,
-   "saniye": 1080,
+   "vp": 3,
+   "saniye": 1298,
    "mac": 1
   },
   "269217": {
@@ -1317,7 +1317,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 5,
-   "saniye": 781,
+   "saniye": 1137,
    "mac": 1
   },
   "284983": {
@@ -1341,7 +1341,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 0,
-   "saniye": 367,
+   "saniye": 505,
    "mac": 1
   },
   "675128": {
@@ -1396,8 +1396,8 @@
    "ad": "Ercan Osmani",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 1,
-   "saniye": 1348,
+   "vp": 3,
+   "saniye": 1486,
    "mac": 1
   },
   "508583": {
@@ -1412,8 +1412,8 @@
    "ad": "Jordan Loyd",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 12,
-   "saniye": 1608,
+   "vp": 17,
+   "saniye": 1964,
    "mac": 1
   },
   "137459": {
@@ -1428,8 +1428,8 @@
    "ad": "Cameron Payne",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 10,
-   "saniye": 850,
+   "vp": 19,
+   "saniye": 1206,
    "mac": 1
   },
   "778421": {
@@ -1437,23 +1437,23 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 12,
-   "saniye": 746,
+   "saniye": 1102,
    "mac": 1
   },
   "157002": {
    "ad": "Erkan Yılmaz",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 7,
-   "saniye": 588,
+   "vp": 9,
+   "saniye": 806,
    "mac": 1
   },
   "735850": {
    "ad": "Kai Jones",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 0,
-   "saniye": 322,
+   "vp": 6,
+   "saniye": 678,
    "mac": 1
   }
  }

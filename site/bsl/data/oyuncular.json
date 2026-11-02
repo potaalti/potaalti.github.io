@@ -205,8 +205,8 @@
   "foto": "https://tbf.org.tr/res/9cf70833-004f-4d58-8d61-1fe2cd02e87a_cayrova_0009_4.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 7.0,
-  "astOrt": 0.8
+  "ribOrt": 7.2,
+  "astOrt": 1.0
  },
  {
   "id": "606624",
@@ -756,7 +756,7 @@
   "foto": "https://tbf.org.tr/res/6f51ca2a-9b1b-499d-b988-595545c5946e_cayrova_0004_11.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 3.8,
+  "ribOrt": 4.0,
   "astOrt": 1.5
  },
  {
@@ -1175,7 +1175,7 @@
   "boy": null,
   "mevkiTahmini": "arka",
   "ribOrt": 0.8,
-  "astOrt": 2.6
+  "astOrt": 3.0
  },
  {
   "id": "777636",
@@ -1193,7 +1193,7 @@
   "foto": "https://tbf.org.tr/res/4998e7e6-f47a-45f5-be67-2365f904ff7b_BJK20WEB.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 3.2,
+  "ribOrt": 3.4,
   "astOrt": 2.4
  },
  {
@@ -1554,7 +1554,7 @@
   "foto": "https://tbf.org.tr/res/c16ac989-69ef-4cac-a839-911100300947_BJK30WEB.webp",
   "boy": 200,
   "mevkiTahmini": "on",
-  "ribOrt": 2.2,
+  "ribOrt": 2.4,
   "astOrt": 1.2
  },
  {
@@ -2105,7 +2105,7 @@
   "foto": "https://tbf.org.tr/res/13df77a3-a5fc-4f88-a15b-ae64f280f75b_BJK9WEB.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 2.3,
+  "ribOrt": 2.7,
   "astOrt": 1.7
  },
  {
@@ -2524,7 +2524,7 @@
   "boy": null,
   "mevkiTahmini": "on",
   "ribOrt": 3.0,
-  "astOrt": 0.5
+  "astOrt": 0.8
  },
  {
   "id": "778244",
@@ -2580,8 +2580,8 @@
   "foto": "https://tbf.org.tr/res/ffaf1e3e-404d-416c-bfef-972090921bd1_cayrova_0005_10.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 1.5,
-  "astOrt": 2.0
+  "ribOrt": 1.7,
+  "astOrt": 2.2
  },
  {
   "id": "254785",
@@ -2979,8 +2979,8 @@
   "foto": "https://tbf.org.tr/res/b0a079dc-3230-444a-9865-86a465a0347e_cayrova_0010_3.webp",
   "boy": 187,
   "mevkiTahmini": "arka",
-  "ribOrt": 0.5,
-  "astOrt": 1.0
+  "ribOrt": 0.8,
+  "astOrt": 1.2
  },
  {
   "id": "434482",
@@ -3530,7 +3530,7 @@
   "foto": "https://tbf.org.tr/res/9a3eca5e-538e-48fb-8436-5362f4085d99_cayrova_0008_6.webp",
   "boy": 200,
   "mevkiTahmini": "on",
-  "ribOrt": 1.2,
+  "ribOrt": 1.0,
   "astOrt": 0.2
  },
  {

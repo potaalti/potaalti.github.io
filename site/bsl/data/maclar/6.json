@@ -82,15 +82,20 @@
   {
    "id": 346318,
    "tarih": "2026-11-02T18:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "ALİAĞA PETKİM SPOR",
    "evId": 266048,
-   "evSkor": null,
+   "evSkor": "44",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": null,
+   "depSkor": "41",
    "salon": "Enka Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 2,
+    "saat": "00:00",
+    "uzatma": false
+   }
   },
   {
    "id": 346320,

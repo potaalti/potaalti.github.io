@@ -105,8 +105,8 @@
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
-    "periyot": 2,
-    "saat": "00:00",
+    "periyot": 3,
+    "saat": "10:00",
     "uzatma": false
    }
   }
@@ -1461,7 +1461,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 5,
-   "saniye": 754,
+   "saniye": 766,
    "mac": 1
   },
   "133112": {
@@ -1469,7 +1469,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 11,
-   "saniye": 678,
+   "saniye": 690,
    "mac": 1
   },
   "501381": {
@@ -1477,7 +1477,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 12,
-   "saniye": 811,
+   "saniye": 823,
    "mac": 1
   },
   "777637": {
@@ -1485,7 +1485,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 535,
+   "saniye": 547,
    "mac": 1
   },
   "777635": {
@@ -1493,7 +1493,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 12,
-   "saniye": 734,
+   "saniye": 746,
    "mac": 1
   },
   "114257": {
@@ -1557,7 +1557,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 0,
-   "saniye": 290,
+   "saniye": 302,
    "mac": 1
   },
   "501134": {
@@ -1565,7 +1565,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 9,
-   "saniye": 737,
+   "saniye": 749,
    "mac": 1
   },
   "666080": {
@@ -1573,7 +1573,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 8,
-   "saniye": 965,
+   "saniye": 977,
    "mac": 1
   },
   "160245": {
@@ -1589,7 +1589,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 2,
-   "saniye": 518,
+   "saniye": 530,
    "mac": 1
   },
   "107520": {
@@ -1605,7 +1605,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": -1,
-   "saniye": 372,
+   "saniye": 384,
    "mac": 1
   },
   "510739": {

@@ -15,8 +15,8 @@
   "foto": "https://tbf.org.tr/res/4c75bf0c-23c2-49e8-89c1-423ba566fad4_cayrova_0011_1.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 2.7,
-  "astOrt": 6.3
+  "ribOrt": 2.8,
+  "astOrt": 6.5
  },
  {
   "id": "734505",
@@ -205,8 +205,8 @@
   "foto": "https://tbf.org.tr/res/9cf70833-004f-4d58-8d61-1fe2cd02e87a_cayrova_0009_4.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 7.2,
-  "astOrt": 1.0
+  "ribOrt": 7.3,
+  "astOrt": 1.2
  },
  {
   "id": "606624",
@@ -756,8 +756,8 @@
   "foto": "https://tbf.org.tr/res/6f51ca2a-9b1b-499d-b988-595545c5946e_cayrova_0004_11.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 4.0,
-  "astOrt": 1.5
+  "ribOrt": 4.2,
+  "astOrt": 1.7
  },
  {
   "id": "120437",
@@ -1174,7 +1174,7 @@
   "foto": "https://tbf.org.tr/res/5839b688-3a94-487d-b6f1-f4e799312c0b_BJK5WEB.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 0.8,
+  "ribOrt": 1.0,
   "astOrt": 3.0
  },
  {
@@ -1193,8 +1193,8 @@
   "foto": "https://tbf.org.tr/res/4998e7e6-f47a-45f5-be67-2365f904ff7b_BJK20WEB.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 3.4,
-  "astOrt": 2.4
+  "ribOrt": 3.6,
+  "astOrt": 2.6
  },
  {
   "id": "501381",
@@ -1212,7 +1212,7 @@
   "foto": "https://tbf.org.tr/res/df4ef8e1-c345-4a16-bd81-76de1ec9fc85_BJK21WEB.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 3.3,
+  "ribOrt": 3.5,
   "astOrt": 1.7
  },
  {
@@ -1460,7 +1460,7 @@
   "boy": 190,
   "mevkiTahmini": "arka",
   "ribOrt": 2.0,
-  "astOrt": 3.5
+  "astOrt": 3.7
  },
  {
   "id": "370740",
@@ -2257,7 +2257,7 @@
   "foto": "https://tbf.org.tr/res/327a4e41-fff0-47eb-9aaa-d79e764c85b6_cayrova_0012_0.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 3.6,
+  "ribOrt": 3.8,
   "astOrt": 0.2
  },
  {
@@ -2561,7 +2561,7 @@
   "foto": "https://tbf.org.tr/res/421acce6-49c4-4fae-808d-057f8e177a48_BJK11WEB.webp",
   "boy": 205,
   "mevkiTahmini": "on",
-  "ribOrt": 4.0,
+  "ribOrt": 4.2,
   "astOrt": 1.0
  },
  {

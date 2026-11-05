@@ -370,32 +370,13 @@ table.kutu tr.takim-satir th, table.kutu tr.takim-satir td { color: var(--soluk)
 @media (prefers-color-scheme: dark) { .odul-uyari { background: #3a2f10; color: #ffe7a3; } }
 
 /* ---------- Haftanın ödülleri galerisi (yönetici) ---------- */
-.odul-ust { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px; margin: 4px 0 16px;
-  padding: 20px 22px; border-radius: 18px; color: #fff; background: var(--baslik-zemin); box-shadow: 0 10px 28px rgba(4, 54, 62, .18); }
-.odul-ust h2 { margin: 2px 0 6px; font-size: 1.7rem; letter-spacing: -.01em; }
-.odul-ust .soluk { color: rgba(255, 255, 255, .8); }
-.odul-ust-kucuk { font-size: .72rem; font-weight: 700; letter-spacing: .18em; opacity: .8; }
-.odul-ust-dugmeler { display: flex; gap: 8px; flex-wrap: wrap; }
-.odul-ust .btn { background: rgba(255, 255, 255, .14); color: #fff; border-color: rgba(255, 255, 255, .35); }
-.odul-ust .btn.ana { background: #fff; color: #06505b; border-color: #fff; }
-.odul-galeri { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
-.odul-kart { all: unset; cursor: pointer; display: flex; flex-direction: column; border-radius: 14px; overflow: hidden; background: var(--kart);
-  border: 1px solid var(--cizgi); box-shadow: 0 4px 14px rgba(4, 54, 62, .08); transition: transform .15s, box-shadow .15s; }
-.odul-kart:hover, .odul-kart:focus-visible { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(4, 54, 62, .18); }
-.odul-kart:focus-visible { outline: 3px solid var(--vurgu); }
-.odul-kart img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block; background: #e6ecee; }
-.odul-alt { display: flex; flex-direction: column; gap: 3px; padding: 10px 12px 12px; min-width: 0; }
-.odul-alt b { font-size: .95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.odul-alt small { color: var(--soluk); font-size: .78rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.odul-rozet { align-self: flex-start; font-size: .68rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--vurgu);
-  background: var(--vurgu-acik); border-radius: 999px; padding: 2px 8px; }
-@media (min-width: 1100px) { .odul-kart.kapak { grid-row: span 2; grid-column: span 2; } .odul-kart.kapak .odul-alt b { font-size: 1.1rem; } }
-@media (max-width: 759px) {
-  .odul-galeri { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .odul-kart.kapak { grid-column: span 2; }
-  .odul-ust { padding: 16px; } .odul-ust h2 { font-size: 1.35rem; }
-  .odul-ust-dugmeler { width: 100%; } .odul-ust-dugmeler .btn { flex: 1; }
-}
+/* Liste (+/- ve Seyirci gibi): küçük önizleme, ödül ve oyuncu, VP, paylaş/indir */
+.odul-satir { align-items: center; }
+.odul-satir .ad { cursor: pointer; min-width: 0; }
+.odul-satir .ad strong, .odul-satir .ad small { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.odul-onizleme { all: unset; cursor: zoom-in; flex: 0 0 auto; width: 44px; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 4px rgba(4, 54, 62, .2); }
+.odul-onizleme img { width: 100%; aspect-ratio: 4 / 5; display: block; }
+.odul-dugmeler { flex: 0 0 auto; gap: 6px; }
 /* Büyük görünüm */
 .odul-perde { position: fixed; inset: 0; z-index: 60; background: rgba(3, 18, 22, .88); display: flex; align-items: center; justify-content: center;
   padding: 16px; backdrop-filter: blur(4px); }
@@ -411,4 +392,4 @@ table.kutu tr.takim-satir th, table.kutu tr.takim-satir td { color: var(--soluk)
 .odul-ok:hover { background: rgba(0, 0, 0, .7); }
 .odul-ok.sol { left: -64px; } .odul-ok.sag { right: -64px; }
 @media (max-width: 759px) { .odul-ok.sol { left: 6px; } .odul-ok.sag { right: 6px; } .odul-buyuk img { max-height: calc(100vh - 170px); } }
-.odul-ust .btn, .odul-buyuk-alt .btn { padding: 9px 14px; border: 1px solid; font: inherit; font-weight: 700; font-size: .9rem; cursor: pointer; }
+.odul-buyuk-alt .btn { padding: 9px 14px; border: 1px solid; font: inherit; font-weight: 700; font-size: .9rem; cursor: pointer; }

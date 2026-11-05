@@ -595,7 +595,7 @@ async function odulHazirla(h, yayinListesi = null) {
     if (b.hata) { sonuc.hatalar.push(`${TEKLI_AD[tur]}: "${sorgu}" ${b.hata}`); continue; }
     if (SART[tur] && !SART[tur](b.o)) sonuc.hatalar.push(`${TEKLI_AD[tur]}: ${b.o.ad} şarta uymuyor (${b.o.yerli ? 'yerli' : 'yabancı'}, takımı ${b.o.kazandi ? 'kazandı' : 'kaybetti'}); yine de hazırlandı`);
     secilenler.set(b.o.id, b.o);
-    isler.push({ ad: `${TEKLI_AD[tur]} · ${b.o.ad}`, bilgi: { tur, baslik: TEKLI_AD[tur], oyuncu: b.o.ad, takim: b.o.takim }, yap: () => OD.tekli({ tur, hafta: h, o: b.o, foto: b.o.foto, logo: b.o.logo }) });
+    isler.push({ ad: `${TEKLI_AD[tur]} · ${b.o.ad}`, bilgi: { tur, baslik: TEKLI_AD[tur], oyuncu: b.o.ad, takim: b.o.takim, vp: b.o.vp }, yap: () => OD.tekli({ tur, hafta: h, o: b.o, foto: b.o.foto, logo: b.o.logo }) });
   }
   liste.gruplar.forEach((grup, i) => {
     const tur = BESLI[i];
@@ -686,22 +686,18 @@ function odulKarti(lig, istenen) {
   if (!v) return `${cipler}<p class="bos">Yükleniyor…</p>`;
   const g = v.gorseller;
   const paylasVar = !!navigator.canShare;
-  const kartlar = g.map((x, i) => `<button class="odul-kart ${x.tur === 'kapak' ? 'kapak' : ''}" data-is="odul-ac" data-id="${i}" aria-label="${esc(x.baslik)} büyük göster">
-      <img src="${galeriAdresi(h, x)}" alt="${esc(x.baslik)}" loading="lazy">
-      <span class="odul-alt"><span class="odul-rozet">${esc(TUR_ROZET[x.tur] ?? x.baslik)}</span>
-        <b>${esc(x.tur === 'besli' ? x.baslik : x.oyuncu ?? x.baslik)}</b>
-        ${x.tur === 'besli' ? `<small>${esc((x.oyuncular ?? []).join(', '))}</small>` : x.takim ? `<small>${esc(baslik(x.takim))}</small>` : ''}</span>
-    </button>`).join('');
+  const satirlar = g.map((x, i) => `<div class="f-satir odul-satir">
+      <button class="odul-onizleme" data-is="odul-ac" data-id="${i}" aria-label="${esc(x.baslik)} büyük göster"><img src="${galeriAdresi(h, x)}" alt="" loading="lazy"></button>
+      <div class="ad" data-is="odul-ac" data-id="${i}"><strong>${esc(x.oyuncu ?? x.baslik)}</strong>
+        <small>${esc(x.tur === 'besli' ? (x.oyuncular ?? []).join(', ') : x.tur === 'kapak' ? 'Kapak' : `${x.baslik} · ${baslik(x.takim ?? '')}`)}</small></div>
+      ${x.vp != null ? `<div class="f-sayi"><strong>${x.vp}</strong><small>VP</small></div>` : ''}
+      <span class="satir odul-dugmeler">${paylasVar ? `<button class="secenek" data-is="odul-paylas" data-id="${h}-${i}" aria-label="Paylaş">📤</button>` : ''}<button class="secenek" data-is="odul-indir" data-id="${h}-${i}" aria-label="İndir">⬇</button></span></div>`).join('');
   const acik = S.ui.odulAcik;
   const buyuk = acik != null && g[acik] ? odulBuyuk(h, g, acik) : '';
-  return `${cipler}<div class="odul-ust">
-      <div><div class="odul-ust-kucuk">TÜRKİYE SİGORTA TBL · 2026-27</div><h2>${h}. Haftanın Panoraması</h2>
-        <p class="soluk kucuk" style="margin:0">${g.length} görsel · dokununca büyür, oradan indir ya da paylaş</p></div>
-      <div class="odul-ust-dugmeler">
-        ${paylasVar ? `<button class="btn ana" data-is="odul-hepsi-paylas" data-id="${h}">📤 Hepsini paylaş</button>` : ''}
-        <button class="btn ${paylasVar ? '' : 'ana'}" data-is="odul-hepsi-indir" data-id="${h}">⬇ Hepsini indir</button></div>
-    </div>
-    <div class="odul-galeri">${kartlar}</div>${buyuk}`;
+  return `${cipler}<div class="kart"><div class="baslik-satir"><h2>${h}. hafta · haftanın ödülleri</h2>
+    <span class="satir">${paylasVar ? `<button class="secenek" data-is="odul-hepsi-paylas" data-id="${h}">📤 Hepsini paylaş</button>` : ''}<button class="secenek" data-is="odul-hepsi-indir" data-id="${h}">⬇ Hepsini indir</button></span></div>
+    ${satirlar}
+    <p class="soluk kucuk" style="margin-bottom:0">Sadece yöneticiler görür. Satıra dokununca görsel büyük açılır.</p></div>${buyuk}`;
 }
 function odulBuyuk(h, g, i) {
   const x = g[i];
@@ -748,8 +744,8 @@ async function odulHepsi(h, paylas) {
 // Büyük görünüm: klavyede ← → Esc, telefonda sağa-sola kaydırma
 document.addEventListener('keydown', e => {
   if (S.ui.odulAcik == null) return;
-  const n = document.querySelectorAll('.odul-kart').length;
-  if (e.key === 'Escape') S.ui.odulAcik = null;
+  const n = document.querySelectorAll('.odul-satir').length;
+  if (e.key === 'Escape') { S.ui.odulAcik = null; }
   else if (e.key === 'ArrowLeft') S.ui.odulAcik = (S.ui.odulAcik - 1 + n) % n;
   else if (e.key === 'ArrowRight') S.ui.odulAcik = (S.ui.odulAcik + 1) % n;
   else return;
@@ -762,7 +758,7 @@ document.addEventListener('touchend', e => {
   const fark = e.changedTouches[0].clientX - odulDokunma;
   odulDokunma = null;
   if (Math.abs(fark) < 50) return;
-  const n = document.querySelectorAll('.odul-kart').length;
+  const n = document.querySelectorAll('.odul-satir').length;
   S.ui.odulAcik = (S.ui.odulAcik + (fark < 0 ? 1 : -1) + n) % n;
   ciz();
 });
@@ -994,6 +990,7 @@ document.addEventListener('click', e => {
     (uretici ? odulUreticiGorseli : odulGorseliniVer)(el.dataset.id, el.dataset.is === 'odul-indir').catch(e => alert(`İndirilemedi: ${e.message}`));
   }
   if (el.dataset.is === 'odul-ac') { S.ui.odulAcik = Number(el.dataset.id); ciz(); }
+
   if (el.dataset.is === 'odul-kapat' && (el.dataset.id === 'x' || e.target === el)) { S.ui.odulAcik = null; ciz(); }
   if (el.dataset.is === 'odul-hepsi-indir' || el.dataset.is === 'odul-hepsi-paylas') odulHepsi(Number(el.dataset.id), el.dataset.is === 'odul-hepsi-paylas').catch(e => alert(`İndirilemedi: ${e.message}`));
   if (el.dataset.is === 'odul-hepsi') {

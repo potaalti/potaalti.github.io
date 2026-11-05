@@ -10,7 +10,7 @@ herkese açık bölümü için özet dosyaları üretir:
   site/data/<lig>/takimlar.json      takımların maç başı istatistikleri, kadroları ve maçları
   site/data/<lig>/oyuncu/<id>.json   oyuncunun maç maç istatistikleri
   site/data/<lig>/takim-istatistik.json  biten maçlarda oyuncuya yazılmayan takım istatistikleri (TBF'den)
-  site/data/tbl/gorsel.json, foto/, logo/  oyuncu fotoğrafları ve takım logoları (TBF'den; --gunluk ile, haftanın ödülleri için)
+  site/data/<lig>/gorsel.json, foto/, logo/  oyuncu fotoğrafları ve takım logoları (TBF'den; --gunluk ile, haftanın ödülleri için)
   site/data/<lig>/seyirci.json       biten maçların seyirci sayıları (TBF'den; --gunluk ile, Cumartesi–Salı)
   site/data/youtube.json             Pota Altı YouTube kanalının son canlı yayınları ve son videoları
 
@@ -364,7 +364,7 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
     takim_istatistik_uret(lig, maclar_hepsi)
     if gunluk or not (CIKTI / lig / "seyirci.json").exists():
         seyirci_uret(lig, maclar_hepsi)
-    if lig == "tbl" and (gunluk or not (CIKTI / lig / "gorsel.json").exists()):
+    if gunluk or not (CIKTI / lig / "gorsel.json").exists():
         gorsel_uret(lig)
     return {"ad": LIGLER[lig], "haftalar": haftalar, "guncel": bilgi.get("guncel"), "takimSayisi": len(takimlar),
             "oyuncuSayisi": len(oyuncular), "_haftaOzet": hafta_ozet}

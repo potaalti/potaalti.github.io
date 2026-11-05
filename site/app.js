@@ -337,7 +337,7 @@ async function yoneticiyiTani() {
 }
 
 function gorunumLig(lig, sekme, donem) {
-  const sekmeListesi = yoneticiMi() ? [...SEKMELER, ['artieksi', '+/-'], ['seyirci', 'Seyirci'], ...(lig === 'tbl' ? [['odul', 'Ödüller']] : [])] : SEKMELER;
+  const sekmeListesi = yoneticiMi() ? [...SEKMELER, ['artieksi', '+/-'], ['seyirci', 'Seyirci'], ['odul', 'Ödüller']] : SEKMELER;
   const sekmeler = `<div class="secenekler">${sekmeListesi.map(([s, ad]) => `<a class="secenek ${s === sekme ? 'aktif' : ''}" href="#/lig/${lig}/${s}">${ad}</a>`).join('')}</div>`;
   const baslikHtml = `<div class="sayfa-baslik"><h1>${LIGLER[lig].ad}</h1><p class="soluk kucuk" style="margin:0 0 12px">2026-27 sezonu · ${LIGLER[lig].kisa}</p></div>`;
   let icerik;
@@ -347,7 +347,7 @@ function gorunumLig(lig, sekme, donem) {
     case 'oyuncular': icerik = oyuncularKarti(lig); break;
     case 'artieksi': icerik = yoneticiMi() ? artieksiKarti(lig, donem) : '<p class="bos">Bu sekme yöneticiler içindir.</p>'; break;
     case 'seyirci': icerik = yoneticiMi() ? seyirciKarti(lig, donem) : '<p class="bos">Bu sekme yöneticiler içindir.</p>'; break;
-    case 'odul': icerik = !(yoneticiMi() && lig === 'tbl') ? '<p class="bos">Bu sekme yöneticiler içindir.</p>'
+    case 'odul': icerik = !yoneticiMi() ? '<p class="bos">Bu sekme yöneticiler içindir.</p>'
       : new URLSearchParams(location.search).has('uret') ? odulUretici(lig, donem) : odulKarti(lig, donem); break;
     default: icerik = tabloKarti(lig);
   }
@@ -466,15 +466,20 @@ async function seyirciGorseliniPaylas(anahtar, indir) {
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
 }
 
-// Haftanın ödülleri (yönetici, TBL): yönetici ödül listesini yapıştırır, oyuncular haftanın kutu skorlarından bulunur ve
+// Haftanın ödülleri (yönetici, TBL ve BSL): yönetici ödül listesini yapıştırır, oyuncular haftanın kutu skorlarından bulunur ve
 // Pota Altı şablonlarında görseller hazırlanır (odul.js). Liste biçimi:
 //   MVP: ÖMER YASİR 25-3-9-4          (YERLİ MVP, YABANCI MVP, KAYBEDEN YERLİ MVP, KAYBEDEN YABANCI MVP de olur)
-//   -----                              (çizgiyle ayrılan 5'li gruplar sırasıyla: Yerli 5, Yabancı 5, Mansiyon I, Mansiyon II)
+//   -----                              (çizgiyle ayrılan 5'li gruplar sırasıyla; TBL: Yerli 5, Yabancı 5, Mansiyon I, Mansiyon II,
+//                                       BSL: Altın 5, Gümüş 5, Bronz 5, Mansiyon 5)
 //   Ömer Yasir Küçük 33
 const TEKLI = { 'mvp': 'mvp', 'yerli mvp': 'yerli', 'yabanci mvp': 'yabanci', 'kaybeden yerli mvp': 'kaybedenYerli', 'kaybeden yabanci mvp': 'kaybedenYabanci' };
 const TEKLI_AD = { mvp: 'MVP', yerli: 'Yerli MVP', yabanci: 'Yabancı MVP', kaybedenYerli: 'Kaybeden Yerli MVP', kaybedenYabanci: 'Kaybeden Yabancı MVP' };
-const BESLI = ['yerli', 'yabanci', 'mansiyon1', 'mansiyon2'];
-const BESLI_AD = { yerli: 'Yerli 5', yabanci: 'Yabancı 5', mansiyon1: "Mansiyon 5'i – I", mansiyon2: "Mansiyon 5'i – II" };
+const BESLI = { tbl: ['yerli', 'yabanci', 'mansiyon1', 'mansiyon2'], bsl: ['altin', 'gumus', 'bronz', 'mansiyon'] };
+const BESLI_AD = { yerli: 'Yerli 5', yabanci: 'Yabancı 5', mansiyon1: "Mansiyon 5'i – I", mansiyon2: "Mansiyon 5'i – II",
+  altin: 'Altın 5', gumus: 'Gümüş 5', bronz: 'Bronz 5', mansiyon: 'Mansiyon 5' };
+// Ödüller sayfasının ligi (sayfa adresinden) ve yayınlanan görsellerin klasörü
+const OL = () => (rota()[1] === 'bsl' ? 'bsl' : 'tbl');
+const odulKok = () => (OL() === 'bsl' ? 'odul/gorsel/bsl' : 'odul/gorsel');
 const kelimeler = s => aramaNorm(s).replace(/[^a-z0-9 ]+/g, ' ').split(' ').filter(Boolean);
 const dosyaAnahtari = ad => aramaNorm(String(ad).replace(/İ/g, 'I')).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const uzanti = url => (String(url).split('?')[0].match(/\.\w+$/)?.[0] ?? '.png').toLowerCase();
@@ -496,12 +501,15 @@ function odulListesiCoz(metin) {
 }
 // Haftanın oyuncuları: biten maçların kutu skorlarından, hafta toplamı (iki maç oynadıysa toplanır)
 async function odulHaftasi(h) {
-  const k = `hafta-${h}`;
+  const lig = OL(), k = `${lig}-hafta-${h}`;
   if (S.odul[k]) return S.odul[k];
-  const [liste, rehber, gorsel, elle] = await Promise.all([getir(`${KAYNAK}/maclar/tbl-${h}.json`), getir(`${KAYNAK}/oyuncular.json`),
-    getir('data/tbl/gorsel.json').catch(() => ({ foto: {}, logo: {} })), getir('odul/foto/liste.json').catch(() => ({}))]);
+  const [liste, ham, gorsel, elle] = await Promise.all([getir(`${KAYNAK}/maclar/${lig}-${h}.json`),
+    getir(lig === 'bsl' ? 'bsl/data/oyuncular.json' : `${KAYNAK}/oyuncular.json`),
+    getir(`data/${lig}/gorsel.json`).catch(() => ({ foto: {}, logo: {} })), getir('odul/foto/liste.json').catch(() => ({}))]);
+  // Rehber: { id: { ad, takim, ulke, aktif } } (BSL'ninki liste)
+  const rehber = Array.isArray(ham) ? Object.fromEntries(ham.map(o => [o.id, o])) : ham;
   // TBF fotoğrafı uygun olmayan oyuncular için yöneticinin gönderdiği fotoğraflar (odul/foto/, liste.json: { id: dosya })
-  const foto = id => elle[id] ? `odul/foto/${elle[id]}` : gorsel.foto[id] ? `data/tbl/foto/${id}${uzanti(gorsel.foto[id])}` : null;
+  const foto = id => elle[id] ? `odul/foto/${elle[id]}` : gorsel.foto[id] ? `data/${lig}/foto/${id}${uzanti(gorsel.foto[id])}` : null;
   const kutular = await Promise.all(liste.maclar.filter(m => m.durum === 'bitti').map(m => getir(`${KAYNAK}/mac/${m.id}.json`)));
   const oy = new Map();
   for (const kutu of kutular) for (const [t, r] of [['ev', 'dep'], ['dep', 'ev']]) {
@@ -509,12 +517,12 @@ async function odulHaftasi(h) {
     for (const o of T.oyuncular ?? []) {
       if (!sureSn(o.sure)) continue;
       const e = oy.get(o.id) ?? { id: o.id, ad: rehber[o.id]?.ad ?? o.ad, kutuAd: o.ad, takim: T.ad, kazandi, yerli: ['TÜRKİYE', 'KKTC'].includes(rehber[o.id]?.ulke),
-        sayi: 0, rib: 0, ast: 0, tc: 0, blk: 0, vp: 0, iki: [0, 0], uc: [0, 0], sa: [0, 0] };
-      for (const a of ['sayi', 'rib', 'ast', 'tc', 'blk', 'vp']) e[a] += Number(o[a]) || 0;
+        sayi: 0, rib: 0, ast: 0, tc: 0, blk: 0, tk: 0, vp: 0, iki: [0, 0], uc: [0, 0], sa: [0, 0] };
+      for (const a of ['sayi', 'rib', 'ast', 'tc', 'blk', 'tk', 'vp']) e[a] += Number(o[a]) || 0;
       for (const a of ['iki', 'uc', 'sa']) e[a] = [e[a][0] + (o[a]?.[0] ?? 0), e[a][1] + (o[a]?.[1] ?? 0)];
       e.foto = foto(o.id);
       e.elleFoto = !!elle[o.id];
-      e.logo = gorsel.logo[T.ad] ? `data/tbl/logo/${dosyaAnahtari(T.ad)}${uzanti(gorsel.logo[T.ad])}` : null;
+      e.logo = gorsel.logo[T.ad] ? `data/${lig}/logo/${dosyaAnahtari(T.ad)}${uzanti(gorsel.logo[T.ad])}` : null;
       oy.set(o.id, e);
     }
   }
@@ -554,20 +562,20 @@ function odulUretici(lig, istenen) {
   const h = haftalar.includes(Number(istenen)) ? Number(istenen) : haftalar.at(-1);
   const cipler = `<div class="secenekler">${haftalar.slice(-6).map(k => `<a class="secenek ${k === h ? 'aktif' : ''}" href="#/lig/${lig}/odul/${k}">${k}. hafta</a>`).join('')}</div>`;
   // Haftanın listesi odul/liste/<hafta>.txt'de (Claude ekler); varsa sayfa açılınca görseller kendiliğinden hazırlanır
-  if (!(`liste-${h}` in S.odul)) {
-    S.odul[`liste-${h}`] = undefined;
-    fetch(`odul/liste/${h}.txt?t=${Date.now()}`, { cache: 'no-store' }).then(r => (r.ok ? r.text() : null)).catch(() => null)
-      .then(m => { S.odul[`liste-${h}`] = m; if (m && !S.odul[`sonuc-${h}`]) odulHazirla(h, m); else ciz(); });
+  if (!(`${OL()}-liste-${h}` in S.odul)) {
+    S.odul[`${OL()}-liste-${h}`] = undefined;
+    fetch(`odul/liste/${OL() === 'bsl' ? 'bsl-' : ''}${h}.txt?t=${Date.now()}`, { cache: 'no-store' }).then(r => (r.ok ? r.text() : null)).catch(() => null)
+      .then(m => { S.odul[`${OL()}-liste-${h}`] = m; if (m && !S.odul[`${OL()}-sonuc-${h}`]) odulHazirla(h, m); else ciz(); });
   }
-  const yayinda = S.odul[`liste-${h}`];
+  const yayinda = S.odul[`${OL()}-liste-${h}`];
   let kayitli = yayinda ?? '';
-  try { kayitli = localStorage.getItem(`odulListesi-${h}`) ?? kayitli; } catch { /* gizli pencere */ }
-  const sonuc = S.odul[`sonuc-${h}`];
+  try { kayitli = localStorage.getItem(`odulListesi-${OL()}-${h}`) ?? kayitli; } catch { /* gizli pencere */ }
+  const sonuc = S.odul[`${OL()}-sonuc-${h}`];
   return `${cipler}<div class="kart"><h2 style="margin-top:0">${h}. hafta · haftanın ödülleri</h2>
     ${yayinda === undefined ? '<p class="soluk">Liste aranıyor…</p>' : yayinda ? '' : '<p class="soluk">Bu haftanın ödül listesi henüz eklenmedi.</p>'}
     <details ${yayinda ? '' : 'open'}><summary class="kucuk soluk">Listeyi kendin gir / değiştir</summary>
     <p class="soluk kucuk">Ödül listesini yapıştır: önce <b>MVP:</b>, <b>YERLİ MVP:</b>, <b>YABANCI MVP:</b>, <b>KAYBEDEN YERLİ MVP:</b>, <b>KAYBEDEN YABANCI MVP:</b> satırları,
-      sonra çizgiyle (<b>-</b>) ayrılmış 5'li gruplar sırasıyla: Yerli 5, Yabancı 5, Mansiyon I, Mansiyon II. Soyadı ya da adın başı yeterli.</p>
+      sonra çizgiyle (<b>-</b>) ayrılmış 5'li gruplar sırasıyla: ${BESLI[lig].map(b => BESLI_AD[b]).join(', ')}. Soyadı ya da adın başı yeterli.</p>
     <textarea id="odul-liste" data-hafta="${h}" rows="14" style="width:100%;font:inherit;padding:8px;box-sizing:border-box">${esc(kayitli)}</textarea>
     <p style="margin:10px 0 0"><button class="secenek" data-is="odul-hazirla" data-id="${h}">🖼️ Görselleri hazırla</button>
       </p></details>
@@ -583,22 +591,22 @@ function odulUretici(lig, istenen) {
 }
 async function odulHazirla(h, yayinListesi = null) {
   const metin = yayinListesi ?? document.getElementById('odul-liste')?.value ?? '';
-  if (yayinListesi === null) try { localStorage.setItem(`odulListesi-${h}`, metin); } catch { /* gizli pencere */ }
-  const sonuc = S.odul[`sonuc-${h}`] = { durum: 'Hazırlanıyor…', hatalar: [], gorseller: [] };
+  if (yayinListesi === null) try { localStorage.setItem(`odulListesi-${OL()}-${h}`, metin); } catch { /* gizli pencere */ }
+  const sonuc = S.odul[`${OL()}-sonuc-${h}`] = { durum: 'Hazırlanıyor…', hatalar: [], gorseller: [] };
   ciz();
   const { oyuncular, kadro } = await odulHaftasi(h);
   const secilenler = new Map();
   const liste = odulListesiCoz(metin);
-  const isler = [{ ad: 'Kapak', bilgi: { tur: 'kapak', baslik: `${h}. Haftanın Panoraması` }, yap: () => OD.kapak({ hafta: h }) }];
+  const isler = [{ ad: 'Kapak', bilgi: { tur: 'kapak', baslik: `${h}. Haftanın Panoraması` }, yap: () => OD.kapak({ lig: OL(), hafta: h }) }];
   for (const { tur, sorgu } of liste.tekli) {
     const b = oyuncuBul(oyuncular, sorgu, SART[tur]);
     if (b.hata) { sonuc.hatalar.push(`${TEKLI_AD[tur]}: "${sorgu}" ${b.hata}`); continue; }
     if (SART[tur] && !SART[tur](b.o)) sonuc.hatalar.push(`${TEKLI_AD[tur]}: ${b.o.ad} şarta uymuyor (${b.o.yerli ? 'yerli' : 'yabancı'}, takımı ${b.o.kazandi ? 'kazandı' : 'kaybetti'}); yine de hazırlandı`);
     secilenler.set(b.o.id, b.o);
-    isler.push({ ad: `${TEKLI_AD[tur]} · ${b.o.ad}`, bilgi: { tur, baslik: TEKLI_AD[tur], oyuncu: b.o.ad, takim: b.o.takim, vp: b.o.vp }, yap: () => OD.tekli({ tur, hafta: h, o: b.o, foto: b.o.foto, logo: b.o.logo }) });
+    isler.push({ ad: `${TEKLI_AD[tur]} · ${b.o.ad}`, bilgi: { tur, baslik: TEKLI_AD[tur], oyuncu: b.o.ad, takim: b.o.takim, vp: b.o.vp }, yap: () => OD.tekli({ lig: OL(), tur, hafta: h, o: b.o, foto: b.o.foto, logo: b.o.logo }) });
   }
   liste.gruplar.forEach((grup, i) => {
-    const tur = BESLI[i];
+    const tur = BESLI[OL()][i];
     const secilen = grup.map(satir => {
       const b = oyuncuBul(oyuncular, satir);
       if (b.hata) { sonuc.hatalar.push(`${BESLI_AD[tur]}: "${satir}" ${b.hata}`); return null; }
@@ -607,7 +615,7 @@ async function odulHazirla(h, yayinListesi = null) {
       const ad = satir.replace(/[\d\s-]+$/, '').trim();
       return { ...b.o, ad: ad.split(/\s+/).length > 1 ? ad : b.o.ad };
     }).filter(Boolean);
-    if (secilen.length) isler.push({ ad: BESLI_AD[tur], bilgi: { tur: 'besli', baslik: BESLI_AD[tur], oyuncular: secilen.map(o => o.ad) }, yap: () => OD.besli({ tur, hafta: h, oyuncular: secilen }) });
+    if (secilen.length) isler.push({ ad: BESLI_AD[tur], bilgi: { tur: 'besli', baslik: BESLI_AD[tur], oyuncular: secilen.map(o => o.ad) }, yap: () => OD.besli({ lig: OL(), tur, hafta: h, oyuncular: secilen }) });
   });
   for (const is of isler) {
     sonuc.durum = `Hazırlanıyor: ${is.ad}…`;
@@ -646,11 +654,11 @@ async function fotoUyarilari(secilenler, kadro) {
 // Yazılan liste sayfa yeniden çizilince kaybolmasın
 document.addEventListener('input', e => {
   if (e.target.id !== 'odul-liste') return;
-  try { localStorage.setItem(`odulListesi-${e.target.dataset.hafta}`, e.target.value); } catch { /* gizli pencere */ }
+  try { localStorage.setItem(`odulListesi-${OL()}-${e.target.dataset.hafta}`, e.target.value); } catch { /* gizli pencere */ }
 });
 async function odulUreticiGorseli(anahtar, indir) {
   const [h, i] = anahtar.split('-').map(Number);
-  const g = S.odul[`sonuc-${h}`]?.gorseller?.[i];
+  const g = S.odul[`${OL()}-sonuc-${h}`]?.gorseller?.[i];
   if (!g) return;
   const dosya = new File([g.blob], `pota-alti-${h}-hafta-${String(i + 1).padStart(2, '0')}-${dosyaAnahtari(g.ad.split(' · ')[0])}.png`, { type: 'image/png' });
   if (!indir && navigator.canShare?.({ files: [dosya] })) {
@@ -669,19 +677,19 @@ async function odulUreticiGorseli(anahtar, indir) {
 const TUR_ROZET = { kapak: 'Kapak', mvp: 'MVP', yerli: 'Yerli MVP', yabanci: 'Yabancı MVP', kaybedenYerli: 'Kaybeden Yerli MVP',
   kaybedenYabanci: 'Kaybeden Yabancı MVP', besli: '5\'li' };
 function odulVerisi(h) {
-  yukle(S.odul, 'index', 'odul/gorsel/index.json', { bosDeger: { haftalar: [] } });
-  if (h != null) yukle(S.odul, `galeri-${h}`, `odul/gorsel/${h}.json`, { bosDeger: { gorseller: [] } });
+  yukle(S.odul, `${OL()}-index`, `${odulKok()}/index.json`, { bosDeger: { haftalar: [] } });
+  if (h != null) yukle(S.odul, `${OL()}-galeri-${h}`, `${odulKok()}/${h}.json`, { bosDeger: { gorseller: [] } });
 }
-const galeriAdresi = (h, g) => `odul/gorsel/${h}/${g.dosya}`;
+const galeriAdresi = (h, g) => `${odulKok()}/${h}/${g.dosya}`;
 function odulKarti(lig, istenen) {
   odulVerisi(null);
-  const idx = S.odul.index;
+  const idx = S.odul[`${OL()}-index`];
   if (!idx) return '<p class="bos">Yükleniyor…</p>';
   const haftalar = [...idx.haftalar].sort((a, b) => a - b);
   if (!haftalar.length) return '<div class="kart"><p class="bos" style="margin:0">Henüz yayınlanmış ödül görseli yok.</p></div>';
   const h = haftalar.includes(Number(istenen)) ? Number(istenen) : haftalar.at(-1);
   odulVerisi(h);
-  const v = S.odul[`galeri-${h}`];
+  const v = S.odul[`${OL()}-galeri-${h}`];
   const cipler = haftalar.length > 1 ? `<div class="secenekler">${haftalar.map(k => `<a class="secenek ${k === h ? 'aktif' : ''}" href="#/lig/${lig}/odul/${k}">${k}. hafta</a>`).join('')}</div>` : '';
   if (!v) return `${cipler}<p class="bos">Yükleniyor…</p>`;
   const g = v.gorseller;
@@ -713,7 +721,7 @@ function odulBuyuk(h, g, i) {
     </div></div>`;
 }
 async function odulDosyasi(h, i) {
-  const x = S.odul[`galeri-${h}`].gorseller[i];
+  const x = S.odul[`${OL()}-galeri-${h}`].gorseller[i];
   const blob = await (await fetch(galeriAdresi(h, x))).blob();
   return new File([blob], `pota-alti-${h}-hafta-${x.dosya}`, { type: blob.type || 'image/jpeg' });
 }
@@ -734,7 +742,7 @@ async function odulGorseliniVer(anahtar, indir) {
   dosyaIndir(dosya);
 }
 async function odulHepsi(h, paylas) {
-  const n = S.odul[`galeri-${h}`]?.gorseller?.length ?? 0;
+  const n = S.odul[`${OL()}-galeri-${h}`]?.gorseller?.length ?? 0;
   const dosyalar = await Promise.all([...Array(n).keys()].map(i => odulDosyasi(h, i)));
   if (paylas && navigator.canShare?.({ files: dosyalar })) {
     try { await navigator.share({ files: dosyalar }); return; } catch (e) { if (e?.name === 'AbortError') return; }
@@ -994,7 +1002,7 @@ document.addEventListener('click', e => {
   if (el.dataset.is === 'odul-kapat' && (el.dataset.id === 'x' || e.target === el)) { S.ui.odulAcik = null; ciz(); }
   if (el.dataset.is === 'odul-hepsi-indir' || el.dataset.is === 'odul-hepsi-paylas') odulHepsi(Number(el.dataset.id), el.dataset.is === 'odul-hepsi-paylas').catch(e => alert(`İndirilemedi: ${e.message}`));
   if (el.dataset.is === 'odul-hepsi') {
-    const n = S.odul[`sonuc-${el.dataset.id}`]?.gorseller?.length ?? 0;
+    const n = S.odul[`${OL()}-sonuc-${el.dataset.id}`]?.gorseller?.length ?? 0;
     for (let i = 0; i < n; i++) setTimeout(() => odulUreticiGorseli(`${el.dataset.id}-${i}`, true), i * 400);
   }
   if (el.dataset.is === 'ana-lig') {

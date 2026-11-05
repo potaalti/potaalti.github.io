@@ -1,12 +1,13 @@
-// Haftanın ödülleri görselleri (yönetici, TBL → Ödüller): Pota Altı'nın Canva şablonlarına oyuncu fotoğrafı, takım logosu ve
-// haftalık istatistikler yazılır. Çıktı 1280x1600 PNG. Şablonlar odul/sablon/ (kullanıcının boş şablonları; tekli şablonda
+// Haftanın ödülleri görselleri (yönetici, TBL/BSL → Ödüller): Pota Altı'nın Canva şablonlarına oyuncu fotoğrafı, takım logosu ve
+// haftalık istatistikler yazılır. Çıktı 1280x1600 PNG. Şablonlar odul/sablon/ (TBL) ve odul/sablon/bsl/ (BSL: aynı yerleşim,
+// lacivert; tekli satırda top kaybı 0 ise "*0") — kullanıcının boş şablonları; tekli şablonda
 // istatistik etiketleri silinip damga olarak ayrıldı, gelen istatistiklere göre yerleştirilir).
 // Yazı tipleri (Canva'dakilerin ücretsiz benzerleri): Heading Now -> Big Shoulders Display, Posey -> Russo One,
 // istatistik rakamları -> Lilita One, 5'li isimler Farro (Canva'daki de Farro).
 const YAZI_TIPLERI = 'https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800&family=Russo+One&family=Lilita+One&family=Farro:wght@700&display=block';
 const G = 1280, Y = 1600;
-const RENK = '#026584';
-const sablon = ad => new URL(`odul/sablon/${ad}`, document.baseURI).href;
+const RENKLER = { tbl: '#026584', bsl: '#0b298b' };
+const sablon = (lig, ad) => new URL(`odul/sablon/${lig === 'bsl' ? 'bsl/' : ''}${ad}`, document.baseURI).href;
 
 let yaziHazir;
 function yaziTipleri() {
@@ -160,8 +161,9 @@ function yerlestir(g, f, cx, basUst, gen) {
 }
 
 // ---------- Kapak ----------
-export async function kapak({ hafta }) {
-  const [z] = await Promise.all([resim(sablon('kapak.webp')), yaziTipleri()]);
+export async function kapak({ lig = 'tbl', hafta }) {
+  const RENK = RENKLER[lig];
+  const [z] = await Promise.all([resim(sablon(lig, 'kapak.webp')), yaziTipleri()]);
   const [c, g] = tuval(z, G / 720);
   yaz(g, `${hafta}. haftanın`, 360, 392, { yazi: '800 PXpx "Big Shoulders Display"', boy: 158, gen: 598, renk: RENK, sikistir: true });
   yaz(g, 'panoraması', 360, 540, { yazi: '800 PXpx "Big Shoulders Display"', boy: 170, gen: 598, renk: RENK, sikistir: true });
@@ -169,10 +171,13 @@ export async function kapak({ hafta }) {
 }
 
 // ---------- Tekli ödül (MVP, Yerli/Yabancı MVP, kaybeden MVP'ler) ----------
-const ETIKET = { sayi: [709, 782], rib: [861, 782], ast: [1012, 782], tc: [795, 914], blk: [944, 914], iki: [758, 1067], uc: [876, 1067], sa: [994, 1067] };
-const SATIRLAR = [{ alanlar: ['sayi', 'rib', 'ast'], ara: 151, boy: 52 }, { alanlar: ['tc', 'blk'], ara: 141, boy: 46 }, { alanlar: ['iki', 'uc', 'sa'], ara: 117, boy: 33 }];
+const ETIKET = { sayi: [709, 782], rib: [861, 782], ast: [1012, 782], tc: [795, 914], blk: [944, 914], to: [862, 914], iki: [758, 1067], uc: [876, 1067], sa: [994, 1067] };
+// BSL'de ikinci satırda top kaybı da var (sadece 0 ise, "*0" olarak)
+const satirlar = lig => [{ alanlar: ['sayi', 'rib', 'ast'], ara: 151, boy: 52 }, { alanlar: lig === 'bsl' ? ['tc', 'blk', 'to'] : ['tc', 'blk'], ara: 141, boy: 46 },
+  { alanlar: ['iki', 'uc', 'sa'], ara: 117, boy: 33 }];
 const ORTA = 925;
-const etiketler = () => Promise.all(Object.keys(ETIKET).map(async a => [a, await resim(sablon(`etiket-${a}.png`))])).then(Object.fromEntries);
+const etiketler = lig => Promise.all(Object.keys(ETIKET).filter(a => lig === 'bsl' || a !== 'to')
+  .map(async a => [a, await resim(sablon(lig, `etiket-${a}.png`))])).then(Object.fromEntries);
 
 // Büyük fotoğrafa nokta dokusu (şablondaki gibi)
 function noktala(g, x, y, w, h) {
@@ -184,9 +189,10 @@ function noktala(g, x, y, w, h) {
 }
 
 // o: { ad, takim, sayi, rib, ast, tc, blk, iki: [s, d], uc, sa, vp }, foto/logo: resim adresi
-export async function tekli({ tur, hafta, o, foto, logo }) {
+export async function tekli({ lig = 'tbl', tur, hafta, o, foto, logo }) {
+  const RENK = RENKLER[lig];
   const mvp = tur === 'mvp';
-  const [z, et, f, l] = await Promise.all([resim(sablon(mvp ? 'tekli-mvp.webp' : 'tekli.webp')), etiketler(), resim(foto), resim(logo), yaziTipleri()]);
+  const [z, et, f, l] = await Promise.all([resim(sablon(lig, mvp ? 'tekli-mvp.webp' : 'tekli.webp')), etiketler(lig), resim(foto), resim(logo), yaziTipleri()]);
   const [c, g] = tuval(z);
   if (f) {
     const dekupe = dekupeMi(f);
@@ -222,9 +228,9 @@ export async function tekli({ tur, hafta, o, foto, logo }) {
     TB[1].forEach((s, i) => { yy += boylar[i]; yaz(g, s, 921, yy, { yazi: BS, boy: boylar[i], gen: 572, renk: RENK, sikistir: true }); yy += ara; });
   }
   // İstatistikler: sıfır olanlar ve hiç denenmeyen atışlar yazılmaz
-  const deger = { sayi: o.sayi, rib: o.rib, ast: o.ast, tc: o.tc, blk: o.blk,
+  const deger = { sayi: o.sayi, rib: o.rib, ast: o.ast, tc: o.tc, blk: o.blk, to: lig === 'bsl' && o.tk === 0 ? '*0' : 0,
     iki: o.iki?.[1] ? `${o.iki[0]}/${o.iki[1]}` : 0, uc: o.uc?.[1] ? `${o.uc[0]}/${o.uc[1]}` : 0, sa: o.sa?.[1] ? `${o.sa[0]}/${o.sa[1]}` : 0 };
-  for (const s of SATIRLAR) {
+  for (const s of satirlar(lig)) {
     const var_ = s.alanlar.filter(a => deger[a]);
     var_.forEach((a, i) => {
       const im = et[a]; const [, ey] = ETIKET[a];
@@ -237,13 +243,40 @@ export async function tekli({ tur, hafta, o, foto, logo }) {
   return blob(c);
 }
 
-// ---------- 5'li (Yerli 5, Yabancı 5, Mansiyon 5'i I–II) — 720x900 ölçüsünde çizilir ----------
+// ---------- 5'li (TBL: Yerli 5, Yabancı 5, Mansiyon 5'i I–II; BSL: Altın, Gümüş, Bronz, Mansiyon 5) — 720x900 ölçüsünde ----------
+// BSL başlığında 5'in adı kendi renginde; şablonun iki şeridine sezon ve İngilizce satır yazılır
+const BSL_5 = { altin: ['ALTIN', '#fdd702', '1ST TEAM'], gumus: ['GÜMÜŞ', '#8491a2', '2ND TEAM'], bronz: ['BRONZ', '#ce7f31', '3RD TEAM'],
+  mansiyon: ['MANSİYON', '#5de1e6', 'HONORABLE MENTIONS'] };
+function parcaliBaslik(g, parcalar, cx, y, { yazi, boy, gen, cizgi }) {
+  const metin = parcalar.map(p => p[0]).join('');
+  let { px, w } = olcu(g, metin, yazi, boy);
+  const sx = Math.min(1, gen / w);
+  g.save();
+  g.translate(cx, y); g.scale(sx, 1);
+  g.font = yazi.replace('PX', px); g.letterSpacing = '0px'; g.textBaseline = 'alphabetic'; g.textAlign = 'left';
+  let x = -w / 2;
+  for (const [t, renk] of parcalar) {
+    g.lineWidth = cizgi / sx; g.strokeStyle = '#fff'; g.lineJoin = 'round'; g.strokeText(t, x, 0);
+    g.fillStyle = renk; g.fillText(t, x, 0);
+    x += g.measureText(t).width;
+  }
+  g.restore();
+}
 const KARTLAR = [[82, 271, 64, 467, 235, 454], [294, 271, 276, 467, 447, 454], [506, 271, 488, 467, 659, 454],
   [188, 566, 170, 762, 341, 749], [400, 566, 382, 762, 553, 749]];
-export async function besli({ tur, hafta, oyuncular }) {
-  const [z] = await Promise.all([resim(sablon('besli.webp')), yaziTipleri()]);
+export async function besli({ lig = 'tbl', tur, hafta, oyuncular }) {
+  const RENK = RENKLER[lig];
+  const [z] = await Promise.all([resim(sablon(lig, 'besli.webp')), yaziTipleri()]);
   const [c, g] = tuval(z, G / 720);
   const BS = '800 PXpx "Big Shoulders Display"';
+  if (lig === 'bsl') {
+    const [ad, renk, ing] = BSL_5[tur];
+    seritYazisi(g, '2026-2027 TÜRKİYE SİGORTA BSL', 359, 106, 400, 12.5);
+    parcaliBaslik(g, [[`${hafta}. HAFTANIN `, RENK], [ad, renk], [" 5'İ", RENK]], 359, 176, { yazi: BS, boy: 47, gen: 427, cizgi: 4 });
+    seritYazisi(g, `${ing} OF THE ${sira(hafta)} WEEK`, 359, 198, 400, 11.5);
+    await besliKartlar(g, oyuncular);
+    return blob(c);
+  }
   const [baslik, ing] = {
     yerli: [`${hafta}. HAFTANIN YERLİ 5'İ`, `DOMESTIC TEAM OF THE ${sira(hafta)} WEEK`],
     yabanci: [`${hafta}. HAFTANIN YABANCI 5'İ`, `FOREIGNER TEAM OF THE ${sira(hafta)} WEEK`],
@@ -252,6 +285,10 @@ export async function besli({ tur, hafta, oyuncular }) {
   }[tur];
   yaz(g, baslik, 360, 177, { yazi: BS, boy: 50, gen: 432, renk: RENK, sikistir: true });
   seritYazisi(g, ing, 360, 197.5, 400, 11.5);
+  await besliKartlar(g, oyuncular);
+  return blob(c);
+}
+async function besliKartlar(g, oyuncular) {
   const resimler = await Promise.all(oyuncular.map(o => Promise.all([resim(o.foto), resim(o.logo)])));
   oyuncular.slice(0, 5).forEach((o, i) => {
     const [bx, by, sx1, sy1, sx2, sy2] = KARTLAR[i];
@@ -274,7 +311,6 @@ export async function besli({ tur, hafta, oyuncular }) {
     satir.forEach((s, k) => yaz(g, s, 0, (k - (satir.length - 1) / 2) * 24 + 9, { yazi: '700 PXpx Farro', boy: 18, gen: 150 }));
     g.restore();
   });
-  return blob(c);
 }
 
 // Yönetici kontrolü için: logonun görsele çizilecek hali

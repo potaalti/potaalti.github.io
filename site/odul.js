@@ -80,7 +80,7 @@ function sigdir(g, im, x, y, w, h, kapla = false) {
   const iw = im.width * k, ih = im.height * k;
   g.drawImage(im, x + (w - iw) / 2, y + (h - ih) / 2, iw, ih);
 }
-// Logo beyaz zeminliyse kenardan başlayıp beyaza yakın pikselleri saydam yapar (taşkın doldurma)
+// Logo beyaz zeminliyse köşelerden başlayıp beyaza yakın pikselleri saydam yapar (taşkın doldurma)
 const seffafOnbellek = new Map();
 function beyaziSil(im) {
   if (!im) return im;
@@ -88,10 +88,9 @@ function beyaziSil(im) {
   const c = document.createElement('canvas'); c.width = im.width; c.height = im.height;
   const g = c.getContext('2d', { willReadFrequently: true }); g.drawImage(im, 0, 0);
   const W = c.width, H = c.height, img = g.getImageData(0, 0, W, H), d = img.data;
-  const beyaz = k => d[k * 4 + 3] > 0 && d[k * 4] > 228 && d[k * 4 + 1] > 228 && d[k * 4 + 2] > 228;
-  const gor = new Uint8Array(W * H), yigin = [];
-  for (let i = 0; i < W; i++) yigin.push(i, (H - 1) * W + i);
-  for (let j = 0; j < H; j++) yigin.push(j * W, j * W + W - 1);
+  // Sadece köşelerden başlanır: çerçevesi resmin kenarına değen logolarda (Ormanspor) kenardan başlamak logonun içine sızar
+  const beyaz = k => d[k * 4 + 3] > 0 && d[k * 4] > 238 && d[k * 4 + 1] > 238 && d[k * 4 + 2] > 238;
+  const gor = new Uint8Array(W * H), yigin = [0, W - 1, (H - 1) * W, H * W - 1];
   while (yigin.length) {
     const k = yigin.pop();
     if (gor[k] || !beyaz(k)) continue;
@@ -109,6 +108,37 @@ function dekupeMi(im) {
   const g = c.getContext('2d'); g.drawImage(im, 0, 0, 20, 20);
   const d = g.getImageData(0, 0, 20, 20).data;
   return d[3] < 20 && d[19 * 4 + 3] < 20;
+}
+
+// Fotoğraf kontrolü (Ödüller sayfasının uyarıları): formalı (dekupe) mi, forma rengi imzası. İmza: gövde bölgesindeki
+// (yükseklikçe %42–72, genişlikçe %30–70) saydam olmayan piksellerin ortalama rengi.
+export async function fotoBilgisi(url) {
+  const im = await resim(url);
+  if (!im) return null;
+  if (!dekupeMi(im)) return { dekupe: false };
+  const W = 40, H = Math.round(40 * im.height / im.width);
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const g = c.getContext('2d', { willReadFrequently: true }); g.drawImage(im, 0, 0, W, H);
+  const d = g.getImageData(0, 0, W, H).data;
+  const t = [0, 0, 0]; let n = 0;
+  for (let j = Math.round(H * 0.42); j < H * 0.72; j++) for (let i = Math.round(W * 0.3); i < W * 0.7; i++) {
+    const k = (j * W + i) * 4;
+    if (d[k + 3] < 200) continue;
+    t[0] += d[k]; t[1] += d[k + 1]; t[2] += d[k + 2]; n++;
+  }
+  return { dekupe: true, imza: n ? t.map(x => x / n) : null };
+}
+export const renkFarki = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+
+// Dekupe oyuncuyu başı (cx, basUst) noktasında olacak şekilde çizer. gen: TBF'nin olağan (belden yukarı) fotoğrafında resmin
+// çizileceği genişlik. Uzaktan (boydan) çekilmiş fotoğraflar, baş genişliği olağan fotoğraflardakine (resim genişliğinin
+// %30,6'sı) eşit olacak kadar yakınlaştırılır (en fazla 2,2 kat; yakın çekimler uzaklaştırılmaz).
+const OLAGAN_BAS = 0.306;
+function yerlestir(g, f, cx, basUst, gen) {
+  const k = kadraj(f);
+  const yakin = Math.min(2.2, Math.max(1, OLAGAN_BAS / (k.bas / f.width || OLAGAN_BAS)));
+  const o = gen * yakin / f.width;
+  g.drawImage(f, cx - k.orta * o, basUst - k.ust * o, f.width * o, f.height * o);
 }
 
 // ---------- Kapak ----------
@@ -145,13 +175,13 @@ export async function tekli({ tur, hafta, o, foto, logo }) {
     // Büyük fotoğraf: turkuaz kutunun içinde, baş kutunun üstünden taşar
     const kat = new OffscreenCanvas(G, Y), kg = kat.getContext('2d');
     kg.beginPath(); kg.rect(0, 70, 561, 1120); kg.clip();
-    if (dekupe) { const k = 730 / f.width; kg.drawImage(f, 272 - 365, 128 - f.height * 0.035 * k, 730, f.height * k); } else sigdir(kg, f, 0, 224, 561, 966, true);
+    if (dekupe) yerlestir(kg, f, 272, 143, 730); else sigdir(kg, f, 0, 224, 561, 966, true);
     noktala(kg, 0, 70, 561, 1120);
     g.drawImage(kat, 0, 0);
     // Önde tam boy fotoğraf (alt banttan önce kesilir)
     if (dekupe) {
       g.save(); g.beginPath(); g.rect(0, 0, G, 1530); g.clip();
-      const k = 470 / f.width; g.drawImage(f, 536 - 235, 690 - f.height * 0.035 * k, 470, f.height * k);
+      yerlestir(g, f, 536, 699, 470);
       g.restore();
     }
   }
@@ -211,7 +241,7 @@ export async function besli({ tur, hafta, oyuncular }) {
     if (f) {
       g.save();
       g.beginPath(); g.moveTo(bx, by - 40); g.lineTo(bx + 131, by - 40); g.lineTo(bx + 131, sy2 + 1); g.lineTo(bx, sy1 + 1); g.closePath(); g.clip();
-      if (dekupeMi(f)) { const w = 150, h = f.height * w / f.width; g.drawImage(f, bx + 65.5 - w / 2, by - 22 - f.height * 0.035 * w / f.width, w, h); } else sigdir(g, f, bx, by, 131, 189, true);
+      if (dekupeMi(f)) yerlestir(g, f, bx + 65.5, by - 19, 150); else sigdir(g, f, bx, by, 131, 189, true);
       g.restore();
     }
     // Logo dairesi şablonda; logo içine
@@ -228,3 +258,31 @@ export async function besli({ tur, hafta, oyuncular }) {
   });
   return blob(c);
 }
+
+// Yönetici kontrolü için: logonun görsele çizilecek hali
+export async function logoOnizleme(url) { return beyaziSil(await resim(url)); }
+
+// Fotoğraf kadrajı: dekupe oyuncunun başının üstü (ust), baş genişliği (bas), başın ortası (orta) ve boynun yeri (boyun), resmin
+// piksellerinde. Satırların opak genişliği yukarıdan izlenir: baş genişler, boyunda daralır, omuzlarda birden açılır.
+const kadrajOnbellek = new Map();
+export function kadraj(im) {
+  if (kadrajOnbellek.has(im)) return kadrajOnbellek.get(im);
+  const W = 160, H = Math.round(160 * im.height / im.width), o = im.width / W;
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const g = c.getContext('2d', { willReadFrequently: true }); g.drawImage(im, 0, 0, W, H);
+  const d = g.getImageData(0, 0, W, H).data;
+  const satir = j => { let a = -1, b = -1; for (let i = 0; i < W; i++) if (d[(j * W + i) * 4 + 3] > 128) { if (a < 0) a = i; b = i; } return a < 0 ? null : [a, b]; };
+  let ust = 0; while (ust < H && !satir(ust)) ust++;
+  let bas = 0, orta = W / 2, boyun = null, enDar = Infinity;
+  for (let j = ust; j < H; j++) {
+    const s = satir(j); if (!s) continue;
+    const w = s[1] - s[0] + 1;
+    if (boyun === null && w > bas) { bas = w; orta = (s[0] + s[1]) / 2; continue; }
+    if (w < bas * 0.92 && w < enDar) { enDar = w; boyun = j; }
+    if (boyun !== null && w > bas * 1.4) break;
+  }
+  const sonuc = { ust: ust * o, bas: bas * o, orta: orta * o, boyun: (boyun ?? ust + bas * 1.3) * o };
+  kadrajOnbellek.set(im, sonuc);
+  return sonuc;
+}
+export const resimYukle = url => resim(url);

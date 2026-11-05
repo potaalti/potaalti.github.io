@@ -366,3 +366,5 @@ table.kutu tr.takim-satir th, table.kutu tr.takim-satir td { color: var(--soluk)
 /* Haftanın ödülleri: hazırlanan görseller */
 .odul-izgara { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
 .odul-izgara .kart { margin: 0; }
+.odul-uyari { background: #fff7e0; border: 1px solid #e0a800; color: #5c4400; border-radius: 8px; padding: 10px 12px; }
+@media (prefers-color-scheme: dark) { .odul-uyari { background: #3a2f10; color: #ffe7a3; } }

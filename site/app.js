@@ -497,8 +497,10 @@ function odulListesiCoz(metin) {
 async function odulHaftasi(h) {
   const k = `hafta-${h}`;
   if (S.odul[k]) return S.odul[k];
-  const [liste, rehber, gorsel] = await Promise.all([getir(`${KAYNAK}/maclar/tbl-${h}.json`), getir(`${KAYNAK}/oyuncular.json`),
-    getir('data/tbl/gorsel.json').catch(() => ({ foto: {}, logo: {} }))]);
+  const [liste, rehber, gorsel, elle] = await Promise.all([getir(`${KAYNAK}/maclar/tbl-${h}.json`), getir(`${KAYNAK}/oyuncular.json`),
+    getir('data/tbl/gorsel.json').catch(() => ({ foto: {}, logo: {} })), getir('odul/foto/liste.json').catch(() => ({}))]);
+  // TBF fotoğrafı uygun olmayan oyuncular için yöneticinin gönderdiği fotoğraflar (odul/foto/, liste.json: { id: dosya })
+  const foto = id => elle[id] ? `odul/foto/${elle[id]}` : gorsel.foto[id] ? `data/tbl/foto/${id}${uzanti(gorsel.foto[id])}` : null;
   const kutular = await Promise.all(liste.maclar.filter(m => m.durum === 'bitti').map(m => getir(`${KAYNAK}/mac/${m.id}.json`)));
   const oy = new Map();
   for (const kutu of kutular) for (const [t, r] of [['ev', 'dep'], ['dep', 'ev']]) {
@@ -509,12 +511,16 @@ async function odulHaftasi(h) {
         sayi: 0, rib: 0, ast: 0, tc: 0, blk: 0, vp: 0, iki: [0, 0], uc: [0, 0], sa: [0, 0] };
       for (const a of ['sayi', 'rib', 'ast', 'tc', 'blk', 'vp']) e[a] += Number(o[a]) || 0;
       for (const a of ['iki', 'uc', 'sa']) e[a] = [e[a][0] + (o[a]?.[0] ?? 0), e[a][1] + (o[a]?.[1] ?? 0)];
-      e.foto = gorsel.foto[o.id] ? `data/tbl/foto/${o.id}${uzanti(gorsel.foto[o.id])}` : null;
+      e.foto = foto(o.id);
+      e.elleFoto = !!elle[o.id];
       e.logo = gorsel.logo[T.ad] ? `data/tbl/logo/${dosyaAnahtari(T.ad)}${uzanti(gorsel.logo[T.ad])}` : null;
       oy.set(o.id, e);
     }
   }
-  return (S.odul[k] = { oyuncular: [...oy.values()] });
+  // Takım arkadaşlarının fotoğrafları (forma rengi karşılaştırması için)
+  const kadro = new Map();
+  for (const [id, r] of Object.entries(rehber)) if (r.aktif !== false && foto(id)) kadro.set(r.takim, [...(kadro.get(r.takim) ?? []), { id, foto: foto(id) }]);
+  return (S.odul[k] = { oyuncular: [...oy.values()], kadro });
 }
 // Yazılan adı haftanın oyuncularında bulur: kelimeler adın kelimelerinin başı olmalı ("M. Baki Görür", "WATKINS");
 // birden çok aday kalırsa ödülün şartı (yerli/yabancı, kaybeden) ve satırdaki verimlilik puanı ayırır.
@@ -545,34 +551,48 @@ function odulKarti(lig, istenen) {
   const haftalar = [...new Set(t.maclar.filter(m => m.durum === 'bitti').map(m => m.hafta))].sort((a, b) => a - b);
   const h = haftalar.includes(Number(istenen)) ? Number(istenen) : haftalar.at(-1);
   const cipler = `<div class="secenekler">${haftalar.slice(-6).map(k => `<a class="secenek ${k === h ? 'aktif' : ''}" href="#/lig/${lig}/odul/${k}">${k}. hafta</a>`).join('')}</div>`;
-  let kayitli = '';
-  try { kayitli = localStorage.getItem(`odulListesi-${h}`) ?? ''; } catch { /* gizli pencere */ }
+  // Haftanın listesi odul/liste/<hafta>.txt'de (Claude ekler); varsa sayfa açılınca görseller kendiliğinden hazırlanır
+  if (!(`liste-${h}` in S.odul)) {
+    S.odul[`liste-${h}`] = undefined;
+    fetch(`odul/liste/${h}.txt?t=${Date.now()}`, { cache: 'no-store' }).then(r => (r.ok ? r.text() : null)).catch(() => null)
+      .then(m => { S.odul[`liste-${h}`] = m; if (m && !S.odul[`sonuc-${h}`]) odulHazirla(h, m); else ciz(); });
+  }
+  const yayinda = S.odul[`liste-${h}`];
+  let kayitli = yayinda ?? '';
+  try { kayitli = localStorage.getItem(`odulListesi-${h}`) ?? kayitli; } catch { /* gizli pencere */ }
   const sonuc = S.odul[`sonuc-${h}`];
   return `${cipler}<div class="kart"><h2 style="margin-top:0">${h}. hafta · haftanın ödülleri</h2>
+    ${yayinda === undefined ? '<p class="soluk">Liste aranıyor…</p>' : yayinda ? '' : '<p class="soluk">Bu haftanın ödül listesi henüz eklenmedi.</p>'}
+    <details ${yayinda ? '' : 'open'}><summary class="kucuk soluk">Listeyi kendin gir / değiştir</summary>
     <p class="soluk kucuk">Ödül listesini yapıştır: önce <b>MVP:</b>, <b>YERLİ MVP:</b>, <b>YABANCI MVP:</b>, <b>KAYBEDEN YERLİ MVP:</b>, <b>KAYBEDEN YABANCI MVP:</b> satırları,
       sonra çizgiyle (<b>-</b>) ayrılmış 5'li gruplar sırasıyla: Yerli 5, Yabancı 5, Mansiyon I, Mansiyon II. Soyadı ya da adın başı yeterli.</p>
     <textarea id="odul-liste" data-hafta="${h}" rows="14" style="width:100%;font:inherit;padding:8px;box-sizing:border-box">${esc(kayitli)}</textarea>
     <p style="margin:10px 0 0"><button class="secenek" data-is="odul-hazirla" data-id="${h}">🖼️ Görselleri hazırla</button>
-      ${sonuc?.gorseller?.length ? `<button class="secenek" data-is="odul-hepsi" data-id="${h}">⬇ Hepsini indir</button>` : ''}</p>
+      </p></details>
+    ${sonuc?.gorseller?.length ? `<p style="margin:10px 0 0"><button class="secenek" data-is="odul-hepsi" data-id="${h}">⬇ Hepsini indir</button></p>` : ''}
     ${sonuc?.durum ? `<p class="soluk kucuk">${esc(sonuc.durum)}</p>` : ''}
-    ${sonuc?.hatalar?.length ? `<div class="hata-kutu kucuk" style="margin-top:10px">${sonuc.hatalar.map(esc).join('<br>')}</div>` : ''}</div>
+    ${sonuc?.hatalar?.length ? `<div class="hata-kutu kucuk" style="margin-top:10px">${sonuc.hatalar.map(esc).join('<br>')}</div>` : ''}
+    ${sonuc?.uyarilar?.length ? `<div class="odul-uyari kucuk" style="margin-top:10px"><b>📷 Fotoğrafı kontrol et</b><br>${sonuc.uyarilar.map(esc).join('<br>')}
+      <br><span class="soluk">Uygun fotoğraflarını Claude'a gönder; eklenince görseller onlarla hazırlanır.</span></div>` : ''}</div>
     ${sonuc?.gorseller?.length ? `<div class="odul-izgara">${sonuc.gorseller.map((g, i) => `<div class="kart" style="padding:10px">
       <img src="${g.url}" alt="${esc(g.ad)}" style="width:100%;display:block;border-radius:8px">
       <div class="satir" style="justify-content:space-between;margin-top:8px"><b class="kucuk">${esc(g.ad)}</b>
         <span><button class="secenek" data-is="odul-paylas" data-id="${h}-${i}">📤</button><button class="secenek" data-is="odul-indir" data-id="${h}-${i}">⬇</button></span></div></div>`).join('')}</div>` : ''}`;
 }
-async function odulHazirla(h) {
-  const metin = document.getElementById('odul-liste')?.value ?? '';
-  try { localStorage.setItem(`odulListesi-${h}`, metin); } catch { /* gizli pencere */ }
+async function odulHazirla(h, yayinListesi = null) {
+  const metin = yayinListesi ?? document.getElementById('odul-liste')?.value ?? '';
+  if (yayinListesi === null) try { localStorage.setItem(`odulListesi-${h}`, metin); } catch { /* gizli pencere */ }
   const sonuc = S.odul[`sonuc-${h}`] = { durum: 'Hazırlanıyor…', hatalar: [], gorseller: [] };
   ciz();
-  const { oyuncular } = await odulHaftasi(h);
+  const { oyuncular, kadro } = await odulHaftasi(h);
+  const secilenler = new Map();
   const liste = odulListesiCoz(metin);
   const isler = [{ ad: 'Kapak', yap: () => OD.kapak({ hafta: h }) }];
   for (const { tur, sorgu } of liste.tekli) {
     const b = oyuncuBul(oyuncular, sorgu, SART[tur]);
     if (b.hata) { sonuc.hatalar.push(`${TEKLI_AD[tur]}: "${sorgu}" ${b.hata}`); continue; }
     if (SART[tur] && !SART[tur](b.o)) sonuc.hatalar.push(`${TEKLI_AD[tur]}: ${b.o.ad} şarta uymuyor (${b.o.yerli ? 'yerli' : 'yabancı'}, takımı ${b.o.kazandi ? 'kazandı' : 'kaybetti'}); yine de hazırlandı`);
+    secilenler.set(b.o.id, b.o);
     isler.push({ ad: `${TEKLI_AD[tur]} · ${b.o.ad}`, yap: () => OD.tekli({ tur, hafta: h, o: b.o, foto: b.o.foto, logo: b.o.logo }) });
   }
   liste.gruplar.forEach((grup, i) => {
@@ -581,6 +601,7 @@ async function odulHazirla(h) {
       const b = oyuncuBul(oyuncular, satir);
       if (b.hata) { sonuc.hatalar.push(`${BESLI_AD[tur]}: "${satir}" ${b.hata}`); return null; }
       // Görselde yazılan ad kullanılır (yazanın kısaltması korunur); tek kelimeyse resmi ad
+      secilenler.set(b.o.id, b.o);
       const ad = satir.replace(/[\d\s-]+$/, '').trim();
       return { ...b.o, ad: ad.split(/\s+/).length > 1 ? ad : b.o.ad };
     }).filter(Boolean);
@@ -594,8 +615,31 @@ async function odulHazirla(h) {
       sonuc.gorseller.push({ ad: is.ad, blob, url: URL.createObjectURL(blob) });
     } catch (e) { sonuc.hatalar.push(`${is.ad}: ${e.message}`); }
   }
+  sonuc.durum = 'Fotoğraflar kontrol ediliyor…';
+  ciz();
+  sonuc.uyarilar = await fotoUyarilari([...secilenler.values()], kadro);
   sonuc.durum = `${sonuc.gorseller.length} görsel hazır.`;
   ciz();
+}
+// Seçilen oyuncuların fotoğrafları: TBF'de formalı (dekupe) fotoğraf yoksa ya da forması takım arkadaşlarınınkinden belirgin
+// farklıysa (fotoğraf eski takımından olabilir) uyarı. Arkadaşların forma rengi: en çok 8 dekupe fotoğrafın ortancası.
+async function fotoUyarilari(secilenler, kadro) {
+  const uyarilar = [];
+  for (const o of secilenler) {
+    if (o.elleFoto) continue;
+    const ad = `${o.ad} (${baslik(o.takim)})`;
+    if (!o.foto) { uyarilar.push(`${ad}: TBF'de fotoğrafı yok`); continue; }
+    const b = await OD.fotoBilgisi(o.foto);
+    if (!b?.dekupe) { uyarilar.push(`${ad}: formalı fotoğrafı yok, TBF'de vesikalık var`); continue; }
+    const arkadaslar = (kadro.get(o.takim) ?? []).filter(x => x.id !== o.id).slice(0, 8);
+    const imzalar = (await Promise.all(arkadaslar.map(x => OD.fotoBilgisi(x.foto)))).filter(x => x?.dekupe && x.imza).map(x => x.imza);
+    if (imzalar.length < 3 || !b.imza) continue;
+    const orta = [0, 1, 2].map(c => imzalar.map(x => x[c]).sort((p, q) => p - q)[imzalar.length >> 1]);
+    // Takımın kendi içinde de iki farklı forma olabilir: en yakın arkadaşa göre de bakılır
+    const enYakin = Math.min(...imzalar.map(x => OD.renkFarki(x, b.imza)));
+    if (OD.renkFarki(orta, b.imza) > 85 && enYakin > 60) uyarilar.push(`${ad}: forması takım arkadaşlarınınkinden farklı görünüyor (fotoğraf eski takımından olabilir)`);
+  }
+  return uyarilar;
 }
 // Yazılan liste sayfa yeniden çizilince kaybolmasın
 document.addEventListener('input', e => {

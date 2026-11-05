@@ -10,6 +10,7 @@ herkese açık bölümü için özet dosyaları üretir:
   site/data/<lig>/takimlar.json      takımların maç başı istatistikleri, kadroları ve maçları
   site/data/<lig>/oyuncu/<id>.json   oyuncunun maç maç istatistikleri
   site/data/<lig>/takim-istatistik.json  biten maçlarda oyuncuya yazılmayan takım istatistikleri (TBF'den)
+  site/data/<lig>/seyirci.json       biten maçların seyirci sayıları (TBF'den; Cumartesi–Pazartesi güncellenir)
   site/data/youtube.json             Pota Altı YouTube kanalının son canlı yayınları ve son videoları
 
 Kaynak dosyalar internetten okunur; biten maçların kutu skorları cache/ klasöründe saklanır (bir daha indirilmez).
@@ -24,7 +25,7 @@ import sys
 import time
 import unicodedata
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 KOK = Path(__file__).resolve().parent.parent
@@ -77,6 +78,7 @@ def yaz(yol, veri):
 
 # Takım istatistikleri (takım ribaundu, takım top kaybı, takım faulü) kaynak kutu skorlarda yok: TBF'nin maç istatistiğinden
 TBF_API = "https://www.tbf.org.tr/api"
+TURKIYE = timezone(timedelta(hours=3))
 TBF_SAYFA = {"tbl": "https://www.tbf.org.tr/ligler/tbl-2026-2027/maclar", "bsl": "https://www.tbf.org.tr/ligler/bsl-2026-2027/maclar"}
 TAKIM_ALANLARI = {"hr": "offensiveRebounds", "sr": "defensiveRebounds", "rib": "totalRebounds", "tk": "turnovers", "faul": "fouls"}
 
@@ -129,6 +131,40 @@ def sayi(x):
 
 
 ALANLAR = ["sayi", "rib", "hr", "sr", "ast", "tc", "blk", "tk", "faul", "vp"]
+
+
+def tbf_getir(lig, yol):
+    req = urllib.request.Request(f"{TBF_API}{yol}", headers={"User-Agent": TARAYICI, "Accept": "application/json", "Referer": TBF_SAYFA[lig]})
+    with urllib.request.urlopen(req, timeout=30) as yanit:
+        return json.load(yanit).get("data") or {}
+
+
+def seyirci_uret(lig, maclar, en_fazla=150):
+    """Biten maçların seyirci sayısı (TBF maç başlığı, matchSpectatorCount). Federasyon sayıyı maçtan sonraki gün işlediği
+    için Cumartesi, Pazar ve Pazartesi (Türkiye saati) çalışır: sayısı olmayan maçlar ve son 3 günün maçları yeniden sorulur.
+    Dosya yoksa (ilk çalışma) gün beklemeden bütün sezon çekilir. 0 = sayı girilmemiş (ya da seyircisiz)."""
+    yol = CIKTI / lig / "seyirci.json"
+    kayit = json.loads(yol.read_text(encoding="utf-8")) if yol.exists() else {"maclar": {}}
+    simdi = datetime.now(TURKIYE)
+    if yol.exists() and simdi.weekday() not in (5, 6, 0):
+        return
+    sinir = (simdi - timedelta(days=3)).replace(tzinfo=None).isoformat()
+    eksik = [m for m in maclar if m["durum"] == "bitti"
+             and (not kayit["maclar"].get(str(m["id"])) or m["tarih"] >= sinir)][:en_fazla]
+    degisti = not yol.exists()
+    for m in eksik:
+        try:
+            sayi_ = tbf_getir(lig, f"/Match/mac-header?matchId={m['id']}").get("matchSpectatorCount")
+            time.sleep(0.2)
+        except Exception as e:  # noqa: BLE001 - TBF'ye ulaşılamazsa sonraki çalışmada devam edilir
+            print(f"{lig}: seyirci alınamadı ({m['id']}):", e)
+            break
+        if sayi_ is not None and kayit["maclar"].get(str(m["id"])) != sayi_:
+            kayit["maclar"][str(m["id"])] = sayi_
+            degisti = True
+    if degisti:
+        kayit["guncelleme"] = simdi.isoformat(timespec="seconds")
+        yaz(yol, kayit)
 
 
 def lig_uret(kaynak, lig, bilgi):
@@ -272,6 +308,7 @@ def lig_uret(kaynak, lig, bilgi):
     yaz(CIKTI / lig / "oyuncular.json", sorted(oyuncu_ozet, key=lambda o: o["ad"]))
     yaz(CIKTI / lig / "takimlar.json", {"takimlar": takim_ozet, "maclar": maclar_hepsi})
     takim_istatistik_uret(lig, maclar_hepsi)
+    seyirci_uret(lig, maclar_hepsi)
     return {"ad": LIGLER[lig], "haftalar": haftalar, "guncel": bilgi.get("guncel"), "takimSayisi": len(takimlar),
             "oyuncuSayisi": len(oyuncular), "_haftaOzet": hafta_ozet}
 

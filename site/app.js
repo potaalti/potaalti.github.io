@@ -7,13 +7,14 @@ import {
 } from './ortak.js';
 import * as Yayin from './yayin.js';
 import * as AE from './fantezi/artieksi.js';
+import * as SY from './seyirci.js';
 
 const YEREL = ['localhost', '127.0.0.1'].includes(location.hostname);
 const LIGLER = { tbl: { kisa: 'TBL', ad: 'Türkiye Basketbol Ligi' }, bsl: { kisa: 'BSL', ad: 'Basketbol Süper Ligi' } };
 
 const S = {
   meta: null, index: null, hata: null,
-  tablo: {}, liderler: {}, takimIst: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, artieksi: {}, // lig -> veri (oyuncu: lig -> id -> detay)
+  tablo: {}, liderler: {}, takimIst: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, artieksi: {}, seyirci: {}, // lig -> veri (oyuncu: lig -> id -> detay)
   maclar: {}, // `${lig}-${hafta}` -> maç listesi
   kutular: {}, // maç id -> kutu skor (null: yok)
   ui: { ara: '', oyuncuSirala: 'vp', liderKategori: {}, anaLig: anaLigOku() },
@@ -335,7 +336,7 @@ async function yoneticiyiTani() {
 }
 
 function gorunumLig(lig, sekme, donem) {
-  const sekmeListesi = yoneticiMi() ? [...SEKMELER, ['artieksi', '+/-']] : SEKMELER;
+  const sekmeListesi = yoneticiMi() ? [...SEKMELER, ['artieksi', '+/-'], ['seyirci', 'Seyirci']] : SEKMELER;
   const sekmeler = `<div class="secenekler">${sekmeListesi.map(([s, ad]) => `<a class="secenek ${s === sekme ? 'aktif' : ''}" href="#/lig/${lig}/${s}">${ad}</a>`).join('')}</div>`;
   const baslikHtml = `<div class="sayfa-baslik"><h1>${LIGLER[lig].ad}</h1><p class="soluk kucuk" style="margin:0 0 12px">2026-27 sezonu · ${LIGLER[lig].kisa}</p></div>`;
   let icerik;
@@ -344,6 +345,7 @@ function gorunumLig(lig, sekme, donem) {
     case 'takimlar': icerik = takimlarKarti(lig); break;
     case 'oyuncular': icerik = oyuncularKarti(lig); break;
     case 'artieksi': icerik = yoneticiMi() ? artieksiKarti(lig, donem) : '<p class="bos">Bu sekme yöneticiler içindir.</p>'; break;
+    case 'seyirci': icerik = yoneticiMi() ? seyirciKarti(lig, donem) : '<p class="bos">Bu sekme yöneticiler içindir.</p>'; break;
     default: icerik = tabloKarti(lig);
   }
   return `<div class="dar">${baslikHtml}${sekmeler}${icerik}${altBilgi()}</div>`;
@@ -380,6 +382,76 @@ async function artieksiGorseliniPaylas(anahtar, indir) {
   const satirlar = artieksiListesi(S.artieksi[lig], donem === 'sezon' ? 'sezon' : Number(donem)).map(AE.gorselSatiri);
   const blob = await AE.artieksiGorseli({ ...AE.gorselBasligi(lig, donem), satirlar });
   const dosya = new File([blob], `pota-alti-arti-eksi-${anahtar}.png`, { type: 'image/png' });
+  if (!indir && navigator.canShare?.({ files: [dosya] })) {
+    try { await navigator.share({ files: [dosya] }); return; } catch (e) { if (e?.name === 'AbortError') return; }
+  }
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(dosya);
+  a.download = dosya.name;
+  document.body.append(a);
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+}
+
+// Seyirci sayıları (yönetici): TBF'nin işlediği sayılar (veri/uret.py Cumartesi–Pazartesi çeker). Her hafta ayrı, en sonda
+// iç saha ortalamaları; sayısı girilmemiş (0) maçlar ortalamaya katılmaz. Paylaş/İndir yayın şablonundaki görseli verir.
+function seyirciVerisi(lig) {
+  yukle(S.seyirci, lig, `data/${lig}/seyirci.json`, { bosDeger: { maclar: {} } });
+  const t = ligVerisi(lig, 'takimlar');
+  const d = S.seyirci[lig];
+  if (!t || !d) return null;
+  const ad = new Map(t.takimlar.map(x => [x.id, x.ad]));
+  const maclar = t.maclar.filter(m => m.durum === 'bitti' && String(m.id) in d.maclar)
+    .map(m => ({ ...m, evAd: ad.get(m.ev) ?? m.ev, depAd: ad.get(m.dep) ?? m.dep, seyirci: d.maclar[m.id] || 0 }));
+  const haftalar = [...new Set(maclar.map(m => m.hafta))].sort((a, b) => a - b);
+  return { maclar, haftalar, ad };
+}
+const seyirciHaftasi = (v, h) => v.maclar.filter(m => m.hafta === h).sort((a, b) => b.seyirci - a.seyirci);
+function seyirciOrtalamasi(v) {
+  const t = new Map();
+  for (const m of v.maclar) {
+    if (!m.seyirci) continue;
+    const k = t.get(m.ev) ?? { id: m.ev, ad: m.evAd, mac: 0, toplam: 0 };
+    k.mac++; k.toplam += m.seyirci;
+    t.set(m.ev, k);
+  }
+  return [...t.values()].map(k => ({ ...k, ort: Math.round(k.toplam / k.mac * 10) / 10 })).sort((a, b) => b.ort - a.ort || b.toplam - a.toplam);
+}
+const binlik = n => Number(n).toLocaleString('tr-TR', { maximumFractionDigits: 1 });
+function seyirciKarti(lig, istenen) {
+  const v = seyirciVerisi(lig);
+  if (!v) return '<p class="bos">Yükleniyor…</p>';
+  if (!v.haftalar.length) return '<p class="bos">Henüz seyirci sayısı yok.</p>';
+  const donem = istenen === 'ortalama' ? 'ortalama' : v.haftalar.includes(Number(istenen)) ? Number(istenen) : v.haftalar.at(-1);
+  const cipler = `<div class="secenekler">${[...v.haftalar, 'ortalama'].map(k =>
+    `<a class="secenek ${k === donem ? 'aktif' : ''}" href="#/lig/${lig}/seyirci/${k}">${k === 'ortalama' ? 'Ortalama' : `${k}. hafta`}</a>`).join('')}</div>`;
+  const dugmeler = `<span class="satir"><button class="secenek" data-is="sy-paylas" data-id="${lig}-${donem}">📤 Paylaş</button><button class="secenek" data-is="sy-indir" data-id="${lig}-${donem}">⬇ İndir</button></span>`;
+  if (donem === 'ortalama') {
+    const liste = seyirciOrtalamasi(v);
+    const satirlar = liste.map((k, i) => `<tr><td class="sayi"><span class="f-sira ${i < 3 ? `s${i + 1}` : ''}">${i + 1}</span></td><td><b>${esc(baslik(k.ad))}</b></td>
+      <td class="sayi">${k.mac}</td><td class="sayi">${binlik(k.toplam)}</td><td class="sayi"><b>${binlik(k.ort)}</b></td></tr>`).join('');
+    return `${cipler}<div class="kart"><div class="baslik-satir"><h2>İlk ${v.haftalar.at(-1)} hafta · seyirci ortalamaları</h2>${dugmeler}</div>
+      <div class="tablo-kap"><table><thead><tr><th class="sayi">#</th><th>Takım</th><th class="sayi">İç saha</th><th class="sayi">Toplam</th><th class="sayi">Ortalama</th></tr></thead>
+      <tbody>${satirlar}</tbody></table></div>
+      <p class="soluk kucuk" style="margin-bottom:0">Sadece yöneticiler görür. Seyirci sayısı girilmemiş maçlar ortalamaya katılmaz.</p></div>`;
+  }
+  const liste = seyirciHaftasi(v, donem);
+  const dolu = liste.filter(m => m.seyirci);
+  const toplam = dolu.reduce((t, m) => t + m.seyirci, 0);
+  const satirlar = liste.map(m => `<div class="f-satir">
+      <div class="ad"><strong>${esc(baslik(m.evAd))} <span class="soluk">${m.evSkor ?? ''}-${m.depSkor ?? ''}</span> ${esc(baslik(m.depAd))}</strong><small>${gunBasligi(m.tarih)}</small></div>
+      <div class="f-sayi"><strong>${m.seyirci ? binlik(m.seyirci) : '–'}</strong><small>seyirci</small></div></div>`).join('');
+  return `${cipler}<div class="kart"><div class="baslik-satir"><h2>${donem}. hafta · seyirci sayıları</h2>${dugmeler}</div>${satirlar}
+    <p class="soluk kucuk" style="margin-bottom:0">Toplam ${binlik(toplam)} · maç başı ${dolu.length ? binlik(Math.round(toplam / dolu.length)) : '–'}.
+    Sayılar TBF'nin sitesinden; federasyon maçtan sonraki gün işliyor, Cumartesi–Pazartesi güncellenir. Sadece yöneticiler görür.</p></div>`;
+}
+async function seyirciGorseliniPaylas(anahtar, indir) {
+  const [lig, donem] = anahtar.split('-');
+  const v = seyirciVerisi(lig);
+  const blob = donem === 'ortalama'
+    ? await SY.ortalamaGorseli({ lig, hafta: v.haftalar.at(-1), takimlar: seyirciOrtalamasi(v) })
+    : await SY.haftaGorseli({ lig, hafta: Number(donem), maclar: seyirciHaftasi(v, Number(donem)).map(m => ({ ...m, ev: m.evAd, dep: m.depAd })) });
+  const dosya = new File([blob], `pota-alti-seyirci-${anahtar}.png`, { type: 'image/png' });
   if (!indir && navigator.canShare?.({ files: [dosya] })) {
     try { await navigator.share({ files: [dosya] }); return; } catch (e) { if (e?.name === 'AbortError') return; }
   }
@@ -603,6 +675,13 @@ document.addEventListener('click', e => {
     el.disabled = true;
     el.textContent = '…';
     artieksiGorseliniPaylas(el.dataset.id, el.dataset.is === 'ae-indir').catch(e => alert(`Görsel hazırlanamadı: ${e.message}`))
+      .finally(() => { el.disabled = false; el.textContent = yazi; });
+  }
+  if (el.dataset.is === 'sy-paylas' || el.dataset.is === 'sy-indir') {
+    const yazi = el.textContent;
+    el.disabled = true;
+    el.textContent = '…';
+    seyirciGorseliniPaylas(el.dataset.id, el.dataset.is === 'sy-indir').catch(e => alert(`Görsel hazırlanamadı: ${e.message}`))
       .finally(() => { el.disabled = false; el.textContent = yazi; });
   }
   if (el.dataset.is === 'ana-lig') {

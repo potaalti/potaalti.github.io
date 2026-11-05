@@ -8,10 +8,10 @@ const VURGU = { tbl: '#2fe0ea', bsl: '#a46cff' };
 
 // Haftalık: 8 maç satırı (üst kenarları), takım adları iki satıra kadar, skor beyaz şeritte, sayı sağdaki kutuda
 const HAFTA = { satirlar: [610, 764, 920, 1075, 1233, 1392, 1550, 1707], ev: 290, dep: 985, adGen: 340, tekSatir: 290, skor: 628, sayi: 1396,
-  baslik: { x: 822, y: 284, boy: 92 } };
+  baslik: { x: 811, y: 268, boy: 74 } };
 // Ortalama: 17 satır (BSL şablonunda 16)
 const ORT = { satirlar: [613, 679, 745, 811, 877, 943, 1009, 1075, 1142, 1210, 1279, 1347, 1414, 1482, 1550, 1618, 1688],
-  sira: 165, takim: 262, takimGen: 528, mac: 896, toplam: 1133, ort: 1410, baslik: { x: 808, y: 284, boy: 92 } };
+  sira: 165, takim: 262, takimGen: 528, mac: 896, toplam: 1133, ort: 1410, baslik: { x: 811, y: 270, boy: 74 } };
 
 // Yazı tipi dosyaları stil dosyası yüklendikten sonra tanınır; ondan önce fonts.load boş döner
 let yaziHazir;
@@ -87,7 +87,7 @@ function baslik(g, metin, { x, y, boy }) {
     if (h !== 'İ') return;
     const sol = -w / 2 + g.measureText(duz.slice(0, i)).width, gen = g.measureText('I').width;
     g.beginPath();
-    g.ellipse(sol + gen * 0.62, -boy - px * 0.13, px * 0.085, px * 0.07, -0.3, 0, Math.PI * 2);
+    g.ellipse(sol + gen * 0.98, -boy - px * 0.12, px * 0.085, px * 0.07, -0.3, 0, Math.PI * 2);
     g.fill();
   });
   g.restore();

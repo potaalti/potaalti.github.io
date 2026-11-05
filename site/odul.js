@@ -145,7 +145,7 @@ export async function tekli({ tur, hafta, o, foto, logo }) {
     // Büyük fotoğraf: turkuaz kutunun içinde, baş kutunun üstünden taşar
     const kat = new OffscreenCanvas(G, Y), kg = kat.getContext('2d');
     kg.beginPath(); kg.rect(0, 70, 561, 1120); kg.clip();
-    if (dekupe) { const k = 860 / f.width; kg.drawImage(f, 270 - 430, 115 - f.height * 0.035 * k, 860, f.height * k); } else sigdir(kg, f, 0, 224, 561, 966, true);
+    if (dekupe) { const k = 730 / f.width; kg.drawImage(f, 272 - 365, 128 - f.height * 0.035 * k, 730, f.height * k); } else sigdir(kg, f, 0, 224, 561, 966, true);
     noktala(kg, 0, 70, 561, 1120);
     g.drawImage(kat, 0, 0);
     // Önde tam boy fotoğraf (alt banttan önce kesilir)
@@ -155,7 +155,7 @@ export async function tekli({ tur, hafta, o, foto, logo }) {
       g.restore();
     }
   }
-  if (l) sigdir(g, beyaziSil(l), 20, 1330, 150, 190);
+  if (l) sigdir(g, beyaziSil(l), 12, 1318, 180, 200);
   // Başlık
   const BS = '800 PXpx "Big Shoulders Display"';
   const TB = {

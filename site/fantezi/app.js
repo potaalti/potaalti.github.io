@@ -3277,7 +3277,9 @@ async function basla() {
     S.bslHareketleri = bslHareketleri;
     S.index = index;
     const haric = new Set(LIG.haricOyuncular ?? []);
-    S.rehber = new Map(rehber.map(o => [o.id, haric.has(o.id) ? { ...o, aktif: false, haric: true } : o]));
+    // Kulübün veda ettiği ama TBF'de lisansı henüz düşmeyen oyuncular ayrılmış sayılır (zorunlu/otomatik değişiklik çalışsın)
+    const veda = new Set(LIG.vedaEdenler ?? []);
+    S.rehber = new Map(rehber.map(o => [o.id, haric.has(o.id) ? { ...o, aktif: false, haric: true } : veda.has(o.id) ? { ...o, aktif: false } : o]));
     // Bu ve sıradaki haftanın maçları: başlamış ama bizim verimizde bitmemiş maç varsa TBL'nin canlı verisi okunur
     Promise.all([index.guncelHafta, index.guncelHafta + 1].map(n => VERI.maclar(n)
       .then(m => { S.maclar[n] = m; }).catch(() => {}))).then(() => { ciz(); canliYenile(); });

@@ -688,8 +688,8 @@ function odulKarti(lig, istenen) {
   const paylasVar = !!navigator.canShare;
   const satirlar = g.map((x, i) => `<div class="f-satir odul-satir">
       <button class="odul-onizleme" data-is="odul-ac" data-id="${i}" aria-label="${esc(x.baslik)} büyük göster"><img src="${galeriAdresi(h, x)}" alt="" loading="lazy"></button>
-      <div class="ad" data-is="odul-ac" data-id="${i}"><strong>${esc(x.oyuncu ?? x.baslik)}</strong>
-        <small>${esc(x.tur === 'besli' ? (x.oyuncular ?? []).join(', ') : x.tur === 'kapak' ? 'Kapak' : `${x.baslik} · ${baslik(x.takim ?? '')}`)}</small></div>
+      <div class="ad" data-is="odul-ac" data-id="${i}"><strong>${esc(x.baslik)}</strong>
+        <small>${esc(x.tur === 'besli' ? (x.oyuncular ?? []).join(', ') : x.tur === 'kapak' ? 'Kapak' : `${x.oyuncu} · ${baslik(x.takim ?? '')}`)}</small></div>
       ${x.vp != null ? `<div class="f-sayi"><strong>${x.vp}</strong><small>VP</small></div>` : ''}
       <span class="satir odul-dugmeler">${paylasVar ? `<button class="secenek" data-is="odul-paylas" data-id="${h}-${i}" aria-label="Paylaş">📤</button>` : ''}<button class="secenek" data-is="odul-indir" data-id="${h}-${i}" aria-label="İndir">⬇</button></span></div>`).join('');
   const acik = S.ui.odulAcik;

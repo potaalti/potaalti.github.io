@@ -347,7 +347,8 @@ function gorunumLig(lig, sekme, donem) {
     case 'oyuncular': icerik = oyuncularKarti(lig); break;
     case 'artieksi': icerik = yoneticiMi() ? artieksiKarti(lig, donem) : '<p class="bos">Bu sekme yöneticiler içindir.</p>'; break;
     case 'seyirci': icerik = yoneticiMi() ? seyirciKarti(lig, donem) : '<p class="bos">Bu sekme yöneticiler içindir.</p>'; break;
-    case 'odul': icerik = yoneticiMi() && lig === 'tbl' ? odulKarti(lig, donem) : '<p class="bos">Bu sekme yöneticiler içindir.</p>'; break;
+    case 'odul': icerik = !(yoneticiMi() && lig === 'tbl') ? '<p class="bos">Bu sekme yöneticiler içindir.</p>'
+      : new URLSearchParams(location.search).has('uret') ? odulUretici(lig, donem) : odulKarti(lig, donem); break;
     default: icerik = tabloKarti(lig);
   }
   return `<div class="dar">${baslikHtml}${sekmeler}${icerik}${altBilgi()}</div>`;
@@ -545,7 +546,8 @@ function oyuncuBul(oyuncular, sorgu, sart) {
 }
 const SART = { yerli: o => o.yerli, yabanci: o => !o.yerli, kaybedenYerli: o => o.yerli && !o.kazandi, kaybedenYabanci: o => !o.yerli && !o.kazandi };
 
-function odulKarti(lig, istenen) {
+// Görselleri üreten eski sayfa: sadece ?uret ile açılır (Claude'un yayın betiği kullanır)
+function odulUretici(lig, istenen) {
   const t = ligVerisi(lig, 'takimlar');
   if (!t) return '<p class="bos">Yükleniyor…</p>';
   const haftalar = [...new Set(t.maclar.filter(m => m.durum === 'bitti').map(m => m.hafta))].sort((a, b) => a - b);
@@ -575,7 +577,7 @@ function odulKarti(lig, istenen) {
     ${sonuc?.uyarilar?.length ? `<div class="odul-uyari kucuk" style="margin-top:10px"><b>📷 Fotoğrafı kontrol et</b><br>${sonuc.uyarilar.map(esc).join('<br>')}
       <br><span class="soluk">Uygun fotoğraflarını Claude'a gönder; eklenince görseller onlarla hazırlanır.</span></div>` : ''}</div>
     ${sonuc?.gorseller?.length ? `<div class="odul-izgara">${sonuc.gorseller.map((g, i) => `<div class="kart" style="padding:10px">
-      <img src="${g.url}" alt="${esc(g.ad)}" style="width:100%;display:block;border-radius:8px">
+      <img src="${g.url}" alt="${esc(g.ad)}" data-bilgi="${esc(JSON.stringify(g.bilgi ?? {}))}" style="width:100%;display:block;border-radius:8px">
       <div class="satir" style="justify-content:space-between;margin-top:8px"><b class="kucuk">${esc(g.ad)}</b>
         <span><button class="secenek" data-is="odul-paylas" data-id="${h}-${i}">📤</button><button class="secenek" data-is="odul-indir" data-id="${h}-${i}">⬇</button></span></div></div>`).join('')}</div>` : ''}`;
 }
@@ -587,13 +589,13 @@ async function odulHazirla(h, yayinListesi = null) {
   const { oyuncular, kadro } = await odulHaftasi(h);
   const secilenler = new Map();
   const liste = odulListesiCoz(metin);
-  const isler = [{ ad: 'Kapak', yap: () => OD.kapak({ hafta: h }) }];
+  const isler = [{ ad: 'Kapak', bilgi: { tur: 'kapak', baslik: `${h}. Haftanın Panoraması` }, yap: () => OD.kapak({ hafta: h }) }];
   for (const { tur, sorgu } of liste.tekli) {
     const b = oyuncuBul(oyuncular, sorgu, SART[tur]);
     if (b.hata) { sonuc.hatalar.push(`${TEKLI_AD[tur]}: "${sorgu}" ${b.hata}`); continue; }
     if (SART[tur] && !SART[tur](b.o)) sonuc.hatalar.push(`${TEKLI_AD[tur]}: ${b.o.ad} şarta uymuyor (${b.o.yerli ? 'yerli' : 'yabancı'}, takımı ${b.o.kazandi ? 'kazandı' : 'kaybetti'}); yine de hazırlandı`);
     secilenler.set(b.o.id, b.o);
-    isler.push({ ad: `${TEKLI_AD[tur]} · ${b.o.ad}`, yap: () => OD.tekli({ tur, hafta: h, o: b.o, foto: b.o.foto, logo: b.o.logo }) });
+    isler.push({ ad: `${TEKLI_AD[tur]} · ${b.o.ad}`, bilgi: { tur, baslik: TEKLI_AD[tur], oyuncu: b.o.ad, takim: b.o.takim }, yap: () => OD.tekli({ tur, hafta: h, o: b.o, foto: b.o.foto, logo: b.o.logo }) });
   }
   liste.gruplar.forEach((grup, i) => {
     const tur = BESLI[i];
@@ -605,14 +607,14 @@ async function odulHazirla(h, yayinListesi = null) {
       const ad = satir.replace(/[\d\s-]+$/, '').trim();
       return { ...b.o, ad: ad.split(/\s+/).length > 1 ? ad : b.o.ad };
     }).filter(Boolean);
-    if (secilen.length) isler.push({ ad: BESLI_AD[tur], yap: () => OD.besli({ tur, hafta: h, oyuncular: secilen }) });
+    if (secilen.length) isler.push({ ad: BESLI_AD[tur], bilgi: { tur: 'besli', baslik: BESLI_AD[tur], oyuncular: secilen.map(o => o.ad) }, yap: () => OD.besli({ tur, hafta: h, oyuncular: secilen }) });
   });
   for (const is of isler) {
     sonuc.durum = `Hazırlanıyor: ${is.ad}…`;
     ciz();
     try {
       const blob = await is.yap();
-      sonuc.gorseller.push({ ad: is.ad, blob, url: URL.createObjectURL(blob) });
+      sonuc.gorseller.push({ ad: is.ad, blob, url: URL.createObjectURL(blob), bilgi: is.bilgi });
     } catch (e) { sonuc.hatalar.push(`${is.ad}: ${e.message}`); }
   }
   sonuc.durum = 'Fotoğraflar kontrol ediliyor…';
@@ -646,7 +648,7 @@ document.addEventListener('input', e => {
   if (e.target.id !== 'odul-liste') return;
   try { localStorage.setItem(`odulListesi-${e.target.dataset.hafta}`, e.target.value); } catch { /* gizli pencere */ }
 });
-async function odulGorseliniVer(anahtar, indir) {
+async function odulUreticiGorseli(anahtar, indir) {
   const [h, i] = anahtar.split('-').map(Number);
   const g = S.odul[`sonuc-${h}`]?.gorseller?.[i];
   if (!g) return;
@@ -661,6 +663,109 @@ async function odulGorseliniVer(anahtar, indir) {
   a.click();
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
 }
+
+// Haftanın ödülleri galerisi (yönetici, TBL → Ödüller): Claude'un hazırlayıp yayınladığı görseller (odul/gorsel/<hafta>/,
+// liste odul/gorsel/<hafta>.json; yayınlanan haftalar odul/gorsel/index.json). Görsele dokununca büyük görünüm açılır.
+const TUR_ROZET = { kapak: 'Kapak', mvp: 'MVP', yerli: 'Yerli MVP', yabanci: 'Yabancı MVP', kaybedenYerli: 'Kaybeden Yerli MVP',
+  kaybedenYabanci: 'Kaybeden Yabancı MVP', besli: '5\'li' };
+function odulVerisi(h) {
+  yukle(S.odul, 'index', 'odul/gorsel/index.json', { bosDeger: { haftalar: [] } });
+  if (h != null) yukle(S.odul, `galeri-${h}`, `odul/gorsel/${h}.json`, { bosDeger: { gorseller: [] } });
+}
+const galeriAdresi = (h, g) => `odul/gorsel/${h}/${g.dosya}`;
+function odulKarti(lig, istenen) {
+  odulVerisi(null);
+  const idx = S.odul.index;
+  if (!idx) return '<p class="bos">Yükleniyor…</p>';
+  const haftalar = [...idx.haftalar].sort((a, b) => a - b);
+  if (!haftalar.length) return '<div class="kart"><p class="bos" style="margin:0">Henüz yayınlanmış ödül görseli yok.</p></div>';
+  const h = haftalar.includes(Number(istenen)) ? Number(istenen) : haftalar.at(-1);
+  odulVerisi(h);
+  const v = S.odul[`galeri-${h}`];
+  const cipler = haftalar.length > 1 ? `<div class="secenekler">${haftalar.map(k => `<a class="secenek ${k === h ? 'aktif' : ''}" href="#/lig/${lig}/odul/${k}">${k}. hafta</a>`).join('')}</div>` : '';
+  if (!v) return `${cipler}<p class="bos">Yükleniyor…</p>`;
+  const g = v.gorseller;
+  const paylasVar = !!navigator.canShare;
+  const kartlar = g.map((x, i) => `<button class="odul-kart ${x.tur === 'kapak' ? 'kapak' : ''}" data-is="odul-ac" data-id="${i}" aria-label="${esc(x.baslik)} büyük göster">
+      <img src="${galeriAdresi(h, x)}" alt="${esc(x.baslik)}" loading="lazy">
+      <span class="odul-alt"><span class="odul-rozet">${esc(TUR_ROZET[x.tur] ?? x.baslik)}</span>
+        <b>${esc(x.tur === 'besli' ? x.baslik : x.oyuncu ?? x.baslik)}</b>
+        ${x.tur === 'besli' ? `<small>${esc((x.oyuncular ?? []).join(', '))}</small>` : x.takim ? `<small>${esc(baslik(x.takim))}</small>` : ''}</span>
+    </button>`).join('');
+  const acik = S.ui.odulAcik;
+  const buyuk = acik != null && g[acik] ? odulBuyuk(h, g, acik) : '';
+  return `${cipler}<div class="odul-ust">
+      <div><div class="odul-ust-kucuk">TÜRKİYE SİGORTA TBL · 2026-27</div><h2>${h}. Haftanın Panoraması</h2>
+        <p class="soluk kucuk" style="margin:0">${g.length} görsel · dokununca büyür, oradan indir ya da paylaş</p></div>
+      <div class="odul-ust-dugmeler">
+        ${paylasVar ? `<button class="btn ana" data-is="odul-hepsi-paylas" data-id="${h}">📤 Hepsini paylaş</button>` : ''}
+        <button class="btn ${paylasVar ? '' : 'ana'}" data-is="odul-hepsi-indir" data-id="${h}">⬇ Hepsini indir</button></div>
+    </div>
+    <div class="odul-galeri">${kartlar}</div>${buyuk}`;
+}
+function odulBuyuk(h, g, i) {
+  const x = g[i];
+  return `<div class="odul-perde" data-is="odul-kapat" data-id="perde">
+    <div class="odul-buyuk" role="dialog" aria-label="${esc(x.baslik)}">
+      <img src="${galeriAdresi(h, x)}" alt="${esc(x.baslik)}">
+      <button class="odul-ok sol" data-is="odul-ac" data-id="${(i - 1 + g.length) % g.length}" aria-label="Önceki">‹</button>
+      <button class="odul-ok sag" data-is="odul-ac" data-id="${(i + 1) % g.length}" aria-label="Sonraki">›</button>
+      <div class="odul-buyuk-alt"><div><b>${esc(x.oyuncu ? `${x.baslik} · ${x.oyuncu}` : x.baslik)}</b><small>${i + 1} / ${g.length}</small></div>
+        <span>${navigator.canShare ? `<button class="btn" data-is="odul-paylas" data-id="${h}-${i}">📤 Paylaş</button>` : ''}
+        <button class="btn ana" data-is="odul-indir" data-id="${h}-${i}">⬇ İndir</button>
+        <button class="btn" data-is="odul-kapat" data-id="x" aria-label="Kapat">✕</button></span></div>
+    </div></div>`;
+}
+async function odulDosyasi(h, i) {
+  const x = S.odul[`galeri-${h}`].gorseller[i];
+  const blob = await (await fetch(galeriAdresi(h, x))).blob();
+  return new File([blob], `pota-alti-${h}-hafta-${x.dosya}`, { type: blob.type || 'image/jpeg' });
+}
+function dosyaIndir(dosya) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(dosya);
+  a.download = dosya.name;
+  document.body.append(a);
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+}
+async function odulGorseliniVer(anahtar, indir) {
+  const [h, i] = anahtar.split('-').map(Number);
+  const dosya = await odulDosyasi(h, i);
+  if (!indir && navigator.canShare?.({ files: [dosya] })) {
+    try { await navigator.share({ files: [dosya] }); return; } catch (e) { if (e?.name === 'AbortError') return; }
+  }
+  dosyaIndir(dosya);
+}
+async function odulHepsi(h, paylas) {
+  const n = S.odul[`galeri-${h}`]?.gorseller?.length ?? 0;
+  const dosyalar = await Promise.all([...Array(n).keys()].map(i => odulDosyasi(h, i)));
+  if (paylas && navigator.canShare?.({ files: dosyalar })) {
+    try { await navigator.share({ files: dosyalar }); return; } catch (e) { if (e?.name === 'AbortError') return; }
+  }
+  dosyalar.forEach((d, i) => setTimeout(() => dosyaIndir(d), i * 400));
+}
+// Büyük görünüm: klavyede ← → Esc, telefonda sağa-sola kaydırma
+document.addEventListener('keydown', e => {
+  if (S.ui.odulAcik == null) return;
+  const n = document.querySelectorAll('.odul-kart').length;
+  if (e.key === 'Escape') S.ui.odulAcik = null;
+  else if (e.key === 'ArrowLeft') S.ui.odulAcik = (S.ui.odulAcik - 1 + n) % n;
+  else if (e.key === 'ArrowRight') S.ui.odulAcik = (S.ui.odulAcik + 1) % n;
+  else return;
+  ciz();
+});
+let odulDokunma = null;
+document.addEventListener('touchstart', e => { if (e.target.closest('.odul-buyuk')) odulDokunma = e.touches[0].clientX; }, { passive: true });
+document.addEventListener('touchend', e => {
+  if (odulDokunma == null || S.ui.odulAcik == null) return;
+  const fark = e.changedTouches[0].clientX - odulDokunma;
+  odulDokunma = null;
+  if (Math.abs(fark) < 50) return;
+  const n = document.querySelectorAll('.odul-kart').length;
+  S.ui.odulAcik = (S.ui.odulAcik + (fark < 0 ? 1 : -1) + n) % n;
+  ciz();
+});
 
 // Puan tablosu canlı: veri/uret.py tabloyu saatte bir üretir; ondan sonra biten maçlar (bu ve sıradaki haftanın listesi, maç
 // saatlerinde dakikada bir yenilenir) burada eklenir ve sıra yeniden hesaplanır. Maçı süren takım "canlı" işaretlenir.
@@ -884,10 +989,16 @@ document.addEventListener('click', e => {
       .finally(() => { el.disabled = false; el.textContent = yazi; });
   }
   if (el.dataset.is === 'odul-hazirla') odulHazirla(Number(el.dataset.id)).catch(e => alert(`Görseller hazırlanamadı: ${e.message}`));
-  if (el.dataset.is === 'odul-paylas' || el.dataset.is === 'odul-indir') odulGorseliniVer(el.dataset.id, el.dataset.is === 'odul-indir');
+  if (el.dataset.is === 'odul-paylas' || el.dataset.is === 'odul-indir') {
+    const uretici = new URLSearchParams(location.search).has('uret');
+    (uretici ? odulUreticiGorseli : odulGorseliniVer)(el.dataset.id, el.dataset.is === 'odul-indir').catch(e => alert(`İndirilemedi: ${e.message}`));
+  }
+  if (el.dataset.is === 'odul-ac') { S.ui.odulAcik = Number(el.dataset.id); ciz(); }
+  if (el.dataset.is === 'odul-kapat' && (el.dataset.id === 'x' || e.target === el)) { S.ui.odulAcik = null; ciz(); }
+  if (el.dataset.is === 'odul-hepsi-indir' || el.dataset.is === 'odul-hepsi-paylas') odulHepsi(Number(el.dataset.id), el.dataset.is === 'odul-hepsi-paylas').catch(e => alert(`İndirilemedi: ${e.message}`));
   if (el.dataset.is === 'odul-hepsi') {
     const n = S.odul[`sonuc-${el.dataset.id}`]?.gorseller?.length ?? 0;
-    for (let i = 0; i < n; i++) setTimeout(() => odulGorseliniVer(`${el.dataset.id}-${i}`, true), i * 400);
+    for (let i = 0; i < n; i++) setTimeout(() => odulUreticiGorseli(`${el.dataset.id}-${i}`, true), i * 400);
   }
   if (el.dataset.is === 'ana-lig') {
     S.ui.anaLig = el.dataset.id;
@@ -902,7 +1013,7 @@ document.addEventListener('input', e => {
   S.ui[k] = e.target.value;
   ciz();
 });
-window.addEventListener('hashchange', () => { S.ui.kutuSirala = null; ciz(); window.scrollTo(0, 0); });
+window.addEventListener('hashchange', () => { S.ui.kutuSirala = null; S.ui.odulAcik = null; ciz(); window.scrollTo(0, 0); });
 
 // ---------- Canlı yenileme: başlamış ama bitmemiş maçı olan haftaların listesi ve açık kutu skor ----------
 async function canliYenile() {

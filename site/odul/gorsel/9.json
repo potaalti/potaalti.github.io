@@ -1,0 +1,87 @@
+{
+ "hafta": 9,
+ "guncelleme": "2026-11-05T21:13:43.126Z",
+ "gorseller": [
+  {
+   "dosya": "01-9-haftanin-panoramasi.jpg",
+   "tur": "kapak",
+   "baslik": "9. Haftanın Panoraması"
+  },
+  {
+   "dosya": "02-mvp-omer-yasir-kucuk.jpg",
+   "tur": "mvp",
+   "baslik": "MVP",
+   "oyuncu": "Ömer Yasir Küçük",
+   "takim": "KONYA BÜYÜKŞEHİR BELEDİYESİ SPOR"
+  },
+  {
+   "dosya": "03-yabanci-mvp-diante-watkins.jpg",
+   "tur": "yabanci",
+   "baslik": "Yabancı MVP",
+   "oyuncu": "Diante Watkins",
+   "takim": "OGM ORMANSPOR"
+  },
+  {
+   "dosya": "04-kaybeden-yabanci-mvp-eric-buckner.jpg",
+   "tur": "kaybedenYabanci",
+   "baslik": "Kaybeden Yabancı MVP",
+   "oyuncu": "Eric Buckner",
+   "takim": "KEÇİÖREN BELEDİYESİ BAĞLUM"
+  },
+  {
+   "dosya": "05-kaybeden-yerli-mvp-tayfun-erulku.jpg",
+   "tur": "kaybedenYerli",
+   "baslik": "Kaybeden Yerli MVP",
+   "oyuncu": "Tayfun Erülkü",
+   "takim": "FİNALSPOR"
+  },
+  {
+   "dosya": "06-yerli-5.jpg",
+   "tur": "besli",
+   "baslik": "Yerli 5",
+   "oyuncular": [
+    "Ömer Yasir Küçük",
+    "Ege Havsa",
+    "Cengizhan İvedi",
+    "Rijad Aydın",
+    "Yiğit Çoban"
+   ]
+  },
+  {
+   "dosya": "07-yabanci-5.jpg",
+   "tur": "besli",
+   "baslik": "Yabancı 5",
+   "oyuncular": [
+    "Diante Watkins",
+    "Robert Smith",
+    "Sam Sessoms",
+    "Benoit Mbala",
+    "Ike Nweke"
+   ]
+  },
+  {
+   "dosya": "08-mansiyon-5-i-i.jpg",
+   "tur": "besli",
+   "baslik": "Mansiyon 5'i – I",
+   "oyuncular": [
+    "Mike Smith",
+    "Kaan Sarıaslan",
+    "Baran Avşar",
+    "M. Baki Görür",
+    "Samet Geyik"
+   ]
+  },
+  {
+   "dosya": "09-mansiyon-5-i-ii.jpg",
+   "tur": "besli",
+   "baslik": "Mansiyon 5'i – II",
+   "oyuncular": [
+    "Umut Geçen",
+    "Tobin Carberry",
+    "Ömer Sancaklı",
+    "Berke Atar",
+    "Tolga Kaan Birer"
+   ]
+  }
+ ]
+}

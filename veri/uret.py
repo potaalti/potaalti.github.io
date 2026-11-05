@@ -5,12 +5,12 @@ herkese açık bölümü için özet dosyaları üretir:
 
   site/data/meta.json                ligler, güncel haftalar, güncelleme zamanı
   site/data/<lig>/tablo.json         takım puan tablosu (G/M, sayı averajı, son 5 maç)
-  site/data/<lig>/liderler.json      istatistik liderleri (maç başı ortalamalar, toplam +/-)
+  site/data/<lig>/liderler.json      istatistik liderleri (maç başı ortalamalar, toplam +/-; --gunluk ile, günde 2 kez)
   site/data/<lig>/oyuncular.json     bütün oyuncuların sezon ortalamaları
   site/data/<lig>/takimlar.json      takımların maç başı istatistikleri, kadroları ve maçları
   site/data/<lig>/oyuncu/<id>.json   oyuncunun maç maç istatistikleri
   site/data/<lig>/takim-istatistik.json  biten maçlarda oyuncuya yazılmayan takım istatistikleri (TBF'den)
-  site/data/<lig>/seyirci.json       biten maçların seyirci sayıları (TBF'den; --seyirci ile, Cumartesi–Pazartesi)
+  site/data/<lig>/seyirci.json       biten maçların seyirci sayıları (TBF'den; --gunluk ile, Cumartesi–Salı)
   site/data/youtube.json             Pota Altı YouTube kanalının son canlı yayınları ve son videoları
 
 Kaynak dosyalar internetten okunur; biten maçların kutu skorları cache/ klasöründe saklanır (bir daha indirilmez).
@@ -140,14 +140,14 @@ def tbf_getir(lig, yol):
 
 
 def seyirci_uret(lig, maclar, en_fazla=150):
-    """Biten maçların seyirci sayısı (TBF maç başlığı, matchSpectatorCount). Sadece --seyirci ile (telefonun günde 2 kezlik
-    tam güncellemesi) ve federasyon sayıyı maçtan sonraki gün işlediği için Cumartesi, Pazar ve Pazartesi (Türkiye saati)
+    """Biten maçların seyirci sayısı (TBF maç başlığı, matchSpectatorCount). Sadece --gunluk ile (telefonun günde 2 kezlik
+    tam güncellemesi) ve federasyon sayıyı maçtan sonraki gün işlediği için Cumartesi, Pazar, Pazartesi ve Salı (Türkiye saati)
     çalışır: sayısı olmayan maçlar ve son 3 günün maçları yeniden sorulur.
     Dosya yoksa (ilk çalışma) gün beklemeden bütün sezon çekilir. 0 = sayı girilmemiş (ya da seyircisiz)."""
     yol = CIKTI / lig / "seyirci.json"
     kayit = json.loads(yol.read_text(encoding="utf-8")) if yol.exists() else {"maclar": {}}
     simdi = datetime.now(TURKIYE)
-    if yol.exists() and simdi.weekday() not in (5, 6, 0):
+    if yol.exists() and simdi.weekday() not in (5, 6, 0, 1):
         return
     sinir = (simdi - timedelta(days=3)).replace(tzinfo=None).isoformat()
     eksik = [m for m in maclar if m["durum"] == "bitti"
@@ -168,7 +168,7 @@ def seyirci_uret(lig, maclar, en_fazla=150):
         yaz(yol, kayit)
 
 
-def lig_uret(kaynak, lig, bilgi, seyirci=False):
+def lig_uret(kaynak, lig, bilgi, gunluk=False):
     haftalar = bilgi["haftalar"]
     hafta_ozet = []  # TBL Fantezi için: haftaların ilk maç saati ve maç sayısı
     takimlar = {}  # anahtar -> kayıt
@@ -305,11 +305,13 @@ def lig_uret(kaynak, lig, bilgi, seyirci=False):
     takim_ozet.sort(key=lambda x: x["ad"])
 
     yaz(CIKTI / lig / "tablo.json", tablo)
-    yaz(CIKTI / lig / "liderler.json", liderler)
+    # Liderler günde 2 kez (telefonun tam güncellemesi, --gunluk); dosya yoksa hemen
+    if gunluk or not (CIKTI / lig / "liderler.json").exists():
+        yaz(CIKTI / lig / "liderler.json", liderler)
     yaz(CIKTI / lig / "oyuncular.json", sorted(oyuncu_ozet, key=lambda o: o["ad"]))
     yaz(CIKTI / lig / "takimlar.json", {"takimlar": takim_ozet, "maclar": maclar_hepsi})
     takim_istatistik_uret(lig, maclar_hepsi)
-    if seyirci or not (CIKTI / lig / "seyirci.json").exists():
+    if gunluk or not (CIKTI / lig / "seyirci.json").exists():
         seyirci_uret(lig, maclar_hepsi)
     return {"ad": LIGLER[lig], "haftalar": haftalar, "guncel": bilgi.get("guncel"), "takimSayisi": len(takimlar),
             "oyuncuSayisi": len(oyuncular), "_haftaOzet": hafta_ozet}
@@ -396,7 +398,7 @@ def youtube_uret():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--kaynak", default=VARSAYILAN_KAYNAK)
-    ap.add_argument("--seyirci", action="store_true", help="seyirci sayılarını da güncelle (Cumartesi–Pazartesi)")
+    ap.add_argument("--gunluk", action="store_true", help="günde 2 kezlik güncelleme: liderler ve (Cumartesi–Salı) seyirci sayıları")
     args = ap.parse_args()
     index = oku(args.kaynak, "hafta/index.json")
     meta = {"guncelleme": datetime.now(timezone.utc).isoformat(timespec="seconds"), "kaynakGuncelleme": index.get("guncelleme"), "ligler": {}}
@@ -404,7 +406,7 @@ def main():
         bilgi = (index.get("maclar") or {}).get(lig)
         if not bilgi:
             continue
-        meta["ligler"][lig] = lig_uret(args.kaynak, lig, bilgi, args.seyirci)
+        meta["ligler"][lig] = lig_uret(args.kaynak, lig, bilgi, args.gunluk)
         hafta_ozet = meta["ligler"][lig].pop("_haftaOzet")
         if lig == "tbl":
             tbl_fantezi_uret(args.kaynak, bilgi, hafta_ozet)

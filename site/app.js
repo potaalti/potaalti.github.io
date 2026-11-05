@@ -443,7 +443,7 @@ function seyirciKarti(lig, istenen) {
       <div class="f-sayi"><strong>${m.seyirci ? binlik(m.seyirci) : '–'}</strong><small>seyirci</small></div></div>`).join('');
   return `${cipler}<div class="kart"><div class="baslik-satir"><h2>${donem}. hafta · seyirci sayıları</h2>${dugmeler}</div>${satirlar}
     <p class="soluk kucuk" style="margin-bottom:0">Toplam ${binlik(toplam)} · maç başı ${dolu.length ? binlik(Math.round(toplam / dolu.length)) : '–'}.
-    Sayılar TBF'nin sitesinden; federasyon maçtan sonraki gün işliyor, Cumartesi–Pazartesi öğlen ve gece güncellenir. Sadece yöneticiler görür.</p></div>`;
+    Sayılar TBF'nin sitesinden; federasyon maçtan sonraki gün işliyor, Cumartesi–Salı öğlen ve gece güncellenir. Sadece yöneticiler görür.</p></div>`;
 }
 async function seyirciGorseliniPaylas(anahtar, indir) {
   const [lig, donem] = anahtar.split('-');

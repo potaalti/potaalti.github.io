@@ -1,10 +1,10 @@
 #!/data/data/com.termux/files/usr/bin/bash
 # Pota Altı App telefon güncellemesi (Termux). 15 dakikada bir tetiklenir (eski TBL Fantezi görevinin yanında, ayrı görev):
 #   - Her tetiklemede: BSL maç saatindeyse BSL canlı skor ve VP (bsl/veri_guncelle.py --akilli; maç yoksa internete çıkmadan kapanır)
-#   - Saat başı (o saat yapılmadıysa): TBL ve BSL puan tablosu, liderler, takım ve oyuncu istatistikleri, YouTube video ve
+#   - Saat başı (o saat yapılmadıysa): TBL ve BSL puan tablosu, takım ve oyuncu istatistikleri, YouTube video ve
 #     Shorts listesi (veri/uret.py; kaynağı eski TBL Fantezi sitesinin dosyaları)
 #   - Günde 2 kez (12:00 ve 23:00'ten sonraki ilk tetikleme): BSL verilerinin tamamı (bsl/veri_guncelle.py, TBF'den) ve
-#     Cumartesi–Pazartesi seyirci sayıları (uret.py --seyirci)
+#     istatistik liderleri ve Cumartesi–Salı seyirci sayıları (uret.py --gunluk)
 # Değişiklik varsa GitHub'a gönderir; GitHub siteyi yayınlar.
 # Elle deneme:  bash ~/pota-alti-app/telefon/guncelle.sh tam   (saat sınırı olmadan her şeyi günceller)
 # POTA_DEPO: depo klasörü (varsayılan ~/pota-alti-app), POTA_KURU=1: GitHub'a göndermeden dener
@@ -45,8 +45,8 @@ fi
     if [ $gunluk = 1 ]; then
       (cd bsl && python veri_guncelle.py) || echo "BSL verisi alınamadı (TBF)"
     fi
-    # Seyirci sayıları sadece günde 2 kezlik tam güncellemede (uret.py Cumartesi–Pazartesi dışında atlar)
-    python veri/uret.py $([ $gunluk = 1 ] && echo --seyirci) > /dev/null || echo "Puan tablosu ve liderler üretilemedi"
+    # Liderler ve seyirci sayıları sadece günde 2 kezlik tam güncellemede (seyirci Cumartesi–Salı dışında atlanır)
+    python veri/uret.py $([ $gunluk = 1 ] && echo --gunluk) > /dev/null || echo "Puan tablosu ve liderler üretilemedi"
   fi
 
   git add site/data site/bsl/data site/tbl/data

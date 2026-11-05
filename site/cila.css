@@ -362,3 +362,7 @@ table.kutu tr.takim-satir th, table.kutu tr.takim-satir td { color: var(--soluk)
   .ana-donus img { width: 26px; height: 26px; }
   .ana-donus:active { background: rgba(255, 255, 255, .3); }
 }
+
+/* Haftanın ödülleri: hazırlanan görseller */
+.odul-izgara { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.odul-izgara .kart { margin: 0; }

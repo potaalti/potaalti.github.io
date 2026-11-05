@@ -10,6 +10,7 @@ herkese açık bölümü için özet dosyaları üretir:
   site/data/<lig>/takimlar.json      takımların maç başı istatistikleri, kadroları ve maçları
   site/data/<lig>/oyuncu/<id>.json   oyuncunun maç maç istatistikleri
   site/data/<lig>/takim-istatistik.json  biten maçlarda oyuncuya yazılmayan takım istatistikleri (TBF'den)
+  site/data/tbl/gorsel.json, foto/, logo/  oyuncu fotoğrafları ve takım logoları (TBF'den; --gunluk ile, haftanın ödülleri için)
   site/data/<lig>/seyirci.json       biten maçların seyirci sayıları (TBF'den; --gunluk ile, Cumartesi–Salı)
   site/data/youtube.json             Pota Altı YouTube kanalının son canlı yayınları ve son videoları
 
@@ -24,6 +25,7 @@ import re
 import sys
 import time
 import unicodedata
+import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -165,6 +167,55 @@ def seyirci_uret(lig, maclar, en_fazla=150):
             degisti = True
     if degisti:
         kayit["guncelleme"] = simdi.isoformat(timespec="seconds")
+        yaz(yol, kayit)
+
+
+TBF_LIG = {"tbl": 22215, "bsl": 22214}
+TBF_SEZON = 174
+
+
+def tbf_resim(url, yol):
+    """TBF'nin resim sunucusu sadece tarayıcı gibi (Referer ile) istenince veriyor."""
+    url = urllib.parse.quote(url, safe=":/?&=%")
+    req = urllib.request.Request(url, headers={"User-Agent": TARAYICI, "Referer": "https://www.tbf.org.tr/", "Accept": "image/*"})
+    with urllib.request.urlopen(req, timeout=30) as yanit:
+        veri = yanit.read()
+    yol.parent.mkdir(parents=True, exist_ok=True)
+    yol.write_bytes(veri)
+
+
+def uzanti(url):
+    return Path(urllib.parse.urlparse(url).path).suffix.lower() or ".png"
+
+
+def gorsel_uret(lig):
+    """Haftanın ödülleri görselleri için oyuncu fotoğrafları ve takım logoları (TBF'den, sitenin kendi dosyalarına; TBF'nin
+    resimleri başka siteden çizilemiyor). Sadece yeni ya da adresi değişenler indirilir.
+      site/data/<lig>/gorsel.json   {"foto": {oyuncu id: TBF adresi}, "logo": {takım adı: TBF adresi}}
+      site/data/<lig>/foto/<id>.<uzantı>, site/data/<lig>/logo/<takım anahtarı>.<uzantı> (uzantı TBF adresindeki)"""
+    yol = CIKTI / lig / "gorsel.json"
+    kayit = json.loads(yol.read_text(encoding="utf-8")) if yol.exists() else {"foto": {}, "logo": {}}
+    degisti = False
+    try:
+        takimlar = tbf_getir(lig, f"/Team/get-teams-by-leauge?leaugeId={TBF_LIG[lig]}") or []
+        for t in takimlar:
+            url = t.get("teamLogoUrl")
+            if url and kayit["logo"].get(t["teamName"]) != url:
+                tbf_resim(url, CIKTI / lig / "logo" / f"{anahtar(t['teamName'])}{uzanti(url)}")
+                kayit["logo"][t["teamName"]] = url
+                degisti = True
+            kadro = tbf_getir(lig, f"/Team/get-team-active-player-list-by-season-and-league?LeagueId={TBF_LIG[lig]}"
+                                   f"&SeasonId={TBF_SEZON}&TeamProcessId={t['teamProcessId']}&prefix={lig}") or []
+            for o in kadro:
+                pid, url = str(o["personId"]), o.get("playerPhoto")
+                if url and kayit["foto"].get(pid) != url:
+                    tbf_resim(url, CIKTI / lig / "foto" / f"{pid}{uzanti(url)}")
+                    kayit["foto"][pid] = url
+                    degisti = True
+                    time.sleep(0.1)
+    except Exception as e:  # noqa: BLE001 - kalanlar sonraki çalışmada indirilir
+        print(f"{lig}: oyuncu fotoğrafları alınamadı:", e)
+    if degisti:
         yaz(yol, kayit)
 
 
@@ -313,6 +364,8 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
     takim_istatistik_uret(lig, maclar_hepsi)
     if gunluk or not (CIKTI / lig / "seyirci.json").exists():
         seyirci_uret(lig, maclar_hepsi)
+    if lig == "tbl" and (gunluk or not (CIKTI / lig / "gorsel.json").exists()):
+        gorsel_uret(lig)
     return {"ad": LIGLER[lig], "haftalar": haftalar, "guncel": bilgi.get("guncel"), "takimSayisi": len(takimlar),
             "oyuncuSayisi": len(oyuncular), "_haftaOzet": hafta_ozet}
 

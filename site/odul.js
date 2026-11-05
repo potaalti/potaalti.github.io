@@ -102,6 +102,24 @@ function beyaziSil(im) {
   seffafOnbellek.set(im, c);
   return c;
 }
+// Logo resimlerinin çevresindeki boşluk farklı: beyaz zemini silinmiş logo, saydam olmayan kısmının sınırına kırpılır
+// (böylece bütün logolar aynı kutuya aynı büyüklükte oturur)
+const logoOnbellek = new Map();
+function logoKirp(im) {
+  if (!im) return null;
+  if (logoOnbellek.has(im)) return logoOnbellek.get(im);
+  const s = beyaziSil(im), W = s.width, H = s.height;
+  const d = s.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, W, H).data;
+  let a = W, b = H, c = -1, e = -1;
+  for (let j = 0; j < H; j++) for (let i = 0; i < W; i++) if (d[(j * W + i) * 4 + 3] > 24) { if (i < a) a = i; if (i > c) c = i; if (j < b) b = j; if (j > e) e = j; }
+  let sonuc = s;
+  if (c >= a && e >= b) {
+    sonuc = document.createElement('canvas'); sonuc.width = c - a + 1; sonuc.height = e - b + 1;
+    sonuc.getContext('2d').drawImage(s, a, b, sonuc.width, sonuc.height, 0, 0, sonuc.width, sonuc.height);
+  }
+  logoOnbellek.set(im, sonuc);
+  return sonuc;
+}
 // Fotoğraf şeffaf zeminli (oyuncu dekupe) mi, yoksa vesikalık mı
 function dekupeMi(im) {
   const c = document.createElement('canvas'); c.width = 20; c.height = 20;
@@ -185,7 +203,7 @@ export async function tekli({ tur, hafta, o, foto, logo }) {
       g.restore();
     }
   }
-  if (l) sigdir(g, beyaziSil(l), 12, 1318, 180, 200);
+  if (l) sigdir(g, logoKirp(l), 16, 1322, 172, 192);
   // Başlık
   const BS = '800 PXpx "Big Shoulders Display"';
   const TB = {
@@ -247,7 +265,7 @@ export async function besli({ tur, hafta, oyuncular }) {
     // Logo dairesi şablonda; logo içine
     const [cx, cy] = [bx - 1, by];
     g.save(); g.beginPath(); g.arc(cx, cy, 27.5, 0, 7); g.fillStyle = '#fff'; g.fill(); g.restore();
-    if (l) sigdir(g, l, cx - 20, cy - 20, 40, 40);
+    if (l) sigdir(g, logoKirp(l), cx - 21, cy - 21, 42, 42);
     // İsim: şeridin eğimiyle, iki satır (ad / soyad)
     const parca = buyuk(o.ad, o.yerli).split(' ');
     const satir = parca.length > 1 ? [parca.slice(0, -1).join(' '), parca.at(-1)] : [parca[0]];

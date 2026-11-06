@@ -1,6 +1,6 @@
 // Haftanın ödülleri görselleri (yönetici, TBL/BSL → Ödüller): Pota Altı'nın Canva şablonlarına oyuncu fotoğrafı, takım logosu ve
 // haftalık istatistikler yazılır. Çıktı 1280x1600 PNG. Şablonlar odul/sablon/ (TBL) ve odul/sablon/bsl/ (BSL: aynı yerleşim,
-// lacivert; tekli satırda top kaybı 0 ise "*0") — kullanıcının boş şablonları; tekli şablonda
+// lacivert; tekli satırda top kaybı 0 ise "*0" — iki ligde de) — kullanıcının boş şablonları; tekli şablonda
 // istatistik etiketleri silinip damga olarak ayrıldı, gelen istatistiklere göre yerleştirilir).
 // Yazı tipleri (Canva'dakilerin ücretsiz benzerleri): Heading Now -> Big Shoulders Display, Posey -> Russo One,
 // istatistik rakamları -> Lilita One, 5'li isimler Farro (Canva'daki de Farro).
@@ -74,6 +74,16 @@ function seritYazisi(g, metin, cx, cy, gen, boy) {
   let { w } = olcu(g, metin, 'PXpx "Russo One"', boy, a);
   const k = Math.min(1, gen / w);
   yaz(g, metin, cx, cy + boy * k / 2, { yazi: 'PXpx "Russo One"', boy: boy * k, aralik: a * k, gen });
+}
+// Şeritteki dar, kalın yazı (Heading Now benzeri): boy büyük harf yüksekliği, yazı şeridin genişliğine yayılır
+function seritDar(g, metin, cx, cy, gen, boy) {
+  const yazi = '800 PXpx "Big Shoulders Display"';
+  const { px, w } = olcu(g, metin, yazi, boy);
+  g.save();
+  g.translate(cx, cy + boy / 2); g.scale(Math.min(1.5, gen / w), 1);
+  g.font = yazi.replace('PX', px); g.letterSpacing = '0px'; g.textBaseline = 'alphabetic'; g.textAlign = 'center';
+  g.fillStyle = '#fff'; g.fillText(metin, 0, 0);
+  g.restore();
 }
 // Sayfaya sığdırılmış resim (contain) ya da kutuyu dolduran (cover)
 function sigdir(g, im, x, y, w, h, kapla = false) {
@@ -172,11 +182,11 @@ export async function kapak({ lig = 'tbl', hafta }) {
 
 // ---------- Tekli ödül (MVP, Yerli/Yabancı MVP, kaybeden MVP'ler) ----------
 const ETIKET = { sayi: [709, 782], rib: [861, 782], ast: [1012, 782], tc: [795, 914], blk: [944, 914], to: [862, 914], iki: [758, 1067], uc: [876, 1067], sa: [994, 1067] };
-// BSL'de ikinci satırda top kaybı da var (sadece 0 ise, "*0" olarak)
-const satirlar = lig => [{ alanlar: ['sayi', 'rib', 'ast'], ara: 151, boy: 52 }, { alanlar: lig === 'bsl' ? ['tc', 'blk', 'to'] : ['tc', 'blk'], ara: 141, boy: 46 },
+// İkinci satırda top kaybı da var (sadece 0 ise, "*0" olarak); 1 asist, 1 top çalma, 1 blok da yazılır (0 olanlar atlanır)
+const satirlar = lig => [{ alanlar: ['sayi', 'rib', 'ast'], ara: 151, boy: 52 }, { alanlar: ['tc', 'blk', 'to'], ara: 141, boy: 46 },
   { alanlar: ['iki', 'uc', 'sa'], ara: 117, boy: 33 }];
 const ORTA = 925;
-const etiketler = lig => Promise.all(Object.keys(ETIKET).filter(a => lig === 'bsl' || a !== 'to')
+const etiketler = lig => Promise.all(Object.keys(ETIKET)
   .map(async a => [a, await resim(sablon(lig, `etiket-${a}.png`))])).then(Object.fromEntries);
 
 // Büyük fotoğrafa nokta dokusu (şablondaki gibi)
@@ -219,7 +229,9 @@ export async function tekli({ lig = 'tbl', tur, hafta, o, foto, logo }) {
     kaybedenYerli: ['HONORABLE MENTION OF THE WEEK', [`${hafta}. HAFTADA KAYBEDEN`, 'YERLİ MVP']],
     kaybedenYabanci: ['HONORABLE MENTION OF THE WEEK', [`${hafta}. HAFTADA KAYBEDEN`, 'YABANCI MVP']],
   }[tur];
-  seritYazisi(g, TB[0], 921, 247, 530, 27);
+  // Şerit: MVP'de aralıklı yazı; diğer ödüllerde şablondaki gibi dar ve kalın, şeridi dolduran yazı
+  if (mvp) seritYazisi(g, TB[0], 921, 247, 530, 27);
+  else seritDar(g, TB[0], 921, 248, 537, 28);
   seritYazisi(g, buyuk(o.ad, o.yerli), 921, 653, 530, 27);
   if (TB[1]) {
     const boylar = tur.startsWith('kaybeden') ? [80, 128] : [136, 144];
@@ -228,7 +240,7 @@ export async function tekli({ lig = 'tbl', tur, hafta, o, foto, logo }) {
     TB[1].forEach((s, i) => { yy += boylar[i]; yaz(g, s, 921, yy, { yazi: BS, boy: boylar[i], gen: 572, renk: RENK, sikistir: true }); yy += ara; });
   }
   // İstatistikler: sıfır olanlar ve hiç denenmeyen atışlar yazılmaz
-  const deger = { sayi: o.sayi, rib: o.rib, ast: o.ast, tc: o.tc, blk: o.blk, to: lig === 'bsl' && o.tk === 0 ? '*0' : 0,
+  const deger = { sayi: o.sayi, rib: o.rib, ast: o.ast, tc: o.tc, blk: o.blk, to: o.tk === 0 ? '*0' : 0,
     iki: o.iki?.[1] ? `${o.iki[0]}/${o.iki[1]}` : 0, uc: o.uc?.[1] ? `${o.uc[0]}/${o.uc[1]}` : 0, sa: o.sa?.[1] ? `${o.sa[0]}/${o.sa[1]}` : 0 };
   for (const s of satirlar(lig)) {
     const var_ = s.alanlar.filter(a => deger[a]);

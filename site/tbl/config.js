@@ -12,10 +12,13 @@ export const firebaseConfig = {
 };
 
 // Lig ayarı (ortak motor): draft yok, kadrolar eski TBL Fantezi Ligi'nden içe aktarılır; As'ta en fazla 2 yabancı.
-// Hafta numaraları fantezi haftasıdır (TBL'nin başlangıç haftası 1. hafta). ortakHak: serbest oyuncu ve As–Yedek değişikliği aynı 2 transfer hakkından düşer
+// Hafta numaraları fantezi haftasıdır (TBL'nin başlangıç haftası 1. hafta). ortakHak: serbest oyuncu ve As–Yedek değişikliği aynı transfer hakkından düşer
 export const lig = {
   kod: 'tbl', kisa: 'TBL', ad: 'Pota Altı TBL Fantezi Ligi', yerelProje: 'demo-tbl-fantezi',
-  kural: 'tbl', draft: false, takas: false, hareketler: false, mevki: false, fanteziHaftasi: true, iceAktar: 'tbl', ortakHak: true, beklemeSaat: 24,
+  kural: 'tbl', draft: false, takas: false, hareketler: false, mevki: false, fanteziHaftasi: true, iceAktar: 'tbl', ortakHak: true, beklemeSaat: 36,
+  // 6 Kasım 2026: transfer ve As–Yedek değişikliği sınırsız (faHakki 99 ve üstü sınırsız sayılır), talep süresi 36 saat.
+  // Yönetici uygulamayı açınca lig/ayar'a bir kez yazılır (Firestore kuralları bu ayarlara bakar)
+  ayarGuncelle: { faHakki: 999, beklemeSaat: 36 },
   // Lisansı düşen yabancının yerine aynı TBL takımına gelen yabancı fantezi takımına otomatik geçer (hak kullanmaz)
   otomatikYerine: true,
   // Yeni sisteme geçerken kadrolardan çıkmış ama talep süresi hiç başlamamış oyuncular (Alp Karahan, Troy Şav, Josh Nzeakor):

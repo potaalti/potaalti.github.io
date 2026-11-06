@@ -546,7 +546,7 @@ async function odulHaftasi(h) {
 //   MVP: takımı kazanan en yüksek VP · Kazanan Yerli MVP: takımı kazanan en iyi yerli · Kaybeden Yerli / Yabancı MVP: takımı kaybeden
 //   en iyi yerli / yabancı (bir oyuncu tek bir tekli ödül alır; tekli ödül alan 5'lere de girebilir)
 //   Altın, Gümüş, Bronz 5: kalanlardan en iyi 3 Arka + 2 Ön · Mansiyon 5: kalanlardan en iyi 5, hepsi aynı mevkiden olamaz
-//   Bir 5'te aynı takımdan en fazla 2 oyuncu (sıradaki takımı dolmamış oyuncu girer)
+//   Bir 5'te aynı takımdan en fazla 2, dört 5'in toplamında en fazla 3 oyuncu (sıradaki takımı dolmamış oyuncu girer)
 //   Görselde gerçek beşteki gibi dizilir: üst sırada Arkalar (1-2-3 numara: sezon asist ortalaması yüksekten düşüğe),
 //   alt sırada Önler (4-5 numara: sezon ribaund ortalaması düşükten yükseğe); Mansiyon'da da önce Arkalar, sonra Önler
 function bslListesi(oyuncular) {
@@ -564,7 +564,8 @@ function bslListesi(oyuncular) {
   const mevkisi = o => o.mevki ?? 'arka';
   const dizilis = g => [...g.filter(o => mevkisi(o) === 'arka').sort((a, b) => b.astOrt - a.astOrt),
     ...g.filter(o => mevkisi(o) !== 'arka').sort((a, b) => a.ribOrt - b.ribOrt)];
-  const takimDolu = (secilen, o) => secilen.filter(x => x.takim === o.takim).length >= 2;
+  const takimDolu = (secilen, o) => secilen.filter(x => x.takim === o.takim).length >= 2
+    || [...gruplar.flat(), ...secilen].filter(x => x.takim === o.takim).length >= 3;
   const gruplar = [];
   for (let i = 0; i < 3; i++) {
     const secilen = [], kota = { arka: 3, on: 2 };

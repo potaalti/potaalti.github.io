@@ -472,13 +472,17 @@ async function seyirciGorseliniPaylas(anahtar, indir) {
 //   -----                              (çizgiyle ayrılan 5'li gruplar sırasıyla; TBL: Yerli 5, Yabancı 5, Mansiyon I, Mansiyon II,
 //                                       BSL: Altın 5, Gümüş 5, Bronz 5, Mansiyon 5)
 //   Ömer Yasir Küçük 33
-const TEKLI = { 'mvp': 'mvp', 'yerli mvp': 'yerli', 'yabanci mvp': 'yabanci', 'kaybeden yerli mvp': 'kaybedenYerli', 'kaybeden yabanci mvp': 'kaybedenYabanci' };
+// BSL'de liste gelmez: oyuncular kurallara göre seçilir (bslListesi), liste aynı biçimde yazılır.
+const TEKLI = { 'mvp': 'mvp', 'yerli mvp': 'yerli', 'kazanan yerli mvp': 'yerli', 'yabanci mvp': 'yabanci', 'kaybeden yerli mvp': 'kaybedenYerli', 'kaybeden yabanci mvp': 'kaybedenYabanci' };
 const TEKLI_AD = { mvp: 'MVP', yerli: 'Yerli MVP', yabanci: 'Yabancı MVP', kaybedenYerli: 'Kaybeden Yerli MVP', kaybedenYabanci: 'Kaybeden Yabancı MVP' };
 const BESLI = { tbl: ['yerli', 'yabanci', 'mansiyon1', 'mansiyon2'], bsl: ['altin', 'gumus', 'bronz', 'mansiyon'] };
 const BESLI_AD = { yerli: 'Yerli 5', yabanci: 'Yabancı 5', mansiyon1: "Mansiyon 5'i – I", mansiyon2: "Mansiyon 5'i – II",
   altin: 'Altın 5', gumus: 'Gümüş 5', bronz: 'Bronz 5', mansiyon: 'Mansiyon 5' };
 // Ödüller sayfasının ligi (sayfa adresinden) ve yayınlanan görsellerin klasörü
 const OL = () => (rota()[1] === 'bsl' ? 'bsl' : 'tbl');
+// BSL'de yerli MVP'nin takımı kazanmış olmalı ("Kazanan Yerli MVP"), MVP'nin de
+const tekliAd = tur => (OL() === 'bsl' && tur === 'yerli' ? 'Kazanan Yerli MVP' : TEKLI_AD[tur]);
+const tekliSart = tur => (OL() !== 'bsl' ? SART[tur] : tur === 'yerli' ? o => o.yerli && o.kazandi : tur === 'mvp' ? o => o.kazandi : SART[tur]);
 const odulKok = () => (OL() === 'bsl' ? 'odul/gorsel/bsl' : 'odul/gorsel');
 const kelimeler = s => aramaNorm(s).replace(/[^a-z0-9 ]+/g, ' ').split(' ').filter(Boolean);
 const dosyaAnahtari = ad => aramaNorm(String(ad).replace(/İ/g, 'I')).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -503,9 +507,10 @@ function odulListesiCoz(metin) {
 async function odulHaftasi(h) {
   const lig = OL(), k = `${lig}-hafta-${h}`;
   if (S.odul[k]) return S.odul[k];
-  const [liste, ham, gorsel, elle] = await Promise.all([getir(`${KAYNAK}/maclar/${lig}-${h}.json`),
+  const [liste, ham, gorsel, elle, mevkiler] = await Promise.all([getir(`${KAYNAK}/maclar/${lig}-${h}.json`),
     getir(lig === 'bsl' ? 'bsl/data/oyuncular.json' : `${KAYNAK}/oyuncular.json`),
-    getir(`data/${lig}/gorsel.json`).catch(() => ({ foto: {}, logo: {} })), getir('odul/foto/liste.json').catch(() => ({}))]);
+    getir(`data/${lig}/gorsel.json`).catch(() => ({ foto: {}, logo: {} })), getir('odul/foto/liste.json').catch(() => ({})),
+    lig === 'bsl' ? getir('bsl/data/mevkiler.json').catch(() => ({})) : {}]);
   // Rehber: { id: { ad, takim, ulke, aktif } } (BSL'ninki liste)
   const rehber = Array.isArray(ham) ? Object.fromEntries(ham.map(o => [o.id, o])) : ham;
   // TBF fotoğrafı uygun olmayan oyuncular için yöneticinin gönderdiği fotoğraflar (odul/foto/, liste.json: { id: dosya })
@@ -516,7 +521,10 @@ async function odulHaftasi(h) {
     const T = kutu[t], kazandi = Number(T.skor) > Number(kutu[r].skor);
     for (const o of T.oyuncular ?? []) {
       if (!sureSn(o.sure)) continue;
-      const e = oy.get(o.id) ?? { id: o.id, ad: rehber[o.id]?.ad ?? o.ad, kutuAd: o.ad, takim: T.ad, kazandi, yerli: ['TÜRKİYE', 'KKTC'].includes(rehber[o.id]?.ulke),
+      const r = rehber[o.id];
+      // Ön/Arka (BSL): yöneticinin mevki listesi (BSL Fantezi'deki), listede yoksa istatistik tahmini
+      const e = oy.get(o.id) ?? { id: o.id, ad: r?.ad ?? o.ad, kutuAd: o.ad, takim: T.ad, kazandi, rehberde: !!r,
+        yerli: typeof r?.turk === 'boolean' ? r.turk : ['TÜRKİYE', 'KKTC'].includes(r?.ulke), mevki: mevkiler[o.id] ?? r?.mevkiTahmini ?? null,
         sayi: 0, rib: 0, ast: 0, tc: 0, blk: 0, tk: 0, vp: 0, iki: [0, 0], uc: [0, 0], sa: [0, 0] };
       for (const a of ['sayi', 'rib', 'ast', 'tc', 'blk', 'tk', 'vp']) e[a] += Number(o[a]) || 0;
       for (const a of ['iki', 'uc', 'sa']) e[a] = [e[a][0] + (o[a]?.[0] ?? 0), e[a][1] + (o[a]?.[1] ?? 0)];
@@ -529,7 +537,44 @@ async function odulHaftasi(h) {
   // Takım arkadaşlarının fotoğrafları (forma rengi karşılaştırması için)
   const kadro = new Map();
   for (const [id, r] of Object.entries(rehber)) if (r.aktif !== false && foto(id)) kadro.set(r.takim, [...(kadro.get(r.takim) ?? []), { id, foto: foto(id) }]);
-  return (S.odul[k] = { oyuncular: [...oy.values()], kadro });
+  const bitmeyen = liste.maclar.filter(m => m.durum !== 'bitti').length;
+  return (S.odul[k] = { oyuncular: [...oy.values()], kadro, bitmeyen });
+}
+// BSL ödül seçimi (kullanıcının kuralları; sıralama VP, eşitlikte sayı):
+//   MVP: takımı kazanan en yüksek VP · Kazanan Yerli MVP: takımı kazanan en iyi yerli · Kaybeden Yerli / Yabancı MVP: takımı kaybeden
+//   en iyi yerli / yabancı (bir oyuncu tek bir tekli ödül alır; tekli ödül alan 5'lere de girebilir)
+//   Altın, Gümüş, Bronz 5: kalanlardan en iyi 3 Arka + 2 Ön · Mansiyon 5: kalanlardan en iyi 5, hepsi aynı mevkiden olamaz
+function bslListesi(oyuncular) {
+  const sira = [...oyuncular].sort((a, b) => b.vp - a.vp || b.sayi - a.sayi);
+  const notlar = [], verilen = new Set(), satirlar = [];
+  for (const [etiket, sart] of [['MVP', o => o.kazandi], ['KAZANAN YERLİ MVP', o => o.yerli && o.kazandi],
+    ['KAYBEDEN YERLİ MVP', o => o.yerli && !o.kazandi], ['KAYBEDEN YABANCI MVP', o => !o.yerli && !o.kazandi]]) {
+    const o = sira.find(x => sart(x) && !verilen.has(x.id));
+    if (!o) { notlar.push(`${etiket}: uygun oyuncu yok`); continue; }
+    verilen.add(o.id);
+    satirlar.push(`${etiket}: ${o.ad} ${o.vp}`);
+  }
+  const kalan = sira.filter(o => o.vp > 0);
+  const al = o => kalan.splice(kalan.indexOf(o), 1)[0];
+  const mevkisi = o => o.mevki ?? 'arka';
+  const gruplar = [];
+  for (let i = 0; i < 3; i++) {
+    const arka = kalan.filter(o => mevkisi(o) === 'arka').slice(0, 3), on = kalan.filter(o => mevkisi(o) === 'on').slice(0, 2);
+    gruplar.push([...arka, ...on].sort((a, b) => b.vp - a.vp || b.sayi - a.sayi).map(al));
+  }
+  const mansiyon = kalan.slice(0, 5);
+  if (mansiyon.length === 5 && new Set(mansiyon.map(mevkisi)).size === 1) {
+    const diger = kalan.find(o => mevkisi(o) !== mevkisi(mansiyon[0]));
+    if (diger) mansiyon.splice(4, 1, diger);
+  }
+  gruplar.push(mansiyon);
+  for (const o of oyuncular) {
+    const secildi = gruplar.flat().includes(o) || verilen.has(o.id);
+    if (secildi && !o.rehberde) notlar.push(`${o.ad} (${baslik(o.takim)}): oyuncu listesinde yok, yerli/yabancı ve mevki bilinmiyor`);
+    else if (secildi && !o.mevki && gruplar.flat().includes(o)) notlar.push(`${o.ad}: mevkisi bilinmiyor, Arka sayıldı`);
+  }
+  const metin = [...satirlar, '-----', gruplar.map(g => g.map(o => `${o.ad} ${o.vp}`).join('\n')).join('\n-\n')].join('\n');
+  return { metin, notlar };
 }
 // Yazılan adı haftanın oyuncularında bulur: kelimeler adın kelimelerinin başı olmalı ("M. Baki Görür", "WATKINS");
 // birden çok aday kalırsa ödülün şartı (yerli/yabancı, kaybeden) ve satırdaki verimlilik puanı ayırır.
@@ -565,7 +610,15 @@ function odulUretici(lig, istenen) {
   if (!(`${OL()}-liste-${h}` in S.odul)) {
     S.odul[`${OL()}-liste-${h}`] = undefined;
     fetch(`odul/liste/${OL() === 'bsl' ? 'bsl-' : ''}${h}.txt?t=${Date.now()}`, { cache: 'no-store' }).then(r => (r.ok ? r.text() : null)).catch(() => null)
-      .then(m => { S.odul[`${OL()}-liste-${h}`] = m; if (m && !S.odul[`${OL()}-sonuc-${h}`]) odulHazirla(h, m); else ciz(); });
+      .then(async m => {
+        if (!m && OL() === 'bsl') {
+          const { oyuncular, bitmeyen } = await odulHaftasi(h);
+          const b = bslListesi(oyuncular);
+          m = b.metin;
+          S.odul[`${OL()}-secimNotlari-${h}`] = [...(bitmeyen ? [`${bitmeyen} maç henüz bitmedi; seçim biten maçlardan yapıldı`] : []), ...b.notlar];
+        }
+        S.odul[`${OL()}-liste-${h}`] = m; if (m && !S.odul[`${OL()}-sonuc-${h}`]) odulHazirla(h, m); else ciz();
+      });
   }
   const yayinda = S.odul[`${OL()}-liste-${h}`];
   let kayitli = yayinda ?? '';
@@ -582,6 +635,7 @@ function odulUretici(lig, istenen) {
     ${sonuc?.gorseller?.length ? `<p style="margin:10px 0 0"><button class="secenek" data-is="odul-hepsi" data-id="${h}">⬇ Hepsini indir</button></p>` : ''}
     ${sonuc?.durum ? `<p class="soluk kucuk">${esc(sonuc.durum)}</p>` : ''}
     ${sonuc?.hatalar?.length ? `<div class="hata-kutu kucuk" style="margin-top:10px">${sonuc.hatalar.map(esc).join('<br>')}</div>` : ''}
+    ${S.odul[`${OL()}-secimNotlari-${h}`]?.length ? `<div class="hata-kutu kucuk" style="margin-top:10px">${S.odul[`${OL()}-secimNotlari-${h}`].map(esc).join('<br>')}</div>` : ''}
     ${sonuc?.uyarilar?.length ? `<div class="odul-uyari kucuk" style="margin-top:10px"><b>📷 Fotoğrafı kontrol et</b><br>${sonuc.uyarilar.map(esc).join('<br>')}
       <br><span class="soluk">Uygun fotoğraflarını Claude'a gönder; eklenince görseller onlarla hazırlanır.</span></div>` : ''}</div>
     ${sonuc?.gorseller?.length ? `<div class="odul-izgara">${sonuc.gorseller.map((g, i) => `<div class="kart" style="padding:10px">
@@ -599,11 +653,12 @@ async function odulHazirla(h, yayinListesi = null) {
   const liste = odulListesiCoz(metin);
   const isler = [{ ad: 'Kapak', bilgi: { tur: 'kapak', baslik: `${h}. Haftanın Panoraması` }, yap: () => OD.kapak({ lig: OL(), hafta: h }) }];
   for (const { tur, sorgu } of liste.tekli) {
-    const b = oyuncuBul(oyuncular, sorgu, SART[tur]);
-    if (b.hata) { sonuc.hatalar.push(`${TEKLI_AD[tur]}: "${sorgu}" ${b.hata}`); continue; }
-    if (SART[tur] && !SART[tur](b.o)) sonuc.hatalar.push(`${TEKLI_AD[tur]}: ${b.o.ad} şarta uymuyor (${b.o.yerli ? 'yerli' : 'yabancı'}, takımı ${b.o.kazandi ? 'kazandı' : 'kaybetti'}); yine de hazırlandı`);
+    const sart = tekliSart(tur);
+    const b = oyuncuBul(oyuncular, sorgu, sart);
+    if (b.hata) { sonuc.hatalar.push(`${tekliAd(tur)}: "${sorgu}" ${b.hata}`); continue; }
+    if (sart && !sart(b.o)) sonuc.hatalar.push(`${tekliAd(tur)}: ${b.o.ad} şarta uymuyor (${b.o.yerli ? 'yerli' : 'yabancı'}, takımı ${b.o.kazandi ? 'kazandı' : 'kaybetti'}); yine de hazırlandı`);
     secilenler.set(b.o.id, b.o);
-    isler.push({ ad: `${TEKLI_AD[tur]} · ${b.o.ad}`, bilgi: { tur, baslik: TEKLI_AD[tur], oyuncu: b.o.ad, takim: b.o.takim, vp: b.o.vp }, yap: () => OD.tekli({ lig: OL(), tur, hafta: h, o: b.o, foto: b.o.foto, logo: b.o.logo }) });
+    isler.push({ ad: `${tekliAd(tur)} · ${b.o.ad}`, bilgi: { tur, baslik: tekliAd(tur), oyuncu: b.o.ad, takim: b.o.takim, vp: b.o.vp }, yap: () => OD.tekli({ lig: OL(), tur, hafta: h, o: b.o, foto: b.o.foto, logo: b.o.logo }) });
   }
   liste.gruplar.forEach((grup, i) => {
     const tur = BESLI[OL()][i];

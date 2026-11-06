@@ -525,6 +525,7 @@ async function odulHaftasi(h) {
       // Ön/Arka (BSL): yöneticinin mevki listesi (BSL Fantezi'deki), listede yoksa istatistik tahmini
       const e = oy.get(o.id) ?? { id: o.id, ad: r?.ad ?? o.ad, kutuAd: o.ad, takim: T.ad, kazandi, rehberde: !!r,
         yerli: typeof r?.turk === 'boolean' ? r.turk : ['TÜRKİYE', 'KKTC'].includes(r?.ulke), mevki: mevkiler[o.id] ?? r?.mevkiTahmini ?? null,
+        astOrt: r?.astOrt ?? 0, ribOrt: r?.ribOrt ?? 0,
         sayi: 0, rib: 0, ast: 0, tc: 0, blk: 0, tk: 0, vp: 0, iki: [0, 0], uc: [0, 0], sa: [0, 0] };
       for (const a of ['sayi', 'rib', 'ast', 'tc', 'blk', 'tk', 'vp']) e[a] += Number(o[a]) || 0;
       for (const a of ['iki', 'uc', 'sa']) e[a] = [e[a][0] + (o[a]?.[0] ?? 0), e[a][1] + (o[a]?.[1] ?? 0)];
@@ -545,7 +546,8 @@ async function odulHaftasi(h) {
 //   en iyi yerli / yabancı (bir oyuncu tek bir tekli ödül alır; tekli ödül alan 5'lere de girebilir)
 //   Altın, Gümüş, Bronz 5: kalanlardan en iyi 3 Arka + 2 Ön · Mansiyon 5: kalanlardan en iyi 5, hepsi aynı mevkiden olamaz
 //   Bir 5'te aynı takımdan en fazla 2 oyuncu (sıradaki takımı dolmamış oyuncu girer)
-//   Görselde üst sıradaki 3 kart Arka, alttaki 2 kart Ön oyunculardır (Mansiyon'da da önce Arkalar, sonra Önler; her biri VP sırasıyla)
+//   Görselde gerçek beşteki gibi dizilir: üst sırada Arkalar (1-2-3 numara: sezon asist ortalaması yüksekten düşüğe),
+//   alt sırada Önler (4-5 numara: sezon ribaund ortalaması düşükten yükseğe); Mansiyon'da da önce Arkalar, sonra Önler
 function bslListesi(oyuncular) {
   const sira = [...oyuncular].sort((a, b) => b.vp - a.vp || b.sayi - a.sayi);
   const notlar = [], verilen = new Set(), satirlar = [];
@@ -559,7 +561,8 @@ function bslListesi(oyuncular) {
   const kalan = sira.filter(o => o.vp > 0);
   const al = o => kalan.splice(kalan.indexOf(o), 1)[0];
   const mevkisi = o => o.mevki ?? 'arka';
-  const dizilis = g => [...g.filter(o => mevkisi(o) === 'arka'), ...g.filter(o => mevkisi(o) !== 'arka')];
+  const dizilis = g => [...g.filter(o => mevkisi(o) === 'arka').sort((a, b) => b.astOrt - a.astOrt),
+    ...g.filter(o => mevkisi(o) !== 'arka').sort((a, b) => a.ribOrt - b.ribOrt)];
   const takimDolu = (secilen, o) => secilen.filter(x => x.takim === o.takim).length >= 2;
   const gruplar = [];
   for (let i = 0; i < 3; i++) {

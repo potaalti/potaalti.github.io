@@ -1,6 +1,6 @@
 {
  "hafta": 6,
- "guncelleme": "2026-11-06T09:39:27.057Z",
+ "guncelleme": "2026-11-06T09:42:11.285Z",
  "notlar": [
   "Brandon Boston Jr. (Trabzonspor): formalı fotoğrafı yok, TBF'de vesikalık var"
  ],
@@ -47,11 +47,11 @@
    "tur": "besli",
    "baslik": "Altın 5",
    "oyuncular": [
-    "Uros Trifunovic",
     "Ty Gordon",
     "Quentin Peterson",
-    "Oscar Cluff",
-    "Braxton Key"
+    "Uros Trifunovic",
+    "Braxton Key",
+    "Oscar Cluff"
    ]
   },
   {
@@ -60,10 +60,10 @@
    "baslik": "Gümüş 5",
    "oyuncular": [
     "Javon Freeman-Liberty",
-    "Metecan Birsen",
     "Anthony Brown",
-    "Steven Enoch",
-    "Alen Smailagic"
+    "Metecan Birsen",
+    "Alen Smailagic",
+    "Steven Enoch"
    ]
   },
   {
@@ -83,8 +83,8 @@
    "tur": "besli",
    "baslik": "Mansiyon 5",
    "oyuncular": [
-    "Brandon Boston Jr.",
     "Talen Horton-Tucker",
+    "Brandon Boston Jr.",
     "Tyler Cavanaugh",
     "Chris Horton",
     "Trevion Williams"

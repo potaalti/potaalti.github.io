@@ -7,10 +7,6 @@ name: BSL haftanın ödülleri
 on:
   schedule:
     - cron: '45 19-22 * * *'
-  # GEÇİCİ: ilk deneme (6. haftayı GitHub'da yeniden hazırlar); denemeden sonra kaldırılır
-  push:
-    branches: [main]
-    paths: ['.github/workflows/bsl-odul.yml']
   workflow_dispatch:
     inputs:
       hafta:
@@ -36,11 +32,11 @@ jobs:
       - run: npm install --no-save --no-audit --no-fund --prefix veri puppeteer-core@25.16.0
       - run: node veri/odul_yayinla.mjs ${HAFTA:-otomatik} bsl
         env:
-          HAFTA: ${{ inputs.hafta || (github.event_name == 'push' && '6') || '' }}
+          HAFTA: ${{ inputs.hafta }}
       - name: Kaydet ve siteyi yayınlat
         env:
           GH_TOKEN: ${{ github.token }}
-          HAFTA: ${{ inputs.hafta || (github.event_name == 'push' && '6') || '' }}
+          HAFTA: ${{ inputs.hafta }}
         run: |
           git add site/odul
           if git diff --cached --quiet; then exit 0; fi

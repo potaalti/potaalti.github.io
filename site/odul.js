@@ -181,7 +181,8 @@ export async function kapak({ lig = 'tbl', hafta }) {
 }
 
 // ---------- Tekli ödül (MVP, Yerli/Yabancı MVP, kaybeden MVP'ler) ----------
-const ETIKET = { sayi: [709, 782], rib: [861, 782], ast: [1012, 782], tc: [795, 914], blk: [944, 914], to: [862, 914], iki: [758, 1067], uc: [876, 1067], sa: [994, 1067] };
+const ETIKET = { sayi: [709, 782], rib: [861, 782], ast: [1012, 782], tc: [795, 914], blk: [944, 914], to: [862, 914], iki: [758, 1067], uc: [876, 1067], sa: [994, 1067],
+  vp: [166, 1274] }; // vp: şablondaki "VERİMLİLİK PUANI" etiketi; öndeki fotoğraf üstüne gelirse diye yeniden basılır
 // İkinci satırda top kaybı da var (sadece 0 ise, "*0" olarak); 1 asist, 1 top çalma, 1 blok da yazılır (0 olanlar atlanır)
 const satirlar = lig => [{ alanlar: ['sayi', 'rib', 'ast'], ara: 151, boy: 52 }, { alanlar: ['tc', 'blk', 'to'], ara: 141, boy: 46 },
   { alanlar: ['iki', 'uc', 'sa'], ara: 117, boy: 33 }];
@@ -189,6 +190,13 @@ const ORTA = 925;
 const etiketler = lig => Promise.all(Object.keys(ETIKET)
   .map(async a => [a, await resim(sablon(lig, `etiket-${a}.png`))])).then(Object.fromEntries);
 
+// Damga, rakamlar gibi beyaz kenarlı çizilir (koyu formanın üstünde de okunsun)
+function haleli(g, im, x, y, r) {
+  const b = new OffscreenCanvas(im.width, im.height), bg = b.getContext('2d');
+  bg.drawImage(im, 0, 0); bg.globalCompositeOperation = 'source-in'; bg.fillStyle = '#fff'; bg.fillRect(0, 0, im.width, im.height);
+  for (let a = 0; a < 16; a++) g.drawImage(b, x + r * Math.cos(a * Math.PI / 8), y + r * Math.sin(a * Math.PI / 8));
+  g.drawImage(im, x, y);
+}
 // Büyük fotoğrafa nokta dokusu (şablondaki gibi)
 function noktala(g, x, y, w, h) {
   g.save();
@@ -251,6 +259,7 @@ export async function tekli({ lig = 'tbl', tur, hafta, o, foto, logo }) {
       yaz(g, String(deger[a]), cx, ey - 2, { yazi: 'PXpx "Lilita One"', boy: s.boy, gen: s.ara - 12, renk: RENK, cizgi: 5 });
     });
   }
+  haleli(g, et.vp, ...ETIKET.vp, 3);
   yaz(g, String(o.vp), 270, 1270, { yazi: 'PXpx "Lilita One"', boy: 64, renk: RENK, cizgi: 6 });
   return blob(c);
 }

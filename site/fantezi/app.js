@@ -433,8 +433,8 @@ function gorunumDiger() {
 
 // Bilgisayarın yan menüsü: üstte Pota Altı'nın bölümleri (ana uygulama), altında fantezi ligleri; açık olan lig genişler ve
 // sayfaları (#menu) altında görünür. Tablet ve telefonda bu kısımlar gizli, sadece ligin menüsü kalır.
-const ANA_MENU = [['', 'Ana Sayfa', '🏠'], ['maclar', 'Maçlar', '📅'], ['lig/tbl', 'TBL', '🏀'], ['lig/bsl', 'BSL', '🏆'], ['yayin', 'Yayın', '▶️']];
-const FANTEZI_LIGLERI = [['tbl', 'TBL Fantezi'], ['bsl', 'BSL Fantezi']];
+const ANA_MENU = [['', 'Ana Sayfa', '🏠'], ['maclar', 'Maçlar', '📅'], ['lig/bsl', 'BSL', '🏆'], ['lig/tbl', 'TBL', '🏀'], ['yayin', 'Yayın', '▶️']];
+const FANTEZI_LIGLERI = [['bsl', 'BSL Fantezi'], ['tbl', 'TBL Fantezi']]; // BSL üst lig, önce gelir
 function yanMenuCiz() {
   if (!$('#ana-menu')) return;
   $('#ana-menu').innerHTML = ANA_MENU.map(([y, ad, ikon]) => `<a href="../#/${y}"><span class="ikon">${ikon}</span><span>${ad}</span></a>`).join('');

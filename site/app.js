@@ -11,7 +11,8 @@ import * as SY from './seyirci.js';
 import * as OD from './odul.js';
 
 const YEREL = ['localhost', '127.0.0.1'].includes(location.hostname);
-const LIGLER = { tbl: { kisa: 'TBL', ad: 'Türkiye Basketbol Ligi' }, bsl: { kisa: 'BSL', ad: 'Basketbol Süper Ligi' } };
+// Sıra önemli: BSL üst lig olduğu için her yerde (menü, fikstür, seçiciler) önce gelir ve varsayılan ligdir
+const LIGLER = { bsl: { kisa: 'BSL', ad: 'Basketbol Süper Ligi' }, tbl: { kisa: 'TBL', ad: 'Türkiye Basketbol Ligi' } };
 
 const S = {
   meta: null, index: null, hata: null,
@@ -20,10 +21,10 @@ const S = {
   kutular: {}, // maç id -> kutu skor (null: yok)
   ui: { ara: '', oyuncuSirala: 'vp', liderKategori: {}, anaLig: anaLigOku() },
 };
-// Telefon ve bilgisayar ayrı düzen: telefonda ana sayfa tek lig gösterir (TBL | BSL seçici), bilgisayarda yan menü ve iki sütun
+// Telefon ve bilgisayar ayrı düzen: telefonda ana sayfa tek lig gösterir (BSL | TBL seçici), bilgisayarda yan menü ve iki sütun
 const TELEFON = matchMedia('(max-width: 759px)');
 function anaLigOku() {
-  try { return localStorage.getItem('anaLig') === 'bsl' ? 'bsl' : 'tbl'; } catch { return 'tbl'; }
+  try { return localStorage.getItem('anaLig') === 'tbl' ? 'tbl' : 'bsl'; } catch { return 'bsl'; }
 }
 const yukleniyor = new Set();
 
@@ -70,7 +71,7 @@ function varsayilanHafta(lig) {
 }
 
 // ---------- Menü ----------
-const MENU = [['', 'Ana Sayfa', '🏠'], ['maclar', 'Maçlar', '📅'], ['lig/tbl', 'TBL', '🏀'], ['lig/bsl', 'BSL', '🏆'], ['fantezi', 'Fantezi', '⭐'], ['yayin', 'Yayın', '▶️']];
+const MENU = [['', 'Ana Sayfa', '🏠'], ['maclar', 'Maçlar', '📅'], ['lig/bsl', 'BSL', '🏆'], ['lig/tbl', 'TBL', '🏀'], ['fantezi', 'Fantezi', '⭐'], ['yayin', 'Yayın', '▶️']];
 function rota() {
   return location.hash.replace(/^#\/?/, '').split('/').filter(Boolean).map(decodeURIComponent);
 }
@@ -104,7 +105,7 @@ function gorunum() {
   if (S.hata) return `<div class="kart"><p class="bos">${esc(S.hata)}</p></div>`;
   if (!S.meta) return '<p class="bos">Yükleniyor…</p>';
   const [s, a, b] = rota();
-  const lig = LIGLER[a] ? a : 'tbl';
+  const lig = LIGLER[a] ? a : 'bsl';
   switch (s) {
     case undefined: return gorunumAna();
     case 'maclar': return `<div class="dar">${gorunumMaclar(LIGLER[a] ? a : null, Number(b) || null)}</div>`;
@@ -148,7 +149,7 @@ function haftaDurumu(maclar) {
 }
 
 function gorunumMaclar(istenenLig, istenenHafta) {
-  const lig = istenenLig ?? (S.ui.sonLig || 'tbl');
+  const lig = istenenLig ?? (S.ui.sonLig || 'bsl');
   S.ui.sonLig = lig;
   const haftalar = S.index?.maclar?.[lig]?.haftalar ?? S.meta.ligler[lig].haftalar;
   const n = haftalar.includes(istenenHafta) ? istenenHafta : varsayilanHafta(lig);
@@ -1016,7 +1017,7 @@ function gorunumAna() {
   const fantezi = `<h2 class="bolum-baslik">Fantezi ligleri</h2><div class="fantezi-kartlari">${fantezKartlari()}</div>`;
   if (TELEFON.matches) {
     const lig = S.ui.anaLig;
-    const secici = `<div class="lig-secici">${['bsl', 'tbl'].map(l => [l, LIGLER[l]]).map(([l, v]) => `<button class="${l === lig ? 'aktif' : ''}" data-is="ana-lig" data-id="${l}">${v.kisa}</button>`).join('')}</div>`;
+    const secici = `<div class="lig-secici">${Object.entries(LIGLER).map(([l, v]) => `<button class="${l === lig ? 'aktif' : ''}" data-is="ana-lig" data-id="${l}">${v.kisa}</button>`).join('')}</div>`;
     return `${Yayin.anaKart()}${secici}${sutun(lig)}${fantezi}${altBilgi()}`;
   }
   return `<div class="ana-ust">${karsilama}${Yayin.anaKart()}</div>
@@ -1025,10 +1026,10 @@ function gorunumAna() {
 
 // ---------- Fantezi ----------
 function fantezKartlari() {
-  return `<a class="kart fantezi-kart tbl" href="tbl/"><span class="fantezi-etiket">TBL</span><strong>TBL Fantezi Ligi ›</strong>
-      <span class="soluk">Puan durumu, kadron, serbest oyuncu ve talep kurası, takaslar. Menajerler kendi değişikliklerini yapar.</span></a>
-    <a class="kart fantezi-kart bsl" href="bsl/"><span class="fantezi-etiket">BSL</span><strong>BSL Fantezi Ligi ›</strong>
-      <span class="soluk">Canlı draft, takaslar, talep kurası, haftalık puanlama. Katıl üyelerine özel.</span></a>`;
+  return `<a class="kart fantezi-kart bsl" href="bsl/"><span class="fantezi-etiket">BSL</span><strong>BSL Fantezi Ligi ›</strong>
+      <span class="soluk">Canlı draft, takaslar, talep kurası, haftalık puanlama. Katıl üyelerine özel.</span></a>
+    <a class="kart fantezi-kart tbl" href="tbl/"><span class="fantezi-etiket">TBL</span><strong>TBL Fantezi Ligi ›</strong>
+      <span class="soluk">Puan durumu, kadron, serbest oyuncu ve talep kurası, takaslar. Menajerler kendi değişikliklerini yapar.</span></a>`;
 }
 function gorunumFantezi() {
   return `<div class="sayfa-baslik"><h1>Fantezi ligleri</h1><p class="soluk">Pota Altı'nın fantezi ligleri. Menajerler davet linkiyle ve Google hesabıyla girer.</p></div>

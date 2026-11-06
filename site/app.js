@@ -545,6 +545,7 @@ async function odulHaftasi(h) {
 //   en iyi yerli / yabancı (bir oyuncu tek bir tekli ödül alır; tekli ödül alan 5'lere de girebilir)
 //   Altın, Gümüş, Bronz 5: kalanlardan en iyi 3 Arka + 2 Ön · Mansiyon 5: kalanlardan en iyi 5, hepsi aynı mevkiden olamaz
 //   Bir 5'te aynı takımdan en fazla 2 oyuncu (sıradaki takımı dolmamış oyuncu girer)
+//   Görselde üst sıradaki 3 kart Arka, alttaki 2 kart Ön oyunculardır (Mansiyon'da da önce Arkalar, sonra Önler; her biri VP sırasıyla)
 function bslListesi(oyuncular) {
   const sira = [...oyuncular].sort((a, b) => b.vp - a.vp || b.sayi - a.sayi);
   const notlar = [], verilen = new Set(), satirlar = [];
@@ -558,6 +559,7 @@ function bslListesi(oyuncular) {
   const kalan = sira.filter(o => o.vp > 0);
   const al = o => kalan.splice(kalan.indexOf(o), 1)[0];
   const mevkisi = o => o.mevki ?? 'arka';
+  const dizilis = g => [...g.filter(o => mevkisi(o) === 'arka'), ...g.filter(o => mevkisi(o) !== 'arka')];
   const takimDolu = (secilen, o) => secilen.filter(x => x.takim === o.takim).length >= 2;
   const gruplar = [];
   for (let i = 0; i < 3; i++) {
@@ -566,7 +568,7 @@ function bslListesi(oyuncular) {
       if (secilen.length === 5) break;
       if (kota[mevkisi(o)] > 0 && !takimDolu(secilen, o)) { secilen.push(o); kota[mevkisi(o)]--; }
     }
-    gruplar.push(secilen.map(al));
+    gruplar.push(dizilis(secilen.map(al)));
   }
   const mansiyon = [];
   for (const o of kalan) if (mansiyon.length < 5 && !takimDolu(mansiyon, o)) mansiyon.push(o);
@@ -575,7 +577,7 @@ function bslListesi(oyuncular) {
     const diger = kalan.find(o => mevkisi(o) !== mevkisi(son) && !takimDolu(mansiyon, o));
     mansiyon.push(diger ?? son);
   }
-  gruplar.push(mansiyon);
+  gruplar.push(dizilis(mansiyon));
   for (const o of oyuncular) {
     const secildi = gruplar.flat().includes(o) || verilen.has(o.id);
     if (secildi && !o.rehberde) notlar.push(`${o.ad} (${baslik(o.takim)}): oyuncu listesinde yok, yerli/yabancı ve mevki bilinmiyor`);

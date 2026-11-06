@@ -30,19 +30,29 @@ jobs:
         with:
           node-version: 22
       - run: npm install --no-save --no-audit --no-fund --prefix veri puppeteer-core@25.16.0
-      - run: node veri/odul_yayinla.mjs ${HAFTA:-otomatik} bsl
+      # Fotoğraf eksik/forması uymuyorsa hafta yayınlanmaz, notlar veri/bekleyen-odul-bsl.json'a yazılır; yeni not varsa
+      # betik 3 koduyla çıkar ve en sonda iş hata verir (GitHub e-postayla bildirir). Aynı notlar için her gece tekrar uyarmaz.
+      - run: node veri/odul_yayinla.mjs ${HAFTA:-otomatik} bsl || echo "KOD=$?" >> "$GITHUB_ENV"
         env:
           HAFTA: ${{ inputs.hafta }}
       - name: Kaydet ve siteyi yayınlat
+        if: env.KOD == '' || env.KOD == '3'
         env:
           GH_TOKEN: ${{ github.token }}
           HAFTA: ${{ inputs.hafta }}
         run: |
           git add site/odul
+          git add -A veri/bekleyen-odul-bsl.json 2>/dev/null || true
           if git diff --cached --quiet; then exit 0; fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git commit -q -m "BSL haftanın ödülleri (otomatik${HAFTA:+, $HAFTA. hafta})"
           for i in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 10; done
-          # Bu iş kaydettiğinde "Siteyi yayınla" kendiliğinden başlamaz; elle başlatılır
-          gh workflow run yayinla.yml
+          # Bu iş kaydettiğinde "Siteyi yayınla" kendiliğinden başlamaz; elle başlatılır (yalnız site değiştiyse)
+          if ! git diff --quiet HEAD~1 HEAD -- site; then gh workflow run yayinla.yml; fi
+      - name: Fotoğraf uyarısı
+        if: env.KOD != ''
+        run: |
+          if [ "$KOD" != 3 ]; then echo "::error::Betik hata verdi (kod $KOD)"; exit 1; fi
+          node -e 'const b=require("./veri/bekleyen-odul-bsl.json");for(const[h,x]of Object.entries(b))console.log(`::error title=BSL ${h}. hafta yayınlanmadı::${x.notlar.join(" / ")}`)'
+          exit 1

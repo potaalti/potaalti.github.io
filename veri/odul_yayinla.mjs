@@ -4,6 +4,9 @@
 // BSL'de liste gelmez: oyuncular kurallarla seçilir (app.js bslListesi), seçilen liste odul/liste/bsl-<hafta>.txt'ye kaydedilir.
 //   node veri/odul_yayinla.mjs <hafta> [tbl|bsl]
 //   node veri/odul_yayinla.mjs otomatik bsl   son yayınlanandan sonra biten haftaları yayınlar (biten yoksa bir şey yapmaz)
+// Otomatikte not çıkarsa (formalı fotoğrafı yok / forması uymuyor, eşleşmeyen isim, mevkisi bilinmeyen) o hafta YAYINLANMAZ:
+// notlar veri/bekleyen-odul-<lig>.json'a yazılır, notlar yeni ya da değişmişse betik 3 koduyla çıkar (Actions işi hata verir,
+// GitHub e-postayla bildirir). Fotoğraflar eklenince sonraki gece kendiliğinden yayınlanır; elle hafta verilirse notlara bakılmaz.
 // Gerekenler: veri/ altında puppeteer-core (npm install --no-save --prefix veri puppeteer-core) ve Chrome (CHROME ile değişir).
 import { writeFileSync, mkdirSync, rmSync, readFileSync, existsSync, createReadStream } from 'node:fs';
 import { createServer } from 'node:http';
@@ -18,6 +21,10 @@ const LIG = process.argv[3] === 'bsl' ? 'bsl' : 'tbl';
 const KOK = join(SITE, 'odul', 'gorsel', ...(LIG === 'bsl' ? ['bsl'] : []));
 const sade = s => s.toLocaleLowerCase('tr').replace(/ı/g, 'i').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const idxYol = join(KOK, 'index.json');
+const OTOMATIK = process.argv[2] === 'otomatik';
+const bekYol = fileURLToPath(new URL(`./bekleyen-odul-${LIG}.json`, import.meta.url));
+const bekleyen = existsSync(bekYol) ? JSON.parse(readFileSync(bekYol, 'utf-8')) : {};
+let yeniUyari = false;
 const index = () => (existsSync(idxYol) ? JSON.parse(readFileSync(idxYol, 'utf-8')) : { haftalar: [] });
 
 // Yayınlanacak haftalar: elle verilen ya da (otomatik) son yayınlanandan sonraki biten haftalar. Hafta, maçlarının hepsi bitince
@@ -79,6 +86,13 @@ async function yayinla(tarayici, adres, hafta) {
     return sonuc;
   });
   await s.close();
+  if (OTOMATIK && notlar.length) {
+    console.log(`${LIG.toUpperCase()} ${hafta}. hafta YAYINLANMADI, notlar:\n${notlar.join('\n')}`);
+    if (JSON.stringify(bekleyen[hafta]?.notlar) !== JSON.stringify(notlar)) yeniUyari = true;
+    bekleyen[hafta] = { tarih: new Date().toISOString(), notlar };
+    return;
+  }
+  delete bekleyen[hafta];
   if (!gorseller.length) throw new Error(`${hafta}. hafta: görsel üretilemedi (${[...notlar, ...hatalar].join(' | ')})`);
   const dizin = join(KOK, String(hafta));
   rmSync(dizin, { recursive: true, force: true });
@@ -108,4 +122,7 @@ try {
 } finally {
   await tarayici.close();
   srv.close();
+  if (Object.keys(bekleyen).length) writeFileSync(bekYol, `${JSON.stringify(bekleyen, null, 1)}\n`);
+  else rmSync(bekYol, { force: true });
 }
+if (yeniUyari) process.exit(3);

@@ -544,6 +544,7 @@ async function odulHaftasi(h) {
 //   MVP: takımı kazanan en yüksek VP · Kazanan Yerli MVP: takımı kazanan en iyi yerli · Kaybeden Yerli / Yabancı MVP: takımı kaybeden
 //   en iyi yerli / yabancı (bir oyuncu tek bir tekli ödül alır; tekli ödül alan 5'lere de girebilir)
 //   Altın, Gümüş, Bronz 5: kalanlardan en iyi 3 Arka + 2 Ön · Mansiyon 5: kalanlardan en iyi 5, hepsi aynı mevkiden olamaz
+//   Bir 5'te aynı takımdan en fazla 2 oyuncu (sıradaki takımı dolmamış oyuncu girer)
 function bslListesi(oyuncular) {
   const sira = [...oyuncular].sort((a, b) => b.vp - a.vp || b.sayi - a.sayi);
   const notlar = [], verilen = new Set(), satirlar = [];
@@ -557,15 +558,22 @@ function bslListesi(oyuncular) {
   const kalan = sira.filter(o => o.vp > 0);
   const al = o => kalan.splice(kalan.indexOf(o), 1)[0];
   const mevkisi = o => o.mevki ?? 'arka';
+  const takimDolu = (secilen, o) => secilen.filter(x => x.takim === o.takim).length >= 2;
   const gruplar = [];
   for (let i = 0; i < 3; i++) {
-    const arka = kalan.filter(o => mevkisi(o) === 'arka').slice(0, 3), on = kalan.filter(o => mevkisi(o) === 'on').slice(0, 2);
-    gruplar.push([...arka, ...on].sort((a, b) => b.vp - a.vp || b.sayi - a.sayi).map(al));
+    const secilen = [], kota = { arka: 3, on: 2 };
+    for (const o of kalan) {
+      if (secilen.length === 5) break;
+      if (kota[mevkisi(o)] > 0 && !takimDolu(secilen, o)) { secilen.push(o); kota[mevkisi(o)]--; }
+    }
+    gruplar.push(secilen.map(al));
   }
-  const mansiyon = kalan.slice(0, 5);
+  const mansiyon = [];
+  for (const o of kalan) if (mansiyon.length < 5 && !takimDolu(mansiyon, o)) mansiyon.push(o);
   if (mansiyon.length === 5 && new Set(mansiyon.map(mevkisi)).size === 1) {
-    const diger = kalan.find(o => mevkisi(o) !== mevkisi(mansiyon[0]));
-    if (diger) mansiyon.splice(4, 1, diger);
+    const son = mansiyon.pop();
+    const diger = kalan.find(o => mevkisi(o) !== mevkisi(son) && !takimDolu(mansiyon, o));
+    mansiyon.push(diger ?? son);
   }
   gruplar.push(mansiyon);
   for (const o of oyuncular) {

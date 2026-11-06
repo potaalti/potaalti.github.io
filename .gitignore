@@ -4,3 +4,6 @@ __pycache__/
 .claude/
 test/node_modules/
 fantezi/test/node_modules/
+veri/node_modules/
+veri/package.json
+veri/package-lock.json

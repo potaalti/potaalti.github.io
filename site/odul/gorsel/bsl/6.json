@@ -1,0 +1,94 @@
+{
+ "hafta": 6,
+ "guncelleme": "2026-11-06T09:26:01.130Z",
+ "notlar": [
+  "Brandon Boston Jr. (Trabzonspor): formalı fotoğrafı yok, TBF'de vesikalık var"
+ ],
+ "gorseller": [
+  {
+   "dosya": "01-6-haftanin-panoramasi.jpg",
+   "tur": "kapak",
+   "baslik": "6. Haftanın Panoraması"
+  },
+  {
+   "dosya": "02-mvp-uros-trifunovic.jpg",
+   "tur": "mvp",
+   "baslik": "MVP",
+   "oyuncu": "Uros Trifunovic",
+   "takim": "TÜRK TELEKOM",
+   "vp": 34
+  },
+  {
+   "dosya": "03-kazanan-yerli-mvp-metecan-birsen.jpg",
+   "tur": "yerli",
+   "baslik": "Kazanan Yerli MVP",
+   "oyuncu": "Metecan Birsen",
+   "takim": "BEŞİKTAŞ",
+   "vp": 24
+  },
+  {
+   "dosya": "04-kaybeden-yerli-mvp-mahir-agva.jpg",
+   "tur": "kaybedenYerli",
+   "baslik": "Kaybeden Yerli MVP",
+   "oyuncu": "Mahir Ağva",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "vp": 18
+  },
+  {
+   "dosya": "05-kaybeden-yabanci-mvp-oscar-cluff.jpg",
+   "tur": "kaybedenYabanci",
+   "baslik": "Kaybeden Yabancı MVP",
+   "oyuncu": "Oscar Cluff",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "vp": 35
+  },
+  {
+   "dosya": "06-altin-5.jpg",
+   "tur": "besli",
+   "baslik": "Altın 5",
+   "oyuncular": [
+    "Oscar Cluff",
+    "Uros Trifunovic",
+    "Braxton Key",
+    "Ty Gordon",
+    "Quentin Peterson"
+   ]
+  },
+  {
+   "dosya": "07-gumus-5.jpg",
+   "tur": "besli",
+   "baslik": "Gümüş 5",
+   "oyuncular": [
+    "Steven Enoch",
+    "Javon Freeman-Liberty",
+    "Alen Smailagic",
+    "Metecan Birsen",
+    "Anthony Brown"
+   ]
+  },
+  {
+   "dosya": "08-bronz-5.jpg",
+   "tur": "besli",
+   "baslik": "Bronz 5",
+   "oyuncular": [
+    "Rashard Kelly",
+    "Wenyen Gabriel",
+    "Jordon Crawford",
+    "Bryce Jones",
+    "John Meeks"
+   ]
+  },
+  {
+   "dosya": "09-mansiyon-5.jpg",
+   "tur": "besli",
+   "baslik": "Mansiyon 5",
+   "oyuncular": [
+    "Tyler Cavanaugh",
+    "Chris Horton",
+    "Brandon Boston Jr.",
+    "Trevion Williams",
+    "Marcquise Reed"
+   ]
+  }
+ ]
+}

@@ -85,15 +85,15 @@
    "durum": "canli",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
-   "evSkor": "40",
+   "evSkor": "50",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": "39",
+   "depSkor": "43",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
-    "periyot": 2,
-    "saat": "00:00",
+    "periyot": 3,
+    "saat": "05:58",
     "uzatma": false
    }
   },

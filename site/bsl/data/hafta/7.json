@@ -85,15 +85,15 @@
    "durum": "canli",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
-   "evSkor": "40",
+   "evSkor": "50",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": "39",
+   "depSkor": "43",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
-    "periyot": 2,
-    "saat": "00:00",
+    "periyot": 3,
+    "saat": "05:58",
     "uzatma": false
    }
   },
@@ -1276,24 +1276,24 @@
    "ad": "Şehmus Hazer",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 8,
-   "saniye": 783,
+   "vp": 6,
+   "saniye": 1025,
    "mac": 1
   },
   "502492": {
    "ad": "Aleksej Nikolic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 2,
-   "saniye": 738,
+   "vp": 3,
+   "saniye": 980,
    "mac": 1
   },
   "779275": {
    "ad": "Chimezie Metu",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 19,
-   "saniye": 978,
+   "vp": 23,
+   "saniye": 1220,
    "mac": 1
   },
   "779274": {
@@ -1332,8 +1332,8 @@
    "ad": "Alen Smailagic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 3,
-   "saniye": 160,
+   "vp": 4,
+   "saniye": 402,
    "mac": 1
   },
   "54128": {
@@ -1348,8 +1348,8 @@
    "ad": "Dyshawn Pierre",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": -1,
-   "saniye": 343,
+   "vp": 8,
+   "saniye": 585,
    "mac": 1
   },
   "781548": {
@@ -1364,8 +1364,8 @@
    "ad": "Mike Davis Jr.",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": -3,
-   "saniye": 757,
+   "vp": -2,
+   "saniye": 999,
    "mac": 1
   },
   "502518": {
@@ -1389,15 +1389,15 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 5,
-   "saniye": 716,
+   "saniye": 958,
    "mac": 1
   },
   "151935": {
    "ad": "Muhsin Yaşar",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 2,
-   "saniye": 317,
+   "vp": 1,
+   "saniye": 492,
    "mac": 1
   },
   "359434": {
@@ -1412,8 +1412,8 @@
    "ad": "James Webb Iii",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 8,
-   "saniye": 883,
+   "vp": 7,
+   "saniye": 1125,
    "mac": 1
   },
   "776570": {
@@ -1421,7 +1421,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 4,
-   "saniye": 567,
+   "saniye": 634,
    "mac": 1
   },
   "351474": {
@@ -1436,8 +1436,8 @@
    "ad": "Egehan Arna",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 13,
-   "saniye": 883,
+   "vp": 15,
+   "saniye": 1125,
    "mac": 1
   },
   "57737": {

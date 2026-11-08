@@ -72,15 +72,15 @@
    "durum": "canli",
    "ev": "ANADOLU EFES",
    "evId": 265990,
-   "evSkor": "38",
+   "evSkor": "40",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "46",
+   "depSkor": "49",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
-    "periyot": 2,
-    "saat": "00:00",
+    "periyot": 3,
+    "saat": "08:57",
     "uzatma": false
    }
   },
@@ -1077,7 +1077,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 4,
-   "saniye": 383,
+   "saniye": 447,
    "mac": 1
   },
   "333434": {
@@ -1092,8 +1092,8 @@
    "ad": "Fatts Russell",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 9,
-   "saniye": 923,
+   "vp": 11,
+   "saniye": 978,
    "mac": 1
   },
   "281408": {
@@ -1101,7 +1101,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 7,
-   "saniye": 457,
+   "saniye": 521,
    "mac": 1
   },
   "370740": {
@@ -1109,7 +1109,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 2,
-   "saniye": 776,
+   "saniye": 840,
    "mac": 1
   },
   "508583": {
@@ -1149,7 +1149,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 0,
-   "saniye": 464,
+   "saniye": 528,
    "mac": 1
   },
   "782949": {
@@ -1157,7 +1157,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 0,
-   "saniye": 248,
+   "saniye": 257,
    "mac": 1
   },
   "157002": {
@@ -1173,31 +1173,31 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 14,
-   "saniye": 721,
+   "saniye": 785,
    "mac": 1
   },
   "227173": {
    "ad": "Sadık Kabaca",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 3,
-   "saniye": 918,
+   "vp": 2,
+   "saniye": 982,
    "mac": 1
   },
   "778401": {
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 11,
-   "saniye": 862,
+   "vp": 14,
+   "saniye": 926,
    "mac": 1
   },
   "778399": {
    "ad": "Shavar Reynolds Jr.",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 9,
-   "saniye": 672,
+   "vp": 10,
+   "saniye": 736,
    "mac": 1
   },
   "778398": {
@@ -1221,7 +1221,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -2,
-   "saniye": 700,
+   "saniye": 764,
    "mac": 1
   },
   "736069": {

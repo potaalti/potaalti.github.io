@@ -36,17 +36,19 @@ if [ "$(cat "$SAAT_KAYIT" 2>/dev/null)" != "$bugun-$saat" ]; then
 fi
 
 {
+  # Her adımın süre sınırı var (timeout): takılan bir istek görevi kilitlemesin (2026-11-05 18:57'de takılıp
+  # 1,5 gün hiç çalışmadı), sonraki tetiklemeler devam etsin
   # BSL canlı: maç saatinde değilse bir şey yazmadan kapanır
-  (cd bsl && python veri_guncelle.py --akilli) || echo "$(date '+%F %T') BSL canlı veri alınamadı"
+  (cd bsl && timeout 600 python veri_guncelle.py --akilli) || echo "$(date '+%F %T') BSL canlı veri alınamadı"
 
   if [ $gunluk = 1 ] || [ $saatlik = 1 ]; then
     echo "== $(date '+%F %T') $([ $gunluk = 1 ] && echo 'tam' || echo 'saatlik') güncelleme"
-    git pull -q --rebase --autostash || echo "git pull başarısız"
+    timeout 180 git pull -q --rebase --autostash || echo "git pull başarısız"
     if [ $gunluk = 1 ]; then
-      (cd bsl && python veri_guncelle.py) || echo "BSL verisi alınamadı (TBF)"
+      (cd bsl && timeout 1500 python veri_guncelle.py) || echo "BSL verisi alınamadı (TBF)"
     fi
     # Liderler ve seyirci sayıları sadece günde 2 kezlik tam güncellemede (seyirci Cumartesi–Salı dışında atlanır)
-    python veri/uret.py $([ $gunluk = 1 ] && echo --gunluk) > /dev/null || echo "Puan tablosu ve liderler üretilemedi"
+    timeout 900 python veri/uret.py $([ $gunluk = 1 ] && echo --gunluk) > /dev/null || echo "Puan tablosu ve liderler üretilemedi"
   fi
 
   git add site/data site/bsl/data site/tbl/data
@@ -55,8 +57,8 @@ fi
     if [ "${POTA_KURU:-0}" = 1 ]; then
       echo "deneme: GitHub'a gönderilmedi"
     else
-      git pull -q --rebase --autostash
-      if git push -q; then echo "$(date '+%F %T') gönderildi"; else echo "$(date '+%F %T') GitHub'a gönderilemedi"; fi
+      timeout 180 git pull -q --rebase --autostash
+      if timeout 180 git push -q; then echo "$(date '+%F %T') gönderildi"; else echo "$(date '+%F %T') GitHub'a gönderilemedi"; fi
     fi
   elif [ $gunluk = 1 ] || [ $saatlik = 1 ]; then
     echo "değişiklik yok"

@@ -52,6 +52,12 @@ if (!hesap) {
   // Uygulama bu jetonla girer (app.js: window.robotJetonu)
   const jeton = jwt({ iss: hesap.client_email, sub: hesap.client_email, uid: UID, iat: simdi, exp: simdi + 3600,
     aud: 'https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit' });
+  // Talep süreleri (bekleme belgeleri, herkese açık) önce/sonra: robotun başlattığı talep süresi ve biten (kurası çekilen) talepler kayda
+  const beklemeler = async () => {
+    const d = await (await fetch(`https://firestore.googleapis.com/v1/projects/${hesap.project_id}/databases/(default)/documents/bekleme?pageSize=300`)).json();
+    return new Map((d.documents ?? []).map(b => [b.name.split('/').pop(), b.fields?.zaman?.timestampValue]));
+  };
+  const once = await beklemeler();
   const tarayici = await puppeteer.launch({ executablePath: CHROME, headless: true, args: ['--no-sandbox'] });
   try {
     const s = await tarayici.newPage();
@@ -64,6 +70,9 @@ if (!hesap) {
     const durum = await s.evaluate(() => window.robotDurumu);
     if (durum.ben !== 'admin') throw new Error(`Robot yönetici olarak girilemedi (takım: ${durum.ben})`);
     await new Promise(ok => setTimeout(ok, BEKLE_MS));
+    const sonra = await beklemeler();
+    for (const [pid, z] of sonra) if (once.get(pid) !== z) kayit.push(`Talep süresi başladı: oyuncu ${pid} (başlangıç ${z})`);
+    for (const pid of once.keys()) if (!sonra.has(pid)) kayit.push(`Talep süresi kapandı (kura çekildi ya da talep yoktu): oyuncu ${pid}`);
     console.log(kayit.length ? kayit.join('\n') : 'Yapılacak iş yoktu.');
   } finally {
     await tarayici.close();

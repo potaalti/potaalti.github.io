@@ -69,15 +69,20 @@
   {
    "id": 346326,
    "tarih": "2026-11-08T15:30:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "ANADOLU EFES",
    "evId": 265990,
-   "evSkor": null,
+   "evSkor": "15",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": null,
+   "depSkor": "14",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "03:37",
+    "uzatma": false
+   }
   },
   {
    "id": 346323,
@@ -1065,6 +1070,198 @@
    "takimId": 266028,
    "vp": 1,
    "saniye": 583,
+   "mac": 1
+  },
+  "778403": {
+   "ad": "Santi Yusta",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 4,
+   "saniye": 383,
+   "mac": 1
+  },
+  "333434": {
+   "ad": "Dario Saric",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 3,
+   "saniye": 324,
+   "mac": 1
+  },
+  "587569": {
+   "ad": "Fatts Russell",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 2,
+   "saniye": 383,
+   "mac": 1
+  },
+  "281408": {
+   "ad": "David Mutaf",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 7,
+   "saniye": 383,
+   "mac": 1
+  },
+  "370740": {
+   "ad": "Ercan Osmani",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 3,
+   "saniye": 383,
+   "mac": 1
+  },
+  "508583": {
+   "ad": "Darius Karutasu",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "736126": {
+   "ad": "Jordan Loyd",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "778400": {
+   "ad": "Collin Malcolm",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "137459": {
+   "ad": "Burak Can Yıldızlı",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "778422": {
+   "ad": "Bruno Fernando",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 1,
+   "saniye": 59,
+   "mac": 1
+  },
+  "782949": {
+   "ad": "Cameron Payne",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "157002": {
+   "ad": "Erkan Yılmaz",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "485299": {
+   "ad": "Terrell Carter Ii",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 3,
+   "saniye": 324,
+   "mac": 1
+  },
+  "227173": {
+   "ad": "Sadık Kabaca",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 3,
+   "saniye": 383,
+   "mac": 1
+  },
+  "778401": {
+   "ad": "Bryce Jones",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 1,
+   "saniye": 324,
+   "mac": 1
+  },
+  "778399": {
+   "ad": "Shavar Reynolds Jr.",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 5,
+   "saniye": 383,
+   "mac": 1
+  },
+  "778398": {
+   "ad": "Gabe Brown",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 2,
+   "saniye": 324,
+   "mac": 1
+  },
+  "452216": {
+   "ad": "Kerem Çorumlular",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "778402": {
+   "ad": "Zach Nutall",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 0,
+   "saniye": 59,
+   "mac": 1
+  },
+  "736069": {
+   "ad": "Tre'shawn Thurman",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 2,
+   "saniye": 59,
+   "mac": 1
+  },
+  "732657": {
+   "ad": "Mantas Rubstavicius",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "389934": {
+   "ad": "Efe Postel",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 0,
+   "saniye": 59,
+   "mac": 1
+  },
+  "434482": {
+   "ad": "Emirhan Serbest",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "197570": {
+   "ad": "Leon Apaydın",
+   "takim": "TOFAŞ",
+   "takimId": 265995,
+   "vp": 0,
+   "saniye": 0,
    "mac": 1
   }
  }

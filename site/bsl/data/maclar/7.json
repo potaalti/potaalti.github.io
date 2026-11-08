@@ -69,15 +69,20 @@
   {
    "id": 346326,
    "tarih": "2026-11-08T15:30:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "ANADOLU EFES",
    "evId": 265990,
-   "evSkor": null,
+   "evSkor": "15",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": null,
+   "depSkor": "14",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "03:37",
+    "uzatma": false
+   }
   },
   {
    "id": 346323,

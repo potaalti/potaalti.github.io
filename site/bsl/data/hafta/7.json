@@ -4,67 +4,72 @@
   {
    "id": 346327,
    "tarih": "2026-11-07T13:00:00",
-   "durum": "oynanmadi",
+   "durum": "bitti",
    "ev": "GLİNT ÇAYIROVA BELEDİYESİ",
    "evId": 265994,
-   "evSkor": null,
+   "evSkor": "95",
    "dep": "PİZZABULLS BORDO BANDIRMA",
    "depId": 265993,
-   "depSkor": null,
+   "depSkor": "78",
    "salon": "Çayırova Belediyesi Spor Kompleksi",
    "yayin": "beINSports"
   },
   {
    "id": 346324,
    "tarih": "2026-11-07T15:30:00",
-   "durum": "oynanmadi",
+   "durum": "bitti",
    "ev": "TÜRK TELEKOM",
    "evId": 266030,
-   "evSkor": null,
+   "evSkor": "94",
    "dep": "BİOTEKNO KÖRFEZ BASKET",
    "depId": 268222,
-   "depSkor": null,
+   "depSkor": "82",
    "salon": "Ankara Spor Salonu",
    "yayin": "beINSports"
   },
   {
    "id": 346325,
    "tarih": "2026-11-07T18:00:00",
-   "durum": "oynanmadi",
+   "durum": "bitti",
    "ev": "TRABZONSPOR",
    "evId": 266029,
-   "evSkor": null,
+   "evSkor": "81",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
-   "depSkor": null,
+   "depSkor": "91",
    "salon": "Hayri Gür Spor Salonu",
    "yayin": "beINSports"
   },
   {
    "id": 346329,
    "tarih": "2026-11-07T20:30:00",
-   "durum": "oynanmadi",
+   "durum": "bitti",
    "ev": "BURSASPOR BASKETBOL",
    "evId": 266176,
-   "evSkor": null,
+   "evSkor": "59",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": null,
+   "depSkor": "78",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports"
   },
   {
    "id": 346322,
    "tarih": "2026-11-08T13:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "BAHÇEŞEHİR KOLEJİ",
    "evId": 265991,
-   "evSkor": null,
+   "evSkor": "51",
    "dep": "YUKATEL DENİZLİ BASKET",
    "depId": 266028,
-   "depSkor": null,
+   "depSkor": "50",
    "salon": "Sinan Erdem Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 2,
+    "saat": "00:00",
+    "uzatma": false
+   }
   },
   {
    "id": 346326,
@@ -106,5 +111,958 @@
    "yayin": "beINSports"
   }
  ],
- "oyuncular": {}
+ "oyuncular": {
+  "501134": {
+   "ad": "Jordon Crawford",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 30,
+   "saniye": 1947,
+   "mac": 1
+  },
+  "666080": {
+   "ad": "Fabian White Jr.",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 20,
+   "saniye": 1940,
+   "mac": 1
+  },
+  "160245": {
+   "ad": "Enes Berkay Taşkıran",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 0,
+   "saniye": 700,
+   "mac": 1
+  },
+  "500074": {
+   "ad": "Jeremy Simmons",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 25,
+   "saniye": 2040,
+   "mac": 1
+  },
+  "502472": {
+   "ad": "Michal Sokolowski",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 9,
+   "saniye": 1653,
+   "mac": 1
+  },
+  "756112": {
+   "ad": "Nysier Brooks",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 0,
+   "saniye": 183,
+   "mac": 1
+  },
+  "107520": {
+   "ad": "Kartal Özmızrak",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 12,
+   "saniye": 888,
+   "mac": 1
+  },
+  "127089": {
+   "ad": "Erdi Gülaslan",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "510739": {
+   "ad": "Rasheed Sulaimon",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 3,
+   "saniye": 1491,
+   "mac": 1
+  },
+  "122136": {
+   "ad": "Canberk Kuş",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 10,
+   "saniye": 1158,
+   "mac": 1
+  },
+  "367110": {
+   "ad": "Emin Kara",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "501690": {
+   "ad": "Roberto Gallinat",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "666515": {
+   "ad": "Ty Gordon",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 13,
+   "saniye": 1754,
+   "mac": 1
+  },
+  "512379": {
+   "ad": "Boubacar Toure",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 5,
+   "saniye": 757,
+   "mac": 1
+  },
+  "667625": {
+   "ad": "Damien Jefferson",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 5,
+   "saniye": 1253,
+   "mac": 1
+  },
+  "307500": {
+   "ad": "Mehmet Oğuzhan Kızıl",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 7,
+   "saniye": 648,
+   "mac": 1
+  },
+  "501076": {
+   "ad": "Quentin Peterson",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 11,
+   "saniye": 2036,
+   "mac": 1
+  },
+  "441857": {
+   "ad": "Alex Perez",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 11,
+   "saniye": 1200,
+   "mac": 1
+  },
+  "130898": {
+   "ad": "Okben Ulubay",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 8,
+   "saniye": 1478,
+   "mac": 1
+  },
+  "106461": {
+   "ad": "Kadir Bayram",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 0,
+   "saniye": 509,
+   "mac": 1
+  },
+  "109611": {
+   "ad": "Berk Demir",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "85925": {
+   "ad": "Özgür Şahin",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "473261": {
+   "ad": "Peyton Aldridge",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 6,
+   "saniye": 921,
+   "mac": 1
+  },
+  "778310": {
+   "ad": "Zach Hankins",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "takimId": 265993,
+   "vp": 23,
+   "saniye": 1443,
+   "mac": 1
+  },
+  "778728": {
+   "ad": "Jerrick Harding",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 9,
+   "saniye": 1326,
+   "mac": 1
+  },
+  "418533": {
+   "ad": "Uros Trifunovic",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 11,
+   "saniye": 1813,
+   "mac": 1
+  },
+  "129216": {
+   "ad": "Doğuş Özdemiroğlu",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 8,
+   "saniye": 1562,
+   "mac": 1
+  },
+  "778727": {
+   "ad": "Ismael Bako",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 29,
+   "saniye": 1379,
+   "mac": 1
+  },
+  "277894": {
+   "ad": "Göktuğ Baş",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 15,
+   "saniye": 1424,
+   "mac": 1
+  },
+  "408785": {
+   "ad": "Anıl Alyanak",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 1,
+   "saniye": 174,
+   "mac": 1
+  },
+  "202579": {
+   "ad": "Ata Kahraman",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 9,
+   "saniye": 1328,
+   "mac": 1
+  },
+  "380838": {
+   "ad": "Ömer Can",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "112715": {
+   "ad": "Emircan Koşut",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": -2,
+   "saniye": 198,
+   "mac": 1
+  },
+  "668012": {
+   "ad": "Kris Bankston",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 14,
+   "saniye": 1132,
+   "mac": 1
+  },
+  "272903": {
+   "ad": "Mete Tekçevik",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": -1,
+   "saniye": 507,
+   "mac": 1
+  },
+  "386159": {
+   "ad": "Shaquille McKissic",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 13,
+   "saniye": 1159,
+   "mac": 1
+  },
+  "778181": {
+   "ad": "Boo Buie",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 7,
+   "saniye": 1841,
+   "mac": 1
+  },
+  "609266": {
+   "ad": "Matt Mitchell",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": -1,
+   "saniye": 765,
+   "mac": 1
+  },
+  "397073": {
+   "ad": "Altan Çamoğlu",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 0,
+   "saniye": 517,
+   "mac": 1
+  },
+  "778184": {
+   "ad": "Oscar Cluff",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 20,
+   "saniye": 1684,
+   "mac": 1
+  },
+  "470601": {
+   "ad": "Filip Barna",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 12,
+   "saniye": 1634,
+   "mac": 1
+  },
+  "778161": {
+   "ad": "Johnny Davis",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 21,
+   "saniye": 1747,
+   "mac": 1
+  },
+  "254785": {
+   "ad": "Mert Akay",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 4,
+   "saniye": 520,
+   "mac": 1
+  },
+  "419874": {
+   "ad": "Berk Can Akın",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 1,
+   "saniye": 1363,
+   "mac": 1
+  },
+  "217226": {
+   "ad": "Atahan Demirtaş",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "358964": {
+   "ad": "Efe Sarıca",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "778182": {
+   "ad": "Alex Reese",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 19,
+   "saniye": 1237,
+   "mac": 1
+  },
+  "778183": {
+   "ad": "Paulius Danusevicius",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 1,
+   "saniye": 692,
+   "mac": 1
+  },
+  "735812": {
+   "ad": "Brandon Boston Jr.",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 10,
+   "saniye": 1284,
+   "mac": 1
+  },
+  "512899": {
+   "ad": "Akwasi Yeboah",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 16,
+   "saniye": 1478,
+   "mac": 1
+  },
+  "473256": {
+   "ad": "Emanuel Terry",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 15,
+   "saniye": 1527,
+   "mac": 1
+  },
+  "590409": {
+   "ad": "Brady Manek",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": -1,
+   "saniye": 1364,
+   "mac": 1
+  },
+  "192987": {
+   "ad": "Rıdvan Öncel",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 8,
+   "saniye": 817,
+   "mac": 1
+  },
+  "501871": {
+   "ad": "Isaiah Canaan",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 6,
+   "saniye": 1195,
+   "mac": 1
+  },
+  "779255": {
+   "ad": "Marcus Keene",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 18,
+   "saniye": 1676,
+   "mac": 1
+  },
+  "105532": {
+   "ad": "Yiğit Arslan",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 6,
+   "saniye": 1520,
+   "mac": 1
+  },
+  "133530": {
+   "ad": "Tolga Geçim",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 0,
+   "saniye": 165,
+   "mac": 1
+  },
+  "129295": {
+   "ad": "Ege Arar",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "369269": {
+   "ad": "Yiğit Hamza Mestoğlu",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 2,
+   "saniye": 203,
+   "mac": 1
+  },
+  "778462": {
+   "ad": "Xavier Tillman",
+   "takim": "TRABZONSPOR",
+   "takimId": 266029,
+   "vp": 8,
+   "saniye": 771,
+   "mac": 1
+  },
+  "516236": {
+   "ad": "Khyri Thomas",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 10,
+   "saniye": 2008,
+   "mac": 1
+  },
+  "778246": {
+   "ad": "Max Abmas",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 14,
+   "saniye": 1430,
+   "mac": 1
+  },
+  "310250": {
+   "ad": "Yiğit Onan",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 22,
+   "saniye": 1777,
+   "mac": 1
+  },
+  "675128": {
+   "ad": "Anzejs Pasecniks",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 2,
+   "saniye": 712,
+   "mac": 1
+  },
+  "572386": {
+   "ad": "Olivier Hanlan",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 30,
+   "saniye": 1946,
+   "mac": 1
+  },
+  "778249": {
+   "ad": "Keandre Cook",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": -1,
+   "saniye": 781,
+   "mac": 1
+  },
+  "778279": {
+   "ad": "Chris Horton",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 19,
+   "saniye": 1688,
+   "mac": 1
+  },
+  "269217": {
+   "ad": "Tibet Görener",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 2,
+   "saniye": 623,
+   "mac": 1
+  },
+  "284983": {
+   "ad": "Ozan Yılmaz",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 1,
+   "saniye": 169,
+   "mac": 1
+  },
+  "470691": {
+   "ad": "Thomas Akyazılı",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 6,
+   "saniye": 866,
+   "mac": 1
+  },
+  "420125": {
+   "ad": "Yiğit Kaba",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "450046": {
+   "ad": "Yusuf Gündüz",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "510723": {
+   "ad": "Leyton Hammonds",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 11,
+   "saniye": 1957,
+   "mac": 1
+  },
+  "247547": {
+   "ad": "Ergi Tırpancı",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 7,
+   "saniye": 1476,
+   "mac": 1
+  },
+  "778460": {
+   "ad": "Brandon Taylor",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 10,
+   "saniye": 2192,
+   "mac": 1
+  },
+  "778459": {
+   "ad": "Warren Washington",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 5,
+   "saniye": 1109,
+   "mac": 1
+  },
+  "502519": {
+   "ad": "Bryce Brown",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 1,
+   "saniye": 1958,
+   "mac": 1
+  },
+  "736260": {
+   "ad": "Micheal Moore",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 22,
+   "saniye": 1503,
+   "mac": 1
+  },
+  "198380": {
+   "ad": "Tevfik Akdamar",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "402930": {
+   "ad": "Mete Paçacı",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "778461": {
+   "ad": "Nate Watson",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 6,
+   "saniye": 792,
+   "mac": 1
+  },
+  "443749": {
+   "ad": "Ahmet Aldin Türkoğlu",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "303549": {
+   "ad": "Buğra Çal",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "227653": {
+   "ad": "Ömer Can İlyasoğlu",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": -2,
+   "saniye": 1014,
+   "mac": 1
+  },
+  "442131": {
+   "ad": "Shane Larkin",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 12,
+   "saniye": 1340,
+   "mac": 1
+  },
+  "412247": {
+   "ad": "Nicolo Melli",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 8,
+   "saniye": 1088,
+   "mac": 1
+  },
+  "54659": {
+   "ad": "Sertaç Şanlı",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 9,
+   "saniye": 1186,
+   "mac": 1
+  },
+  "777704": {
+   "ad": "Trent Forrest",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 7,
+   "saniye": 1146,
+   "mac": 1
+  },
+  "777705": {
+   "ad": "Shavon Shields",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 11,
+   "saniye": 1311,
+   "mac": 1
+  },
+  "667814": {
+   "ad": "Wade Baldwin IV",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 8,
+   "saniye": 1201,
+   "mac": 1
+  },
+  "777679": {
+   "ad": "Johnny  Juzang",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": -2,
+   "saniye": 546,
+   "mac": 1
+  },
+  "27541": {
+   "ad": "Melih Mahmutoğlu",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 7,
+   "saniye": 526,
+   "mac": 1
+  },
+  "785063": {
+   "ad": "DWIGHT HARLAN POWELL",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 12,
+   "saniye": 1038,
+   "mac": 1
+  },
+  "144725": {
+   "ad": "Onuralp Bitim",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 19,
+   "saniye": 1488,
+   "mac": 1
+  },
+  "346709": {
+   "ad": "Ignas Sargiunas",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 7,
+   "saniye": 1130,
+   "mac": 1
+  },
+  "318204": {
+   "ad": "Demircan Demir",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "609095": {
+   "ad": "Marcquise Reed",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 5,
+   "saniye": 508,
+   "mac": 1
+  },
+  "734506": {
+   "ad": "Malachi Flynn",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 4,
+   "saniye": 777,
+   "mac": 1
+  },
+  "608898": {
+   "ad": "Tyler Cavanaugh",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 2,
+   "saniye": 868,
+   "mac": 1
+  },
+  "384595": {
+   "ad": "Mateusz Ponitka",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 11,
+   "saniye": 655,
+   "mac": 1
+  },
+  "734505": {
+   "ad": "Trevion Williams",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 16,
+   "saniye": 810,
+   "mac": 1
+  },
+  "776935": {
+   "ad": "Aleksa Avramovic",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 8,
+   "saniye": 506,
+   "mac": 1
+  },
+  "358272": {
+   "ad": "İsmet Akpınar",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 275,
+   "mac": 1
+  },
+  "776654": {
+   "ad": "Damien Inglis",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 332,
+   "mac": 1
+  },
+  "447092": {
+   "ad": "Mustafa Yiğit Açar",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "283725": {
+   "ad": "Furkan Haltalı",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 4,
+   "saniye": 376,
+   "mac": 1
+  },
+  "776655": {
+   "ad": "David Dileo",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 10,
+   "saniye": 417,
+   "mac": 1
+  },
+  "131296": {
+   "ad": "Kenan Sipahi",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 6,
+   "saniye": 476,
+   "mac": 1
+  },
+  "778996": {
+   "ad": "Brae Ivey",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 16,
+   "saniye": 900,
+   "mac": 1
+  },
+  "373162": {
+   "ad": "Marko Pecarski",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 7,
+   "saniye": 890,
+   "mac": 1
+  },
+  "779010": {
+   "ad": "Victor Bailey Jr.",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 10,
+   "saniye": 929,
+   "mac": 1
+  },
+  "736366": {
+   "ad": "John Meeks",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 9,
+   "saniye": 944,
+   "mac": 1
+  },
+  "470765": {
+   "ad": "Mahir Ağva",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 5,
+   "saniye": 1022,
+   "mac": 1
+  },
+  "779011": {
+   "ad": "Jhonathan Dunn",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 0,
+   "saniye": 262,
+   "mac": 1
+  },
+  "379563": {
+   "ad": "Mustafa Yılmaz",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 6,
+   "saniye": 309,
+   "mac": 1
+  },
+  "392627": {
+   "ad": "Yaman Alişan",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "278617": {
+   "ad": "Erten Gazi",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "124128": {
+   "ad": "Egemen Güven",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 7,
+   "saniye": 488,
+   "mac": 1
+  },
+  "779012": {
+   "ad": "Mustapha Amzil",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 2,
+   "saniye": 256,
+   "mac": 1
+  }
+ }
 }

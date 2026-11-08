@@ -7,6 +7,7 @@ import * as F from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestor
 import { firebaseConfig, lig as LIG_AYARI } from 'lig-ayar';
 import * as C from './core.js';
 import * as D from './db.js';
+import * as ME from '../mac-ek.js';
 
 // Aynı motor iki lig için çalışır. BSL: draftla kurulur, As 3 Ön + 2 Arka ve Türk kuralı.
 // TBL: kadrolar eski TBL Fantezi Ligi'nden içe aktarılır (draft yok), As'ta en fazla 2 yabancı, fantezi hafta numaraları.
@@ -2149,16 +2150,36 @@ function takimIstatistigi(id) {
   }
   return S.takimIst?.[id];
 }
+// Gelişmiş istatistikler ve skor farkı grafiği (biten maçlar, ana uygulamanın verisinden; canlıda kutu skorun içinde gelir)
+function ileriIstatistigi(id) {
+  if (S.ileriIst === undefined) {
+    S.ileriIst = null;
+    fetch(new URL(`../data/${LIG.kod}/ileri-istatistik.json`, location.href)).then(r => (r.ok ? r.json() : {})).catch(() => ({}))
+      .then(v => { S.ileriIst = v; ciz(); });
+  }
+  return S.ileriIst?.[id];
+}
+function farkVerisi(id) {
+  S.farklar ??= {};
+  if (S.farklar[id] === undefined) {
+    S.farklar[id] = null;
+    fetch(new URL(`../data/${LIG.kod}/fark/${id}.json`, location.href)).then(r => (r.ok ? r.json() : null)).catch(() => null)
+      .then(v => { if (v) { S.farklar[id] = v; ciz(); } });
+  }
+  return S.farklar[id];
+}
 
-function kutuSkorTablosu(t, takim) {
+// canli: maç sürüyorsa sahadaki 5 oyuncunun adının sonuna * konur (kutu skorda "sahada" bilgisi varsa; stil cila.css)
+function kutuSkorTablosu(t, takim, canli = false) {
   const sahip = sahipler();
   const benim = benimTakimim();
   const oyuncular = t.oyuncular ?? [];
   const satirlar = kutuSirasi(oyuncular).map(o => {
     const tid = sahip.get(String(o.id));
     const ad = oyuncuLinki(o.id, o.ad);
+    const sahada = canli && o.sahada;
     return `<tr class="${sureSn(o.sure) > 0 ? '' : 'oynamadi'} ${tid && tid === benim ? 'ben' : ''}">
-      <th>${o.ilk5 ? `<b>${ad}</b>` : ad}</th>
+      <th${sahada ? ' class="sahada"' : ''}>${o.ilk5 ? `<b>${ad}</b>` : ad}${sahada ? '<span class="sahada-yildiz">*</span>' : ''}</th>
       ${KUTU_SUTUNLARI.map(c => kutuHucresi(o, c)).join('')}</tr>`;
   }).join('');
   return `<div class="kart"><h3>${esc(baslik(t.ad))}</h3><div class="tablo-kap"><table class="kutu">
@@ -2196,8 +2217,16 @@ function gorunumMac(id) {
   if (!kutu) {
     return `${ust}${kutu === null || m.durum === 'oynanmadi' ? `<p class="bos">${m.durum === 'oynanmadi' ? 'Maç henüz oynanmadı.' : 'Kutu skor henüz gelmedi.'}</p>` : '<p class="bos">Kutu skor yükleniyor…</p>'}${fantezi}`;
   }
-  return `${ust}${ceyrekTablosu(kutu)}${kutuSkorTablosu(kutu.ev, takimIstatistigi(kutu.id)?.ev)}${kutuSkorTablosu(kutu.dep, takimIstatistigi(kutu.id)?.dep)}
-    <p class="soluk kucuk">Kalın: ilk 5 · 2S/3S/SA: isabet/deneme · Oyuncunun altında fantezi takımı yazar${benimTakimim() ? ', senin oyuncuların vurgulu' : ''}.</p>`;
+  // Ana uygulamanın maç sayfasıyla aynı: sahadaki 5 (*), canlıda da takım satırı, skor farkı grafiği, gelişmiş istatistikler
+  const canli = m.durum === 'canli' && !canliYazisi(m).startsWith('Maç sonu');
+  const tist = takimIstatistigi(kutu.id);
+  const ileri = ME.ileriVerisi(kutu, kutu.ev.ileri ? null : ileriIstatistigi(kutu.id));
+  const fark = kutu.fark ?? (ME.farkVarMi(LIG.kod, kutu.hafta ?? n) ? farkVerisi(id) : null);
+  const evAd = baslik(kutu.ev.ad), depAd = baslik(kutu.dep.ad);
+  return `${ust}${ceyrekTablosu(kutu)}${ME.farkGrafigi(evAd, depAd, fark)}
+    ${kutuSkorTablosu(kutu.ev, kutu.ev.takim ?? tist?.ev, canli)}${kutuSkorTablosu(kutu.dep, kutu.dep.takim ?? tist?.dep, canli)}
+    ${ME.ileriIstatistikKarti(evAd, depAd, ileri)}
+    <p class="soluk kucuk">Kalın: ilk 5${canli ? ' · *: sahada' : ''} · 2S/3S/SA: isabet/deneme · Oyuncunun altında fantezi takımı yazar${benimTakimim() ? ', senin oyuncuların vurgulu' : ''}.</p>`;
 }
 
 // Maçtaki fantezi oyuncuları: iki BSL takımında olup bir fantezi takımında olan oyuncular ve o haftaki VP'leri

@@ -1,6 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
 import {
-  getAuth, signInAnonymously, signOut, connectAuthEmulator, GoogleAuthProvider, signInWithPopup, signInWithRedirect,
+  getAuth, signInAnonymously, signOut, connectAuthEmulator, GoogleAuthProvider, signInWithPopup, signInWithRedirect, signInWithCustomToken,
 } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
 import * as F from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
 // Lig ayarı ve Firebase projesi her ligin kendi klasöründeki config.js'tedir (sayfadaki import map: 'lig-ayar')
@@ -227,6 +227,7 @@ function bildir(mesaj, hata = false) {
   const el = document.createElement('div');
   el.textContent = mesaj;
   if (hata) el.className = 'hata';
+  if (window.robotJetonu) console.log(`BİLDİRİM${hata ? ' (hata)' : ''}: ${mesaj}`); // robotun iş kaydına
   $('#bildirim').append(el);
   setTimeout(() => el.remove(), hata ? 6000 : 3500);
 }
@@ -3260,6 +3261,9 @@ async function basla() {
   try {
     // Google ile girmiş kullanıcı tarayıcıda kayıtlıdır; yoksa izleyici olarak anonim girilir
     await auth.authStateReady();
+    // Robot yönetici (GitHub Actions, veri/robot_yonetici.mjs): Firebase hizmet hesabının verdiği jetonla girer; yönetici
+    // ekranının otomatik işleri (yeni oyuncunun talep süresi, talep kurası) kimse uygulamayı açmasa da yapılır
+    if (window.robotJetonu) await signInWithCustomToken(auth, window.robotJetonu);
     if (!auth.currentUser) await signInAnonymously(auth);
     // Tarayıcıda kayıtlı kullanıcı geçersizse (silinmişse) yeniden anonim gir
     try {
@@ -3299,6 +3303,7 @@ async function basla() {
       return ciz();
     }
     await girisYap();
+    if (window.robotJetonu) window.robotDurumu = { ben: S.ben ?? null };
     D.dinle(veriGeldi, dinlemeHatasi);
     D.beklemeleriDinle(v => { S.bekleme = v; S.beklemeYuklendi = true; beklemeleriEsitle(); talepKuralariniCek(); ciz(); }, dinlemeHatasi);
     // Sunucu saati farkı arka planda ölçülür; sayfanın açılmasını bekletmesin

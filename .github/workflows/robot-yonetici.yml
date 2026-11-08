@@ -1,0 +1,30 @@
+# Robot yönetici: 15 dakikada bir TBL Fantezi'yi yönetici yetkisiyle arka planda açar (veri/robot_yonetici.mjs):
+# lige yeni katılan oyuncunun talep süresini başlatır, süresi biten taleplerin kurasını çeker. Telefon 3 saattir veri
+# göndermiyorsa da hata verir (GitHub e-postayla bildirir). Firebase hizmet hesabı sırrı: FIREBASE_TBL_HESAP.
+name: Robot yönetici
+
+on:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: robot-yonetici
+  cancel-in-progress: false
+
+jobs:
+  robot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-save --no-audit --no-fund --prefix veri puppeteer-core@25.16.0
+      - run: node veri/robot_yonetici.mjs
+        env:
+          FIREBASE_TBL_HESAP: ${{ secrets.FIREBASE_TBL_HESAP }}

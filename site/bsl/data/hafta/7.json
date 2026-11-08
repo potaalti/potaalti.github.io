@@ -85,15 +85,15 @@
    "durum": "canli",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
-   "evSkor": "35",
+   "evSkor": "40",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": "30",
+   "depSkor": "39",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "02:44",
+    "saat": "00:00",
     "uzatma": false
    }
   },
@@ -1276,8 +1276,8 @@
    "ad": "Şehmus Hazer",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 5,
-   "saniye": 619,
+   "vp": 8,
+   "saniye": 783,
    "mac": 1
   },
   "502492": {
@@ -1293,23 +1293,23 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 19,
-   "saniye": 814,
+   "saniye": 978,
    "mac": 1
   },
   "779274": {
    "ad": "Oumar Ballo",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 2,
-   "saniye": 524,
+   "vp": 4,
+   "saniye": 622,
    "mac": 1
   },
   "128768": {
    "ad": "Berkan Durmaz",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 6,
-   "saniye": 391,
+   "vp": 7,
+   "saniye": 457,
    "mac": 1
   },
   "382357": {
@@ -1340,8 +1340,8 @@
    "ad": "Buğrahan Tuncer",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": -2,
-   "saniye": 480,
+   "vp": -3,
+   "saniye": 644,
    "mac": 1
   },
   "500054": {
@@ -1356,8 +1356,8 @@
    "ad": "Kj Simpson",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 3,
-   "saniye": 617,
+   "vp": 4,
+   "saniye": 781,
    "mac": 1
   },
   "606624": {
@@ -1380,8 +1380,8 @@
    "ad": "Amadou Sow",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": -2,
-   "saniye": 469,
+   "vp": -1,
+   "saniye": 633,
    "mac": 1
   },
   "778080": {
@@ -1404,8 +1404,8 @@
    "ad": "Errick Mccollum",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 1,
-   "saniye": 409,
+   "vp": 6,
+   "saniye": 573,
    "mac": 1
   },
   "667498": {
@@ -1413,7 +1413,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 8,
-   "saniye": 719,
+   "saniye": 883,
    "mac": 1
   },
   "776570": {
@@ -1428,16 +1428,16 @@
    "ad": "Melih Tunca",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 0,
-   "saniye": 63,
+   "vp": 1,
+   "saniye": 227,
    "mac": 1
   },
   "120437": {
    "ad": "Egehan Arna",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 9,
-   "saniye": 719,
+   "vp": 13,
+   "saniye": 883,
    "mac": 1
   },
   "57737": {

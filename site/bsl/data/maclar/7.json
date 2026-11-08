@@ -72,15 +72,15 @@
    "durum": "canli",
    "ev": "ANADOLU EFES",
    "evId": 265990,
-   "evSkor": "40",
+   "evSkor": "59",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "49",
+   "depSkor": "60",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "08:57",
+    "saat": "03:08",
     "uzatma": false
    }
   },

@@ -59,15 +59,15 @@
    "durum": "canli",
    "ev": "BAHÇEŞEHİR KOLEJİ",
    "evId": 265991,
-   "evSkor": "70",
+   "evSkor": "88",
    "dep": "YUKATEL DENİZLİ BASKET",
    "depId": 266028,
-   "depSkor": "58",
+   "depSkor": "79",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
-    "periyot": 3,
-    "saat": "03:31",
+    "periyot": 4,
+    "saat": "04:10",
     "uzatma": false
    }
   },
@@ -884,8 +884,8 @@
    "ad": "Marcquise Reed",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 5,
-   "saniye": 549,
+   "vp": 18,
+   "saniye": 1100,
    "mac": 1
   },
   "734506": {
@@ -909,23 +909,23 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 15,
-   "saniye": 1013,
+   "saniye": 1199,
    "mac": 1
   },
   "734505": {
    "ad": "Trevion Williams",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 26,
-   "saniye": 1209,
+   "vp": 28,
+   "saniye": 1254,
    "mac": 1
   },
   "776935": {
    "ad": "Aleksa Avramovic",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 14,
-   "saniye": 864,
+   "vp": 13,
+   "saniye": 951,
    "mac": 1
   },
   "358272": {
@@ -940,8 +940,8 @@
    "ad": "Damien Inglis",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 0,
-   "saniye": 348,
+   "vp": 5,
+   "saniye": 899,
    "mac": 1
   },
   "447092": {
@@ -956,32 +956,32 @@
    "ad": "Furkan Haltalı",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 4,
-   "saniye": 376,
+   "vp": 6,
+   "saniye": 882,
    "mac": 1
   },
   "776655": {
    "ad": "David Dileo",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 10,
-   "saniye": 458,
+   "vp": 12,
+   "saniye": 823,
    "mac": 1
   },
   "131296": {
    "ad": "Kenan Sipahi",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 8,
-   "saniye": 595,
+   "vp": 6,
+   "saniye": 1059,
    "mac": 1
   },
   "778996": {
    "ad": "Brae Ivey",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 17,
-   "saniye": 1258,
+   "vp": 23,
+   "saniye": 1764,
    "mac": 1
   },
   "373162": {
@@ -989,47 +989,47 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 8,
-   "saniye": 1048,
+   "saniye": 1428,
    "mac": 1
   },
   "779010": {
    "ad": "Victor Bailey Jr.",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 9,
-   "saniye": 1328,
+   "vp": 15,
+   "saniye": 1723,
    "mac": 1
   },
   "736366": {
    "ad": "John Meeks",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 8,
-   "saniye": 1343,
+   "vp": 18,
+   "saniye": 1738,
    "mac": 1
   },
   "470765": {
    "ad": "Mahir Ağva",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 4,
-   "saniye": 1380,
+   "vp": 8,
+   "saniye": 1730,
    "mac": 1
   },
   "779011": {
    "ad": "Jhonathan Dunn",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 0,
-   "saniye": 262,
+   "vp": 2,
+   "saniye": 418,
    "mac": 1
   },
   "379563": {
    "ad": "Mustafa Yılmaz",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 6,
-   "saniye": 350,
+   "vp": 5,
+   "saniye": 395,
    "mac": 1
   },
   "392627": {
@@ -1052,16 +1052,16 @@
    "ad": "Egemen Güven",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 13,
-   "saniye": 770,
+   "vp": 12,
+   "saniye": 971,
    "mac": 1
   },
   "779012": {
    "ad": "Mustapha Amzil",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 2,
-   "saniye": 256,
+   "vp": 1,
+   "saniye": 583,
    "mac": 1
   }
  }

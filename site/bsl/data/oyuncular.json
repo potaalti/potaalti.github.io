@@ -168,7 +168,7 @@
   "boy": null,
   "mevkiTahmini": "on",
   "ribOrt": 4.7,
-  "astOrt": 2.6
+  "astOrt": 2.7
  },
  {
   "id": "778310",
@@ -642,8 +642,8 @@
   "foto": "https://tbf.org.tr/res/7cff6471-a719-4afb-94b2-692b2868bd71_0.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 1.0,
-  "astOrt": 2.4
+  "ribOrt": 1.1,
+  "astOrt": 2.7
  },
  {
   "id": "500079",
@@ -699,7 +699,7 @@
   "foto": "https://tbf.org.tr/res/14c6dbbc-cfa0-4939-94b0-ab807df08393_denizlibasket_0007_5.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 4.7,
+  "ribOrt": 4.9,
   "astOrt": 0.9
  },
  {
@@ -965,7 +965,7 @@
   "foto": "https://tbf.org.tr/res/9af9d00c-c3a2-40d8-8d90-0eec26957b88_denizlibasket_0010_46.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 5.9,
+  "ribOrt": 6.3,
   "astOrt": 1.9
  },
  {
@@ -984,8 +984,8 @@
   "foto": "https://tbf.org.tr/res/b11aa28b-d93b-46b7-b629-d26d1fed3199_denizlibasket_0009_1.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 2.4,
-  "astOrt": 4.4
+  "ribOrt": 2.7,
+  "astOrt": 5.0
  },
  {
   "id": "778399",
@@ -1611,7 +1611,7 @@
   "foto": "https://tbf.org.tr/res/55abc303-1723-443d-bb2e-87c95015e6b7_55.webp",
   "boy": 198,
   "mevkiTahmini": "arka",
-  "ribOrt": 1.4,
+  "ribOrt": 1.6,
   "astOrt": 3.0
  },
  {
@@ -1688,7 +1688,7 @@
   "boy": null,
   "mevkiTahmini": "arka",
   "ribOrt": 3.2,
-  "astOrt": 2.0
+  "astOrt": 2.3
  },
  {
   "id": "114257",
@@ -2142,7 +2142,7 @@
   "foto": "https://tbf.org.tr/res/0ac590d6-8099-4836-884e-2e2422b63087_14.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 3.3,
+  "ribOrt": 3.5,
   "astOrt": 0.5
  },
  {
@@ -3301,7 +3301,7 @@
   "foto": "https://tbf.org.tr/res/2d39b665-f74e-4699-b41d-1d31357d7b4d_denizlibasket_0000_22.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 1.7,
+  "ribOrt": 1.9,
   "astOrt": 0.4
  },
  {
@@ -3623,7 +3623,7 @@
   "foto": "https://tbf.org.tr/res/c0026029-230f-47b1-b70a-83dee6a47f28_51.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 1.5,
+  "ribOrt": 2.0,
   "astOrt": 0.5
  },
  {

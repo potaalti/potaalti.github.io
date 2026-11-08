@@ -85,15 +85,15 @@
    "durum": "canli",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
-   "evSkor": "50",
+   "evSkor": "59",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": "43",
+   "depSkor": "59",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "05:58",
+    "saat": "00:55",
     "uzatma": false
    }
   },
@@ -1268,24 +1268,24 @@
    "ad": "Jerome Robinson Jr.",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 1,
-   "saniye": 494,
+   "vp": 2,
+   "saniye": 542,
    "mac": 1
   },
   "250129": {
    "ad": "Şehmus Hazer",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 6,
-   "saniye": 1025,
+   "vp": 11,
+   "saniye": 1284,
    "mac": 1
   },
   "502492": {
    "ad": "Aleksej Nikolic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 3,
-   "saniye": 980,
+   "vp": 2,
+   "saniye": 1168,
    "mac": 1
   },
   "779275": {
@@ -1293,7 +1293,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 23,
-   "saniye": 1220,
+   "saniye": 1384,
    "mac": 1
   },
   "779274": {
@@ -1309,7 +1309,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 7,
-   "saniye": 457,
+   "saniye": 648,
    "mac": 1
   },
   "382357": {
@@ -1332,16 +1332,16 @@
    "ad": "Alen Smailagic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 4,
-   "saniye": 402,
+   "vp": 7,
+   "saniye": 661,
    "mac": 1
   },
   "54128": {
    "ad": "Buğrahan Tuncer",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": -3,
-   "saniye": 644,
+   "vp": -2,
+   "saniye": 763,
    "mac": 1
   },
   "500054": {
@@ -1349,23 +1349,23 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 8,
-   "saniye": 585,
+   "saniye": 661,
    "mac": 1
   },
   "781548": {
    "ad": "Kj Simpson",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 4,
-   "saniye": 781,
+   "vp": 5,
+   "saniye": 1012,
    "mac": 1
   },
   "606624": {
    "ad": "Mike Davis Jr.",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": -2,
-   "saniye": 999,
+   "vp": 0,
+   "saniye": 1306,
    "mac": 1
   },
   "502518": {
@@ -1397,31 +1397,31 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 1,
-   "saniye": 492,
+   "saniye": 524,
    "mac": 1
   },
   "359434": {
    "ad": "Errick Mccollum",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 6,
-   "saniye": 573,
+   "vp": 14,
+   "saniye": 880,
    "mac": 1
   },
   "667498": {
    "ad": "James Webb Iii",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 7,
-   "saniye": 1125,
+   "vp": 8,
+   "saniye": 1432,
    "mac": 1
   },
   "776570": {
    "ad": "Kevin Yebo",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 4,
-   "saniye": 634,
+   "vp": 8,
+   "saniye": 909,
    "mac": 1
   },
   "351474": {
@@ -1436,8 +1436,8 @@
    "ad": "Egehan Arna",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 15,
-   "saniye": 1125,
+   "vp": 21,
+   "saniye": 1432,
    "mac": 1
   },
   "57737": {

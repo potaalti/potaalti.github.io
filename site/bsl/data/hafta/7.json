@@ -59,15 +59,15 @@
    "durum": "canli",
    "ev": "BAHÇEŞEHİR KOLEJİ",
    "evId": 265991,
-   "evSkor": "51",
+   "evSkor": "57",
    "dep": "YUKATEL DENİZLİ BASKET",
    "depId": 266028,
-   "depSkor": "50",
+   "depSkor": "52",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
-    "periyot": 2,
-    "saat": "00:00",
+    "periyot": 3,
+    "saat": "07:30",
     "uzatma": false
    }
   },
@@ -892,16 +892,16 @@
    "ad": "Malachi Flynn",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 4,
-   "saniye": 777,
+   "vp": 6,
+   "saniye": 927,
    "mac": 1
   },
   "608898": {
    "ad": "Tyler Cavanaugh",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 2,
-   "saniye": 868,
+   "vp": 3,
+   "saniye": 1018,
    "mac": 1
   },
   "384595": {
@@ -909,23 +909,23 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 11,
-   "saniye": 655,
+   "saniye": 805,
    "mac": 1
   },
   "734505": {
    "ad": "Trevion Williams",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 16,
-   "saniye": 810,
+   "vp": 21,
+   "saniye": 960,
    "mac": 1
   },
   "776935": {
    "ad": "Aleksa Avramovic",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 8,
-   "saniye": 506,
+   "vp": 9,
+   "saniye": 656,
    "mac": 1
   },
   "358272": {
@@ -981,7 +981,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 16,
-   "saniye": 900,
+   "saniye": 1050,
    "mac": 1
   },
   "373162": {
@@ -989,7 +989,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 7,
-   "saniye": 890,
+   "saniye": 1007,
    "mac": 1
   },
   "779010": {
@@ -997,15 +997,15 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 10,
-   "saniye": 929,
+   "saniye": 1079,
    "mac": 1
   },
   "736366": {
    "ad": "John Meeks",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 9,
-   "saniye": 944,
+   "vp": 7,
+   "saniye": 1094,
    "mac": 1
   },
   "470765": {
@@ -1013,7 +1013,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 5,
-   "saniye": 1022,
+   "saniye": 1172,
    "mac": 1
   },
   "779011": {
@@ -1052,8 +1052,8 @@
    "ad": "Egemen Güven",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 7,
-   "saniye": 488,
+   "vp": 9,
+   "saniye": 521,
    "mac": 1
   },
   "779012": {

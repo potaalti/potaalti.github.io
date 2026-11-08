@@ -286,7 +286,8 @@ function gorunumMac(lig, id) {
       <a class="${kazananSinifi(m, 'dep')}" href="#/takim/${lig}/${takimAnahtari(m.dep)}">${esc(baslik(m.dep))}</a></div>
       <p class="soluk kucuk" style="margin:10px 0 0;text-align:center"><span class="lig-etiket">${LIGLER[lig].kisa}</span> ${hafta}. hafta · ${bilgi}</p></div>`;
   if (!kutu) return `${ust}<p class="bos">${m.durum === 'oynanmadi' ? 'Maç henüz oynanmadı.' : kutu === null ? 'Kutu skor henüz gelmedi.' : 'Yükleniyor…'}</p>`;
-  const canli = m.durum === 'canli';
+  // Maç bitince (TBF kesinleştirmeden önceki "Maç sonu · kesinleşiyor" dahil) sahada işareti kalkar
+  const canli = m.durum === 'canli' && !canliYazisi(m).startsWith('Maç sonu');
   return `${ust}${ceyrekTablosu(lig, kutu)}${kutuSkorTablosu(lig, kutu.ev, takimIstatistigi(lig, kutu.id)?.ev, canli)}${kutuSkorTablosu(lig, kutu.dep, takimIstatistigi(lig, kutu.id)?.dep, canli)}
     <p class="soluk kucuk">Kalın: ilk 5${canli ? ' · *: sahada' : ''} · 2S/3S/SA: isabet/deneme · Tç: top çalma · Bl: blok · Tk: top kaybı · VP: verimlilik</p>`;
 }

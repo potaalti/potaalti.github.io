@@ -72,15 +72,15 @@
    "durum": "canli",
    "ev": "ANADOLU EFES",
    "evId": 265990,
-   "evSkor": "32",
+   "evSkor": "38",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "38",
+   "depSkor": "46",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "02:31",
+    "saat": "00:00",
     "uzatma": false
    }
   },
@@ -1084,16 +1084,16 @@
    "ad": "Dario Saric",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 6,
-   "saniye": 651,
+   "vp": 8,
+   "saniye": 802,
    "mac": 1
   },
   "587569": {
    "ad": "Fatts Russell",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 7,
-   "saniye": 801,
+   "vp": 9,
+   "saniye": 923,
    "mac": 1
   },
   "281408": {
@@ -1101,7 +1101,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 7,
-   "saniye": 383,
+   "saniye": 457,
    "mac": 1
   },
   "370740": {
@@ -1109,7 +1109,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 2,
-   "saniye": 699,
+   "saniye": 776,
    "mac": 1
   },
   "508583": {
@@ -1124,8 +1124,8 @@
    "ad": "Jordan Loyd",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 1,
-   "saniye": 327,
+   "vp": 0,
+   "saniye": 478,
    "mac": 1
   },
   "778400": {
@@ -1133,7 +1133,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 3,
-   "saniye": 666,
+   "saniye": 780,
    "mac": 1
   },
   "137459": {
@@ -1149,7 +1149,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 0,
-   "saniye": 398,
+   "saniye": 464,
    "mac": 1
   },
   "782949": {
@@ -1172,8 +1172,8 @@
    "ad": "Terrell Carter Ii",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 8,
-   "saniye": 606,
+   "vp": 14,
+   "saniye": 721,
    "mac": 1
   },
   "227173": {
@@ -1181,31 +1181,31 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 3,
-   "saniye": 889,
+   "saniye": 918,
    "mac": 1
   },
   "778401": {
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 10,
-   "saniye": 730,
+   "vp": 11,
+   "saniye": 862,
    "mac": 1
   },
   "778399": {
    "ad": "Shavar Reynolds Jr.",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 7,
-   "saniye": 643,
+   "vp": 9,
+   "saniye": 672,
    "mac": 1
   },
   "778398": {
    "ad": "Gabe Brown",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 3,
-   "saniye": 437,
+   "vp": 5,
+   "saniye": 559,
    "mac": 1
   },
   "452216": {
@@ -1221,7 +1221,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -2,
-   "saniye": 663,
+   "saniye": 700,
    "mac": 1
   },
   "736069": {
@@ -1229,7 +1229,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 460,
+   "saniye": 574,
    "mac": 1
   },
   "732657": {
@@ -1237,7 +1237,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 6,
-   "saniye": 336,
+   "saniye": 372,
    "mac": 1
   },
   "389934": {
@@ -1245,7 +1245,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -1,
-   "saniye": 212,
+   "saniye": 334,
    "mac": 1
   },
   "434482": {
@@ -1253,7 +1253,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 143,
+   "saniye": 162,
    "mac": 1
   },
   "197570": {

@@ -82,7 +82,7 @@
   {
    "id": 346323,
    "tarih": "2026-11-08T18:00:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
    "evSkor": "90",
@@ -90,12 +90,7 @@
    "depId": 266024,
    "depSkor": "81",
    "salon": "Sinan Erdem Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "00:00",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346328,

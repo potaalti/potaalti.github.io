@@ -82,7 +82,7 @@
   {
    "id": 346323,
    "tarih": "2026-11-08T18:00:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
    "evSkor": "90",
@@ -90,12 +90,7 @@
    "depId": 266024,
    "depSkor": "81",
    "salon": "Sinan Erdem Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "00:00",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346328,
@@ -1353,7 +1348,7 @@
    "mac": 1
   },
   "781548": {
-   "ad": "Kj Simpson",
+   "ad": "KJ Simpson",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 17,
@@ -1401,7 +1396,7 @@
    "mac": 1
   },
   "359434": {
-   "ad": "Errick Mccollum",
+   "ad": "Errick McCollum",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 15,
@@ -1409,7 +1404,7 @@
    "mac": 1
   },
   "667498": {
-   "ad": "James Webb Iii",
+   "ad": "James Webb III",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 10,

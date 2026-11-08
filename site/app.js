@@ -16,7 +16,7 @@ const LIGLER = { bsl: { kisa: 'BSL', ad: 'Basketbol Süper Ligi' }, tbl: { kisa:
 
 const S = {
   meta: null, index: null, hata: null,
-  tablo: {}, liderler: {}, takimIst: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, artieksi: {}, seyirci: {}, odul: {}, // lig -> veri (oyuncu: lig -> id -> detay)
+  tablo: {}, liderler: {}, takimIst: {}, ileriIst: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, artieksi: {}, seyirci: {}, odul: {}, // lig -> veri (oyuncu: lig -> id -> detay)
   maclar: {}, // `${lig}-${hafta}` -> maç listesi
   kutular: {}, // maç id -> kutu skor (null: yok)
   ui: { ara: '', oyuncuSirala: 'vp', liderKategori: {}, anaLig: anaLigOku() },
@@ -57,6 +57,8 @@ function yukle(hedef, anahtar, url, { bosDeger = null, donustur = v => v } = {})
     .finally(() => { yukleniyor.delete(k); ciz(); });
 }
 const takimIstatistigi = (lig, id) => { yukle(S.takimIst, lig, `data/${lig}/takim-istatistik.json`, { bosDeger: {} }); return S.takimIst[lig]?.[id]; };
+// Biten maçların gelişmiş takım istatistikleri (FIBA, veri/uret.py); canlı maçta kutu skorun içinde gelir (takım.ileri)
+const ileriIstatistigi = (lig, id) => { yukle(S.ileriIst, lig, `data/${lig}/ileri-istatistik.json`, { bosDeger: {} }); return S.ileriIst[lig]?.[id]; };
 const ligVerisi = (lig, ad) => { yukle(S[ad], lig, `data/${lig}/${ad}.json`); return S[ad][lig]; };
 const macListesi = (lig, h) => { yukle(S.maclar, `${lig}-${h}`, `${KAYNAK}/maclar/${lig}-${h}.json`, { donustur: listeDuzelt }); return S.maclar[`${lig}-${h}`]?.maclar; };
 
@@ -288,8 +290,34 @@ function gorunumMac(lig, id) {
   if (!kutu) return `${ust}<p class="bos">${m.durum === 'oynanmadi' ? 'Maç henüz oynanmadı.' : kutu === null ? 'Kutu skor henüz gelmedi.' : 'Yükleniyor…'}</p>`;
   // Maç bitince (TBF kesinleştirmeden önceki "Maç sonu · kesinleşiyor" dahil) sahada işareti kalkar
   const canli = m.durum === 'canli' && !canliYazisi(m).startsWith('Maç sonu');
-  return `${ust}${ceyrekTablosu(lig, kutu)}${kutuSkorTablosu(lig, kutu.ev, takimIstatistigi(lig, kutu.id)?.ev, canli)}${kutuSkorTablosu(lig, kutu.dep, takimIstatistigi(lig, kutu.id)?.dep, canli)}
-    <p class="soluk kucuk">Kalın: ilk 5${canli ? ' · *: sahada' : ''} · 2S/3S/SA: isabet/deneme · Tç: top çalma · Bl: blok · Tk: top kaybı · VP: verimlilik</p>`;
+  // Takım satırı (takım ribaundu / top kaybı / faul): canlıda kutu skorun içinden, biten maçta TBF'nin takım istatistiğinden
+  const tist = takimIstatistigi(lig, kutu.id);
+  const ileri = kutu.ev.ileri && kutu.dep.ileri ? { ev: kutu.ev.ileri, dep: kutu.dep.ileri } : ileriIstatistigi(lig, kutu.id);
+  return `${ust}${ceyrekTablosu(lig, kutu)}${kutuSkorTablosu(lig, kutu.ev, kutu.ev.takim ?? tist?.ev, canli)}${kutuSkorTablosu(lig, kutu.dep, kutu.dep.takim ?? tist?.dep, canli)}
+    <p class="soluk kucuk">Kalın: ilk 5${canli ? ' · *: sahada' : ''} · 2S/3S/SA: isabet/deneme · Tç: top çalma · Bl: blok · Tk: top kaybı · VP: verimlilik</p>
+    ${ileriIstatistikKarti(kutu, ileri)}`;
+}
+
+// Gelişmiş istatistikler: iki takım karşılıklı çubuklar (o istatistikte önde olan vurgu renginde), altında fark / seri / liderlik
+const ILERI_CUBUKLAR = [['tks', 'Top kaybından sayı'], ['hh', 'Hızlı hücum sayısı'], ['is', 'İkinci şans sayısı'], ['ba', 'Boyalı alan sayısı'], ['benc', 'Benç sayısı']];
+const dakikaSaniye = sn => `${Math.floor(sn / 60)}:${String(sn % 60).padStart(2, '0')}`;
+function ileriIstatistikKarti(kutu, ileri) {
+  const ev = ileri?.ev;
+  const dep = ileri?.dep;
+  if (!ev || !dep) return '';
+  const cubuk = ([k, ad]) => {
+    const a = ev[k] ?? 0;
+    const b = dep[k] ?? 0;
+    const pay = x => (a + b ? Math.max(12, Math.round((x / (a + b)) * 100)) : 12);
+    return `<div class="ileri-cubuk"><div class="ileri-iz sol"><span class="${a > b ? 'onde' : ''}" style="width:${pay(a)}%">${a}</span></div>
+      <div class="ileri-ad">${ad}</div><div class="ileri-iz"><span class="${b > a ? 'onde' : ''}" style="width:${pay(b)}%">${b}</span></div></div>`;
+  };
+  const satir = (ad, a, b) => `<div class="ileri-satir"><b>${a}</b><span>${ad}</span><b>${b}</b></div>`;
+  return `<div class="kart ileri-kart"><h3>Gelişmiş istatistikler</h3>
+    <div class="ileri-takimlar"><span>${esc(baslik(kutu.ev.ad))}</span><span>${esc(baslik(kutu.dep.ad))}</span></div>
+    ${ILERI_CUBUKLAR.map(cubuk).join('')}
+    ${satir('En büyük fark', ev.fark, dep.fark)}${satir('En büyük seri', ev.seri, dep.seri)}${satir('Liderlik süresi', dakikaSaniye(ev.lider), dakikaSaniye(dep.lider))}
+    <div class="ileri-satir orta"><span>Liderlik değişimi <b>${ev.degisim}</b></span><span>Eşitlik <b>${ev.esitlik}</b></span></div></div>`;
 }
 
 // ---------- Lig: puan tablosu, liderler, takımlar, oyuncular ----------

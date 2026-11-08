@@ -109,6 +109,57 @@ def takim_istatistik_uret(lig, maclar, en_fazla=80):
         yaz(yol, kayit)
 
 
+FIBA_URL = "https://fibalivestats.dcd.shared.geniussports.com/data/{}/data.json"
+
+
+def fiba_ileri(tm):
+    """Maç sayfasındaki gelişmiş takım istatistikleri (FIBA takım toplamlarından). Canlı maçta aynısını eski TBL sitesinin
+    fetch_tbf.py'si kutu skora yazar (fiba_ileri): alanlar ikisinde aynı kalmalı. lider: önde geçen süre (saniye)."""
+    s = lambda k: int(round(float(tm.get(k) or 0)))  # noqa: E731
+    return {"tks": s("tot_sPointsFromTurnovers"), "hh": s("tot_sPointsFastBreak"), "is": s("tot_sPointsSecondChance"),
+            "ba": s("tot_sPointsInThePaint"), "benc": s("tot_sBenchPoints"), "fark": s("tot_sBiggestLead"),
+            "seri": s("tot_sBiggestScoringRun"), "lider": int(round(float(tm.get("tot_sTimeLeading") or 0) * 60)),
+            "degisim": s("tot_sLeadChanges"), "esitlik": s("tot_sTimesScoresLevel")}
+
+
+def ileri_istatistik_uret(lig, maclar, en_fazla=60):
+    """Biten maçların gelişmiş takım istatistikleri (FIBA LiveStats, maç başına bir kez; dosyadaki maç bir daha çekilmez).
+    FIBA maç numarası TBF'nin haftalık maç listesinden (genuisId) alınır; numarası olmayan maç null yazılır, tekrar sorulmaz.
+    Şut haritası ve sayı sayı akış kullanıcı isteğiyle alınmaz."""
+    yol = CIKTI / lig / "ileri-istatistik.json"
+    kayit = json.loads(yol.read_text(encoding="utf-8")) if yol.exists() else {}
+    eksik = [m for m in maclar if m["durum"] == "bitti" and str(m["id"]) not in kayit][:en_fazla]
+    fiba_no = {}
+    for h in sorted({m["hafta"] for m in eksik}):
+        try:
+            for x in tbf_getir(lig, f"/Match/get-all-matches-for-filter?ActivityId={TBF_LIG[lig]}&WeekFilter={h}&Page=1&PageSize=-1") or []:
+                fiba_no[str(x["matchId"])] = x.get("genuisId")
+        except Exception as e:  # noqa: BLE001 - TBF'ye ulaşılamazsa sonraki çalışmada
+            print(f"{lig}: {h}. hafta maç listesi alınamadı:", e)
+    degisti = False
+    for m in eksik:
+        k = str(m["id"])
+        if k not in fiba_no:
+            continue
+        if not fiba_no[k]:
+            kayit[k], degisti = None, True
+            continue
+        try:
+            req = urllib.request.Request(FIBA_URL.format(fiba_no[k]), headers={"User-Agent": TARAYICI})
+            with urllib.request.urlopen(req, timeout=30) as yanit:
+                d = json.load(yanit)
+            time.sleep(0.3)
+        except Exception as e:  # noqa: BLE001 - sonraki çalışmada yeniden denenir
+            print(f"{lig}: gelişmiş istatistik alınamadı ({k}):", e)
+            break
+        tm = d.get("tm") or {}
+        if "1" not in tm or "2" not in tm:
+            continue
+        kayit[k], degisti = {"ev": fiba_ileri(tm["1"]), "dep": fiba_ileri(tm["2"])}, True
+    if degisti or not yol.exists():
+        yaz(yol, kayit)
+
+
 def anahtar(ad):
     """Takım adından adres dostu kimlik: 'FENERBAHÇE BEKO' -> 'fenerbahce-beko'"""
     s = ad.replace("İ", "I").replace("ı", "i").lower()
@@ -362,6 +413,7 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
     yaz(CIKTI / lig / "oyuncular.json", sorted(oyuncu_ozet, key=lambda o: o["ad"]))
     yaz(CIKTI / lig / "takimlar.json", {"takimlar": takim_ozet, "maclar": maclar_hepsi})
     takim_istatistik_uret(lig, maclar_hepsi)
+    ileri_istatistik_uret(lig, maclar_hepsi)
     if gunluk or not (CIKTI / lig / "seyirci.json").exists():
         seyirci_uret(lig, maclar_hepsi)
     if gunluk or not (CIKTI / lig / "gorsel.json").exists():

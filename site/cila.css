@@ -396,3 +396,23 @@ table.kutu tr.takim-satir th, table.kutu tr.takim-satir td { color: var(--soluk)
 .odul-ok.sol { left: -64px; } .odul-ok.sag { right: -64px; }
 @media (max-width: 759px) { .odul-ok.sol { left: 6px; } .odul-ok.sag { right: 6px; } .odul-buyuk img { max-height: calc(100vh - 170px); } }
 .odul-buyuk-alt .btn { padding: 9px 14px; border: 1px solid; font: inherit; font-weight: 700; font-size: .9rem; cursor: pointer; }
+
+/* Maç sayfası: gelişmiş istatistikler (karşılıklı çubuklar; o istatistikte önde olan takım vurgu renginde) */
+.ileri-kart h3 { text-align: center; }
+.ileri-takimlar { display: flex; justify-content: space-between; gap: 12px; font-weight: 700; font-size: .85rem; margin-bottom: 4px; }
+.ileri-takimlar span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ileri-cubuk { display: grid; grid-template-columns: 1fr minmax(84px, 120px) 1fr; align-items: center; gap: 8px; margin: 10px 0; }
+.ileri-iz { height: 26px; border-radius: 13px; background: color-mix(in srgb, var(--cizgi) 80%, transparent); display: flex; }
+.ileri-iz.sol { justify-content: flex-end; }
+.ileri-iz span { display: flex; align-items: center; justify-content: flex-end; padding: 0 9px; border-radius: 13px; font-size: .8rem; font-weight: 700;
+  background: var(--gumus); color: #fff; min-width: 30px; box-sizing: border-box; }
+.ileri-iz.sol span { justify-content: flex-start; }
+.ileri-iz span.onde { background: var(--vurgu); color: var(--vurgu-uzeri); }
+.ileri-ad { text-align: center; font-size: .78rem; font-weight: 600; line-height: 1.2; }
+.ileri-satir { display: flex; justify-content: space-between; align-items: center; padding: 9px 2px; border-top: 1px solid var(--cizgi); }
+.ileri-cubuk + .ileri-satir { margin-top: 14px; }
+.ileri-satir > b { font-size: 1.25rem; min-width: 56px; }
+.ileri-satir > b:last-child { text-align: right; }
+.ileri-satir > span { color: var(--soluk); font-size: .9rem; text-align: center; }
+.ileri-satir.orta { justify-content: center; gap: 22px; }
+.ileri-satir.orta b { color: var(--yazi); margin-left: 4px; }

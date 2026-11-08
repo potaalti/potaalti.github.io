@@ -178,87 +178,13 @@ function bayYazisi(lig, maclar) {
 }
 
 // ---------- Maç sayfası (kutu skor) ----------
-const atis = ([b, d] = [0, 0]) => `${b}/${d}`;
-// Kutu skor sütunları: [başlık, değer, toplam alanı, hücre sınıfı, açıklama]
-const KUTU_SUTUNLARI = [
-  ['Dk', o => o.sure, null, '', 'Süre'], ['Sy', o => o.sayi, 'sayi', '', 'Sayı'],
-  ['2S', o => atis(o.iki), 'iki', '', '2 sayılık atış'], ['3S', o => atis(o.uc), 'uc', '', '3 sayılık atış'], ['SA', o => atis(o.sa), 'sa', '', 'Serbest atış'],
-  ['HR', o => o.hr ?? '', 'hr', '', 'Hücum ribaundu'], ['SR', o => o.sr ?? '', 'sr', '', 'Savunma ribaundu'],
-  ['Rb', o => o.rib, 'rib', 'rb', 'Toplam ribaund'], ['As', o => o.ast, 'ast', '', 'Asist'], ['Tç', o => o.tc, 'tc', '', 'Top çalma'],
-  ['Bl', o => o.blk, 'blk', '', 'Blok'], ['Tk', o => o.tk, 'tk', '', 'Top kaybı'], ['F', o => o.faul, 'faul', '', 'Faul'],
-  ['+/-', o => o.pm ?? '', null, '', 'Sahadayken skor farkı'], ['VP', o => o.vp, 'vp', 'vp', 'Verimlilik puanı'],
-];
-const kutuHucresi = (o, [, f, , sinif]) => `<td class="${sinif}">${esc(f(o))}</td>`;
-// Başlığa dokununca sıralanır: önce çoktan aza, sonra azdan çoka, üçüncüde ilk haline döner (S.ui.kutuSirala: { b, artan })
-const kutuBasligi = () => KUTU_SUTUNLARI.map(([b, , , sinif, aciklama]) => {
-  const s = S.ui.kutuSirala?.b === b ? S.ui.kutuSirala : null;
-  return `<td class="${sinif} sirala ${s ? 'aktif' : ''}" title="${aciklama}" data-is="kutu-sirala" data-id="${b}">${b}${s ? (s.artan ? '▲' : '▼') : ''}</td>`;
-}).join('');
-// Sıralama değeri: süre saniye, atışlarda isabet (eşitse deneme), yoksa sayı; değeri olmayan (ör. +/- gelmemiş) hep sonda
-function kutuDegeri([b, f, alan], o) {
-  if (b === 'Dk') return sureSn(o.sure);
-  if (['iki', 'uc', 'sa'].includes(alan)) return (o[alan]?.[0] ?? 0) * 1000 + (o[alan]?.[1] ?? 0);
-  const v = f(o);
-  return v === '' || v == null ? null : Number(v) || 0;
-}
-function kutuSirasi(oyuncular) {
-  const s = S.ui.kutuSirala;
-  const c = s && KUTU_SUTUNLARI.find(([b]) => b === s.b);
-  if (!c) return oyuncular;
-  return [...oyuncular].sort((x, y) => {
-    const a = kutuDegeri(c, x);
-    const b = kutuDegeri(c, y);
-    if (a == null || b == null) return (a == null) - (b == null);
-    return s.artan ? a - b : b - a;
-  });
-}
-const kutuSiralamaDegistir = b => {
-  const s = S.ui.kutuSirala;
-  S.ui.kutuSirala = s?.b !== b ? { b, artan: false } : !s.artan ? { b, artan: true } : null;
-};
-// Takım satırı: oyuncuya yazılmayan takım ribaundu, takım top kaybı ve takım faulü (biten maçlarda, TBF'den); toplama da girer
-const TAKIM_ALANLARI = ['hr', 'sr', 'rib', 'tk', 'faul'];
-const takimSatiri = takim => (!takim ? '' : `<tr class="takim-satir"><th>Takım</th>${KUTU_SUTUNLARI.map(([, , alan, sinif]) =>
-  `<td class="${sinif}">${TAKIM_ALANLARI.includes(alan) ? takim[alan] ?? 0 : ''}</td>`).join('')}</tr>`);
-function kutuToplami(oyuncular, takim) {
-  const topla = alan => oyuncular.reduce((x, o) => x + (Number(o[alan]) || 0), 0) + (takim?.[alan] ?? 0);
-  const toplaAtis = alan => atis([0, 1].map(i => oyuncular.reduce((x, o) => x + (o[alan]?.[i] ?? 0), 0)));
-  return KUTU_SUTUNLARI.map(([, , alan, sinif]) => `<td class="${sinif}">${!alan ? '' : ['iki', 'uc', 'sa'].includes(alan) ? toplaAtis(alan) : topla(alan)}</td>`).join('');
-}
-
+// Kutu skor, çeyrekler, grafik ve gelişmiş istatistikler ortak site/mac-ek.js'te (Fantezi Lig arayüzüyle aynı olsun diye)
 // Fantezi ligine giriş yapılmışsa (bu tarayıcıda) benim takımımın oyuncuları: { ad, oyuncular: Set }
 function takimim(lig) {
   try {
     const t = JSON.parse(localStorage.getItem(`potaAltiTakimim-${lig}`) ?? 'null');
     return t && { ad: t.ad, oyuncular: new Set(t.oyuncular.map(String)) };
   } catch { return null; }
-}
-
-// canli: maç sürüyorsa sahadaki 5 oyuncunun adının sonuna * konur (kutu skorda "sahada" bilgisi varsa)
-function kutuSkorTablosu(lig, t, takim, canli = false) {
-  const oyuncular = t.oyuncular ?? [];
-  const benim = takimim(lig);
-  const satirlar = kutuSirasi(oyuncular).map(o => {
-    const id = String(o.id);
-    const sahada = canli && o.sahada;
-    const ad = id.startsWith('fiba-') ? esc(o.ad) : `<a href="#/oyuncu/${lig}/${id}" class="oyuncu-link">${esc(o.ad)}</a>`;
-    const benimki = benim?.oyuncular.has(id);
-    return `<tr class="${sureSn(o.sure) > 0 ? '' : 'oynamadi'} ${benimki ? 'benim-oyuncu' : ''}"><th${sahada ? ' class="sahada"' : ''}>${o.ilk5 ? `<b>${ad}</b>` : ad}${sahada ? '<span class="sahada-yildiz">*</span>' : ''}</th>
-      ${KUTU_SUTUNLARI.map(c => kutuHucresi(o, c)).join('')}</tr>`;
-  }).join('');
-  return `<div class="kart"><h3>${takimLinki(lig, t.ad)}</h3><div class="tablo-kap"><table class="kutu">
-    <thead><tr><th>Oyuncu</th>${kutuBasligi()}</tr></thead>
-    <tbody>${satirlar}${takimSatiri(takim)}<tr class="toplam"><th>Toplam</th>${kutuToplami(oyuncular, takim)}</tr></tbody></table></div></div>`;
-}
-
-function ceyrekTablosu(lig, k) {
-  const n = Math.max(k.ev.ceyrekler?.length ?? 0, k.dep.ceyrekler?.length ?? 0);
-  if (!n) return '';
-  const hucre = i => (i < 4 ? `Ç${i + 1}` : `U${i - 3}`);
-  const satir = t => `<tr><th>${esc(baslik(t.ad))}</th>${Array.from({ length: n }, (_, i) => `<td>${t.ceyrekler?.[i] ?? '–'}</td>`).join('')}<td><b>${t.skor ?? 0}</b></td></tr>`;
-  return `<div class="kart"><div class="tablo-kap"><table class="kutu ceyrek">
-    <thead><tr><th></th>${Array.from({ length: n }, (_, i) => `<td>${hucre(i)}</td>`).join('')}<td>T</td></tr></thead>
-    <tbody>${satir(k.ev)}${satir(k.dep)}</tbody></table></div></div>`;
 }
 
 function macBul(lig, id) {
@@ -292,17 +218,17 @@ function gorunumMac(lig, id) {
   if (!kutu) return `${ust}<p class="bos">${m.durum === 'oynanmadi' ? 'Maç henüz oynanmadı.' : kutu === null ? 'Kutu skor henüz gelmedi.' : 'Yükleniyor…'}</p>`;
   // Maç bitince (TBF kesinleştirmeden önceki "Maç sonu · kesinleşiyor" dahil) sahada işareti kalkar
   const canli = m.durum === 'canli' && !canliYazisi(m).startsWith('Maç sonu');
-  // Takım satırı (takım ribaundu / top kaybı / faul): canlıda kutu skorun içinden, biten maçta TBF'nin takım istatistiğinden
-  const tist = takimIstatistigi(lig, kutu.id);
-  const ileri = ME.ileriVerisi(kutu, kutu.ev.ileri ? null : ileriIstatistigi(lig, kutu.id));
-  // Skor farkı grafiği (oyuncu istatistiklerinden önce): canlıda kutu skorun içinden, biten maçta ayrı dosyadan (FARK_ILK_HAFTA'dan itibaren)
+  // Takım satırı canlıda kutu skorun içinden, biten maçta TBF'nin takım istatistiğinden; grafik canlıda kutudan, biten maçta
+  // ayrı dosyadan (FARK_ILK_HAFTA'dan itibaren). Gövde Fantezi Lig arayüzüyle ortak (mac-ek.js).
   if (!kutu.fark && ME.farkVarMi(lig, kutu.hafta ?? hafta)) yukle(S.farklar, id, `data/${lig}/fark/${id}.json`);
-  const fark = kutu.fark ?? S.farklar[id];
-  const evAd = baslik(kutu.ev.ad), depAd = baslik(kutu.dep.ad);
-  return `${ust}${ceyrekTablosu(lig, kutu)}${ME.farkGrafigi(evAd, depAd, fark)}
-    ${kutuSkorTablosu(lig, kutu.ev, kutu.ev.takim ?? tist?.ev, canli)}${kutuSkorTablosu(lig, kutu.dep, kutu.dep.takim ?? tist?.dep, canli)}
-    ${ME.ileriIstatistikKarti(evAd, depAd, ileri)}
-    <p class="soluk kucuk">Kalın: ilk 5${canli ? ' · *: sahada' : ''} · 2S/3S/SA: isabet/deneme · Tç: top çalma · Bl: blok · Tk: top kaybı · VP: verimlilik</p>`;
+  const benim = takimim(lig);
+  return `${ust}${ME.macGovdesi(kutu, {
+    canli, sirala: S.ui.kutuSirala, takimIst: takimIstatistigi(lig, kutu.id),
+    ileriDosya: kutu.ev.ileri ? null : ileriIstatistigi(lig, kutu.id), fark: S.farklar[id],
+    takimBasligi: t => takimLinki(lig, t.ad),
+    oyuncuAdi: o => (String(o.id).startsWith('fiba-') ? esc(o.ad) : `<a href="#/oyuncu/${lig}/${o.id}" class="oyuncu-link">${esc(o.ad)}</a>`),
+    benimMi: pid => !!benim?.oyuncular.has(pid),
+  })}`;
 }
 
 // ---------- Lig: puan tablosu, liderler, takımlar, oyuncular ----------
@@ -1066,7 +992,7 @@ document.addEventListener('click', e => {
   const el = e.target.closest('[data-is]');
   if (!el) return;
   if (el.dataset.is === 'oyuncu-sirala') { S.ui.oyuncuSirala = el.dataset.id; ciz(); }
-  if (el.dataset.is === 'kutu-sirala') { kutuSiralamaDegistir(el.dataset.id); ciz(); }
+  if (el.dataset.is === 'kutu-sirala') { S.ui.kutuSirala = ME.kutuSiralamaDegistir(S.ui.kutuSirala, el.dataset.id); ciz(); }
   if (el.dataset.is === 'ae-paylas' || el.dataset.is === 'ae-indir') {
     const yazi = el.textContent;
     el.disabled = true;

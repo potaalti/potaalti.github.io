@@ -1,9 +1,92 @@
-// Maç sayfası ekleri: skor farkı grafiği ve gelişmiş istatistikler. Hem Pota Altı App (app.js) hem Fantezi Lig arayüzü
-// (fantezi/app.js) kullanır; stiller cila.css'te (iki arayüz de yükler). Veriler: canlı maçta kutu skorun içinden
-// (eski TBL sitesinin fetch_tbf.py'si: fark, ev.ileri / dep.ileri, ev.takim / dep.takim), biten maçta veri/uret.py'nin
-// data/<lig>/fark/<id>.json ve data/<lig>/ileri-istatistik.json dosyalarından.
+// Maç sayfasının gövdesi: çeyrek skorları, skor farkı grafiği, iki takımın kutu skoru, gelişmiş istatistikler ve açıklama.
+// KULLANICI KURALI: ana uygulamadaki (app.js) box score ile Fantezi Lig arayüzündeki (fantezi/app.js) box score AYNI
+// olmalı; ikisi de bu dosyayı kullanır, değişiklik burada yapılır. Arayüze özgü olan yalnızca: takım başlığı (bağlantı),
+// oyuncu adı bağlantısı, "benim oyuncum" vurgusu ve açıklamaya eklenen cümle (ayar olarak verilir).
+// Stiller cila.css'te (iki arayüz de yükler). Veriler: canlı maçta kutu skorun içinden (eski TBL sitesinin fetch_tbf.py'si:
+// fark, ev/dep.ileri, ev/dep.takim, oyuncu.sahada), biten maçta veri/uret.py'nin data/<lig>/fark/<id>.json,
+// ileri-istatistik.json ve takim-istatistik.json dosyalarından.
+import { esc, baslik, sureSn } from './ortak.js';
 
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+// ---------- Kutu skor ----------
+const atis = ([b, d] = [0, 0]) => `${b}/${d}`;
+// Kutu skor sütunları: [başlık, değer, toplam alanı, hücre sınıfı, açıklama]
+const KUTU_SUTUNLARI = [
+  ['Dk', o => o.sure, null, '', 'Süre'], ['Sy', o => o.sayi, 'sayi', '', 'Sayı'],
+  ['2S', o => atis(o.iki), 'iki', '', '2 sayılık atış'], ['3S', o => atis(o.uc), 'uc', '', '3 sayılık atış'], ['SA', o => atis(o.sa), 'sa', '', 'Serbest atış'],
+  ['HR', o => o.hr ?? '', 'hr', '', 'Hücum ribaundu'], ['SR', o => o.sr ?? '', 'sr', '', 'Savunma ribaundu'],
+  ['Rb', o => o.rib, 'rib', 'rb', 'Toplam ribaund'], ['As', o => o.ast, 'ast', '', 'Asist'], ['Tç', o => o.tc, 'tc', '', 'Top çalma'],
+  ['Bl', o => o.blk, 'blk', '', 'Blok'], ['Tk', o => o.tk, 'tk', '', 'Top kaybı'], ['F', o => o.faul, 'faul', '', 'Faul'],
+  ['+/-', o => o.pm ?? '', null, '', 'Sahadayken skor farkı'], ['VP', o => o.vp, 'vp', 'vp', 'Verimlilik puanı'],
+];
+const kutuHucresi = (o, [, f, , sinif]) => `<td class="${sinif}">${esc(f(o))}</td>`;
+// Başlığa dokununca sıralanır (data-is="kutu-sirala"): önce çoktan aza, sonra azdan çoka, üçüncüde ilk haline döner
+export const kutuSiralamaDegistir = (s, b) => (s?.b !== b ? { b, artan: false } : !s.artan ? { b, artan: true } : null);
+const kutuBasligi = sirala => KUTU_SUTUNLARI.map(([b, , , sinif, aciklama]) => {
+  const s = sirala?.b === b ? sirala : null;
+  return `<td class="${sinif} sirala ${s ? 'aktif' : ''}" title="${aciklama}" data-is="kutu-sirala" data-id="${b}">${b}${s ? (s.artan ? '▲' : '▼') : ''}</td>`;
+}).join('');
+// Sıralama değeri: süre saniye, atışlarda isabet (eşitse deneme), yoksa sayı; değeri olmayan (ör. +/- gelmemiş) hep sonda
+function kutuDegeri([b, f, alan], o) {
+  if (b === 'Dk') return sureSn(o.sure);
+  if (['iki', 'uc', 'sa'].includes(alan)) return (o[alan]?.[0] ?? 0) * 1000 + (o[alan]?.[1] ?? 0);
+  const v = f(o);
+  return v === '' || v == null ? null : Number(v) || 0;
+}
+function kutuSirasi(oyuncular, sirala) {
+  const c = sirala && KUTU_SUTUNLARI.find(([b]) => b === sirala.b);
+  if (!c) return oyuncular;
+  return [...oyuncular].sort((x, y) => {
+    const a = kutuDegeri(c, x);
+    const b = kutuDegeri(c, y);
+    if (a == null || b == null) return (a == null) - (b == null);
+    return sirala.artan ? a - b : b - a;
+  });
+}
+// Takım satırı: oyuncuya yazılmayan takım ribaundu, takım top kaybı ve takım faulü; toplama da girer
+const TAKIM_ALANLARI = ['hr', 'sr', 'rib', 'tk', 'faul'];
+const takimSatiri = takim => (!takim ? '' : `<tr class="takim-satir"><th>Takım</th>${KUTU_SUTUNLARI.map(([, , alan, sinif]) =>
+  `<td class="${sinif}">${TAKIM_ALANLARI.includes(alan) ? takim[alan] ?? 0 : ''}</td>`).join('')}</tr>`);
+function kutuToplami(oyuncular, takim) {
+  const topla = alan => oyuncular.reduce((x, o) => x + (Number(o[alan]) || 0), 0) + (takim?.[alan] ?? 0);
+  const toplaAtis = alan => atis([0, 1].map(i => oyuncular.reduce((x, o) => x + (o[alan]?.[i] ?? 0), 0)));
+  return KUTU_SUTUNLARI.map(([, , alan, sinif]) => `<td class="${sinif}">${!alan ? '' : ['iki', 'uc', 'sa'].includes(alan) ? toplaAtis(alan) : topla(alan)}</td>`).join('');
+}
+// canli: maç sürüyorsa sahadaki 5 oyuncunun adının sonuna * konur (kutu skorda "sahada" bilgisi varsa)
+function kutuSkorTablosu(t, takim, a) {
+  const oyuncular = t.oyuncular ?? [];
+  const satirlar = kutuSirasi(oyuncular, a.sirala).map(o => {
+    const sahada = a.canli && o.sahada;
+    const ad = a.oyuncuAdi(o);
+    return `<tr class="${sureSn(o.sure) > 0 ? '' : 'oynamadi'} ${a.benimMi(String(o.id)) ? 'ben benim-oyuncu' : ''}"><th${sahada ? ' class="sahada"' : ''}>${o.ilk5 ? `<b>${ad}</b>` : ad}${sahada ? '<span class="sahada-yildiz">*</span>' : ''}</th>
+      ${KUTU_SUTUNLARI.map(c => kutuHucresi(o, c)).join('')}</tr>`;
+  }).join('');
+  return `<div class="kart"><h3>${a.takimBasligi(t)}</h3><div class="tablo-kap"><table class="kutu">
+    <thead><tr><th>Oyuncu</th>${kutuBasligi(a.sirala)}</tr></thead>
+    <tbody>${satirlar}${takimSatiri(takim)}<tr class="toplam"><th>Toplam</th>${kutuToplami(oyuncular, takim)}</tr></tbody></table></div></div>`;
+}
+function ceyrekTablosu(k) {
+  const n = Math.max(k.ev.ceyrekler?.length ?? 0, k.dep.ceyrekler?.length ?? 0);
+  if (!n) return '';
+  const hucre = i => (i < 4 ? `Ç${i + 1}` : `U${i - 3}`);
+  const satir = t => `<tr><th>${esc(baslik(t.ad))}</th>${Array.from({ length: n }, (_, i) => `<td>${t.ceyrekler?.[i] ?? '–'}</td>`).join('')}<td><b>${t.skor ?? 0}</b></td></tr>`;
+  return `<div class="kart"><div class="tablo-kap"><table class="kutu ceyrek">
+    <thead><tr><th></th>${Array.from({ length: n }, (_, i) => `<td>${hucre(i)}</td>`).join('')}<td>T</td></tr></thead>
+    <tbody>${satir(k.ev)}${satir(k.dep)}</tbody></table></div></div>`;
+}
+
+// Maç sayfasının kutu skor bölümü (başlık kartından sonrası). Ayarlar:
+//   canli: maç sürüyor mu (sahadaki 5'e *), takimIst: { ev, dep } biten maçın takım istatistiği (canlıda kutudan gelir),
+//   ileriDosya: biten maçın gelişmiş istatistiği, fark: skor farkı verisi, sirala: sıralama durumu,
+//   takimBasligi(t), oyuncuAdi(o): arayüze göre HTML; benimMi(id): oyuncu benim fantezi takımımda mı; aciklamaEki: açıklamanın sonu
+export function macGovdesi(kutu, ayar) {
+  const a = { takimBasligi: t => esc(baslik(t.ad)), oyuncuAdi: o => esc(o.ad), benimMi: () => false, aciklamaEki: '', ...ayar };
+  const evAd = baslik(kutu.ev.ad), depAd = baslik(kutu.dep.ad);
+  const ileri = ileriVerisi(kutu, a.ileriDosya);
+  return `${ceyrekTablosu(kutu)}${farkGrafigi(evAd, depAd, kutu.fark ?? a.fark)}
+    ${kutuSkorTablosu(kutu.ev, kutu.ev.takim ?? a.takimIst?.ev, a)}${kutuSkorTablosu(kutu.dep, kutu.dep.takim ?? a.takimIst?.dep, a)}
+    ${ileriIstatistikKarti(evAd, depAd, ileri)}
+    <p class="soluk kucuk">Kalın: ilk 5${a.canli ? ' · *: sahada' : ''} · 2S/3S/SA: isabet/deneme · Tç: top çalma · Bl: blok · Tk: top kaybı · VP: verimlilik${a.aciklamaEki}</p>`;
+}
 
 // Skor farkı grafiği (kullanıcı: geçmiş haftalara gerek yok): veri bu haftalardan itibaren var; veri/uret.py FARK_ILK_HAFTA ile aynı
 export const FARK_ILK_HAFTA = { bsl: 7, tbl: 10 };

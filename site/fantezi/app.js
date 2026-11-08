@@ -2093,53 +2093,7 @@ async function kutuYukle(id) {
   ciz();
 }
 
-const atis = ([b, d] = [0, 0]) => `${b}/${d}`;
-// Kutu skor sütunları: [başlık, değer, toplam alanı, hücre sınıfı, açıklama]
-const KUTU_SUTUNLARI = [
-  ['Dk', o => o.sure, null, '', 'Süre'], ['Sy', o => o.sayi, 'sayi', '', 'Sayı'],
-  ['2S', o => atis(o.iki), 'iki', '', '2 sayılık atış'], ['3S', o => atis(o.uc), 'uc', '', '3 sayılık atış'], ['SA', o => atis(o.sa), 'sa', '', 'Serbest atış'],
-  ['HR', o => o.hr ?? '', 'hr', '', 'Hücum ribaundu'], ['SR', o => o.sr ?? '', 'sr', '', 'Savunma ribaundu'],
-  ['Rb', o => o.rib, 'rib', 'rb', 'Toplam ribaund'], ['As', o => o.ast, 'ast', '', 'Asist'], ['Tç', o => o.tc, 'tc', '', 'Top çalma'],
-  ['Bl', o => o.blk, 'blk', '', 'Blok'], ['Tk', o => o.tk, 'tk', '', 'Top kaybı'], ['F', o => o.faul, 'faul', '', 'Faul'],
-  ['VP', o => o.vp, 'vp', 'vp', 'Verimlilik puanı'],
-];
-const kutuHucresi = (o, [, f, , sinif]) => `<td class="${sinif}">${esc(f(o))}</td>`;
-// Başlığa dokununca sıralanır: önce çoktan aza, sonra azdan çoka, üçüncüde ilk haline döner (S.ui.kutuSirala: { b, artan })
-const kutuBasligi = () => KUTU_SUTUNLARI.map(([b, , , sinif, aciklama]) => {
-  const s = S.ui.kutuSirala?.b === b ? S.ui.kutuSirala : null;
-  return `<td class="${sinif} sirala ${s ? 'aktif' : ''}" title="${aciklama}" data-is="kutu-sirala" data-id="${b}">${b}${s ? (s.artan ? '▲' : '▼') : ''}</td>`;
-}).join('');
-// Sıralama değeri: süre saniye, atışlarda isabet (eşitse deneme), yoksa sayı; değeri olmayan (ör. +/- gelmemiş) hep sonda
-function kutuDegeri([b, f, alan], o) {
-  if (b === 'Dk') return sureSn(o.sure);
-  if (['iki', 'uc', 'sa'].includes(alan)) return (o[alan]?.[0] ?? 0) * 1000 + (o[alan]?.[1] ?? 0);
-  const v = f(o);
-  return v === '' || v == null ? null : Number(v) || 0;
-}
-function kutuSirasi(oyuncular) {
-  const s = S.ui.kutuSirala;
-  const c = s && KUTU_SUTUNLARI.find(([b]) => b === s.b);
-  if (!c) return oyuncular;
-  return [...oyuncular].sort((x, y) => {
-    const a = kutuDegeri(c, x);
-    const b = kutuDegeri(c, y);
-    if (a == null || b == null) return (a == null) - (b == null);
-    return s.artan ? a - b : b - a;
-  });
-}
-const kutuSiralamaDegistir = b => {
-  const s = S.ui.kutuSirala;
-  S.ui.kutuSirala = s?.b !== b ? { b, artan: false } : !s.artan ? { b, artan: true } : null;
-};
-// Takım satırı: oyuncuya yazılmayan takım ribaundu, takım top kaybı ve takım faulü (biten maçlarda, TBF'den); toplama da girer
-const TAKIM_ALANLARI = ['hr', 'sr', 'rib', 'tk', 'faul'];
-const takimSatiri = takim => (!takim ? '' : `<tr class="takim-satir"><th>Takım</th>${KUTU_SUTUNLARI.map(([, , alan, sinif]) =>
-  `<td class="${sinif}">${TAKIM_ALANLARI.includes(alan) ? takim[alan] ?? 0 : ''}</td>`).join('')}</tr>`);
-function kutuToplami(oyuncular, takim) {
-  const topla = alan => oyuncular.reduce((x, o) => x + (Number(o[alan]) || 0), 0) + (takim?.[alan] ?? 0);
-  const toplaAtis = alan => atis([0, 1].map(i => oyuncular.reduce((x, o) => x + (o[alan]?.[i] ?? 0), 0)));
-  return KUTU_SUTUNLARI.map(([, , alan, sinif]) => `<td class="${sinif}">${!alan ? '' : ['iki', 'uc', 'sa'].includes(alan) ? toplaAtis(alan) : topla(alan)}</td>`).join('');
-}
+// Kutu skor, çeyrekler, grafik ve gelişmiş istatistikler ortak ../mac-ek.js'te: ana uygulamadaki box score ile AYNI olsun diye
 
 // Takım istatistikleri ana uygulamanın verisinden (data/<lig>/takim-istatistik.json, saatte bir güncellenir); oturumda bir kez okunur
 function takimIstatistigi(id) {
@@ -2169,34 +2123,6 @@ function farkVerisi(id) {
   return S.farklar[id];
 }
 
-// canli: maç sürüyorsa sahadaki 5 oyuncunun adının sonuna * konur (kutu skorda "sahada" bilgisi varsa; stil cila.css)
-function kutuSkorTablosu(t, takim, canli = false) {
-  const sahip = sahipler();
-  const benim = benimTakimim();
-  const oyuncular = t.oyuncular ?? [];
-  const satirlar = kutuSirasi(oyuncular).map(o => {
-    const tid = sahip.get(String(o.id));
-    const ad = oyuncuLinki(o.id, o.ad);
-    const sahada = canli && o.sahada;
-    return `<tr class="${sureSn(o.sure) > 0 ? '' : 'oynamadi'} ${tid && tid === benim ? 'ben' : ''}">
-      <th${sahada ? ' class="sahada"' : ''}>${o.ilk5 ? `<b>${ad}</b>` : ad}${sahada ? '<span class="sahada-yildiz">*</span>' : ''}</th>
-      ${KUTU_SUTUNLARI.map(c => kutuHucresi(o, c)).join('')}</tr>`;
-  }).join('');
-  return `<div class="kart"><h3>${esc(baslik(t.ad))}</h3><div class="tablo-kap"><table class="kutu">
-    <thead><tr><th>Oyuncu</th>${kutuBasligi()}</tr></thead>
-    <tbody>${satirlar}${takimSatiri(takim)}<tr class="toplam"><th>Toplam</th>${kutuToplami(oyuncular, takim)}</tr></tbody></table></div></div>`;
-}
-
-function ceyrekTablosu(k) {
-  const n = Math.max(k.ev.ceyrekler?.length ?? 0, k.dep.ceyrekler?.length ?? 0);
-  if (!n) return '';
-  const hucre = i => (i < 4 ? `Ç${i + 1}` : `U${i - 3}`);
-  const satir = t => `<tr><th>${esc(baslik(t.ad))}</th>${Array.from({ length: n }, (_, i) => `<td>${t.ceyrekler?.[i] ?? '–'}</td>`).join('')}<td><b>${t.skor ?? 0}</b></td></tr>`;
-  return `<div class="kart"><div class="tablo-kap"><table class="kutu ceyrek">
-    <thead><tr><th></th>${Array.from({ length: n }, (_, i) => `<td>${hucre(i)}</td>`).join('')}<td>T</td></tr></thead>
-    <tbody>${satir(k.ev)}${satir(k.dep)}</tbody></table></div></div>`;
-}
-
 function gorunumMac(id) {
   const bulunan = macBul(id);
   const kutu = S.kutular[id];
@@ -2217,16 +2143,18 @@ function gorunumMac(id) {
   if (!kutu) {
     return `${ust}${kutu === null || m.durum === 'oynanmadi' ? `<p class="bos">${m.durum === 'oynanmadi' ? 'Maç henüz oynanmadı.' : 'Kutu skor henüz gelmedi.'}</p>` : '<p class="bos">Kutu skor yükleniyor…</p>'}${fantezi}`;
   }
-  // Ana uygulamanın maç sayfasıyla aynı: sahadaki 5 (*), canlıda da takım satırı, skor farkı grafiği, gelişmiş istatistikler
+  // Gövde ana uygulamanın maç sayfasıyla ortak (mac-ek.js): sahadaki 5 (*), takım satırı, skor farkı grafiği, gelişmiş istatistikler
   const canli = m.durum === 'canli' && !canliYazisi(m).startsWith('Maç sonu');
-  const tist = takimIstatistigi(kutu.id);
-  const ileri = ME.ileriVerisi(kutu, kutu.ev.ileri ? null : ileriIstatistigi(kutu.id));
-  const fark = kutu.fark ?? (ME.farkVarMi(LIG.kod, kutu.hafta ?? n) ? farkVerisi(id) : null);
-  const evAd = baslik(kutu.ev.ad), depAd = baslik(kutu.dep.ad);
-  return `${ust}${ceyrekTablosu(kutu)}${ME.farkGrafigi(evAd, depAd, fark)}
-    ${kutuSkorTablosu(kutu.ev, kutu.ev.takim ?? tist?.ev, canli)}${kutuSkorTablosu(kutu.dep, kutu.dep.takim ?? tist?.dep, canli)}
-    ${ME.ileriIstatistikKarti(evAd, depAd, ileri)}
-    <p class="soluk kucuk">Kalın: ilk 5${canli ? ' · *: sahada' : ''} · 2S/3S/SA: isabet/deneme · Oyuncunun altında fantezi takımı yazar${benimTakimim() ? ', senin oyuncuların vurgulu' : ''}.</p>`;
+  const sahip = sahipler();
+  const benim = benimTakimim();
+  return `${ust}${ME.macGovdesi(kutu, {
+    canli, sirala: S.ui.kutuSirala, takimIst: takimIstatistigi(kutu.id),
+    ileriDosya: kutu.ev.ileri ? null : ileriIstatistigi(kutu.id),
+    fark: !kutu.fark && ME.farkVarMi(LIG.kod, kutu.hafta ?? n) ? farkVerisi(id) : null,
+    oyuncuAdi: o => oyuncuLinki(o.id, o.ad),
+    benimMi: pid => !!benim && sahip.get(pid) === benim,
+    aciklamaEki: benim ? ' · Senin oyuncuların vurgulu' : '',
+  })}`;
 }
 
 // Maçtaki fantezi oyuncuları: iki BSL takımında olup bir fantezi takımında olan oyuncular ve o haftaki VP'leri
@@ -2477,7 +2405,7 @@ async function eylem(is, id, el) {
     case 'sec-as': S.ui.secAs = S.ui.secAs === id ? null : id; return ciz();
     case 'sec-yedek': S.ui.secYedek = S.ui.secYedek === id ? null : id; return ciz();
     case 'sec-temizle': S.ui.secAs = null; S.ui.secYedek = null; S.ui.degisimModu = false; return ciz();
-    case 'kutu-sirala': kutuSiralamaDegistir(id); return ciz();
+    case 'kutu-sirala': S.ui.kutuSirala = ME.kutuSiralamaDegistir(S.ui.kutuSirala, id); return ciz();
     case 'saha-hafta': S.ui.sahaHafta = id === 'sonraki' ? null : Number(id); return ciz();
     case 'degisim-modu':
       // Düğme sayfanın altında: seçim sahada yapılır, oraya kaydır

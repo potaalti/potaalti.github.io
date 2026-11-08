@@ -125,14 +125,98 @@ export function farkGrafigi(evAd, depAd, fark) {
   for (let b = 2400, n = 1; b < fark.sure; b += 300, n++) periyotlar.push([b, b + 300, `U${n}`]);
   const cizgiler = periyotlar.slice(1).map(([b]) => `<line x1="${x(b)}" x2="${x(b)}" y1="${ust}" y2="${alt}" class="fark-periyot"/>`).join('');
   const etiketler = periyotlar.map(([b, s, ad]) => `<text x="${((+x(b) + +x(s)) / 2).toFixed(1)}" y="12" text-anchor="middle">${ad}</text>`).join('');
+  // Dokunma / tıklama göstergesi için (farkImleci): gerçek fark değerleri (basamaklı) ve çizim ölçüleri
+  const veri = { sure: fark.sure, son, d: noktalar, ev: evAd, dep: depAd, x0, x1, ust, alt, orta, olcek, G };
   return `<div class="kart fark-kart"><h3>Skor farkı</h3>
     <div class="fark-lejant"><span><i class="ev"></i>${esc(evAd)} önde</span><span><i class="dep"></i>${esc(depAd)} önde</span></div>
-    <svg viewBox="0 0 ${G} ${Y}" class="fark-svg" role="img" aria-label="Maç boyunca skor farkı">
+    <div class="fark-kap"><div class="fark-balon" hidden></div>
+    <svg viewBox="0 0 ${G} ${Y}" class="fark-svg" role="img" aria-label="Maç boyunca skor farkı" data-fark="${esc(JSON.stringify(veri))}">
       ${etiketler}${cizgiler}
       <path d="${alan(f => Math.max(f, 0))}" class="ev"/><path d="${alan(f => Math.min(f, 0))}" class="dep"/>
       <line x1="${x0}" x2="${x1}" y1="${orta}" y2="${orta}" class="fark-sifir"/>
       <text x="${x1 + 6}" y="${+y(olcek) + 4}">${olcek}</text><text x="${x1 + 6}" y="${orta + 4}">0</text><text x="${x1 + 6}" y="${+y(-olcek) + 4}">${olcek}</text>
-    </svg></div>`;
+      <line class="fark-imlec" x1="0" x2="0" y1="${ust}" y2="${alt}" visibility="hidden"/><circle class="fark-nokta" r="4" cx="0" cy="0" visibility="hidden"/>
+    </svg></div>
+    <p class="soluk kucuk fark-ipucu">Grafiğe dokun ya da basılı tutup kaydır: o dakikadaki fark yazar.</p></div>`;
+}
+
+// Grafikte dokunulan / tıklanan andaki dakika ve fark: telefonda basılı tutup yana kaydırınca değişir (sayfa dikey kaymaya devam
+// eder, CSS touch-action: pan-y), bilgisayarda tıklayınca ya da basılıyken sürükleyince. Sayfa her yeniden çizildiğinde grafik
+// yenilendiği için dinleyiciler belgeye bir kez bağlanır.
+function farkAni(v, t) {
+  let f = 0;
+  for (const [tn, fn] of v.d) { if (tn > t) break; f = fn; }
+  let periyot, kalan;
+  if (t <= 2400) { const p = Math.min(4, Math.floor(t / 600) + 1); periyot = `${p}. Çeyrek`; kalan = p * 600 - t; }
+  else { const n = Math.ceil((t - 2400) / 300); periyot = `${n}. Uzatma`; kalan = 2400 + n * 300 - t; }
+  kalan = Math.max(0, Math.round(kalan));
+  const saat = `${String(Math.floor(kalan / 60)).padStart(2, '0')}:${String(kalan % 60).padStart(2, '0')}`;
+  const durum = f === 0 ? '<b>Eşit</b>' : `<b class="${f > 0 ? 'ev' : 'dep'}">${esc(f > 0 ? v.ev : v.dep)} +${Math.abs(f)}</b>`;
+  return `<span>${periyot} · ${saat} <small>(${Math.min(Math.floor(t / 60) + 1, Math.ceil(v.sure / 60))}. dk)</small></span>${durum}`;
+}
+const farkOku = svg => { try { return JSON.parse(svg.dataset.fark); } catch { return null; } };
+// Parmağın / farenin olduğu yerdeki an (maç başından saniye)
+function farkAnBul(e, svg, v) {
+  const r = svg.getBoundingClientRect();
+  const vx = ((e.clientX - r.left) / r.width) * v.G;
+  return Math.max(0, Math.min(v.son, ((vx - v.x0) / (v.x1 - v.x0)) * v.sure));
+}
+function farkAnGoster(svg, v, t) {
+  t = Math.min(t, v.son);
+  const x = v.x0 + (t / v.sure) * (v.x1 - v.x0);
+  // Noktanın yüksekliği çizilen şekilden (noktalar arası düz çizgi)
+  let fy = 0;
+  for (let i = 0; i < v.d.length; i++) {
+    const [ta, fa] = v.d[i];
+    const [tb, fb] = v.d[i + 1] ?? [v.son, fa];
+    if (t >= ta && t <= tb) { fy = tb > ta ? fa + ((fb - fa) * (t - ta)) / (tb - ta) : fb; break; }
+  }
+  const y = v.orta - (fy / v.olcek) * (v.orta - v.ust);
+  const imlec = svg.querySelector('.fark-imlec');
+  const nokta = svg.querySelector('.fark-nokta');
+  imlec.setAttribute('x1', x); imlec.setAttribute('x2', x); imlec.setAttribute('visibility', 'visible');
+  nokta.setAttribute('cx', x); nokta.setAttribute('cy', y); nokta.setAttribute('visibility', 'visible');
+  const balon = svg.parentElement.querySelector('.fark-balon');
+  balon.innerHTML = farkAni(v, t);
+  balon.hidden = false;
+  // Balon imlecin hizasında, noktanın üstüne binmesin diye nokta üst yarıdaysa grafiğin altında; kenarlardan taşmaz
+  balon.classList.toggle('alt', y < v.orta);
+  const genislik = svg.getBoundingClientRect().width;
+  const w = balon.offsetWidth;
+  balon.style.left = `${Math.max(0, Math.min(genislik - w, (x / v.G) * genislik - w / 2))}px`;
+}
+if (typeof document !== 'undefined' && !globalThis.farkImleciKurulu) {
+  globalThis.farkImleciKurulu = true;
+  // Seçilen an hatırlanır: sayfa yeniden çizilince (veri gelince, canlıda dakikalık yenileme) yeni grafikte de gösterilir
+  let surukle = false;
+  let secili = null; // { anahtar: iki takım adı, t }
+  const anahtar = v => `${v.ev}|${v.dep}`;
+  const goster = (e, svg) => {
+    const v = farkOku(svg);
+    if (!v) return;
+    secili = { anahtar: anahtar(v), t: farkAnBul(e, svg, v) };
+    farkAnGoster(svg, v, secili.t);
+  };
+  document.addEventListener('pointerdown', e => {
+    const svg = e.target.closest?.('.fark-svg');
+    if (!svg) return;
+    surukle = true;
+    goster(e, svg);
+  });
+  document.addEventListener('pointermove', e => {
+    if (!surukle || (e.buttons === 0 && e.pointerType !== 'touch')) return;
+    const svg = document.querySelector('.fark-svg');
+    if (svg) goster(e, svg);
+  });
+  const birak = () => { surukle = false; };
+  document.addEventListener('pointerup', birak);
+  document.addEventListener('pointercancel', birak);
+  new MutationObserver(() => {
+    const svg = secili && document.querySelector('.fark-svg');
+    if (!svg || svg.querySelector('.fark-imlec')?.getAttribute('visibility') === 'visible') return;
+    const v = farkOku(svg);
+    if (v && anahtar(v) === secili.anahtar) farkAnGoster(svg, v, secili.t);
+  }).observe(document.body, { childList: true, subtree: true });
 }
 
 // Gelişmiş istatistikler: iki takım karşılıklı çubuklar (o istatistikte önde olan vurgu renginde), altında fark / seri / liderlik

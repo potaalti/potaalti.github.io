@@ -233,7 +233,7 @@ function gorunumMac(lig, id) {
 
 // ---------- Lig: puan tablosu, liderler, takımlar, oyuncular ----------
 const SEKMELER = [['tablo', 'Puan Tablosu'], ['liderler', 'Liderler'], ['takimlar', 'Takımlar'], ['oyuncular', 'Oyuncular']];
-// Fantezi ligine bu tarayıcıda yönetici olarak girilmişse +/- sekmesi (en sağda) görünür
+// +/-, Seyirci ve Ödüller sekmeleri herkese açık (kullanıcı kararı 2026-11-08); yönetici sadece ödül üreticisi (?uret) için gerekir
 const yoneticiMi = () => { try { return localStorage.getItem('potaAltiYonetici') === '1'; } catch { return false; } };
 
 // Fantezi uygulaması o anahtarı yazar; yazılmamışsa (fantezi bu tarayıcıda yeni sürümle henüz açılmadı) Firebase'in
@@ -283,7 +283,7 @@ async function yoneticiyiTani() {
 }
 
 function gorunumLig(lig, sekme, donem) {
-  const sekmeListesi = yoneticiMi() ? [...SEKMELER, ['artieksi', '+/-'], ['seyirci', 'Seyirci'], ['odul', 'Ödüller']] : SEKMELER;
+  const sekmeListesi = [...SEKMELER, ['artieksi', '+/-'], ['seyirci', 'Seyirci'], ['odul', 'Ödüller']];
   const sekmeler = `<div class="secenekler">${sekmeListesi.map(([s, ad]) => `<a class="secenek ${s === sekme ? 'aktif' : ''}" href="#/lig/${lig}/${s}">${ad}</a>`).join('')}</div>`;
   const baslikHtml = `<div class="sayfa-baslik"><h1>${LIGLER[lig].ad}</h1><p class="soluk kucuk" style="margin:0 0 12px">2026-27 sezonu · ${LIGLER[lig].kisa}</p></div>`;
   let icerik;
@@ -291,16 +291,16 @@ function gorunumLig(lig, sekme, donem) {
     case 'liderler': icerik = liderlerKarti(lig); break;
     case 'takimlar': icerik = takimlarKarti(lig); break;
     case 'oyuncular': icerik = oyuncularKarti(lig); break;
-    case 'artieksi': icerik = yoneticiMi() ? artieksiKarti(lig, donem) : '<p class="bos">Bu sekme yöneticiler içindir.</p>'; break;
-    case 'seyirci': icerik = yoneticiMi() ? seyirciKarti(lig, donem) : '<p class="bos">Bu sekme yöneticiler içindir.</p>'; break;
-    case 'odul': icerik = !yoneticiMi() ? '<p class="bos">Bu sekme yöneticiler içindir.</p>'
-      : new URLSearchParams(location.search).has('uret') ? odulUretici(lig, donem) : odulKarti(lig, donem); break;
+    case 'artieksi': icerik = artieksiKarti(lig, donem); break;
+    case 'seyirci': icerik = seyirciKarti(lig, donem); break;
+    // Ödül üreticisi (görselleri hazırlama aracı) yalnızca yöneticiye
+    case 'odul': icerik = new URLSearchParams(location.search).has('uret') && yoneticiMi() ? odulUretici(lig, donem) : odulKarti(lig, donem); break;
     default: icerik = tabloKarti(lig);
   }
   return `<div class="dar">${baslikHtml}${sekmeler}${icerik}${altBilgi()}</div>`;
 }
 
-// +/- liderleri (yönetici): haftalık ya da sezon boyu +/- toplamı, ilk 10 (10. ile aynı +/- yapanlar da girer).
+// +/- liderleri (herkese açık): haftalık ya da sezon boyu +/- toplamı, ilk 10 (10. ile aynı +/- yapanlar da girer).
 // Eşit +/-'de takımının skor farkı daha kötü olan üstte. Paylaş/İndir yayın şablonundaki görseli verir.
 function artieksiListesi(d, donem) {
   const tum = (donem === 'sezon' ? d?.sezon : d?.haftalar?.[donem]) ?? [];
@@ -324,7 +324,7 @@ function artieksiKarti(lig, istenen) {
   return `${cipler}<div class="kart"><div class="baslik-satir"><h2>${donem === 'sezon' ? 'Sezon' : `${donem}. hafta`} · +/- ilk 10</h2>
     ${liste.length ? `<span class="satir"><button class="secenek" data-is="ae-paylas" data-id="${anahtar}">📤 Paylaş</button><button class="secenek" data-is="ae-indir" data-id="${anahtar}">⬇ İndir</button></span>` : ''}</div>
     ${satirlar || '<p class="bos">Henüz veri yok.</p>'}
-    <p class="soluk kucuk" style="margin-bottom:0">Sadece yöneticiler görür. Eşit +/-'de takımının skor farkı daha kötü olan üstte.</p></div>`;
+    <p class="soluk kucuk" style="margin-bottom:0">Eşit +/-'de takımının skor farkı daha kötü olan üstte.</p></div>`;
 }
 async function artieksiGorseliniPaylas(anahtar, indir) {
   const [lig, donem] = anahtar.split('-');
@@ -342,7 +342,7 @@ async function artieksiGorseliniPaylas(anahtar, indir) {
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
 }
 
-// Seyirci sayıları (yönetici): TBF'nin işlediği sayılar (veri/uret.py Cumartesi–Pazartesi çeker). Her hafta ayrı, en sonda
+// Seyirci sayıları (herkese açık): TBF'nin işlediği sayılar (veri/uret.py Cumartesi–Pazartesi çeker). Her hafta ayrı, en sonda
 // iç saha ortalamaları; sayısı girilmemiş (0) maçlar ortalamaya katılmaz. Paylaş/İndir yayın şablonundaki görseli verir.
 function seyirciVerisi(lig) {
   yukle(S.seyirci, lig, `data/${lig}/seyirci.json`, { bosDeger: { maclar: {} } });
@@ -382,7 +382,7 @@ function seyirciKarti(lig, istenen) {
     return `${cipler}<div class="kart"><div class="baslik-satir"><h2>İlk ${v.haftalar.at(-1)} hafta · seyirci ortalamaları</h2>${dugmeler}</div>
       <div class="tablo-kap"><table><thead><tr><th class="sayi">#</th><th>Takım</th><th class="sayi">İç saha</th><th class="sayi">Toplam</th><th class="sayi">Ortalama</th></tr></thead>
       <tbody>${satirlar}</tbody></table></div>
-      <p class="soluk kucuk" style="margin-bottom:0">Sadece yöneticiler görür. Seyirci sayısı girilmemiş maçlar ortalamaya katılmaz.</p></div>`;
+      <p class="soluk kucuk" style="margin-bottom:0">Seyirci sayısı girilmemiş maçlar ortalamaya katılmaz.</p></div>`;
   }
   const liste = seyirciHaftasi(v, donem);
   const dolu = liste.filter(m => m.seyirci);
@@ -392,7 +392,7 @@ function seyirciKarti(lig, istenen) {
       <div class="f-sayi"><strong>${m.seyirci ? binlik(m.seyirci) : '–'}</strong><small>seyirci</small></div></div>`).join('');
   return `${cipler}<div class="kart"><div class="baslik-satir"><h2>${donem}. hafta · seyirci sayıları</h2>${dugmeler}</div>${satirlar}
     <p class="soluk kucuk" style="margin-bottom:0">Toplam ${binlik(toplam)} · maç başı ${dolu.length ? binlik(Math.round(toplam / dolu.length)) : '–'}.
-    Sayılar TBF'nin sitesinden; federasyon maçtan sonraki gün işliyor, Cumartesi–Salı öğlen ve gece güncellenir. Sadece yöneticiler görür.</p></div>`;
+    Sayılar TBF'nin sitesinden; federasyon maçtan sonraki gün işliyor, Cumartesi–Salı öğlen ve gece güncellenir.</p></div>`;
 }
 async function seyirciGorseliniPaylas(anahtar, indir) {
   const [lig, donem] = anahtar.split('-');
@@ -687,7 +687,7 @@ async function odulUreticiGorseli(anahtar, indir) {
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
 }
 
-// Haftanın ödülleri galerisi (yönetici, TBL → Ödüller): Claude'un hazırlayıp yayınladığı görseller (odul/gorsel/<hafta>/,
+// Haftanın ödülleri galerisi (herkese açık, TBL/BSL → Ödüller): Claude'un hazırlayıp yayınladığı görseller (odul/gorsel/<hafta>/,
 // liste odul/gorsel/<hafta>.json; yayınlanan haftalar odul/gorsel/index.json). Görsele dokununca büyük görünüm açılır.
 const TUR_ROZET = { kapak: 'Kapak', mvp: 'MVP', yerli: 'Yerli MVP', yabanci: 'Yabancı MVP', kaybedenYerli: 'Kaybeden Yerli MVP',
   kaybedenYabanci: 'Kaybeden Yabancı MVP', besli: '5\'li' };
@@ -720,7 +720,7 @@ function odulKarti(lig, istenen) {
   return `${cipler}<div class="kart"><div class="baslik-satir"><h2>${h}. hafta · haftanın ödülleri</h2>
     <span class="satir">${paylasVar ? `<button class="secenek" data-is="odul-hepsi-paylas" data-id="${h}">📤 Hepsini paylaş</button>` : ''}<button class="secenek" data-is="odul-hepsi-indir" data-id="${h}">⬇ Hepsini indir</button></span></div>
     ${satirlar}
-    <p class="soluk kucuk" style="margin-bottom:0">Sadece yöneticiler görür. Satıra dokununca görsel büyük açılır.</p></div>${buyuk}`;
+    <p class="soluk kucuk" style="margin-bottom:0">Satıra dokununca görsel büyük açılır.</p></div>${buyuk}`;
 }
 function odulBuyuk(h, g, i) {
   const x = g[i];

@@ -82,15 +82,20 @@
   {
    "id": 346323,
    "tarih": "2026-11-08T18:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
-   "evSkor": null,
+   "evSkor": "11",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": null,
+   "depSkor": "5",
    "salon": "Sinan Erdem Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "05:27",
+    "uzatma": false
+   }
   },
   {
    "id": 346328,

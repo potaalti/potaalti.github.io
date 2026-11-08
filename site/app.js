@@ -230,14 +230,16 @@ function takimim(lig) {
   } catch { return null; }
 }
 
-function kutuSkorTablosu(lig, t, takim) {
+// canli: maç sürüyorsa sahadaki 5 oyuncunun adının sonuna * konur (kutu skorda "sahada" bilgisi varsa)
+function kutuSkorTablosu(lig, t, takim, canli = false) {
   const oyuncular = t.oyuncular ?? [];
   const benim = takimim(lig);
   const satirlar = kutuSirasi(oyuncular).map(o => {
     const id = String(o.id);
+    const sahada = canli && o.sahada;
     const ad = id.startsWith('fiba-') ? esc(o.ad) : `<a href="#/oyuncu/${lig}/${id}" class="oyuncu-link">${esc(o.ad)}</a>`;
     const benimki = benim?.oyuncular.has(id);
-    return `<tr class="${sureSn(o.sure) > 0 ? '' : 'oynamadi'} ${benimki ? 'benim-oyuncu' : ''}"><th>${o.ilk5 ? `<b>${ad}</b>` : ad}</th>
+    return `<tr class="${sureSn(o.sure) > 0 ? '' : 'oynamadi'} ${benimki ? 'benim-oyuncu' : ''}"><th${sahada ? ' class="sahada"' : ''}>${o.ilk5 ? `<b>${ad}</b>` : ad}${sahada ? '<span class="sahada-yildiz">*</span>' : ''}</th>
       ${KUTU_SUTUNLARI.map(c => kutuHucresi(o, c)).join('')}</tr>`;
   }).join('');
   return `<div class="kart"><h3>${takimLinki(lig, t.ad)}</h3><div class="tablo-kap"><table class="kutu">
@@ -267,7 +269,9 @@ function macBul(lig, id) {
 function gorunumMac(lig, id) {
   yukle(S.kutular, id, `${KAYNAK}/mac/${id}.json`);
   const kutu = S.kutular[id];
-  const liste = macBul(lig, id);
+  // Sayfa doğrudan maçta açıldıysa (yenileme) haftanın listesi henüz yüklenmemiştir: kutu skordaki haftadan yüklenir;
+  // canlı maçın çeyreği/kalan süresi ve dakikalık yenileme bu listeden gelir
+  const liste = macBul(lig, id) ?? (kutu?.hafta ? macListesi(lig, kutu.hafta)?.find(x => x.id === id) ?? null : null);
   if (!liste && kutu === undefined) return '<p class="bos">Yükleniyor…</p>';
   if (!liste && !kutu) return '<p class="bos">Maç bulunamadı.</p>';
   // Maç listesi (dakikada bir yenilenir) canlıyken kutu skordan daha güncel olabilir
@@ -282,8 +286,9 @@ function gorunumMac(lig, id) {
       <a class="${kazananSinifi(m, 'dep')}" href="#/takim/${lig}/${takimAnahtari(m.dep)}">${esc(baslik(m.dep))}</a></div>
       <p class="soluk kucuk" style="margin:10px 0 0;text-align:center"><span class="lig-etiket">${LIGLER[lig].kisa}</span> ${hafta}. hafta · ${bilgi}</p></div>`;
   if (!kutu) return `${ust}<p class="bos">${m.durum === 'oynanmadi' ? 'Maç henüz oynanmadı.' : kutu === null ? 'Kutu skor henüz gelmedi.' : 'Yükleniyor…'}</p>`;
-  return `${ust}${ceyrekTablosu(lig, kutu)}${kutuSkorTablosu(lig, kutu.ev, takimIstatistigi(lig, kutu.id)?.ev)}${kutuSkorTablosu(lig, kutu.dep, takimIstatistigi(lig, kutu.id)?.dep)}
-    <p class="soluk kucuk">Kalın: ilk 5 · 2S/3S/SA: isabet/deneme · Tç: top çalma · Bl: blok · Tk: top kaybı · VP: verimlilik</p>`;
+  const canli = m.durum === 'canli';
+  return `${ust}${ceyrekTablosu(lig, kutu)}${kutuSkorTablosu(lig, kutu.ev, takimIstatistigi(lig, kutu.id)?.ev, canli)}${kutuSkorTablosu(lig, kutu.dep, takimIstatistigi(lig, kutu.id)?.dep, canli)}
+    <p class="soluk kucuk">Kalın: ilk 5${canli ? ' · *: sahada' : ''} · 2S/3S/SA: isabet/deneme · Tç: top çalma · Bl: blok · Tk: top kaybı · VP: verimlilik</p>`;
 }
 
 // ---------- Lig: puan tablosu, liderler, takımlar, oyuncular ----------

@@ -393,6 +393,12 @@ def tbl_fantezi_uret(kaynak, bilgi, hafta_ozet):
         for pid, e in onceki.items():
             if e.get("aktif") and not (rehber.get(pid) or {}).get("aktif"):
                 yeni.append({"zaman": zaman, "id": pid, "ad": e["ad"], "tur": "ayrildi", "eskiTakim": e.get("takim")})
+        # Oyuncunun son hareketiyle aynıysa yazılmaz: veri başka yerden (bilgisayar/telefon) önce işlendiyse yeni katılanın
+        # 36 saatlik talep süresi yeniden başlamasın
+        son = {}
+        for h in hareketler:
+            son.setdefault(h["id"], (h["tur"], h.get("eskiTakim"), h.get("yeniTakim")))
+        yeni = [h for h in yeni if son.get(h["id"]) != (h["tur"], h.get("eskiTakim"), h.get("yeniTakim"))]
         sinir = (datetime.now(timezone.utc).timestamp() - 90 * 86400)
         hareketler = [h for h in yeni + hareketler if datetime.fromisoformat(h["zaman"]).timestamp() >= sinir]
     yaz(hareket_yol, hareketler)

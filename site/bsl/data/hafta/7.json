@@ -56,7 +56,7 @@
   {
    "id": 346322,
    "tarih": "2026-11-08T13:00:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "BAHÇEŞEHİR KOLEJİ",
    "evId": 265991,
    "evSkor": "97",
@@ -64,12 +64,7 @@
    "depId": 266028,
    "depSkor": "86",
    "salon": "Sinan Erdem Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "00:12",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346326,
@@ -885,7 +880,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 18,
-   "saniye": 1180,
+   "saniye": 1192,
    "mac": 1
   },
   "734506": {
@@ -893,7 +888,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 11,
-   "saniye": 1295,
+   "saniye": 1307,
    "mac": 1
   },
   "608898": {
@@ -909,7 +904,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 17,
-   "saniye": 1437,
+   "saniye": 1436,
    "mac": 1
   },
   "734505": {
@@ -917,7 +912,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 31,
-   "saniye": 1492,
+   "saniye": 1504,
    "mac": 1
   },
   "776935": {
@@ -941,7 +936,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 7,
-   "saniye": 1137,
+   "saniye": 1149,
    "mac": 1
   },
   "447092": {
@@ -949,7 +944,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 13,
    "mac": 1
   },
   "283725": {
@@ -961,7 +956,7 @@
    "mac": 1
   },
   "776655": {
-   "ad": "David Dileo",
+   "ad": "David DiLeo",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 12,
@@ -980,8 +975,8 @@
    "ad": "Brae Ivey",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 25,
-   "saniye": 2002,
+   "vp": 23,
+   "saniye": 2014,
    "mac": 1
   },
   "373162": {
@@ -989,15 +984,15 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 8,
-   "saniye": 1666,
+   "saniye": 1678,
    "mac": 1
   },
   "779010": {
    "ad": "Victor Bailey Jr.",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 11,
-   "saniye": 1961,
+   "vp": 13,
+   "saniye": 1973,
    "mac": 1
   },
   "736366": {
@@ -1005,7 +1000,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 23,
-   "saniye": 1976,
+   "saniye": 1988,
    "mac": 1
   },
   "470765": {
@@ -1013,7 +1008,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 11,
-   "saniye": 1968,
+   "saniye": 1980,
    "mac": 1
   },
   "779011": {
@@ -1054,6 +1049,14 @@
    "takimId": 266028,
    "vp": 12,
    "saniye": 971,
+   "mac": 1
+  },
+  "497055": {
+   "ad": "Bulut Yenice",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 0,
+   "saniye": 0,
    "mac": 1
   },
   "779012": {

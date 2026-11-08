@@ -59,15 +59,15 @@
    "durum": "canli",
    "ev": "BAHÇEŞEHİR KOLEJİ",
    "evId": 265991,
-   "evSkor": "88",
+   "evSkor": "97",
    "dep": "YUKATEL DENİZLİ BASKET",
    "depId": 266028,
-   "depSkor": "79",
+   "depSkor": "86",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "04:10",
+    "saat": "00:12",
     "uzatma": false
    }
   },
@@ -885,15 +885,15 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 18,
-   "saniye": 1100,
+   "saniye": 1180,
    "mac": 1
   },
   "734506": {
    "ad": "Malachi Flynn",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 9,
-   "saniye": 1057,
+   "vp": 11,
+   "saniye": 1295,
    "mac": 1
   },
   "608898": {
@@ -908,24 +908,24 @@
    "ad": "Mateusz Ponitka",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 15,
-   "saniye": 1199,
+   "vp": 17,
+   "saniye": 1437,
    "mac": 1
   },
   "734505": {
    "ad": "Trevion Williams",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 28,
-   "saniye": 1254,
+   "vp": 31,
+   "saniye": 1492,
    "mac": 1
   },
   "776935": {
    "ad": "Aleksa Avramovic",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 13,
-   "saniye": 951,
+   "vp": 15,
+   "saniye": 1109,
    "mac": 1
   },
   "358272": {
@@ -940,8 +940,8 @@
    "ad": "Damien Inglis",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 5,
-   "saniye": 899,
+   "vp": 7,
+   "saniye": 1137,
    "mac": 1
   },
   "447092": {
@@ -980,8 +980,8 @@
    "ad": "Brae Ivey",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 23,
-   "saniye": 1764,
+   "vp": 25,
+   "saniye": 2002,
    "mac": 1
   },
   "373162": {
@@ -989,31 +989,31 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 8,
-   "saniye": 1428,
+   "saniye": 1666,
    "mac": 1
   },
   "779010": {
    "ad": "Victor Bailey Jr.",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 15,
-   "saniye": 1723,
+   "vp": 11,
+   "saniye": 1961,
    "mac": 1
   },
   "736366": {
    "ad": "John Meeks",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 18,
-   "saniye": 1738,
+   "vp": 23,
+   "saniye": 1976,
    "mac": 1
   },
   "470765": {
    "ad": "Mahir Ağva",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 8,
-   "saniye": 1730,
+   "vp": 11,
+   "saniye": 1968,
    "mac": 1
   },
   "779011": {

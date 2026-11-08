@@ -416,3 +416,16 @@ table.kutu tr.takim-satir th, table.kutu tr.takim-satir td { color: var(--soluk)
 .ileri-satir > span { color: var(--soluk); font-size: .9rem; text-align: center; }
 .ileri-satir.orta { justify-content: center; gap: 22px; }
 .ileri-satir.orta b { color: var(--yazi); margin-left: 4px; }
+
+/* Maç sayfası: skor farkı grafiği (ev önde üstte vurgu rengi, deplasman önde altta turuncu) */
+.fark-kart h3 { text-align: center; }
+.fark-lejant { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 18px; font-size: .8rem; font-weight: 600; margin-bottom: 6px; }
+.fark-lejant i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.fark-lejant i.ev { background: var(--vurgu); }
+.fark-lejant i.dep { background: var(--turuncu); }
+.fark-svg { display: block; width: 100%; max-width: 540px; height: auto; margin: 0 auto; }
+.fark-svg text { font-size: 11px; fill: var(--soluk); }
+.fark-svg path.ev { fill: var(--vurgu); opacity: .85; }
+.fark-svg path.dep { fill: var(--turuncu); opacity: .85; }
+.fark-svg .fark-periyot { stroke: var(--cizgi); stroke-dasharray: 3 3; }
+.fark-svg .fark-sifir { stroke: var(--soluk); stroke-width: 1; }

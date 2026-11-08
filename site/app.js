@@ -19,6 +19,7 @@ const S = {
   tablo: {}, liderler: {}, takimIst: {}, ileriIst: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, artieksi: {}, seyirci: {}, odul: {}, // lig -> veri (oyuncu: lig -> id -> detay)
   maclar: {}, // `${lig}-${hafta}` -> maç listesi
   kutular: {}, // maç id -> kutu skor (null: yok)
+  farklar: {}, // maç id -> skor farkı grafiği verisi (biten maçlar, null: yok)
   ui: { ara: '', oyuncuSirala: 'vp', liderKategori: {}, anaLig: anaLigOku() },
 };
 // Telefon ve bilgisayar ayrı düzen: telefonda ana sayfa tek lig gösterir (BSL | TBL seçici), bilgisayarda yan menü ve iki sütun
@@ -293,9 +294,45 @@ function gorunumMac(lig, id) {
   // Takım satırı (takım ribaundu / top kaybı / faul): canlıda kutu skorun içinden, biten maçta TBF'nin takım istatistiğinden
   const tist = takimIstatistigi(lig, kutu.id);
   const ileri = kutu.ev.ileri && kutu.dep.ileri ? { ev: kutu.ev.ileri, dep: kutu.dep.ileri } : ileriIstatistigi(lig, kutu.id);
+  // Skor farkı grafiği: canlıda kutu skorun içinden, biten maçta ayrı dosyadan (FARK_ILK_HAFTA'dan itibaren)
+  if (!kutu.fark && (kutu.hafta ?? hafta) >= (FARK_ILK_HAFTA[lig] ?? Infinity)) yukle(S.farklar, id, `data/${lig}/fark/${id}.json`);
+  const fark = kutu.fark ?? S.farklar[id];
   return `${ust}${ceyrekTablosu(lig, kutu)}${kutuSkorTablosu(lig, kutu.ev, kutu.ev.takim ?? tist?.ev, canli)}${kutuSkorTablosu(lig, kutu.dep, kutu.dep.takim ?? tist?.dep, canli)}
-    <p class="soluk kucuk">Kalın: ilk 5${canli ? ' · *: sahada' : ''} · 2S/3S/SA: isabet/deneme · Tç: top çalma · Bl: blok · Tk: top kaybı · VP: verimlilik</p>
-    ${ileriIstatistikKarti(kutu, ileri)}`;
+    ${farkGrafigi(kutu, fark)}${ileriIstatistikKarti(kutu, ileri)}
+    <p class="soluk kucuk">Kalın: ilk 5${canli ? ' · *: sahada' : ''} · 2S/3S/SA: isabet/deneme · Tç: top çalma · Bl: blok · Tk: top kaybı · VP: verimlilik</p>`;
+}
+
+// Skor farkı grafiği (kullanıcı: geçmiş haftalara gerek yok): veri bu haftalardan itibaren var; veri/uret.py FARK_ILK_HAFTA ile aynı
+const FARK_ILK_HAFTA = { bsl: 7, tbl: 10 };
+// fark: { sure, simdi, d: [[saniye, ev - deplasman], ...] }; ev öndeyken üstte vurgu renginde, deplasman öndeyken altta turuncu
+function farkGrafigi(kutu, fark) {
+  const d = fark?.d;
+  if (!d?.length || !fark.sure) return '';
+  const G = 400, Y = 160, x0 = 4, x1 = 368, ust = 18, alt = 154, orta = (ust + alt) / 2;
+  const enCok = Math.max(5, ...d.map(([, f]) => Math.abs(f)));
+  const olcek = Math.ceil(enCok / 5) * 5;
+  const x = t => (x0 + (Math.min(t, fark.sure) / fark.sure) * (x1 - x0)).toFixed(1);
+  const y = f => (orta - (f / olcek) * (orta - ust)).toFixed(1);
+  const son = Math.max(fark.simdi ?? 0, d[d.length - 1][0]);
+  // Basamaklı alan: fark bir sonraki sayıya kadar aynı kalır; pozitif ve negatif kısım ayrı çizilir
+  const alan = kirp => {
+    let yol = `M${x(0)} ${y(0)}`;
+    d.forEach(([t, f], i) => { const bitis = d[i + 1]?.[0] ?? son; yol += ` L${x(t)} ${y(kirp(f))} L${x(bitis)} ${y(kirp(f))}`; });
+    return `${yol} L${x(son)} ${y(0)} Z`;
+  };
+  const normal = 2400;
+  const periyotlar = [[0, 600, '1.Ç'], [600, 1200, '2.Ç'], [1200, 1800, '3.Ç'], [1800, 2400, '4.Ç']];
+  for (let b = normal, n = 1; b < fark.sure; b += 300, n++) periyotlar.push([b, b + 300, `U${n}`]);
+  const cizgiler = periyotlar.slice(1).map(([b]) => `<line x1="${x(b)}" x2="${x(b)}" y1="${ust}" y2="${alt}" class="fark-periyot"/>`).join('');
+  const etiketler = periyotlar.map(([b, s, ad]) => `<text x="${((+x(b) + +x(s)) / 2).toFixed(1)}" y="12" text-anchor="middle">${ad}</text>`).join('');
+  return `<div class="kart fark-kart"><h3>Skor farkı</h3>
+    <div class="fark-lejant"><span><i class="ev"></i>${esc(baslik(kutu.ev.ad))} önde</span><span><i class="dep"></i>${esc(baslik(kutu.dep.ad))} önde</span></div>
+    <svg viewBox="0 0 ${G} ${Y}" class="fark-svg" role="img" aria-label="Maç boyunca skor farkı">
+      ${etiketler}${cizgiler}
+      <path d="${alan(f => Math.max(f, 0))}" class="ev"/><path d="${alan(f => Math.min(f, 0))}" class="dep"/>
+      <line x1="${x0}" x2="${x1}" y1="${orta}" y2="${orta}" class="fark-sifir"/>
+      <text x="${x1 + 6}" y="${+y(olcek) + 4}">${olcek}</text><text x="${x1 + 6}" y="${orta + 4}">0</text><text x="${x1 + 6}" y="${+y(-olcek) + 4}">${olcek}</text>
+    </svg></div>`;
 }
 
 // Gelişmiş istatistikler: iki takım karşılıklı çubuklar (o istatistikte önde olan vurgu renginde), altında fark / seri / liderlik

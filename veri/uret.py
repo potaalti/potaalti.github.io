@@ -160,6 +160,66 @@ def ileri_istatistik_uret(lig, maclar, en_fazla=60):
         yaz(yol, kayit)
 
 
+def fiba_fark(d):
+    """Skor farkı grafiği: maç başından geçen saniye ve skor farkı (ev - deplasman), sadece fark değişince. sure: toplam
+    süre (uzatmalar dahil), simdi: son olayın saniyesi. Canlıda aynısını eski TBL sitesinin fetch_tbf.py'si (fiba_fark)
+    kutu skora "fark" olarak yazar: ikisi aynı kalmalı."""
+    normal = int(d.get("periodLengthREGULAR") or 10) * 60
+    uzatma = int(d.get("periodLengthOVERTIME") or 5) * 60
+    noktalar, son, simdi, uzatmalar = [[0, 0]], 0, 0, set()
+    for e in reversed(d.get("pbp") or []):
+        try:
+            per = int(e.get("period") or 1)
+            dk, sn = (int(x) for x in str(e.get("clock") or "0:0").split(":")[:2])
+            fark = int(e.get("s1") or 0) - int(e.get("s2") or 0)
+        except ValueError:
+            continue
+        if e.get("periodType") == "OVERTIME":
+            n = per - 4 if per > 4 else per
+            uzatmalar.add(n)
+            t = 4 * normal + n * uzatma - (dk * 60 + sn)
+        else:
+            t = per * normal - (dk * 60 + sn)
+        simdi = max(simdi, t)
+        if fark != son:
+            noktalar.append([t, fark])
+            son = fark
+    return {"sure": 4 * normal + len(uzatmalar) * uzatma, "simdi": simdi, "d": noktalar}
+
+
+# Skor farkı grafiği bu haftalardan itibaren (kullanıcı: geçmiş haftalara gerek yok); site/app.js FARK_ILK_HAFTA ile aynı
+FARK_ILK_HAFTA = {"bsl": 7, "tbl": 10}
+
+
+def fark_akisi_uret(lig, maclar, en_fazla=40):
+    """Biten maçların skor farkı grafiği verisi: maç başına bir dosya (data/<lig>/fark/<id>.json), bir kez yazılır."""
+    klasor = CIKTI / lig / "fark"
+    eksik = [m for m in maclar if m["durum"] == "bitti" and m["hafta"] >= FARK_ILK_HAFTA[lig]
+             and not (klasor / f"{m['id']}.json").exists()][:en_fazla]
+    fiba_no = {}
+    for h in sorted({m["hafta"] for m in eksik}):
+        try:
+            for x in tbf_getir(lig, f"/Match/get-all-matches-for-filter?ActivityId={TBF_LIG[lig]}&WeekFilter={h}&Page=1&PageSize=-1") or []:
+                fiba_no[str(x["matchId"])] = x.get("genuisId")
+        except Exception as e:  # noqa: BLE001 - TBF'ye ulaşılamazsa sonraki çalışmada
+            print(f"{lig}: {h}. hafta maç listesi alınamadı:", e)
+    for m in eksik:
+        no = fiba_no.get(str(m["id"]))
+        if not no:
+            continue
+        try:
+            req = urllib.request.Request(FIBA_URL.format(no), headers={"User-Agent": TARAYICI})
+            with urllib.request.urlopen(req, timeout=30) as yanit:
+                d = json.load(yanit)
+            time.sleep(0.3)
+        except Exception as e:  # noqa: BLE001 - sonraki çalışmada yeniden denenir
+            print(f"{lig}: skor farkı alınamadı ({m['id']}):", e)
+            break
+        if d.get("pbp"):
+            klasor.mkdir(parents=True, exist_ok=True)
+            yaz(klasor / f"{m['id']}.json", fiba_fark(d))
+
+
 def anahtar(ad):
     """Takım adından adres dostu kimlik: 'FENERBAHÇE BEKO' -> 'fenerbahce-beko'"""
     s = ad.replace("İ", "I").replace("ı", "i").lower()
@@ -414,6 +474,7 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
     yaz(CIKTI / lig / "takimlar.json", {"takimlar": takim_ozet, "maclar": maclar_hepsi})
     takim_istatistik_uret(lig, maclar_hepsi)
     ileri_istatistik_uret(lig, maclar_hepsi)
+    fark_akisi_uret(lig, maclar_hepsi)
     if gunluk or not (CIKTI / lig / "seyirci.json").exists():
         seyirci_uret(lig, maclar_hepsi)
     if gunluk or not (CIKTI / lig / "gorsel.json").exists():

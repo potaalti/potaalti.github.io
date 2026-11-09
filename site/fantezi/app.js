@@ -3263,7 +3263,8 @@ async function basla() {
     await girisYap();
     if (window.robotJetonu) window.robotDurumu = { ben: S.ben ?? null };
     D.dinle(veriGeldi, dinlemeHatasi);
-    D.beklemeleriDinle(v => { S.bekleme = v; S.beklemeYuklendi = true; beklemeleriEsitle(); talepKuralariniCek(); ciz(); }, dinlemeHatasi);
+    // Talep süreleri ve kura yalnızca sunucudan gelen güncel veriyle (önbellekteki eski veriyle değil) yazılır
+    D.beklemeleriDinle((v, sunucudan) => { S.bekleme = v; if (sunucudan) S.beklemeYuklendi = true; beklemeleriEsitle(); talepKuralariniCek(); ciz(); }, dinlemeHatasi);
     // Sunucu saati farkı arka planda ölçülür; sayfanın açılmasını bekletmesin
     D.saatFarki(S.uid).then(f => { S.saatFarki = f; D.saatFarkiniAyarla(f); }).catch(e => console.warn('Sunucu saati alınamadı', e));
   } catch (e) {

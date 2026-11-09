@@ -489,17 +489,20 @@ export function beklemeKalan(b) {
 }
 const beklemede = b => beklemeKalan(b) > 0;
 
+// cb(veri, sunucudan): sunucudan = false ise veri telefonun önbelleğinden (eski olabilir); yönetici ekranı yazmak için sunucudan
+// gelen veriyi bekler (2026-11-09: eski önbellekte Can Uğur'un talep kaydı yoktu, kayıt baştan yazılıp 7 talep silindi)
 export function beklemeleriDinle(cb, hata) {
-  return F.onSnapshot(koleksiyon('bekleme'), s => {
+  return F.onSnapshot(koleksiyon('bekleme'), { includeMetadataChanges: true }, s => {
     const v = {};
     s.forEach(d => { v[d.id] = d.data({ serverTimestamps: 'estimate' }); });
-    cb(v);
+    cb(v, !s.metadata.fromCache);
   }, hata);
 }
 
 // Yönetici: lige yeni gelen oyuncular için bekleme başlatır. zamanlar: { pid: Date (lisans/transfer zamanı) }
+// Birleştirerek yazılır: kayıt zaten varsa talepler asla silinmez
 export async function beklemeleriBaslat(zamanlar) {
-  await topluYaz(Object.entries(zamanlar).map(([pid, z]) => b => b.set(yol('bekleme', pid), { zaman: F.Timestamp.fromDate(z) })));
+  await topluYaz(Object.entries(zamanlar).map(([pid, z]) => b => b.set(yol('bekleme', pid), { zaman: F.Timestamp.fromDate(z) }, { merge: true })));
 }
 
 export async function beklemeZamaniniDegistir(pid, zaman) {

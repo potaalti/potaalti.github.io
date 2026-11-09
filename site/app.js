@@ -618,6 +618,11 @@ async function odulHazirla(h, yayinListesi = null) {
     if (b.hata) { sonuc.hatalar.push(`${tekliAd(tur)}: "${sorgu}" ${b.hata}`); continue; }
     if (sart && !sart(b.o)) sonuc.hatalar.push(`${tekliAd(tur)}: ${b.o.ad} şarta uymuyor (${b.o.yerli ? 'yerli' : 'yabancı'}, takımı ${b.o.kazandi ? 'kazandı' : 'kaybetti'}); yine de hazırlandı`);
     secilenler.set(b.o.id, b.o);
+    // Görselde yazılan ad (TBF'deki göbek adları yazılmasın: "Jaquan Scott", "Jaquan Elijah Scott" değil); yazılan ad soyadla
+    // bitmiyorsa ("ÖMER YASİR") resmi tam ad kalır
+    const yazilan = sorgu.split(/\s+\d/)[0].trim();
+    const yk = kelimeler(yazilan), rk = kelimeler(b.o.ad);
+    if (yk.length > 1 && yk.at(-1) === rk.at(-1) && yk.every(k => rk.includes(k))) b.o = { ...b.o, ad: yazilan };
     isler.push({ ad: `${tekliAd(tur)} · ${b.o.ad}`, bilgi: { tur, baslik: tekliAd(tur), oyuncu: b.o.ad, takim: b.o.takim, vp: b.o.vp }, yap: () => OD.tekli({ lig: OL(), tur, hafta: h, o: b.o, foto: b.o.foto, logo: b.o.logo }) });
   }
   liste.gruplar.forEach((grup, i) => {

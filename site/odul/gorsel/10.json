@@ -1,0 +1,100 @@
+{
+ "hafta": 10,
+ "guncelleme": "2026-11-09T17:57:19.246Z",
+ "notlar": [],
+ "gorseller": [
+  {
+   "dosya": "01-10-haftanin-panoramasi.jpg",
+   "tur": "kapak",
+   "baslik": "10. Haftanın Panoraması"
+  },
+  {
+   "dosya": "02-mvp-jaquan-scott.jpg",
+   "tur": "mvp",
+   "baslik": "MVP",
+   "oyuncu": "Jaquan Scott",
+   "takim": "BALIKESİR BÜYÜKŞEHİR BELEDİYE SPOR",
+   "vp": 34
+  },
+  {
+   "dosya": "03-mvp-justyn-hamilton.jpg",
+   "tur": "mvp",
+   "baslik": "MVP",
+   "oyuncu": "Justyn Hamilton",
+   "takim": "FENERBAHÇE GELİŞİM",
+   "vp": 34
+  },
+  {
+   "dosya": "04-yerli-mvp-bartu-encu.jpg",
+   "tur": "yerli",
+   "baslik": "Yerli MVP",
+   "oyuncu": "Bartu Encü",
+   "takim": "FENERBAHÇE GELİŞİM",
+   "vp": 23
+  },
+  {
+   "dosya": "05-kaybeden-yabanci-mvp-kahlil-dukes.jpg",
+   "tur": "kaybedenYabanci",
+   "baslik": "Kaybeden Yabancı MVP",
+   "oyuncu": "Kahlil Dukes",
+   "takim": "KEÇİÖREN BELEDİYESİ BAĞLUM",
+   "vp": 34
+  },
+  {
+   "dosya": "06-kaybeden-yerli-mvp-zahid-isaoglu.jpg",
+   "tur": "kaybedenYerli",
+   "baslik": "Kaybeden Yerli MVP",
+   "oyuncu": "Zahid İsaoğlu",
+   "takim": "KEÇİÖREN BELEDİYESİ BAĞLUM",
+   "vp": 28
+  },
+  {
+   "dosya": "07-yerli-5.jpg",
+   "tur": "besli",
+   "baslik": "Yerli 5",
+   "oyuncular": [
+    "Eray Akyüz",
+    "Can Uğur Öğüt",
+    "Bartu Encü",
+    "İlker Tunalı",
+    "Gökay Hacıoğlu"
+   ]
+  },
+  {
+   "dosya": "08-yabanci-5.jpg",
+   "tur": "besli",
+   "baslik": "Yabancı 5",
+   "oyuncular": [
+    "Sam Sessoms",
+    "Brandon Jefferson",
+    "Jarmar Gulley",
+    "Jaquan Scott",
+    "Justyn Hamilton"
+   ]
+  },
+  {
+   "dosya": "09-mansiyon-5-i-i.jpg",
+   "tur": "besli",
+   "baslik": "Mansiyon 5'i – I",
+   "oyuncular": [
+    "Scoochie Smith",
+    "Tavian Dunn-Martin",
+    "Baran Avşar",
+    "Julien Ducree",
+    "Abdoulaye Gueye"
+   ]
+  },
+  {
+   "dosya": "10-mansiyon-5-i-ii.jpg",
+   "tur": "besli",
+   "baslik": "Mansiyon 5'i – II",
+   "oyuncular": [
+    "Fred Cleveland",
+    "Ege Havsa",
+    "Stefan Moody",
+    "Ike Nweke",
+    "Eric Buckner"
+   ]
+  }
+ ]
+}

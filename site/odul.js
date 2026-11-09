@@ -336,6 +336,8 @@ async function besliKartlar(g, oyuncular) {
 
 // Yönetici kontrolü için: logonun görsele çizilecek hali
 export async function logoOnizleme(url) { return beyaziSil(await resim(url)); }
+// Haftanın programı görseli (program.js) için: beyaz zemini silinmiş ve kırpılmış logo
+export async function kirpikLogo(url) { return logoKirp(await resim(url)); }
 
 // Fotoğraf kadrajı: dekupe oyuncunun başının üstü (ust), baş genişliği (bas), başın ortası (orta) ve boynun yeri (boyun), resmin
 // piksellerinde. Satırların opak genişliği yukarıdan izlenir: baş genişler, boyunda daralır, omuzlarda birden açılır.

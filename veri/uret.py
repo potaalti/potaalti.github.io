@@ -429,7 +429,12 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
                       "averaj": t["atilan"] - t["yenilen"], "puan": t["g"] * 2 + t["m"], "son5": [x["s"] for x in t["seri"][-5:]],
                       # tabloya giren maçlar: uygulama bundan sonra biten maçları canlı ekler
                       "sayilan": [x["id"] for x in t["seri"]]})
-    tablo.sort(key=lambda x: (-x["g"], x["m"], -x["averaj"], -x["atilan"]))
+    # TBL sıralaması galibiyet yüzdesine göre (bay yüzünden takımların maç sayısı farklı; kullanıcı 2026-11-09), eşitlikte genel
+    # averaj; BSL galibiyet sayısına göre. site/app.js canliTablo da aynı sıralamayı kullanır
+    if lig == "tbl":
+        tablo.sort(key=lambda x: (-(x["g"] / x["o"] if x["o"] else 0), -x["averaj"], -x["atilan"]))
+    else:
+        tablo.sort(key=lambda x: (-x["g"], x["m"], -x["averaj"], -x["atilan"]))
     for i, s in enumerate(tablo):
         s["sira"] = i + 1
 

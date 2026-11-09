@@ -860,26 +860,34 @@ function canliTablo(lig, tablo) {
   }
   const liste = [...satir.values()];
   if (degisti) {
-    liste.sort((x, y) => y.g - x.g || x.m - y.m || y.averaj - x.averaj || y.atilan - x.atilan);
+    liste.sort(siralamaKarsilastir(lig));
     liste.forEach((s, i) => { s.sira = i + 1; });
   }
   return liste;
 }
+
+// Puan tablosu sıralaması (veri/uret.py ile aynı): TBL galibiyet yüzdesine göre (bay yüzünden maç sayıları farklı), eşitlikte genel
+// averaj; BSL galibiyet sayısına göre
+const galibiyetYuzdesi = s => (s.o ? s.g / s.o : 0);
+const yuzdeYazisi = s => `%${(Math.round(galibiyetYuzdesi(s) * 10000) / 100).toLocaleString('tr-TR', { maximumFractionDigits: 2 })}`;
+const siralamaKarsilastir = lig => (lig === 'tbl'
+  ? (x, y) => galibiyetYuzdesi(y) - galibiyetYuzdesi(x) || y.averaj - x.averaj || y.atilan - x.atilan
+  : (x, y) => y.g - x.g || x.m - y.m || y.averaj - x.averaj || y.atilan - x.atilan);
 
 function tabloKarti(lig, ilk = null) {
   const t = canliTablo(lig, ligVerisi(lig, 'tablo'));
   if (!t) return '<p class="bos">Yükleniyor…</p>';
   const satirlar = (ilk ? t.slice(0, ilk) : t).map(s => `<tr class="tikla" onclick="location.hash='#/takim/${lig}/${s.id}'">
       <td class="sira"><span class="madalya m${s.sira}">${s.sira}</span></td><td class="takim-ad">${esc(baslik(s.ad))}${s.canli ? ' <span class="canli-yazi kucuk">canlı</span>' : ''}</td>
-      <td class="sayi">${s.o}</td><td class="sayi"><b>${s.g}</b></td><td class="sayi">${s.m}</td>
+      <td class="sayi">${s.o}</td><td class="sayi"><b>${s.g}</b></td><td class="sayi">${s.m}</td>${lig === 'tbl' ? `<td class="sayi">${yuzdeYazisi(s)}</td>` : ''}
       <td class="sayi dar-gizle">${s.atilan}</td><td class="sayi dar-gizle">${s.yenilen}</td><td class="sayi">${isaretli(s.averaj)}</td>
       ${ilk ? '' : `<td class="dar-gizle"><span class="form">${s.son5.map(x => `<i class="${x}">${x}</i>`).join('')}</span></td>`}</tr>`).join('');
   return `<div class="kart">${ilk ? `<div class="baslik-satir"><h2>${LIGLER[lig].kisa} puan tablosu</h2><a href="#/lig/${lig}/tablo">Tümü ›</a></div>` : ''}
     <div class="tablo-kap"><table>
-    <thead><tr><th>#</th><th>Takım</th><th class="sayi">O</th><th class="sayi">G</th><th class="sayi">M</th>
+    <thead><tr><th>#</th><th>Takım</th><th class="sayi">O</th><th class="sayi">G</th><th class="sayi">M</th>${lig === 'tbl' ? '<th class="sayi">G%</th>' : ''}
       <th class="sayi dar-gizle">A</th><th class="sayi dar-gizle">Y</th><th class="sayi">Av.</th>${ilk ? '' : '<th class="dar-gizle">Son 5</th>'}</tr></thead>
     <tbody>${satirlar}</tbody></table></div>
-    ${ilk ? '' : '<p class="soluk kucuk" style="margin:8px 0 0">O: oynanan · G: galibiyet · M: mağlubiyet · A/Y: atılan/yenilen sayı · Av.: averaj. Sıralama galibiyete göre, eşitlikte averaj (resmi sıralamada ikili averaj gibi farklı kurallar olabilir).</p>'}</div>`;
+    ${ilk ? '' : '<p class="soluk kucuk" style="margin:8px 0 0">O: oynanan · G: galibiyet · M: mağlubiyet · A/Y: atılan/yenilen sayı · Av.: averaj. ${lig === 'tbl' ? 'G%: galibiyet yüzdesi. Sıralama galibiyet yüzdesine göre, eşitlikte averaj' : 'Sıralama galibiyete göre, eşitlikte averaj'} (resmi sıralamada ikili averaj gibi farklı kurallar olabilir).</p>'}</div>`;
 }
 
 function liderListesi(lig, k, kac) {

@@ -994,7 +994,8 @@ function genelKart(haftalar) {
 }
 
 // ---------- Puan durumu görseli (WhatsApp / Instagram paylaşımı) ----------
-const paylasDugmeleri = (tur, n = '') => `<span class="satir" style="flex-wrap:nowrap">
+// Paylaş / İndir yalnızca yöneticiye (kullanıcı kararı 2026-11-09)
+const paylasDugmeleri = (tur, n = '') => !yonetici() ? '' : `<span class="satir" style="flex-wrap:nowrap">
     <button class="btn kucuk" data-is="paylas" data-tur="${tur}" data-id="${n}">📤 Paylaş</button>
     <button class="btn kucuk" data-is="paylas" data-tur="${tur}" data-id="${n}" data-islem="indir" title="Görseli indir">⬇</button></span>`;
 
@@ -2420,7 +2421,7 @@ async function eylem(is, id, el) {
       return ciz();
     case 'panel-kapat': S.ui.panel = null; return ciz();
     case 'fa-sirala': S.ui.faSirala = id; return ciz();
-    case 'paylas': return siralamayiPaylas(el, el.dataset.tur, Number(id), el.dataset.islem === 'indir');
+    case 'paylas': if (!yonetici()) return; return siralamayiPaylas(el, el.dataset.tur, Number(id), el.dataset.islem === 'indir');
     case 'talep-git': S.ui.faAlSonraki = id; location.hash = '#/bostakiler'; return;
     case 'talep-onayla': {
       const birak = deger('fa-birak');

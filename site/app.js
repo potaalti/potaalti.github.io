@@ -322,7 +322,7 @@ function artieksiKarti(lig, istenen) {
       <div class="f-sayi"><strong>${isaretli(k.pm)}</strong><small>+/-</small></div></div>`).join('');
   const anahtar = `${lig}-${donem}`;
   return `${cipler}<div class="kart"><div class="baslik-satir"><h2>${donem === 'sezon' ? 'Sezon' : `${donem}. hafta`} · +/- ilk 10</h2>
-    ${liste.length ? `<span class="satir"><button class="secenek" data-is="ae-paylas" data-id="${anahtar}">📤 Paylaş</button><button class="secenek" data-is="ae-indir" data-id="${anahtar}">⬇ İndir</button></span>` : ''}</div>
+    ${liste.length && yoneticiMi() ? `<span class="satir"><button class="secenek" data-is="ae-paylas" data-id="${anahtar}">📤 Paylaş</button><button class="secenek" data-is="ae-indir" data-id="${anahtar}">⬇ İndir</button></span>` : ''}</div>
     ${satirlar || '<p class="bos">Henüz veri yok.</p>'}
     <p class="soluk kucuk" style="margin-bottom:0">Eşit +/-'de takımının skor farkı daha kötü olan üstte.</p></div>`;
 }
@@ -374,7 +374,8 @@ function seyirciKarti(lig, istenen) {
   const donem = istenen === 'ortalama' ? 'ortalama' : v.haftalar.includes(Number(istenen)) ? Number(istenen) : v.haftalar.at(-1);
   const cipler = `<div class="secenekler">${[...v.haftalar, 'ortalama'].map(k =>
     `<a class="secenek ${k === donem ? 'aktif' : ''}" href="#/lig/${lig}/seyirci/${k}">${k === 'ortalama' ? 'Ortalama' : `${k}. hafta`}</a>`).join('')}</div>`;
-  const dugmeler = `<span class="satir"><button class="secenek" data-is="sy-paylas" data-id="${lig}-${donem}">📤 Paylaş</button><button class="secenek" data-is="sy-indir" data-id="${lig}-${donem}">⬇ İndir</button></span>`;
+  // Paylaş / İndir yalnızca yöneticiye (kullanıcı kararı 2026-11-09)
+  const dugmeler = !yoneticiMi() ? '' : `<span class="satir"><button class="secenek" data-is="sy-paylas" data-id="${lig}-${donem}">📤 Paylaş</button><button class="secenek" data-is="sy-indir" data-id="${lig}-${donem}">⬇ İndir</button></span>`;
   if (donem === 'ortalama') {
     const liste = seyirciOrtalamasi(v);
     const satirlar = liste.map((k, i) => `<tr><td class="sayi"><span class="f-sira ${i < 3 ? `s${i + 1}` : ''}">${i + 1}</span></td><td><b>${esc(baslik(k.ad))}</b></td>
@@ -721,17 +722,19 @@ function odulKarti(lig, istenen) {
   const cipler = haftalar.length > 1 ? `<div class="secenekler">${haftalar.map(k => `<a class="secenek ${k === h ? 'aktif' : ''}" href="#/lig/${lig}/odul/${k}">${k}. hafta</a>`).join('')}</div>` : '';
   if (!v) return `${cipler}<p class="bos">Yükleniyor…</p>`;
   const g = v.gorseller;
-  const paylasVar = !!navigator.canShare;
+  // Paylaş / İndir yalnızca yöneticiye (kullanıcı kararı 2026-11-09)
+  const yon = yoneticiMi();
+  const paylasVar = yon && !!navigator.canShare;
   const satirlar = g.map((x, i) => `<div class="f-satir odul-satir">
       <button class="odul-onizleme" data-is="odul-ac" data-id="${i}" aria-label="${esc(x.baslik)} büyük göster"><img src="${galeriAdresi(h, x)}" alt="" loading="lazy"></button>
       <div class="ad" data-is="odul-ac" data-id="${i}"><strong>${esc(x.baslik)}</strong>
         <small>${esc(x.tur === 'besli' ? (x.oyuncular ?? []).join(', ') : x.tur === 'kapak' ? 'Kapak' : `${x.oyuncu} · ${baslik(x.takim ?? '')}`)}</small></div>
       ${x.vp != null ? `<div class="f-sayi"><strong>${x.vp}</strong><small>VP</small></div>` : ''}
-      <span class="satir odul-dugmeler">${paylasVar ? `<button class="secenek" data-is="odul-paylas" data-id="${h}-${i}" aria-label="Paylaş">📤</button>` : ''}<button class="secenek" data-is="odul-indir" data-id="${h}-${i}" aria-label="İndir">⬇</button></span></div>`).join('');
+      ${yon ? `<span class="satir odul-dugmeler">${paylasVar ? `<button class="secenek" data-is="odul-paylas" data-id="${h}-${i}" aria-label="Paylaş">📤</button>` : ''}<button class="secenek" data-is="odul-indir" data-id="${h}-${i}" aria-label="İndir">⬇</button></span>` : ''}</div>`).join('');
   const acik = S.ui.odulAcik;
   const buyuk = acik != null && g[acik] ? odulBuyuk(h, g, acik) : '';
   return `${cipler}<div class="kart"><div class="baslik-satir"><h2>${h}. hafta · haftanın ödülleri</h2>
-    <span class="satir">${paylasVar ? `<button class="secenek" data-is="odul-hepsi-paylas" data-id="${h}">📤 Hepsini paylaş</button>` : ''}<button class="secenek" data-is="odul-hepsi-indir" data-id="${h}">⬇ Hepsini indir</button></span></div>
+    ${yon ? `<span class="satir">${paylasVar ? `<button class="secenek" data-is="odul-hepsi-paylas" data-id="${h}">📤 Hepsini paylaş</button>` : ''}<button class="secenek" data-is="odul-hepsi-indir" data-id="${h}">⬇ Hepsini indir</button></span>` : ''}</div>
     ${satirlar}
     <p class="soluk kucuk" style="margin-bottom:0">Satıra dokununca görsel büyük açılır.</p></div>${buyuk}`;
 }
@@ -743,8 +746,8 @@ function odulBuyuk(h, g, i) {
       <button class="odul-ok sol" data-is="odul-ac" data-id="${(i - 1 + g.length) % g.length}" aria-label="Önceki">‹</button>
       <button class="odul-ok sag" data-is="odul-ac" data-id="${(i + 1) % g.length}" aria-label="Sonraki">›</button>
       <div class="odul-buyuk-alt"><div><b>${esc(x.oyuncu ? `${x.baslik} · ${x.oyuncu}` : x.baslik)}</b><small>${i + 1} / ${g.length}</small></div>
-        <span>${navigator.canShare ? `<button class="btn" data-is="odul-paylas" data-id="${h}-${i}">📤 Paylaş</button>` : ''}
-        <button class="btn ana" data-is="odul-indir" data-id="${h}-${i}">⬇ İndir</button>
+        <span>${yoneticiMi() ? `${navigator.canShare ? `<button class="btn" data-is="odul-paylas" data-id="${h}-${i}">📤 Paylaş</button>` : ''}
+        <button class="btn ana" data-is="odul-indir" data-id="${h}-${i}">⬇ İndir</button>` : ''}
         <button class="btn" data-is="odul-kapat" data-id="x" aria-label="Kapat">✕</button></span></div>
     </div></div>`;
 }
@@ -1006,6 +1009,8 @@ document.addEventListener('click', e => {
   if (!el) return;
   if (el.dataset.is === 'oyuncu-sirala') { S.ui.oyuncuSirala = el.dataset.id; ciz(); }
   if (el.dataset.is === 'kutu-sirala') { S.ui.kutuSirala = ME.kutuSiralamaDegistir(S.ui.kutuSirala, el.dataset.id); ciz(); }
+  // Paylaş / İndir yalnızca yöneticiye (kullanıcı kararı 2026-11-09); ödül üreticisi (?uret) zaten yöneticiye
+  if (/^(ae|sy|odul)-(paylas|indir)$|^odul-hepsi(-indir|-paylas)?$/.test(el.dataset.is) && !yoneticiMi()) return;
   if (el.dataset.is === 'ae-paylas' || el.dataset.is === 'ae-indir') {
     const yazi = el.textContent;
     el.disabled = true;

@@ -445,3 +445,4 @@ table.kutu tr.takim-satir th, table.kutu tr.takim-satir td { color: var(--soluk)
 .fark-balon.alt { top: auto; bottom: -4px; }
 /* Maçlar sayfası: yöneticiye "Haftanın programı" indir / paylaş (program.js) */
 .program-dugmeler { justify-content: flex-end; gap: 8px; margin: -4px 0 10px; }
+.program-dugmeler { flex-wrap: wrap; }

@@ -1,25 +1,36 @@
-// Haftanın programı şablonları (bir kez çalışır): kullanıcının yapay zekayla hazırladığı örnek görsellerinden (TBL 9. hafta,
-// BSL 6. hafta, 1280x1600) boş şablon çıkarır: hafta numarası ve tarih yazısı silinir; maç paneli program.js'te her hafta
-// yeniden çizildiği için olduğu gibi kalır, ama panelin renkleri (her satırda sol ve sağ kenar) ölçülüp <lig>.json'a yazılır.
-//   node veri/program_sablon.mjs <tbl-ornek> <bsl-ornek>
-// Çıktı: site/program/sablon/<lig>.webp, <lig>.json, youtube-tbf.png, ht-spor.png (TBL örneğinden kesilen yayın simgeleri)
+// Haftanın programı ve sonuçları şablonları (bir kez çalışır): kullanıcının yapay zekayla hazırladığı örnek görsellerinden
+// (1280x1600) boş şablon çıkarır: hafta numarası ve tarih yazısı (BSL'de görselin üstünden kesik üst satır da) silinir; maç
+// paneli program.js'te her hafta yeniden çizildiği için olduğu gibi kalır, ama panelin renkleri (her satırda sol ve sağ kenar)
+// ölçülüp <ad>.json'a yazılır. Numara ve tarihin yeni konumları (cizim) de json'a yazılır, program.js oradan okur.
+//   node veri/program_sablon.mjs tbl=<ornek> bsl=<ornek> tbl-sonuc=<ornek> bsl-sonuc=<ornek>   (verilenler üretilir)
+// Örnekler: program TBL 9 / BSL 6 hafta, sonuç TBL 8 / BSL 5 hafta.
+// Çıktı: site/program/sablon/<ad>.webp, <ad>.json, youtube-tbf.png, ht-spor.png (TBL program örneğinden kesilen yayın simgeleri)
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import puppeteer from 'puppeteer-core';
 
 const CIKTI = fileURLToPath(new URL('../site/program/sablon/', import.meta.url));
 mkdirSync(CIKTI, { recursive: true });
-const [, , TBL, BSL] = process.argv;
+const GIRDI = Object.fromEntries(process.argv.slice(2).map(a => a.split('=')));
 const veri = f => `data:image/webp;base64,${readFileSync(f).toString('base64')}`;
 
-// Ölçüler (1280x1600 görselde): numara ve tarih kutuları, panel(ler)
+// Ölçüler (1280x1600 görselde): numara ve tarih kutuları (silinecek), panel(ler); cizim: yeni numara (sağ kenarı, üst/alt,
+// dokusu alınan "H" sapının sütunları, "PROGRAMI/SONUÇLARI"nın başladığı yükseklik) ve tarihin ortası ve en geniş hali
 const AYAR = {
   tbl: { numara: [70, 70, 128, 152], pUst: 205, tarih: [232, 338, 400, 56], panel: [62, 403, 1153, 1057],
-    kenar: [[68, 104], [1172, 1208]], bayAlt: [512, 1452, 116, 36] },
+    kenar: [[68, 104], [1172, 1208]], bayAlt: [512, 1452, 116, 36],
+    cizim: { numara: { sag: 194, ust: 82, alt: 200, kok: [204, 219], pUst: 205 }, tarih: { x: 430, y: 367, w: 384 } } },
   bsl: { numara: [64, 64, 133, 130], pUst: 140, ustYazi: [70, 0, 520, 58], tarih: [172, 318, 440, 76], tarihKapali: true, panel: [50, 408, 1178, 982],
     kenar: [[56, 76], [1200, 1222]], zemin: [[26, 44], [1236, 1254]],
     // Panel renkleri yalnızca ilk gün panelinin içinden (paneller arası boşluk ve kenar gölgeleri karışmasın)
-    ornek: [420, 748] },
+    ornek: [420, 748],
+    cizim: { numara: { sag: 193, ust: 79, alt: 186, kok: [203, 218], pUst: 140 }, tarih: { x: 390, y: 355, w: 412 } } },
+  'tbl-sonuc': { numara: [66, 68, 132, 154], pUst: 208, tarih: [252, 336, 314, 56], panel: [60, 400, 1153, 1050],
+    kenar: [[66, 100], [1178, 1208]], bayAlt: [512, 1446, 120, 40],
+    cizim: { numara: { sag: 194, ust: 82, alt: 204, kok: [204, 220], pUst: 208 }, tarih: { x: 408, y: 364, w: 330 } } },
+  'bsl-sonuc': { numara: [70, 76, 135, 128], pUst: 205, ustYazi: [70, 0, 520, 64], tarih: [172, 320, 450, 78], tarihKapali: true,
+    panel: [37, 410, 1176, 950], kenar: [[43, 90], [1186, 1208]], zemin: [[20, 34], [1222, 1246]], ornek: [610, 925],
+    cizim: { numara: { sag: 198, ust: 89, alt: 195, kok: [211, 225], pUst: 205 }, tarih: { x: 395, y: 360, w: 340 } } },
 };
 
 const SAYFA = `<!doctype html><html><body><script>
@@ -129,13 +140,13 @@ window.uret = async (src, A, lig) => {
 const t = await puppeteer.launch({ executablePath: process.env.CHROME ?? 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: true });
 const p = await t.newPage();
 await p.setContent(SAYFA);
-for (const [lig, dosya] of [['tbl', TBL], ['bsl', BSL]]) {
-  const s = await p.evaluate((src, A, l) => window.uret(src, A, l), veri(dosya), AYAR[lig], lig);
-  const yaz = (ad, url) => writeFileSync(`${CIKTI}${ad}`, Buffer.from(url.split(',')[1], 'base64'));
-  yaz(`${lig}.webp`, s.webp);
+for (const [ad, dosya] of Object.entries(GIRDI)) {
+  const s = await p.evaluate((src, A, l) => window.uret(src, A, l), veri(dosya), AYAR[ad], ad);
+  const yaz = (dosyaAdi, url) => writeFileSync(`${CIKTI}${dosyaAdi}`, Buffer.from(url.split(',')[1], 'base64'));
+  yaz(`${ad}.webp`, s.webp);
   if (s.youtube) { yaz('youtube-tbf.png', s.youtube); yaz('ht-spor.png', s.ht); }
   const { webp, youtube, ht, ...json } = s;
-  writeFileSync(`${CIKTI}${lig}.json`, JSON.stringify({ ...json, ...AYAR[lig] }));
-  console.log(lig, 'tamam');
+  writeFileSync(`${CIKTI}${ad}.json`, JSON.stringify({ ...json, ...AYAR[ad] }));
+  console.log(ad, 'tamam');
 }
 await t.close();

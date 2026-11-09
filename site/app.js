@@ -164,7 +164,7 @@ function gorunumMaclar(istenenLig, istenenHafta) {
   const maclar = macListesi(lig, n);
   return `${ligSec}<div class="hafta-secici">${ok(haftalar[i - 1], '‹')}
       <div class="baslik"><strong>${LIGLER[lig].kisa} ${n}. Hafta</strong><small>${maclar ? haftaDurumu(maclar) : 'Yükleniyor…'}</small></div>${ok(haftalar[i + 1], '›')}</div>
-    ${yoneticiMi() && maclar?.length ? `<div class="satir program-dugmeler"><button class="secenek" data-is="pr-indir" data-id="${lig}-${n}">⬇ Haftanın programı</button>${navigator.canShare ? `<button class="secenek" data-is="pr-paylas" data-id="${lig}-${n}" aria-label="Programı paylaş">📤</button>` : ''}</div>` : ''}
+    ${yoneticiMi() && maclar?.length ? programDugmeleri(lig, n, maclar) : ''}
     ${!maclar ? '<p class="bos">Yükleniyor…</p>' : maclar.length ? gunlereGore(lig, maclar) : '<p class="bos">Bu haftanın maçları henüz belli değil.</p>'}
     ${maclar?.length ? bayYazisi(lig, maclar) : ''}
     <p class="soluk kucuk">Maça dokununca kutu skor açılır. Maç saatlerinde skorlar dakikada bir yenilenir.</p>`;
@@ -758,20 +758,26 @@ async function odulDosyasi(h, i) {
   const blob = await (await fetch(galeriAdresi(h, x))).blob();
   return new File([blob], `pota-alti-${h}-hafta-${x.dosya}`, { type: blob.type || 'image/jpeg' });
 }
-// Haftanın programı görseli (program.js; şablonlar kullanıcının örneklerinden): Maçlar sayfasında yalnızca yöneticiye "Programı
-// indir / paylaş". Her basışta o anki maç listesinden (saat değişikliği dahil) yeniden hazırlanır.
-async function programDosyasi(lig, h) {
+// Haftanın programı ve sonuçları görselleri (program.js; şablonlar kullanıcının örneklerinden): Maçlar sayfasında yalnızca
+// yöneticiye indir / paylaş. Her basışta o anki maç listesinden (saat değişikliği, yeni biten maç dahil) yeniden hazırlanır.
+// Sonuçlar, haftada biten maç varsa çıkar (bitmemiş maçlarda saat yazar).
+function programDugmeleri(lig, n, maclar) {
+  const dugme = (tur, ad) => `<button class="secenek" data-is="pr-indir" data-id="${lig}-${n}-${tur}">⬇ ${ad}</button>${navigator.canShare
+    ? `<button class="secenek" data-is="pr-paylas" data-id="${lig}-${n}-${tur}" aria-label="${ad} paylaş">📤</button>` : ''}`;
+  return `<div class="satir program-dugmeler">${dugme('program', 'Haftanın programı')}${maclar.some(m => m.durum === 'bitti') ? dugme('sonuc', 'Sonuçlar') : ''}</div>`;
+}
+async function programDosyasi(lig, h, tur = 'program') {
   const [liste, gorsel, tablo] = await Promise.all([getir(`${KAYNAK}/maclar/${lig}-${h}.json`), getir(`data/${lig}/gorsel.json`), getir(`data/${lig}/tablo.json`)]);
   const maclar = liste.maclar ?? [];
   const logo = ad => (gorsel.logo?.[ad] ? `data/${lig}/logo/${dosyaAnahtari(ad)}${uzanti(gorsel.logo[ad])}` : null);
   const oynayan = new Set(maclar.flatMap(m => [m.ev, m.dep]));
   const bay = lig === 'tbl' ? tablo.map(t => t.ad).filter(a => !oynayan.has(a)) : [];
-  const blob = await PR.programGorseli({ lig, hafta: h, maclar, bay, logo });
-  return new File([blob], `pota-alti-${lig}-${h}-hafta-programi.png`, { type: 'image/png' });
+  const blob = await PR.programGorseli({ lig, hafta: h, maclar, bay, logo, tur });
+  return new File([blob], `pota-alti-${lig}-${h}-hafta-${tur === 'sonuc' ? 'sonuclari' : 'programi'}.png`, { type: 'image/png' });
 }
 async function programPaylas(k, indir) {
-  const [lig, h] = k.split('-');
-  const dosya = await programDosyasi(lig, Number(h));
+  const [lig, h, tur] = k.split('-');
+  const dosya = await programDosyasi(lig, Number(h), tur);
   if (!indir && navigator.canShare?.({ files: [dosya] })) {
     try { await navigator.share({ files: [dosya] }); return; } catch (e) { if (e?.name === 'AbortError') return; }
   }

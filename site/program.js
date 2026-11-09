@@ -26,7 +26,7 @@ const resim = url => {
 };
 const sablonAdresi = ad => new URL(`program/sablon/${ad}`, document.baseURI).href;
 let sablonVerisi = {};
-const sablonJson = lig => (sablonVerisi[lig] ??= fetch(sablonAdresi(`${lig}.json`)).then(r => r.json()));
+const sablonJson = ad => (sablonVerisi[ad] ??= fetch(sablonAdresi(`${ad}.json`)).then(r => r.json()));
 let yaziHazir;
 function yaziTipleri() {
   yaziHazir ??= new Promise(ok => {
@@ -41,11 +41,12 @@ function yaziTipleri() {
 // "2026-10-31T14:00:00" (Türkiye saati) -> parçalar
 const parcala = s => { const [t, sa] = String(s).split('T'); const [y, a, g] = t.split('-').map(Number); return { y, a, g, saat: (sa ?? '').slice(0, 5), gun: new Date(Date.UTC(y, a - 1, g)).getUTCDay() }; };
 const gunAnahtari = s => String(s).slice(0, 10);
-// Tarih aralığı: TBL "31 EKİM - 1 KASIM 2026", BSL "31 EKİM-2 KASIM 2026"; aynı ayda "14-15 KASIM 2026"
+// Tarih aralığı: TBL "31 EKİM - 1 KASIM 2026", BSL "31 EKİM-2 KASIM 2026"; aynı ayda "23-25 EKİM 2026"
 function aralik(gunler, lig) {
   const a = parcala(gunler[0]), b = parcala(gunler.at(-1)), ayrac = lig === 'tbl' ? ' - ' : '-';
   if (gunler.length === 1) return `${a.g} ${AYLAR[a.a - 1]} ${a.y}`;
-  return a.a === b.a ? `${a.g}${ayrac}${b.g} ${AYLAR[a.a - 1]} ${b.y}` : `${a.g} ${AYLAR[a.a - 1]}${ayrac}${b.g} ${AYLAR[b.a - 1]} ${b.y}`;
+  // Aynı ayda iki ligde de boşluksuz ("23-25 EKİM 2026"), ay değişince TBL'de boşluklu ("31 EKİM - 1 KASIM 2026")
+  return a.a === b.a ? `${a.g}-${b.g} ${AYLAR[a.a - 1]} ${b.y}` : `${a.g} ${AYLAR[a.a - 1]}${ayrac}${b.g} ${AYLAR[b.a - 1]} ${b.y}`;
 }
 const kanal = yayin => { const y = String(yayin ?? '').toLowerCase(); return /youtube|tbf/.test(y) ? 'youtube' : /\bht\b|ht spor/.test(y) ? 'ht' : null; };
 
@@ -163,7 +164,7 @@ function gunlereBol(maclar) {
 }
 
 // ---------- TBL ----------
-async function tblCiz(g, S, { hafta, gunler, bay, logo }) {
+async function tblCiz(g, S, { gunler, bay, logo, sonuc }) {
   const [px, py, pw, ph] = S.panel;
   panelBoya(g, S.panel, 22, S.panelSol, S.panelSag);
   const yt = await resim(sablonAdresi('youtube-tbf.png')), ht = await resim(sablonAdresi('ht-spor.png'));
@@ -204,8 +205,9 @@ async function tblCiz(g, S, { hafta, gunler, bay, logo }) {
       adYaz(g, m.dep, 824, yc2, 'left', 318);
       await logoHalkasi(g, 512, yc2, 44, logo(m.ev));
       await logoHalkasi(g, 768, yc2, 44, logo(m.dep));
-      // Saat ve altında yayın simgesi, satır yüksekliğine göre ölçeklenip satırın ortasına
-      const k = kanal(m.yayin), simge = k === 'youtube' ? yt : k === 'ht' ? ht : null;
+      // Sonuçlarda biten maçın skoru; programda (ve sonuçlarda henüz bitmemiş maçta) saat, programda altında yayın simgesi
+      if (sonuc && skorVar(m)) { skorYaz(g, m, yc2, Math.min(46, aralikY * 0.5), '#10222f'); y += aralikY; continue; }
+      const k = sonuc ? null : kanal(m.yayin), simge = k === 'youtube' ? yt : k === 'ht' ? ht : null;
       const yazi = Math.min(44, aralikY * 0.46), yaziH = yazi * 0.74;
       const sh = !simge ? 0 : k === 'ht' ? Math.min(46, aralikY * 0.42) : Math.min(28, aralikY * 0.28);
       const blok = yaziH + (simge ? 7 + sh : 0), ust = yc2 - blok / 2;
@@ -240,7 +242,7 @@ async function tblCiz(g, S, { hafta, gunler, bay, logo }) {
 }
 
 // ---------- BSL ----------
-async function bslCiz(g, S, { gunler, logo }) {
+async function bslCiz(g, S, { gunler, logo, sonuc }) {
   const [px, py, pw, ph] = S.panel;
   // Panellerin bölgesi önce zeminle (sol ve sağ kenardaki zeminin satır satır geçişi) kaplanır, sonra gün panelleri çizilir
   const zemin = [px - 14, py - 10, pw + 28, ph + 20];
@@ -265,47 +267,64 @@ async function bslCiz(g, S, { gunler, logo }) {
       const yc = yy + aralikY / 2;
       g.save();
       g.shadowColor = 'rgba(0,0,30,.3)'; g.shadowBlur = 8; g.shadowOffsetY = 2;
-      const gr = g.createLinearGradient(82, 0, 1196, 0);
+      const bx0 = px + 32, bx1 = px + pw - 32;
+      const gr = g.createLinearGradient(bx0, 0, bx1, 0);
       gr.addColorStop(0, '#08104a'); gr.addColorStop(0.5, '#0c1a66'); gr.addColorStop(1, '#13258a');
-      yuvarlak(g, 82, yc - barH / 2, 1114, barH, 9); g.fillStyle = gr; g.fill();
+      yuvarlak(g, bx0, yc - barH / 2, bx1 - bx0, barH, 9); g.fillStyle = gr; g.fill();
       g.restore();
       adYaz(g, m.ev, 474, yc, 'right', 380);
       adYaz(g, m.dep, 812, yc, 'left', 360);
       await logoHalkasi(g, 528, yc, 43, logo(m.ev));
       await logoHalkasi(g, 752, yc, 43, logo(m.dep));
-      g.save();
-      g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#fff'; g.font = '700 42px Roboto';
-      g.fillText(parcala(m.tarih).saat, 640, yc + 1);
-      g.restore();
+      if (sonuc && skorVar(m)) skorYaz(g, m, yc, 46, '#fff');
+      else {
+        g.save();
+        g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#fff'; g.font = '700 42px Roboto';
+        g.fillText(parcala(m.tarih).saat, 640, yc + 1);
+        g.restore();
+      }
       yy += aralikY;
     }
     y += h + bosluk;
   }
 }
 
-// lig: 'tbl' | 'bsl'; maclar: [{ tarih, ev, dep, yayin }]; bay: [takım adı]; logo: takım adı -> resim adresi
-export async function programGorseli({ lig, hafta, maclar, bay = [], logo }) {
-  const [S, z] = await Promise.all([sablonJson(lig), resim(sablonAdresi(`${lig}.webp`)), yaziTipleri()]);
+// Sonuç: iki logonun arasına sığacak skor ("102-68" dahil, en geniş 136 piksel)
+const skorVar = m => m.durum === 'bitti' && m.evSkor != null && m.depSkor != null;
+function skorYaz(g, m, yc, boy, renk) {
+  g.save();
+  g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = renk; g.font = `700 ${boy}px Roboto`;
+  const metin = `${m.evSkor}-${m.depSkor}`, o = Math.min(1, 136 / g.measureText(metin).width);
+  g.translate(640, yc + 1); g.scale(o, 1); g.fillText(metin, 0, 0);
+  g.restore();
+}
+
+// lig: 'tbl' | 'bsl'; tur: 'program' | 'sonuc' (şablon <lig> ya da <lig>-sonuc); maclar: [{ tarih, ev, dep, yayin, durum, evSkor,
+// depSkor }]; bay: [takım adı]; logo: takım adı -> resim adresi
+export async function programGorseli({ lig, hafta, maclar, bay = [], logo, tur = 'program' }) {
+  const ad = tur === 'sonuc' ? `${lig}-sonuc` : lig;
+  const [S, z] = await Promise.all([sablonJson(ad), resim(sablonAdresi(`${ad}.webp`)), yaziTipleri()]);
   const c = document.createElement('canvas'); c.width = 1280; c.height = 1600;
   const g = c.getContext('2d');
   g.drawImage(z, 0, 0, 1280, 1600);
   const gunler = gunlereBol(maclar);
   // Başlık: hafta numarası ve tarih aralığı
-  numaraYaz(g, z, hafta, lig === 'tbl' ? { sag: 194, ust: 82, alt: 200, kok: [204, 219], pUst: 205 } : { sag: 193, ust: 79, alt: 186, kok: [203, 218], pUst: 140 });
+  numaraYaz(g, z, hafta, S.cizim.numara);
   if (lig === 'bsl') bslUstYazi(g);
   if (gunler.length) {
     g.save();
     g.textAlign = 'center'; g.textBaseline = 'middle';
-    // Şeride sığsın: en geniş tbl 384, bsl 412 piksel
+    // Şeride sığsın (şablondaki ortası ve en geniş hali)
     const yaz = (font, renk, x, y, enGenis) => {
       g.font = font; g.fillStyle = renk;
       const metin = aralik(gunler.map(d => d.gun), lig), w = g.measureText(metin).width, o = Math.min(1, enGenis / w);
       g.translate(x, y); g.scale(o, 1); g.fillText(metin, 0, 0);
     };
-    if (lig === 'tbl') yaz('600 46px Oswald', '#0a1520', 430, 367, 384);
-    else yaz('40px "Russo One"', '#131c63', 390, 355, 412);
+    const { x, y, w } = S.cizim.tarih;
+    if (lig === 'tbl') yaz('600 46px Oswald', '#0a1520', x, y, w);
+    else yaz('40px "Russo One"', '#131c63', x, y, w);
     g.restore();
   }
-  await (lig === 'tbl' ? tblCiz : bslCiz)(g, S, { hafta, gunler, bay, logo });
+  await (lig === 'tbl' ? tblCiz : bslCiz)(g, S, { gunler, bay, logo, sonuc: tur === 'sonuc' });
   return new Promise(ok => c.toBlob(ok, 'image/png'));
 }

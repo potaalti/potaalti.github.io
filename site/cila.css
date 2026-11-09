@@ -443,6 +443,6 @@ table.kutu tr.takim-satir th, table.kutu tr.takim-satir td { color: var(--soluk)
 .fark-balon b.dep { color: var(--turuncu); }
 .fark-ipucu { text-align: center; margin: 6px 0 0; }
 .fark-balon.alt { top: auto; bottom: -4px; }
-/* Maçlar sayfası: yöneticiye "Haftanın programı" indir / paylaş (program.js) */
-.program-dugmeler { justify-content: flex-end; gap: 8px; margin: -4px 0 10px; }
-.program-dugmeler { flex-wrap: wrap; }
+/* Maçlar sayfası: yöneticiye haftanın sonuçları / programı görselleri, Paylaş ve İndir (program.js) */
+.gorsel-kart { padding-top: 6px; padding-bottom: 6px; }
+.gorsel-kart .f-satir { gap: 8px; flex-wrap: wrap; }

@@ -164,7 +164,7 @@ function gorunumMaclar(istenenLig, istenenHafta) {
   const maclar = macListesi(lig, n);
   return `${ligSec}<div class="hafta-secici">${ok(haftalar[i - 1], '‹')}
       <div class="baslik"><strong>${LIGLER[lig].kisa} ${n}. Hafta</strong><small>${maclar ? haftaDurumu(maclar) : 'Yükleniyor…'}</small></div>${ok(haftalar[i + 1], '›')}</div>
-    ${yoneticiMi() && maclar?.length ? programDugmeleri(lig, n, maclar) : ''}
+    ${yoneticiMi() && maclar?.length ? programDugmeleri(lig, n, maclar, haftalar) : ''}
     ${!maclar ? '<p class="bos">Yükleniyor…</p>' : maclar.length ? gunlereGore(lig, maclar) : '<p class="bos">Bu haftanın maçları henüz belli değil.</p>'}
     ${maclar?.length ? bayYazisi(lig, maclar) : ''}
     <p class="soluk kucuk">Maça dokununca kutu skor açılır. Maç saatlerinde skorlar dakikada bir yenilenir.</p>`;
@@ -761,10 +761,14 @@ async function odulDosyasi(h, i) {
 // Haftanın programı ve sonuçları görselleri (program.js; şablonlar kullanıcının örneklerinden): Maçlar sayfasında yalnızca
 // yöneticiye indir / paylaş. Her basışta o anki maç listesinden (saat değişikliği, yeni biten maç dahil) yeniden hazırlanır.
 // Sonuçlar, haftada biten maç varsa çıkar (bitmemiş maçlarda saat yazar).
-function programDugmeleri(lig, n, maclar) {
-  const dugme = (tur, ad) => `<button class="secenek" data-is="pr-indir" data-id="${lig}-${n}-${tur}">⬇ ${ad}</button>${navigator.canShare
-    ? `<button class="secenek" data-is="pr-paylas" data-id="${lig}-${n}-${tur}" aria-label="${ad} paylaş">📤</button>` : ''}`;
-  return `<div class="satir program-dugmeler">${dugme('program', 'Haftanın programı')}${maclar.some(m => m.durum === 'bitti') ? dugme('sonuc', 'Sonuçlar') : ''}</div>`;
+function programDugmeleri(lig, n, maclar, haftalar) {
+  // +/- gibi her görselde Paylaş ve İndir (paylaşım desteklenmiyorsa Paylaş da indirir): haftanın sonuçları (biten maç varsa),
+  // haftanın programı ve gelecek haftanın programı
+  const satir = (h, tur, ad) => `<div class="f-satir"><div class="ad"><strong>${ad}</strong></div><span class="satir">
+    <button class="secenek" data-is="pr-paylas" data-id="${lig}-${h}-${tur}">📤 Paylaş</button><button class="secenek" data-is="pr-indir" data-id="${lig}-${h}-${tur}">⬇ İndir</button></span></div>`;
+  return `<div class="kart gorsel-kart">
+    ${maclar.some(m => m.durum === 'bitti') ? satir(n, 'sonuc', `${n}. hafta sonuçları`) : ''}${satir(n, 'program', `${n}. hafta programı`)}
+    ${haftalar.includes(n + 1) ? satir(n + 1, 'program', `${n + 1}. hafta programı`) : ''}</div>`;
 }
 async function programDosyasi(lig, h, tur = 'program') {
   const [liste, gorsel, tablo] = await Promise.all([getir(`${KAYNAK}/maclar/${lig}-${h}.json`), getir(`data/${lig}/gorsel.json`), getir(`data/${lig}/tablo.json`)]);

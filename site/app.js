@@ -883,7 +883,7 @@ function tabloKarti(lig, ilk = null) {
     <thead><tr><th>#</th><th>Takım</th><th class="sayi">O</th><th class="sayi">G</th><th class="sayi">M</th>${lig === 'tbl' ? '<th class="sayi">G%</th>' : ''}
       <th class="sayi dar-gizle">A</th><th class="sayi dar-gizle">Y</th><th class="sayi">Av.</th>${ilk ? '' : '<th class="dar-gizle">Son 5</th>'}</tr></thead>
     <tbody>${satirlar}</tbody></table></div>
-    ${ilk ? '' : '<p class="soluk kucuk" style="margin:8px 0 0">O: oynanan · G: galibiyet · M: mağlubiyet · A/Y: atılan/yenilen sayı · Av.: averaj. ${lig === 'tbl' ? 'G%: galibiyet yüzdesi. Sıralama galibiyet yüzdesine göre, eşitlikte averaj' : 'Sıralama galibiyete göre, eşitlikte averaj'} (resmi sıralamada ikili averaj gibi farklı kurallar olabilir).</p>'}</div>`;
+    ${ilk ? '' : `<p class="soluk kucuk" style="margin:8px 0 0">O: oynanan · G: galibiyet · M: mağlubiyet · A/Y: atılan/yenilen sayı · Av.: averaj. ${lig === 'tbl' ? 'G%: galibiyet yüzdesi. Sıralama galibiyet yüzdesine göre, eşitlikte averaj' : 'Sıralama galibiyete göre, eşitlikte averaj'} (resmi sıralamada ikili averaj gibi farklı kurallar olabilir).</p>`}</div>`;
 }
 
 function liderListesi(lig, k, kac) {

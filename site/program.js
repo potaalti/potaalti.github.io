@@ -4,7 +4,9 @@
 // ölçümlerden. Logolar TBF'nin logoları (sitedeki kopyaları: data/<lig>/logo/), beyaz zeminleri silinip kırpılır.
 import { kirpikLogo } from './odul.js';
 
-const YAZI_TIPLERI = 'https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;600;700&family=Montserrat:wght@800&family=Russo+One&display=block';
+// Yazı tipleri kullanıcının örneklerine göre: saat ve takım adları Roboto Bold, gün başlıkları Oswald, hafta numarası Anton
+// ("HAFTANIN"ın dokusuyla boyanır), BSL tarihi Russo One, BSL üst satırı Montserrat
+const YAZI_TIPLERI = 'https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;600;700&family=Roboto:wght@700&family=Montserrat:wght@500&family=Russo+One&display=block';
 const AYLAR = ['OCAK', 'ŞUBAT', 'MART', 'NİSAN', 'MAYIS', 'HAZİRAN', 'TEMMUZ', 'AĞUSTOS', 'EYLÜL', 'EKİM', 'KASIM', 'ARALIK'];
 const GUNLER = ['PAZAR', 'PAZARTESİ', 'SALI', 'ÇARŞAMBA', 'PERŞEMBE', 'CUMA', 'CUMARTESİ'];
 // Görselde yazılan kısa adlar (kullanıcının örneklerindeki gibi); \n: iki satır
@@ -31,7 +33,7 @@ function yaziTipleri() {
     const l = document.createElement('link');
     l.rel = 'stylesheet'; l.href = YAZI_TIPLERI; l.onload = ok; l.onerror = ok;
     document.head.append(l);
-  }).then(() => Promise.all(['100px Anton', '400 40px Oswald', '600 40px Oswald', '700 40px Oswald', '800 40px Montserrat', '40px "Russo One"']
+  }).then(() => Promise.all(['100px Anton', '400 40px Oswald', '600 40px Oswald', '700 40px Oswald', '700 40px Roboto', '500 40px Montserrat', '40px "Russo One"']
     .map(f => document.fonts.load(f, 'HAFTANIN İŞĞÜÇÖ 0123:'))));
   return Promise.race([yaziHazir, new Promise(ok => setTimeout(ok, 6000))]);
 }
@@ -51,7 +53,7 @@ const kanal = yayin => { const y = String(yayin ?? '').toLowerCase(); return /yo
 function adSatirlari(g, ad, enGenis, boy) {
   const metin = KISA[ad] ?? ad;
   let satirlar = metin.split('\n');
-  g.font = `800 ${boy}px Montserrat`;
+  g.font = `700 ${boy}px Roboto`;
   if (satirlar.length === 1 && g.measureText(metin).width > enGenis) {
     const k = metin.split(' ');
     let enIyi = null;
@@ -62,7 +64,7 @@ function adSatirlari(g, ad, enGenis, boy) {
     }
     if (enIyi) satirlar = enIyi.s;
   }
-  const genislik = (s, b) => { g.font = `800 ${b}px Montserrat`; return Math.max(...s.map(x => g.measureText(x).width)); };
+  const genislik = (s, b) => { g.font = `700 ${b}px Roboto`; return Math.max(...s.map(x => g.measureText(x).width)); };
   // Tek satır, yazı biraz küçülerek sığıyorsa bölünmez (örneklerdeki gibi); sığmazsa iki satır
   if (satirlar.length > 1 && !metin.includes(String.fromCharCode(10))) {
     let b1 = boy;
@@ -76,7 +78,7 @@ function adSatirlari(g, ad, enGenis, boy) {
 function adYaz(g, ad, x, y, hiza, enGenis, boy = 25) {
   const { satirlar, boy: b } = adSatirlari(g, ad, enGenis, boy);
   g.save();
-  g.font = `800 ${b}px Montserrat`; g.fillStyle = '#fff'; g.textAlign = hiza; g.textBaseline = 'middle';
+  g.font = `700 ${b}px Roboto`; g.fillStyle = '#fff'; g.textAlign = hiza; g.textBaseline = 'middle';
   g.shadowColor = 'rgba(0,0,0,.35)'; g.shadowBlur = 4; g.shadowOffsetY = 1;
   const ara = b * 1.12;
   satirlar.forEach((s, i) => g.fillText(s, x, y + (i - (satirlar.length - 1) / 2) * ara + 1));
@@ -96,20 +98,43 @@ async function logoHalkasi(g, x, y, r, logoUrl) {
     g.drawImage(l, x - l.width * o / 2, y - l.height * o / 2, l.width * o, l.height * o);
   }
 }
-// Hafta numarası: "HAFTANIN" yazısının solunda, aynı yükseklikte (Anton, beyazdan griye); iki basamak sığmazsa daraltılır
-function numaraYaz(g, hafta, { sag, ust, alt }) {
+// Hafta numarası: "HAFTANIN" yazısının solunda, aynı yükseklikte (Anton, örnekteki rakamlar kadar geniş). İçi "H" harfinin sapından
+// (kok: sütunlar) alınan dokuyla boyanır, böylece "HAFTANIN" ile aynı beyazdan griye geçişi ve pürüzü taşır; "PROGRAMI"nın
+// renkli pikselleri (pUst'ten aşağısı) önde kalır, örnekteki gibi
+function numaraYaz(g, z, hafta, { sag, ust, alt, kok: [k0, k1], pUst }) {
   const metin = `${hafta}.`;
-  g.save();
   g.font = '100px Anton';
-  const m = g.measureText(metin), boy = 100 * (alt - ust) / m.actualBoundingBoxAscent;
-  g.font = `${boy}px Anton`;
-  const w = g.measureText(metin).width, sx = Math.min(1, (sag - 24) / w);
-  const grad = g.createLinearGradient(0, ust, 0, alt);
-  grad.addColorStop(0, '#ffffff'); grad.addColorStop(0.55, '#f1f2f4'); grad.addColorStop(1, '#bfc4cc');
-  g.translate(sag, alt); g.scale(sx, 1);
-  g.textAlign = 'right'; g.textBaseline = 'alphabetic';
-  g.shadowColor = 'rgba(0,0,0,.55)'; g.shadowBlur = 10; g.shadowOffsetY = 3;
-  g.fillStyle = grad; g.fillText(metin, 0, 0);
+  const boy = 100 * (alt - ust) / g.measureText(metin).actualBoundingBoxAscent;
+  const c = document.createElement('canvas'); c.width = 1280; c.height = 400;
+  const h = c.getContext('2d');
+  h.font = `${boy}px Anton`;
+  const w = h.measureText(metin).width, sx = Math.min(1.12, (sag - 26) / w), sol = sag - w * sx;
+  h.save(); h.translate(sag, alt); h.scale(sx, 1); h.textAlign = 'right'; h.fillStyle = '#fff'; h.fillText(metin, 0, 0); h.restore();
+  h.globalCompositeOperation = 'source-in';
+  h.drawImage(z, k0, ust - 6, k1 - k0, alt - ust + 12, sol, ust - 6, sag - sol, alt - ust + 12);
+  // P önde
+  const y0 = pUst, y1 = Math.min(400, alt + 12), x0 = Math.max(0, Math.floor(sol) - 4), x1 = Math.ceil(sag) + 4;
+  if (y1 > y0) {
+    const t = g.getImageData(x0, y0, x1 - x0, y1 - y0).data, n = h.getImageData(x0, y0, x1 - x0, y1 - y0);
+    for (let k = 0; k < t.length / 4; k++) {
+      const r = t[k * 4], gg = t[k * 4 + 1], b = t[k * 4 + 2], mx = Math.max(r, gg, b), L = 0.299 * r + 0.587 * gg + 0.114 * b;
+      if (L > 120 && (mx - Math.min(r, gg, b)) / mx >= 0.25 && (r > 130 || gg > 150)) n.data[k * 4 + 3] = 0;
+    }
+    h.globalCompositeOperation = 'source-over';
+    h.putImageData(n, x0, y0);
+  }
+  g.save(); g.shadowColor = 'rgba(0,0,0,.6)'; g.shadowBlur = 12; g.shadowOffsetY = 4; g.drawImage(c, 0, 0); g.restore();
+}
+// BSL: en üstteki iki satır (örnekte görselin üstünden kesikti): tam görünecek yerde, aralıklı harflerle
+function bslUstYazi(g) {
+  g.save();
+  g.fillStyle = 'rgba(255,255,255,.92)'; g.textBaseline = 'middle'; g.textAlign = 'left';
+  g.font = '500 25px Montserrat';
+  // Harf aralığı iki satırda aynı (örnekteki gibi): alt satır 465 piksel genişliğe göre
+  const alt = 'BASKETBOL SÜPER LİGİ', ara = Math.max(0, (465 - g.measureText(alt).width) / (alt.length - 1));
+  g.letterSpacing = `${ara}px`;
+  g.fillText('TÜRKİYE SİGORTA', 86, 19);
+  g.fillText(alt, 86, 49);
   g.restore();
 }
 
@@ -185,7 +210,7 @@ async function tblCiz(g, S, { hafta, gunler, bay, logo }) {
       const sh = !simge ? 0 : k === 'ht' ? Math.min(46, aralikY * 0.42) : Math.min(28, aralikY * 0.28);
       const blok = yaziH + (simge ? 7 + sh : 0), ust = yc2 - blok / 2;
       g.save();
-      g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#10222f'; g.font = `600 ${yazi}px Oswald`;
+      g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#10222f'; g.font = `700 ${yazi * 0.92}px Roboto`;
       g.fillText(parcala(m.tarih).saat, 640, ust + yaziH / 2);
       g.restore();
       if (simge) { const sw = simge.width * sh / simge.height; g.drawImage(simge, 640 - sw / 2, ust + yaziH + 7, sw, sh); }
@@ -197,9 +222,9 @@ async function tblCiz(g, S, { hafta, gunler, bay, logo }) {
     const yc = py + ph - 52;
     // "BAY", logo ve ad ortalanır; koyu şerit yazının genişliğine göre (kenarlarda saydamlaşır)
     const ad = bay[0];
-    g.font = '800 30px Montserrat'; const wb = g.measureText('BAY').width;
+    g.font = '700 30px Roboto'; const wb = g.measureText('BAY').width;
     const { satirlar, boy } = adSatirlari(g, ad, 420, 28);
-    g.font = `800 ${boy}px Montserrat`; const wa = Math.max(...satirlar.map(x => g.measureText(x).width));
+    g.font = `700 ${boy}px Roboto`; const wa = Math.max(...satirlar.map(x => g.measureText(x).width));
     const grup = wb + 22 + 88 + 22 + wa, x0 = 640 - grup / 2;
     const sw = Math.min(pw - 40, Math.max(680, grup + 220)), sx = 640 - sw / 2;
     g.save();
@@ -208,7 +233,7 @@ async function tblCiz(g, S, { hafta, gunler, bay, logo }) {
     gr.addColorStop(0, 'rgba(11,28,41,0)'); gr.addColorStop(0.16, 'rgba(11,28,41,.93)'); gr.addColorStop(0.84, 'rgba(11,28,41,.93)'); gr.addColorStop(1, 'rgba(11,28,41,0)');
     yuvarlak(g, sx, yc - 40, sw, 80, 40); g.fillStyle = gr; g.fill();
     g.restore();
-    g.save(); g.font = '800 30px Montserrat'; g.fillStyle = '#fff'; g.textAlign = 'left'; g.textBaseline = 'middle'; g.fillText('BAY', x0, yc + 1); g.restore();
+    g.save(); g.font = '700 30px Roboto'; g.fillStyle = '#fff'; g.textAlign = 'left'; g.textBaseline = 'middle'; g.fillText('BAY', x0, yc + 1); g.restore();
     await logoHalkasi(g, x0 + wb + 22 + 44, yc, 44, logo(ad));
     adYaz(g, ad, x0 + wb + 22 + 88 + 22, yc, 'left', 420, 28);
   }
@@ -249,7 +274,7 @@ async function bslCiz(g, S, { gunler, logo }) {
       await logoHalkasi(g, 528, yc, 43, logo(m.ev));
       await logoHalkasi(g, 752, yc, 43, logo(m.dep));
       g.save();
-      g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#fff'; g.font = '600 46px Oswald';
+      g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#fff'; g.font = '700 42px Roboto';
       g.fillText(parcala(m.tarih).saat, 640, yc + 1);
       g.restore();
       yy += aralikY;
@@ -266,7 +291,8 @@ export async function programGorseli({ lig, hafta, maclar, bay = [], logo }) {
   g.drawImage(z, 0, 0, 1280, 1600);
   const gunler = gunlereBol(maclar);
   // Başlık: hafta numarası ve tarih aralığı
-  numaraYaz(g, hafta, lig === 'tbl' ? { sag: 192, ust: 82, alt: 200 } : { sag: 191, ust: 79, alt: 186 });
+  numaraYaz(g, z, hafta, lig === 'tbl' ? { sag: 194, ust: 82, alt: 200, kok: [204, 219], pUst: 205 } : { sag: 193, ust: 79, alt: 186, kok: [203, 218], pUst: 140 });
+  if (lig === 'bsl') bslUstYazi(g);
   if (gunler.length) {
     g.save();
     g.textAlign = 'center'; g.textBaseline = 'middle';

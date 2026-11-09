@@ -14,9 +14,9 @@ const veri = f => `data:image/webp;base64,${readFileSync(f).toString('base64')}`
 
 // Ölçüler (1280x1600 görselde): numara ve tarih kutuları, panel(ler)
 const AYAR = {
-  tbl: { numara: [70, 70, 132, 138], tarih: [232, 338, 400, 56], panel: [62, 403, 1153, 1057],
+  tbl: { numara: [70, 70, 128, 152], pUst: 205, tarih: [232, 338, 400, 56], panel: [62, 403, 1153, 1057],
     kenar: [[68, 104], [1172, 1208]], bayAlt: [512, 1452, 116, 36] },
-  bsl: { numara: [66, 66, 134, 128], tarih: [172, 318, 440, 76], tarihKapali: true, panel: [50, 408, 1178, 982],
+  bsl: { numara: [64, 64, 133, 130], pUst: 140, ustYazi: [70, 0, 520, 58], tarih: [172, 318, 440, 76], tarihKapali: true, panel: [50, 408, 1178, 982],
     kenar: [[56, 76], [1200, 1222]], zemin: [[26, 44], [1236, 1254]],
     // Panel renkleri yalnızca ilk gün panelinin içinden (paneller arası boşluk ve kenar gölgeleri karışmasın)
     ornek: [420, 748] },
@@ -29,7 +29,11 @@ const L = (r, g, b) => 0.299 * r + 0.587 * g + 0.114 * b;
 function doldur(x, X, Y, W, H, maske) {
   const img = x.getImageData(X, Y, W, H), d = img.data, f = new Float32Array(W * H * 3);
   for (let k = 0; k < W * H; k++) for (let c = 0; c < 3; c++) f[k * 3 + c] = d[k * 4 + c];
-  for (let it = 0; it < 900; it++) for (let j = 1; j < H - 1; j++) for (let i = 1; i < W - 1; i++) {
+  // Maskeli pikseller sabit piksellerin ortalamasıyla başlar (eski yazının rengi kalmasın), sonra çevreden yayılır
+  const ort = [0, 0, 0]; let n = 0;
+  for (let k = 0; k < W * H; k++) if (!maske[k]) { for (let c = 0; c < 3; c++) ort[c] += f[k * 3 + c]; n++; }
+  for (let k = 0; k < W * H; k++) if (maske[k]) for (let c = 0; c < 3; c++) f[k * 3 + c] = ort[c] / Math.max(1, n);
+  for (let it = 0; it < 2500; it++) for (let j = 1; j < H - 1; j++) for (let i = 1; i < W - 1; i++) {
     const k = j * W + i; if (!maske[k]) continue;
     for (let c = 0; c < 3; c++) f[k * 3 + c] = (f[(k - 1) * 3 + c] + f[(k + 1) * 3 + c] + f[(k - W) * 3 + c] + f[(k + W) * 3 + c]) / 4;
   }
@@ -68,9 +72,31 @@ window.uret = async (src, A, lig) => {
     sonuc.youtube = kes([596, 546, 90, 34]);
     sonuc.ht = kes([614, 834, 54, 60]);
   }
-  // Hafta numarası: beyaz/gri (doygunluğu düşük, açık) pikseller; altındaki renkli "PROGRAMI" yazısı kalır
-  const beyaz = (r, g, b) => { const mx = Math.max(r, g, b), mn = Math.min(r, g, b); return mx > 95 && (mx - mn) / mx < 0.2; };
-  doldur(x, ...A.numara, maskele(x, A.numara, beyaz, 3));
+  // Hafta numarası: beyaz, gri ve gölgedeki koyu gri (doygunluğu düşük) pikseller; altındaki renkli "PROGRAMI" yazısı ve
+  // koyu mavi zemin kalır
+  // Kutunun sağ kenarı "H" harfine değmez (beyazı içeri yayılmasın); "PROGRAMI"nın renkli pikselleri ve 4 piksel çevresi korunur
+  // (yalnızca P'nin başladığı yükseklikten (pUst) aşağıda: üstte rakamın mavi zeminle karışan kenarları da lila görünür)
+  {
+    const [X, Y, W, H] = A.numara, d = x.getImageData(X, Y, W, H).data;
+    const renkli = k => { const r = d[k * 4], g = d[k * 4 + 1], b = d[k * 4 + 2], mx = Math.max(r, g, b); return L(r, g, b) > 120 && (mx - Math.min(r, g, b)) / mx >= 0.25 && (r > 130 || g > 150); }; // P: camgöbeği ya da lila (zemindeki mavi ışık değil)
+    const beyaz = (r, g, b) => { const mx = Math.max(r, g, b), mn = Math.min(r, g, b); return mx > 20 && (mx - mn) / mx < 0.22; };
+    const m = maskele(x, A.numara, beyaz, 3);
+    for (let j = 0; j < H; j++) for (let i = 0; i < W; i++) {
+      const k = j * W + i; if (!m[k]) continue;
+      for (let v = -4; v <= 4 && m[k]; v++) for (let u = -4; u <= 4; u++) {
+        const jj = j + v, ii = i + u;
+        if (jj >= 0 && jj < H && ii >= 0 && ii < W && Y + jj >= A.pUst && renkli(jj * W + ii)) { m[k] = 0; break; }
+      }
+    }
+    doldur(x, X, Y, W, H, m);
+  }
+  // BSL: en üstteki "TÜRKİYE SİGORTA / BASKETBOL SÜPER LİGİ" örnekte görselin üstünden kesik: silinir, program.js tam yazar
+  if (A.ustYazi) {
+    doldur(x, ...A.ustYazi, maskele(x, A.ustYazi, (r, g, b) => L(r, g, b) > 105, 3));
+    // Kutunun üst kenarı görselin üst kenarı: oradaki ilk satırlar (kesik harflerin ucu) 9. satırın rengiyle örtülür
+    const [X, , W] = A.ustYazi, satir = x.getImageData(X, 9, W, 1);
+    for (let j = 0; j < 9; j++) x.putImageData(satir, X, j);
+  }
   // Tarih: fırça şeridin (açık renk) içindeki koyu yazı. BSL'de (tarihKapali) yalnızca altında ve üstünde şerit olan koyu
   // pikseller: kutu şeridin dışındaki koyu zemine taşıyor, o silinmez
   {

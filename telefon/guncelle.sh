@@ -15,6 +15,42 @@ GUNLUK_KAYIT="$HOME/.pota-alti-gunluk"
 GUNLUK_SAATLER="12 23"
 
 cd "$DEPO" || exit 1
+
+# Eski TBL Fantezi görevinin (canlı skorların kaynağı, ~/tbl-fantezi/telefon/guncelle.sh) bekçisi: maç döngüsü takılırsa
+# (nabzı 10 dakikadan eski; eski betikte nabız yoksa döngünün başladığı an) durdurulur ve o depo güncellenir ki
+# sonraki tetiklemesinde yeni betikle yeniden başlasın. 2026-11-09: döngü takıldı, Karşıyaka–Beşiktaş canlı güncellenmedi.
+ESKI_PID="$HOME/.tbl-mac-dongusu.pid"
+if [ -f "$ESKI_PID" ]; then
+  eski_yas=$(( $(date +%s) - $(stat -c %Y "$HOME/.tbl-mac-dongusu.nabiz" 2>/dev/null || stat -c %Y "$ESKI_PID") ))
+  if [ "$eski_yas" -gt 600 ]; then
+    eski=$(cat "$ESKI_PID")
+    pkill -P "$eski" 2>/dev/null
+    kill "$eski" 2>/dev/null
+    rm -f "$ESKI_PID"
+    (cd "$HOME/tbl-fantezi" && timeout 120 git fetch -q origin && git reset -q --hard origin/main)
+    echo "$(date '+%F %T') eski TBL maç döngüsü ${eski_yas} sn'dir takılıydı: durduruldu, betiği güncellendi" >> "$LOG"
+  fi
+fi
+# Eski görev Termux'ta hiç tetiklenmese bile maç saatinde canlı skor dursun: döngüsü yoksa ve 20 dakikadır kaydına bir şey
+# yazmadıysa eski betik buradan başlatılır (maç döngüsünü kendisi açar)
+ESKI_LOG="$HOME/tbl-guncelle.log"
+if [ ! -f "$ESKI_PID" ] && [ -f "$HOME/tbl-fantezi/telefon/guncelle.sh" ]    && [ $(( $(date +%s) - $(stat -c %Y "$ESKI_LOG" 2>/dev/null || echo 0) )) -gt 1200 ]    && python - "$HOME/tbl-fantezi/site/data/hafta/index.json" <<'PY'
+import json, sys
+from datetime import datetime, timedelta
+try:
+    ms = json.load(open(sys.argv[1], encoding="utf-8")).get("macSaatleri", [])
+except Exception:
+    sys.exit(1)
+simdi = datetime.now()
+sys.exit(0 if any(not m.get("bitti") and not m["tarih"].endswith("T00:00:00")
+                  and datetime.fromisoformat(m["tarih"]) - timedelta(minutes=10) <= simdi <= datetime.fromisoformat(m["tarih"]) + timedelta(hours=4)
+                  for m in ms) else 1)
+PY
+then
+  echo "$(date '+%F %T') maç saati ama eski TBL görevi çalışmıyor: buradan başlatıldı" >> "$LOG"
+  nohup bash "$HOME/tbl-fantezi/telefon/guncelle.sh" > /dev/null 2>&1 &
+fi
+
 tam=0
 [ "$1" = "tam" ] && tam=1
 bugun=$(date +%F)

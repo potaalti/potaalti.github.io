@@ -20,6 +20,20 @@ try {
   const saat = (Date.now() - Date.parse(meta.guncelleme)) / 3600e3;
   if (saat >= 3 && saat < 3.5) telefonUyarisi = `Telefon ${saat.toFixed(1)} saattir veri göndermiyor (son: ${meta.guncelleme})`;
 } catch (e) { console.log('meta.json okunamadı:', e.message); }
+// Canlı skor (eski TBL sitesinin verisi, telefonun maç döngüsü 3 dakikada bir yazar): maç saatinde 20–35 dakikadır
+// güncellenmediyse bir kez hata. Telefon bekçisi takılan döngüyü kendisi yeniden başlatır; bu uyarı o da olmazsa gelir.
+try {
+  const idx = await (await fetch(`${SITE}/tbl_fantezi_lig/data/hafta/index.json?t=${Date.now()}`)).json();
+  // macSaatleri Türkiye saatinde, saat dilimi yazılmadan
+  const tr = s => Date.parse(`${s}+03:00`);
+  const suren = (idx.macSaatleri ?? []).filter(m => !m.bitti && !m.tarih.endsWith('T00:00:00')
+    && Date.now() >= tr(m.tarih) && Date.now() <= tr(m.tarih) + 150 * 60e3);
+  // Gecikme, son güncellemeden ya da (veri maçtan önce kaldıysa) maçın başlamasından sayılır
+  const dk = suren.length ? (Date.now() - Math.max(Date.parse(idx.guncelleme), Math.min(...suren.map(m => tr(m.tarih))))) / 60e3 : 0;
+  if (suren.length && dk >= 20 && dk < 35) {
+    telefonUyarisi = `${telefonUyarisi ? `${telefonUyarisi}. ` : ''}Maç saatinde canlı skor ${Math.round(dk)} dakikadır güncellenmiyor (son: ${idx.guncelleme})`;
+  }
+} catch (e) { console.log('Canlı skor verisi okunamadı:', e.message); }
 
 const hesap = process.env.FIREBASE_TBL_HESAP ? JSON.parse(process.env.FIREBASE_TBL_HESAP) : null;
 if (!hesap) {
@@ -80,6 +94,6 @@ if (!hesap) {
 }
 
 if (telefonUyarisi) {
-  console.log(`::error title=Telefon veri göndermiyor::${telefonUyarisi}`);
+  console.log(`::error title=Telefon veri göndermiyor (canlı skor ya da istatistik)::${telefonUyarisi}`);
   process.exit(1);
 }

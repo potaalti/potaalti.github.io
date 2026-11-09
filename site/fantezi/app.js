@@ -2782,6 +2782,17 @@ function beklemeleriEsitle() {
     S.beklemeYazilan.add(`haric-${pid}`);
     D.beklemeyiKaldir(pid).then(() => bildir(`${oyuncu(pid)?.ad ?? pid} ligden çıkarıldı; talep süresi ve talepleri silindi`)).catch(hataGoster);
   }
+  // Silinen talepleri geri yükleme (config: talepGeriYukle { oyuncu: { takım: bırakacağı oyuncu } }): talep süresi sürerken
+  // listede olup kayıtta olmayan talepler bir kez eklenir (2026-11-09: eski önbellek yüzünden silinen Can Uğur talepleri)
+  for (const [pid, liste] of Object.entries(LIG.talepGeriYukle ?? {})) {
+    const b = S.bekleme[pid];
+    if (!b || D.beklemeKalan(b) <= 0 || S.beklemeYazilan.has(`geri-${pid}`)) continue;
+    const eksikTalep = Object.entries(liste).filter(([t]) => !(t in (b.talepler ?? {})));
+    if (!eksikTalep.length) continue;
+    S.beklemeYazilan.add(`geri-${pid}`);
+    Promise.all(eksikTalep.map(([t, birak]) => D.talepEt(pid, t, birak)))
+      .then(() => bildir(`${oyuncu(pid)?.ad ?? pid}: ${eksikTalep.length} talep geri yüklendi`)).catch(hataGoster);
+  }
   // Talep istisnası: o tarihte başlamış talep süresi istisnadaki bitişe çekilir (bir kez)
   for (const [pid, ist] of Object.entries(LIG.talepIstisnalari ?? {})) {
     if (!istisnaBekliyor(pid, S.bekleme[pid]) || S.beklemeYazilan.has(`istisna-${pid}`)) continue;

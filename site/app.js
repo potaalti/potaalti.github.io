@@ -487,7 +487,7 @@ async function odulHaftasi(h) {
   const bitmeyen = liste.maclar.filter(m => m.durum !== 'bitti').length;
   return (S.odul[k] = { oyuncular: [...oy.values()], kadro, bitmeyen });
 }
-// BSL ödül seçimi (kullanıcının kuralları; sıralama VP, eşitlikte sayı):
+// BSL ödül seçimi (kullanıcının kuralları; sıralama VP, eşitlikte sayı; tekli ödülde VP eşitse ödül ikisine de):
 //   MVP: takımı kazanan en yüksek VP · Kazanan Yerli MVP: takımı kazanan en iyi yerli · Kaybeden Yerli / Yabancı MVP: takımı kaybeden
 //   en iyi yerli / yabancı (bir oyuncu tek bir tekli ödül alır; tekli ödül alan 5'lere de girebilir)
 //   Altın, Gümüş, Bronz 5: kalanlardan en iyi 3 Arka + 2 Ön · Mansiyon 5: kalanlardan en iyi 5, hepsi aynı mevkiden olamaz
@@ -501,8 +501,12 @@ function bslListesi(oyuncular) {
     ['KAYBEDEN YERLİ MVP', o => o.yerli && !o.kazandi], ['KAYBEDEN YABANCI MVP', o => !o.yerli && !o.kazandi]]) {
     const o = sira.find(x => sart(x) && !verilen.has(x.id));
     if (!o) { notlar.push(`${etiket}: uygun oyuncu yok`); continue; }
-    verilen.add(o.id);
-    satirlar.push(`${etiket}: ${o.ad} ${o.vp}`);
+    // Kullanıcı kuralı (2026-11-09): tekli ödülde VP'si eşit iki (ya da daha çok) oyuncu varsa ödül hepsine verilir, her birine
+    // ayrı görsel hazırlanır (görselde "MVP 1 / MVP 2" yazmaz); sayı eşitliği bozmaz
+    for (const x of sira.filter(y => sart(y) && !verilen.has(y.id) && y.vp === o.vp)) {
+      verilen.add(x.id);
+      satirlar.push(`${etiket}: ${x.ad} ${x.vp}`);
+    }
   }
   const kalan = sira.filter(o => o.vp > 0);
   const al = o => kalan.splice(kalan.indexOf(o), 1)[0];

@@ -95,15 +95,20 @@
   {
    "id": 346328,
    "tarih": "2026-11-09T19:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "KARŞIYAKA",
    "evId": 266027,
-   "evSkor": null,
+   "evSkor": "11",
    "dep": "BEŞİKTAŞ",
    "depId": 265992,
-   "depSkor": null,
+   "depSkor": "7",
    "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "05:39",
+    "uzatma": false
+   }
   }
  ]
 }

@@ -95,15 +95,20 @@
   {
    "id": 346328,
    "tarih": "2026-11-09T19:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "KARŞIYAKA",
    "evId": 266027,
-   "evSkor": null,
+   "evSkor": "11",
    "dep": "BEŞİKTAŞ",
    "depId": 265992,
-   "depSkor": null,
+   "depSkor": "7",
    "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "05:39",
+    "uzatma": false
+   }
   }
  ],
  "oyuncular": {
@@ -1447,6 +1452,198 @@
    "ad": "Metehan Akyel",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "573226": {
+   "ad": "Briante Weber",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 260,
+   "mac": 1
+  },
+  "779071": {
+   "ad": "Ishmael El-Amin",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 4,
+   "saniye": 260,
+   "mac": 1
+  },
+  "500079": {
+   "ad": "Rashard Kelly",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 3,
+   "saniye": 260,
+   "mac": 1
+  },
+  "254789": {
+   "ad": "Yavuz Gültekin",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 260,
+   "mac": 1
+  },
+  "609083": {
+   "ad": "Steven Enoch",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 2,
+   "saniye": 260,
+   "mac": 1
+  },
+  "228502": {
+   "ad": "Muhaymin Mustafa",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "500121": {
+   "ad": "Xavier Munford",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "410874": {
+   "ad": "Markel Starks",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "218536": {
+   "ad": "Hakan Sayılı",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "400519": {
+   "ad": "Yalın Yıldız",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "444058": {
+   "ad": "Egemen Yapıcı",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "781757": {
+   "ad": "Yakuba Ouattara",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "735336": {
+   "ad": "Devon Dotson",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 5,
+   "saniye": 260,
+   "mac": 1
+  },
+  "782996": {
+   "ad": "Lonnie Walker Iv",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": -2,
+   "saniye": 260,
+   "mac": 1
+  },
+  "133112": {
+   "ad": "Metecan Birsen",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 2,
+   "saniye": 260,
+   "mac": 1
+  },
+  "501381": {
+   "ad": "Anthony Brown",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 260,
+   "mac": 1
+  },
+  "397202": {
+   "ad": "Ante Zizic",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 2,
+   "saniye": 260,
+   "mac": 1
+  },
+  "114257": {
+   "ad": "Berk Uğurlu",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "589830": {
+   "ad": "Conor Morgan",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "381972": {
+   "ad": "Yağız Aksu",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "363061": {
+   "ad": "Scottie Wilbekin",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "777636": {
+   "ad": "Eugene Omoruyi",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "163489": {
+   "ad": "Furkan Korkmaz",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "777635": {
+   "ad": "Wenyen Gabriel",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
    "vp": 0,
    "saniye": 0,
    "mac": 1

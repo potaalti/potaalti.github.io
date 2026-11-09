@@ -95,7 +95,7 @@
   {
    "id": 346328,
    "tarih": "2026-11-09T19:00:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "KARŞIYAKA",
    "evId": 266027,
    "evSkor": "84",
@@ -103,12 +103,7 @@
    "depId": 265992,
    "depSkor": "83",
    "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "00:10",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   }
  ]
 }

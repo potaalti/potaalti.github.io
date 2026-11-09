@@ -6,7 +6,7 @@ import { kirpikLogo } from './odul.js';
 
 // Yazı tipleri kullanıcının örneklerine göre: saat ve takım adları Roboto Bold, gün başlıkları Oswald, hafta numarası Anton
 // ("HAFTANIN"ın dokusuyla boyanır), BSL tarihi Russo One, BSL üst satırı Montserrat
-const YAZI_TIPLERI = 'https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;600;700&family=Roboto:wght@700&family=Montserrat:wght@500&family=Russo+One&display=block';
+const YAZI_TIPLERI = 'https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;600;700&family=Roboto:wght@700&family=Montserrat:wght@500;600&family=Russo+One&display=block';
 const AYLAR = ['OCAK', 'ŞUBAT', 'MART', 'NİSAN', 'MAYIS', 'HAZİRAN', 'TEMMUZ', 'AĞUSTOS', 'EYLÜL', 'EKİM', 'KASIM', 'ARALIK'];
 const GUNLER = ['PAZAR', 'PAZARTESİ', 'SALI', 'ÇARŞAMBA', 'PERŞEMBE', 'CUMA', 'CUMARTESİ'];
 // Görselde yazılan kısa adlar (kullanıcının örneklerindeki gibi); \n: iki satır
@@ -33,7 +33,7 @@ function yaziTipleri() {
     const l = document.createElement('link');
     l.rel = 'stylesheet'; l.href = YAZI_TIPLERI; l.onload = ok; l.onerror = ok;
     document.head.append(l);
-  }).then(() => Promise.all(['100px Anton', '400 40px Oswald', '600 40px Oswald', '700 40px Oswald', '700 40px Roboto', '500 40px Montserrat', '40px "Russo One"']
+  }).then(() => Promise.all(['100px Anton', '400 40px Oswald', '600 40px Oswald', '700 40px Oswald', '700 40px Roboto', '500 40px Montserrat', '600 40px Montserrat', '40px "Russo One"']
     .map(f => document.fonts.load(f, 'HAFTANIN İŞĞÜÇÖ 0123:'))));
   return Promise.race([yaziHazir, new Promise(ok => setTimeout(ok, 6000))]);
 }
@@ -127,15 +127,15 @@ function numaraYaz(g, z, hafta, { sag, ust, alt, kok: [k0, k1], pUst }) {
   g.save(); g.shadowColor = 'rgba(0,0,0,.6)'; g.shadowBlur = 12; g.shadowOffsetY = 4; g.drawImage(c, 0, 0); g.restore();
 }
 // BSL: en üstteki iki satır (örnekte görselin üstünden kesikti): tam görünecek yerde, aralıklı harflerle
-function bslUstYazi(g) {
+function bslUstYazi(g, { x = 86, y1 = 19, y2 = 49, w = 465, boy = 25 } = {}) {
   g.save();
   g.fillStyle = 'rgba(255,255,255,.92)'; g.textBaseline = 'middle'; g.textAlign = 'left';
-  g.font = '500 25px Montserrat';
-  // Harf aralığı iki satırda aynı (örnekteki gibi): alt satır 465 piksel genişliğe göre
-  const alt = 'BASKETBOL SÜPER LİGİ', ara = Math.max(0, (465 - g.measureText(alt).width) / (alt.length - 1));
+  g.font = `500 ${boy}px Montserrat`;
+  // Harf aralığı iki satırda aynı (örnekteki gibi): alt satır w piksel genişliğe göre
+  const alt = 'BASKETBOL SÜPER LİGİ', ara = Math.max(0, (w - g.measureText(alt).width) / (alt.length - 1));
   g.letterSpacing = `${ara}px`;
-  g.fillText('TÜRKİYE SİGORTA', 86, 19);
-  g.fillText(alt, 86, 49);
+  g.fillText('TÜRKİYE SİGORTA', x, y1);
+  g.fillText(alt, x, y2);
   g.restore();
 }
 
@@ -326,5 +326,53 @@ export async function programGorseli({ lig, hafta, maclar, bay = [], logo, tur =
     g.restore();
   }
   await (lig === 'tbl' ? tblCiz : bslCiz)(g, S, { gunler, bay, logo, sonuc: tur === 'sonuc' });
+  return new Promise(ok => c.toBlob(ok, 'image/png'));
+}
+
+// ---------- Puan durumu (TBL "Lig sıralaması galibiyet yüzdesine göre", BSL "Puan durumu"), 1600x2000 ----------
+// Şablon program/sablon/tablo-<lig>.webp (veri/tablo_sablon.mjs): hücreler boş; satırların yeri ve sütunlar tablo-<lig>.json'da.
+// tablo: sıralanmış satırlar [{ ad, o, g, m, atilan, yenilen, averaj, puan, icPuan?, icAveraj? }]
+const isaret = n => (n > 0 ? `+${n}` : String(n));
+const yuzde = s => `%${(Math.round((s.o ? s.g / s.o : 0) * 10000) / 100).toLocaleString('tr-TR', { maximumFractionDigits: 2 })}`;
+function hucreYaz(g, metin, x, y, font, renk, enGenis) {
+  g.save();
+  g.font = font; g.fillStyle = renk; g.textAlign = 'center'; g.textBaseline = 'middle';
+  const o = enGenis ? Math.min(1, enGenis / g.measureText(metin).width) : 1;
+  g.translate(x, y); g.scale(o, 1); g.fillText(metin, 0, 0);
+  g.restore();
+}
+export async function tabloGorseli({ lig, tablo, logo }) {
+  const [S, z] = await Promise.all([sablonJson(`tablo-${lig}`), resim(sablonAdresi(`tablo-${lig}.webp`)), yaziTipleri()]);
+  const c = document.createElement('canvas'); c.width = 1600; c.height = 2000;
+  const g = c.getContext('2d');
+  g.drawImage(z, 0, 0, 1600, 2000);
+  if (lig === 'bsl') bslUstYazi(g, { x: 110, y1: 18, y2: 52, w: 567, boy: 30 });
+  const { sira, logo: [lx, lr], ad: [ax, aw], acik, kutu } = S.sutun;
+  const acikRenk = lig === 'tbl' ? '#36536f' : '#1b2690';
+  for (let i = 0; i < Math.min(tablo.length, S.satirlar.length); i++) {
+    const t = tablo[i], [y0, y1] = S.satirlar[i], yc = (y0 + y1) / 2 + 1;
+    hucreYaz(g, String(i + 1), sira, yc, '600 38px Montserrat', '#fff');
+    // Logo: halkanın içi beyaz, logo ortada
+    g.beginPath(); g.arc(lx, yc, lr, 0, Math.PI * 2); g.fillStyle = '#fff'; g.fill();
+    const l = logo(t.ad) ? await kirpikLogo(logo(t.ad)) : null;
+    if (l) { const k = lr * 2 * 0.82, o = Math.min(k / l.width, k / l.height); g.drawImage(l, lx - l.width * o / 2, yc - l.height * o / 2, l.width * o, l.height * o); }
+    // Takım adı (TBF'deki adı; uzunsa iki satır)
+    g.save();
+    g.font = '600 25px Montserrat'; g.fillStyle = '#fff'; g.textAlign = 'left'; g.textBaseline = 'middle';
+    let satirlar = [t.ad];
+    if (g.measureText(t.ad).width > aw) {
+      const k = t.ad.split(' '); let enIyi = null;
+      for (let j = 1; j < k.length; j++) { const p = [k.slice(0, j).join(' '), k.slice(j).join(' ')], w = Math.max(...p.map(x => g.measureText(x).width)); if (!enIyi || w < enIyi.w) enIyi = { p, w }; }
+      if (enIyi) satirlar = enIyi.p;
+    }
+    let b = 25; while (b > 17 && Math.max(...satirlar.map(x => { g.font = `600 ${b}px Montserrat`; return g.measureText(x).width; })) > aw) b--;
+    g.font = `600 ${b}px Montserrat`;
+    satirlar.forEach((x, j) => g.fillText(x, ax, yc + (j - (satirlar.length - 1) / 2) * b * 1.15 + 1));
+    g.restore();
+    const deger = k => ({ yuzde: yuzde(t), averaj: lig === 'tbl' ? isaret(t.averaj) : String(t.averaj), puan: String(t.g * 2 + t.m),
+      icPuan: String(t.icPuan ?? 0), icAveraj: String(t.icAveraj ?? 0) })[k] ?? String(t[k] ?? 0);
+    for (const [k, x] of acik) hucreYaz(g, deger(k), x, yc + 1, '400 31px Oswald', acikRenk, 90);
+    for (const [k, x] of kutu) hucreYaz(g, deger(k), x, yc + 1, `600 ${k === 'puan' && lig === 'bsl' ? 42 : 38}px Montserrat`, '#fff', k === 'puan' ? 80 : 170);
+  }
   return new Promise(ok => c.toBlob(ok, 'image/png'));
 }

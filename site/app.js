@@ -870,6 +870,35 @@ const siralamaKarsilastir = lig => (lig === 'tbl'
   ? (x, y) => galibiyetYuzdesi(y) - galibiyetYuzdesi(x) || y.averaj - x.averaj || y.atilan - x.atilan
   : (x, y) => y.g - x.g || x.m - y.m || y.averaj - x.averaj || y.atilan - x.atilan);
 
+// İç puan ve iç averaj (BSL puan durumu görseli): puanı eşit takımların kendi aralarında oynadığı biten maçlardan
+function icDegerler(tablo, maclar) {
+  const puan = t => t.g * 2 + t.m, gruplar = new Map(), sonuc = new Map();
+  for (const t of tablo) gruplar.set(puan(t), [...(gruplar.get(puan(t)) ?? []), t]);
+  for (const grup of gruplar.values()) {
+    if (grup.length < 2) continue;
+    const ids = new Set(grup.map(t => t.id));
+    for (const t of grup) sonuc.set(t.id, { icPuan: 0, icAveraj: 0 });
+    for (const m of maclar ?? []) {
+      if (m.durum !== 'bitti' || !ids.has(m.ev) || !ids.has(m.dep) || m.evSkor == null) continue;
+      const e = Number(m.evSkor), d = Number(m.depSkor), a = sonuc.get(m.ev), b = sonuc.get(m.dep);
+      a.icPuan += e > d ? 2 : 1; b.icPuan += d > e ? 2 : 1; a.icAveraj += e - d; b.icAveraj += d - e;
+    }
+  }
+  return tablo.map(t => ({ ...t, ...(sonuc.get(t.id) ?? { icPuan: 0, icAveraj: 0 }) }));
+}
+// Puan durumu görseli (program.js tabloGorseli; şablon kullanıcının örneklerinden): Puan Tablosu sekmesinde yöneticiye Paylaş / İndir
+async function tabloPaylas(lig, indir) {
+  const [tablo, gorsel, takimlar] = await Promise.all([getir(`data/${lig}/tablo.json`), getir(`data/${lig}/gorsel.json`), getir(`data/${lig}/takimlar.json`)]);
+  const satirlar = icDegerler(canliTablo(lig, tablo), takimlar.maclar);
+  const logo = ad => (gorsel.logo?.[ad] ? `data/${lig}/logo/${dosyaAnahtari(ad)}${uzanti(gorsel.logo[ad])}` : null);
+  const blob = await PR.tabloGorseli({ lig, tablo: satirlar, logo });
+  const dosya = new File([blob], `pota-alti-${lig}-puan-durumu.png`, { type: 'image/png' });
+  if (!indir && navigator.canShare?.({ files: [dosya] })) {
+    try { await navigator.share({ files: [dosya] }); return; } catch (e) { if (e?.name === 'AbortError') return; }
+  }
+  dosyaIndir(dosya);
+}
+
 function tabloKarti(lig, ilk = null) {
   const t = canliTablo(lig, ligVerisi(lig, 'tablo'));
   if (!t) return '<p class="bos">Yükleniyor…</p>';
@@ -878,7 +907,8 @@ function tabloKarti(lig, ilk = null) {
       <td class="sayi">${s.o}</td><td class="sayi"><b>${s.g}</b></td><td class="sayi">${s.m}</td>${lig === 'tbl' ? `<td class="sayi">${yuzdeYazisi(s)}</td>` : ''}
       <td class="sayi dar-gizle">${s.atilan}</td><td class="sayi dar-gizle">${s.yenilen}</td><td class="sayi">${isaretli(s.averaj)}</td>
       ${ilk ? '' : `<td class="dar-gizle"><span class="form">${s.son5.map(x => `<i class="${x}">${x}</i>`).join('')}</span></td>`}</tr>`).join('');
-  return `<div class="kart">${ilk ? `<div class="baslik-satir"><h2>${LIGLER[lig].kisa} puan tablosu</h2><a href="#/lig/${lig}/tablo">Tümü ›</a></div>` : ''}
+  return `<div class="kart">${ilk ? `<div class="baslik-satir"><h2>${LIGLER[lig].kisa} puan tablosu</h2><a href="#/lig/${lig}/tablo">Tümü ›</a></div>`
+    : yoneticiMi() ? `<div class="baslik-satir"><h2>Puan durumu</h2><span class="satir"><button class="secenek" data-is="pt-paylas" data-id="${lig}">📤 Paylaş</button><button class="secenek" data-is="pt-indir" data-id="${lig}">⬇ İndir</button></span></div>` : ''}
     <div class="tablo-kap"><table>
     <thead><tr><th>#</th><th>Takım</th><th class="sayi">O</th><th class="sayi">G</th><th class="sayi">M</th>${lig === 'tbl' ? '<th class="sayi">G%</th>' : ''}
       <th class="sayi dar-gizle">A</th><th class="sayi dar-gizle">Y</th><th class="sayi">Av.</th>${ilk ? '' : '<th class="dar-gizle">Son 5</th>'}</tr></thead>
@@ -1066,6 +1096,13 @@ document.addEventListener('click', e => {
     (uretici ? odulUreticiGorseli : odulGorseliniVer)(el.dataset.id, el.dataset.is === 'odul-indir').catch(e => alert(`İndirilemedi: ${e.message}`));
   }
   if (el.dataset.is === 'odul-ac') { S.ui.odulAcik = Number(el.dataset.id); ciz(); }
+  if ((el.dataset.is === 'pt-paylas' || el.dataset.is === 'pt-indir') && yoneticiMi() && !el.disabled) {
+    const yazi = el.textContent;
+    el.disabled = true;
+    el.textContent = 'Hazırlanıyor…';
+    tabloPaylas(el.dataset.id, el.dataset.is === 'pt-indir').catch(e => alert(`Görsel hazırlanamadı: ${e.message}`))
+      .finally(() => { el.disabled = false; el.textContent = yazi; });
+  }
   if ((el.dataset.is === 'pr-paylas' || el.dataset.is === 'pr-indir') && yoneticiMi() && !el.disabled) {
     const yazi = el.textContent;
     el.disabled = true;

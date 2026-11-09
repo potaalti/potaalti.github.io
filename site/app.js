@@ -18,7 +18,7 @@ const LIGLER = { bsl: { kisa: 'BSL', ad: 'Basketbol Süper Ligi' }, tbl: { kisa:
 
 const S = {
   meta: null, index: null, hata: null,
-  tablo: {}, liderler: {}, takimIst: {}, ileriIst: {}, gorsel: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, artieksi: {}, seyirci: {}, odul: {}, // lig -> veri (oyuncu: lig -> id -> detay)
+  tablo: {}, liderler: {}, takimIst: {}, ileriIst: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, artieksi: {}, seyirci: {}, odul: {}, // lig -> veri (oyuncu: lig -> id -> detay)
   maclar: {}, // `${lig}-${hafta}` -> maç listesi
   kutular: {}, // maç id -> kutu skor (null: yok)
   farklar: {}, // maç id -> skor farkı grafiği verisi (biten maçlar, null: yok)
@@ -164,6 +164,7 @@ function gorunumMaclar(istenenLig, istenenHafta) {
   const maclar = macListesi(lig, n);
   return `${ligSec}<div class="hafta-secici">${ok(haftalar[i - 1], '‹')}
       <div class="baslik"><strong>${LIGLER[lig].kisa} ${n}. Hafta</strong><small>${maclar ? haftaDurumu(maclar) : 'Yükleniyor…'}</small></div>${ok(haftalar[i + 1], '›')}</div>
+    ${yoneticiMi() && maclar?.length ? `<div class="satir program-dugmeler"><button class="secenek" data-is="pr-indir" data-id="${lig}-${n}">⬇ Haftanın programı</button>${navigator.canShare ? `<button class="secenek" data-is="pr-paylas" data-id="${lig}-${n}" aria-label="Programı paylaş">📤</button>` : ''}</div>` : ''}
     ${!maclar ? '<p class="bos">Yükleniyor…</p>' : maclar.length ? gunlereGore(lig, maclar) : '<p class="bos">Bu haftanın maçları henüz belli değil.</p>'}
     ${maclar?.length ? bayYazisi(lig, maclar) : ''}
     <p class="soluk kucuk">Maça dokununca kutu skor açılır. Maç saatlerinde skorlar dakikada bir yenilenir.</p>`;
@@ -284,8 +285,7 @@ async function yoneticiyiTani() {
 }
 
 function gorunumLig(lig, sekme, donem) {
-  // Program (haftanın programı görseli) yalnızca yöneticiye
-  const sekmeListesi = [...SEKMELER, ['artieksi', '+/-'], ['seyirci', 'Seyirci'], ['odul', 'Ödüller'], ...(yoneticiMi() ? [['program', 'Program']] : [])];
+  const sekmeListesi = [...SEKMELER, ['artieksi', '+/-'], ['seyirci', 'Seyirci'], ['odul', 'Ödüller']];
   const sekmeler = `<div class="secenekler">${sekmeListesi.map(([s, ad]) => `<a class="secenek ${s === sekme ? 'aktif' : ''}" href="#/lig/${lig}/${s}">${ad}</a>`).join('')}</div>`;
   const baslikHtml = `<div class="sayfa-baslik"><h1>${LIGLER[lig].ad}</h1><p class="soluk kucuk" style="margin:0 0 12px">2026-27 sezonu · ${LIGLER[lig].kisa}</p></div>`;
   let icerik;
@@ -297,7 +297,6 @@ function gorunumLig(lig, sekme, donem) {
     case 'seyirci': icerik = seyirciKarti(lig, donem); break;
     // Ödül üreticisi (görselleri hazırlama aracı) yalnızca yöneticiye
     case 'odul': icerik = new URLSearchParams(location.search).has('uret') && yoneticiMi() ? odulUretici(lig, donem) : odulKarti(lig, donem); break;
-    case 'program': icerik = yoneticiMi() ? programKarti(lig, donem) : '<p class="bos">Bu sekme yöneticiler içindir.</p>'; break;
     default: icerik = tabloKarti(lig);
   }
   return `<div class="dar">${baslikHtml}${sekmeler}${icerik}${altBilgi()}</div>`;
@@ -759,43 +758,20 @@ async function odulDosyasi(h, i) {
   const blob = await (await fetch(galeriAdresi(h, x))).blob();
   return new File([blob], `pota-alti-${h}-hafta-${x.dosya}`, { type: blob.type || 'image/jpeg' });
 }
-// Haftanın programı (yönetici, TBL/BSL → Program): o haftanın maçlarından görsel (program.js; şablonlar kullanıcının örneklerinden)
-function programKarti(lig, istenen) {
-  // Program hafta başında paylaşılır: güncel hafta bittiyse sıradaki hafta
-  const b = S.index?.maclar?.[lig];
-  const varsayilan = b?.guncelBitti && b?.siradaki ? b.siradaki.hafta : varsayilanHafta(lig);
-  const h = Number(istenen) || varsayilan;
-  const haftalar = [...new Set([varsayilan - 1, varsayilan, varsayilan + 1, varsayilan + 2, h])].filter(x => x >= 1).sort((a, b) => a - b);
-  const cipler = `<div class="secenekler">${haftalar.map(k => `<a class="secenek ${k === h ? 'aktif' : ''}" href="#/lig/${lig}/program/${k}">${k}. hafta</a>`).join('')}</div>`;
-  const maclar = macListesi(lig, h), gorsel = ligVerisi(lig, 'gorsel'), tablo = ligVerisi(lig, 'tablo');
-  if (!maclar || !gorsel || !tablo) return `${cipler}<p class="bos">Yükleniyor…</p>`;
-  if (!maclar.length) return `${cipler}<div class="kart"><p class="bos" style="margin:0">${h}. haftanın maçları henüz belli değil.</p></div>`;
-  S.program ??= {};
-  const k = `${lig}-${h}`;
-  if (!S.program[k]) {
-    S.program[k] = { durum: 'Hazırlanıyor…' };
-    const logo = ad => (gorsel.logo?.[ad] ? `data/${lig}/logo/${dosyaAnahtari(ad)}${uzanti(gorsel.logo[ad])}` : null);
-    const oynayan = new Set(maclar.flatMap(m => [m.ev, m.dep]));
-    const bay = lig === 'tbl' ? tablo.map(t => t.ad).filter(a => !oynayan.has(a)) : [];
-    PR.programGorseli({ lig, hafta: h, maclar, bay, logo })
-      .then(blob => { S.program[k] = { blob, url: URL.createObjectURL(blob) }; })
-      .catch(e => { S.program[k] = { durum: `Hazırlanamadı: ${e.message}` }; })
-      .finally(ciz);
-  }
-  const p = S.program[k];
-  const eksik = maclar.filter(m => !gorsel.logo?.[m.ev] || !gorsel.logo?.[m.dep]).flatMap(m => [m.ev, m.dep].filter(a => !gorsel.logo?.[a]));
-  return `${cipler}<div class="kart"><div class="baslik-satir"><h2>${h}. haftanın programı</h2>
-    ${p.url ? `<span class="satir">${navigator.canShare ? `<button class="secenek" data-is="pr-paylas" data-id="${k}">📤 Paylaş</button>` : ''}<button class="secenek" data-is="pr-indir" data-id="${k}">⬇ İndir</button>
-      <button class="secenek" data-is="pr-yenile" data-id="${k}" title="Maçlar değiştiyse yeniden hazırla">↻</button></span>` : ''}</div>
-    ${p.url ? `<img src="${p.url}" alt="${h}. haftanın programı" style="width:100%;display:block;border-radius:10px">` : `<p class="soluk">${esc(p.durum)}</p>`}
-    ${eksik.length ? `<p class="hata-kutu kucuk">Logosu olmayan takım: ${[...new Set(eksik)].map(esc).join(', ')}</p>` : ''}
-    <p class="soluk kucuk" style="margin-bottom:0">Maçlar, saatler ve yayın kanalları TBF'den; logolar TBF'nin logoları.</p></div>`;
+// Haftanın programı görseli (program.js; şablonlar kullanıcının örneklerinden): Maçlar sayfasında yalnızca yöneticiye "Programı
+// indir / paylaş". Her basışta o anki maç listesinden (saat değişikliği dahil) yeniden hazırlanır.
+async function programDosyasi(lig, h) {
+  const [liste, gorsel, tablo] = await Promise.all([getir(`${KAYNAK}/maclar/${lig}-${h}.json`), getir(`data/${lig}/gorsel.json`), getir(`data/${lig}/tablo.json`)]);
+  const maclar = liste.maclar ?? [];
+  const logo = ad => (gorsel.logo?.[ad] ? `data/${lig}/logo/${dosyaAnahtari(ad)}${uzanti(gorsel.logo[ad])}` : null);
+  const oynayan = new Set(maclar.flatMap(m => [m.ev, m.dep]));
+  const bay = lig === 'tbl' ? tablo.map(t => t.ad).filter(a => !oynayan.has(a)) : [];
+  const blob = await PR.programGorseli({ lig, hafta: h, maclar, bay, logo });
+  return new File([blob], `pota-alti-${lig}-${h}-hafta-programi.png`, { type: 'image/png' });
 }
 async function programPaylas(k, indir) {
-  const p = S.program?.[k];
-  if (!p?.blob) return;
   const [lig, h] = k.split('-');
-  const dosya = new File([p.blob], `pota-alti-${lig}-${h}-hafta-programi.png`, { type: 'image/png' });
+  const dosya = await programDosyasi(lig, Number(h));
   if (!indir && navigator.canShare?.({ files: [dosya] })) {
     try { await navigator.share({ files: [dosya] }); return; } catch (e) { if (e?.name === 'AbortError') return; }
   }
@@ -1076,8 +1052,13 @@ document.addEventListener('click', e => {
     (uretici ? odulUreticiGorseli : odulGorseliniVer)(el.dataset.id, el.dataset.is === 'odul-indir').catch(e => alert(`İndirilemedi: ${e.message}`));
   }
   if (el.dataset.is === 'odul-ac') { S.ui.odulAcik = Number(el.dataset.id); ciz(); }
-  if ((el.dataset.is === 'pr-paylas' || el.dataset.is === 'pr-indir') && yoneticiMi()) programPaylas(el.dataset.id, el.dataset.is === 'pr-indir').catch(e => alert(`İndirilemedi: ${e.message}`));
-  if (el.dataset.is === 'pr-yenile' && yoneticiMi()) { delete S.program[el.dataset.id]; S.maclar = Object.fromEntries(Object.entries(S.maclar).filter(([k]) => k !== el.dataset.id)); ciz(); }
+  if ((el.dataset.is === 'pr-paylas' || el.dataset.is === 'pr-indir') && yoneticiMi() && !el.disabled) {
+    const yazi = el.textContent;
+    el.disabled = true;
+    el.textContent = 'Hazırlanıyor…';
+    programPaylas(el.dataset.id, el.dataset.is === 'pr-indir').catch(e => alert(`Program hazırlanamadı: ${e.message}`))
+      .finally(() => { el.disabled = false; el.textContent = yazi; });
+  }
 
   if (el.dataset.is === 'odul-kapat' && (el.dataset.id === 'x' || e.target === el)) { S.ui.odulAcik = null; ciz(); }
   if (el.dataset.is === 'odul-hepsi-indir' || el.dataset.is === 'odul-hepsi-paylas') odulHepsi(Number(el.dataset.id), el.dataset.is === 'odul-hepsi-paylas').catch(e => alert(`İndirilemedi: ${e.message}`));

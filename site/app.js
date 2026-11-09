@@ -840,7 +840,6 @@ function canliTablo(lig, tablo) {
   const b = S.index?.maclar?.[lig];
   const maclar = [...new Set([b?.guncel, varsayilanHafta(lig)].filter(Boolean))].flatMap(h => macListesi(lig, h) ?? []);
   const satir = new Map(tablo.map(s => [s.ad, { ...s, son5: [...s.son5], sayilan: new Set(s.sayilan), canli: false }]));
-  let degisti = false;
   for (const m of [...maclar].sort((x, y) => x.tarih.localeCompare(y.tarih))) {
     const ev = satir.get(m.ev);
     const dep = satir.get(m.dep);
@@ -856,13 +855,10 @@ function canliTablo(lig, tablo) {
       t.son5 = [...t.son5, a > y ? 'G' : 'M'].slice(-5);
       t.sayilan.add(m.id);
     }
-    degisti = true;
   }
-  const liste = [...satir.values()];
-  if (degisti) {
-    liste.sort(siralamaKarsilastir(lig));
-    liste.forEach((s, i) => { s.sira = i + 1; });
-  }
+  // Sıralama her zaman burada da yapılır (kural değişince veri dosyası yeniden üretilmeden de doğru sıra görünsün)
+  const liste = [...satir.values()].sort(siralamaKarsilastir(lig));
+  liste.forEach((s, i) => { s.sira = i + 1; });
   return liste;
 }
 

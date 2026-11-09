@@ -1,0 +1,108 @@
+{
+ "hafta": 7,
+ "guncelleme": "2026-11-09T19:04:03.497Z",
+ "notlar": [],
+ "gorseller": [
+  {
+   "dosya": "01-7-haftanin-panoramasi.jpg",
+   "tur": "kapak",
+   "baslik": "7. Haftanın Panoraması"
+  },
+  {
+   "dosya": "02-mvp-trevion-williams.jpg",
+   "tur": "mvp",
+   "baslik": "MVP",
+   "oyuncu": "Trevion Williams",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "vp": 31
+  },
+  {
+   "dosya": "03-kazanan-yerli-mvp-yigit-onan.jpg",
+   "tur": "yerli",
+   "baslik": "Kazanan Yerli MVP",
+   "oyuncu": "Yiğit Onan",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "vp": 22
+  },
+  {
+   "dosya": "04-kaybeden-yerli-mvp-egehan-arna.jpg",
+   "tur": "kaybedenYerli",
+   "baslik": "Kaybeden Yerli MVP",
+   "oyuncu": "Egehan Arna",
+   "takim": "ESENLER EROKSPOR",
+   "vp": 28
+  },
+  {
+   "dosya": "05-kaybeden-yabanci-mvp-john-meeks.jpg",
+   "tur": "kaybedenYabanci",
+   "baslik": "Kaybeden Yabancı MVP",
+   "oyuncu": "John Meeks",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "vp": 23
+  },
+  {
+   "dosya": "06-kaybeden-yabanci-mvp-zach-hankins.jpg",
+   "tur": "kaybedenYabanci",
+   "baslik": "Kaybeden Yabancı MVP",
+   "oyuncu": "Zach Hankins",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "vp": 23
+  },
+  {
+   "dosya": "07-kaybeden-yabanci-mvp-brae-ivey.jpg",
+   "tur": "kaybedenYabanci",
+   "baslik": "Kaybeden Yabancı MVP",
+   "oyuncu": "Brae Ivey",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "vp": 23
+  },
+  {
+   "dosya": "08-altin-5.jpg",
+   "tur": "besli",
+   "baslik": "Altın 5",
+   "oyuncular": [
+    "Jordon Crawford",
+    "Olivier Hanlan",
+    "Egehan Arna",
+    "Chimezie Metu",
+    "Trevion Williams"
+   ]
+  },
+  {
+   "dosya": "09-gumus-5.jpg",
+   "tur": "besli",
+   "baslik": "Gümüş 5",
+   "oyuncular": [
+    "Brae Ivey",
+    "John Meeks",
+    "Micheal Moore",
+    "Jeremy Simmons",
+    "Ismael Bako"
+   ]
+  },
+  {
+   "dosya": "10-bronz-5.jpg",
+   "tur": "besli",
+   "baslik": "Bronz 5",
+   "oyuncular": [
+    "Johnny Davis",
+    "Yiğit Onan",
+    "Tre'shawn Thurman",
+    "Terrell Carter II",
+    "Zach Hankins"
+   ]
+  },
+  {
+   "dosya": "11-mansiyon-5.jpg",
+   "tur": "besli",
+   "baslik": "Mansiyon 5",
+   "oyuncular": [
+    "Bryce Jones",
+    "Onuralp Bitim",
+    "Alex Reese",
+    "Fabian White Jr.",
+    "Oscar Cluff"
+   ]
+  }
+ ]
+}

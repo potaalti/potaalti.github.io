@@ -461,7 +461,11 @@ async function odulHaftasi(h) {
   const rehber = Array.isArray(ham) ? Object.fromEntries(ham.map(o => [o.id, o])) : ham;
   // TBF fotoğrafı uygun olmayan oyuncular için yöneticinin gönderdiği fotoğraflar (odul/foto/, liste.json: { id: dosya })
   const foto = id => elle[id] ? `odul/foto/${elle[id]}` : gorsel.foto[id] ? `data/${lig}/foto/${id}${uzanti(gorsel.foto[id])}` : null;
-  const kutular = await Promise.all(liste.maclar.filter(m => m.durum === 'bitti').map(m => getir(`${KAYNAK}/mac/${m.id}.json`)));
+  // Biten maçlar: TBF'nin kesinleştirdikleri ve son düdüğü çalmış ama TBF'nin henüz kesinleştirmediği ("Maç sonu · kesinleşiyor":
+  // 4. çeyrek ya da uzatma 00:00, skor eşit değil) maçlar; kullanıcı 2026-11-09 kesinleşmeyi beklemeden hazırlanmasını istedi
+  const bitti = m => m.durum === 'bitti' || (m.durum === 'canli' && (m.canliDurum?.periyot >= 4 || m.canliDurum?.uzatma)
+    && m.canliDurum?.saat === '00:00' && Number(m.evSkor) !== Number(m.depSkor));
+  const kutular = await Promise.all(liste.maclar.filter(bitti).map(m => getir(`${KAYNAK}/mac/${m.id}.json`)));
   const oy = new Map();
   for (const kutu of kutular) for (const [t, r] of [['ev', 'dep'], ['dep', 'ev']]) {
     const T = kutu[t], kazandi = Number(T.skor) > Number(kutu[r].skor);
@@ -484,7 +488,7 @@ async function odulHaftasi(h) {
   // Takım arkadaşlarının fotoğrafları (forma rengi karşılaştırması için)
   const kadro = new Map();
   for (const [id, r] of Object.entries(rehber)) if (r.aktif !== false && foto(id)) kadro.set(r.takim, [...(kadro.get(r.takim) ?? []), { id, foto: foto(id) }]);
-  const bitmeyen = liste.maclar.filter(m => m.durum !== 'bitti').length;
+  const bitmeyen = liste.maclar.filter(m => !bitti(m)).length;
   return (S.odul[k] = { oyuncular: [...oy.values()], kadro, bitmeyen });
 }
 // BSL ödül seçimi (kullanıcının kuralları; sıralama VP, eşitlikte sayı; tekli ödülde VP eşitse ödül ikisine de):

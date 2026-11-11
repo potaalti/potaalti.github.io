@@ -4194,6 +4194,25 @@
   "astOrt": 0
  },
  {
+  "id": "786430",
+  "ad": "CYRIL J LANGEVINE",
+  "takim": "KARŞIYAKA",
+  "takimId": 266027,
+  "takimKod": "KSK",
+  "ulke": "ABD",
+  "turk": false,
+  "aktif": true,
+  "mac": 0,
+  "vpOrt": 0,
+  "sayiOrt": 0,
+  "sureOrt": "00:00:00",
+  "foto": "https://tbf.org.tr/res/5ab19e3d-ede7-4b90-ab45-7fd4bac25406_6796.png",
+  "boy": null,
+  "mevkiTahmini": null,
+  "ribOrt": 0,
+  "astOrt": 0
+ },
+ {
   "id": "777634",
   "ad": "Daquan Jeffries",
   "takim": "BEŞİKTAŞ",

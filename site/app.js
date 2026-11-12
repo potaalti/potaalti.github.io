@@ -1010,6 +1010,8 @@ function gorunumTakim(lig, id) {
 }
 
 // ---------- Oyuncu sayfası ----------
+// Atışlar maç başı isabet/deneme: [16, 19] ve 4 maç -> "4/4,8"
+const macBasiAtis = ([b, d], mac) => { const f = x => (mac ? x / mac : 0).toLocaleString('tr-TR', { maximumFractionDigits: 1 }); return `${f(b)}/${f(d)}`; };
 function gorunumOyuncu(lig, id) {
   S.oyuncu[lig] ??= {};
   yukle(S.oyuncu[lig], id, `data/${lig}/oyuncu/${id}.json`);
@@ -1030,9 +1032,9 @@ function gorunumOyuncu(lig, id) {
   return `<a class="geri" href="#/takim/${lig}/${o.takim}">‹ ${esc(takimAdi(lig, o.takim))}</a>
     <div class="kart sayfa-baslik"><h1>${esc(o.ad)}</h1>
       <p class="soluk" style="margin:0 0 12px"><span class="lig-etiket">${LIGLER[lig].kisa}</span> <a href="#/takim/${lig}/${o.takim}">${esc(takimAdi(lig, o.takim))}</a> · ${o.mac} maç (${o.ilk5} ilk 5)</p>
-      <div class="istatistik">${[['Dakika', o.dk], ['Sayı', o.sayi], ['Ribaund', o.rib], ['Asist', o.ast], ['VP', o.vp], ['+/-', isaretli(o.pm)], ['2S %', yuzde(o.iki)], ['3S %', yuzde(o.uc)], ['SA %', yuzde(o.sa)]]
-        .map(([ad, v]) => `<div><b>${typeof v === 'number' ? sayi(v) : v}</b><span>${ad}</span></div>`).join('')}</div>
-      <p class="soluk kucuk" style="margin:8px 0 0">Maç başı ortalamalar (+/-: sezon toplamı).</p></div>
+      <div class="istatistik">${[['Dakika', o.dk], ['Sayı', o.sayi], ['Ribaund', o.rib], ['Asist', o.ast], ['VP', o.vp], ['+/-', isaretli(o.pm)], ['2S %', yuzde(o.iki), o.iki], ['3S %', yuzde(o.uc), o.uc], ['SA %', yuzde(o.sa), o.sa]]
+        .map(([ad, v, atis]) => `<div><b>${typeof v === 'number' ? sayi(v) : v}</b><span>${ad}</span>${atis ? `<small>${macBasiAtis(atis, o.mac)}</small>` : ''}</div>`).join('')}</div>
+      <p class="soluk kucuk" style="margin:8px 0 0">Maç başı ortalamalar (+/-: sezon toplamı). Atış yüzdelerinin altında maç başı isabet/deneme.</p></div>
     <div class="kart"><h3>Maç maç</h3><div class="tablo-kap"><table>
       <thead><tr><th>Hf</th><th>Rakip</th><th class="sayi">Dk</th><th class="sayi">Sy</th><th class="sayi">Rb</th><th class="sayi">As</th><th class="sayi dar-gizle">+/-</th><th class="sayi">VP</th></tr></thead>
       <tbody>${satirlar || '<tr><td colspan="8" class="bos">Henüz maç yok</td></tr>'}</tbody></table></div>

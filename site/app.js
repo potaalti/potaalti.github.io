@@ -22,7 +22,7 @@ const S = {
   maclar: {}, // `${lig}-${hafta}` -> maç listesi
   kutular: {}, // maç id -> kutu skor (null: yok)
   farklar: {}, // maç id -> skor farkı grafiği verisi (biten maçlar, null: yok)
-  ui: { ara: '', oyuncuSirala: 'vp', seyirciSirala: { k: 'ort', yon: 1 }, seyirciHaftaSirala: { k: 'seyirci', yon: 1 }, liderKategori: {}, anaLig: anaLigOku() },
+  ui: { ara: '', oyuncuSirala: 'vp', seyirciSirala: { k: 'ort', yon: 1 }, seyirciHaftaSirala: { k: 'seyirci', yon: 1 }, tabloSirala: null, liderKategori: {}, anaLig: anaLigOku() },
 };
 // Telefon ve bilgisayar ayrı düzen: telefonda ana sayfa tek lig gösterir (BSL | TBL seçici), bilgisayarda yan menü ve iki sütun
 const TELEFON = matchMedia('(max-width: 759px)');
@@ -922,8 +922,14 @@ async function tabloPaylas(lig, indir) {
 }
 
 function tabloKarti(lig, ilk = null) {
-  const t = canliTablo(lig, ligVerisi(lig, 'tablo'));
-  if (!t) return '<p class="bos">Yükleniyor…</p>';
+  const t0 = canliTablo(lig, ligVerisi(lig, 'tablo'));
+  if (!t0) return '<p class="bos">Yükleniyor…</p>';
+  // Tam tabloda A, Y ve Av. başlıklarına dokununca o sütuna göre sıralanır (# sütunu resmi sırayı göstermeye devam eder);
+  // üçüncü dokunuş resmi sıraya döner. Paylaş/İndir görseli her zaman resmi sırayla.
+  const ps = ilk ? null : S.ui.tabloSirala;
+  const t = ps ? [...t0].sort((a, b) => ps.yon * (b[ps.k] - a[ps.k]) || a.sira - b.sira) : t0;
+  const th = (k, ad, ek = '') => ilk ? `<th class="sayi ${ek}">${ad}</th>`
+    : `<th class="sayi sirala ${ek} ${ps?.k === k ? 'aktif' : ''}" data-is="pt-sirala" data-id="${k}">${ad}${ps?.k === k ? (ps.yon > 0 ? ' ▼' : ' ▲') : ''}</th>`;
   const satirlar = (ilk ? t.slice(0, ilk) : t).map(s => `<tr class="tikla" onclick="location.hash='#/takim/${lig}/${s.id}'">
       <td class="sira"><span class="madalya m${s.sira}">${s.sira}</span></td><td class="takim-ad">${esc(baslik(s.ad))}${s.canli ? ' <span class="canli-yazi kucuk">canlı</span>' : ''}</td>
       <td class="sayi">${s.o}</td><td class="sayi"><b>${s.g}</b></td><td class="sayi">${s.m}</td>${lig === 'tbl' ? `<td class="sayi">${yuzdeYazisi(s)}</td>` : ''}
@@ -933,9 +939,9 @@ function tabloKarti(lig, ilk = null) {
     : yoneticiMi() ? `<div class="baslik-satir"><h2>Puan durumu</h2><span class="satir"><button class="secenek" data-is="pt-paylas" data-id="${lig}">📤 Paylaş</button><button class="secenek" data-is="pt-indir" data-id="${lig}">⬇ İndir</button></span></div>` : ''}
     <div class="tablo-kap"><table>
     <thead><tr><th>#</th><th>Takım</th><th class="sayi">O</th><th class="sayi">G</th><th class="sayi">M</th>${lig === 'tbl' ? '<th class="sayi">G%</th>' : ''}
-      <th class="sayi dar-gizle">A</th><th class="sayi dar-gizle">Y</th><th class="sayi">Av.</th>${ilk ? '' : '<th class="dar-gizle">Son 5</th>'}</tr></thead>
+      ${th('atilan', 'A', 'dar-gizle')}${th('yenilen', 'Y', 'dar-gizle')}${th('averaj', 'Av.')}${ilk ? '' : '<th class="dar-gizle">Son 5</th>'}</tr></thead>
     <tbody>${satirlar}</tbody></table></div>
-    ${ilk ? '' : `<p class="soluk kucuk" style="margin:8px 0 0">O: oynanan · G: galibiyet · M: mağlubiyet · A/Y: atılan/yenilen sayı · Av.: averaj. ${lig === 'tbl' ? 'G%: galibiyet yüzdesi. Sıralama galibiyet yüzdesine göre, eşitlikte averaj' : 'Sıralama galibiyete göre, eşitlikte averaj'} (resmi sıralamada ikili averaj gibi farklı kurallar olabilir).</p>`}</div>`;
+    ${ilk ? '' : `<p class="soluk kucuk" style="margin:8px 0 0">O: oynanan · G: galibiyet · M: mağlubiyet · A/Y: atılan/yenilen sayı · Av.: averaj. ${lig === 'tbl' ? 'G%: galibiyet yüzdesi. Sıralama galibiyet yüzdesine göre, eşitlikte averaj' : 'Sıralama galibiyete göre, eşitlikte averaj'} (resmi sıralamada ikili averaj gibi farklı kurallar olabilir). A, Y ya da Av. başlığına dokununca o sütuna göre sıralanır; üçüncü dokunuş resmi sıraya döner.</p>`}</div>`;
 }
 
 function liderListesi(lig, k, kac) {
@@ -1097,6 +1103,12 @@ document.addEventListener('click', e => {
   const el = e.target.closest('[data-is]');
   if (!el) return;
   if (el.dataset.is === 'oyuncu-sirala') { S.ui.oyuncuSirala = el.dataset.id; ciz(); }
+  if (el.dataset.is === 'pt-sirala') {
+    // İlk dokunuş en iyi üstte (A ve Av. çoktan aza, Y azdan çoka), ikincisi tersi, üçüncüsü resmi sıra
+    const k = el.dataset.id, ilkYon = k === 'yenilen' ? -1 : 1, o = S.ui.tabloSirala;
+    S.ui.tabloSirala = o?.k !== k ? { k, yon: ilkYon } : o.yon === ilkYon ? { k, yon: -ilkYon } : null;
+    ciz();
+  }
   if (el.dataset.is === 'syh-sirala') {
     const o = S.ui.seyirciHaftaSirala;
     S.ui.seyirciHaftaSirala = { k: el.dataset.id, yon: o.k === el.dataset.id ? -o.yon : 1 };

@@ -11,6 +11,7 @@ herkese açık bölümü için özet dosyaları üretir:
   site/data/<lig>/oyuncu/<id>.json   oyuncunun maç maç istatistikleri
   site/data/<lig>/takim-istatistik.json  biten maçlarda oyuncuya yazılmayan takım istatistikleri (TBF'den)
   site/data/<lig>/gorsel.json, foto/, logo/  oyuncu fotoğrafları ve takım logoları (TBF'den; --gunluk ile, haftanın ödülleri için)
+  site/data/<lig>/rekorlar.json      sezon rekorları (tek maç, double-double, takım rekorları)
   site/data/<lig>/seyirci.json       biten maçların seyirci sayıları (TBF'den; --gunluk ile, Cumartesi–Salı)
                                      (salon doluluğu için kapasiteler elle: site/data/salonlar.json, maç salonu takimlar.json'da)
   site/data/youtube.json             Pota Altı YouTube kanalının son canlı yayınları ve son videoları
@@ -478,6 +479,7 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
         yaz(CIKTI / lig / "liderler.json", liderler)
     yaz(CIKTI / lig / "oyuncular.json", sorted(oyuncu_ozet, key=lambda o: o["ad"]))
     yaz(CIKTI / lig / "takimlar.json", {"takimlar": takim_ozet, "maclar": maclar_hepsi})
+    rekor_uret(lig, oyuncular, takimlar, maclar_hepsi)
     takim_istatistik_uret(lig, maclar_hepsi)
     ileri_istatistik_uret(lig, maclar_hepsi)
     fark_akisi_uret(lig, maclar_hepsi)
@@ -487,6 +489,49 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
         gorsel_uret(lig)
     return {"ad": LIGLER[lig], "haftalar": haftalar, "guncel": bilgi.get("guncel"), "takimSayisi": len(takimlar),
             "oyuncuSayisi": len(oyuncular), "_haftaOzet": hafta_ozet}
+
+
+def rekor_uret(lig, oyuncular, takimlar, maclar):
+    """Sezon rekorları (site/data/<lig>/rekorlar.json): oyuncuların tek maç rekorları (biten maçlar), double-double ve
+    triple-double sayıları (sayı, ribaund, asist, top çalma, blok'tan en az ikisi/üçü 10+), takımların en yüksek skoru,
+    en farklı galibiyeti ve en uzun galibiyet serisi."""
+    satirlar = [(p, x) for p in oyuncular.values() for x in p["maclar"] if x["durum"] == "bitti" and x["sn"] > 0]
+    KATEGORI = [("sayi", "Sayı", lambda x: x["sayi"]), ("rib", "Ribaund", lambda x: x["rib"]), ("ast", "Asist", lambda x: x["ast"]),
+                ("vp", "Verimlilik (VP)", lambda x: x["vp"]), ("tc", "Top çalma", lambda x: x["tc"]), ("blk", "Blok", lambda x: x["blk"]),
+                ("uc", "3 sayılık isabet", lambda x: x["uc"][0])]
+    oyuncu = []
+    for anah, ad, f in KATEGORI:
+        sirali = sorted(satirlar, key=lambda px: (-f(px[1]), px[1]["tarih"]))[:5]
+        oyuncu.append({"id": anah, "ad": ad, "liste": [{"oyuncu": p["id"], "ad": p["ad"], "takim": x["takim"], "rakip": x["rakip"], "mac": x["mac"],
+                                                       "hafta": x["hafta"], "evde": x["evde"], "deger": f(x)} for p, x in sirali]})
+    cift = {}
+    for p, x in satirlar:
+        on = sum(1 for a in ("sayi", "rib", "ast", "tc", "blk") if x[a] >= 10)
+        if on >= 2:
+            k = cift.setdefault(p["id"], {"oyuncu": p["id"], "ad": p["ad"], "takim": p["takim"], "dd": 0, "td": 0})
+            k["dd"] += 1
+            k["td"] += on >= 3
+    dd = sorted(cift.values(), key=lambda k: (-k["td"], -k["dd"], k["ad"]))
+    biten = [m for m in maclar if m["durum"] == "bitti"]
+    skorlar = [{"takim": t, "rakip": r_, "mac": m["id"], "hafta": m["hafta"], "skor": sayi(a), "rakipSkor": sayi(b)}
+               for m in biten for t, r_, a, b in ((m["ev"], m["dep"], m["evSkor"], m["depSkor"]), (m["dep"], m["ev"], m["depSkor"], m["evSkor"]))]
+    seriler = []
+    for t in takimlar.values():
+        en, su = 0, 0
+        for x in sorted(t["seri"], key=lambda x: x["tarih"]):
+            su = su + 1 if x["s"] == "G" else 0
+            en = max(en, su)
+        if en:
+            seriler.append({"takim": t["id"], "deger": en, "suruyor": su == en})
+    takim = [
+        {"id": "skor", "ad": "En yüksek skor", "liste": [{**x, "deger": x["skor"]} for x in sorted(skorlar, key=lambda x: (-x["skor"], x["mac"]))[:5]]},
+        {"id": "fark", "ad": "En farklı galibiyet", "liste": [{**x, "deger": x["skor"] - x["rakipSkor"]}
+                                                             for x in sorted(skorlar, key=lambda x: (-(x["skor"] - x["rakipSkor"]), x["mac"]))[:5]]},
+        {"id": "seri", "ad": "En uzun galibiyet serisi", "liste": sorted(seriler, key=lambda x: (-x["deger"], not x["suruyor"]))[:5]},
+        {"id": "dusuk", "ad": "En düşük skor", "liste": [{**x, "deger": x["skor"]} for x in sorted(skorlar, key=lambda x: (x["skor"], x["mac"]))[:5]]},
+    ]
+    yaz(CIKTI / lig / "rekorlar.json", {"oyuncu": oyuncu, "dd": dd[:15], "ddToplam": sum(k["dd"] for k in cift.values()),
+                                        "tdToplam": sum(k["td"] for k in cift.values()), "takim": takim})
 
 
 def tbl_fantezi_uret(kaynak, bilgi, hafta_ozet):

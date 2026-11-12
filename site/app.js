@@ -18,7 +18,7 @@ const LIGLER = { bsl: { kisa: 'BSL', ad: 'Basketbol Süper Ligi' }, tbl: { kisa:
 
 const S = {
   meta: null, index: null, hata: null,
-  tablo: {}, liderler: {}, takimIst: {}, ileriIst: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, artieksi: {}, seyirci: {}, odul: {}, avrupa: {}, durum: {}, // lig -> veri (oyuncu: lig -> id -> detay)
+  tablo: {}, liderler: {}, takimIst: {}, ileriIst: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, artieksi: {}, seyirci: {}, odul: {}, avrupa: {}, durum: {}, rekorlar: {}, // lig -> veri (oyuncu: lig -> id -> detay)
   maclar: {}, // `${lig}-${hafta}` -> maç listesi
   kutular: {}, // maç id -> kutu skor (null: yok)
   farklar: {}, // maç id -> skor farkı grafiği verisi (biten maçlar, null: yok)
@@ -293,7 +293,7 @@ async function yoneticiyiTani() {
 }
 
 function gorunumLig(lig, sekme, donem) {
-  const sekmeListesi = [...SEKMELER, ['artieksi', '+/-'], ['seyirci', 'Seyirci'], ['odul', 'Ödüller']];
+  const sekmeListesi = [...SEKMELER, ['rekor', 'Rekorlar'], ['artieksi', '+/-'], ['seyirci', 'Seyirci'], ['odul', 'Ödüller']];
   const sekmeler = `<div class="secenekler">${sekmeListesi.map(([s, ad]) => `<a class="secenek ${s === sekme ? 'aktif' : ''}" href="#/lig/${lig}/${s}">${ad}</a>`).join('')}</div>`;
   const baslikHtml = `<div class="sayfa-baslik"><h1>${LIGLER[lig].ad}</h1><p class="soluk kucuk" style="margin:0 0 12px">2026-27 sezonu · ${LIGLER[lig].kisa}</p></div>`;
   let icerik;
@@ -303,6 +303,7 @@ function gorunumLig(lig, sekme, donem) {
     case 'oyuncular': icerik = oyuncularKarti(lig); break;
     case 'artieksi': icerik = artieksiKarti(lig, donem); break;
     case 'seyirci': icerik = seyirciKarti(lig, donem); break;
+    case 'rekor': icerik = rekorKarti(lig); break;
     // Ödül üreticisi (görselleri hazırlama aracı) yalnızca yöneticiye
     case 'odul': icerik = new URLSearchParams(location.search).has('uret') && yoneticiMi() ? odulUretici(lig, donem) : odulKarti(lig, donem); break;
     default: icerik = tabloKarti(lig);
@@ -1290,6 +1291,32 @@ function gorunumAvrupa(kod, tur, id) {
   const icerik = tur === 'takim' ? avTakim(k.kod, k, id) : tur === 'oyuncu' ? avOyuncu(k.kod, k, id) : tur === 'mac' ? avMac(k.kod, k, id) : avKupa(k.kod, k);
   return `${tur ? '' : `<div class="sayfa-baslik" style="margin-bottom:10px"><h1>Avrupa'daki temsilcilerimiz</h1>
       <p class="soluk" style="margin:0 0 10px">2026-27 sezonu${idx.guncelleme ? ` · ${tarihSaat(idx.guncelleme)} itibarıyla` : ''}</p></div>${avGunKarti(idx)}${cipler}`}${icerik}`;
+}
+
+// ---------- Sezon rekorları (data/<lig>/rekorlar.json, veri/uret.py) ----------
+function rekorKarti(lig) {
+  const d = ligVerisi(lig, 'rekorlar');
+  ligVerisi(lig, 'tablo');
+  if (!d) return '<p class="bos">Yükleniyor…</p>';
+  const macBilgi = x => `${x.hafta}. hafta · ${x.evde ? '' : '@ '}${esc(takimAdi(lig, x.rakip))}`;
+  const oyuncuListesi = k => `<ol class="lider-listesi">${k.liste.map((x, i) => `<li><span class="no">${i + 1}</span>
+    <span class="ad"><a href="#/oyuncu/${lig}/${x.oyuncu}" class="oyuncu-link"><b>${esc(x.ad)}</b></a>
+      <small>${esc(takimAdi(lig, x.takim))} · <a href="#/mac/${lig}/${x.mac}">${macBilgi(x)}</a></small></span>
+    <span class="deger">${x.deger}</span></li>`).join('')}</ol>`;
+  const takimListesi = k => `<ol class="lider-listesi">${k.liste.map((x, i) => `<li><span class="no">${i + 1}</span>
+    <span class="ad"><a href="#/takim/${lig}/${x.takim}"><b>${esc(takimAdi(lig, x.takim))}</b></a>
+      <small>${k.id === 'seri' ? (x.suruyor ? 'seri sürüyor' : 'sezon içinde') : `<a href="#/mac/${lig}/${x.mac}">${x.hafta}. hafta · ${esc(takimAdi(lig, x.rakip))} · ${x.skor}-${x.rakipSkor}</a>`}</small></span>
+    <span class="deger">${k.id === 'fark' ? `+${x.deger}` : k.id === 'seri' ? `${x.deger} G` : x.deger}</span></li>`).join('')}</ol>`;
+  const dd = `<ol class="lider-listesi">${d.dd.map((x, i) => `<li><span class="no">${i + 1}</span>
+    <span class="ad"><a href="#/oyuncu/${lig}/${x.oyuncu}" class="oyuncu-link"><b>${esc(x.ad)}</b></a><small>${esc(takimAdi(lig, x.takim))}${x.td ? ` · ${x.td} triple-double` : ''}</small></span>
+    <span class="deger">${x.dd}</span></li>`).join('') || '<li class="bos">Henüz yok</li>'}</ol>`;
+  return `<p class="soluk kucuk">Bu sezonun biten maçlarından. Tek maç rekorlarında maça dokununca kutu skor açılır.</p>
+    <h2 class="bolum-baslik">Tek maçta en çok</h2>
+    <div class="izgara">${d.oyuncu.map(k => `<div class="kart" style="margin:0"><h3>${esc(k.ad)}</h3>${oyuncuListesi(k)}</div>`).join('')}
+      <div class="kart" style="margin:0"><h3>Double-double</h3><p class="soluk kucuk" style="margin:0 0 6px">Sezonda toplam ${d.ddToplam} double-double, ${d.tdToplam} triple-double
+        (sayı, ribaund, asist, top çalma, bloktan en az ikisinde 10+)</p>${dd}</div></div>
+    <h2 class="bolum-baslik">Takım rekorları</h2>
+    <div class="izgara">${d.takim.map(k => `<div class="kart" style="margin:0"><h3>${esc(k.ad)}</h3>${takimListesi(k)}</div>`).join('')}</div>`;
 }
 
 // ---------- Maç önü (oynanmamış maç) ----------

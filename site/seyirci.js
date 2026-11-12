@@ -11,7 +11,7 @@ const HAFTA = { satirlar: [610, 764, 920, 1075, 1233, 1392, 1550, 1707], ev: 290
   baslik: { x: 811, y: 268, boy: 74 } };
 // Ortalama: 17 satır (BSL şablonunda 16)
 const ORT = { satirlar: [613, 679, 745, 811, 877, 943, 1009, 1075, 1142, 1210, 1279, 1347, 1414, 1482, 1550, 1618, 1688],
-  sira: 165, takim: 262, takimGen: 528, mac: 896, toplam: 1133, ort: 1410, baslik: { x: 811, y: 270, boy: 74 } };
+  sira: 165, takim: 262, takimGen: 400, doluluk: 722, mac: 896, toplam: 1133, ort: 1410, baslik: { x: 811, y: 270, boy: 74 } };
 
 // Yazı tipi dosyaları stil dosyası yüklendikten sonra tanınır; ondan önce fonts.load boş döner
 let yaziHazir;
@@ -27,6 +27,7 @@ function yaziTipleriniYukle() {
 const resim = url => new Promise((ok, hata) => { const i = new Image(); i.crossOrigin = 'anonymous'; i.onload = () => ok(i); i.onerror = () => hata(new Error('Şablon yüklenemedi')); i.src = url; });
 const buyuk = s => String(s ?? '').toLocaleUpperCase('tr');
 const binlik = n => Number(n).toLocaleString('tr-TR', { maximumFractionDigits: 1 });
+const yuzde = d => `%${Math.round(d * 100)}`;
 
 // Yazının büyük harf yüksekliği istenen boyda olacak şekilde yazı tipi ayarlanır; genişliğe sığmazsa yatayda daraltılır
 function yaz(g, metin, x, y, { yazi, boy, gen = Infinity, hiza = 'center', renk = '#fff', kalin = 0 }) {
@@ -102,7 +103,8 @@ function tuval(zemin) {
 }
 const blob = c => new Promise(ok => c.toBlob(ok, 'image/png'));
 
-// maclar: [{ ev, dep, evSkor, depSkor, seyirci }] (çok seyirciliden aza, en fazla 8)
+// maclar: [{ ev, dep, evSkor, depSkor, seyirci, doluluk }] (çok seyirciliden aza, en fazla 8); doluluk 0–1 ya da null
+// (salon kapasitesi bilinmiyor): skorun altına, beyaz şeridin dar ucuna "SALON %62 DOLU"
 export async function haftaGorseli({ lig, hafta, maclar }) {
   const [zemin] = await Promise.all([resim(SABLON(lig)('hafta')), yaziTipleriniYukle()]);
   const [c, g] = tuval(zemin);
@@ -113,20 +115,25 @@ export async function haftaGorseli({ lig, hafta, maclar }) {
     takimAdi(g, m.dep, HAFTA.dep, y);
     yaz(g, `${m.evSkor ?? ''} - ${m.depSkor ?? ''}`, HAFTA.skor, y + 95, { yazi: 'Anton', boy: 56, gen: 220, renk: '#0b0b0f' });
     yaz(g, m.seyirci ? String(m.seyirci) : '–', HAFTA.sayi, y + 78, { yazi: 'Anton', boy: 56, gen: 170, renk: VURGU[lig] });
+    if (m.doluluk !== null && m.doluluk !== undefined)
+      yaz(g, `SALON ${yuzde(m.doluluk)} DOLU`, HAFTA.skor, y + 124, { yazi: '"Bebas Neue"', boy: 19, gen: 190, renk: '#3a3a4a', kalin: 0.4 });
   });
   return blob(c);
 }
 
-// takimlar: [{ ad, mac, toplam, ort }] (ortalamaya göre sıralı); hafta: kaçıncı haftaya kadar
+// takimlar: [{ ad, mac, toplam, ort, doluluk }] (ortalamaya göre sıralı); hafta: kaçıncı haftaya kadar. Doluluk takım
+// sütununun sağ ucunda kendi başlığıyla (şablonda yeri yok, başlık şeridine "DOLULUK" yazılır)
 export async function ortalamaGorseli({ lig, hafta, takimlar }) {
   const [zemin] = await Promise.all([resim(SABLON(lig)('ort')), yaziTipleriniYukle()]);
   const [c, g] = tuval(zemin);
   baslik(g, `İLK ${hafta} HAFTA`, ORT.baslik);
+  yaz(g, 'DOLULUK', ORT.doluluk, 591, { yazi: '"Bebas Neue"', boy: 22, kalin: 0.6 });
   takimlar.slice(0, ORT.satirlar.length).forEach((t, i) => {
     const y = ORT.satirlar[i] + 49;
     const ust = i < 3;
     yaz(g, String(i + 1), ORT.sira, y, { yazi: 'Anton', boy: 34, renk: ust ? '#111' : '#fff' });
     yaz(g, buyuk(t.ad), ORT.takim, y, { yazi: '"Bebas Neue"', boy: 35, gen: ORT.takimGen, hiza: 'left', kalin: 0.8 });
+    yaz(g, t.doluluk === null || t.doluluk === undefined ? '–' : yuzde(t.doluluk), ORT.doluluk, y, { yazi: '"Bebas Neue"', boy: 30, renk: VURGU[lig], kalin: 0.8 });
     yaz(g, String(t.mac), ORT.mac, y, { yazi: '"Bebas Neue"', boy: 35, kalin: 0.8 });
     yaz(g, binlik(t.toplam), ORT.toplam, y, { yazi: '"Bebas Neue"', boy: 35, kalin: 0.8 });
     yaz(g, binlik(t.ort), ORT.ort, y, { yazi: '"Bebas Neue"', boy: 35, renk: '#0b0b14', kalin: 1.2 });

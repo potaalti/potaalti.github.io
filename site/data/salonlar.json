@@ -1,0 +1,33 @@
+{
+ "not": "Salon kapasiteleri (seyirci doluluk yüzdesi için). Anahtar TBF'nin salon adı; null = kapasite bilinmiyor (yüzde gösterilmez). Kaynaklar: Wikipedia 2026-27 BSL / 2025-26 TBL sayfaları, Keçiören Belediyesi, haberler. Seyirci kapasiteyi geçerse %100 gösterilir.",
+ "kapasite": {
+  "Ankara Spor Salonu": 10400,
+  "Bandırma 17 Eylül Üniversitesi Spor Salonu": 3500,
+  "Beşiktaş Akatlar Spor Kompleksi": 3200,
+  "Enka Spor Salonu": 3000,
+  "Hayri Gür Spor Salonu": 7500,
+  "Mustafa Kemal Atatürk Karşıyaka Spor Salonu": 5000,
+  "Pamukkale Üniversitesi Spor Salonu": 3490,
+  "Sinan Erdem Spor Salonu": 16000,
+  "Tofaş Spor Salonu": 7500,
+  "Turkcell Basketbol Gelişim Merkezi": 10000,
+  "Çayırova Belediyesi Spor Kompleksi": 3500,
+  "Ülker Spor ve Etkinlik Salonu": 13800,
+  "Şehit Polis Recep Topaloğlu Spor Salonu": 5000,
+  "90. Yıl Spor Salonu": 2500,
+  "Altındağ Atatürk Spor Kompleksi": 1920,
+  "Ankara Taha Akgül Spor Salonu": 2715,
+  "Darüşşafaka Ayhan Şahenk Spor Salonu": 3500,
+  "Fenerbahçe Metro Enerji Spor Salonu": 2500,
+  "Gazanfer Bilge Spor Salonu": 2500,
+  "Gölbaşı Spor Salonu": null,
+  "Kahramanmaraş Merkez Spor Salonu": 2500,
+  "Kamil Ocak Spor Salonu": 3800,
+  "M. Sait Zarifoğlu Spor Salonu": 2000,
+  "Mamak Belediyesi Hidayet Türkoğlu Spor Salonu": 4250,
+  "Selçuklu Belediyesi Spor Salonu": 3800,
+  "Servet Tazegül Spor Salonu": 7500,
+  "TOBB ETÜ Spor Salonu": 2000,
+  "Şehit Turgut Solak Spor Salonu": null
+ }
+}

@@ -346,14 +346,21 @@ async function artieksiGorseliniPaylas(anahtar, indir) {
 
 // Seyirci sayıları (herkese açık): TBF'nin işlediği sayılar (veri/uret.py Cumartesi–Pazartesi çeker). Her hafta ayrı, en sonda
 // iç saha ortalamaları; sayısı girilmemiş (0) maçlar ortalamaya katılmaz. Paylaş/İndir yayın şablonundaki görseli verir.
+// Salon doluluğu: seyirci / salon kapasitesi (data/salonlar.json, elle; kapasitesi bilinmeyen salonda yüzde yok, kapasiteyi
+// geçen sayı %100). Ortalama doluluk: takımın kapasitesi bilinen iç saha maçlarının yüzdelerinin ortalaması.
 function seyirciVerisi(lig) {
   yukle(S.seyirci, lig, `data/${lig}/seyirci.json`, { bosDeger: { maclar: {} } });
+  yukle(S, 'salonlar', 'data/salonlar.json', { bosDeger: { kapasite: {} } });
   const t = ligVerisi(lig, 'takimlar');
   const d = S.seyirci[lig];
-  if (!t || !d) return null;
+  if (!t || !d || !S.salonlar) return null;
   const ad = new Map(t.takimlar.map(x => [x.id, x.ad]));
   const maclar = t.maclar.filter(m => m.durum === 'bitti' && String(m.id) in d.maclar)
-    .map(m => ({ ...m, evAd: ad.get(m.ev) ?? m.ev, depAd: ad.get(m.dep) ?? m.dep, seyirci: d.maclar[m.id] || 0 }));
+    .map(m => {
+      const seyirci = d.maclar[m.id] || 0, kapasite = S.salonlar.kapasite[m.salon] || null;
+      return { ...m, evAd: ad.get(m.ev) ?? m.ev, depAd: ad.get(m.dep) ?? m.dep, seyirci, kapasite,
+        doluluk: seyirci && kapasite ? Math.min(1, seyirci / kapasite) : null };
+    });
   const haftalar = [...new Set(maclar.map(m => m.hafta))].sort((a, b) => a - b);
   return { maclar, haftalar, ad };
 }
@@ -362,13 +369,16 @@ function seyirciOrtalamasi(v) {
   const t = new Map();
   for (const m of v.maclar) {
     if (!m.seyirci) continue;
-    const k = t.get(m.ev) ?? { id: m.ev, ad: m.evAd, mac: 0, toplam: 0 };
+    const k = t.get(m.ev) ?? { id: m.ev, ad: m.evAd, mac: 0, toplam: 0, dolu: [] };
     k.mac++; k.toplam += m.seyirci;
+    if (m.doluluk !== null) k.dolu.push(m.doluluk);
     t.set(m.ev, k);
   }
-  return [...t.values()].map(k => ({ ...k, ort: Math.round(k.toplam / k.mac * 10) / 10 })).sort((a, b) => b.ort - a.ort || b.toplam - a.toplam);
+  return [...t.values()].map(({ dolu, ...k }) => ({ ...k, ort: Math.round(k.toplam / k.mac * 10) / 10,
+    doluluk: dolu.length ? dolu.reduce((a, b) => a + b, 0) / dolu.length : null })).sort((a, b) => b.ort - a.ort || b.toplam - a.toplam);
 }
 const binlik = n => Number(n).toLocaleString('tr-TR', { maximumFractionDigits: 1 });
+const dolulukYazisi = d => (d === null || d === undefined ? '–' : `%${Math.round(d * 100)}`);
 function seyirciKarti(lig, istenen) {
   const v = seyirciVerisi(lig);
   if (!v) return '<p class="bos">Yükleniyor…</p>';
@@ -381,20 +391,22 @@ function seyirciKarti(lig, istenen) {
   if (donem === 'ortalama') {
     const liste = seyirciOrtalamasi(v);
     const satirlar = liste.map((k, i) => `<tr><td class="sayi"><span class="f-sira ${i < 3 ? `s${i + 1}` : ''}">${i + 1}</span></td><td><b>${esc(baslik(k.ad))}</b></td>
-      <td class="sayi">${k.mac}</td><td class="sayi">${binlik(k.toplam)}</td><td class="sayi"><b>${binlik(k.ort)}</b></td></tr>`).join('');
+      <td class="sayi">${k.mac}</td><td class="sayi">${binlik(k.toplam)}</td><td class="sayi"><b>${binlik(k.ort)}</b></td><td class="sayi">${dolulukYazisi(k.doluluk)}</td></tr>`).join('');
     return `${cipler}<div class="kart"><div class="baslik-satir"><h2>İlk ${v.haftalar.at(-1)} hafta · seyirci ortalamaları</h2>${dugmeler}</div>
-      <div class="tablo-kap"><table><thead><tr><th class="sayi">#</th><th>Takım</th><th class="sayi">İç saha</th><th class="sayi">Toplam</th><th class="sayi">Ortalama</th></tr></thead>
+      <div class="tablo-kap"><table><thead><tr><th class="sayi">#</th><th>Takım</th><th class="sayi">İç saha</th><th class="sayi">Toplam</th><th class="sayi">Ortalama</th><th class="sayi">Doluluk</th></tr></thead>
       <tbody>${satirlar}</tbody></table></div>
-      <p class="soluk kucuk" style="margin-bottom:0">Seyirci sayısı girilmemiş maçlar ortalamaya katılmaz.</p></div>`;
+      <p class="soluk kucuk" style="margin-bottom:0">Seyirci sayısı girilmemiş maçlar ortalamaya katılmaz. Doluluk: seyircinin salon kapasitesine oranı (iç saha maçlarının ortalaması; kapasitesi bilinmeyen salonda –).</p></div>`;
   }
   const liste = seyirciHaftasi(v, donem);
   const dolu = liste.filter(m => m.seyirci);
   const toplam = dolu.reduce((t, m) => t + m.seyirci, 0);
+  const yuzdeli = dolu.filter(m => m.doluluk !== null);
+  const ortDoluluk = yuzdeli.length ? yuzdeli.reduce((t, m) => t + m.doluluk, 0) / yuzdeli.length : null;
   const satirlar = liste.map(m => `<div class="f-satir">
-      <div class="ad"><strong>${esc(baslik(m.evAd))} <span class="soluk">${m.evSkor ?? ''}-${m.depSkor ?? ''}</span> ${esc(baslik(m.depAd))}</strong><small>${gunBasligi(m.tarih)}</small></div>
-      <div class="f-sayi"><strong>${m.seyirci ? binlik(m.seyirci) : '–'}</strong><small>seyirci</small></div></div>`).join('');
+      <div class="ad"><strong>${esc(baslik(m.evAd))} <span class="soluk">${m.evSkor ?? ''}-${m.depSkor ?? ''}</span> ${esc(baslik(m.depAd))}</strong><small>${[gunBasligi(m.tarih), m.salon && `${esc(m.salon)}${m.kapasite ? ` (${binlik(m.kapasite)})` : ''}`].filter(Boolean).join(' · ')}</small></div>
+      <div class="f-sayi"><strong>${m.seyirci ? binlik(m.seyirci) : '–'}</strong><small>${m.doluluk !== null ? `seyirci · ${dolulukYazisi(m.doluluk)} dolu` : 'seyirci'}</small></div></div>`).join('');
   return `${cipler}<div class="kart"><div class="baslik-satir"><h2>${donem}. hafta · seyirci sayıları</h2>${dugmeler}</div>${satirlar}
-    <p class="soluk kucuk" style="margin-bottom:0">Toplam ${binlik(toplam)} · maç başı ${dolu.length ? binlik(Math.round(toplam / dolu.length)) : '–'}.
+    <p class="soluk kucuk" style="margin-bottom:0">Toplam ${binlik(toplam)} · maç başı ${dolu.length ? binlik(Math.round(toplam / dolu.length)) : '–'}${ortDoluluk !== null ? ` · salonlar ortalama ${dolulukYazisi(ortDoluluk)} dolu` : ''}.
     Sayılar TBF'nin sitesinden; federasyon maçtan sonraki gün işliyor, Cumartesi–Salı öğlen ve gece güncellenir.</p></div>`;
 }
 async function seyirciGorseliniPaylas(anahtar, indir) {

@@ -12,6 +12,7 @@ herkese açık bölümü için özet dosyaları üretir:
   site/data/<lig>/takim-istatistik.json  biten maçlarda oyuncuya yazılmayan takım istatistikleri (TBF'den)
   site/data/<lig>/gorsel.json, foto/, logo/  oyuncu fotoğrafları ve takım logoları (TBF'den; --gunluk ile, haftanın ödülleri için)
   site/data/<lig>/seyirci.json       biten maçların seyirci sayıları (TBF'den; --gunluk ile, Cumartesi–Salı)
+                                     (salon doluluğu için kapasiteler elle: site/data/salonlar.json, maç salonu takimlar.json'da)
   site/data/youtube.json             Pota Altı YouTube kanalının son canlı yayınları ve son videoları
 
 Kaynak dosyalar internetten okunur; biten maçların kutu skorları cache/ klasöründe saklanır (bir daha indirilmez).
@@ -357,7 +358,7 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
                 m["durum"] = "oynanmadi"
             ev, dep = takim(m["ev"]), takim(m["dep"])
             ozet = {"id": m["id"], "hafta": h, "tarih": m["tarih"], "durum": m["durum"], "ev": ev["id"], "dep": dep["id"],
-                    "evSkor": m.get("evSkor"), "depSkor": m.get("depSkor")}
+                    "evSkor": m.get("evSkor"), "depSkor": m.get("depSkor"), "salon": m.get("salon")}
             maclar_hepsi.append(ozet)
             ev["maclar"].append(m["id"])
             dep["maclar"].append(m["id"])

@@ -1140,7 +1140,7 @@ function avMacSatiri(kod, d, m, etiket = '') {
     ? `<strong>${saatYazisi(m.tarih)}</strong><small>${alt}</small>`
     : `<strong>${m.evSkor ?? 0} - ${m.depSkor ?? 0}</strong><small>${m.durum === 'canli' ? `<span class="canli-yazi">${esc(m.periyot ?? '')} ${esc(m.sure ?? '')}</span>` : `MS · ${alt}`}</small>`;
   const ad = id => (avTurkMu(d, id) ? `<b>${esc(avTakimAdi(d, id))}</b>` : esc(avTakimAdi(d, id)));
-  const href = m.durum === 'bitti' ? `#/avrupa/${kod}/mac/${m.id}` : `#/avrupa/${kod}`;
+  const href = m.durum !== 'oynanmadi' ? `#/avrupa/${kod}/mac/${m.id}` : `#/avrupa/${kod}`;
   return `<a class="mac" href="${href}"><span class="${avKazanan(m, 'ev')}">${ad(m.ev)}</span><span class="skor">${orta}</span>
     <span class="dep ${avKazanan(m, 'dep')}">${ad(m.dep)}</span></a>`;
 }
@@ -1235,22 +1235,23 @@ function avMac(kod, k, id) {
   const d = av(kod);
   const kb = av(`${kod}/mac/${id}`);
   if (!d || kb === undefined) return '<p class="bos">Yükleniyor…</p>';
-  if (!kb) return '<p class="bos">Kutu skor bulunamadı.</p>';
-  const m = d.maclar.find(x => x.id === id) ?? { tarih: kb.tarih, ev: kb.ev.id, dep: kb.dep.id, evSkor: kb.ev.skor, depSkor: kb.dep.skor, durum: 'bitti' };
+  const liste = d.maclar.find(x => x.id === id);
+  if (!kb && !liste) return '<p class="bos">Maç bulunamadı.</p>';
+  const m = liste ?? { tarih: kb.tarih, ev: kb.ev.id, dep: kb.dep.id, evSkor: kb.ev.skor, depSkor: kb.dep.skor, durum: 'bitti' };
   const taraf = (t, i) => ({ ad: avTakimAdi(d, t.id), skor: t.skor, ceyrekler: m.ceyrekler?.[i] ?? t.ceyrekler,
     oyuncular: t.oyuncular.map(o => ({ ...o, sure: mmss(o.sn), hr: o.or, sr: o.dr })) });
-  const kutu = { ev: taraf(kb.ev, 0), dep: taraf(kb.dep, 1) };
-  const turkOyuncu = new Set([kb.ev, kb.dep].filter(t => avTurkMu(d, t.id)).flatMap(t => t.oyuncular.map(o => String(o.id))));
+  const kutu = kb ? { ev: taraf(kb.ev, 0), dep: taraf(kb.dep, 1) } : null;
+  const turkOyuncu = new Set(kb ? [kb.ev, kb.dep].filter(t => avTurkMu(d, t.id)).flatMap(t => t.oyuncular.map(o => String(o.id))) : []);
   const bilgi = [gunBasligi(m.tarih), m.tur, m.salon, m.seyirci ? `${binlik(m.seyirci)} seyirci` : ''].filter(Boolean).map(esc).join(' · ');
   const takimLink = t => (avTurkMu(d, t) ? `<a href="#/avrupa/${kod}/takim/${t}">${esc(avTakimAdi(d, t))}</a>` : `<span>${esc(avTakimAdi(d, t))}</span>`);
   return `<a class="geri" href="#/avrupa/${kod}">‹ ${esc(k.ad)}</a>
     <div class="kart mac-baslik"><div class="mac-takimlar">
       <span class="${avKazanan(m, 'ev')}">${takimLink(m.ev)}</span>
-      <div class="mac-skor"><strong>${m.evSkor} - ${m.depSkor}</strong><small>Maç sonu</small></div>
+      <div class="mac-skor"><strong>${m.evSkor ?? kb?.ev.skor ?? 0} - ${m.depSkor ?? kb?.dep.skor ?? 0}</strong><small>${m.durum === 'canli' ? `<span class="canli-yazi">${esc(m.periyot ?? '')} ${esc(m.sure ?? '')}</span>` : 'Maç sonu'}</small></div>
       <span class="${avKazanan(m, 'dep')}">${takimLink(m.dep)}</span></div>
       <p class="soluk kucuk" style="margin:10px 0 0;text-align:center"><span class="lig-etiket">${esc(k.kisa)}</span> ${bilgi}</p></div>
-    ${ME.macGovdesi(kutu, { sirala: S.ui.kutuSirala, fark: kb.fark, ileriDosya: kb.ileri,
-      aciklamaEki: kb.ileriResmi === false ? ' · Gelişmiş istatistiklerde top kaybından, ikinci şanstan ve boyalı alandan sayılar maç akışından hesaplandı (resmi değil); hızlı hücum bu kupanın verisinde yok.' : '',
+    ${!kutu ? '<p class="bos">Kutu skor maç başlayınca gelir (birkaç dakika sürebilir).</p>' : ME.macGovdesi(kutu, { sirala: S.ui.kutuSirala, fark: kb.fark, ileriDosya: kb.ileri,
+      aciklamaEki: kb?.ileriResmi === false ? ' · Gelişmiş istatistiklerde top kaybından, ikinci şanstan ve boyalı alandan sayılar maç akışından hesaplandı (resmi değil); hızlı hücum bu kupanın verisinde yok.' : '',
       oyuncuAdi: o => (turkOyuncu.has(String(o.id)) ? `<a href="#/avrupa/${kod}/oyuncu/${o.id}" class="oyuncu-link">${esc(o.ad)}</a>` : esc(o.ad)) })}`;
 }
 // Günün Avrupa maçları (bütün kupalar, temsilcilerimizin maçları): bugün maç yoksa sıradaki maç günü
@@ -1381,6 +1382,10 @@ async function canliYenile() {
       if (k.includes('/') || !v?.maclar?.some(m => m.durum === 'canli' || (m.durum === 'oynanmadi' && m.tarih
         && simdi >= new Date(m.tarih).getTime() - 10 * 60000 && simdi <= new Date(m.tarih).getTime() + 3 * 3600000))) continue;
       try { [S.avrupa[k], S.avrupa.index] = await Promise.all([getir(`data/avrupa/${k}.json`), getir('data/avrupa/index.json')]); } catch { /* sonraki denemede */ }
+    }
+    const [, kod, tur, mid] = rota();
+    if (tur === 'mac' && S.avrupa[kod]?.maclar?.find(m => m.id === mid)?.durum === 'canli') {
+      try { S.avrupa[`${kod}/mac/${mid}`] = await getir(`data/avrupa/${kod}/mac/${mid}.json`); } catch { /* sonraki denemede */ }
     }
   }
   const [s, lig, id] = rota();

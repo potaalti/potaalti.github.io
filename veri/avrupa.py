@@ -442,9 +442,10 @@ def akis_hesapla(sayilar, sure, kayit, resmi):
         if fark != son_fark:
             d.append([t, fark])
             son_fark = fark
+    bitis = onceki_t if kayit.get("canli") else sure  # canlı maçta son sayının anına kadar
     if lider:
-        ileri[lider]["lider"] += max(0, sure - onceki_t)
-    return {"fark": {"sure": sure, "simdi": sure, "d": d}, "ileri": ileri, "ileriResmi": resmi}
+        ileri[lider]["lider"] += max(0, bitis - onceki_t)
+    return {"fark": {"sure": sure, "simdi": bitis, "d": d}, "ileri": ileri, "ileriResmi": resmi}
 
 
 # ---------- Ortak: takım ve oyuncu dosyaları ----------
@@ -507,17 +508,25 @@ def kupa_uret(k):
         v["ad"] = TR_AD.get(v["ad"], v["ad"])
     kutular = {}
     for m in maclar:
-        if m["durum"] != "bitti":
+        if m["durum"] not in ("bitti", "canli"):
             continue
         yol = CIKTI / k["kod"] / "mac" / f"{m['id']}.json"
         kayit = oku(yol)
-        if kayit is None:
+        # Canlı maçın kutu skoru her çalışmada yeniden çekilir; canlıyken kaydedilmiş maç bitince bir kez daha (son hali)
+        if kayit is None or m["durum"] == "canli" or kayit.get("canli"):
             try:
                 kayit = kutu(m)
-                yaz(yol, kayit)
+                kayit["canli"] = m["durum"] == "canli"
             except Exception as e:  # noqa: BLE001 - bir maç alınamazsa diğerleri devam eder
                 print(f"  {k['kod']} {m['id']}: kutu skor alınamadı:", e)
                 continue
+            try:
+                kayit.update(akis(m, kayit))
+            except Exception as e:  # noqa: BLE001 - sonraki çalışmada yeniden denenir
+                print(f"  {k['kod']} {m['id']}: akış alınamadı:", e)
+            yaz(yol, kayit)
+        if m["durum"] == "canli":
+            continue  # canlı maç takım ve oyuncu istatistiklerine bitince katılır
         if "ileri" not in kayit:  # skor farkı ve gelişmiş istatistik (sonradan eklendi: eski kayıtlara da bir kez eklenir)
             try:
                 kayit.update(akis(m, kayit))

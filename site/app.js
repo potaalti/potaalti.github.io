@@ -18,7 +18,7 @@ const LIGLER = { bsl: { kisa: 'BSL', ad: 'Basketbol Süper Ligi' }, tbl: { kisa:
 
 const S = {
   meta: null, index: null, hata: null,
-  tablo: {}, liderler: {}, takimIst: {}, ileriIst: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, artieksi: {}, seyirci: {}, odul: {}, avrupa: {}, // lig -> veri (oyuncu: lig -> id -> detay)
+  tablo: {}, liderler: {}, takimIst: {}, ileriIst: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, artieksi: {}, seyirci: {}, odul: {}, avrupa: {}, durum: {}, // lig -> veri (oyuncu: lig -> id -> detay)
   maclar: {}, // `${lig}-${hafta}` -> maç listesi
   kutular: {}, // maç id -> kutu skor (null: yok)
   farklar: {}, // maç id -> skor farkı grafiği verisi (biten maçlar, null: yok)
@@ -91,7 +91,7 @@ function aktifMenu() {
 const menuListesi = () => [...MENU.slice(0, 4), ['avrupa', 'Avrupa', '🌍'], ...MENU.slice(4)];
 function menuCiz() {
   const aktif = aktifMenu();
-  $('#menu').innerHTML = menuListesi().map(([y, ad, ikon]) => `<a href="#/${y}" class="${y === aktif ? 'aktif' : ''}"><span class="ikon">${ikon}</span><span>${ad}</span></a>`).join('');
+  $('#menu').innerHTML = [...menuListesi(), ...(yoneticiMi() ? [['durum', 'Durum', '🛠️']] : [])].map(([y, ad, ikon]) => `<a href="#/${y}" class="${y === aktif ? 'aktif' : ''}"><span class="ikon">${ikon}</span><span>${ad}</span></a>`).join('');
   $('#alt-menu').innerHTML = menuListesi().map(([y, ad, ikon]) => `<a href="#/${y}" class="${y === aktif ? 'aktif' : ''}"><span class="ikon">${ikon}</span><span>${ad}</span></a>`).join('');
 }
 
@@ -121,6 +121,7 @@ function gorunum() {
     case 'takim': return `<div class="dar">${gorunumTakim(lig, b)}</div>`;
     case 'oyuncu': return `<div class="dar">${gorunumOyuncu(lig, b)}</div>`;
     case 'yayin': return `<div class="dar">${Yayin.gorunum(a)}</div>`;
+    case 'durum': return `<div class="dar">${gorunumDurum()}</div>`;
     case 'avrupa': return `<div class="dar">${gorunumAvrupa(a, b, rota()[3])}</div>`;
     case 'fantezi':
       if (a === 'tbl') { location.replace('tbl/'); return ''; } // eski adres: TBL Fantezi artık kendi sayfasında
@@ -1119,7 +1120,7 @@ function gorunumFantezi() {
 
 function altBilgi() {
   const g = S.meta?.guncelleme;
-  return `<p class="alt-bilgi">Veriler: TBF · İstatistikler ${g ? tarihSaat(g) : '-'} itibarıyla · Canlı skorlar maç saatlerinde dakikada bir yenilenir</p>`;
+  return `<p class="alt-bilgi">Veriler: TBF · İstatistikler ${g ? tarihSaat(g) : '-'} itibarıyla · Canlı skorlar maç saatlerinde dakikada bir yenilenir${yoneticiMi() ? ' · <a href="#/durum">Sistem durumu</a>' : ''}</p>`;
 }
 
 // ---------- Avrupa'daki temsilcilerimiz (2026-11-12) ----------
@@ -1273,7 +1274,7 @@ function avGunKarti(idx, sadeceBugun = false) {
     baslik = `Sıradaki maç günü · ${gunBasligi(`${sonraki}T12:00:00`)}`;
   }
   secili.sort((a, b) => a.m.tarih.localeCompare(b.m.tarih));
-  if (sadeceBugun) baslik = 'Bugün Avrupa'da';
+  if (sadeceBugun) baslik = "Bugün Avrupa'da";
   return `<div class="kart mac-gun"><h3 style="padding:12px 14px 0;margin:0">${esc(baslik)}${sadeceBugun ? ' <a href="#/avrupa" style="float:right;font-weight:600">Avrupa ›</a>' : ''}</h3>
     ${secili.map(({ k, d, m }) => avMacSatiri(k.kod, d, m, k.kisa)).join('')}</div>`;
 }
@@ -1285,6 +1286,103 @@ function gorunumAvrupa(kod, tur, id) {
   const icerik = tur === 'takim' ? avTakim(k.kod, k, id) : tur === 'oyuncu' ? avOyuncu(k.kod, k, id) : tur === 'mac' ? avMac(k.kod, k, id) : avKupa(k.kod, k);
   return `${tur ? '' : `<div class="sayfa-baslik" style="margin-bottom:10px"><h1>Avrupa'daki temsilcilerimiz</h1>
       <p class="soluk" style="margin:0 0 10px">2026-27 sezonu${idx.guncelleme ? ` · ${tarihSaat(idx.guncelleme)} itibarıyla` : ''}</p></div>${avGunKarti(idx)}${cipler}`}${icerik}`;
+}
+
+// ---------- Sistem durumu (yönetici, #/durum) ----------
+// Her veri kaynağının son çalışması tek sayfada: yeşil normal, sarı gecikmiş, kırmızı sorun, gri şu an beklenmiyor. Kaynaklar
+// herkese açık adresler (site dosyaları, GitHub'ın açık API'si, yedek dalı); sayfa açıkken dakikada bir yenilenir.
+const DEPO_API = 'https://api.github.com/repos/potaalti/potaalti.github.io';
+const ESKI_API = 'https://api.github.com/repos/potaalti/tbl_fantezi_lig';
+async function durumGetir(ad, url) {
+  try {
+    const dis = url.startsWith('https://api.github.com') || url.startsWith('https://raw.githubusercontent');
+    const r = await fetch(dis ? url : `${url}?t=${Date.now()}`, { cache: 'no-store' });
+    S.durum[ad] = r.ok ? await r.json() : { hata: r.status };
+  } catch (e) { S.durum[ad] = { hata: e.message }; }
+}
+function durumYukle(zorla = false) {
+  if (!zorla && S.durum.zaman && Date.now() - S.durum.zaman < 55000) return;
+  S.durum.zaman = Date.now();
+  Promise.all([
+    durumGetir('meta', 'data/meta.json'),
+    durumGetir('canli', `${KAYNAK}/hafta/index.json`),
+    durumGetir('avrupa', 'data/avrupa/index.json'),
+    durumGetir('seyirciTbl', 'data/tbl/seyirci.json'),
+    durumGetir('seyirciBsl', 'data/bsl/seyirci.json'),
+    durumGetir('yedek', 'https://raw.githubusercontent.com/potaalti/potaalti.github.io/yedek/tbl/son.json'),
+    durumGetir('isler', `${DEPO_API}/actions/runs?per_page=60`),
+    durumGetir('eskiIsler', `${ESKI_API}/actions/runs?per_page=10`),
+    durumGetir('avKayit', `${DEPO_API}/commits?path=site/data/avrupa/index.json&per_page=40`),
+  ]).then(() => ciz());
+}
+const dkOnce = iso => (iso ? Math.round((Date.now() - Date.parse(iso)) / 60000) : null);
+function sureYazisi(dk) {
+  if (dk === null || Number.isNaN(dk)) return 'bilinmiyor';
+  if (dk < 1) return 'az önce';
+  if (dk < 60) return `${dk} dk önce`;
+  if (dk < 48 * 60) return `${Math.floor(dk / 60)} sa ${dk % 60} dk önce`;
+  return `${Math.floor(dk / 1440)} gün önce`;
+}
+function gorunumDurum() {
+  if (!yoneticiMi()) return '<p class="bos">Bu sayfa yöneticiye özel.</p>';
+  durumYukle();
+  const d = S.durum;
+  if (!d.meta) return '<p class="bos">Yükleniyor…</p>';
+  const satir = (renk, ad, ayrinti, aciklama = '') => `<div class="f-satir"><span class="durum-isik ${renk}"></span>
+    <div class="ad"><strong>${esc(ad)}</strong><small>${aciklama}</small></div><div class="f-sayi"><small>${ayrinti}</small></div></div>`;
+  const yas = (iso, sari, kirmizi) => { const dk = dkOnce(iso); return dk === null ? 'kirmizi' : dk >= kirmizi ? 'kirmizi' : dk >= sari ? 'sari' : 'yesil'; };
+  const trSaat = (new Date().getUTCHours() + 3) % 24;
+  const meta = d.meta?.guncelleme;
+  const satirlar = [satir(yas(meta, 90, 180), 'Telefon · istatistikler', sureYazisi(dkOnce(meta)), 'Puan tablosu, liderler, takım ve oyuncu istatistikleri (saat başı)')];
+  // Telefonun TBL/BSL canlı skor döngüsü: yalnızca maç saatinde değerlendirilir
+  const tr = t => Date.parse(`${t}+03:00`);
+  const suren = (d.canli?.macSaatleri ?? []).filter(m => !m.bitti && !m.tarih.endsWith('T00:00:00') && Date.now() >= tr(m.tarih) && Date.now() <= tr(m.tarih) + 150 * 60e3);
+  const canliIso = d.canli?.guncelleme;
+  satirlar.push(satir(suren.length ? yas(canliIso, 10, 20) : 'gri', 'Telefon · TBL/BSL canlı skor', sureYazisi(dkOnce(canliIso)),
+    suren.length ? `${suren.length} maç sürüyor: 3 dakikada bir güncellenmeli` : 'Şu an maç yok (maç saatinde 3 dakikada bir)'));
+  // GitHub işleri
+  const isler = d.isler?.workflow_runs ?? [];
+  const isSatiri = (ad, aciklama, sari, kirmizi) => {
+    const x = isler.find(i => i.name === ad);
+    if (!x) return satir('gri', `GitHub · ${ad}`, d.isler?.hata ? 'okunamadı' : 'son 60 çalışmada yok', aciklama);
+    const basarisiz = x.status === 'completed' && !['success', 'skipped'].includes(x.conclusion);
+    const renk = basarisiz ? 'kirmizi' : yas(x.updated_at, sari, kirmizi);
+    const hal = x.status === 'completed' ? (basarisiz ? 'hata' : 'tamam') : 'çalışıyor';
+    return satir(renk, `GitHub · ${ad}`, `<a href="${x.html_url}" target="_blank" rel="noopener">${hal}</a> · ${sureYazisi(dkOnce(x.updated_at))}`, aciklama);
+  };
+  satirlar.push(isSatiri('Siteyi yayınla', 'Her veri gönderiminden sonra siteyi yayınlar', 180, 600));
+  satirlar.push(isSatiri('Avrupa verileri', 'Avrupa: 18:00–02:00 arası 3 dakikada bir, diğer saatlerde saatte bir', 75, 150));
+  satirlar.push(isSatiri('Robot yönetici', 'TBL Fantezi talep süreleri ve kuralar (15 dakikada bir)', 40, 90));
+  satirlar.push(isSatiri('Fantezi yedeği', 'TBL Fantezi verilerinin şifreli yedeği (saat başı)', 90, 180));
+  // Avrupa: kim gönderiyor (GitHub, telefon, bilgisayar). Veri değişmediyse gönderi olmaz: eski olması tek başına sorun değil
+  const kayitlar = Array.isArray(d.avKayit) ? d.avKayit : [];
+  for (const [ad, adi] of [['github-actions', 'GitHub'], ['pota-alti-telefon', 'telefon'], ['pota-alti-pc', 'bilgisayar']]) {
+    const c = kayitlar.find(k => (k.commit?.author?.name ?? '').includes(ad));
+    satirlar.push(satir(c ? 'yesil' : 'gri', `Avrupa · ${adi} gönderisi`, c ? sureYazisi(dkOnce(c.commit.author.date)) : 'son 40 kayıtta yok',
+      'Veri değişmediyse gönderi yapılmaz'));
+  }
+  const avIso = d.avrupa?.guncelleme;
+  satirlar.push(satir([18, 19, 20, 21, 22, 23, 0, 1].includes(trSaat) ? yas(avIso, 180, 720) : 'gri', 'Avrupa verisi', sureYazisi(dkOnce(avIso)),
+    'Son değişiklik (veri değişmeyince ilerlemez)'));
+  // Fantezi yedeği
+  const y = d.yedek;
+  satirlar.push(satir(y?.zaman ? yas(y.zaman, 24 * 60, 48 * 60) : 'kirmizi', 'TBL Fantezi son yedek', y?.zaman ? sureYazisi(dkOnce(y.zaman)) : 'yedek yok',
+    y?.sayilar ? Object.entries(y.sayilar).map(([k, v]) => `${k} ${v}`).join(' · ') : 'Yedek henüz alınmadı'));
+  // Eski TBL sitesi (canlı skorların yayınlandığı yer)
+  const eski = d.eskiIsler?.workflow_runs?.[0];
+  if (eski) {
+    const basarisiz = eski.status === 'completed' && eski.conclusion !== 'success';
+    satirlar.push(satir(basarisiz ? 'kirmizi' : 'yesil', 'GitHub · eski TBL sitesi yayını',
+      `<a href="${eski.html_url}" target="_blank" rel="noopener">${basarisiz ? 'hata' : eski.status === 'completed' ? 'tamam' : 'çalışıyor'}</a> · ${sureYazisi(dkOnce(eski.updated_at))}`,
+      'Canlı skorların yayınlandığı site'));
+  }
+  for (const [k, ad] of [['seyirciTbl', 'TBL'], ['seyirciBsl', 'BSL']]) {
+    satirlar.push(satir('gri', `Seyirci · ${ad}`, sureYazisi(dkOnce(d[k]?.guncelleme)), 'Cumartesi–Salı günde 2 kez'));
+  }
+  const sorun = satirlar.filter(x => x.includes('durum-isik kirmizi')).length;
+  return `<div class="sayfa-baslik"><h1>Sistem durumu</h1><p class="soluk" style="margin:0 0 10px">${sorun ? `<b class="kirmizi-yazi">${sorun} sorun var</b>` : 'Her şey yolunda görünüyor'} · dakikada bir yenilenir</p></div>
+    <div class="kart">${satirlar.join('')}</div>
+    <p class="soluk kucuk">Yeşil: normal · sarı: gecikmiş · kırmızı: sorun · gri: şu an beklenmiyor ya da bilgi amaçlı. Bağlantılar GitHub'daki çalışmayı açar.</p>`;
 }
 
 // ---------- Olaylar ----------
@@ -1380,6 +1478,7 @@ async function canliYenile() {
     if (!v?.maclar?.some(m => m.durum !== 'bitti' && !m.tarih.endsWith('T00:00:00') && simdi >= new Date(m.tarih).getTime() - 10 * 60000)) continue;
     try { S.maclar[k] = listeDuzelt(await getir(`${KAYNAK}/maclar/${k}.json`)); } catch { /* sonraki denemede */ }
   }
+  if (rota()[0] === 'durum') durumYukle(true);
   // Avrupa: maç saatindeki (canlı ya da başlamak üzere) kupaların dosyası yenilenir (GitHub'da 10 dakikada bir güncellenir)
   if (rota()[0] === 'avrupa') {
     for (const [k, v] of Object.entries(S.avrupa)) {

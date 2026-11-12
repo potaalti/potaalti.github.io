@@ -394,14 +394,14 @@ function seyirciKarti(lig, istenen) {
     const { k: sk, yon } = S.ui.seyirciSirala;
     const liste = seyirciOrtalamasi(v).sort((a, b) => (a[sk] === null) - (b[sk] === null) || yon * ((b[sk] ?? 0) - (a[sk] ?? 0)) || b.ort - a.ort);
     const th = (k, ad, ek = '') => `<th class="sayi sirala ${ek} ${k === sk ? 'aktif' : ''}" data-is="sy-sirala" data-id="${k}">${ad}${k === sk ? (yon > 0 ? ' ▼' : ' ▲') : ''}</th>`;
-    const siraCipleri = `<div class="secenekler" style="margin-bottom:6px">${[['ort', 'Ortalama'], ['doluluk', 'Doluluk'], ['toplam', 'Toplam'], ['mac', 'İç saha']].map(([k, ad]) =>
+    const siraCipleri = `<div class="secenekler" style="margin-bottom:6px">${[['ort', 'Ortalama'], ['doluluk', 'Doluluk'], ['toplam', 'Toplam']].map(([k, ad]) =>
       `<button class="secenek ${k === sk ? 'aktif' : ''}" data-is="sy-sirala" data-id="${k}">${ad}${k === sk ? (yon > 0 ? ' ▼' : ' ▲') : ''}</button>`).join('')}</div>`;
     const satirlar = liste.map((k, i) => `<tr><td class="sayi"><span class="f-sira ${i < 3 ? `s${i + 1}` : ''}">${i + 1}</span></td><td><b>${esc(baslik(k.ad))}</b></td>
       <td class="sayi dar-gizle">${k.mac}</td><td class="sayi">${binlik(k.toplam)}</td><td class="sayi">${sk === 'ort' ? `<b>${binlik(k.ort)}</b>` : binlik(k.ort)}</td><td class="sayi">${sk === 'doluluk' ? `<b>${dolulukYazisi(k.doluluk)}</b>` : dolulukYazisi(k.doluluk)}</td></tr>`).join('');
     return `${cipler}<div class="kart"><div class="baslik-satir"><h2>İlk ${v.haftalar.at(-1)} hafta · seyirci ortalamaları</h2>${dugmeler}</div>
-      ${siraCipleri}<div class="tablo-kap"><table class="seyirci-ort"><thead><tr><th class="sayi">#</th><th>Takım</th>${th('mac', 'İç saha', 'dar-gizle')}${th('toplam', 'Toplam')}${th('ort', 'Ortalama')}${th('doluluk', 'Doluluk')}</tr></thead>
+      ${siraCipleri}<div class="tablo-kap"><table class="seyirci-ort"><thead><tr><th class="sayi">#</th><th>Takım</th>${th('mac', 'Maç', 'dar-gizle')}${th('toplam', 'Toplam')}${th('ort', 'Ortalama')}${th('doluluk', 'Doluluk')}</tr></thead>
       <tbody>${satirlar}</tbody></table></div>
-      <p class="soluk kucuk" style="margin-bottom:0">Seyirci sayısı girilmemiş maçlar ortalamaya katılmaz. Doluluk: seyircinin salon kapasitesine oranı (iç saha maçlarının ortalaması; kapasitesi bilinmeyen salonda –). Sıralamak için düğmeye ya da sütun başlığına dokun; ikinci dokunuş tersine çevirir.</p></div>`;
+      <p class="soluk kucuk" style="margin-bottom:0">Maç: seyirci sayısı girilmiş maç sayısı; sayısı girilmemiş maçlar ortalamaya katılmaz. Doluluk: seyircinin salon kapasitesine oranı (iç saha maçlarının ortalaması; kapasitesi bilinmeyen salonda –). Sıralamak için düğmeye ya da sütun başlığına dokun; ikinci dokunuş tersine çevirir.</p></div>`;
   }
   const liste = seyirciHaftasi(v, donem);
   const dolu = liste.filter(m => m.seyirci);

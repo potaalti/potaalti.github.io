@@ -1,0 +1,69 @@
+# TBL Fantezi Firestore yedeği (veri/fantezi_yedek.mjs): saat başı bütün koleksiyonlar okunur, şifrelenip "yedek" dalına
+# yazılır (yalnızca değiştiyse). Geri yükleme: Actions > "Fantezi yedeği" > Run workflow; dosya (ör. 2026-11-12T20-50.json,
+# boş: en son yedek), koleksiyon (ör. bekleme) ve "uygula" seçilir. "uygula" işaretlenmezse yalnızca neyin değişeceğini yazar.
+name: Fantezi yedeği
+
+on:
+  schedule:
+    - cron: '50 * * * *'
+  workflow_dispatch:
+    inputs:
+      koleksiyon:
+        description: 'Geri yüklenecek koleksiyon (boş: geri yükleme yok, yalnızca yedek al). Ör: bekleme, kadrolar'
+        required: false
+      dosya:
+        description: 'Yedek dosyası (boş: en son yedek). Ör: 2026-11-12T20-50.json'
+        required: false
+      uygula:
+        description: 'Geri yüklemeyi gerçekten yap (işaretsiz: yalnızca neyin değişeceğini göster)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fantezi-yedek
+  cancel-in-progress: false
+
+jobs:
+  yedek:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Yedek dalını al
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          url="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if ! git clone -q --depth 1 --branch yedek --single-branch "$url" yedek; then
+            mkdir yedek && cd yedek && git init -q -b yedek && git remote add origin "$url"
+            echo "# TBL Fantezi Firestore yedekleri (şifreli; veri/fantezi_yedek.mjs)" > README.md
+          fi
+      - name: Geri yükle
+        if: inputs.koleksiyon != ''
+        env:
+          FIREBASE_TBL_HESAP: ${{ secrets.FIREBASE_TBL_HESAP }}
+          DOSYA: ${{ inputs.dosya }}
+        run: |
+          d="${DOSYA:-$(node -p "require('./yedek/tbl/son.json').dosya")}"
+          node veri/fantezi_yedek.mjs geri "yedek/tbl/$d" "${{ inputs.koleksiyon }}" ${{ inputs.uygula && '--uygula' || '' }}
+      - name: Yedekle
+        if: inputs.koleksiyon == ''
+        env:
+          FIREBASE_TBL_HESAP: ${{ secrets.FIREBASE_TBL_HESAP }}
+        run: |
+          node veri/fantezi_yedek.mjs yedekle yedek
+          cd yedek
+          git add -A
+          if git rev-parse -q --verify HEAD >/dev/null && git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          # Dal her seferinde tek kayıt: geçmiş birikmez (depoyu indiren telefon şişmesin)
+          git checkout -q --orphan yeni && git add -A
+          git commit -q -m "Fantezi yedeği $(date -u +%FT%H:%M)"
+          git push -q -f origin yeni:yedek

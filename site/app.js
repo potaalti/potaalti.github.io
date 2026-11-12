@@ -87,8 +87,8 @@ function aktifMenu() {
   if (['lig', 'takim', 'oyuncu'].includes(s)) return `lig/${lig}`;
   return s;
 }
-// Avrupa (ön çalışma) menüde şimdilik yalnızca yöneticiye görünür
-const menuListesi = () => (yoneticiMi() ? [...MENU.slice(0, 4), ['avrupa', 'Avrupa', '🌍'], ...MENU.slice(4)] : MENU);
+// Avrupa 2026-11-12'den beri herkese açık (önce yalnızca yöneticiye görünen ön çalışmaydı)
+const menuListesi = () => [...MENU.slice(0, 4), ['avrupa', 'Avrupa', '🌍'], ...MENU.slice(4)];
 function menuCiz() {
   const aktif = aktifMenu();
   $('#menu').innerHTML = menuListesi().map(([y, ad, ikon]) => `<a href="#/${y}" class="${y === aktif ? 'aktif' : ''}"><span class="ikon">${ikon}</span><span>${ad}</span></a>`).join('');
@@ -1094,13 +1094,15 @@ function gorunumAna() {
   const sutun = lig => `<div>${buHaftaKarti(lig)}${tabloKarti(lig, 8)}</div>`;
   const karsilama = `<div class="karsilama"><img src="icon-192.png" alt=""><div><strong>Pota Altı</strong><small>TBL ve BSL canlı skorlar, istatistikler, fantezi ligleri ve yayınlar</small></div></div>`;
   const fantezi = `<h2 class="bolum-baslik">Fantezi ligleri</h2><div class="fantezi-kartlari">${fantezKartlari()}</div>`;
+  const avIdx = av('index');
+  const avrupa = avIdx ? avGunKarti(avIdx, true) : '';  // bugün temsilcilerimizin maçı varsa
   if (TELEFON.matches) {
     const lig = S.ui.anaLig;
     const secici = `<div class="lig-secici">${Object.entries(LIGLER).map(([l, v]) => `<button class="${l === lig ? 'aktif' : ''}" data-is="ana-lig" data-id="${l}">${v.kisa}</button>`).join('')}</div>`;
-    return `${Yayin.anaKart()}${secici}${sutun(lig)}${fantezi}${altBilgi()}`;
+    return `${Yayin.anaKart()}${avrupa}${secici}${sutun(lig)}${fantezi}${altBilgi()}`;
   }
   return `<div class="ana-ust">${karsilama}${Yayin.anaKart()}</div>
-    <div class="iki-sutun">${sutun('bsl')}${sutun('tbl')}</div>${fantezi}${altBilgi()}`;
+    ${avrupa}<div class="iki-sutun">${sutun('bsl')}${sutun('tbl')}</div>${fantezi}${altBilgi()}`;
 }
 
 // ---------- Fantezi ----------
@@ -1120,7 +1122,7 @@ function altBilgi() {
   return `<p class="alt-bilgi">Veriler: TBF · İstatistikler ${g ? tarihSaat(g) : '-'} itibarıyla · Canlı skorlar maç saatlerinde dakikada bir yenilenir</p>`;
 }
 
-// ---------- Avrupa'daki temsilcilerimiz (ön çalışma, 2026-11-12) ----------
+// ---------- Avrupa'daki temsilcilerimiz (2026-11-12) ----------
 // Veriler veri/avrupa.py'den (data/avrupa/): EuroLeague, EuroCup, BCL, FIBA Europe Cup. Menüde şimdilik yalnızca yöneticiye
 // görünür; adres (#/avrupa) herkese açık. Kaldırmak için: bu bölüm, menuListesi()'ndeki avrupa, gorunum()'deki 'avrupa'
 // satırı, S.avrupa ve data/avrupa.
@@ -1255,7 +1257,7 @@ function avMac(kod, k, id) {
       oyuncuAdi: o => (turkOyuncu.has(String(o.id)) ? `<a href="#/avrupa/${kod}/oyuncu/${o.id}" class="oyuncu-link">${esc(o.ad)}</a>` : esc(o.ad)) })}`;
 }
 // Günün Avrupa maçları (bütün kupalar, temsilcilerimizin maçları): bugün maç yoksa sıradaki maç günü
-function avGunKarti(idx) {
+function avGunKarti(idx, sadeceBugun = false) {
   const veriler = idx.kupalar.map(k => [k, av(k.kod)]);
   if (veriler.some(([, d]) => d === undefined)) return '';
   const hepsi = veriler.flatMap(([k, d]) => (d?.maclar ?? []).filter(m => m.tarih).map(m => ({ k, d, m })));
@@ -1264,13 +1266,15 @@ function avGunKarti(idx) {
   let secili = hepsi.filter(x => gun(x.m.tarih) === bugun);
   let baslik = 'Bugünün maçları';
   if (!secili.length) {
+    if (sadeceBugun) return '';
     const sonraki = hepsi.filter(x => gun(x.m.tarih) > bugun).map(x => gun(x.m.tarih)).sort()[0];
     if (!sonraki) return '';
     secili = hepsi.filter(x => gun(x.m.tarih) === sonraki);
     baslik = `Sıradaki maç günü · ${gunBasligi(`${sonraki}T12:00:00`)}`;
   }
   secili.sort((a, b) => a.m.tarih.localeCompare(b.m.tarih));
-  return `<div class="kart mac-gun"><h3 style="padding:12px 14px 0;margin:0">${esc(baslik)}</h3>
+  if (sadeceBugun) baslik = 'Bugün Avrupa'da';
+  return `<div class="kart mac-gun"><h3 style="padding:12px 14px 0;margin:0">${esc(baslik)}${sadeceBugun ? ' <a href="#/avrupa" style="float:right;font-weight:600">Avrupa ›</a>' : ''}</h3>
     ${secili.map(({ k, d, m }) => avMacSatiri(k.kod, d, m, k.kisa)).join('')}</div>`;
 }
 function gorunumAvrupa(kod, tur, id) {

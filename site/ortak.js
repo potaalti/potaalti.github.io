@@ -16,6 +16,8 @@ export const baslik = ad => String(ad ?? '').split(' ').map(k =>
 export const gunBasligi = iso => new Date(iso).toLocaleDateString('tr-TR', { weekday: 'long', day: 'numeric', month: 'long' });
 // TBF saati henüz belli olmayan maçları 00:00 olarak verir
 export const saatYazisi = iso => (iso.endsWith('T00:00:00') ? 'Saat belli değil' : new Date(iso).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }));
+// Maç sayfasındaki tarih ve saat: "14 Kasım Cumartesi, 13:00" (saati belli değilse yalnızca gün)
+export const gunSaat = iso => (iso ? `${gunBasligi(iso)}${iso.endsWith('T00:00:00') ? '' : `, ${saatYazisi(iso)}`}` : '');
 export const tarihSaat = iso => new Date(iso).toLocaleString('tr-TR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
 export const sureSn = s => { const [dk, sn] = String(s || '0:00').split(':').map(Number); return (dk || 0) * 60 + (sn || 0); };
 

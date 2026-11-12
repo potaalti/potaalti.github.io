@@ -475,3 +475,6 @@ table.kutu tr.takim-satir th, table.kutu tr.takim-satir td { color: var(--soluk)
 .durum-isik.yesil { background: #1f9d55; }
 .durum-isik.sari { background: #e0a400; }
 .durum-isik.kirmizi { background: #d93a3a; box-shadow: 0 0 0 3px rgba(217, 58, 58, .2); }
+
+/* Maç önü: o istatistikte daha iyi olan takımın değeri */
+.ileri-satir b.iyi { color: var(--vurgu); }

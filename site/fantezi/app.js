@@ -1958,6 +1958,8 @@ const baslik = ad => String(ad ?? '').split(' ').map(k =>
     : k.toLocaleLowerCase('tr').replace(/(^|[.\-])(\p{L})/gu, (_, a, b) => a + b.toLocaleUpperCase('tr'))
 ).join(' ').replace(/Technıc/u, 'Technic');
 const gunBasligi = iso => new Date(iso).toLocaleDateString('tr-TR', { weekday: 'long', day: 'numeric', month: 'long' });
+// Maç sayfasındaki tarih ve saat (ana uygulamadaki ortak.js gunSaat ile aynı)
+const gunSaat = iso => (iso ? `${gunBasligi(iso)}${iso.endsWith('T00:00:00') ? '' : `, ${saatYazisi(iso)}`}` : '');
 // TBF saati henüz belli olmayan maçları 00:00 olarak verir
 const saatYazisi = iso => (iso.endsWith('T00:00:00') ? 'Saat belli değil'
   : new Date(iso).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }));
@@ -2133,7 +2135,7 @@ function gorunumMac(id) {
   const m = bulunan?.m ?? { id, tarih: kutu.tarih, durum: kutu.durum, ev: kutu.ev.ad, dep: kutu.dep.ad, evSkor: kutu.evSkor, depSkor: kutu.depSkor, salon: kutu.salon, yayin: kutu.yayin };
   const n = bulunan?.n ?? kutu.hafta;
   const durum = m.durum === 'canli' ? `<span class="canli-yazi">Canlı · ${canliYazisi(m)}</span>` : m.durum === 'bitti' ? 'Maç sonu' : saatYazisi(m.tarih);
-  const bilgi = [gunBasligi(m.tarih), m.salon, m.yayin].filter(Boolean).map(esc).join(' · ');
+  const bilgi = [gunSaat(m.tarih), m.salon, m.yayin].filter(Boolean).map(esc).join(' · ');
   const ust = `<p style="margin:0 0 10px"><a href="#/maclar/${n}">‹ ${n}. hafta maçları</a></p>
     <div class="kart mac-baslik"><div class="mac-takimlar">
       <strong class="${kazananSinifi(m, 'ev')}">${esc(baslik(m.ev))}</strong>

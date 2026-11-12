@@ -1114,10 +1114,12 @@ function avKazanan(m, taraf) {
   if (m.durum !== 'bitti') return '';
   return (taraf === 'ev' ? m.evSkor > m.depSkor : m.depSkor > m.evSkor) ? 'kazanan' : '';
 }
-function avMacSatiri(kod, d, m) {
+function avMacSatiri(kod, d, m, etiket = '') {
+  // etiket verilirse (günün maçları) tarih yerine kupanın kısa adı yazılır
+  const alt = etiket ? `<span class="lig-etiket">${esc(etiket)}</span>` : esc(gunBasligi(m.tarih));
   const orta = m.durum === 'oynanmadi'
-    ? `<strong>${saatYazisi(m.tarih)}</strong><small>${esc(gunBasligi(m.tarih))}</small>`
-    : `<strong>${m.evSkor ?? 0} - ${m.depSkor ?? 0}</strong><small>${m.durum === 'canli' ? `<span class="canli-yazi">${esc(m.periyot ?? '')} ${esc(m.sure ?? '')}</span>` : `MS · ${esc(gunBasligi(m.tarih))}`}</small>`;
+    ? `<strong>${saatYazisi(m.tarih)}</strong><small>${alt}</small>`
+    : `<strong>${m.evSkor ?? 0} - ${m.depSkor ?? 0}</strong><small>${m.durum === 'canli' ? `<span class="canli-yazi">${esc(m.periyot ?? '')} ${esc(m.sure ?? '')}</span>` : `MS · ${alt}`}</small>`;
   const ad = id => (avTurkMu(d, id) ? `<b>${esc(avTakimAdi(d, id))}</b>` : esc(avTakimAdi(d, id)));
   const href = m.durum === 'bitti' ? `#/avrupa/${kod}/mac/${m.id}` : `#/avrupa/${kod}`;
   return `<a class="mac" href="${href}"><span class="${avKazanan(m, 'ev')}">${ad(m.ev)}</span><span class="skor">${orta}</span>
@@ -1234,6 +1236,25 @@ function avMac(kod, k, id) {
     ${ME.macGovdesi(kutu, { sirala: S.ui.kutuSirala,
       oyuncuAdi: o => (turkOyuncu.has(String(o.id)) ? `<a href="#/avrupa/${kod}/oyuncu/${o.id}" class="oyuncu-link">${esc(o.ad)}</a>` : esc(o.ad)) })}`;
 }
+// Günün Avrupa maçları (bütün kupalar, temsilcilerimizin maçları): bugün maç yoksa sıradaki maç günü
+function avGunKarti(idx) {
+  const veriler = idx.kupalar.map(k => [k, av(k.kod)]);
+  if (veriler.some(([, d]) => d === undefined)) return '';
+  const hepsi = veriler.flatMap(([k, d]) => (d?.maclar ?? []).filter(m => m.tarih).map(m => ({ k, d, m })));
+  const gun = iso => iso.slice(0, 10);
+  const bugun = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Istanbul' });
+  let secili = hepsi.filter(x => gun(x.m.tarih) === bugun);
+  let baslik = 'Bugünün maçları';
+  if (!secili.length) {
+    const sonraki = hepsi.filter(x => gun(x.m.tarih) > bugun).map(x => gun(x.m.tarih)).sort()[0];
+    if (!sonraki) return '';
+    secili = hepsi.filter(x => gun(x.m.tarih) === sonraki);
+    baslik = `Sıradaki maç günü · ${gunBasligi(`${sonraki}T12:00:00`)}`;
+  }
+  secili.sort((a, b) => a.m.tarih.localeCompare(b.m.tarih));
+  return `<div class="kart mac-gun"><h3 style="padding:12px 14px 0;margin:0">${esc(baslik)}</h3>
+    ${secili.map(({ k, d, m }) => avMacSatiri(k.kod, d, m, k.kisa)).join('')}</div>`;
+}
 function gorunumAvrupa(kod, tur, id) {
   const idx = av('index');
   if (!idx) return idx === null ? '<p class="bos">Avrupa verisi henüz yok.</p>' : '<p class="bos">Yükleniyor…</p>';
@@ -1241,7 +1262,7 @@ function gorunumAvrupa(kod, tur, id) {
   const cipler = `<div class="secenekler">${idx.kupalar.map(x => `<a class="secenek ${x.kod === k.kod ? 'aktif' : ''}" href="#/avrupa/${x.kod}">${esc(x.ad)}</a>`).join('')}</div>`;
   const icerik = tur === 'takim' ? avTakim(k.kod, k, id) : tur === 'oyuncu' ? avOyuncu(k.kod, k, id) : tur === 'mac' ? avMac(k.kod, k, id) : avKupa(k.kod, k);
   return `${tur ? '' : `<div class="sayfa-baslik" style="margin-bottom:10px"><h1>Avrupa'daki temsilcilerimiz</h1>
-      <p class="soluk" style="margin:0 0 10px">2026-27 sezonu${idx.guncelleme ? ` · ${tarihSaat(idx.guncelleme)} itibarıyla` : ''}</p></div>${cipler}`}${icerik}`;
+      <p class="soluk" style="margin:0 0 10px">2026-27 sezonu${idx.guncelleme ? ` · ${tarihSaat(idx.guncelleme)} itibarıyla` : ''}</p></div>${avGunKarti(idx)}${cipler}`}${icerik}`;
 }
 
 // ---------- Olaylar ----------

@@ -470,6 +470,9 @@ table.kutu tr.takim-satir th, table.kutu tr.takim-satir td { color: var(--soluk)
 .gorsel-kart { padding-top: 6px; padding-bottom: 6px; }
 .gorsel-kart .f-satir { gap: 8px; flex-wrap: wrap; }
 
+/* Kutu skor: takım başlığının yanında koç */
+h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-left: 6px; }
+
 /* Sistem durumu (yönetici) */
 .durum-isik { width: 12px; height: 12px; flex: 0 0 12px; border-radius: 50%; background: #9aa5a8; }
 .durum-isik.yesil { background: #1f9d55; }

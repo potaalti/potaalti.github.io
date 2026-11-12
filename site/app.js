@@ -1218,7 +1218,7 @@ function avTakim(kod, k, id) {
       <div class="istatistik">${[['Sayı', o.sayi], ['Ribaund', o.rib], ['Asist', o.ast], ['Top çalma', o.tc], ['Blok', o.blk], ['Top kaybı', o.tk], ['VP', o.vp],
         ['2S %', yuzde(t.atis.iki), t.atis.iki], ['3S %', yuzde(t.atis.uc), t.atis.uc], ['SA %', yuzde(t.atis.sa), t.atis.sa]]
         .map(([ad, v, atis]) => `<div><b>${typeof v === 'number' ? sayi(v) : v}</b><span>${ad}</span>${atis ? `<small>${macBasiAtis(atis, t.o)}</small>` : ''}</div>`).join('')}</div>
-      <p class="soluk kucuk" style="margin:8px 0 0">${esc(k.ad)} maç başı takım ortalamaları (${t.o} maç).</p></div>
+      <p class="soluk kucuk" style="margin:8px 0 0">${esc(k.ad)} maç başı takım ortalamaları (${t.o} maç)${t.turk === false ? '; yalnızca temsilcilerimize karşı oynadığı maçlardan' : ''}.</p></div>
     <div class="iki-sutun">
       <div class="kart"><h3>Maçlar</h3><div class="tablo-kap"><table><tbody>${oynanan.map(macSatir).join('') || '<tr><td class="bos">Henüz maç yok</td></tr>'}</tbody></table></div>
         ${gelecek.length ? `<h3 style="margin-top:14px">Sıradaki maçlar</h3><div class="tablo-kap"><table><tbody>${gelecek.map(macSatir).join('')}</tbody></table></div>` : ''}</div>
@@ -1259,23 +1259,66 @@ function avMac(kod, k, id) {
   const liste = d.maclar.find(x => x.id === id);
   if (!kb && !liste) return '<p class="bos">Maç bulunamadı.</p>';
   const m = liste ?? { tarih: kb.tarih, ev: kb.ev.id, dep: kb.dep.id, evSkor: kb.ev.skor, depSkor: kb.dep.skor, durum: 'bitti' };
-  const taraf = (t, i) => ({ ad: avTakimAdi(d, t.id), skor: t.skor, ceyrekler: m.ceyrekler?.[i] ?? t.ceyrekler,
+  const taraf = (t, i) => ({ ad: avTakimAdi(d, t.id), skor: t.skor, ceyrekler: m.ceyrekler?.[i] ?? t.ceyrekler, takim: t.takim, koc: t.koc,
     oyuncular: t.oyuncular.map(o => ({ ...o, sure: mmss(o.sn), hr: o.or, sr: o.dr })) });
   const kutu = kb?.ev?.oyuncular ? { ev: taraf(kb.ev, 0), dep: taraf(kb.dep, 1) } : null;
-  const turkOyuncu = new Set(kutu ? [kb.ev, kb.dep].filter(t => avTurkMu(d, t.id)).flatMap(t => t.oyuncular.map(o => String(o.id))) : []);
   const bilgi = [gunSaat(m.tarih), m.tur, m.salon, m.seyirci ? `${binlik(m.seyirci)} seyirci` : '', m.yayin].filter(Boolean).map(esc).join(' · ');
-  const takimLink = t => (avTurkMu(d, t) ? `<a href="#/avrupa/${kod}/takim/${t}">${esc(avTakimAdi(d, t))}</a>` : `<span>${esc(avTakimAdi(d, t))}</span>`);
+  const takimLink = t => `<a href="#/avrupa/${kod}/takim/${t}">${esc(avTakimAdi(d, t))}</a>`;
   return `<a class="geri" href="#/avrupa/${kod}">‹ ${esc(k.ad)}</a>
     <div class="kart mac-baslik"><div class="mac-takimlar">
       <span class="${avKazanan(m, 'ev')}">${takimLink(m.ev)}</span>
       <div class="mac-skor"><strong>${m.evSkor ?? kb?.ev.skor ?? 0} - ${m.depSkor ?? kb?.dep.skor ?? 0}</strong><small>${m.durum === 'canli' ? `<span class="canli-yazi">${esc(m.periyot ?? '')} ${esc(m.sure ?? '')}</span>` : m.durum === 'bitti' ? 'Maç sonu' : saatYazisi(m.tarih)}</small></div>
       <span class="${avKazanan(m, 'dep')}">${takimLink(m.dep)}</span></div>
       <p class="soluk kucuk" style="margin:10px 0 0;text-align:center"><span class="lig-etiket">${esc(k.kisa)}</span> ${bilgi}</p></div>
-    ${!kutu ? `${kb?.fark ? ME.farkGrafigi(avTakimAdi(d, m.ev), avTakimAdi(d, m.dep), kb.fark) : ''}<p class="bos">${m.durum === 'canli'
+    ${!kb && m.durum === 'oynanmadi' ? avMacOnu(kod, d, m) : !kutu ? `${kb?.fark ? ME.farkGrafigi(avTakimAdi(d, m.ev), avTakimAdi(d, m.dep), kb.fark) : ''}<p class="bos">${m.durum === 'canli'
       ? 'Bu kupada kutu skor ve gelişmiş istatistikler maç bitince gelir. Skor farkı grafiği maç sırasında birkaç dakikada bir güncellenir.'
       : 'Kutu skor maç başlayınca gelir (birkaç dakika sürebilir).'}</p>` : ME.macGovdesi(kutu, { sirala: S.ui.kutuSirala, fark: kb.fark, ileriDosya: kb.ileri,
       aciklamaEki: kb?.ileriResmi === false ? ' · Gelişmiş istatistiklerde top kaybından, ikinci şanstan ve boyalı alandan sayılar maç akışından hesaplandı (resmi değil); hızlı hücum bu kupanın verisinde yok.' : '',
-      oyuncuAdi: o => (turkOyuncu.has(String(o.id)) ? `<a href="#/avrupa/${kod}/oyuncu/${o.id}" class="oyuncu-link">${esc(o.ad)}</a>` : esc(o.ad)) })}`;
+      takimBasligi: t => esc(t.ad),
+      oyuncuAdi: o => `<a href="#/avrupa/${kod}/oyuncu/${o.id}" class="oyuncu-link">${esc(o.ad)}</a>` })}`;
+}
+
+// Avrupa maç önü (oynanmamış maç): puan durumundan kıyas, son maçlar, öne çıkan oyuncular; rakibin temsilcilerimize karşı
+// maçlarında kime kaç sayı attığı (rakiplerin yalnızca temsilcilerimizle oynadığı maçların verisi var)
+function avMacOnu(kod, d, m) {
+  const s = id => d.gruplar.flatMap(g => g.satirlar).find(x => x.takim === id);
+  const tf = id => av(`${kod}/takim/${id}`);
+  const [te, td] = [tf(m.ev), tf(m.dep)];
+  if (te === undefined || td === undefined) return '<p class="bos">Yükleniyor…</p>';
+  const se = s(m.ev), sd = s(m.dep);
+  const ort = (x, o) => (o ? x / o : 0);
+  const KIYAS = se && sd ? [
+    ['Sıra', se.sira, sd.sira, x => `${x}.`, false], ['Galibiyet', se.g, sd.g, x => x, true], ['Mağlubiyet', se.m, sd.m, x => x, false],
+    ['Averaj', se.averaj, sd.averaj, isaretli, true], ['Attığı sayı', ort(se.atilan, se.o), ort(sd.atilan, sd.o), sayi, true],
+    ['Yediği sayı', ort(se.yenilen, se.o), ort(sd.yenilen, sd.o), sayi, false],
+  ] : [];
+  const kiyas = KIYAS.map(([ad, a, b, f, buyukIyi]) => {
+    const iyiA = a !== b && (buyukIyi ? a > b : a < b), iyiB = a !== b && !iyiA;
+    return `<div class="ileri-satir"><b class="${iyiA ? 'iyi' : ''}">${f(a)}</b><span>${ad}</span><b class="${iyiB ? 'iyi' : ''}">${f(b)}</b></div>`;
+  }).join('');
+  const sonuc = (id, x) => {
+    const ev = x.ev === id, biz = ev ? x.evSkor : x.depSkor, onlar = ev ? x.depSkor : x.evSkor;
+    return `<tr class="tikla" onclick="location.hash='#/avrupa/${kod}/mac/${x.id}'"><td class="sira kucuk">${kisaTarih(x.tarih)}</td><td>${ev ? '' : '@ '}${esc(avTakimAdi(d, ev ? x.dep : x.ev))}</td>
+      <td class="sayi"><span class="${biz > onlar ? 'yesil-yazi' : 'kirmizi-yazi'}">${biz > onlar ? 'G' : 'M'}</span> ${biz}-${onlar}</td></tr>`;
+  };
+  const takimKarti = (id, t) => {
+    const turk = avTurkMu(d, id);
+    const son = d.maclar.filter(x => x.durum === 'bitti' && (x.ev === id || x.dep === id)).sort((a, b) => b.tarih.localeCompare(a.tarih)).slice(0, 5);
+    const yildiz = (t?.kadro ?? []).filter(x => x.mac).sort((a, b) => (turk ? b.vp - a.vp : b.sayi - a.sayi)).slice(0, turk ? 3 : 5);
+    const oyuncu = x => `<div class="f-satir"><div class="ad"><a href="#/avrupa/${kod}/oyuncu/${x.id}" class="oyuncu-link"><strong>${esc(x.ad)}</strong></a>
+      <small>${turk ? `${sayi(x.sayi)} sayı · ${sayi(x.rib)} ribaund · ${sayi(x.ast)} asist`
+        : (x.karsi ?? []).map(([r, p]) => `${p} sayı · ${esc(avTakimAdi(d, r))}`).join(' — ')}</small></div>
+      <div class="f-sayi"><strong>${sayi(turk ? x.vp : x.sayi)}</strong><small>${turk ? 'VP' : 'sayı ort.'}</small></div></div>`;
+    return `<div class="kart"><h3><a href="#/avrupa/${kod}/takim/${id}">${esc(avTakimAdi(d, id))}</a></h3>
+      <p class="soluk kucuk" style="margin:0 0 6px">${turk ? 'Bu kupadaki son maçları' : 'Temsilcilerimize karşı maçları'}</p>
+      <div class="tablo-kap"><table><tbody>${son.map(x => sonuc(id, x)).join('') || '<tr><td class="bos">Henüz maç yok</td></tr>'}</tbody></table></div>
+      <h3 style="margin-top:14px">${turk ? 'Öne çıkan oyuncular' : 'Temsilcilerimize karşı en çok sayı atanlar'}</h3>${yildiz.map(oyuncu).join('') || '<p class="bos">Henüz veri yok</p>'}</div>`;
+  };
+  const aralarinda = d.maclar.filter(x => x.id !== m.id && x.durum === 'bitti' && [x.ev, x.dep].includes(m.ev) && [x.ev, x.dep].includes(m.dep));
+  return `${kiyas ? `<div class="kart ileri-kart"><h3>Maç önü</h3><div class="ileri-takimlar"><span>${esc(avTakimAdi(d, m.ev))}</span><span>${esc(avTakimAdi(d, m.dep))}</span></div>${kiyas}
+      <p class="soluk kucuk" style="margin:8px 0 0;text-align:center">Bu kupadaki puan durumundan; vurgulu olan daha iyi.</p></div>` : ''}
+    ${aralarinda.length ? `<div class="kart"><h3>Bu sezonki karşılaşmaları</h3><div class="tablo-kap"><table><tbody>${aralarinda.map(x => sonuc(m.ev, x)).join('')}</tbody></table></div></div>` : ''}
+    <div class="iki-sutun">${takimKarti(m.ev, te)}${takimKarti(m.dep, td)}</div>`;
 }
 // Günün Avrupa maçları (bütün kupalar, temsilcilerimizin maçları): bugün maç yoksa sıradaki maç günü
 function avGunKarti(idx, sadeceBugun = false) {

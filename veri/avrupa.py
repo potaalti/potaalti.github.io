@@ -221,7 +221,11 @@ def el_kupa(k):
                     "faul": int(s["foulsCommited"]), "vp": int(s["valuation"]), "pm": int(s.get("plusMinus") or 0),
                     "iki": [int(s["fieldGoalsMade2"]), int(s["fieldGoalsAttempted2"])], "uc": [int(s["fieldGoalsMade3"]), int(s["fieldGoalsAttempted3"])],
                     "sa": [int(s["freeThrowsMade"]), int(s["freeThrowsAttempted"])]}))
-            return {"id": kod, "skor": int(t["total"]["points"]), "oyuncular": oyuncular}
+            tm = t.get("team") or {}
+            return {"id": kod, "skor": int(t["total"]["points"]), "oyuncular": oyuncular,
+                    "koc": ad_duzelt(t["coach"]["name"]) if (t.get("coach") or {}).get("name") else None,
+                    "takim": {"hr": int(tm.get("offensiveRebounds") or 0), "sr": int(tm.get("defensiveRebounds") or 0),
+                              "rib": int(tm.get("totalRebounds") or 0), "tk": int(tm.get("turnovers") or 0), "faul": int(tm.get("foulsCommited") or 0)}}
         return {"id": m["id"], "tarih": m["tarih"], "ev": taraf(d["local"], m["ev"]), "dep": taraf(d["road"], m["dep"])}
 
     def akis(m, kayit):
@@ -362,8 +366,23 @@ def fiba_kupa(k):
                     "tc": st.get("ST", 0), "blk": st.get("BS", 0), "tk": st.get("TO", 0), "faul": st.get("PF", 0), "vp": st.get("EFF", 0),
                     "pm": st.get("PM", 0) or 0, "iki": [st.get("FG2M", 0), st.get("FG2A", 0)], "uc": [st.get("FG3M", 0), st.get("FG3A", 0)],
                     "sa": [st.get("FTM", 0), st.get("FTA", 0)]}))
-            return {"id": org.get(t["Id"][2:]), "skor": t.get("Score"), "ceyrekler": [p.get("Score") for p in t.get("Periods", [])], "oyuncular": oyuncular}
+            st = t.get("Stats") or {}
+            return {"id": org.get(t["Id"][2:]), "skor": t.get("Score"), "ceyrekler": [p.get("Score") for p in t.get("Periods", [])], "oyuncular": oyuncular,
+                    "takim": {"hr": st.get("T_OR", 0), "sr": st.get("T_DR", 0), "rib": st.get("T_REB", 0), "tk": st.get("T_TO", 0), "faul": st.get("T_PF", 0)},
+                    "resmiIleri": {"tks": st.get("A_PAT"), "ba": st.get("A_PIP"), "is": st.get("A_SCP"), "hh": st.get("A_FBP")}}
         taraflar = {x["id"]: x for x in (taraf(t) for t in det["c"])}
+        # Başantrenör: sayfadaki staffA (ev sahibi) ve staffB listeleri
+        for anah, taraf_id in (("staffA", m["ev"]), ("staffB", m["dep"])):
+            i = sayfa.find(f'"{anah}":[')
+            if i >= 0:
+                try:
+                    liste, _ = json.JSONDecoder().raw_decode(sayfa, i + len(anah) + 3)
+                    bas = next((x for x in liste if x.get("isHeadCoach") == 1 or x.get("function") == "Head Coach"), None)
+                    if bas:
+                        taraflar[taraf_id]["koc"] = " ".join(w.capitalize() if w.isupper() and len(w) > 2 else w
+                                                          for w in f"{bas.get('firstName', '')} {bas.get('lastName', '')}".split())
+                except ValueError:
+                    pass
         return {"id": m["id"], "tarih": m["tarih"], "ev": taraflar[m["ev"]], "dep": taraflar[m["dep"]]}
 
     def akis(m, kayit):
@@ -414,7 +433,16 @@ def fiba_kupa(k):
                     if ac != "FT":  # sayıyla hücum biter (serbest atışlarda son atışa kadar sürer)
                         top_kaybi[taraf] = ikinci[taraf] = False
                         top_kaybi[rakip] = ikinci[rakip] = False
-        return akis_hesapla(sayilar, son_sure, kayit, resmi=False)
+        sonuc = akis_hesapla(sayilar, son_sure, kayit, resmi=False)
+        # Maç bitince FIBA'nın resmi değerleri sayfada: hesaplanan yerine onlar (hızlı hücum dahil)
+        resmi = [kayit[t].get("resmiIleri") or {} for t in ("ev", "dep")]
+        if all(r.get("tks") is not None for r in resmi):
+            for t, r in zip(("ev", "dep"), resmi):
+                for alan in ("tks", "ba", "is", "hh"):
+                    if r.get(alan) is not None:
+                        sonuc["ileri"][t][alan] = int(r[alan])
+            sonuc["ileriResmi"] = True
+        return sonuc
 
     return takimlar, gruplar, maclar, kutu, akis
 
@@ -480,8 +508,10 @@ def ort(x, n):
 def takim_oyuncu_uret(k, takimlar, maclar, kutular):
     kok = CIKTI / k["kod"]
     turk = [t for t, v in takimlar.items() if v["turk"]]
+    # Rakipler: temsilcilerimizle oynadığı (kutu skoru alınmış) maçlardan; istatistikleri yalnızca o maçlardan
+    rakipler = sorted({t for m in maclar if m["id"] in kutular for t in (m["ev"], m["dep"]) if t not in turk})
     oyuncular_hepsi = {}
-    for tid in turk:
+    for tid in turk + rakipler:
         oynanan = [m for m in maclar if tid in (m["ev"], m["dep"]) and m["id"] in kutular]
         toplam = {a: 0 for a in ALANLAR} | {"iki": [0, 0], "uc": [0, 0], "sa": [0, 0]}
         oyuncular = {}
@@ -507,14 +537,15 @@ def takim_oyuncu_uret(k, takimlar, maclar, kutular):
                     **{a: ort(sum(x[a] for x in oyn), n) for a in ALANLAR}, "pm": sum(x["pm"] for x in oyn),
                     **{a: [sum(x[a][0] for x in oyn), sum(x[a][1] for x in oyn)] for a in ("iki", "uc", "sa")}}
             if n:
-                kadro.append({"id": o["id"], "ad": o["ad"], "no": o["no"], **ozet})
+                kadro.append({"id": o["id"], "ad": o["ad"], "no": o["no"], **ozet,
+                              **({} if takimlar[tid]["turk"] else {"karsi": [[x["rakip"], x["sayi"]] for x in oyn]})})
             oyuncular_hepsi[o["id"]] = {"id": o["id"], "ad": o["ad"], "no": o["no"], "takim": tid, "takimAd": takimlar[tid]["ad"], "kupa": k["kod"],
                                         "ozet": ozet, "maclar": o["maclar"]}
         kadro.sort(key=lambda x: (-x["dk"], x["ad"]))
         n = len(oynanan)
         g = sum(1 for m in oynanan if (kutular[m["id"]]["ev"]["skor"] > kutular[m["id"]]["dep"]["skor"]) == (m["ev"] == tid))
         yaz(kok / "takim" / f"{tid}.json", {
-            "id": tid, "ad": takimlar[tid]["ad"], "kupa": k["kod"], "o": n, "g": g, "m": n - g,
+            "id": tid, "ad": takimlar[tid]["ad"], "kupa": k["kod"], "turk": takimlar[tid]["turk"], "o": n, "g": g, "m": n - g,
             "ort": {a: ort(toplam[a], n) for a in ALANLAR}, "atis": {a: toplam[a] for a in ("iki", "uc", "sa")},
             "maclar": [m for m in maclar if tid in (m["ev"], m["dep"])], "kadro": kadro})
     for o in oyuncular_hepsi.values():
@@ -533,7 +564,7 @@ def kupa_uret(k):
         yol = CIKTI / k["kod"] / "mac" / f"{m['id']}.json"
         kayit = oku(yol)
         # Canlı maçın kutu skoru her çalışmada yeniden çekilir; canlıyken kaydedilmiş maç bitince bir kez daha (son hali)
-        if kayit is None or m["durum"] == "canli" or kayit.get("canli"):
+        if kayit is None or m["durum"] == "canli" or kayit.get("canli") or "takim" not in (kayit.get("ev") or {}):
             try:
                 kayit = kutu(m)
                 kayit["canli"] = m["durum"] == "canli"

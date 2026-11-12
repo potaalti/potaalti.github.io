@@ -52,7 +52,13 @@ function kutuToplami(oyuncular, takim) {
   return KUTU_SUTUNLARI.map(([, , alan, sinif]) => `<td class="${sinif}">${!alan ? '' : ['iki', 'uc', 'sa'].includes(alan) ? toplaAtis(alan) : topla(alan)}</td>`).join('');
 }
 // canli: maç sürüyorsa sahadaki 5 oyuncunun adının sonuna * konur (kutu skorda "sahada" bilgisi varsa)
-function kutuSkorTablosu(t, takim, a) {
+// Koç adı kaynakta büyük harfle gelebiliyor ("MURAT HÜSEYİN YILMAZ"): "Murat Hüseyin Yılmaz"
+const kocAdi = k => {
+  const ad = String(k).trim().split(/\s+/);
+  const tr = /[İŞĞÜÖÇışğüöç]/.test(k);  // Türkçe harf varsa Türkçe küçük harf (YILMAZ -> Yılmaz), yoksa MARKOVIC -> Markovic
+  return ad.map(w => (w === w.toLocaleUpperCase('tr') ? w[0] + (tr ? w.slice(1).toLocaleLowerCase('tr') : w.slice(1).toLowerCase()) : w)).join(' ');
+};
+function kutuSkorTablosu(t, takim, a, koc) {
   const oyuncular = t.oyuncular ?? [];
   const satirlar = kutuSirasi(oyuncular, a.sirala).map(o => {
     const sahada = a.canli && o.sahada;
@@ -60,7 +66,7 @@ function kutuSkorTablosu(t, takim, a) {
     return `<tr class="${sureSn(o.sure) > 0 ? '' : 'oynamadi'} ${a.benimMi(String(o.id)) ? 'ben benim-oyuncu' : ''}"><th${sahada ? ' class="sahada"' : ''}>${o.ilk5 ? `<b>${ad}</b>` : ad}${sahada ? '<span class="sahada-yildiz">*</span>' : ''}</th>
       ${KUTU_SUTUNLARI.map(c => kutuHucresi(o, c)).join('')}</tr>`;
   }).join('');
-  return `<div class="kart"><h3>${a.takimBasligi(t)}</h3><div class="tablo-kap"><table class="kutu">
+  return `<div class="kart"><h3>${a.takimBasligi(t)}${koc ? ` <small class="koc">Koç: ${esc(kocAdi(koc))}</small>` : ''}</h3><div class="tablo-kap"><table class="kutu">
     <thead><tr><th>Oyuncu</th>${kutuBasligi(a.sirala)}</tr></thead>
     <tbody>${satirlar}${takimSatiri(takim)}<tr class="toplam"><th>Toplam</th>${kutuToplami(oyuncular, takim)}</tr></tbody></table></div></div>`;
 }
@@ -83,7 +89,7 @@ export function macGovdesi(kutu, ayar) {
   const evAd = baslik(kutu.ev.ad), depAd = baslik(kutu.dep.ad);
   const ileri = ileriVerisi(kutu, a.ileriDosya);
   return `${ceyrekTablosu(kutu)}${farkGrafigi(evAd, depAd, kutu.fark ?? a.fark)}
-    ${kutuSkorTablosu(kutu.ev, kutu.ev.takim ?? a.takimIst?.ev, a)}${kutuSkorTablosu(kutu.dep, kutu.dep.takim ?? a.takimIst?.dep, a)}
+    ${kutuSkorTablosu(kutu.ev, kutu.ev.takim ?? a.takimIst?.ev, a, kutu.ev.koc ?? ileri?.ev?.koc)}${kutuSkorTablosu(kutu.dep, kutu.dep.takim ?? a.takimIst?.dep, a, kutu.dep.koc ?? ileri?.dep?.koc)}
     ${ileriIstatistikKarti(evAd, depAd, ileri)}
     <p class="soluk kucuk">Kalın: ilk 5${a.canli ? ' · *: sahada' : ''} · 2S/3S/SA: isabet/deneme · Tç: top çalma · Bl: blok · Tk: top kaybı · VP: verimlilik${a.aciklamaEki}</p>`;
 }

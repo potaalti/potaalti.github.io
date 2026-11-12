@@ -130,7 +130,9 @@ def ileri_istatistik_uret(lig, maclar, en_fazla=60):
     Şut haritası ve sayı sayı akış kullanıcı isteğiyle alınmaz."""
     yol = CIKTI / lig / "ileri-istatistik.json"
     kayit = json.loads(yol.read_text(encoding="utf-8")) if yol.exists() else {}
-    eksik = [m for m in maclar if m["durum"] == "bitti" and str(m["id"]) not in kayit][:en_fazla]
+    # Koç sonradan eklendi (2026-11-12): koçu olmayan eski kayıtlar da bir kez yeniden çekilir
+    eksik = [m for m in maclar if m["durum"] == "bitti" and (str(m["id"]) not in kayit
+                                                            or (kayit[str(m["id"])] and "koc" not in kayit[str(m["id"])]["ev"]))][:en_fazla]
     fiba_no = {}
     for h in sorted({m["hafta"] for m in eksik}):
         try:
@@ -157,7 +159,8 @@ def ileri_istatistik_uret(lig, maclar, en_fazla=60):
         tm = d.get("tm") or {}
         if "1" not in tm or "2" not in tm:
             continue
-        kayit[k], degisti = {"ev": fiba_ileri(tm["1"]), "dep": fiba_ileri(tm["2"])}, True
+        kayit[k], degisti = {"ev": {**fiba_ileri(tm["1"]), "koc": tm["1"].get("coach") or None},
+                             "dep": {**fiba_ileri(tm["2"]), "koc": tm["2"].get("coach") or None}}, True
     if degisti or not yol.exists():
         yaz(yol, kayit)
 

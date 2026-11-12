@@ -1,13 +1,14 @@
 # Avrupa'daki temsilcilerimiz (veri/avrupa.py): EuroLeague, EuroCup, BCL, FIBA Europe Cup verileri resmi kaynaklardan çekilir.
-# Avrupa maçları akşamları (Türkiye 17:00–02:00) 10 dakikada bir (canlı skor, biten maçın kutu skoru, puan durumu), diğer
-# saatlerde saatte bir. Değişiklik yoksa hiçbir şey kaydedilmez; varsa kaydedilir ve site yeniden yayınlatılır.
+# Türkiye saatiyle 18:00–02:00 arası 3 dakikada bir (TBL/BSL gibi): GitHub'ın zamanlayıcısı en sık 5 dakikada bir
+# çalıştırabildiği için iş yarım saatte bir başlar ve kendi içinde ~27 dakika boyunca 3 dakikada bir günceller. Diğer saatlerde
+# saatte bir tek sefer. Değişiklik yoksa hiçbir şey kaydedilmez; varsa kaydedilir ve site yeniden yayınlatılır.
 # (Bu kaynaklar TBF gibi GitHub sunucularını engellemiyor; telefona yük binmez.)
 name: Avrupa verileri
 
 on:
   schedule:
-    - cron: '*/10 14-23 * * *'
-    - cron: '25 0-13 * * *'
+    - cron: '0,30 15-22 * * *'   # 18:00–01:30 başlangıçları (UTC+3), her biri yarım saat sürer: 02:00'ye kadar
+    - cron: '25 0-14,23 * * *'   # gündüz ve gece: saatte bir tek sefer
   workflow_dispatch:
 
 permissions:
@@ -21,22 +22,34 @@ concurrency:
 jobs:
   avrupa:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python veri/avrupa.py
-      - name: Kaydet ve siteyi yayınlat
+      - name: Güncelle (akşam 3 dakikada bir, ~27 dakika)
         env:
           GH_TOKEN: ${{ github.token }}
+          TEK: ${{ github.event.schedule == '25 0-14,23 * * *' }}
         run: |
-          git add site/data/avrupa
-          if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -q -m "Avrupa verileri güncellendi"
-          for i in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 10; done
-          # Bu iş kaydettiğinde "Siteyi yayınla" kendiliğinden başlamaz; elle başlatılır
-          gh workflow run yayinla.yml
+          bitis=$(( $(date +%s) + 27 * 60 ))
+          while :; do
+            bas=$(date +%s)
+            python veri/avrupa.py || echo "::warning::avrupa.py hata verdi"
+            git add site/data/avrupa
+            if ! git diff --cached --quiet; then
+              git commit -q -m "Avrupa verileri güncellendi"
+              for i in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 10; done
+              # Bu iş kaydettiğinde "Siteyi yayınla" kendiliğinden başlamaz; elle başlatılır
+              gh workflow run yayinla.yml || true
+            else
+              echo "Değişiklik yok"
+            fi
+            if [ "$TEK" = "true" ] || [ $(( $(date +%s) + 180 )) -ge "$bitis" ]; then break; fi
+            bekle=$(( 180 - ($(date +%s) - bas) ))
+            if [ "$bekle" -gt 0 ]; then sleep "$bekle"; fi
+            git pull -q --rebase || true
+          done

@@ -51,6 +51,29 @@ then
   nohup bash "$HOME/tbl-fantezi/telefon/guncelle.sh" > /dev/null 2>&1 &
 fi
 
+# Avrupa'daki temsilcilerimiz (Türkiye saatiyle 18:00–02:00): ayrı küçük kopyada (~/pota-avrupa) 3 dakikalık döngü
+# (veri/avrupa_dongu.py; GitHub'daki "Avrupa verileri" işinin ve bilgisayarın yedeği). Döngü çalışmıyorsa ya da
+# 10 dakikadır nabzı yoksa (takıldıysa) buradan başlatılır; 02:00'de kendiliğinden biter.
+AV_PID="$HOME/.pota-avrupa.pid"
+if python -c 'from datetime import datetime,timezone,timedelta as t;import sys;sys.exit(0 if (datetime.now(timezone.utc)+t(hours=3)).hour in {18,19,20,21,22,23,0,1} else 1)'; then
+  av_calisiyor=0
+  if [ -f "$AV_PID" ] && kill -0 "$(cat "$AV_PID")" 2>/dev/null; then
+    av_yas=$(( $(date +%s) - $(stat -c %Y "$HOME/.pota-avrupa.nabiz" 2>/dev/null || stat -c %Y "$AV_PID") ))
+    if [ "$av_yas" -gt 600 ]; then
+      pkill -P "$(cat "$AV_PID")" 2>/dev/null
+      kill "$(cat "$AV_PID")" 2>/dev/null
+      echo "$(date '+%F %T') Avrupa döngüsü ${av_yas} sn'dir takılıydı: yeniden başlatılıyor" >> "$LOG"
+    else
+      av_calisiyor=1
+    fi
+  fi
+  if [ $av_calisiyor = 0 ] && [ -f "$DEPO/veri/avrupa_dongu.py" ]; then
+    nohup python "$DEPO/veri/avrupa_dongu.py" dongu --ad telefon > /dev/null 2>&1 &
+    echo $! > "$AV_PID"
+    echo "$(date '+%F %T') Avrupa döngüsü başlatıldı (kayıt: ~/pota-avrupa.log)" >> "$LOG"
+  fi
+fi
+
 tam=0
 [ "$1" = "tam" ] && tam=1
 bugun=$(date +%F)

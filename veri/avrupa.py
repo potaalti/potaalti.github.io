@@ -110,10 +110,6 @@ def oyuncu_satiri(id_, ad, no, ilk5, sn, s):
     return {"id": str(id_), "ad": tr_oyuncu(ad), "no": str(no or ""), "ilk5": bool(ilk5), "sn": int(sn), **s}
 
 
-# Yayın kanalı (Türkiye): kaynaklarda yok. EuroLeague/EuroCup hakları Saran Media'da (S Sport / S Sport Plus); BCL ve
-# Europe Cup için Türkiye'de yayıncı bulunamadı, FIBA'nın kendi platformu Courtside 1891. Maç maç düzeltme:
-# site/data/avrupa/kanallar.json {"el-377": "S Sport", ...} (anahtar kupa-maç numarası), kupanın tamamı için {"el": "..."}.
-KANAL = {"el": "S Sport Plus", "ec": "S Sport Plus", "bcl": "Courtside 1891", "fec": "Courtside 1891"}
 
 
 # Temsilcilerimizin adları kaynaklarda İngilizce ve Türkçe harfsiz: uygulamada Türkçe yazılır
@@ -600,11 +596,10 @@ def kupa_uret(k):
             except Exception as e:  # noqa: BLE001 - sonraki çalışmada yeniden denenir
                 print(f"  {k['kod']} {m['id']}: akış alınamadı:", e)
         kutular[m["id"]] = kayit
-    kanallar = oku(CIKTI / "kanallar.json") or {}
     for m in maclar:
         m.pop("sayfa", None)
         m.pop("_an", None)
-        m["yayin"] = kanallar.get(f"{k['kod']}-{m['id']}") or kanallar.get(k["kod"]) or KANAL.get(k["kod"])
+        m.pop("yayin", None)  # Avrupa maçlarında yayıncı gösterilmiyor (kanal maç maç doğrulanamıyor)
         if not m.get("ceyrekler") and m["id"] in kutular:
             m["ceyrekler"] = [kutular[m["id"]]["ev"].get("ceyrekler") or [], kutular[m["id"]]["dep"].get("ceyrekler") or []]
     takim_oyuncu_uret(k, takimlar, maclar, kutular, gruplar)

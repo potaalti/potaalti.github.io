@@ -1186,7 +1186,7 @@ function avMacSatiri(kod, d, m, etiket = '') {
   // etiket verilirse (günün maçları) tarih yerine kupanın kısa adı yazılır
   const alt = etiket ? `<span class="lig-etiket">${esc(etiket)}</span>` : esc(gunBasligi(m.tarih));
   const orta = m.durum === 'oynanmadi'
-    ? `<strong>${saatYazisi(m.tarih)}</strong><small>${alt}</small>${m.yayin ? `<small>${esc(m.yayin)}</small>` : ''}`
+    ? `<strong>${saatYazisi(m.tarih)}</strong><small>${alt}</small>`
     : `<strong>${m.evSkor ?? 0} - ${m.depSkor ?? 0}</strong><small>${m.durum === 'canli' ? `<span class="canli-yazi">${esc(m.periyot ?? '')} ${esc(m.sure ?? '')}</span>` : `MS · ${alt}`}</small>`;
   const ad = id => (avTurkMu(d, id) ? `<b>${esc(avTakimAdi(d, id))}</b>` : esc(avTakimAdi(d, id)));
   const href = `#/avrupa/${kod}/mac/${m.id}`;
@@ -1297,7 +1297,7 @@ function avMac(kod, k, id) {
   const taraf = (t, i) => ({ id: t.id, ad: avTakimAdi(d, t.id), skor: t.skor, ceyrekler: m.ceyrekler?.[i] ?? t.ceyrekler, takim: t.takim, koc: t.koc,
     oyuncular: t.oyuncular.map(o => ({ ...o, sure: mmss(o.sn), hr: o.or, sr: o.dr })) });
   const kutu = kb?.ev?.oyuncular ? { ev: taraf(kb.ev, 0), dep: taraf(kb.dep, 1) } : null;
-  const bilgi = [gunSaat(m.tarih), m.tur, m.salon, m.seyirci ? `${binlik(m.seyirci)} seyirci` : '', m.yayin].filter(Boolean).map(esc).join(' · ');
+  const bilgi = [gunSaat(m.tarih), m.tur, m.salon, m.seyirci ? `${binlik(m.seyirci)} seyirci` : ''].filter(Boolean).map(esc).join(' · ');
   const takimLink = t => `<a href="#/avrupa/${kod}/takim/${t}">${esc(avTakimAdi(d, t))}</a>`;
   return `<a class="geri" href="#/avrupa/${kod}">‹ ${esc(k.ad)}</a>
     <div class="kart mac-baslik"><div class="mac-takimlar">
@@ -1416,7 +1416,7 @@ async function avGorselPaylas(tur, indir) {
   const maclar = avHaftaMaclari(idx).filter(x => tur === 'program' || x.m.durum === 'bitti').map(({ k, d, m, biz }) => {
     const evde = m.ev === biz;
     return { kupa: k.kod, kupaKisa: k.kisa, tarih: m.tarih, biz: avTakimAdi(d, biz), bizLogo: logo(avTakimAdi(d, biz)), rakip: avTakimAdi(d, evde ? m.dep : m.ev),
-      evde, bizSkor: evde ? m.evSkor : m.depSkor, rakipSkor: evde ? m.depSkor : m.evSkor, durum: m.durum, yayin: m.yayin };
+      evde, bizSkor: evde ? m.evSkor : m.depSkor, rakipSkor: evde ? m.depSkor : m.evSkor, durum: m.durum };
   });
   const blob = await AG.haftaGorseli({ maclar, tur, aralik: avHafta().aralik });
   const dosya = new File([blob], `pota-alti-avrupa-${avHafta().bas}-${tur === 'sonuc' ? 'sonuclar' : 'program'}.png`, { type: 'image/png' });

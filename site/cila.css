@@ -470,6 +470,9 @@ table.kutu tr.takim-satir th, table.kutu tr.takim-satir td { color: var(--soluk)
 .gorsel-kart { padding-top: 6px; padding-bottom: 6px; }
 .gorsel-kart .f-satir { gap: 8px; flex-wrap: wrap; }
 
+/* Maç önü: öne çıkan oyuncunun güçlü yanları */
+.f-satir .ad small.guclu { color: var(--vurgu); font-weight: 600; }
+
 /* Kutu skor: takım başlığının yanında koç */
 h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-left: 6px; }
 

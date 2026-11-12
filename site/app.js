@@ -117,7 +117,7 @@ function gorunum() {
   const lig = LIGLER[a] ? a : 'bsl';
   switch (s) {
     case undefined: return gorunumAna();
-    case 'maclar': return `<div class="dar">${gorunumMaclar(LIGLER[a] ? a : null, Number(b) || null)}</div>`;
+    case 'maclar': return `<div class="dar">${gorunumMaclar(LIGLER[a] || a === 'avrupa' ? a : null, b ?? null)}</div>`;
     case 'mac': return `<div class="dar">${gorunumMac(lig, Number(b))}</div>`;
     case 'lig': return gorunumLig(lig, b ?? 'tablo', rota()[3]);
     case 'takim': return `<div class="dar">${gorunumTakim(lig, b)}</div>`;
@@ -162,18 +162,45 @@ function haftaDurumu(maclar) {
 function gorunumMaclar(istenenLig, istenenHafta) {
   const lig = istenenLig ?? (S.ui.sonLig || 'bsl');
   S.ui.sonLig = lig;
+  const ligSec = `<div class="secenekler">${[...Object.entries(LIGLER).map(([l, b]) => [l, b.kisa]), ['avrupa', 'Avrupa']]
+    .map(([l, ad]) => `<a class="secenek ${l === lig ? 'aktif' : ''}" href="#/maclar/${l}">${ad}</a>`).join('')}</div>`;
+  return `${ligSec}${lig === 'avrupa' ? avrupaFiksturu(istenenHafta) : haftaFiksturu(lig, Number(istenenHafta) || null, `#/maclar/${lig}`)}`;
+}
+// Ligin hafta hafta fikstürü (Maçlar sayfası ve lig sayfasındaki Fikstür sekmesi): taban, okların gittiği adres
+function haftaFiksturu(lig, istenenHafta, taban) {
   const haftalar = S.index?.maclar?.[lig]?.haftalar ?? S.meta.ligler[lig].haftalar;
   const n = haftalar.includes(istenenHafta) ? istenenHafta : varsayilanHafta(lig);
-  const ligSec = `<div class="secenekler">${Object.entries(LIGLER).map(([l, b]) => `<a class="secenek ${l === lig ? 'aktif' : ''}" href="#/maclar/${l}">${b.kisa}</a>`).join('')}</div>`;
   const i = haftalar.indexOf(n);
-  const ok = (h, isaret) => (h === undefined ? `<span>${isaret}</span>` : `<a href="#/maclar/${lig}/${h}" aria-label="${h}. hafta">${isaret}</a>`);
+  const ok = (h, isaret) => (h === undefined ? `<span>${isaret}</span>` : `<a href="${taban}/${h}" aria-label="${h}. hafta">${isaret}</a>`);
   const maclar = macListesi(lig, n);
-  return `${ligSec}<div class="hafta-secici">${ok(haftalar[i - 1], '‹')}
+  return `<div class="hafta-secici">${ok(haftalar[i - 1], '‹')}
       <div class="baslik"><strong>${LIGLER[lig].kisa} ${n}. Hafta</strong><small>${maclar ? haftaDurumu(maclar) : 'Yükleniyor…'}</small></div>${ok(haftalar[i + 1], '›')}</div>
     ${yoneticiMi() && maclar?.length ? programDugmeleri(lig, n, maclar) : ''}
     ${!maclar ? '<p class="bos">Yükleniyor…</p>' : maclar.length ? gunlereGore(lig, maclar) : '<p class="bos">Bu haftanın maçları henüz belli değil.</p>'}
     ${maclar?.length ? bayYazisi(lig, maclar) : ''}
-    <p class="soluk kucuk">Maça dokununca kutu skor açılır. Maç saatlerinde skorlar dakikada bir yenilenir.</p>`;
+    <p class="soluk kucuk">Maça dokununca kutu skor açılır (oynanmamış maçta maç önü). Maç saatlerinde skorlar dakikada bir yenilenir.</p>`;
+}
+// Avrupa fikstürü: haftalar Pazartesi–Pazar; dört kupada temsilcilerimizin maçları gün gün
+function avrupaFiksturu(istenen) {
+  const idx = av('index');
+  if (!idx || idx.kupalar.some(k => av(k.kod) === undefined)) return '<p class="bos">Yükleniyor…</p>';
+  const gun = d => d.toISOString().slice(0, 10);
+  const pazartesi = iso => { const g = new Date(`${iso}T12:00:00Z`); return gun(new Date(g.getTime() - ((g.getUTCDay() + 6) % 7) * 864e5)); };
+  const bas = /^\d{4}-\d\d-\d\d$/.test(String(istenen ?? '')) ? pazartesi(istenen) : pazartesi(new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Istanbul' }));
+  const kaydir = n => gun(new Date(Date.parse(`${bas}T12:00:00Z`) + n * 7 * 864e5));
+  const son = gun(new Date(Date.parse(`${bas}T12:00:00Z`) + 6 * 864e5));
+  const hepsi = idx.kupalar.flatMap(k => (S.avrupa[k.kod]?.maclar ?? []).filter(m => m.tarih).map(m => ({ k, d: S.avrupa[k.kod], m })));
+  const hafta = hepsi.filter(x => x.m.tarih.slice(0, 10) >= bas && x.m.tarih.slice(0, 10) <= son).sort((a, b) => a.m.tarih.localeCompare(b.m.tarih));
+  const ilk = hepsi.map(x => x.m.tarih.slice(0, 10)).sort()[0], sonGun = hepsi.map(x => x.m.tarih.slice(0, 10)).sort().at(-1);
+  const ok = (n, isaret) => { const h = kaydir(n), sinir = n < 0 ? h >= pazartesi(ilk) : h <= sonGun; return sinir ? `<a href="#/maclar/avrupa/${h}">${isaret}</a>` : `<span>${isaret}</span>`; };
+  const ay = iso => new Date(`${iso}T12:00:00Z`).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', timeZone: 'UTC' });
+  const gunler = new Map();
+  for (const x of hafta) { const g = x.m.tarih.slice(0, 10); if (!gunler.has(g)) gunler.set(g, []); gunler.get(g).push(x); }
+  const bloklar = [...gunler.entries()].map(([g, liste]) => `<section class="kart mac-gun"><h2>${esc(gunBasligi(`${g}T12:00:00`))}</h2>
+    ${liste.map(({ k, d, m }) => avMacSatiri(k.kod, d, m, k.kisa)).join('')}</section>`).join('');
+  return `<div class="hafta-secici">${ok(-1, '‹')}<div class="baslik"><strong>Avrupa · ${ay(bas)} – ${ay(son)}</strong><small>${hafta.length} maç</small></div>${ok(1, '›')}</div>
+    ${bloklar || '<p class="bos">Bu hafta temsilcilerimizin maçı yok.</p>'}
+    <p class="soluk kucuk">EuroLeague, EuroCup, Şampiyonlar Ligi ve FIBA Europe Cup'ta temsilcilerimizin maçları. Maça dokununca maç sayfası açılır (oynanmamış maçta maç önü).</p>`;
 }
 
 // Haftanın maçında olmayan takım(lar): ligin puan tablosundaki takımlardan
@@ -244,7 +271,7 @@ function gorunumMac(lig, id) {
 }
 
 // ---------- Lig: puan tablosu, liderler, takımlar, oyuncular ----------
-const SEKMELER = [['tablo', 'Puan Tablosu'], ['liderler', 'Liderler'], ['takimlar', 'Takımlar'], ['oyuncular', 'Oyuncular']];
+const SEKMELER = [['tablo', 'Puan Tablosu'], ['fikstur', 'Fikstür'], ['liderler', 'Liderler'], ['takimlar', 'Takımlar'], ['oyuncular', 'Oyuncular']];
 // +/-, Seyirci ve Ödüller sekmeleri herkese açık (kullanıcı kararı 2026-11-08); yönetici sadece ödül üreticisi (?uret) için gerekir
 const yoneticiMi = () => { try { return localStorage.getItem('potaAltiYonetici') === '1'; } catch { return false; } };
 
@@ -306,6 +333,7 @@ function gorunumLig(lig, sekme, donem) {
     case 'artieksi': icerik = artieksiKarti(lig, donem); break;
     case 'seyirci': icerik = seyirciKarti(lig, donem); break;
     case 'rekor': icerik = rekorKarti(lig); break;
+    case 'fikstur': icerik = haftaFiksturu(lig, Number(donem) || null, `#/lig/${lig}/fikstur`); break;
     // Ödül üreticisi (görselleri hazırlama aracı) yalnızca yöneticiye
     case 'odul': icerik = new URLSearchParams(location.search).has('uret') && yoneticiMi() ? odulUretici(lig, donem) : odulKarti(lig, donem); break;
     default: icerik = tabloKarti(lig);
@@ -1311,15 +1339,15 @@ function avMacOnu(kod, d, m) {
   const takimKarti = (id, t) => {
     const turk = avTurkMu(d, id);
     const son = d.maclar.filter(x => x.durum === 'bitti' && (x.ev === id || x.dep === id)).sort((a, b) => b.tarih.localeCompare(a.tarih)).slice(0, 5);
-    const yildiz = (t?.kadro ?? []).filter(x => x.mac).sort((a, b) => (turk ? b.vp - a.vp : b.sayi - a.sayi)).slice(0, turk ? 3 : 5);
+    const yildiz = (t?.kadro ?? []).filter(x => x.mac).sort((a, b) => (turk ? b.vp - a.vp : b.sayi - a.sayi)).slice(0, 5);
     const oyuncu = x => `<div class="f-satir"><div class="ad"><a href="#/avrupa/${kod}/oyuncu/${x.id}" class="oyuncu-link"><strong>${esc(x.ad)}</strong></a>
       <small>${turk ? `${sayi(x.sayi)} sayı · ${sayi(x.rib)} ribaund · ${sayi(x.ast)} asist`
-        : (x.karsi ?? []).map(([r, p]) => `${p} sayı · ${esc(avTakimAdi(d, r))}`).join(' — ')}</small></div>
+        : (x.karsi ?? []).map(([r, p]) => `${p} sayı · ${esc(avTakimAdi(d, r))}`).join(' — ')}</small>${gucluYanlari(x)}</div>
       <div class="f-sayi"><strong>${sayi(turk ? x.vp : x.sayi)}</strong><small>${turk ? 'VP' : 'sayı ort.'}</small></div></div>`;
     return `<div class="kart"><h3><a href="#/avrupa/${kod}/takim/${id}">${esc(avTakimAdi(d, id))}</a></h3>
-      <p class="soluk kucuk" style="margin:0 0 6px">${turk ? 'Bu kupadaki son maçları' : 'Temsilcilerimize karşı maçları'}</p>
-      <div class="tablo-kap"><table><tbody>${son.map(x => sonuc(id, x)).join('') || '<tr><td class="bos">Henüz maç yok</td></tr>'}</tbody></table></div>
-      <h3 style="margin-top:14px">${turk ? 'Öne çıkan oyuncular' : 'Temsilcilerimize karşı en çok sayı atanlar'}</h3>${yildiz.map(oyuncu).join('') || '<p class="bos">Henüz veri yok</p>'}</div>`;
+      <h3 style="margin-top:4px">${turk ? 'Öne çıkan oyuncular' : 'Temsilcilerimize karşı en çok sayı atanlar'}</h3>${yildiz.map(oyuncu).join('') || '<p class="bos">Henüz veri yok</p>'}
+      <h3 style="margin-top:14px">${turk ? 'Bu kupadaki son 5 maçı' : 'Temsilcilerimize karşı maçları'}</h3>
+      <div class="tablo-kap"><table><tbody>${son.map(x => sonuc(id, x)).join('') || '<tr><td class="bos">Henüz maç yok</td></tr>'}</tbody></table></div></div>`;
   };
   const aralarinda = d.maclar.filter(x => x.id !== m.id && x.durum === 'bitti' && [x.ev, x.dep].includes(m.ev) && [x.ev, x.dep].includes(m.dep));
   return `${kiyas ? `<div class="kart ileri-kart"><h3>Maç önü</h3><div class="ileri-takimlar"><a href="#/avrupa/${kod}/takim/${m.ev}">${esc(avTakimAdi(d, m.ev))}</a><a href="#/avrupa/${kod}/takim/${m.dep}">${esc(avTakimAdi(d, m.dep))}</a></div>${kiyas}
@@ -1466,6 +1494,29 @@ async function rekorGorselPaylas(anahtar, indir) {
   dosyaIndir(dosya);
 }
 
+// Öne çıkan oyuncunun en güçlü olduğu 1–2 istatistik (blok, top çalma, üçlük...). havuz verilirse (TBL/BSL: ligin oyuncuları)
+// ligdeki sırasıyla ("1,9 blok (ligde 2.)"), verilmezse (Avrupa) eşiklere göre
+const GUCLU = [
+  ['tc', 'top çalma', o => o.tc, v => sayi(v), 1.2],
+  ['blk', 'blok', o => o.blk, v => sayi(v), 0.7],
+  ['ucm', 'üçlük', o => (o.mac ? o.uc[0] / o.mac : 0), v => sayi(v), 1.8],
+  ['ucy', 'üçlük isabeti', o => (o.mac && o.uc[1] >= 2 * o.mac ? o.uc[0] / o.uc[1] : 0), v => `%${Math.round(v * 100)}`, 0.4],
+  ['say', 'serbest atış', o => (o.mac && o.sa[1] >= 2 * o.mac ? o.sa[0] / o.sa[1] : 0), v => `%${Math.round(v * 100)}`, 0.85],
+  ['hr', 'hücum ribaundu', o => o.hr ?? o.or ?? 0, v => sayi(v), 1.8],
+];
+function gucluYanlari(o, havuz) {
+  const adaylar = GUCLU.map(([, ad, f, bicim, esik]) => {
+    const v = f(o);
+    if (!(v > 0)) return null;
+    if (havuz) {
+      const sira = havuz.filter(x => f(x) > v).length + 1;
+      return sira <= 15 ? { puan: sira, yazi: `${bicim(v)} ${ad} (ligde ${sira}.)` } : null;
+    }
+    return v >= esik ? { puan: -v / esik, yazi: `${bicim(v)} ${ad}` } : null;
+  }).filter(Boolean).sort((a, b) => a.puan - b.puan).slice(0, 2);
+  return adaylar.length ? `<small class="guclu">${adaylar.map(x => esc(x.yazi)).join(' · ')}</small>` : '';
+}
+
 // ---------- Maç önü (oynanmamış maç) ----------
 // İki takımın sezon kıyası (iyi olan vurgulu), son 5 maç, bu sezonki karşılaşmaları ve öne çıkan oyuncular. Yayın hazırlığı için.
 function macOnu(lig, m) {
@@ -1500,13 +1551,14 @@ function macOnu(lig, m) {
     return `<tr class="tikla" onclick="location.hash='#/mac/${lig}/${x.id}'"><td class="sira">${x.hafta}.</td><td>${ev ? '' : '@ '}${esc(takimAdi(lig, ev ? x.dep : x.ev))}</td>
       <td class="sayi"><span class="${biz > onlar ? 'yesil-yazi' : 'kirmizi-yazi'}">${biz > onlar ? 'G' : 'M'}</span> ${biz}-${onlar}</td></tr>`;
   };
-  const yildizlar = tk => [...tk.kadro].filter(x => x.mac >= Math.min(2, tk.o)).sort((a, b) => b.vp - a.vp).slice(0, 3)
+  const havuz = (ligVerisi(lig, 'oyuncular') ?? []).filter(x => x.mac >= 3);
+  const yildizlar = tk => [...tk.kadro].filter(x => x.mac >= Math.min(2, tk.o)).sort((a, b) => b.vp - a.vp).slice(0, 5)
     .map(x => `<div class="f-satir"><div class="ad"><a href="#/oyuncu/${lig}/${x.id}" class="oyuncu-link"><strong>${esc(x.ad)}</strong></a>
-      <small>${sayi(x.sayi)} sayı · ${sayi(x.rib)} ribaund · ${sayi(x.ast)} asist · ${sayi(x.dk)} dk</small></div><div class="f-sayi"><strong>${sayi(x.vp)}</strong><small>VP</small></div></div>`).join('');
+      <small>${sayi(x.sayi)} sayı · ${sayi(x.rib)} ribaund · ${sayi(x.ast)} asist · ${sayi(x.dk)} dk</small>${gucluYanlari(x, havuz)}</div><div class="f-sayi"><strong>${sayi(x.vp)}</strong><small>VP</small></div></div>`).join('');
   const takimKarti = (id, tk, st) => `<div class="kart"><h3><a href="#/takim/${lig}/${id}">${esc(baslik(tk.ad))}</a></h3>
-    <p class="soluk kucuk" style="margin:0 0 6px">Son 5: <span class="form">${st.son5.map(x => `<i class="${x}">${x}</i>`).join('')}</span></p>
-    <div class="tablo-kap"><table><tbody>${sonMaclar(id).map(x => macSatir(id, x)).join('') || '<tr><td class="bos">Henüz maç yok</td></tr>'}</tbody></table></div>
-    <h3 style="margin-top:14px">Öne çıkan oyuncular</h3>${yildizlar(tk) || '<p class="bos">—</p>'}</div>`;
+    <h3 style="margin-top:4px">Öne çıkan oyuncular</h3>${yildizlar(tk) || '<p class="bos">—</p>'}
+    <h3 style="margin-top:14px">Son 5 maç <span class="form" style="margin-left:6px">${st.son5.map(x => `<i class="${x}">${x}</i>`).join('')}</span></h3>
+    <div class="tablo-kap"><table><tbody>${sonMaclar(id).map(x => macSatir(id, x)).join('') || '<tr><td class="bos">Henüz maç yok</td></tr>'}</tbody></table></div></div>`;
   const aralarinda = t.maclar.filter(x => x.id !== m.id && ((x.ev === evId && x.dep === depId) || (x.ev === depId && x.dep === evId)) && x.durum === 'bitti');
   return `<div class="kart ileri-kart"><h3>Maç önü</h3>
       <div class="ileri-takimlar"><a href="#/takim/${lig}/${evId}">${esc(baslik(te.ad))}</a><a href="#/takim/${lig}/${depId}">${esc(baslik(td.ad))}</a></div>${kiyas}

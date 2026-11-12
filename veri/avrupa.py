@@ -41,6 +41,8 @@ KUPALAR = [
 
 
 def getir(url, metin=False):
+    if "fiba.basketball" in url:  # FIBA sayfaları CDN'de önbellekli: her istek ayrı adresle (CDN'i atlar; FIBA'nın kendi 5 dk'lık önbelleği kalır)
+        url += ("&" if "?" in url else "?") + f"t={int(time.time())}"
     # EuroLeague API'si Accept'e göre XML de döndürebiliyor: JSON istenirken açıkça belirtilir
     req = urllib.request.Request(url, headers={"User-Agent": TARAYICI, "Accept": "*/*" if metin else "application/json"})
     with urllib.request.urlopen(req, timeout=40) as y:

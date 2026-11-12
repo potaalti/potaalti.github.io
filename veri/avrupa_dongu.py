@@ -12,6 +12,7 @@ birbirini ezmez. Türkiye saatiyle 18:00–02:00 dışında bir şey yapmaz.
 """
 import argparse
 import os
+import shutil
 import subprocess
 import sys
 import time
@@ -106,6 +107,11 @@ def main():
     depo = Path(a.depo)
     log = Kayit(str(Path.home() / "pota-avrupa.log"))
     nabiz = Path.home() / ".pota-avrupa.nabiz"
+    # Telefonda (Termux) döngü boyunca telefon uyanık kalır: yoksa Android ekran kapalıyken döngüyü uyutuyor
+    # (2026-11-12 19:12–19:52 arası hiç güncelleme gelmedi). Eski TBL maç döngüsü de aynısını yapar.
+    kilit = a.mod == "dongu" and shutil.which("termux-wake-lock")
+    if kilit:
+        subprocess.run(["termux-wake-lock"], timeout=30)
     try:
         while a.hep or tr_saat().hour in PENCERE_SAATLERI:
             bas = time.time()
@@ -119,6 +125,8 @@ def main():
                 break
             time.sleep(max(5, ARALIK - (time.time() - bas)))
     finally:
+        if kilit:
+            subprocess.run(["termux-wake-unlock"], timeout=30)
         log.kirp()
 
 

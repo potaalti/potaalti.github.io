@@ -10,6 +10,7 @@ import * as AE from './fantezi/artieksi.js';
 import * as SY from './seyirci.js';
 import * as OD from './odul.js';
 import * as ME from './mac-ek.js';
+import * as AG from './avrupa-gorsel.js';
 import * as PR from './program.js';
 
 const YEREL = ['localhost', '127.0.0.1'].includes(location.hostname);
@@ -1283,6 +1284,55 @@ function avGunKarti(idx, sadeceBugun = false) {
   return `<div class="kart mac-gun"><h3 style="padding:12px 14px 0;margin:0">${esc(baslik)}${sadeceBugun ? ' <a href="#/avrupa" style="float:right;font-weight:600">Avrupa ›</a>' : ''}</h3>
     ${secili.map(({ k, d, m }) => avMacSatiri(k.kod, d, m, k.kisa)).join('')}</div>`;
 }
+
+// Haftalık Avrupa görseli (yönetici): bu haftanın (Pazartesi–Pazar, Türkiye saati) programı ve sonuçları
+function avHafta() {
+  const bugun = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Istanbul' });
+  const g = new Date(`${bugun}T12:00:00Z`);
+  const pzt = new Date(g.getTime() - ((g.getUTCDay() + 6) % 7) * 864e5);
+  const pz = new Date(pzt.getTime() + 6 * 864e5);
+  const gun = d => d.toISOString().slice(0, 10);
+  const ay = d => d.toLocaleDateString('tr-TR', { month: 'long', timeZone: 'UTC' }).toLocaleUpperCase('tr');
+  const aralik = ay(pzt) === ay(pz) ? `${pzt.getUTCDate()}–${pz.getUTCDate()} ${ay(pz)}` : `${pzt.getUTCDate()} ${ay(pzt)} – ${pz.getUTCDate()} ${ay(pz)}`;
+  return { bas: gun(pzt), son: gun(pz), aralik };
+}
+function avHaftaMaclari(idx) {
+  const { bas, son } = avHafta();
+  return idx.kupalar.flatMap(k => {
+    const d = S.avrupa[k.kod];
+    return (d?.maclar ?? []).filter(m => m.tarih && m.tarih.slice(0, 10) >= bas && m.tarih.slice(0, 10) <= son)
+      .flatMap(m => [m.ev, m.dep].filter(t => avTurkMu(d, t)).map(t => ({ k, d, m, biz: t })));
+  }).sort((a, b) => a.m.tarih.localeCompare(b.m.tarih));
+}
+function avGorselKarti(idx) {
+  if (!yoneticiMi() || idx.kupalar.some(k => S.avrupa[k.kod] === undefined)) return '';
+  const liste = avHaftaMaclari(idx);
+  const { aralik } = avHafta();
+  const satir = (tur, ad) => `<div class="f-satir"><div class="ad"><strong>${ad}</strong><small>${aralik} · ${liste.length} maç</small></div><span class="satir">
+    <button class="secenek" data-is="av-paylas" data-id="${tur}">📤 Paylaş</button><button class="secenek" data-is="av-indir" data-id="${tur}">⬇ İndir</button></span></div>`;
+  return `<div class="kart gorsel-kart">${satir('program', 'Temsilcilerimizin haftası · program')}
+    ${liste.some(x => x.m.durum === 'bitti') ? satir('sonuc', 'Temsilcilerimizin haftası · sonuçlar') : ''}</div>`;
+}
+async function avGorselPaylas(tur, indir) {
+  const idx = S.avrupa.index;
+  const gorsel = await getir('data/bsl/gorsel.json');
+  const logo = ad => {
+    const anah = dosyaAnahtari(ad);
+    const bsl = Object.keys(gorsel.logo ?? {}).find(x => dosyaAnahtari(x) === anah);
+    return bsl ? `data/bsl/logo/${anah}${uzanti(gorsel.logo[bsl])}` : null;
+  };
+  const maclar = avHaftaMaclari(idx).filter(x => tur === 'program' || x.m.durum === 'bitti').map(({ k, d, m, biz }) => {
+    const evde = m.ev === biz;
+    return { kupa: k.kod, kupaKisa: k.kisa, tarih: m.tarih, biz: avTakimAdi(d, biz), bizLogo: logo(avTakimAdi(d, biz)), rakip: avTakimAdi(d, evde ? m.dep : m.ev),
+      evde, bizSkor: evde ? m.evSkor : m.depSkor, rakipSkor: evde ? m.depSkor : m.evSkor, durum: m.durum };
+  });
+  const blob = await AG.haftaGorseli({ maclar, tur, aralik: avHafta().aralik });
+  const dosya = new File([blob], `pota-alti-avrupa-${avHafta().bas}-${tur === 'sonuc' ? 'sonuclar' : 'program'}.png`, { type: 'image/png' });
+  if (!indir && navigator.canShare?.({ files: [dosya] })) {
+    try { await navigator.share({ files: [dosya] }); return; } catch (e) { if (e?.name === 'AbortError') return; }
+  }
+  dosyaIndir(dosya);
+}
 function gorunumAvrupa(kod, tur, id) {
   const idx = av('index');
   if (!idx) return idx === null ? '<p class="bos">Avrupa verisi henüz yok.</p>' : '<p class="bos">Yükleniyor…</p>';
@@ -1290,7 +1340,7 @@ function gorunumAvrupa(kod, tur, id) {
   const cipler = `<div class="secenekler">${idx.kupalar.map(x => `<a class="secenek ${x.kod === k.kod ? 'aktif' : ''}" href="#/avrupa/${x.kod}">${esc(x.ad)}</a>`).join('')}</div>`;
   const icerik = tur === 'takim' ? avTakim(k.kod, k, id) : tur === 'oyuncu' ? avOyuncu(k.kod, k, id) : tur === 'mac' ? avMac(k.kod, k, id) : avKupa(k.kod, k);
   return `${tur ? '' : `<div class="sayfa-baslik" style="margin-bottom:10px"><h1>Avrupa'daki temsilcilerimiz</h1>
-      <p class="soluk" style="margin:0 0 10px">2026-27 sezonu${idx.guncelleme ? ` · ${tarihSaat(idx.guncelleme)} itibarıyla` : ''}</p></div>${avGunKarti(idx)}${cipler}`}${icerik}`;
+      <p class="soluk" style="margin:0 0 10px">2026-27 sezonu${idx.guncelleme ? ` · ${tarihSaat(idx.guncelleme)} itibarıyla` : ''}</p></div>${avGunKarti(idx)}${avGorselKarti(idx)}${cipler}`}${icerik}`;
 }
 
 // ---------- Sezon rekorları (data/<lig>/rekorlar.json, veri/uret.py) ----------
@@ -1493,7 +1543,14 @@ document.addEventListener('click', e => {
   }
   if (el.dataset.is === 'kutu-sirala') { S.ui.kutuSirala = ME.kutuSiralamaDegistir(S.ui.kutuSirala, el.dataset.id); ciz(); }
   // Paylaş / İndir yalnızca yöneticiye (kullanıcı kararı 2026-11-09); ödül üreticisi (?uret) zaten yöneticiye
-  if (/^(ae|sy|odul)-(paylas|indir)$|^odul-hepsi(-indir|-paylas)?$/.test(el.dataset.is) && !yoneticiMi()) return;
+  if (/^(ae|sy|odul|av)-(paylas|indir)$|^odul-hepsi(-indir|-paylas)?$/.test(el.dataset.is) && !yoneticiMi()) return;
+  if (el.dataset.is === 'av-paylas' || el.dataset.is === 'av-indir') {
+    const yazi = el.textContent;
+    el.disabled = true; el.textContent = 'Hazırlanıyor…';
+    avGorselPaylas(el.dataset.id, el.dataset.is === 'av-indir').catch(e => alert(`Görsel hazırlanamadı: ${e.message}`))
+      .finally(() => { el.disabled = false; el.textContent = yazi; });
+    return;
+  }
   if (el.dataset.is === 'ae-paylas' || el.dataset.is === 'ae-indir') {
     const yazi = el.textContent;
     el.disabled = true;

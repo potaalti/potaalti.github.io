@@ -22,7 +22,7 @@ const S = {
   maclar: {}, // `${lig}-${hafta}` -> maç listesi
   kutular: {}, // maç id -> kutu skor (null: yok)
   farklar: {}, // maç id -> skor farkı grafiği verisi (biten maçlar, null: yok)
-  ui: { ara: '', oyuncuSirala: 'vp', liderKategori: {}, anaLig: anaLigOku() },
+  ui: { ara: '', oyuncuSirala: 'vp', seyirciSirala: { k: 'ort', yon: 1 }, liderKategori: {}, anaLig: anaLigOku() },
 };
 // Telefon ve bilgisayar ayrı düzen: telefonda ana sayfa tek lig gösterir (BSL | TBL seçici), bilgisayarda yan menü ve iki sütun
 const TELEFON = matchMedia('(max-width: 759px)');
@@ -389,13 +389,19 @@ function seyirciKarti(lig, istenen) {
   // Paylaş / İndir yalnızca yöneticiye (kullanıcı kararı 2026-11-09)
   const dugmeler = !yoneticiMi() ? '' : `<span class="satir"><button class="secenek" data-is="sy-paylas" data-id="${lig}-${donem}">📤 Paylaş</button><button class="secenek" data-is="sy-indir" data-id="${lig}-${donem}">⬇ İndir</button></span>`;
   if (donem === 'ortalama') {
-    const liste = seyirciOrtalamasi(v);
+    // Sütun başlığına dokununca sıralama (ilk dokunuş çoktan aza, ikincisi azdan çoka); doluluğu bilinmeyen hep en altta.
+    // Paylaş/İndir görseli her zaman ortalamaya göre sıralı kalır.
+    const { k: sk, yon } = S.ui.seyirciSirala;
+    const liste = seyirciOrtalamasi(v).sort((a, b) => (a[sk] === null) - (b[sk] === null) || yon * ((b[sk] ?? 0) - (a[sk] ?? 0)) || b.ort - a.ort);
+    const th = (k, ad, ek = '') => `<th class="sayi sirala ${ek} ${k === sk ? 'aktif' : ''}" data-is="sy-sirala" data-id="${k}">${ad}${k === sk ? (yon > 0 ? ' ▼' : ' ▲') : ''}</th>`;
+    const siraCipleri = `<div class="secenekler" style="margin-bottom:6px">${[['ort', 'Ortalama'], ['doluluk', 'Doluluk'], ['toplam', 'Toplam'], ['mac', 'İç saha']].map(([k, ad]) =>
+      `<button class="secenek ${k === sk ? 'aktif' : ''}" data-is="sy-sirala" data-id="${k}">${ad}${k === sk ? (yon > 0 ? ' ▼' : ' ▲') : ''}</button>`).join('')}</div>`;
     const satirlar = liste.map((k, i) => `<tr><td class="sayi"><span class="f-sira ${i < 3 ? `s${i + 1}` : ''}">${i + 1}</span></td><td><b>${esc(baslik(k.ad))}</b></td>
-      <td class="sayi">${k.mac}</td><td class="sayi">${binlik(k.toplam)}</td><td class="sayi"><b>${binlik(k.ort)}</b></td><td class="sayi">${dolulukYazisi(k.doluluk)}</td></tr>`).join('');
+      <td class="sayi dar-gizle">${k.mac}</td><td class="sayi">${binlik(k.toplam)}</td><td class="sayi">${sk === 'ort' ? `<b>${binlik(k.ort)}</b>` : binlik(k.ort)}</td><td class="sayi">${sk === 'doluluk' ? `<b>${dolulukYazisi(k.doluluk)}</b>` : dolulukYazisi(k.doluluk)}</td></tr>`).join('');
     return `${cipler}<div class="kart"><div class="baslik-satir"><h2>İlk ${v.haftalar.at(-1)} hafta · seyirci ortalamaları</h2>${dugmeler}</div>
-      <div class="tablo-kap"><table><thead><tr><th class="sayi">#</th><th>Takım</th><th class="sayi">İç saha</th><th class="sayi">Toplam</th><th class="sayi">Ortalama</th><th class="sayi">Doluluk</th></tr></thead>
+      ${siraCipleri}<div class="tablo-kap"><table class="seyirci-ort"><thead><tr><th class="sayi">#</th><th>Takım</th>${th('mac', 'İç saha', 'dar-gizle')}${th('toplam', 'Toplam')}${th('ort', 'Ortalama')}${th('doluluk', 'Doluluk')}</tr></thead>
       <tbody>${satirlar}</tbody></table></div>
-      <p class="soluk kucuk" style="margin-bottom:0">Seyirci sayısı girilmemiş maçlar ortalamaya katılmaz. Doluluk: seyircinin salon kapasitesine oranı (iç saha maçlarının ortalaması; kapasitesi bilinmeyen salonda –).</p></div>`;
+      <p class="soluk kucuk" style="margin-bottom:0">Seyirci sayısı girilmemiş maçlar ortalamaya katılmaz. Doluluk: seyircinin salon kapasitesine oranı (iç saha maçlarının ortalaması; kapasitesi bilinmeyen salonda –). Sıralamak için düğmeye ya da sütun başlığına dokun; ikinci dokunuş tersine çevirir.</p></div>`;
   }
   const liste = seyirciHaftasi(v, donem);
   const dolu = liste.filter(m => m.seyirci);
@@ -1087,6 +1093,11 @@ document.addEventListener('click', e => {
   const el = e.target.closest('[data-is]');
   if (!el) return;
   if (el.dataset.is === 'oyuncu-sirala') { S.ui.oyuncuSirala = el.dataset.id; ciz(); }
+  if (el.dataset.is === 'sy-sirala') {
+    const o = S.ui.seyirciSirala;
+    S.ui.seyirciSirala = { k: el.dataset.id, yon: o.k === el.dataset.id ? -o.yon : 1 };
+    ciz();
+  }
   if (el.dataset.is === 'kutu-sirala') { S.ui.kutuSirala = ME.kutuSiralamaDegistir(S.ui.kutuSirala, el.dataset.id); ciz(); }
   // Paylaş / İndir yalnızca yöneticiye (kullanıcı kararı 2026-11-09); ödül üreticisi (?uret) zaten yöneticiye
   if (/^(ae|sy|odul)-(paylas|indir)$|^odul-hepsi(-indir|-paylas)?$/.test(el.dataset.is) && !yoneticiMi()) return;

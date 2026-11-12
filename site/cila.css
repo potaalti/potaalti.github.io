@@ -354,6 +354,15 @@ table.kutu .sahada-yildiz { position: absolute; right: 2px; top: 50%; transform:
 /* Kutu skor: sütun başlığına dokununca sıralama (▼ çoktan aza, ▲ azdan çoka) */
 table.kutu thead td.sirala { cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
 table.kutu thead td.sirala.aktif { color: var(--vurgu); }
+/* Seyirci ortalamaları: sütun başlığına dokununca sıralama */
+th.sirala { cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; white-space: nowrap; }
+th.sirala.aktif { color: var(--vurgu); }
+@media (max-width: 759px) {
+  table.seyirci-ort th, table.seyirci-ort td { padding-left: 3px; padding-right: 3px; }
+  table.seyirci-ort td { font-size: .84rem; }
+  table.seyirci-ort .f-sira { width: 24px; height: 24px; font-size: .75rem; }
+  table.seyirci-ort thead th { letter-spacing: 0; }
+}
 
 /* Kutu skor: takım satırı (oyuncuya yazılmayan ribaund, top kaybı, faul) */
 table.kutu tr.takim-satir th, table.kutu tr.takim-satir td { color: var(--soluk); font-style: italic; }

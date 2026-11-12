@@ -49,9 +49,18 @@ def getir(url, metin=False):
     return veri if metin else json.loads(veri)
 
 
+DEGISTI = False  # bu çalışmada içeriği değişen dosya oldu mu (index.json'daki güncelleme zamanı yalnız o zaman ilerler)
+
+
 def yaz(yol, veri):
+    """Yalnızca içerik değiştiyse yazar: GitHub'daki zamanlanmış iş değişiklik yoksa kayıt ve yayın yapmaz."""
+    global DEGISTI
+    metin = json.dumps(veri, ensure_ascii=False, separators=(",", ":"))
+    if yol.exists() and yol.read_text(encoding="utf-8") == metin:
+        return
     yol.parent.mkdir(parents=True, exist_ok=True)
-    yol.write_text(json.dumps(veri, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    yol.write_text(metin, encoding="utf-8")
+    DEGISTI = True
 
 
 def oku(yol):
@@ -107,6 +116,16 @@ TR_AD = {
 }
 
 
+def periyot_adi(p):
+    """FIBA 'Q3' -> '3. Ç', 'OT1' -> '1. Uzatma'"""
+    p = str(p or "")
+    if p.startswith("Q") and p[1:].isdigit():
+        return f"{p[1:]}. Ç"
+    if p.startswith("OT"):
+        return f"{p[2:] or 1}. Uzatma"
+    return p
+
+
 def salon_adi(ad):
     """'ULKER SPORTS AND EVENT HALL' -> 'Ulker Sports And Event Hall'"""
     return ad.title() if ad and ad.isupper() else ad
@@ -140,6 +159,21 @@ def el_kupa(k):
                        "durum": "bitti" if g["played"] else "oynanmadi",
                        "salon": salon_adi((g.get("venue") or {}).get("name")), "seyirci": g.get("audience") or None,
                        "ceyrekler": [ceyrek_el(g["local"].get("partials")), ceyrek_el(g["road"].get("partials"))] if g["played"] else None})
+    # Canlı skor: başlama saati geçmiş (en çok 3 saat) ama listede henüz bitmemiş maçlar için maç başlığı
+    simdi = datetime.now(TURKIYE).replace(tzinfo=None)
+    for m in maclar:
+        bas = datetime.fromisoformat(m["tarih"])
+        if m["durum"] != "oynanmadi" or not (bas <= simdi <= bas + timedelta(hours=3)):
+            continue
+        try:
+            h = getir(f"https://live.euroleague.net/api/Header?gamecode={m['id']}&seasoncode={k['sezon']}")
+        except Exception as e:  # noqa: BLE001 - canlı skor alınamazsa maç oynanmadı görünür
+            print(f"  {k['kod']} {m['id']}: canlı skor alınamadı:", e)
+            continue
+        if h.get("Live"):
+            ceyrek = str(h.get("Quarter") or "").strip()
+            m.update({"durum": "canli", "evSkor": int(h.get("ScoreA") or 0), "depSkor": int(h.get("ScoreB") or 0),
+                      "periyot": f"{ceyrek}. Ç" if ceyrek.isdigit() and int(ceyrek) <= 4 else ceyrek or "", "sure": h.get("RemainingPartialTime") or ""})
     # Puan durumu (resmi sıralama, v1 XML; EuroCup'ta 4 grup)
     xml = ET.fromstring(getir(f"{EL_API}/v1/standings?seasonCode={k['sezon']}", metin=True))
     gruplar = []
@@ -256,7 +290,7 @@ def fiba_kupa(k):
                        "evSkor": g.get("teamAScore") if (bitti or canli) else None, "depSkor": g.get("teamBScore") if (bitti or canli) else None,
                        "durum": "canli" if canli else "bitti" if bitti else "oynanmadi",
                        "salon": salon_adi(g.get("venueName")), "seyirci": g.get("spectators") or None,
-                       **({"periyot": g.get("currentPeriod"), "sure": g.get("chrono")} if canli else {}),
+                       **({"periyot": periyot_adi(g.get("currentPeriod")), "sure": g.get("chrono")} if canli else {}),
                        "sayfa": f"{k['taban']}/games/{g['gameId']}-{g['teamA'].get('code')}-{g['teamB'].get('code')}"})
     # Puan durumu: sayfadaki "current" evrenin grupları
     s = gomulu(getir(f"{k['taban']}/standings", metin=True))
@@ -512,7 +546,12 @@ def main():
             print(f"{k['ad']}: alınamadı:", e)
             eski = oku(CIKTI / "index.json") or {"kupalar": []}
             ozet.extend(x for x in eski["kupalar"] if x["kod"] == k["kod"])
-    yaz(CIKTI / "index.json", {"guncelleme": datetime.now(TURKIYE).isoformat(timespec="seconds"), "kupalar": ozet})
+    eski = oku(CIKTI / "index.json") or {}
+    if DEGISTI or eski.get("kupalar") != ozet or "guncelleme" not in eski:
+        yaz(CIKTI / "index.json", {"guncelleme": datetime.now(TURKIYE).isoformat(timespec="seconds"), "kupalar": ozet})
+        print("değişiklik var")
+    else:
+        print("değişiklik yok")
 
 
 if __name__ == "__main__":

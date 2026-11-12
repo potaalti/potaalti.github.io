@@ -1,0 +1,42 @@
+# Avrupa'daki temsilcilerimiz (veri/avrupa.py): EuroLeague, EuroCup, BCL, FIBA Europe Cup verileri resmi kaynaklardan çekilir.
+# Avrupa maçları akşamları (Türkiye 17:00–02:00) 10 dakikada bir (canlı skor, biten maçın kutu skoru, puan durumu), diğer
+# saatlerde saatte bir. Değişiklik yoksa hiçbir şey kaydedilmez; varsa kaydedilir ve site yeniden yayınlatılır.
+# (Bu kaynaklar TBF gibi GitHub sunucularını engellemiyor; telefona yük binmez.)
+name: Avrupa verileri
+
+on:
+  schedule:
+    - cron: '*/10 14-23 * * *'
+    - cron: '25 0-13 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: avrupa
+  cancel-in-progress: false
+
+jobs:
+  avrupa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python veri/avrupa.py
+      - name: Kaydet ve siteyi yayınlat
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add site/data/avrupa
+          if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -q -m "Avrupa verileri güncellendi"
+          for i in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 10; done
+          # Bu iş kaydettiğinde "Siteyi yayınla" kendiliğinden başlamaz; elle başlatılır
+          gh workflow run yayinla.yml

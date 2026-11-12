@@ -1375,6 +1375,14 @@ async function canliYenile() {
     if (!v?.maclar?.some(m => m.durum !== 'bitti' && !m.tarih.endsWith('T00:00:00') && simdi >= new Date(m.tarih).getTime() - 10 * 60000)) continue;
     try { S.maclar[k] = listeDuzelt(await getir(`${KAYNAK}/maclar/${k}.json`)); } catch { /* sonraki denemede */ }
   }
+  // Avrupa: maç saatindeki (canlı ya da başlamak üzere) kupaların dosyası yenilenir (GitHub'da 10 dakikada bir güncellenir)
+  if (rota()[0] === 'avrupa') {
+    for (const [k, v] of Object.entries(S.avrupa)) {
+      if (k.includes('/') || !v?.maclar?.some(m => m.durum === 'canli' || (m.durum === 'oynanmadi' && m.tarih
+        && simdi >= new Date(m.tarih).getTime() - 10 * 60000 && simdi <= new Date(m.tarih).getTime() + 3 * 3600000))) continue;
+      try { [S.avrupa[k], S.avrupa.index] = await Promise.all([getir(`data/avrupa/${k}.json`), getir('data/avrupa/index.json')]); } catch { /* sonraki denemede */ }
+    }
+  }
   const [s, lig, id] = rota();
   if (s === 'mac' && macBul(lig, Number(id))?.durum === 'canli') {
     try { S.kutular[Number(id)] = await getir(`${KAYNAK}/mac/${id}.json`); } catch { /* sonraki denemede */ }

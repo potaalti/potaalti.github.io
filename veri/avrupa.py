@@ -118,6 +118,17 @@ TR_AD = {
 }
 
 
+def mac_ani(p, chrono):
+    """Canlı maçın başından geçen saniye: 'Q3', '04:12' -> 2*600 + 600 - 252 (uzatma 5 dk)"""
+    p = str(p or "")
+    kalan = sure_sn(chrono)
+    if p.startswith("Q") and p[1:].isdigit():
+        return (int(p[1:]) - 1) * 600 + 600 - kalan
+    if p.startswith("OT"):
+        return 2400 + (int(p[2:] or 1) - 1) * 300 + 300 - kalan
+    return None
+
+
 def periyot_adi(p):
     """FIBA 'Q3' -> '3. Ç', 'OT1' -> '1. Uzatma'"""
     p = str(p or "")
@@ -292,7 +303,8 @@ def fiba_kupa(k):
                        "evSkor": g.get("teamAScore") if (bitti or canli) else None, "depSkor": g.get("teamBScore") if (bitti or canli) else None,
                        "durum": "canli" if canli else "bitti" if bitti else "oynanmadi",
                        "salon": salon_adi(g.get("venueName")), "seyirci": g.get("spectators") or None,
-                       **({"periyot": periyot_adi(g.get("currentPeriod")), "sure": g.get("chrono")} if canli else {}),
+                       **({"periyot": periyot_adi(g.get("currentPeriod")), "sure": g.get("chrono"),
+                           "_an": mac_ani(g.get("currentPeriod"), g.get("chrono"))} if canli else {}),
                        "sayfa": f"{k['taban']}/games/{g['gameId']}-{g['teamA'].get('code')}-{g['teamB'].get('code')}"})
     # Puan durumu: sayfadaki "current" evrenin grupları
     s = gomulu(getir(f"{k['taban']}/standings", metin=True))
@@ -521,6 +533,19 @@ def kupa_uret(k):
                 kayit["canli"] = m["durum"] == "canli"
             except Exception as e:  # noqa: BLE001 - bir maç alınamazsa diğerleri devam eder
                 print(f"  {k['kod']} {m['id']}: kutu skor alınamadı:", e)
+                # FIBA canlıyken kutu skor ve sayı sayı akış vermiyor: skor farkı grafiği her güncellemedeki canlı skordan
+                # (maçın o anki dakikasıyla) kurulur; maç bitip tam akış gelince yerini o alır
+                an = m.get("_an")
+                if m["durum"] == "canli" and an is not None and m.get("evSkor") is not None:
+                    onceki = oku(yol) or {}
+                    d = (onceki.get("fark") or {}).get("d") if onceki.get("anlik") else None
+                    d = d or [[0, 0]]
+                    fark = int(m["evSkor"]) - int(m["depSkor"])
+                    if an > d[-1][0] and fark != d[-1][1]:
+                        d.append([an, fark])
+                    yaz(yol, {"id": m["id"], "tarih": m["tarih"], "canli": True, "anlik": True,
+                              "ev": {"id": m["ev"], "skor": m["evSkor"]}, "dep": {"id": m["dep"], "skor": m["depSkor"]},
+                              "fark": {"sure": max(2400, an), "simdi": an, "d": d}})
                 continue
             try:
                 kayit.update(akis(m, kayit))
@@ -538,6 +563,7 @@ def kupa_uret(k):
         kutular[m["id"]] = kayit
     for m in maclar:
         m.pop("sayfa", None)
+        m.pop("_an", None)
         if not m.get("ceyrekler") and m["id"] in kutular:
             m["ceyrekler"] = [kutular[m["id"]]["ev"].get("ceyrekler") or [], kutular[m["id"]]["dep"].get("ceyrekler") or []]
     takim_oyuncu_uret(k, takimlar, maclar, kutular)

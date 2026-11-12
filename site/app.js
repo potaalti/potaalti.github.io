@@ -1249,17 +1249,19 @@ function avMac(kod, k, id) {
   const m = liste ?? { tarih: kb.tarih, ev: kb.ev.id, dep: kb.dep.id, evSkor: kb.ev.skor, depSkor: kb.dep.skor, durum: 'bitti' };
   const taraf = (t, i) => ({ ad: avTakimAdi(d, t.id), skor: t.skor, ceyrekler: m.ceyrekler?.[i] ?? t.ceyrekler,
     oyuncular: t.oyuncular.map(o => ({ ...o, sure: mmss(o.sn), hr: o.or, sr: o.dr })) });
-  const kutu = kb ? { ev: taraf(kb.ev, 0), dep: taraf(kb.dep, 1) } : null;
-  const turkOyuncu = new Set(kb ? [kb.ev, kb.dep].filter(t => avTurkMu(d, t.id)).flatMap(t => t.oyuncular.map(o => String(o.id))) : []);
+  const kutu = kb?.ev?.oyuncular ? { ev: taraf(kb.ev, 0), dep: taraf(kb.dep, 1) } : null;
+  const turkOyuncu = new Set(kutu ? [kb.ev, kb.dep].filter(t => avTurkMu(d, t.id)).flatMap(t => t.oyuncular.map(o => String(o.id))) : []);
   const bilgi = [gunSaat(m.tarih), m.tur, m.salon, m.seyirci ? `${binlik(m.seyirci)} seyirci` : ''].filter(Boolean).map(esc).join(' · ');
   const takimLink = t => (avTurkMu(d, t) ? `<a href="#/avrupa/${kod}/takim/${t}">${esc(avTakimAdi(d, t))}</a>` : `<span>${esc(avTakimAdi(d, t))}</span>`);
   return `<a class="geri" href="#/avrupa/${kod}">‹ ${esc(k.ad)}</a>
     <div class="kart mac-baslik"><div class="mac-takimlar">
       <span class="${avKazanan(m, 'ev')}">${takimLink(m.ev)}</span>
-      <div class="mac-skor"><strong>${m.evSkor ?? kb?.ev.skor ?? 0} - ${m.depSkor ?? kb?.dep.skor ?? 0}</strong><small>${m.durum === 'canli' ? `<span class="canli-yazi">${esc(m.periyot ?? '')} ${esc(m.sure ?? '')}</span>` : 'Maç sonu'}</small></div>
+      <div class="mac-skor"><strong>${m.evSkor ?? kb?.ev.skor ?? 0} - ${m.depSkor ?? kb?.dep.skor ?? 0}</strong><small>${m.durum === 'canli' ? `<span class="canli-yazi">${esc(m.periyot ?? '')} ${esc(m.sure ?? '')}</span>` : m.durum === 'bitti' ? 'Maç sonu' : saatYazisi(m.tarih)}</small></div>
       <span class="${avKazanan(m, 'dep')}">${takimLink(m.dep)}</span></div>
       <p class="soluk kucuk" style="margin:10px 0 0;text-align:center"><span class="lig-etiket">${esc(k.kisa)}</span> ${bilgi}</p></div>
-    ${!kutu ? '<p class="bos">Kutu skor maç başlayınca gelir (birkaç dakika sürebilir).</p>' : ME.macGovdesi(kutu, { sirala: S.ui.kutuSirala, fark: kb.fark, ileriDosya: kb.ileri,
+    ${!kutu ? `${kb?.fark ? ME.farkGrafigi(avTakimAdi(d, m.ev), avTakimAdi(d, m.dep), kb.fark) : ''}<p class="bos">${m.durum === 'canli'
+      ? 'Bu kupada kutu skor ve gelişmiş istatistikler maç bitince gelir. Skor farkı grafiği maç sırasında birkaç dakikada bir güncellenir.'
+      : 'Kutu skor maç başlayınca gelir (birkaç dakika sürebilir).'}</p>` : ME.macGovdesi(kutu, { sirala: S.ui.kutuSirala, fark: kb.fark, ileriDosya: kb.ileri,
       aciklamaEki: kb?.ileriResmi === false ? ' · Gelişmiş istatistiklerde top kaybından, ikinci şanstan ve boyalı alandan sayılar maç akışından hesaplandı (resmi değil); hızlı hücum bu kupanın verisinde yok.' : '',
       oyuncuAdi: o => (turkOyuncu.has(String(o.id)) ? `<a href="#/avrupa/${kod}/oyuncu/${o.id}" class="oyuncu-link">${esc(o.ad)}</a>` : esc(o.ad)) })}`;
 }

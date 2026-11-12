@@ -22,7 +22,7 @@ const S = {
   maclar: {}, // `${lig}-${hafta}` -> maç listesi
   kutular: {}, // maç id -> kutu skor (null: yok)
   farklar: {}, // maç id -> skor farkı grafiği verisi (biten maçlar, null: yok)
-  ui: { ara: '', oyuncuSirala: 'vp', seyirciSirala: { k: 'ort', yon: 1 }, liderKategori: {}, anaLig: anaLigOku() },
+  ui: { ara: '', oyuncuSirala: 'vp', seyirciSirala: { k: 'ort', yon: 1 }, seyirciHaftaSirala: { k: 'seyirci', yon: 1 }, liderKategori: {}, anaLig: anaLigOku() },
 };
 // Telefon ve bilgisayar ayrı düzen: telefonda ana sayfa tek lig gösterir (BSL | TBL seçici), bilgisayarda yan menü ve iki sütun
 const TELEFON = matchMedia('(max-width: 759px)');
@@ -403,15 +403,22 @@ function seyirciKarti(lig, istenen) {
       <tbody>${satirlar}</tbody></table></div>
       <p class="soluk kucuk" style="margin-bottom:0">Maç: seyirci sayısı girilmiş maç sayısı; sayısı girilmemiş maçlar ortalamaya katılmaz. Doluluk: seyircinin salon kapasitesine oranı (iç saha maçlarının ortalaması; kapasitesi bilinmeyen salonda –). Sıralamak için düğmeye ya da sütun başlığına dokun; ikinci dokunuş tersine çevirir.</p></div>`;
   }
-  const liste = seyirciHaftasi(v, donem);
+  // Haftalık liste seyirciye ya da doluluğa göre sıralanır (ikinci dokunuş tersine çevirir; yüzdesi olmayan hep en altta).
+  // Doluluğa göre sıralıyken sağdaki büyük sayı yüzde olur. Paylaş/İndir görseli her zaman seyirciye göre.
+  const { k: hk, yon: hy } = S.ui.seyirciHaftaSirala;
+  const liste = seyirciHaftasi(v, donem).sort((a, b) => (a[hk] === null) - (b[hk] === null) || hy * ((b[hk] ?? 0) - (a[hk] ?? 0)) || b.seyirci - a.seyirci);
+  const haftaCipleri = `<div class="secenekler" style="margin-bottom:4px">${[['seyirci', 'Seyirci'], ['doluluk', 'Doluluk']].map(([k, ad]) =>
+    `<button class="secenek ${k === hk ? 'aktif' : ''}" data-is="syh-sirala" data-id="${k}">${ad}${k === hk ? (hy > 0 ? ' ▼' : ' ▲') : ''}</button>`).join('')}</div>`;
   const dolu = liste.filter(m => m.seyirci);
   const toplam = dolu.reduce((t, m) => t + m.seyirci, 0);
   const yuzdeli = dolu.filter(m => m.doluluk !== null);
   const ortDoluluk = yuzdeli.length ? yuzdeli.reduce((t, m) => t + m.doluluk, 0) / yuzdeli.length : null;
   const satirlar = liste.map(m => `<div class="f-satir">
       <div class="ad"><strong>${esc(baslik(m.evAd))} <span class="soluk">${m.evSkor ?? ''}-${m.depSkor ?? ''}</span> ${esc(baslik(m.depAd))}</strong><small>${[gunBasligi(m.tarih), m.salon && `${esc(m.salon)}${m.kapasite ? ` (${binlik(m.kapasite)})` : ''}`].filter(Boolean).join(' · ')}</small></div>
-      <div class="f-sayi"><strong>${m.seyirci ? binlik(m.seyirci) : '–'}</strong><small>${m.doluluk !== null ? `seyirci · ${dolulukYazisi(m.doluluk)} dolu` : 'seyirci'}</small></div></div>`).join('');
-  return `${cipler}<div class="kart"><div class="baslik-satir"><h2>${donem}. hafta · seyirci sayıları</h2>${dugmeler}</div>${satirlar}
+      ${hk === 'doluluk'
+    ? `<div class="f-sayi"><strong>${dolulukYazisi(m.doluluk)}</strong><small>${m.seyirci ? `${binlik(m.seyirci)} seyirci` : 'dolu'}</small></div>`
+    : `<div class="f-sayi"><strong>${m.seyirci ? binlik(m.seyirci) : '–'}</strong><small>${m.doluluk !== null ? `seyirci · ${dolulukYazisi(m.doluluk)} dolu` : 'seyirci'}</small></div>`}</div>`).join('');
+  return `${cipler}<div class="kart"><div class="baslik-satir"><h2>${donem}. hafta · seyirci sayıları</h2>${dugmeler}</div>${haftaCipleri}${satirlar}
     <p class="soluk kucuk" style="margin-bottom:0">Toplam ${binlik(toplam)} · maç başı ${dolu.length ? binlik(Math.round(toplam / dolu.length)) : '–'}${ortDoluluk !== null ? ` · salonlar ortalama ${dolulukYazisi(ortDoluluk)} dolu` : ''}.
     Sayılar TBF'nin sitesinden; federasyon maçtan sonraki gün işliyor, Cumartesi–Salı öğlen ve gece güncellenir.</p></div>`;
 }
@@ -1093,6 +1100,11 @@ document.addEventListener('click', e => {
   const el = e.target.closest('[data-is]');
   if (!el) return;
   if (el.dataset.is === 'oyuncu-sirala') { S.ui.oyuncuSirala = el.dataset.id; ciz(); }
+  if (el.dataset.is === 'syh-sirala') {
+    const o = S.ui.seyirciHaftaSirala;
+    S.ui.seyirciHaftaSirala = { k: el.dataset.id, yon: o.k === el.dataset.id ? -o.yon : 1 };
+    ciz();
+  }
   if (el.dataset.is === 'sy-sirala') {
     const o = S.ui.seyirciSirala;
     S.ui.seyirciSirala = { k: el.dataset.id, yon: o.k === el.dataset.id ? -o.yon : 1 };

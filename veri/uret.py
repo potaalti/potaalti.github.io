@@ -493,7 +493,7 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
 
 def rekor_uret(lig, oyuncular, takimlar, maclar):
     """Sezon rekorları (site/data/<lig>/rekorlar.json): oyuncuların tek maç rekorları (biten maçlar), double-double ve
-    triple-double sayıları (sayı, ribaund, asist, top çalma, blok'tan en az ikisi/üçü 10+), takımların en yüksek skoru,
+    triple-double sayıları (listeler ilk 10) (sayı, ribaund, asist, top çalma, blok'tan en az ikisi/üçü 10+), takımların en yüksek skoru,
     en farklı galibiyeti ve en uzun galibiyet serisi."""
     satirlar = [(p, x) for p in oyuncular.values() for x in p["maclar"] if x["durum"] == "bitti" and x["sn"] > 0]
     KATEGORI = [("sayi", "Sayı", lambda x: x["sayi"]), ("rib", "Ribaund", lambda x: x["rib"]), ("ast", "Asist", lambda x: x["ast"]),
@@ -501,7 +501,7 @@ def rekor_uret(lig, oyuncular, takimlar, maclar):
                 ("uc", "3 sayılık isabet", lambda x: x["uc"][0])]
     oyuncu = []
     for anah, ad, f in KATEGORI:
-        sirali = sorted(satirlar, key=lambda px: (-f(px[1]), px[1]["tarih"]))[:5]
+        sirali = sorted(satirlar, key=lambda px: (-f(px[1]), px[1]["tarih"]))[:10]
         oyuncu.append({"id": anah, "ad": ad, "liste": [{"oyuncu": p["id"], "ad": p["ad"], "takim": x["takim"], "rakip": x["rakip"], "mac": x["mac"],
                                                        "hafta": x["hafta"], "evde": x["evde"], "deger": f(x)} for p, x in sirali]})
     cift = {}
@@ -524,11 +524,11 @@ def rekor_uret(lig, oyuncular, takimlar, maclar):
         if en:
             seriler.append({"takim": t["id"], "deger": en, "suruyor": su == en})
     takim = [
-        {"id": "skor", "ad": "En yüksek skor", "liste": [{**x, "deger": x["skor"]} for x in sorted(skorlar, key=lambda x: (-x["skor"], x["mac"]))[:5]]},
+        {"id": "skor", "ad": "En yüksek skor", "liste": [{**x, "deger": x["skor"]} for x in sorted(skorlar, key=lambda x: (-x["skor"], x["mac"]))[:10]]},
         {"id": "fark", "ad": "En farklı galibiyet", "liste": [{**x, "deger": x["skor"] - x["rakipSkor"]}
-                                                             for x in sorted(skorlar, key=lambda x: (-(x["skor"] - x["rakipSkor"]), x["mac"]))[:5]]},
-        {"id": "seri", "ad": "En uzun galibiyet serisi", "liste": sorted(seriler, key=lambda x: (-x["deger"], not x["suruyor"]))[:5]},
-        {"id": "dusuk", "ad": "En düşük skor", "liste": [{**x, "deger": x["skor"]} for x in sorted(skorlar, key=lambda x: (x["skor"], x["mac"]))[:5]]},
+                                                             for x in sorted(skorlar, key=lambda x: (-(x["skor"] - x["rakipSkor"]), x["mac"]))[:10]]},
+        {"id": "seri", "ad": "En uzun galibiyet serisi", "liste": sorted(seriler, key=lambda x: (-x["deger"], not x["suruyor"]))[:10]},
+        {"id": "dusuk", "ad": "En düşük skor", "liste": [{**x, "deger": x["skor"]} for x in sorted(skorlar, key=lambda x: (x["skor"], x["mac"]))[:10]]},
     ]
     yaz(CIKTI / lig / "rekorlar.json", {"oyuncu": oyuncu, "dd": dd[:15], "ddToplam": sum(k["dd"] for k in cift.values()),
                                         "tdToplam": sum(k["td"] for k in cift.values()), "takim": takim})

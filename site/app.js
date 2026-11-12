@@ -11,6 +11,7 @@ import * as SY from './seyirci.js';
 import * as OD from './odul.js';
 import * as ME from './mac-ek.js';
 import * as AG from './avrupa-gorsel.js';
+import * as RG from './rekor-gorsel.js';
 import * as PR from './program.js';
 
 const YEREL = ['localhost', '127.0.0.1'].includes(location.hostname);
@@ -28,7 +29,7 @@ const S = {
 // Telefon ve bilgisayar ayrı düzen: telefonda ana sayfa tek lig gösterir (BSL | TBL seçici), bilgisayarda yan menü ve iki sütun
 const TELEFON = matchMedia('(max-width: 759px)');
 function anaLigOku() {
-  try { return localStorage.getItem('anaLig') === 'tbl' ? 'tbl' : 'bsl'; } catch { return 'bsl'; }
+  try { const l = localStorage.getItem('anaLig'); return ['tbl', 'avrupa'].includes(l) ? l : 'bsl'; } catch { return 'bsl'; }
 }
 const yukleniyor = new Set();
 
@@ -1097,19 +1098,30 @@ function buHaftaKarti(lig) {
 }
 
 function gorunumAna() {
-  // Ana sayfada solda BSL, sağda TBL; puan tablosunun ilk 8'i
-  const sutun = lig => `<div>${buHaftaKarti(lig)}${tabloKarti(lig, 8)}</div>`;
+  // Ana sayfada solda BSL, sağda TBL (puan tablosunun ilk 10'u). Bugün temsilcilerimizin Avrupa maçı varsa en üstte kartı;
+  // yoksa Avrupa bölümü TBL/BSL'nin altında (telefonda BSL · TBL · Avrupa seçimi)
+  const sutun = lig => `<div>${buHaftaKarti(lig)}${tabloKarti(lig, 10)}</div>`;
   const karsilama = `<div class="karsilama"><img src="icon-192.png" alt=""><div><strong>Pota Altı</strong><small>TBL ve BSL canlı skorlar, istatistikler, fantezi ligleri ve yayınlar</small></div></div>`;
   const fantezi = `<h2 class="bolum-baslik">Fantezi ligleri</h2><div class="fantezi-kartlari">${fantezKartlari()}</div>`;
   const avIdx = av('index');
-  const avrupa = avIdx ? avGunKarti(avIdx, true) : '';  // bugün temsilcilerimizin maçı varsa
+  const bugun = avIdx ? avGunKarti(avIdx, true) : '';  // bugün temsilcilerimizin maçı varsa
+  const avrupaBolumu = avIdx ? avAnaBolum(avIdx, !!bugun) : '<p class="bos">Yükleniyor…</p>';
   if (TELEFON.matches) {
     const lig = S.ui.anaLig;
-    const secici = `<div class="lig-secici">${Object.entries(LIGLER).map(([l, v]) => `<button class="${l === lig ? 'aktif' : ''}" data-is="ana-lig" data-id="${l}">${v.kisa}</button>`).join('')}</div>`;
-    return `${Yayin.anaKart()}${avrupa}${secici}${sutun(lig)}${fantezi}${altBilgi()}`;
+    const secici = `<div class="lig-secici">${[...Object.entries(LIGLER).map(([l, v]) => [l, v.kisa]), ['avrupa', 'Avrupa']]
+      .map(([l, ad]) => `<button class="${l === lig ? 'aktif' : ''}" data-is="ana-lig" data-id="${l}">${ad}</button>`).join('')}</div>`;
+    return `${Yayin.anaKart()}${bugun}${secici}${lig === 'avrupa' ? avrupaBolumu : sutun(lig)}${fantezi}${altBilgi()}`;
   }
   return `<div class="ana-ust">${karsilama}${Yayin.anaKart()}</div>
-    ${avrupa}<div class="iki-sutun">${sutun('bsl')}${sutun('tbl')}</div>${fantezi}${altBilgi()}`;
+    ${bugun}<div class="iki-sutun">${sutun('bsl')}${sutun('tbl')}</div>${bugun ? '' : `<h2 class="bolum-baslik">Avrupa'daki temsilcilerimiz</h2>${avrupaBolumu}`}${fantezi}${altBilgi()}`;
+}
+// Ana sayfadaki Avrupa bölümü: sıradaki maç günü (bugün varsa bugün) ve dört kupadaki son sonuçlar
+function avAnaBolum(idx, bugunUstte = false) {
+  if (idx.kupalar.some(k => av(k.kod) === undefined)) return '<p class="bos">Yükleniyor…</p>';
+  const son = idx.kupalar.flatMap(k => (S.avrupa[k.kod]?.maclar ?? []).filter(m => m.durum === 'bitti').map(m => ({ k, d: S.avrupa[k.kod], m })))
+    .sort((a, b) => b.m.tarih.localeCompare(a.m.tarih)).slice(0, 6);
+  return `${bugunUstte ? '' : avGunKarti(idx)}<div class="kart mac-gun"><h3 style="padding:12px 14px 0;margin:0">Son sonuçlar <a href="#/avrupa" style="float:right;font-weight:600">Avrupa ›</a></h3>
+    ${son.map(({ k, d, m }) => avMacSatiri(k.kod, d, m, k.kisa)).join('')}</div>`;
 }
 
 // ---------- Fantezi ----------
@@ -1146,7 +1158,7 @@ function avMacSatiri(kod, d, m, etiket = '') {
   // etiket verilirse (günün maçları) tarih yerine kupanın kısa adı yazılır
   const alt = etiket ? `<span class="lig-etiket">${esc(etiket)}</span>` : esc(gunBasligi(m.tarih));
   const orta = m.durum === 'oynanmadi'
-    ? `<strong>${saatYazisi(m.tarih)}</strong><small>${alt}</small>`
+    ? `<strong>${saatYazisi(m.tarih)}</strong><small>${alt}</small>${m.yayin ? `<small>${esc(m.yayin)}</small>` : ''}`
     : `<strong>${m.evSkor ?? 0} - ${m.depSkor ?? 0}</strong><small>${m.durum === 'canli' ? `<span class="canli-yazi">${esc(m.periyot ?? '')} ${esc(m.sure ?? '')}</span>` : `MS · ${alt}`}</small>`;
   const ad = id => (avTurkMu(d, id) ? `<b>${esc(avTakimAdi(d, id))}</b>` : esc(avTakimAdi(d, id)));
   const href = m.durum !== 'oynanmadi' ? `#/avrupa/${kod}/mac/${m.id}` : `#/avrupa/${kod}`;
@@ -1251,7 +1263,7 @@ function avMac(kod, k, id) {
     oyuncular: t.oyuncular.map(o => ({ ...o, sure: mmss(o.sn), hr: o.or, sr: o.dr })) });
   const kutu = kb?.ev?.oyuncular ? { ev: taraf(kb.ev, 0), dep: taraf(kb.dep, 1) } : null;
   const turkOyuncu = new Set(kutu ? [kb.ev, kb.dep].filter(t => avTurkMu(d, t.id)).flatMap(t => t.oyuncular.map(o => String(o.id))) : []);
-  const bilgi = [gunSaat(m.tarih), m.tur, m.salon, m.seyirci ? `${binlik(m.seyirci)} seyirci` : ''].filter(Boolean).map(esc).join(' · ');
+  const bilgi = [gunSaat(m.tarih), m.tur, m.salon, m.seyirci ? `${binlik(m.seyirci)} seyirci` : '', m.yayin].filter(Boolean).map(esc).join(' · ');
   const takimLink = t => (avTurkMu(d, t) ? `<a href="#/avrupa/${kod}/takim/${t}">${esc(avTakimAdi(d, t))}</a>` : `<span>${esc(avTakimAdi(d, t))}</span>`);
   return `<a class="geri" href="#/avrupa/${kod}">‹ ${esc(k.ad)}</a>
     <div class="kart mac-baslik"><div class="mac-takimlar">
@@ -1326,7 +1338,7 @@ async function avGorselPaylas(tur, indir) {
   const maclar = avHaftaMaclari(idx).filter(x => tur === 'program' || x.m.durum === 'bitti').map(({ k, d, m, biz }) => {
     const evde = m.ev === biz;
     return { kupa: k.kod, kupaKisa: k.kisa, tarih: m.tarih, biz: avTakimAdi(d, biz), bizLogo: logo(avTakimAdi(d, biz)), rakip: avTakimAdi(d, evde ? m.dep : m.ev),
-      evde, bizSkor: evde ? m.evSkor : m.depSkor, rakipSkor: evde ? m.depSkor : m.evSkor, durum: m.durum };
+      evde, bizSkor: evde ? m.evSkor : m.depSkor, rakipSkor: evde ? m.depSkor : m.evSkor, durum: m.durum, yayin: m.yayin };
   });
   const blob = await AG.haftaGorseli({ maclar, tur, aralik: avHafta().aralik });
   const dosya = new File([blob], `pota-alti-avrupa-${avHafta().bas}-${tur === 'sonuc' ? 'sonuclar' : 'program'}.png`, { type: 'image/png' });
@@ -1342,7 +1354,7 @@ function gorunumAvrupa(kod, tur, id) {
   const cipler = `<div class="secenekler">${idx.kupalar.map(x => `<a class="secenek ${x.kod === k.kod ? 'aktif' : ''}" href="#/avrupa/${x.kod}">${esc(x.ad)}</a>`).join('')}</div>`;
   const icerik = tur === 'takim' ? avTakim(k.kod, k, id) : tur === 'oyuncu' ? avOyuncu(k.kod, k, id) : tur === 'mac' ? avMac(k.kod, k, id) : avKupa(k.kod, k);
   return `${tur ? '' : `<div class="sayfa-baslik" style="margin-bottom:10px"><h1>Avrupa'daki temsilcilerimiz</h1>
-      <p class="soluk" style="margin:0 0 10px">2026-27 sezonu${idx.guncelleme ? ` · ${tarihSaat(idx.guncelleme)} itibarıyla` : ''}</p></div>${avGunKarti(idx)}${avGorselKarti(idx)}${cipler}`}${icerik}`;
+      <p class="soluk" style="margin:0 0 10px">2026-27 sezonu${idx.guncelleme ? ` · ${tarihSaat(idx.guncelleme)} itibarıyla` : ''}</p></div>${avGunKarti(idx)}${cipler}`}${icerik}${tur ? '' : avGorselKarti(idx)}`;
 }
 
 // ---------- Sezon rekorları (data/<lig>/rekorlar.json, veri/uret.py) ----------
@@ -1362,13 +1374,45 @@ function rekorKarti(lig) {
   const dd = `<ol class="lider-listesi">${d.dd.map((x, i) => `<li><span class="no">${i + 1}</span>
     <span class="ad"><a href="#/oyuncu/${lig}/${x.oyuncu}" class="oyuncu-link"><b>${esc(x.ad)}</b></a><small>${esc(takimAdi(lig, x.takim))}${x.td ? ` · ${x.td} triple-double` : ''}</small></span>
     <span class="deger">${x.dd}</span></li>`).join('') || '<li class="bos">Henüz yok</li>'}</ol>`;
+  // Yöneticiye her kategori için ayrı görsel (ilk 10, takım logolu)
+  const dugme = (grup, id) => (!yoneticiMi() ? '' : `<span class="satir"><button class="secenek" data-is="rk-paylas" data-id="${lig}|${grup}|${id}">📤</button><button class="secenek" data-is="rk-indir" data-id="${lig}|${grup}|${id}">⬇</button></span>`);
+  const kart = (ad, grup, id, ic) => `<div class="kart" style="margin:0"><div class="baslik-satir"><h3>${esc(ad)}</h3>${dugme(grup, id)}</div>${ic}</div>`;
   return `<p class="soluk kucuk">Bu sezonun biten maçlarından. Tek maç rekorlarında maça dokununca kutu skor açılır.</p>
     <h2 class="bolum-baslik">Tek maçta en çok</h2>
-    <div class="izgara">${d.oyuncu.map(k => `<div class="kart" style="margin:0"><h3>${esc(k.ad)}</h3>${oyuncuListesi(k)}</div>`).join('')}
-      <div class="kart" style="margin:0"><h3>Double-double</h3><p class="soluk kucuk" style="margin:0 0 6px">Sezonda toplam ${d.ddToplam} double-double, ${d.tdToplam} triple-double
-        (sayı, ribaund, asist, top çalma, bloktan en az ikisinde 10+)</p>${dd}</div></div>
+    <div class="izgara">${d.oyuncu.map(k => kart(k.ad, 'oyuncu', k.id, oyuncuListesi(k))).join('')}
+      ${kart('Double-double', 'dd', 'dd', `<p class="soluk kucuk" style="margin:0 0 6px">Sezonda toplam ${d.ddToplam} double-double, ${d.tdToplam} triple-double
+        (sayı, ribaund, asist, top çalma, bloktan en az ikisinde 10+)</p>${dd}`)}</div>
     <h2 class="bolum-baslik">Takım rekorları</h2>
-    <div class="izgara">${d.takim.map(k => `<div class="kart" style="margin:0"><h3>${esc(k.ad)}</h3>${takimListesi(k)}</div>`).join('')}</div>`;
+    <div class="izgara">${d.takim.map(k => kart(k.ad, 'takim', k.id, takimListesi(k))).join('')}</div>`;
+}
+
+async function rekorGorselPaylas(anahtar, indir) {
+  const [lig, grup, id] = anahtar.split('|');
+  const d = S.rekorlar[lig];
+  const gorsel = await getir(`data/${lig}/gorsel.json`);
+  const logolar = new Map(Object.entries(gorsel.logo ?? {}).map(([ad, url]) => [takimAnahtari(ad), `data/${lig}/logo/${dosyaAnahtari(ad)}${uzanti(url)}`]));
+  const T = t => takimAdi(lig, t);
+  let baslik, satirlar;
+  if (grup === 'oyuncu') {
+    const k = d.oyuncu.find(x => x.id === id);
+    baslik = `TEK MAÇTA EN ÇOK ${k.ad.toLocaleUpperCase('tr')}`;
+    satirlar = k.liste.map(x => ({ ad: x.ad, alt: `${T(x.takim)} · ${x.hafta}. hafta · ${x.evde ? '' : '@ '}${T(x.rakip)}`, deger: x.deger, logo: logolar.get(x.takim) }));
+  } else if (grup === 'dd') {
+    baslik = 'EN ÇOK DOUBLE-DOUBLE';
+    satirlar = d.dd.slice(0, 10).map(x => ({ ad: x.ad, alt: `${T(x.takim)}${x.td ? ` · ${x.td} triple-double` : ''}`, deger: x.dd, logo: logolar.get(x.takim) }));
+  } else {
+    const k = d.takim.find(x => x.id === id);
+    baslik = k.ad.toLocaleUpperCase('tr');
+    satirlar = k.liste.map(x => ({ ad: T(x.takim), logo: logolar.get(x.takim),
+      alt: id === 'seri' ? (x.suruyor ? 'Seri sürüyor' : 'Sezon içinde') : `${x.hafta}. hafta · ${T(x.rakip)} · ${x.skor}-${x.rakipSkor}`,
+      deger: id === 'fark' ? `+${x.deger}` : id === 'seri' ? `${x.deger} G` : x.deger }));
+  }
+  const blob = await RG.rekorGorseli({ lig, baslik, satirlar });
+  const dosya = new File([blob], `pota-alti-${lig}-rekor-${grup}-${id}.png`, { type: 'image/png' });
+  if (!indir && navigator.canShare?.({ files: [dosya] })) {
+    try { await navigator.share({ files: [dosya] }); return; } catch (e) { if (e?.name === 'AbortError') return; }
+  }
+  dosyaIndir(dosya);
 }
 
 // ---------- Maç önü (oynanmamış maç) ----------
@@ -1545,7 +1589,14 @@ document.addEventListener('click', e => {
   }
   if (el.dataset.is === 'kutu-sirala') { S.ui.kutuSirala = ME.kutuSiralamaDegistir(S.ui.kutuSirala, el.dataset.id); ciz(); }
   // Paylaş / İndir yalnızca yöneticiye (kullanıcı kararı 2026-11-09); ödül üreticisi (?uret) zaten yöneticiye
-  if (/^(ae|sy|odul|av)-(paylas|indir)$|^odul-hepsi(-indir|-paylas)?$/.test(el.dataset.is) && !yoneticiMi()) return;
+  if (/^(ae|sy|odul|av|rk)-(paylas|indir)$|^odul-hepsi(-indir|-paylas)?$/.test(el.dataset.is) && !yoneticiMi()) return;
+  if (el.dataset.is === 'rk-paylas' || el.dataset.is === 'rk-indir') {
+    const yazi = el.textContent;
+    el.disabled = true; el.textContent = '…';
+    rekorGorselPaylas(el.dataset.id, el.dataset.is === 'rk-indir').catch(e => alert(`Görsel hazırlanamadı: ${e.message}`))
+      .finally(() => { el.disabled = false; el.textContent = yazi; });
+    return;
+  }
   if (el.dataset.is === 'av-paylas' || el.dataset.is === 'av-indir') {
     const yazi = el.textContent;
     el.disabled = true; el.textContent = 'Hazırlanıyor…';

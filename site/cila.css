@@ -133,7 +133,7 @@ tr.ben td { background: color-mix(in srgb, var(--vurgu) 14%, transparent) !impor
   .sayfa-baslik h1 { font-size: 1.45rem; }
   .bolum-baslik { font-size: 1.05rem; margin: 18px 2px 10px; }
   .fantezi-kartlari { grid-template-columns: minmax(0, 1fr); gap: 10px; }
-  .lig-secici { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; margin: 0 0 12px; border-radius: 14px;
+  .lig-secici { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 4px; margin: 0 0 12px; border-radius: 14px;
     background: color-mix(in srgb, var(--kart) 88%, transparent); border: 1px solid var(--cizgi); box-shadow: var(--golge-1);
     position: sticky; top: 60px; z-index: 6; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
   .lig-secici button { border: 0; background: transparent; padding: 9px 0; border-radius: 10px; font-weight: 800; letter-spacing: .04em; color: var(--soluk); cursor: pointer; }

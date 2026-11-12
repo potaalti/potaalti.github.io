@@ -1,6 +1,7 @@
 // Haftalık Avrupa görseli (yönetici, Avrupa sayfası): "Temsilcilerimizin haftası" — o haftanın (Pazartesi–Pazar) programı ya da
 // sonuçları, 1080x1350. TBL/BSL görsellerinin aksine kullanıcı şablonu yok: Pota Altı renkleriyle tuvale çizilir.
 // Temsilcilerimizin logoları BSL logolarından (data/bsl/logo), rakiplerin yalnızca adı yazılır.
+import { markaYazilari, logoCiz, sosyalCiz } from './marka.js';
 const YAZI_TIPLERI = 'https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;600;700&family=Montserrat:wght@500;600;700&display=block';
 const G = 1080, Y = 1350;
 const RENK = { zemin1: '#05161b', zemin2: '#0a3940', vurgu: '#2fe0ea', beyaz: '#ffffff', soluk: '#9fc3c7', satir: 'rgba(255,255,255,0.06)', yesil: '#3ddc84', kirmizi: '#ff6b6b' };
@@ -36,10 +37,10 @@ function yuvarlak(g, x, y, w, h, r) {
   g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
 }
 
-// maclar: [{ kupa: 'el', kupaKisa: 'EL', tarih, biz, bizLogo, rakip, evde, bizSkor, rakipSkor, durum }]
+// maclar: [{ kupa: 'el', kupaKisa: 'EL', tarih, biz, bizLogo, rakip, evde, bizSkor, rakipSkor, durum, yayin }]
 // tur: 'program' | 'sonuc'; araliK: '9–15 KASIM'
 export async function haftaGorseli({ maclar, tur, aralik }) {
-  await yaziTipleri();
+  await Promise.all([yaziTipleri(), markaYazilari()]);
   const logolar = await Promise.all(maclar.map(m => resim(m.bizLogo)));
   const c = document.createElement('canvas'); c.width = G; c.height = Y;
   const g = c.getContext('2d');
@@ -51,7 +52,7 @@ export async function haftaGorseli({ maclar, tur, aralik }) {
   g.strokeStyle = 'rgba(255,255,255,0.035)'; g.lineWidth = 2;
   for (let i = -Y; i < G; i += 46) { g.beginPath(); g.moveTo(i, Y); g.lineTo(i + Y, 0); g.stroke(); }
   // Başlık
-  yaz(g, 'POTA ALTI', G / 2, 70, { font: '600 26px Montserrat', renk: RENK.vurgu, hiza: 'center' });
+  logoCiz(g, 92, 92, 56);
   yaz(g, 'TEMSİLCİLERİMİZİN', G / 2, 150, { font: '92px Anton', hiza: 'center', gen: 980 });
   yaz(g, 'HAFTASI', G / 2, 250, { font: '92px Anton', renk: RENK.vurgu, hiza: 'center' });
   const etiket = `${aralik} · ${tur === 'sonuc' ? 'SONUÇLAR' : 'PROGRAM'}`;
@@ -92,11 +93,11 @@ export async function haftaGorseli({ maclar, tur, aralik }) {
       yaz(g, buyuk(gun), G - 80, orta + (kucuk ? 22 : 30), { font: `600 ${kucuk ? 16 : 19}px Montserrat`, renk: RENK.soluk, hiza: 'right' });
     } else {
       yaz(g, saat, G - 80, orta - (kucuk ? 9 : 12), { font: `${kucuk ? 42 : 52}px Anton`, renk: RENK.vurgu, hiza: 'right' });
-      yaz(g, buyuk(gun), G - 80, orta + (kucuk ? 22 : 30), { font: `600 ${kucuk ? 16 : 21}px Montserrat`, renk: RENK.soluk, hiza: 'right' });
+      yaz(g, buyuk([gun, m.yayin].filter(Boolean).join(' · ')), G - 80, orta + (kucuk ? 22 : 30), { font: `600 ${kucuk ? 15 : 19}px Montserrat`, renk: RENK.soluk, hiza: 'right', gen: G - 80 - sag + 20 });
     }
   });
   if (!maclar.length) yaz(g, 'BU HAFTA MAÇ YOK', G / 2, 700, { font: '60px Anton', renk: RENK.soluk, hiza: 'center' });
   // Alt bilgi
-  yaz(g, '@PotaAltiTV', G / 2, Y - 45, { font: '600 26px Montserrat', renk: RENK.soluk, hiza: 'center' });
+  sosyalCiz(g, G / 2, Y - 42, 34);
   return new Promise(ok => c.toBlob(ok, 'image/png'));
 }

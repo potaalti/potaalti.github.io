@@ -22,7 +22,7 @@ const S = {
   maclar: {}, // `${lig}-${hafta}` -> maç listesi
   kutular: {}, // maç id -> kutu skor (null: yok)
   farklar: {}, // maç id -> skor farkı grafiği verisi (biten maçlar, null: yok)
-  ui: { ara: '', oyuncuSirala: 'vp', seyirciSirala: { k: 'ort', yon: 1 }, seyirciHaftaSirala: { k: 'seyirci', yon: 1 }, tabloSirala: null, liderKategori: {}, anaLig: anaLigOku() },
+  ui: { ara: '', oyuncuSirala: 'vp', seyirciSirala: { k: 'ort', yon: 1 }, seyirciHaftaSirala: { k: 'seyirci', yon: 1 }, tabloSirala: null, kadroSirala: null, liderKategori: {}, anaLig: anaLigOku() },
 };
 // Telefon ve bilgisayar ayrı düzen: telefonda ana sayfa tek lig gösterir (BSL | TBL seçici), bilgisayarda yan menü ve iki sütun
 const TELEFON = matchMedia('(max-width: 759px)');
@@ -990,6 +990,28 @@ function oyuncularKarti(lig) {
 }
 
 // ---------- Takım sayfası ----------
+// Takım sayfasındaki kadro (TBL, BSL ve Avrupa ortak): sütun başlığına dokununca sıralanır (çoktan aza, azdan çoka, ilk
+// sıra). Telefonda ilk sütunlar ekrana sığar, oyuncu adı sabit kalır, diğer istatistikler yana kaydırılarak görülür.
+const KADRO_SUTUNLARI = [
+  ['mac', 'M', x => x.mac, x => x.mac], ['dk', 'Dk', x => x.dk, x => sayi(x.dk)], ['sayi', 'Sy', x => x.sayi, x => sayi(x.sayi)],
+  ['rib', 'Rb', x => x.rib, x => sayi(x.rib)], ['ast', 'As', x => x.ast, x => sayi(x.ast)], ['vp', 'VP', x => x.vp, x => `<b>${sayi(x.vp)}</b>`],
+  ['tc', 'Tç', x => x.tc, x => sayi(x.tc)], ['blk', 'Bl', x => x.blk, x => sayi(x.blk)], ['tk', 'Tk', x => x.tk, x => sayi(x.tk)],
+  ['iki', '2S%', x => (x.iki?.[1] ? x.iki[0] / x.iki[1] : -1), x => yuzde(x.iki ?? [0, 0])],
+  ['uc', '3S%', x => (x.uc?.[1] ? x.uc[0] / x.uc[1] : -1), x => yuzde(x.uc ?? [0, 0])],
+  ['sa', 'SA%', x => (x.sa?.[1] ? x.sa[0] / x.sa[1] : -1), x => yuzde(x.sa ?? [0, 0])],
+  ['pm', '+/-', x => x.pm ?? 0, x => isaretli(x.pm ?? 0)],
+];
+const KADRO_ACIKLAMA = 'Sütun başlığına dokununca sıralanır; telefonda diğer istatistikler için tabloyu yana kaydır. Tç: top çalma · Bl: blok · Tk: top kaybı · +/-: toplam.';
+function kadroTablosu(kadro, href) {
+  const s = S.ui.kadroSirala;
+  const c = s && KADRO_SUTUNLARI.find(([k]) => k === s.k);
+  const liste = c ? [...kadro].sort((a, b) => s.yon * (c[2](b) - c[2](a))) : kadro;
+  const th = ([k, ad]) => `<th class="sayi sirala ${s?.k === k ? 'aktif' : ''}" data-is="kd-sirala" data-id="${k}">${ad}${s?.k === k ? (s.yon > 0 ? ' ▼' : ' ▲') : ''}</th>`;
+  return `<div class="tablo-kap"><table class="kadro">
+    <thead><tr><th>Oyuncu</th>${KADRO_SUTUNLARI.map(th).join('')}</tr></thead>
+    <tbody>${liste.map(x => `<tr class="tikla" onclick="location.hash='${href(x)}'"><th><b>${esc(x.ad)}</b></th>
+      ${KADRO_SUTUNLARI.map(col => `<td class="sayi">${col[3](x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+}
 function gorunumTakim(lig, id) {
   const t = ligVerisi(lig, 'takimlar');
   const tablo = ligVerisi(lig, 'tablo');
@@ -1020,11 +1042,8 @@ function gorunumTakim(lig, id) {
     <div class="iki-sutun">
       <div class="kart"><h3>Maçlar</h3><div class="tablo-kap"><table><tbody>${oynanan.map(macSatir).join('') || '<tr><td class="bos">Henüz maç yok</td></tr>'}</tbody></table></div>
         ${gelecek.length ? `<h3 style="margin-top:14px">Sıradaki maçlar</h3><div class="tablo-kap"><table><tbody>${gelecek.map(macSatir).join('')}</tbody></table></div>` : ''}</div>
-      <div class="kart"><h3>Kadro</h3><div class="tablo-kap"><table>
-        <thead><tr><th>Oyuncu</th><th class="sayi">M</th><th class="sayi">Dk</th><th class="sayi">Sy</th><th class="sayi">Rb</th><th class="sayi">As</th><th class="sayi">VP</th></tr></thead>
-        <tbody>${tk.kadro.map(x => `<tr class="tikla" onclick="location.hash='#/oyuncu/${lig}/${x.id}'"><td><b>${esc(x.ad)}</b></td><td class="sayi">${x.mac}</td>
-          <td class="sayi">${sayi(x.dk)}</td><td class="sayi">${sayi(x.sayi)}</td><td class="sayi">${sayi(x.rib)}</td><td class="sayi">${sayi(x.ast)}</td><td class="sayi"><b>${sayi(x.vp)}</b></td></tr>`).join('')}</tbody></table></div>
-        <p class="soluk kucuk" style="margin:8px 0 0">Bu sezon takımda süre almış oyuncular (en son oynadığı takıma göre).</p></div>
+      <div class="kart"><h3>Kadro</h3>${kadroTablosu(tk.kadro, x => `#/oyuncu/${lig}/${x.id}`)}
+        <p class="soluk kucuk" style="margin:8px 0 0">Bu sezon takımda süre almış oyuncular (en son oynadığı takıma göre). ${KADRO_ACIKLAMA}</p></div>
     </div>`;
 }
 
@@ -1182,11 +1201,8 @@ function avTakim(kod, k, id) {
     <div class="iki-sutun">
       <div class="kart"><h3>Maçlar</h3><div class="tablo-kap"><table><tbody>${oynanan.map(macSatir).join('') || '<tr><td class="bos">Henüz maç yok</td></tr>'}</tbody></table></div>
         ${gelecek.length ? `<h3 style="margin-top:14px">Sıradaki maçlar</h3><div class="tablo-kap"><table><tbody>${gelecek.map(macSatir).join('')}</tbody></table></div>` : ''}</div>
-      <div class="kart"><h3>Kadro</h3><div class="tablo-kap"><table>
-        <thead><tr><th>Oyuncu</th><th class="sayi">M</th><th class="sayi">Dk</th><th class="sayi">Sy</th><th class="sayi">Rb</th><th class="sayi">As</th><th class="sayi">VP</th></tr></thead>
-        <tbody>${t.kadro.map(x => `<tr class="tikla" onclick="location.hash='#/avrupa/${kod}/oyuncu/${x.id}'"><td><b>${esc(x.ad)}</b></td><td class="sayi">${x.mac}</td>
-          <td class="sayi">${sayi(x.dk)}</td><td class="sayi">${sayi(x.sayi)}</td><td class="sayi">${sayi(x.rib)}</td><td class="sayi">${sayi(x.ast)}</td><td class="sayi"><b>${sayi(x.vp)}</b></td></tr>`).join('')}</tbody></table></div>
-        <p class="soluk kucuk" style="margin:8px 0 0">Bu turnuvada süre almış oyuncular, maç başı ortalamalar. Oyuncuya dokununca turnuva istatistikleri açılır.</p></div>
+      <div class="kart"><h3>Kadro</h3>${kadroTablosu(t.kadro, x => `#/avrupa/${kod}/oyuncu/${x.id}`)}
+        <p class="soluk kucuk" style="margin:8px 0 0">Bu turnuvada süre almış oyuncular, maç başı ortalamalar. ${KADRO_ACIKLAMA}</p></div>
     </div>`;
 }
 function avOyuncu(kod, k, id) {
@@ -1233,7 +1249,8 @@ function avMac(kod, k, id) {
       <div class="mac-skor"><strong>${m.evSkor} - ${m.depSkor}</strong><small>Maç sonu</small></div>
       <span class="${avKazanan(m, 'dep')}">${takimLink(m.dep)}</span></div>
       <p class="soluk kucuk" style="margin:10px 0 0;text-align:center"><span class="lig-etiket">${esc(k.kisa)}</span> ${bilgi}</p></div>
-    ${ME.macGovdesi(kutu, { sirala: S.ui.kutuSirala,
+    ${ME.macGovdesi(kutu, { sirala: S.ui.kutuSirala, fark: kb.fark, ileriDosya: kb.ileri,
+      aciklamaEki: kb.ileriResmi === false ? ' · Gelişmiş istatistiklerde top kaybından, ikinci şanstan ve boyalı alandan sayılar maç akışından hesaplandı (resmi değil); hızlı hücum bu kupanın verisinde yok.' : '',
       oyuncuAdi: o => (turkOyuncu.has(String(o.id)) ? `<a href="#/avrupa/${kod}/oyuncu/${o.id}" class="oyuncu-link">${esc(o.ad)}</a>` : esc(o.ad)) })}`;
 }
 // Günün Avrupa maçları (bütün kupalar, temsilcilerimizin maçları): bugün maç yoksa sıradaki maç günü
@@ -1270,6 +1287,11 @@ document.addEventListener('click', e => {
   const el = e.target.closest('[data-is]');
   if (!el) return;
   if (el.dataset.is === 'oyuncu-sirala') { S.ui.oyuncuSirala = el.dataset.id; ciz(); }
+  if (el.dataset.is === 'kd-sirala') {
+    const k = el.dataset.id, o = S.ui.kadroSirala;
+    S.ui.kadroSirala = o?.k !== k ? { k, yon: 1 } : o.yon === 1 ? { k, yon: -1 } : null;
+    ciz();
+  }
   if (el.dataset.is === 'pt-sirala') {
     // İlk dokunuş en iyi üstte (A ve Av. çoktan aza, Y azdan çoka), ikincisi tersi, üçüncüsü resmi sıra
     const k = el.dataset.id, ilkYon = k === 'yenilen' ? -1 : 1, o = S.ui.tabloSirala;

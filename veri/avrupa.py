@@ -171,7 +171,34 @@ def el_kupa(k):
             return {"id": kod, "skor": int(t["total"]["points"]), "oyuncular": oyuncular}
         return {"id": m["id"], "tarih": m["tarih"], "ev": taraf(d["local"], m["ev"]), "dep": taraf(d["road"], m["dep"])}
 
-    return takimlar, gruplar, maclar, kutu
+    def akis(m, kayit):
+        """Skor farkı ve gelişmiş istatistik: maçın bütün sayıları (Points); hızlı hücum, ikinci şans ve top kaybından sayı
+        resmi veride işaretli, boyalı alan atışın yerinden (koordinatlar sepete göre santimetre)."""
+        satirlar = getir(f"https://live.euroleague.net/api/Points?gamecode={m['id']}&seasoncode={k['sezon']}")["Rows"]
+        olaylar, son_dk = [], 40
+        for r in satirlar:
+            if not r.get("POINTS"):
+                continue
+            dk = int(r.get("MINUTE") or 1)
+            son_dk = max(son_dk, dk)
+            kalan = sure_sn(r.get("CONSOLE"))
+            t = ((dk - 1) // 10) * 600 + 600 - kalan if dk <= 40 else 2400 + ((dk - 41) // 5) * 300 + 300 - kalan
+            taraf = "ev" if r["TEAM"].strip() == m["ev"] else "dep"
+            x, y = r.get("COORD_X"), r.get("COORD_Y")
+            boyali = r["ID_ACTION"] in ("2FGM", "DUNK", "LAYUPMD") and x is not None and abs(x) <= 245 and -160 <= (y or 0) <= 423
+            olaylar.append({"t": max(0, t), "taraf": taraf, "pts": int(r["POINTS"]), "hh": r.get("FASTBREAK") == "1",
+                            "is": r.get("SECOND_CHANCE") == "1", "tks": r.get("POINTS_OFF_TURNOVER") == "1", "ba": boyali})
+        sure = 2400 + max(0, (son_dk - 40 + 4) // 5) * 300
+        sonuc = akis_hesapla(olaylar, sure, kayit, resmi=True)
+        # En büyük fark, en büyük seri ve bench sayısı resmi karşılaştırmadan (A: ev sahibi)
+        c = getir(f"https://live.euroleague.net/api/Comparison?gamecode={m['id']}&seasoncode={k['sezon']}")
+        for taraf, h in (("ev", "A"), ("dep", "B")):
+            for alan, anahtar in (("fark", f"maxLead{h}"), ("seri", f"max{h}"), ("benc", f"PointsBench{h}")):
+                if c.get(anahtar) is not None:
+                    sonuc["ileri"][taraf][alan] = int(c[anahtar])
+        return sonuc
+
+    return takimlar, gruplar, maclar, kutu, akis
 
 
 # ---------- BCL / FIBA Europe Cup ----------
@@ -244,11 +271,18 @@ def fiba_kupa(k):
             if any(st["takim"] in turk for st in satirlar):  # sadece temsilcilerimizin grupları
                 gruplar.append({"ad": f"{gr['groupName']} Grubu", "satirlar": satirlar})
 
+    sayfalar = {}
+
+    def sayfa_getir(m):
+        if m["id"] not in sayfalar:
+            try:
+                sayfalar[m["id"]] = gomulu(getir(m["sayfa"], metin=True))
+            except urllib.error.HTTPError:  # adres takım kodlarıyla bulunamazsa yalnızca maç numarasıyla
+                sayfalar[m["id"]] = gomulu(getir(f"{k['taban']}/games/{m['id']}", metin=True))
+        return sayfalar[m["id"]]
+
     def kutu(m):
-        try:
-            sayfa = gomulu(getir(m["sayfa"], metin=True))
-        except urllib.error.HTTPError:  # adres takım kodlarıyla bulunamazsa yalnızca maç numarasıyla
-            sayfa = gomulu(getir(f"{k['taban']}/games/{m['id']}", metin=True))
+        sayfa = sayfa_getir(m)
         kisiler = {}
         for p in nesneler(sayfa, "personId"):
             if p.get("firstName") is not None or p.get("lastName") is not None:
@@ -278,7 +312,105 @@ def fiba_kupa(k):
         taraflar = {x["id"]: x for x in (taraf(t) for t in det["c"])}
         return {"id": m["id"], "tarih": m["tarih"], "ev": taraflar[m["ev"]], "dep": taraflar[m["dep"]]}
 
-    return takimlar, gruplar, maclar, kutu
+    def akis(m, kayit):
+        """Skor farkı ve gelişmiş istatistik maç sayfasındaki sayı sayı akıştan. Kaynakta hızlı hücum işareti yok (boş kalır);
+        top kaybından ve ikinci şanstan sayı akıştan, boyalı alan atışın açıklamasından hesaplanır (resmi değil)."""
+        sayfa = sayfa_getir(m)
+        i = sayfa.find('"playByPlay":{"items"')
+        if i < 0:
+            raise ValueError("sayı sayı akış yok")
+        veri, _ = json.JSONDecoder().raw_decode(sayfa, i + len('"playByPlay":'))
+        org = {takimlar[m["ev"]]["org"]: "ev", takimlar[m["dep"]]["org"]: "dep"}
+        olaylar, son_sure = [], 2400
+        for ad, per in veri["items"].items():
+            if ad.startswith("OT"):
+                n = int(ad[2:] or 1)
+                bas, uz = 2400 + (n - 1) * 300, 300
+            else:
+                bas, uz = (int(ad[1:]) - 1) * 600, 600
+            son_sure = max(son_sure, bas + uz)
+            for it in sorted(per["items"], key=lambda x: x.get("order") or 0):
+                it["_t"] = bas + uz - sure_sn(it.get("Time"))
+                olaylar.append(it)
+        olaylar.sort(key=lambda x: (x["_t"], x.get("order") or 0))
+        sayilar = []
+        top_kaybi = {"ev": False, "dep": False}  # rakibin top kaybından sonraki hücum
+        ikinci = {"ev": False, "dep": False}  # kendi hücum ribaundundan sonraki hücum
+        son_atis = None
+        for it in olaylar:
+            taraf = org.get(it.get("oId"))
+            if not taraf:
+                continue
+            rakip = "dep" if taraf == "ev" else "ev"
+            ac = it.get("ac")
+            if ac == "TO":
+                top_kaybi[rakip], top_kaybi[taraf], ikinci[taraf] = True, False, False
+            elif ac in ("REB", "TREB"):
+                if son_atis == taraf:
+                    ikinci[taraf] = True
+                else:
+                    top_kaybi[rakip] = ikinci[rakip] = False
+            elif ac in ("P2", "P3", "FT"):
+                son_atis = taraf if not it.get("made") else None
+                if it.get("made") and it.get("pts"):
+                    txt = (it.get("txt") or "").lower()
+                    boyali = ac == "P2" and any(w in txt for w in ("under the basket", "inside paint", "layup", "lay-up", "dunk", "tip", "putback", "alley", "eurostep", "hook"))
+                    sayilar.append({"t": it["_t"], "taraf": taraf, "pts": 1 if ac == "FT" else int(it["pts"]), "hh": None,
+                                    "is": ikinci[taraf], "tks": top_kaybi[taraf], "ba": boyali})
+                    if ac != "FT":  # sayıyla hücum biter (serbest atışlarda son atışa kadar sürer)
+                        top_kaybi[taraf] = ikinci[taraf] = False
+                        top_kaybi[rakip] = ikinci[rakip] = False
+        return akis_hesapla(sayilar, son_sure, kayit, resmi=False)
+
+    return takimlar, gruplar, maclar, kutu, akis
+
+
+# ---------- Ortak: skor farkı ve gelişmiş istatistik ----------
+
+def akis_hesapla(sayilar, sure, kayit, resmi):
+    """sayilar: [{t (maç başından saniye), taraf ev/dep, pts, tks, hh, is, ba}] zamana göre. Uygulamadaki BSL/TBL alanlarıyla:
+    fark {sure, simdi, d: [[saniye, ev - dep]]} ve ileri {ev, dep: {tks, hh, is, ba, benc, fark, seri, lider, degisim, esitlik}}.
+    hh None ise (kaynakta yok) uygulamada o satır gösterilmez."""
+    sayilar = sorted(sayilar, key=lambda x: x["t"])
+    skor = {"ev": 0, "dep": 0}
+    d, son_fark = [[0, 0]], 0
+    ileri = {t: {"tks": 0, "hh": 0 if all(s["hh"] is not None for s in sayilar) else None, "is": 0, "ba": 0,
+                 "benc": sum(o["sayi"] for o in kayit[t]["oyuncular"] if not o["ilk5"]), "fark": 0, "seri": 0, "lider": 0,
+                 "degisim": 0, "esitlik": 0} for t in ("ev", "dep")}
+    seri_taraf, seri, onceki_t, lider, son_lider = None, 0, 0, None, None
+    for s in sayilar:
+        t, taraf = s["t"], s["taraf"]
+        if lider:  # önceki andan bu ana kadar önde olan
+            ileri[lider]["lider"] += max(0, t - onceki_t)
+        onceki_t = t
+        skor[taraf] += s["pts"]
+        for a in ("tks", "is", "ba"):
+            if s[a]:
+                ileri[taraf][a] += s["pts"]
+        if s["hh"]:
+            ileri[taraf]["hh"] += s["pts"]
+        seri = seri + s["pts"] if seri_taraf == taraf else s["pts"]
+        seri_taraf = taraf
+        ileri[taraf]["seri"] = max(ileri[taraf]["seri"], seri)
+        fark = skor["ev"] - skor["dep"]
+        ileri["ev"]["fark"] = max(ileri["ev"]["fark"], fark)
+        ileri["dep"]["fark"] = max(ileri["dep"]["fark"], -fark)
+        yeni = "ev" if fark > 0 else "dep" if fark < 0 else None
+        if fark == 0 and son_fark != 0:
+            ileri["ev"]["esitlik"] += 1
+            ileri["dep"]["esitlik"] += 1
+        if yeni and son_lider and yeni != son_lider:
+            ileri["ev"]["degisim"] += 1
+            ileri["dep"]["degisim"] += 1
+        if yeni:
+            son_lider = yeni
+        lider = yeni
+        if fark != son_fark:
+            d.append([t, fark])
+            son_fark = fark
+    if lider:
+        ileri[lider]["lider"] += max(0, sure - onceki_t)
+    return {"fark": {"sure": sure, "simdi": sure, "d": d}, "ileri": ileri, "ileriResmi": resmi}
 
 
 # ---------- Ortak: takım ve oyuncu dosyaları ----------
@@ -336,7 +468,7 @@ def takim_oyuncu_uret(k, takimlar, maclar, kutular):
 
 def kupa_uret(k):
     print(k["ad"], "…")
-    takimlar, gruplar, maclar, kutu = (el_kupa if k["tur"] == "el" else fiba_kupa)(k)
+    takimlar, gruplar, maclar, kutu, akis = (el_kupa if k["tur"] == "el" else fiba_kupa)(k)
     for v in takimlar.values():
         v["ad"] = TR_AD.get(v["ad"], v["ad"])
     kutular = {}
@@ -352,6 +484,12 @@ def kupa_uret(k):
             except Exception as e:  # noqa: BLE001 - bir maç alınamazsa diğerleri devam eder
                 print(f"  {k['kod']} {m['id']}: kutu skor alınamadı:", e)
                 continue
+        if "ileri" not in kayit:  # skor farkı ve gelişmiş istatistik (sonradan eklendi: eski kayıtlara da bir kez eklenir)
+            try:
+                kayit.update(akis(m, kayit))
+                yaz(yol, kayit)
+            except Exception as e:  # noqa: BLE001 - sonraki çalışmada yeniden denenir
+                print(f"  {k['kod']} {m['id']}: akış alınamadı:", e)
         kutular[m["id"]] = kayit
     for m in maclar:
         m.pop("sayfa", None)

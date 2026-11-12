@@ -357,6 +357,12 @@ table.kutu thead td.sirala.aktif { color: var(--vurgu); }
 /* Seyirci ortalamaları: sütun başlığına dokununca sıralama */
 th.sirala { cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; white-space: nowrap; }
 th.sirala.aktif { color: var(--vurgu); }
+/* Takım sayfası kadro: oyuncu adı yana kaydırırken sabit kalır */
+table.kadro th, table.kadro td { white-space: nowrap; }
+table.kadro tbody th { position: sticky; left: 0; z-index: 1; background: var(--kart); font-weight: 500; text-align: left; }
+table.kadro thead th:first-child { position: sticky; left: 0; z-index: 2; background: var(--kart); }
+table.kadro tr.tikla:hover th { background: var(--vurgu-acik); }
+@media (max-width: 759px) { table.kadro th, table.kadro td { padding-left: 5px; padding-right: 5px; } table.kadro tbody th { max-width: 132px; overflow: hidden; text-overflow: ellipsis; } }
 /* Seyirci haftalık: sağda iki sütun (seyirci, doluluk); başlıklarına dokununca sıralama */
 .sy-baslik { display: flex; align-items: center; gap: 12px; padding: 6px 2px 4px; border-bottom: 1px solid var(--cizgi); font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--soluk); }
 .sy-baslik > span:first-child { flex: 1; }

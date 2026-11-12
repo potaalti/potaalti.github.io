@@ -236,7 +236,7 @@ export function ileriIstatistikKarti(evAd, depAd, ileri) {
   const satir = (ad, a, b) => `<div class="ileri-satir"><b>${a}</b><span>${ad}</span><b>${b}</b></div>`;
   return `<div class="kart ileri-kart"><h3>Gelişmiş istatistikler</h3>
     <div class="ileri-takimlar"><span>${esc(evAd)}</span><span>${esc(depAd)}</span></div>
-    ${ILERI_CUBUKLAR.map(cubuk).join('')}
+    ${ILERI_CUBUKLAR.filter(([k]) => ev[k] != null && dep[k] != null).map(cubuk).join('')}
     ${satir('En büyük fark', ev.fark, dep.fark)}${satir('En büyük seri', ev.seri, dep.seri)}${satir('Liderlik süresi', dakikaSaniye(ev.lider), dakikaSaniye(dep.lider))}
     <div class="ileri-satir orta"><span>Liderlik değişimi <b>${ev.degisim}</b></span><span>Eşitlik <b>${ev.esitlik}</b></span></div></div>`;
 }

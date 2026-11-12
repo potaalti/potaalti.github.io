@@ -1358,6 +1358,7 @@ function gorunumAvrupa(kod, tur, id) {
 }
 
 // ---------- Sezon rekorları (data/<lig>/rekorlar.json, veri/uret.py) ----------
+const rekorDegeri = (id, v) => (id === 'fark' ? `+${v}` : id === 'seri' ? `${v} G` : id === 'seyirci' ? binlik(v) : v);
 function rekorKarti(lig) {
   const d = ligVerisi(lig, 'rekorlar');
   ligVerisi(lig, 'tablo');
@@ -1369,8 +1370,8 @@ function rekorKarti(lig) {
     <span class="deger">${x.deger}</span></li>`).join('')}</ol>`;
   const takimListesi = k => `<ol class="lider-listesi">${k.liste.map((x, i) => `<li><span class="no">${i + 1}</span>
     <span class="ad"><a href="#/takim/${lig}/${x.takim}"><b>${esc(takimAdi(lig, x.takim))}</b></a>
-      <small>${k.id === 'seri' ? (x.suruyor ? 'seri sürüyor' : 'sezon içinde') : `<a href="#/mac/${lig}/${x.mac}">${x.hafta}. hafta · ${esc(takimAdi(lig, x.rakip))} · ${x.skor}-${x.rakipSkor}</a>`}</small></span>
-    <span class="deger">${k.id === 'fark' ? `+${x.deger}` : k.id === 'seri' ? `${x.deger} G` : x.deger}</span></li>`).join('')}</ol>`;
+      <small>${k.id === 'seri' ? (x.suruyor ? 'seri sürüyor' : 'sezon içinde') : `<a href="#/mac/${lig}/${x.mac}">${x.hafta}. hafta · ${esc(takimAdi(lig, x.rakip))} · ${x.skor}-${x.rakipSkor}${k.id === 'ucluk' ? ` · ${x.deneme} deneme` : ''}</a>`}</small></span>
+    <span class="deger">${rekorDegeri(k.id, x.deger)}</span></li>`).join('')}</ol>`;
   const dd = `<ol class="lider-listesi">${d.dd.map((x, i) => `<li><span class="no">${i + 1}</span>
     <span class="ad"><a href="#/oyuncu/${lig}/${x.oyuncu}" class="oyuncu-link"><b>${esc(x.ad)}</b></a><small>${esc(takimAdi(lig, x.takim))}${x.td ? ` · ${x.td} triple-double` : ''}</small></span>
     <span class="deger">${x.dd}</span></li>`).join('') || '<li class="bos">Henüz yok</li>'}</ol>`;
@@ -1404,8 +1405,8 @@ async function rekorGorselPaylas(anahtar, indir) {
     const k = d.takim.find(x => x.id === id);
     baslik = k.ad.toLocaleUpperCase('tr');
     satirlar = k.liste.map(x => ({ ad: T(x.takim), logo: logolar.get(x.takim),
-      alt: id === 'seri' ? (x.suruyor ? 'Seri sürüyor' : 'Sezon içinde') : `${x.hafta}. hafta · ${T(x.rakip)} · ${x.skor}-${x.rakipSkor}`,
-      deger: id === 'fark' ? `+${x.deger}` : id === 'seri' ? `${x.deger} G` : x.deger }));
+      alt: id === 'seri' ? (x.suruyor ? 'Seri sürüyor' : 'Sezon içinde') : `${x.hafta}. hafta · ${T(x.rakip)} · ${x.skor}-${x.rakipSkor}${id === 'ucluk' ? ` · ${x.deneme} deneme` : ''}`,
+      deger: rekorDegeri(id, x.deger) }));
   }
   const blob = await RG.rekorGorseli({ lig, baslik, satirlar });
   const dosya = new File([blob], `pota-alti-${lig}-rekor-${grup}-${id}.png`, { type: 'image/png' });

@@ -523,10 +523,23 @@ def rekor_uret(lig, oyuncular, takimlar, maclar):
             en = max(en, su)
         if en:
             seriler.append({"takim": t["id"], "deger": en, "suruyor": su == en})
+    # Takımın bir maçta attığı üçlük (oyuncuların toplamı) ve sezonun en kalabalık maçları (seyirci.json, ev sahibine yazılır)
+    ucluk = {}
+    for p, x in satirlar:
+        u = ucluk.setdefault((x["takim"], x["mac"]), {"takim": x["takim"], "rakip": x["rakip"], "mac": x["mac"], "hafta": x["hafta"],
+                                                      "skor": x["skor"], "rakipSkor": x["rakipSkor"], "deger": 0, "deneme": 0})
+        u["deger"] += x["uc"][0]
+        u["deneme"] += x["uc"][1]
+    sy_yol = CIKTI / lig / "seyirci.json"
+    sy = json.loads(sy_yol.read_text(encoding="utf-8")).get("maclar", {}) if sy_yol.exists() else {}
+    kalabalik = [{"takim": m["ev"], "rakip": m["dep"], "mac": m["id"], "hafta": m["hafta"], "skor": sayi(m["evSkor"]), "rakipSkor": sayi(m["depSkor"]),
+                  "deger": sy[str(m["id"])]} for m in biten if sy.get(str(m["id"]))]
     takim = [
         {"id": "skor", "ad": "En yüksek skor", "liste": [{**x, "deger": x["skor"]} for x in sorted(skorlar, key=lambda x: (-x["skor"], x["mac"]))[:10]]},
         {"id": "fark", "ad": "En farklı galibiyet", "liste": [{**x, "deger": x["skor"] - x["rakipSkor"]}
                                                              for x in sorted(skorlar, key=lambda x: (-(x["skor"] - x["rakipSkor"]), x["mac"]))[:10]]},
+        {"id": "ucluk", "ad": "Bir maçta en çok üçlük", "liste": sorted(ucluk.values(), key=lambda x: (-x["deger"], x["deneme"], x["mac"]))[:10]},
+        {"id": "seyirci", "ad": "En kalabalık maç", "liste": sorted(kalabalik, key=lambda x: (-x["deger"], x["mac"]))[:10]},
         {"id": "seri", "ad": "En uzun galibiyet serisi", "liste": sorted(seriler, key=lambda x: (-x["deger"], not x["suruyor"]))[:10]},
         {"id": "dusuk", "ad": "En düşük skor", "liste": [{**x, "deger": x["skor"]} for x in sorted(skorlar, key=lambda x: (x["skor"], x["mac"]))[:10]]},
     ]

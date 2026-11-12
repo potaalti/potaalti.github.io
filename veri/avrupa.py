@@ -1,0 +1,381 @@
+"""Avrupa'daki temsilcilerimiz (ön çalışma, 2026-11-12): EuroLeague, EuroCup, Basketbol Şampiyonlar Ligi ve FIBA Europe Cup.
+
+Kaynaklar (hepsi herkese açık):
+  EuroLeague / EuroCup  api-live.euroleague.net: v2 maç listesi ve maç istatistikleri (JSON), v1 puan durumu (XML)
+  BCL / FIBA Europe Cup resmi sitelerin sayfaları: maç listesi, puan durumu ve maç sayfasındaki kutu skor, sayfanın içine
+                        gömülü JSON olarak gelir (Next.js); oradan okunur.
+
+Çıktı (site/data/avrupa/):
+  index.json                      kupalar, temsilcilerimiz, güncelleme zamanı
+  <kupa>.json                     puan durumu (gruplar) ve temsilcilerimizin maçları
+  <kupa>/mac/<id>.json            temsilcilerimizin biten maçlarının kutu skoru (bir kez çekilir, sonra yeniden kullanılır)
+  <kupa>/takim/<id>.json          takım: maçlar, maç başı takım ortalamaları, oyuncuların turnuva ortalamaları
+  <kupa>/oyuncu/<id>.json         oyuncu: turnuva ortalamaları ve maç maç
+Türk takımı: EuroLeague/EuroCup'ta kulübün ülkesi TUR; FIBA kupalarında iç saha maçının ülkesi TUR olan takım.
+
+  python veri/avrupa.py
+"""
+import json
+import re
+import time
+import urllib.error
+import urllib.request
+import xml.etree.ElementTree as ET
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+
+KOK = Path(__file__).resolve().parent.parent
+CIKTI = KOK / "site" / "data" / "avrupa"
+TARAYICI = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36"
+TURKIYE = timezone(timedelta(hours=3))
+EL_API = "https://api-live.euroleague.net"
+
+KUPALAR = [
+    {"kod": "el", "ad": "EuroLeague", "kisa": "EL", "tur": "el", "api": "E", "sezon": "E2026"},
+    {"kod": "ec", "ad": "EuroCup", "kisa": "EC", "tur": "el", "api": "U", "sezon": "U2026"},
+    {"kod": "bcl", "ad": "Basketbol Şampiyonlar Ligi", "kisa": "BCL", "tur": "fiba",
+     "taban": "https://www.championsleague.basketball/en"},
+    {"kod": "fec", "ad": "FIBA Europe Cup", "kisa": "FEC", "tur": "fiba",
+     "taban": "https://www.fiba.basketball/en/events/fiba-europe-cup-26-27"},
+]
+
+
+def getir(url, metin=False):
+    # EuroLeague API'si Accept'e göre XML de döndürebiliyor: JSON istenirken açıkça belirtilir
+    req = urllib.request.Request(url, headers={"User-Agent": TARAYICI, "Accept": "*/*" if metin else "application/json"})
+    with urllib.request.urlopen(req, timeout=40) as y:
+        veri = y.read().decode("utf-8", errors="replace")
+    time.sleep(0.25)
+    return veri if metin else json.loads(veri)
+
+
+def yaz(yol, veri):
+    yol.parent.mkdir(parents=True, exist_ok=True)
+    yol.write_text(json.dumps(veri, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+
+
+def oku(yol):
+    return json.loads(yol.read_text(encoding="utf-8")) if yol.exists() else None
+
+
+def tr_saat(utc):
+    """'2026-10-07T16:00:00Z' -> Türkiye saatiyle '2026-10-07T19:00:00'"""
+    t = datetime.fromisoformat(utc.replace("Z", "+00:00"))
+    if t.tzinfo is None:
+        t = t.replace(tzinfo=timezone.utc)
+    return t.astimezone(TURKIYE).replace(tzinfo=None).isoformat(timespec="seconds")
+
+
+def ad_duzelt(ad):
+    """'BUTLER, JARED' -> 'Jared Butler'"""
+    if "," in ad:
+        soy, ilk = [x.strip() for x in ad.split(",", 1)]
+        ad = f"{ilk} {soy}"
+    return " ".join(k[:1].upper() + k[1:].lower() if k.isupper() else k for k in ad.split())
+
+
+def katla(ad):
+    tablo = str.maketrans("çğıöşüÇĞİÖŞÜâî", "cgiosuCGIOSUai")
+    return re.sub(r"[^a-z ]", "", ad.translate(tablo).lower()).split()
+
+
+_TR_OYUNCU = None
+
+
+def tr_oyuncu(ad):
+    """BSL/TBL'de de oynayan Türk oyuncunun adı kaynaklarda Türkçe harfsiz ('Dogus Ozdemiroglu'): BSL/TBL'deki yazılışı kullanılır."""
+    global _TR_OYUNCU
+    if _TR_OYUNCU is None:
+        _TR_OYUNCU = {}
+        for lig in ("bsl", "tbl"):
+            for o in oku(KOK / "site" / "data" / lig / "oyuncular.json") or []:
+                _TR_OYUNCU.setdefault(" ".join(katla(o["ad"])), o["ad"])
+    tr = _TR_OYUNCU.get(" ".join(katla(ad)), ad)
+    return ad if tr.isupper() else tr  # BSL/TBL listesinde büyük harfle yazılmışsa kaynağın düzgün yazılışı kalır
+
+
+def oyuncu_satiri(id_, ad, no, ilk5, sn, s):
+    """Ortak kutu skor satırı (BSL/TBL'deki alan adlarıyla)."""
+    return {"id": str(id_), "ad": tr_oyuncu(ad), "no": str(no or ""), "ilk5": bool(ilk5), "sn": int(sn), **s}
+
+
+# Temsilcilerimizin adları kaynaklarda İngilizce ve Türkçe harfsiz: uygulamada Türkçe yazılır
+TR_AD = {
+    "Anadolu Efes Istanbul": "Anadolu Efes", "Besiktas Istanbul": "Beşiktaş", "Fenerbahce Tarfin Istanbul": "Fenerbahçe Tarfin",
+    "Bahcesehir College Istanbul": "Bahçeşehir Koleji", "Tofas Bursa": "Tofaş", "Turk Telekom Ankara": "Türk Telekom",
+    "Biotekno Korfez Basket": "Biotekno Körfez Basket",
+}
+
+
+def salon_adi(ad):
+    """'ULKER SPORTS AND EVENT HALL' -> 'Ulker Sports And Event Hall'"""
+    return ad.title() if ad and ad.isupper() else ad
+
+
+def ceyrek_el(p):
+    if not p:
+        return []
+    q = [p.get(f"partials{i}") for i in range(1, 5)]
+    uz = p.get("extraPeriods") or {}
+    return [x for x in q if x is not None] + [uz[k] for k in sorted(uz)]
+
+
+# ---------- EuroLeague / EuroCup ----------
+
+def el_kupa(k):
+    kulupler = getir(f"{EL_API}/v2/competitions/{k['api']}/seasons/{k['sezon']}/clubs")["data"]
+    turk = {c["code"] for c in kulupler if (c.get("country") or {}).get("code") == "TUR"}
+    takimlar = {c["code"]: {"ad": c["name"], "turk": c["code"] in turk} for c in kulupler}
+    oyunlar = getir(f"{EL_API}/v2/competitions/{k['api']}/seasons/{k['sezon']}/games")["data"]
+    maclar = []
+    for g in oyunlar:
+        ev, dep = g["local"]["club"]["code"], g["road"]["club"]["code"]
+        for c in (g["local"]["club"], g["road"]["club"]):
+            takimlar.setdefault(c["code"], {"ad": c["name"], "turk": c["code"] in turk})
+        if ev not in turk and dep not in turk:
+            continue
+        maclar.append({"id": str(g["gameCode"]), "tarih": tr_saat(g["utcDate"]), "tur": f"{g['round']}. tur",
+                       "evre": (g.get("phaseType") or {}).get("name"), "ev": ev, "dep": dep,
+                       "evSkor": g["local"]["score"] if g["played"] else None, "depSkor": g["road"]["score"] if g["played"] else None,
+                       "durum": "bitti" if g["played"] else "oynanmadi",
+                       "salon": salon_adi((g.get("venue") or {}).get("name")), "seyirci": g.get("audience") or None,
+                       "ceyrekler": [ceyrek_el(g["local"].get("partials")), ceyrek_el(g["road"].get("partials"))] if g["played"] else None})
+    # Puan durumu (resmi sıralama, v1 XML; EuroCup'ta 4 grup)
+    xml = ET.fromstring(getir(f"{EL_API}/v1/standings?seasonCode={k['sezon']}", metin=True))
+    gruplar = []
+    for i, grup in enumerate(xml.findall("group")):
+        satirlar = []
+        for t in grup.findall("team"):
+            f = lambda a: t.findtext(a)  # noqa: E731
+            satirlar.append({"sira": int(f("ranking")), "takim": f("code"), "o": int(f("totalgames")), "g": int(f("wins")),
+                             "m": int(f("losses")), "atilan": int(f("ptsfavour")), "yenilen": int(f("ptsagainst")),
+                             "averaj": int(f("difference"))})
+        ad = grup.get("name")
+        if any(st["takim"] in turk for st in satirlar):  # sadece temsilcilerimizin grupları
+            gruplar.append({"ad": f"{chr(65 + i)} Grubu" if len(xml.findall("group")) > 1 else "Normal sezon", "satirlar": satirlar})
+
+    def kutu(m):
+        d = getir(f"{EL_API}/v2/competitions/{k['api']}/seasons/{k['sezon']}/games/{m['id']}/stats")
+
+        def taraf(t, kod):
+            oyuncular = []
+            for p in t["players"]:
+                s, kisi = p["stats"], p["player"]["person"]
+                oyuncular.append(oyuncu_satiri(kisi["code"], ad_duzelt(kisi["name"]), s.get("dorsal") or p["player"].get("dorsal"), s.get("startFive"),
+                                               s.get("timePlayed") or 0, {
+                    "sayi": int(s["points"]), "rib": int(s["totalRebounds"]), "or": int(s["offensiveRebounds"]), "dr": int(s["defensiveRebounds"]),
+                    "ast": int(s["assistances"]), "tc": int(s["steals"]), "blk": int(s["blocksFavour"]), "tk": int(s["turnovers"]),
+                    "faul": int(s["foulsCommited"]), "vp": int(s["valuation"]), "pm": int(s.get("plusMinus") or 0),
+                    "iki": [int(s["fieldGoalsMade2"]), int(s["fieldGoalsAttempted2"])], "uc": [int(s["fieldGoalsMade3"]), int(s["fieldGoalsAttempted3"])],
+                    "sa": [int(s["freeThrowsMade"]), int(s["freeThrowsAttempted"])]}))
+            return {"id": kod, "skor": int(t["total"]["points"]), "oyuncular": oyuncular}
+        return {"id": m["id"], "tarih": m["tarih"], "ev": taraf(d["local"], m["ev"]), "dep": taraf(d["road"], m["dep"])}
+
+    return takimlar, gruplar, maclar, kutu
+
+
+# ---------- BCL / FIBA Europe Cup ----------
+
+def gomulu(sayfa):
+    """Next.js sayfasının içine gömülü JSON metni (kaçışları açılmış)."""
+    return sayfa.replace('\\"', '"').replace("\\\\", "\\")
+
+
+def nesneler(x, anahtar):
+    """x içinde '{"<anahtar>":' ile başlayan bütün JSON nesneleri."""
+    dec, bul, i = json.JSONDecoder(), [], 0
+    while (i := x.find('{"' + anahtar + '":', i)) >= 0:
+        try:
+            o, son = dec.raw_decode(x, i)
+            bul.append(o)
+            i = son
+        except ValueError:
+            i += 1
+    return bul
+
+
+def sure_sn(tp):
+    if not tp or ":" not in str(tp):
+        return 0
+    d, s = str(tp).split(":")[:2]
+    return int(d) * 60 + int(s)
+
+
+def fiba_kupa(k):
+    x = gomulu(getir(f"{k['taban']}/games", metin=True))
+    oyunlar = {o["gameId"]: o for o in nesneler(x, "gameId") if isinstance(o.get("teamA"), dict) and isinstance(o.get("teamB"), dict)}
+    takimlar = {}
+    turk = set()
+    for g in oyunlar.values():
+        for t in ("teamA", "teamB"):
+            tk = g[t]
+            takimlar.setdefault(str(tk["teamId"]), {"ad": tk.get("shortName") or tk.get("officialName"), "turk": False, "org": tk.get("organisationId"),
+                                                    "kod": tk.get("code")})
+        if g.get("hostCountryCode") == "TUR":
+            turk.add(str(g["teamA"]["teamId"]))
+    for t in turk:
+        takimlar[t]["turk"] = True
+    maclar = []
+    for g in sorted(oyunlar.values(), key=lambda g: g.get("gameDateTimeUTC") or ""):
+        ev, dep = str(g["teamA"]["teamId"]), str(g["teamB"]["teamId"])
+        if ev not in turk and dep not in turk:
+            continue
+        canli = bool(g.get("isLive"))
+        bitti = (g.get("liveGameStatus") == 999 or g.get("currentPeriodStatus") == "E") and not canli and (g.get("teamAScore") or g.get("teamBScore"))
+        tur = g.get("round") or {}
+        maclar.append({"id": str(g["gameId"]), "tarih": tr_saat(g["gameDateTimeUTC"] + "Z") if g.get("gameDateTimeUTC") else None,
+                       "tur": None, "evre": tur.get("roundName"),
+                       "grup": g.get("groupPairingCode"), "ev": ev, "dep": dep,
+                       "evSkor": g.get("teamAScore") if (bitti or canli) else None, "depSkor": g.get("teamBScore") if (bitti or canli) else None,
+                       "durum": "canli" if canli else "bitti" if bitti else "oynanmadi",
+                       "salon": salon_adi(g.get("venueName")), "seyirci": g.get("spectators") or None,
+                       **({"periyot": g.get("currentPeriod"), "sure": g.get("chrono")} if canli else {}),
+                       "sayfa": f"{k['taban']}/games/{g['gameId']}-{g['teamA'].get('code')}-{g['teamB'].get('code')}"})
+    # Puan durumu: sayfadaki "current" evrenin grupları
+    s = gomulu(getir(f"{k['taban']}/standings", metin=True))
+    i = s.find('"current":true')
+    j = s.find('{"groups":', i if i >= 0 else 0)
+    gruplar = []
+    if j >= 0:
+        veri, _ = json.JSONDecoder().raw_decode(s, j)
+        for gr in veri["groups"]:
+            satirlar = [{"sira": t["rank"], "takim": str(t["team"]), "o": t["gamesPlayed"], "g": t["gamesWon"], "m": t["gamesLost"],
+                         "atilan": t["pointsFor"], "yenilen": t["pointsAgainst"], "averaj": t["plusMinus"]} for t in gr["teamsStats"]]
+            if any(st["takim"] in turk for st in satirlar):  # sadece temsilcilerimizin grupları
+                gruplar.append({"ad": f"{gr['groupName']} Grubu", "satirlar": satirlar})
+
+    def kutu(m):
+        try:
+            sayfa = gomulu(getir(m["sayfa"], metin=True))
+        except urllib.error.HTTPError:  # adres takım kodlarıyla bulunamazsa yalnızca maç numarasıyla
+            sayfa = gomulu(getir(f"{k['taban']}/games/{m['id']}", metin=True))
+        kisiler = {}
+        for p in nesneler(sayfa, "personId"):
+            if p.get("firstName") is not None or p.get("lastName") is not None:
+                kisiler.setdefault(p["personId"], p)
+        det = nesneler(sayfa, "c")
+        det = next((d for d in det if isinstance(d.get("c"), list) and d["c"] and str(d["c"][0].get("Id", "")).startswith("T_")), None)
+        if not det:
+            raise ValueError("kutu skor bulunamadı")
+        org = {str(takimlar[m["ev"]]["org"]): m["ev"], str(takimlar[m["dep"]]["org"]): m["dep"]}
+
+        def taraf(t):
+            oyuncular = []
+            for ch in t.get("Children", []):
+                st = ch.get("Stats") or {}
+                if not str(ch.get("Id", "")).startswith("P_"):
+                    continue
+                pid = int(ch["Id"][2:])
+                kisi = kisiler.get(pid, {})
+                ad = " ".join(x for x in [kisi.get("firstName"), kisi.get("lastName")] if x) or f"#{pid}"
+                ad = " ".join(w.capitalize() if w.isupper() and len(w) > 2 else w for w in ad.split())
+                oyuncular.append(oyuncu_satiri(pid, ad, kisi.get("uniformNumber"), st.get("Starter"), sure_sn(st.get("TP")) if st.get("HasPlayed") else 0, {
+                    "sayi": st.get("PTS", 0), "rib": st.get("REB", 0), "or": st.get("OR", 0), "dr": st.get("DR", 0), "ast": st.get("AS", 0),
+                    "tc": st.get("ST", 0), "blk": st.get("BS", 0), "tk": st.get("TO", 0), "faul": st.get("PF", 0), "vp": st.get("EFF", 0),
+                    "pm": st.get("PM", 0) or 0, "iki": [st.get("FG2M", 0), st.get("FG2A", 0)], "uc": [st.get("FG3M", 0), st.get("FG3A", 0)],
+                    "sa": [st.get("FTM", 0), st.get("FTA", 0)]}))
+            return {"id": org.get(t["Id"][2:]), "skor": t.get("Score"), "ceyrekler": [p.get("Score") for p in t.get("Periods", [])], "oyuncular": oyuncular}
+        taraflar = {x["id"]: x for x in (taraf(t) for t in det["c"])}
+        return {"id": m["id"], "tarih": m["tarih"], "ev": taraflar[m["ev"]], "dep": taraflar[m["dep"]]}
+
+    return takimlar, gruplar, maclar, kutu
+
+
+# ---------- Ortak: takım ve oyuncu dosyaları ----------
+
+ALANLAR = ["sayi", "rib", "or", "dr", "ast", "tc", "blk", "tk", "faul", "vp"]
+
+
+def ort(x, n):
+    return round(x / n, 1) if n else 0
+
+
+def takim_oyuncu_uret(k, takimlar, maclar, kutular):
+    kok = CIKTI / k["kod"]
+    turk = [t for t, v in takimlar.items() if v["turk"]]
+    oyuncular_hepsi = {}
+    for tid in turk:
+        oynanan = [m for m in maclar if tid in (m["ev"], m["dep"]) and m["id"] in kutular]
+        toplam = {a: 0 for a in ALANLAR} | {"iki": [0, 0], "uc": [0, 0], "sa": [0, 0]}
+        oyuncular = {}
+        for m in oynanan:
+            kutu = kutular[m["id"]]
+            biz = kutu["ev"] if kutu["ev"]["id"] == tid else kutu["dep"]
+            rakip = kutu["dep"] if biz is kutu["ev"] else kutu["ev"]
+            for p in biz["oyuncular"]:
+                for a in ALANLAR:
+                    toplam[a] += p[a]
+                for a in ("iki", "uc", "sa"):
+                    toplam[a][0] += p[a][0]
+                    toplam[a][1] += p[a][1]
+                o = oyuncular.setdefault(p["id"], {"id": p["id"], "ad": p["ad"], "no": p["no"], "takim": tid, "maclar": []})
+                o["no"] = p["no"] or o["no"]
+                o["maclar"].append({"mac": m["id"], "tarih": m["tarih"], "tur": m["tur"], "rakip": rakip["id"], "evde": m["ev"] == tid,
+                                    "skor": biz["skor"], "rakipSkor": rakip["skor"], **{a: p[a] for a in ALANLAR + ["pm", "sn", "ilk5", "iki", "uc", "sa"]}})
+        kadro = []
+        for o in oyuncular.values():
+            oyn = [x for x in o["maclar"] if x["sn"] > 0]
+            n = len(oyn)
+            ozet = {"mac": n, "ilk5": sum(1 for x in oyn if x["ilk5"]), "dk": ort(sum(x["sn"] for x in oyn) / 60, n),
+                    **{a: ort(sum(x[a] for x in oyn), n) for a in ALANLAR}, "pm": sum(x["pm"] for x in oyn),
+                    **{a: [sum(x[a][0] for x in oyn), sum(x[a][1] for x in oyn)] for a in ("iki", "uc", "sa")}}
+            if n:
+                kadro.append({"id": o["id"], "ad": o["ad"], "no": o["no"], **ozet})
+            oyuncular_hepsi[o["id"]] = {"id": o["id"], "ad": o["ad"], "no": o["no"], "takim": tid, "takimAd": takimlar[tid]["ad"], "kupa": k["kod"],
+                                        "ozet": ozet, "maclar": o["maclar"]}
+        kadro.sort(key=lambda x: (-x["dk"], x["ad"]))
+        n = len(oynanan)
+        g = sum(1 for m in oynanan if (kutular[m["id"]]["ev"]["skor"] > kutular[m["id"]]["dep"]["skor"]) == (m["ev"] == tid))
+        yaz(kok / "takim" / f"{tid}.json", {
+            "id": tid, "ad": takimlar[tid]["ad"], "kupa": k["kod"], "o": n, "g": g, "m": n - g,
+            "ort": {a: ort(toplam[a], n) for a in ALANLAR}, "atis": {a: toplam[a] for a in ("iki", "uc", "sa")},
+            "maclar": [m for m in maclar if tid in (m["ev"], m["dep"])], "kadro": kadro})
+    for o in oyuncular_hepsi.values():
+        yaz(kok / "oyuncu" / f"{o['id']}.json", o)
+
+
+def kupa_uret(k):
+    print(k["ad"], "…")
+    takimlar, gruplar, maclar, kutu = (el_kupa if k["tur"] == "el" else fiba_kupa)(k)
+    for v in takimlar.values():
+        v["ad"] = TR_AD.get(v["ad"], v["ad"])
+    kutular = {}
+    for m in maclar:
+        if m["durum"] != "bitti":
+            continue
+        yol = CIKTI / k["kod"] / "mac" / f"{m['id']}.json"
+        kayit = oku(yol)
+        if kayit is None:
+            try:
+                kayit = kutu(m)
+                yaz(yol, kayit)
+            except Exception as e:  # noqa: BLE001 - bir maç alınamazsa diğerleri devam eder
+                print(f"  {k['kod']} {m['id']}: kutu skor alınamadı:", e)
+                continue
+        kutular[m["id"]] = kayit
+    for m in maclar:
+        m.pop("sayfa", None)
+        if not m.get("ceyrekler") and m["id"] in kutular:
+            m["ceyrekler"] = [kutular[m["id"]]["ev"].get("ceyrekler") or [], kutular[m["id"]]["dep"].get("ceyrekler") or []]
+    takim_oyuncu_uret(k, takimlar, maclar, kutular)
+    yaz(CIKTI / f"{k['kod']}.json", {"kod": k["kod"], "ad": k["ad"], "takimlar": {t: {"ad": v["ad"], "turk": v["turk"]} for t, v in takimlar.items()},
+                                     "gruplar": gruplar, "maclar": maclar})
+    turkler = [{"id": t, "ad": v["ad"]} for t, v in takimlar.items() if v["turk"]]
+    print(f"  temsilciler: {', '.join(t['ad'] for t in turkler)} · {len(maclar)} maç · {len(kutular)} kutu skor")
+    return {"kod": k["kod"], "ad": k["ad"], "kisa": k["kisa"], "temsilciler": turkler}
+
+
+def main():
+    ozet = []
+    for k in KUPALAR:
+        try:
+            ozet.append(kupa_uret(k))
+        except Exception as e:  # noqa: BLE001 - bir kupa alınamazsa eski dosyası kalır
+            print(f"{k['ad']}: alınamadı:", e)
+            eski = oku(CIKTI / "index.json") or {"kupalar": []}
+            ozet.extend(x for x in eski["kupalar"] if x["kod"] == k["kod"])
+    yaz(CIKTI / "index.json", {"guncelleme": datetime.now(TURKIYE).isoformat(timespec="seconds"), "kupalar": ozet})
+
+
+if __name__ == "__main__":
+    main()

@@ -377,6 +377,11 @@ function seyirciOrtalamasi(v) {
   return [...t.values()].map(({ dolu, ...k }) => ({ ...k, ort: Math.round(k.toplam / k.mac * 10) / 10,
     doluluk: dolu.length ? dolu.reduce((a, b) => a + b, 0) / dolu.length : null })).sort((a, b) => b.ort - a.ort || b.toplam - a.toplam);
 }
+// Seçili sütuna göre sıralı listeler: ekrandaki sıra ile Paylaş/İndir görselinin sırası aynıdır. İlk dokunuş çoktan aza,
+// ikincisi azdan çoka; değeri olmayan (kapasitesi bilinmeyen salon) hep en altta.
+const sutunaGore = (k, yon, ikinci) => (a, b) => (a[k] === null) - (b[k] === null) || yon * ((b[k] ?? 0) - (a[k] ?? 0)) || ikinci(a, b);
+const seyirciOrtSirali = v => seyirciOrtalamasi(v).sort(sutunaGore(S.ui.seyirciSirala.k, S.ui.seyirciSirala.yon, (a, b) => b.ort - a.ort));
+const seyirciHaftaSirali = (v, h) => seyirciHaftasi(v, h).sort(sutunaGore(S.ui.seyirciHaftaSirala.k, S.ui.seyirciHaftaSirala.yon, (a, b) => b.seyirci - a.seyirci));
 const binlik = n => Number(n).toLocaleString('tr-TR', { maximumFractionDigits: 1 });
 const dolulukYazisi = d => (d === null || d === undefined ? '–' : `%${Math.round(d * 100)}`);
 function seyirciKarti(lig, istenen) {
@@ -389,45 +394,38 @@ function seyirciKarti(lig, istenen) {
   // Paylaş / İndir yalnızca yöneticiye (kullanıcı kararı 2026-11-09)
   const dugmeler = !yoneticiMi() ? '' : `<span class="satir"><button class="secenek" data-is="sy-paylas" data-id="${lig}-${donem}">📤 Paylaş</button><button class="secenek" data-is="sy-indir" data-id="${lig}-${donem}">⬇ İndir</button></span>`;
   if (donem === 'ortalama') {
-    // Sütun başlığına dokununca sıralama (ilk dokunuş çoktan aza, ikincisi azdan çoka); doluluğu bilinmeyen hep en altta.
-    // Paylaş/İndir görseli her zaman ortalamaya göre sıralı kalır.
     const { k: sk, yon } = S.ui.seyirciSirala;
-    const liste = seyirciOrtalamasi(v).sort((a, b) => (a[sk] === null) - (b[sk] === null) || yon * ((b[sk] ?? 0) - (a[sk] ?? 0)) || b.ort - a.ort);
+    const liste = seyirciOrtSirali(v);
     const th = (k, ad, ek = '') => `<th class="sayi sirala ${ek} ${k === sk ? 'aktif' : ''}" data-is="sy-sirala" data-id="${k}">${ad}${k === sk ? (yon > 0 ? ' ▼' : ' ▲') : ''}</th>`;
-    const siraCipleri = `<div class="secenekler" style="margin-bottom:6px">${[['ort', 'Ortalama'], ['doluluk', 'Doluluk'], ['toplam', 'Toplam']].map(([k, ad]) =>
-      `<button class="secenek ${k === sk ? 'aktif' : ''}" data-is="sy-sirala" data-id="${k}">${ad}${k === sk ? (yon > 0 ? ' ▼' : ' ▲') : ''}</button>`).join('')}</div>`;
     const satirlar = liste.map((k, i) => `<tr><td class="sayi"><span class="f-sira ${i < 3 ? `s${i + 1}` : ''}">${i + 1}</span></td><td><b>${esc(baslik(k.ad))}</b></td>
-      <td class="sayi dar-gizle">${k.mac}</td><td class="sayi">${binlik(k.toplam)}</td><td class="sayi">${sk === 'ort' ? `<b>${binlik(k.ort)}</b>` : binlik(k.ort)}</td><td class="sayi">${sk === 'doluluk' ? `<b>${dolulukYazisi(k.doluluk)}</b>` : dolulukYazisi(k.doluluk)}</td></tr>`).join('');
+      <td class="sayi dar-gizle">${k.mac}</td><td class="sayi">${sk === 'toplam' ? `<b>${binlik(k.toplam)}</b>` : binlik(k.toplam)}</td><td class="sayi">${sk === 'ort' ? `<b>${binlik(k.ort)}</b>` : binlik(k.ort)}</td><td class="sayi">${sk === 'doluluk' ? `<b>${dolulukYazisi(k.doluluk)}</b>` : dolulukYazisi(k.doluluk)}</td></tr>`).join('');
     return `${cipler}<div class="kart"><div class="baslik-satir"><h2>İlk ${v.haftalar.at(-1)} hafta · seyirci ortalamaları</h2>${dugmeler}</div>
-      ${siraCipleri}<div class="tablo-kap"><table class="seyirci-ort"><thead><tr><th class="sayi">#</th><th>Takım</th>${th('mac', 'Maç', 'dar-gizle')}${th('toplam', 'Toplam')}${th('ort', 'Ortalama')}${th('doluluk', 'Doluluk')}</tr></thead>
+      <div class="tablo-kap"><table class="seyirci-ort"><thead><tr><th class="sayi">#</th><th>Takım</th>${th('mac', 'Maç', 'dar-gizle')}${th('toplam', 'Toplam')}${th('ort', 'Ortalama')}${th('doluluk', 'Doluluk')}</tr></thead>
       <tbody>${satirlar}</tbody></table></div>
-      <p class="soluk kucuk" style="margin-bottom:0">Maç: seyirci sayısı girilmiş maç sayısı; sayısı girilmemiş maçlar ortalamaya katılmaz. Doluluk: seyircinin salon kapasitesine oranı (iç saha maçlarının ortalaması; kapasitesi bilinmeyen salonda –). Sıralamak için düğmeye ya da sütun başlığına dokun; ikinci dokunuş tersine çevirir.</p></div>`;
+      <p class="soluk kucuk" style="margin-bottom:0">Maç: seyirci sayısı girilmiş maç sayısı; sayısı girilmemiş maçlar ortalamaya katılmaz. Doluluk: seyircinin salon kapasitesine oranı (iç saha maçlarının ortalaması; kapasitesi bilinmeyen salonda –). Sıralamak için sütun başlığına dokun; ikinci dokunuş tersine çevirir. İndirilen görsel de bu sırayla çıkar.</p></div>`;
   }
-  // Haftalık liste seyirciye ya da doluluğa göre sıralanır (ikinci dokunuş tersine çevirir; yüzdesi olmayan hep en altta).
-  // Doluluğa göre sıralıyken sağdaki büyük sayı yüzde olur. Paylaş/İndir görseli her zaman seyirciye göre.
   const { k: hk, yon: hy } = S.ui.seyirciHaftaSirala;
-  const liste = seyirciHaftasi(v, donem).sort((a, b) => (a[hk] === null) - (b[hk] === null) || hy * ((b[hk] ?? 0) - (a[hk] ?? 0)) || b.seyirci - a.seyirci);
-  const haftaCipleri = `<div class="secenekler" style="margin-bottom:4px">${[['seyirci', 'Seyirci'], ['doluluk', 'Doluluk']].map(([k, ad]) =>
-    `<button class="secenek ${k === hk ? 'aktif' : ''}" data-is="syh-sirala" data-id="${k}">${ad}${k === hk ? (hy > 0 ? ' ▼' : ' ▲') : ''}</button>`).join('')}</div>`;
+  const liste = seyirciHaftaSirali(v, donem);
   const dolu = liste.filter(m => m.seyirci);
   const toplam = dolu.reduce((t, m) => t + m.seyirci, 0);
   const yuzdeli = dolu.filter(m => m.doluluk !== null);
   const ortDoluluk = yuzdeli.length ? yuzdeli.reduce((t, m) => t + m.doluluk, 0) / yuzdeli.length : null;
-  const satirlar = liste.map(m => `<div class="f-satir">
+  const bas = (k, ad) => `<span class="sirala ${k === hk ? 'aktif' : ''}" data-is="syh-sirala" data-id="${k}">${ad}${k === hk ? (hy > 0 ? ' ▼' : ' ▲') : ''}</span>`;
+  const satirlar = liste.map(m => `<div class="f-satir sy-satir">
       <div class="ad"><strong>${esc(baslik(m.evAd))} <span class="soluk">${m.evSkor ?? ''}-${m.depSkor ?? ''}</span> ${esc(baslik(m.depAd))}</strong><small>${[gunBasligi(m.tarih), m.salon && `${esc(m.salon)}${m.kapasite ? ` (${binlik(m.kapasite)})` : ''}`].filter(Boolean).join(' · ')}</small></div>
-      ${hk === 'doluluk'
-    ? `<div class="f-sayi"><strong>${dolulukYazisi(m.doluluk)}</strong><small>${m.seyirci ? `${binlik(m.seyirci)} seyirci` : 'dolu'}</small></div>`
-    : `<div class="f-sayi"><strong>${m.seyirci ? binlik(m.seyirci) : '–'}</strong><small>${m.doluluk !== null ? `seyirci · ${dolulukYazisi(m.doluluk)} dolu` : 'seyirci'}</small></div>`}</div>`).join('');
-  return `${cipler}<div class="kart"><div class="baslik-satir"><h2>${donem}. hafta · seyirci sayıları</h2>${dugmeler}</div>${haftaCipleri}${satirlar}
+      <div class="sy-sayi ${hk === 'seyirci' ? 'aktif' : ''}">${m.seyirci ? binlik(m.seyirci) : '–'}</div><div class="sy-sayi ${hk === 'doluluk' ? 'aktif' : ''}">${dolulukYazisi(m.doluluk)}</div></div>`).join('');
+  return `${cipler}<div class="kart"><div class="baslik-satir"><h2>${donem}. hafta · seyirci sayıları</h2>${dugmeler}</div>
+    <div class="sy-baslik"><span>Maç</span>${bas('seyirci', 'Seyirci')}${bas('doluluk', 'Doluluk')}</div>${satirlar}
     <p class="soluk kucuk" style="margin-bottom:0">Toplam ${binlik(toplam)} · maç başı ${dolu.length ? binlik(Math.round(toplam / dolu.length)) : '–'}${ortDoluluk !== null ? ` · salonlar ortalama ${dolulukYazisi(ortDoluluk)} dolu` : ''}.
+    Sıralamak için Seyirci ya da Doluluk yazısına dokun; indirilen görsel de bu sırayla çıkar.
     Sayılar TBF'nin sitesinden; federasyon maçtan sonraki gün işliyor, Cumartesi–Salı öğlen ve gece güncellenir.</p></div>`;
 }
 async function seyirciGorseliniPaylas(anahtar, indir) {
   const [lig, donem] = anahtar.split('-');
   const v = seyirciVerisi(lig);
   const blob = donem === 'ortalama'
-    ? await SY.ortalamaGorseli({ lig, hafta: v.haftalar.at(-1), takimlar: seyirciOrtalamasi(v) })
-    : await SY.haftaGorseli({ lig, hafta: Number(donem), maclar: seyirciHaftasi(v, Number(donem)).map(m => ({ ...m, ev: m.evAd, dep: m.depAd })) });
+    ? await SY.ortalamaGorseli({ lig, hafta: v.haftalar.at(-1), takimlar: seyirciOrtSirali(v) })
+    : await SY.haftaGorseli({ lig, hafta: Number(donem), maclar: seyirciHaftaSirali(v, Number(donem)).map(m => ({ ...m, ev: m.evAd, dep: m.depAd })) });
   const dosya = new File([blob], `pota-alti-seyirci-${anahtar}.png`, { type: 'image/png' });
   if (!indir && navigator.canShare?.({ files: [dosya] })) {
     try { await navigator.share({ files: [dosya] }); return; } catch (e) { if (e?.name === 'AbortError') return; }

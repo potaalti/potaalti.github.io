@@ -357,6 +357,14 @@ table.kutu thead td.sirala.aktif { color: var(--vurgu); }
 /* Seyirci ortalamaları: sütun başlığına dokununca sıralama */
 th.sirala { cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; white-space: nowrap; }
 th.sirala.aktif { color: var(--vurgu); }
+/* Seyirci haftalık: sağda iki sütun (seyirci, doluluk); başlıklarına dokununca sıralama */
+.sy-baslik { display: flex; align-items: center; gap: 12px; padding: 6px 2px 4px; border-bottom: 1px solid var(--cizgi); font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--soluk); }
+.sy-baslik > span:first-child { flex: 1; }
+.sy-baslik .sirala, .sy-satir .sy-sayi { width: 74px; flex: 0 0 74px; text-align: right; }
+.sy-baslik .sirala { cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; white-space: nowrap; }
+.sy-baslik .sirala.aktif { color: var(--vurgu); }
+.sy-satir .sy-sayi { font-variant-numeric: tabular-nums; color: var(--soluk); }
+.sy-satir .sy-sayi.aktif { font-weight: 800; color: var(--yazi); font-size: 1.05rem; }
 @media (max-width: 759px) {
   table.seyirci-ort th, table.seyirci-ort td { padding-left: 3px; padding-right: 3px; }
   table.seyirci-ort td { font-size: .84rem; }

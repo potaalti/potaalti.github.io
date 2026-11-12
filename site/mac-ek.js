@@ -70,11 +70,11 @@ function kutuSkorTablosu(t, takim, a, koc) {
     <thead><tr><th>Oyuncu</th>${kutuBasligi(a.sirala)}</tr></thead>
     <tbody>${satirlar}${takimSatiri(takim)}<tr class="toplam"><th>Toplam</th>${kutuToplami(oyuncular, takim)}</tr></tbody></table></div></div>`;
 }
-function ceyrekTablosu(k) {
+function ceyrekTablosu(k, a) {
   const n = Math.max(k.ev.ceyrekler?.length ?? 0, k.dep.ceyrekler?.length ?? 0);
   if (!n) return '';
   const hucre = i => (i < 4 ? `Ç${i + 1}` : `U${i - 3}`);
-  const satir = t => `<tr><th>${esc(baslik(t.ad))}</th>${Array.from({ length: n }, (_, i) => `<td>${t.ceyrekler?.[i] ?? '–'}</td>`).join('')}<td><b>${t.skor ?? 0}</b></td></tr>`;
+  const satir = t => `<tr><th>${a ? a.takimBasligi(t) : esc(baslik(t.ad))}</th>${Array.from({ length: n }, (_, i) => `<td>${t.ceyrekler?.[i] ?? '–'}</td>`).join('')}<td><b>${t.skor ?? 0}</b></td></tr>`;
   return `<div class="kart"><div class="tablo-kap"><table class="kutu ceyrek">
     <thead><tr><th></th>${Array.from({ length: n }, (_, i) => `<td>${hucre(i)}</td>`).join('')}<td>T</td></tr></thead>
     <tbody>${satir(k.ev)}${satir(k.dep)}</tbody></table></div></div>`;
@@ -88,9 +88,9 @@ export function macGovdesi(kutu, ayar) {
   const a = { takimBasligi: t => esc(baslik(t.ad)), oyuncuAdi: o => esc(o.ad), benimMi: () => false, aciklamaEki: '', ...ayar };
   const evAd = baslik(kutu.ev.ad), depAd = baslik(kutu.dep.ad);
   const ileri = ileriVerisi(kutu, a.ileriDosya);
-  return `${ceyrekTablosu(kutu)}${farkGrafigi(evAd, depAd, kutu.fark ?? a.fark)}
+  return `${ceyrekTablosu(kutu, a)}${farkGrafigi(evAd, depAd, kutu.fark ?? a.fark)}
     ${kutuSkorTablosu(kutu.ev, kutu.ev.takim ?? a.takimIst?.ev, a, kutu.ev.koc ?? ileri?.ev?.koc)}${kutuSkorTablosu(kutu.dep, kutu.dep.takim ?? a.takimIst?.dep, a, kutu.dep.koc ?? ileri?.dep?.koc)}
-    ${ileriIstatistikKarti(evAd, depAd, ileri)}
+    ${ileriIstatistikKarti(evAd, depAd, ileri, a.takimBasligi(kutu.ev), a.takimBasligi(kutu.dep))}
     <p class="soluk kucuk">Kalın: ilk 5${a.canli ? ' · *: sahada' : ''} · 2S/3S/SA: isabet/deneme · Tç: top çalma · Bl: blok · Tk: top kaybı · VP: verimlilik${a.aciklamaEki}</p>`;
 }
 
@@ -228,7 +228,7 @@ if (typeof document !== 'undefined' && !globalThis.farkImleciKurulu) {
 // Gelişmiş istatistikler: iki takım karşılıklı çubuklar (o istatistikte önde olan vurgu renginde), altında fark / seri / liderlik
 const ILERI_CUBUKLAR = [['tks', 'Top kaybından sayı'], ['hh', 'Hızlı hücum sayısı'], ['is', 'İkinci şans sayısı'], ['ba', 'Boyalı alan sayısı'], ['benc', 'Benç sayısı']];
 const dakikaSaniye = sn => `${Math.floor(sn / 60)}:${String(sn % 60).padStart(2, '0')}`;
-export function ileriIstatistikKarti(evAd, depAd, ileri) {
+export function ileriIstatistikKarti(evAd, depAd, ileri, evLink, depLink) {
   const ev = ileri?.ev;
   const dep = ileri?.dep;
   if (!ev || !dep) return '';
@@ -241,7 +241,7 @@ export function ileriIstatistikKarti(evAd, depAd, ileri) {
   };
   const satir = (ad, a, b) => `<div class="ileri-satir"><b>${a}</b><span>${ad}</span><b>${b}</b></div>`;
   return `<div class="kart ileri-kart"><h3>Gelişmiş istatistikler</h3>
-    <div class="ileri-takimlar"><span>${esc(evAd)}</span><span>${esc(depAd)}</span></div>
+    <div class="ileri-takimlar"><span>${evLink ?? esc(evAd)}</span><span>${depLink ?? esc(depAd)}</span></div>
     ${ILERI_CUBUKLAR.filter(([k]) => ev[k] != null && dep[k] != null).map(cubuk).join('')}
     ${satir('En büyük fark', ev.fark, dep.fark)}${satir('En büyük seri', ev.seri, dep.seri)}${satir('Liderlik süresi', dakikaSaniye(ev.lider), dakikaSaniye(dep.lider))}
     <div class="ileri-satir orta"><span>Liderlik değişimi <b>${ev.degisim}</b></span><span>Eşitlik <b>${ev.esitlik}</b></span></div></div>`;

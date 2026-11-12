@@ -505,11 +505,13 @@ def ort(x, n):
     return round(x / n, 1) if n else 0
 
 
-def takim_oyuncu_uret(k, takimlar, maclar, kutular):
+def takim_oyuncu_uret(k, takimlar, maclar, kutular, gruplar=()):
     kok = CIKTI / k["kod"]
     turk = [t for t, v in takimlar.items() if v["turk"]]
     # Rakipler: temsilcilerimizle oynadığı (kutu skoru alınmış) maçlardan; istatistikleri yalnızca o maçlardan
-    rakipler = sorted({t for m in maclar if m["id"] in kutular for t in (m["ev"], m["dep"]) if t not in turk})
+    # Puan durumundaki bütün takımların da sayfası olsun (uygulamada her takım adı tıklanır): temsilcilerimizle maçı yoksa boş
+    rakipler = sorted(({t for m in maclar if m["id"] in kutular for t in (m["ev"], m["dep"])}
+                       | {s["takim"] for g in gruplar for s in g["satirlar"]}) - set(turk))
     oyuncular_hepsi = {}
     for tid in turk + rakipler:
         oynanan = [m for m in maclar if tid in (m["ev"], m["dep"]) and m["id"] in kutular]
@@ -605,7 +607,7 @@ def kupa_uret(k):
         m["yayin"] = kanallar.get(f"{k['kod']}-{m['id']}") or kanallar.get(k["kod"]) or KANAL.get(k["kod"])
         if not m.get("ceyrekler") and m["id"] in kutular:
             m["ceyrekler"] = [kutular[m["id"]]["ev"].get("ceyrekler") or [], kutular[m["id"]]["dep"].get("ceyrekler") or []]
-    takim_oyuncu_uret(k, takimlar, maclar, kutular)
+    takim_oyuncu_uret(k, takimlar, maclar, kutular, gruplar)
     yaz(CIKTI / f"{k['kod']}.json", {"kod": k["kod"], "ad": k["ad"], "takimlar": {t: {"ad": v["ad"], "turk": v["turk"]} for t, v in takimlar.items()},
                                      "gruplar": gruplar, "maclar": maclar})
     turkler = [{"id": t, "ad": v["ad"]} for t, v in takimlar.items() if v["turk"]]

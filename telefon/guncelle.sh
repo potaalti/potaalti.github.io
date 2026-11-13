@@ -94,34 +94,50 @@ if [ "$(cat "$SAAT_KAYIT" 2>/dev/null)" != "$bugun-$saat" ]; then
   saatlik=1
 fi
 
-{
-  # Her adımın süre sınırı var (timeout): takılan bir istek görevi kilitlemesin (2026-11-05 18:57'de takılıp
-  # 1,5 gün hiç çalışmadı), sonraki tetiklemeler devam etsin
-  # BSL canlı: maç saatinde değilse bir şey yazmadan kapanır
-  (cd bsl && timeout 600 python veri_guncelle.py --akilli) || echo "$(date '+%F %T') BSL canlı veri alınamadı"
+# BSL maç saatinde miyiz (telefondaki son veriden, internete çıkmadan)
+bsl_mac=0
+(cd bsl && python -c 'import sys, veri_guncelle as v; sys.exit(0 if v.guncelleme_gerekli() else 1)' 2>/dev/null) && bsl_mac=1
 
-  if [ $gunluk = 1 ] || [ $saatlik = 1 ]; then
-    echo "== $(date '+%F %T') $([ $gunluk = 1 ] && echo 'tam' || echo 'saatlik') güncelleme"
-    timeout 180 git pull -q --rebase --autostash || echo "git pull başarısız"
-    if [ $gunluk = 1 ]; then
-      (cd bsl && timeout 1500 python veri_guncelle.py) || echo "BSL verisi alınamadı (TBF)"
+# Yapılacak bir şey yoksa internete çıkmadan biter. Varsa: GitHub'daki son hali alır (git reset; telefondaki veriler her seferinde
+# yeniden üretildiği için yerel farklar güvenle atılır), üretir, gönderir; o arada bilgisayar ya da GitHub göndermişse son hali
+# alıp yeniden üretir (en çok 3 kez). Bilgisayar açıkken (son 5 dakikada '(pc)' gönderimi) BSL canlı turu bilgisayara bırakılır.
+# Hepsi tek fonksiyon ve tek satırla çağrılır: git reset bu dosyayı çalışırken değiştirse bile bash eski metni okumaya devam eder.
+guncelle() {
+  [ $bsl_mac = 0 ] && [ $gunluk = 0 ] && [ $saatlik = 0 ] && return 0
+  git rebase --abort 2>/dev/null
+  local deneme son_pc
+  for deneme in 1 2 3; do
+    # Her adımın süre sınırı var (timeout): takılan bir istek görevi kilitlemesin (2026-11-05 18:57'de takılıp
+    # 1,5 gün hiç çalışmadı), sonraki tetiklemeler devam etsin
+    timeout 180 git fetch -q origin || { echo "$(date '+%F %T') git fetch başarısız"; return 1; }
+    git reset -q --hard origin/main
+    if [ $bsl_mac = 1 ]; then
+      son_pc=$(git log -1 --format=%ct --grep='(pc)$' origin/main)
+      if [ $tam = 0 ] && [ -n "$son_pc" ] && [ $(( $(date +%s) - son_pc )) -lt 300 ]; then
+        [ $deneme = 1 ] && echo "$(date '+%F %T') bilgisayar çekiyor: BSL canlı turu atlandı"
+      else
+        (cd bsl && timeout 600 python veri_guncelle.py --akilli) || echo "$(date '+%F %T') BSL canlı veri alınamadı"
+      fi
     fi
-    # Liderler ve seyirci sayıları sadece günde 2 kezlik tam güncellemede (seyirci Cumartesi–Salı dışında atlanır)
-    timeout 900 python veri/uret.py $([ $gunluk = 1 ] && echo --gunluk) > /dev/null || echo "Puan tablosu ve liderler üretilemedi"
-  fi
-
-  git add site/data site/bsl/data site/tbl/data
-  if ! git diff --cached --quiet; then
+    if [ $gunluk = 1 ] || [ $saatlik = 1 ]; then
+      echo "== $(date '+%F %T') $([ $gunluk = 1 ] && echo 'tam' || echo 'saatlik') güncelleme"
+      if [ $gunluk = 1 ]; then
+        (cd bsl && timeout 1500 python veri_guncelle.py) || echo "BSL verisi alınamadı (TBF)"
+      fi
+      # Liderler ve seyirci sayıları sadece günde 2 kezlik tam güncellemede (seyirci Cumartesi–Salı dışında atlanır)
+      timeout 900 python veri/uret.py $([ $gunluk = 1 ] && echo --gunluk) > /dev/null || echo "Puan tablosu ve liderler üretilemedi"
+    fi
+    git add site/data site/bsl/data site/tbl/data
+    if git diff --cached --quiet; then
+      { [ $gunluk = 1 ] || [ $saatlik = 1 ]; } && echo "değişiklik yok"
+      return 0
+    fi
     git commit -q -m "Veriler güncellendi (telefon)"
-    if [ "${POTA_KURU:-0}" = 1 ]; then
-      echo "deneme: GitHub'a gönderilmedi"
-    else
-      timeout 180 git pull -q --rebase --autostash
-      if timeout 180 git push -q; then echo "$(date '+%F %T') gönderildi"; else echo "$(date '+%F %T') GitHub'a gönderilemedi"; fi
-    fi
-  elif [ $gunluk = 1 ] || [ $saatlik = 1 ]; then
-    echo "değişiklik yok"
-  fi
-} >> "$LOG" 2>&1
+    if [ "${POTA_KURU:-0}" = 1 ]; then echo "deneme: GitHub'a gönderilmedi"; return 0; fi
+    if timeout 180 git push -q origin HEAD:main; then echo "$(date '+%F %T') gönderildi"; return 0; fi
+    echo "$(date '+%F %T') gönderilemedi ($deneme/3): GitHub'daki son hal alınıp yeniden üretiliyor"
+  done
+  echo "$(date '+%F %T') GitHub'a gönderilemedi"
+}
 
-tail -n 400 "$LOG" > "$LOG.tmp" && mv "$LOG.tmp" "$LOG"
+guncelle >> "$LOG" 2>&1; tail -n 400 "$LOG" > "$LOG.tmp" && mv "$LOG.tmp" "$LOG"; exit 0

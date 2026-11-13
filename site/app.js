@@ -1322,7 +1322,7 @@ function avMac(kod, k, id) {
       <p class="soluk kucuk" style="margin:10px 0 0;text-align:center"><span class="lig-etiket">${esc(k.kisa)}</span> ${bilgi}</p></div>
     ${!kb && m.durum === 'oynanmadi' ? avMacOnu(kod, d, m) : !kutu ? `${kb?.fark ? ME.farkGrafigi(avTakimAdi(d, m.ev), avTakimAdi(d, m.dep), kb.fark) : ''}<p class="bos">${m.durum === 'canli'
       ? 'Bu kupada kutu skor ve gelişmiş istatistikler maç bitince gelir. Skor farkı grafiği maç sırasında birkaç dakikada bir güncellenir.'
-      : 'Kutu skor maç başlayınca gelir (birkaç dakika sürebilir).'}</p>` : ME.macGovdesi(kutu, { sirala: S.ui.kutuSirala, fark: kb.fark, ileriDosya: kb.ileri,
+      : 'Kutu skor maç başlayınca gelir (birkaç dakika sürebilir).'}</p>` : ME.macGovdesi(kutu, { canli: m.durum === 'canli', sirala: S.ui.kutuSirala, fark: kb.fark, ileriDosya: kb.ileri,
       aciklamaEki: kb?.ileriResmi === false ? ' · Gelişmiş istatistiklerde top kaybından, ikinci şanstan ve boyalı alandan sayılar maç akışından hesaplandı (resmi değil); hızlı hücum bu kupanın verisinde yok.' : '',
       takimBasligi: t => `<a href="#/avrupa/${kod}/takim/${t.id}">${esc(t.ad)}</a>`,
       oyuncuAdi: o => `<a href="#/avrupa/${kod}/oyuncu/${o.id}" class="oyuncu-link">${esc(o.ad)}</a>` })}`;

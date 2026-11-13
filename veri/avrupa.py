@@ -246,7 +246,8 @@ def el_kupa(k):
                     "ast": n("Assistances"), "tc": n("Steals"), "blk": n("BlocksFavour"), "tk": n("Turnovers"),
                     "faul": n("FoulsCommited"), "vp": n("Valuation"), "pm": n("Plusminus"),
                     "iki": [n("FieldGoalsMade2"), n("FieldGoalsAttempted2")], "uc": [n("FieldGoalsMade3"), n("FieldGoalsAttempted3")],
-                    "sa": [n("FreeThrowsMade"), n("FreeThrowsAttempted")]}))
+                    "sa": [n("FreeThrowsMade"), n("FreeThrowsAttempted")],
+                    **({"sahada": True} if p.get("IsPlaying") else {})}))  # şu an sahadaki 5 (uygulama adın sonuna * koyar)
             tm, top = t.get("tmr") or {}, t.get("totr") or {}
             q = ceyrek.get(t.get("Team")) or {}
             ceyrekler = [q[a] for a in sorted(q, key=lambda a: (len(a), a)) if a.startswith("Quarter") and q[a]]

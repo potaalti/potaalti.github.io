@@ -1,23 +1,31 @@
 // Ziyaret sayacı (GoatCounter: çerezsiz, kişisel veri tutmaz). Ana uygulama, TBL Fantezi ve BSL Fantezi sayfalarında yüklenir.
-// Sayfa adresi #/ ile değiştiği için her BÖLÜM değişiminde bir kez sayılır (maç/oyuncu numarası atılır: #/mac/bsl/123 -> /#/mac/bsl);
-// böylece aylık sayım sınırı şişmez, yönetici İstatistik bölümünde bölümler toplu görünür. Yöneticinin kendi gezintisi sayılmaz.
+// Giriş: sayfa her açıldığında bir kez sayfa görüntüleme ('/', '/tbl/', '/bsl/'); GoatCounter aynı kişiyi (aynı cihaz ve tarayıcı)
+// 8 saat içinde tekrar ziyaretçi saymaz, yenileme de yeni ziyaret değildir. Gezilen bölümler ayrıca "olay" olarak sayılır
+// (maç/oyuncu numarası atılır: #/mac/bsl/123 -> /#/mac/bsl); ziyaretçi sayısına girmez, en çok bakılan bölümleri gösterir.
+// Yöneticinin kendi gezintisi sayılmaz.
 // İstatistikler: veri/istatistik.mjs (GitHub "Site istatistikleri" işi) GoatCounter'dan çekip data/istatistik.json'a yazar.
 (function () {
   var KOD = 'potaalti'; // GoatCounter site kodu (ör. 'potaalti' -> potaalti.goatcounter.com); boşken sayaç kapalı
   if (!KOD) return;
   try { if (localStorage.getItem('potaAltiYonetici') === '1') return; } catch (e) { /* gizli sekme */ }
   var LIG = /^(bsl|tbl|el|ec|bcl|fec)$/;
-  var son = null;
+  var son = null, girdi = false;
   function bolum() {
     var kok = location.pathname.replace(/index\.html$/, '');
     var p = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
     return kok + '#/' + (p[0] || '') + (p[0] && p[1] && LIG.test(p[1]) ? '/' + p[1] : '');
   }
   function say() {
+    var gc = window.goatcounter;
+    if (!gc || !gc.count) return;
+    if (!girdi) {
+      girdi = true;
+      gc.count({ path: location.pathname.replace(/index\.html$/, ''), title: document.title });
+    }
     var yol = bolum();
-    if (yol === son || !window.goatcounter || !window.goatcounter.count) return;
+    if (yol === son) return;
     son = yol;
-    window.goatcounter.count({ path: yol, title: document.title });
+    gc.count({ path: yol, title: document.title, event: true });
   }
   window.goatcounter = { no_onload: true };
   var s = document.createElement('script');

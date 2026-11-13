@@ -33,6 +33,9 @@ const iso = t => new Date(t).toISOString().replace(/\.\d+Z$/, 'Z');
 
 
 const liste = (x, ad = s => s.name) => (x.stats ?? []).map(s => ({ ad: ad(s), id: s.id ?? '', n: s.count ?? 0 })).filter(s => s.n > 0);
+// Ziyaretçi = giriş sayfaları ('/', '/tbl/', '/bsl/', eski site): olay olmayan ve # içermeyen yollar. Bölümler: olaylar
+// (2026-11-13 gecesi kısa süre bölümler de sayfa görüntülemesi olarak sayıldı: # içeren o yollar da bölümlere eklenir)
+const girisMi = h => !h.event && !String(h.path).includes('#');
 async function donem(bas) {
   const sorgu = { start: iso(bas), end: iso(bitis) };
   const sonuc = {};
@@ -40,8 +43,10 @@ async function donem(bas) {
     sonuc[anahtar] = liste(await getir(`/stats/${sayfa}`, { ...sorgu, limit: 20 }));
   }
   const hits = await getir('/stats/hits', { ...sorgu, limit: 100 });
-  sonuc.bolum = (hits.hits ?? []).filter(h => !h.event).map(h => ({ ad: h.path, n: h.count ?? 0 })).filter(h => h.n > 0);
-  sonuc.ziyaretci = hits.total ?? sonuc.bolum.reduce((t, h) => t + h.n, 0);
+  const yollar = (hits.hits ?? []).map(h => ({ ad: h.path, n: h.count ?? 0, giris: girisMi(h) })).filter(h => h.n > 0);
+  sonuc.giris = yollar.filter(h => h.giris).map(({ ad, n }) => ({ ad, n }));
+  sonuc.bolum = yollar.filter(h => !h.giris).map(({ ad, n }) => ({ ad, n }));
+  sonuc.ziyaretci = sonuc.giris.reduce((t, h) => t + h.n, 0);
   return sonuc;
 }
 
@@ -50,9 +55,18 @@ let eski = null;
 try { eski = JSON.parse(readFileSync(dosya, 'utf8')); } catch { /* ilk çalışma */ }
 let veri;
 try {
-  // Günlük ve saatlik ziyaretçi (sitenin GoatCounter ayarındaki saat dilimine göre): 60 gün (30 günü öncekiyle kıyaslamak için)
-  const toplam = await getir('/stats/total', { start: iso(bugunBas - 59 * GUN), end: iso(bitis) });
-  const gunler = (toplam.stats ?? []).map(s => ({ gun: s.day.slice(0, 10), z: s.daily ?? 0, saat: s.hourly ?? [] })).sort((a, b) => a.gun.localeCompare(b.gun));
+  // Günlük ve saatlik ziyaretçi (giriş sayfalarının toplamı; sitenin GoatCounter saat dilimine göre): 60 gün (30 günü öncekiyle kıyaslamak için)
+  const h60 = await getir('/stats/hits', { start: iso(bugunBas - 59 * GUN), end: iso(bitis), limit: 100 });
+  const gun = new Map();
+  for (const h of (h60.hits ?? []).filter(girisMi)) {
+    for (const s of h.stats ?? []) {
+      const g = gun.get(s.day.slice(0, 10)) ?? { z: 0, saat: Array(24).fill(0) };
+      g.z += s.daily ?? 0;
+      (s.hourly ?? []).forEach((x, i) => { g.saat[i] += x ?? 0; });
+      gun.set(s.day.slice(0, 10), g);
+    }
+  }
+  const gunler = [...gun].map(([g, v]) => ({ gun: g, ...v })).sort((a, b) => a.gun.localeCompare(b.gun));
   veri = {
     guncelleme: new Date(simdi).toISOString(),
     gunler: gunler.map(({ gun, z }) => ({ gun, z })),

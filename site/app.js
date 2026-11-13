@@ -1697,6 +1697,9 @@ function istBolumAdi(yol) {
   const ad = IST_BOLUM[s] ?? s;
   return lig ? `${lig} · ${ad.toLocaleLowerCase('tr-TR')}` : ad;
 }
+// Giriş yeri: hangi sayfadan açıldı ('/', '/tbl/', '/bsl/', eski TBL sitesi)
+const istGirisAdi = yol => (yol.startsWith('/tbl_fantezi_lig') ? 'Eski TBL Fantezi sitesi' : yol.startsWith('/tbl/') ? 'TBL Fantezi'
+  : yol.startsWith('/bsl/') ? 'BSL Fantezi' : 'Pota Altı uygulaması');
 function istCihazAdi(x) {
   const t = `${x.id} ${x.ad}`.toLowerCase();
   // GoatCounter ekran genişliği grupları: Phones / Tablets and large phones / Computer monitors (…larger than HD)
@@ -1785,8 +1788,9 @@ function gorunumIstatistik() {
       <div class="ist-kutular">${kutucuk(binlik(ziyaretci), 'Ziyaretçi', kiyas)}${ikinci}${kutucuk(mobil === null ? '–' : `%${mobil}`, 'Mobilden', 'telefon ve tablet')}</div>
       <p id="ist-bilgi" class="ist-bilgi">${enYogun?.z ? `En yoğun: ${enYogun.bilgi}` : 'Bu dönemde ziyaret yok.'}</p>
       <div class="ist-grafik">${cubuklar.map(c => `<button class="ist-cubuk${c.bos ? ' bos' : ''}" data-is="ist-cubuk" data-bilgi="${esc(c.bilgi)}" aria-label="${esc(c.bilgi.replace(/<[^>]+>/g, ''))}"><i style="height:${c.z ? Math.max(3, (c.z / max) * 100) : 0}%"></i><span>${c.etiket}</span></button>`).join('')}</div>
-      <p class="soluk kucuk" style="margin:10px 0 0">Ziyaretçi: siteyi açan kişi (aynı kişi gün içinde birkaç kez açsa da bir sayılır). Yöneticilerin kendi gezintisi sayılmaz.</p></div>
+      <p class="soluk kucuk" style="margin:10px 0 0">Ziyaretçi: siteyi açan kişi. Sayfayı yenilemek ya da 8 saat içinde yeniden açmak yeni ziyaret sayılmaz (aynı telefon ve tarayıcı); bölümler arası gezinti ziyaretçiye eklenmez. Yöneticilerin kendi gezintisi sayılmaz.</p></div>
     <div class="ist-izgara">
+      ${istDagilim('Nereden açıldı', istTopla(d.giris, x => istGirisAdi(x.ad)))}
       ${istDagilim('Cihaz', cihaz)}
       ${istDagilim('İşletim sistemi', istTopla(d.sistem, x => x.ad || 'Bilinmiyor'))}
       ${istDagilim('Nereden geldi', istTopla(d.kaynak, x => istKaynakAdi(x.ad)))}

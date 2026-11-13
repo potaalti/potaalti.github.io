@@ -638,7 +638,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--kaynak", default=VARSAYILAN_KAYNAK)
     ap.add_argument("--gunluk", action="store_true", help="günde 2 kezlik güncelleme: liderler ve (Cumartesi–Salı) seyirci sayıları")
+    # Bilgisayar döngüsü (veri/pc_dongu.py) YouTube listesini ayrı saatlerde yeniler: hayir = ligler, sadece = yalnızca YouTube
+    ap.add_argument("--youtube", choices=["evet", "hayir", "sadece"], default="evet")
     args = ap.parse_args()
+    if args.youtube == "sadece":
+        y, v = youtube_uret()
+        print(f"youtube: {y} canlı yayın, {v} video")
+        return 0
     index = oku(args.kaynak, "hafta/index.json")
     meta = {"guncelleme": datetime.now(timezone.utc).isoformat(timespec="seconds"), "kaynakGuncelleme": index.get("guncelleme"), "ligler": {}}
     for lig in LIGLER:
@@ -651,8 +657,9 @@ def main():
             tbl_fantezi_uret(args.kaynak, bilgi, hafta_ozet)
         print(f"{lig}: {meta['ligler'][lig]['takimSayisi']} takım, {meta['ligler'][lig]['oyuncuSayisi']} oyuncu")
     try:
-        y, v = youtube_uret()
-        print(f"youtube: {y} canlı yayın, {v} video")
+        if args.youtube == "evet":
+            y, v = youtube_uret()
+            print(f"youtube: {y} canlı yayın, {v} video")
     except Exception as e:  # YouTube okunamazsa önceki dosya kalır; ligler etkilenmez
         print("youtube okunamadı:", e)
     yaz(CIKTI / "meta.json", meta)

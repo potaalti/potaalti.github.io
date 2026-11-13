@@ -966,10 +966,10 @@ async function tabloPaylas(lig, indir) {
 // BSL: ilk 8 play-off (lider yine sarı)
 const BOLGELER = {
   tbl: [[1, 'ust', 'Üst lige çıkar'], [7, 'po', 'Play-off (2–7)'], [11, 'pi', 'Play-in (8–11)']],
-  bsl: [[1, 'ust', 'Lider'], [8, 'po', 'Play-off (ilk 8)']],
+  bsl: [[1, 'ust', 'Lider', false], [8, 'po', 'Play-off (ilk 8)']], // 4. alan false: altına kesik çizgi yok (lider de play-off'ta)
 };
 const bolgeSinifi = (lig, sira) => (BOLGELER[lig] ?? []).find(([son]) => sira <= son)?.[1] ?? '';
-const bolgeSiniri = (lig, sira) => (BOLGELER[lig] ?? []).some(([son]) => son === sira);
+const bolgeSiniri = (lig, sira) => (BOLGELER[lig] ?? []).some(([son, , , cizgi]) => son === sira && cizgi !== false);
 const bolgeLejanti = lig => (BOLGELER[lig] ? `<p class="bolge-lejant">${BOLGELER[lig].map(([, s, ad]) => `<span><i class="bolge-${s}"></i>${ad}</span>`).join('')}</p>` : '');
 
 function tabloKarti(lig, ilk = null) {

@@ -1698,8 +1698,9 @@ function istBolumAdi(yol) {
   return lig ? `${lig} · ${ad.toLocaleLowerCase('tr-TR')}` : ad;
 }
 // Giriş yeri: hangi sayfadan açıldı ('/', '/tbl/', '/bsl/', eski TBL sitesi)
-const istGirisAdi = yol => (yol.startsWith('/tbl_fantezi_lig') ? 'Eski TBL Fantezi sitesi' : yol.startsWith('/tbl/') ? 'TBL Fantezi'
-  : yol.startsWith('/bsl/') ? 'BSL Fantezi' : 'Pota Altı uygulaması');
+// (GoatCounter sondaki / işaretini atar: '/tbl/' -> '/tbl')
+const istGirisAdi = yol => (yol.startsWith('/tbl_fantezi_lig') ? 'Eski TBL Fantezi sitesi' : /^\/tbl(\/|$)/.test(yol) ? 'TBL Fantezi'
+  : /^\/bsl(\/|$)/.test(yol) ? 'BSL Fantezi' : 'Pota Altı uygulaması');
 function istCihazAdi(x) {
   const t = `${x.id} ${x.ad}`.toLowerCase();
   // GoatCounter ekran genişliği grupları: Phones / Tablets and large phones / Computer monitors (…larger than HD)

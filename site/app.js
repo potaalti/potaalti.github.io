@@ -1689,6 +1689,7 @@ function istBolumAdi(yol) {
   const [kok, h = ''] = yol.split('#');
   if (/\/tbl\/$/.test(kok)) return 'TBL Fantezi';
   if (/\/bsl\/$/.test(kok)) return 'BSL Fantezi';
+  if (kok.startsWith('/tbl_fantezi_lig')) return 'Eski TBL Fantezi sitesi';
   const [s = '', l] = h.replace(/^\//, '').split('/');
   const lig = IST_LIG[l];
   if (s === 'lig') return lig ?? 'Lig';
@@ -1698,7 +1699,8 @@ function istBolumAdi(yol) {
 }
 function istCihazAdi(x) {
   const t = `${x.id} ${x.ad}`.toLowerCase();
-  return /phone/.test(t) ? 'Telefon' : /tablet/.test(t) ? 'Tablet' : /monitor|computer|desktop|laptop/.test(t) ? 'Bilgisayar' : 'Bilinmiyor';
+  // GoatCounter ekran genişliği grupları: Phones / Tablets and large phones / Computer monitors (…larger than HD)
+  return /tablet|large ?phone/.test(t) ? 'Tablet / büyük telefon' : /phone/.test(t) ? 'Telefon' : /monitor|computer|desktop|laptop/.test(t) ? 'Bilgisayar' : 'Bilinmiyor';
 }
 const IST_ULKE = { Turkey: 'Türkiye', 'Türkiye': 'Türkiye', Germany: 'Almanya', Netherlands: 'Hollanda', 'United States': 'ABD', 'United Kingdom': 'Birleşik Krallık',
   France: 'Fransa', Belgium: 'Belçika', Austria: 'Avusturya', Cyprus: 'Kıbrıs', Azerbaijan: 'Azerbaycan', Greece: 'Yunanistan', Spain: 'İspanya', Italy: 'İtalya' };
@@ -1767,7 +1769,7 @@ function gorunumIstatistik() {
   const enYogun = cubuklar.reduce((a, c) => (c.z > a.z ? c : a), cubuklar[0]);
   const cihaz = istTopla(d.cihaz, istCihazAdi);
   const cihazTop = cihaz.reduce((t, x) => t + x.n, 0);
-  const telefon = cihazTop ? Math.round(((cihaz.find(x => x.ad === 'Telefon')?.n ?? 0) / cihazTop) * 100) : null;
+  const mobil = cihazTop ? Math.round((cihaz.filter(x => x.ad === 'Telefon' || x.ad.startsWith('Tablet')).reduce((t, x) => t + x.n, 0) / cihazTop) * 100) : null;
   const kutucuk = (deger, ad, alt = '') => `<div class="ist-kutu"><b>${deger}</b><span>${ad}</span>${alt ? `<small>${alt}</small>` : ''}</div>`;
   const ikinci = donem === 'bugun'
     ? kutucuk(enYogun?.z ? enYogun.saat : '–', 'En yoğun saat', enYogun?.z ? `${binlik(enYogun.z)} ziyaretçi` : '')
@@ -1775,7 +1777,7 @@ function gorunumIstatistik() {
   const kiyas = degisim === null ? '' : `<span class="${degisim >= 0 ? 'artis' : 'azalis'}">${degisim >= 0 ? '▲' : '▼'} %${Math.abs(degisim)}</span> ${kiyasYazi}`;
   return `<div class="ist${anim ? ' ist-anim' : ''}"><div class="kart"><div class="baslik-satir"><h2>Ziyaret istatistikleri</h2><small class="soluk">${v.guncelleme ? `Güncelleme: ${sureYazisi(dkOnce(v.guncelleme))}` : ''}</small></div>
       <div class="satir ist-donem">${IST_DONEMLER.map(([k, ad]) => `<button class="secenek ${k === donem ? 'aktif' : ''}" data-is="ist-donem" data-id="${k}">${ad}</button>`).join('')}</div>
-      <div class="ist-kutular">${kutucuk(binlik(ziyaretci), 'Ziyaretçi', kiyas)}${ikinci}${kutucuk(telefon === null ? '–' : `%${telefon}`, 'Telefondan')}</div>
+      <div class="ist-kutular">${kutucuk(binlik(ziyaretci), 'Ziyaretçi', kiyas)}${ikinci}${kutucuk(mobil === null ? '–' : `%${mobil}`, 'Mobilden', 'telefon ve tablet')}</div>
       <p id="ist-bilgi" class="ist-bilgi">${enYogun?.z ? `En yoğun: ${enYogun.bilgi}` : 'Bu dönemde ziyaret yok.'}</p>
       <div class="ist-grafik">${cubuklar.map(c => `<button class="ist-cubuk${c.bos ? ' bos' : ''}" data-is="ist-cubuk" data-bilgi="${esc(c.bilgi)}" aria-label="${esc(c.bilgi.replace(/<[^>]+>/g, ''))}"><i style="height:${c.z ? Math.max(3, (c.z / max) * 100) : 0}%"></i><span>${c.etiket}</span></button>`).join('')}</div>
       <p class="soluk kucuk" style="margin:10px 0 0">Ziyaretçi: siteyi açan kişi (aynı kişi gün içinde birkaç kez açsa da bir sayılır). Yöneticilerin kendi gezintisi sayılmaz.</p></div>

@@ -3,7 +3,7 @@
 // böylece aylık sayım sınırı şişmez, yönetici İstatistik bölümünde bölümler toplu görünür. Yöneticinin kendi gezintisi sayılmaz.
 // İstatistikler: veri/istatistik.mjs (GitHub "Site istatistikleri" işi) GoatCounter'dan çekip data/istatistik.json'a yazar.
 (function () {
-  var KOD = ''; // GoatCounter site kodu (ör. 'potaalti' -> potaalti.goatcounter.com); boşken sayaç kapalı
+  var KOD = 'potaalti'; // GoatCounter site kodu (ör. 'potaalti' -> potaalti.goatcounter.com); boşken sayaç kapalı
   if (!KOD) return;
   try { if (localStorage.getItem('potaAltiYonetici') === '1') return; } catch (e) { /* gizli sekme */ }
   var LIG = /^(bsl|tbl|el|ec|bcl|fec)$/;

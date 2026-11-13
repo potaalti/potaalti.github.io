@@ -222,7 +222,39 @@ def el_kupa(k):
                     "koc": ad_duzelt(t["coach"]["name"]) if (t.get("coach") or {}).get("name") else None,
                     "takim": {"hr": int(tm.get("offensiveRebounds") or 0), "sr": int(tm.get("defensiveRebounds") or 0),
                               "rib": int(tm.get("totalRebounds") or 0), "tk": int(tm.get("turnovers") or 0), "faul": int(tm.get("foulsCommited") or 0)}}
+        if not d["local"].get("players") or not d["local"].get("total"):
+            return kutu_canli(m)  # v2 kutu skor maç bitene kadar boş geliyor: canlıyken eski canlı servisten
         return {"id": m["id"], "tarih": m["tarih"], "ev": taraf(d["local"], m["ev"]), "dep": taraf(d["road"], m["dep"])}
+
+    def kutu_canli(m):
+        """Canlı maçın kutu skoru (live.euroleague.net Boxscore; v2 ile aynı oyuncu kodları, 'P003091' -> '003091')."""
+        d = getir(f"https://live.euroleague.net/api/Boxscore?gamecode={m['id']}&seasoncode={k['sezon']}")
+        if len(d.get("Stats") or []) < 2:
+            raise ValueError("canlı kutu skor yok")
+        ceyrek = {q.get("Team"): q for q in d.get("ByQuarter") or []}
+
+        def taraf(t, kod):
+            oyuncular = []
+            for p in t.get("PlayersStats") or []:
+                pid = str(p.get("Player_ID") or "").strip().lstrip("P")
+                if not pid:
+                    continue
+                n = lambda a: int(p.get(a) or 0)  # noqa: E731
+                oyuncular.append(oyuncu_satiri(pid, ad_duzelt(p.get("Player") or ""), p.get("Dorsal"), p.get("IsStarter"),
+                                               sure_sn(p.get("Minutes")), {
+                    "sayi": n("Points"), "rib": n("TotalRebounds"), "or": n("OffensiveRebounds"), "dr": n("DefensiveRebounds"),
+                    "ast": n("Assistances"), "tc": n("Steals"), "blk": n("BlocksFavour"), "tk": n("Turnovers"),
+                    "faul": n("FoulsCommited"), "vp": n("Valuation"), "pm": n("Plusminus"),
+                    "iki": [n("FieldGoalsMade2"), n("FieldGoalsAttempted2")], "uc": [n("FieldGoalsMade3"), n("FieldGoalsAttempted3")],
+                    "sa": [n("FreeThrowsMade"), n("FreeThrowsAttempted")]}))
+            tm, top = t.get("tmr") or {}, t.get("totr") or {}
+            q = ceyrek.get(t.get("Team")) or {}
+            ceyrekler = [q[a] for a in sorted(q, key=lambda a: (len(a), a)) if a.startswith("Quarter") and q[a]]
+            return {"id": kod, "skor": int(top.get("Points") or 0), "oyuncular": oyuncular, "ceyrekler": ceyrekler,
+                    "koc": ad_duzelt(t["Coach"]) if t.get("Coach") else None,
+                    "takim": {"hr": int(tm.get("OffensiveRebounds") or 0), "sr": int(tm.get("DefensiveRebounds") or 0),
+                              "rib": int(tm.get("TotalRebounds") or 0), "tk": int(tm.get("Turnovers") or 0), "faul": int(tm.get("FoulsCommited") or 0)}}
+        return {"id": m["id"], "tarih": m["tarih"], "ev": taraf(d["Stats"][0], m["ev"]), "dep": taraf(d["Stats"][1], m["dep"])}
 
     def akis(m, kayit):
         """Skor farkı ve gelişmiş istatistik: maçın bütün sayıları (Points); hızlı hücum, ikinci şans ve top kaybından sayı

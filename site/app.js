@@ -20,11 +20,11 @@ const LIGLER = { bsl: { kisa: 'BSL', ad: 'Basketbol Süper Ligi' }, tbl: { kisa:
 
 const S = {
   meta: null, index: null, hata: null,
-  tablo: {}, liderler: {}, takimIst: {}, ileriIst: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, artieksi: {}, seyirci: {}, odul: {}, avrupa: {}, durum: {}, rekorlar: {}, // lig -> veri (oyuncu: lig -> id -> detay)
+  tablo: {}, liderler: {}, takimIst: {}, ileriIst: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, artieksi: {}, seyirci: {}, odul: {}, avrupa: {}, durum: {}, rekorlar: {}, istatistik: {}, // lig -> veri (oyuncu: lig -> id -> detay)
   maclar: {}, // `${lig}-${hafta}` -> maç listesi
   kutular: {}, // maç id -> kutu skor (null: yok)
   farklar: {}, // maç id -> skor farkı grafiği verisi (biten maçlar, null: yok)
-  ui: { ara: '', oyuncuSirala: 'vp', seyirciSirala: { k: 'ort', yon: 1 }, seyirciHaftaSirala: { k: 'seyirci', yon: 1 }, tabloSirala: null, kadroSirala: null, liderKategori: {}, anaLig: anaLigOku() },
+  ui: { ara: '', oyuncuSirala: 'vp', seyirciSirala: { k: 'ort', yon: 1 }, seyirciHaftaSirala: { k: 'seyirci', yon: 1 }, tabloSirala: null, kadroSirala: null, liderKategori: {}, anaLig: anaLigOku(), istDonem: 'hafta' },
 };
 // Telefon ve bilgisayar ayrı düzen: telefonda ana sayfa tek lig gösterir (BSL | TBL seçici), bilgisayarda yan menü ve iki sütun
 const TELEFON = matchMedia('(max-width: 759px)');
@@ -93,7 +93,7 @@ function aktifMenu() {
 const menuListesi = () => [...MENU.slice(0, 4), ['avrupa', 'Avrupa', '🌍'], ...MENU.slice(4)];
 function menuCiz() {
   const aktif = aktifMenu();
-  $('#menu').innerHTML = [...menuListesi(), ...(yoneticiMi() ? [['durum', 'Durum', '🛠️']] : [])].map(([y, ad, ikon]) => `<a href="#/${y}" class="${y === aktif ? 'aktif' : ''}"><span class="ikon">${ikon}</span><span>${ad}</span></a>`).join('');
+  $('#menu').innerHTML = [...menuListesi(), ...(yoneticiMi() ? [['durum', 'Durum', '🛠️'], ['istatistik', 'İstatistik', '📊']] : [])].map(([y, ad, ikon]) => `<a href="#/${y}" class="${y === aktif ? 'aktif' : ''}"><span class="ikon">${ikon}</span><span>${ad}</span></a>`).join('');
   $('#alt-menu').innerHTML = menuListesi().map(([y, ad, ikon]) => `<a href="#/${y}" class="${y === aktif ? 'aktif' : ''}"><span class="ikon">${ikon}</span><span>${ad}</span></a>`).join('');
 }
 
@@ -114,6 +114,7 @@ function gorunum() {
   if (S.hata) return `<div class="kart"><p class="bos">${esc(S.hata)}</p></div>`;
   if (!S.meta) return '<p class="bos">Yükleniyor…</p>';
   const [s, a, b] = rota();
+  if (s !== 'istatistik') S.ui.istAnim = null; // istatistik sayfasına dönünce çubuklar yine büyüyerek gelsin
   const lig = LIGLER[a] ? a : 'bsl';
   switch (s) {
     case undefined: return gorunumAna();
@@ -124,6 +125,7 @@ function gorunum() {
     case 'oyuncu': return `<div class="dar">${gorunumOyuncu(lig, b)}</div>`;
     case 'yayin': return `<div class="dar">${Yayin.gorunum(a)}</div>`;
     case 'durum': return `<div class="dar">${gorunumDurum()}</div>`;
+    case 'istatistik': return `<div class="dar">${gorunumIstatistik()}</div>`;
     case 'avrupa': return `<div class="dar">${gorunumAvrupa(a, b, rota()[3])}</div>`;
     case 'fantezi':
       if (a === 'tbl') { location.replace('tbl/'); return ''; } // eski adres: TBL Fantezi artık kendi sayfasında
@@ -1179,7 +1181,7 @@ function gorunumFantezi() {
 
 function altBilgi() {
   const g = S.meta?.guncelleme;
-  return `<p class="alt-bilgi">Veriler: TBF · İstatistikler ${g ? tarihSaat(g) : '-'} itibarıyla · Canlı skorlar maç saatlerinde dakikada bir yenilenir${yoneticiMi() ? ' · <a href="#/durum">Sistem durumu</a>' : ''}</p>`;
+  return `<p class="alt-bilgi">Veriler: TBF · İstatistikler ${g ? tarihSaat(g) : '-'} itibarıyla · Canlı skorlar maç saatlerinde dakikada bir yenilenir${yoneticiMi() ? ' · <a href="#/durum">Sistem durumu</a> · <a href="#/istatistik">Ziyaret istatistikleri</a>' : ''}</p>`;
 }
 
 // ---------- Avrupa'daki temsilcilerimiz (2026-11-12) ----------
@@ -1677,10 +1679,127 @@ function gorunumDurum() {
     <p class="soluk kucuk">Yeşil: normal · sarı: gecikmiş · kırmızı: sorun · gri: şu an beklenmiyor ya da bilgi amaçlı. Bağlantılar GitHub'daki çalışmayı açar.</p>`;
 }
 
+// ---------- Ziyaret istatistikleri (yönetici, #/istatistik) ----------
+// Veri: data/istatistik.json (veri/istatistik.mjs, GoatCounter'dan yarım saatte bir; sayaç site/sayac.js). Sade görünüm: dönem seçici,
+// özet sayılar, tek renk çubuk grafik (dokununca / üstüne gelince değer yazar), cihaz · sistem · kaynak · bölüm dağılımları.
+const IST_DONEMLER = [['bugun', 'Bugün'], ['hafta', '7 gün'], ['ay', '30 gün']];
+const IST_LIG = { bsl: 'BSL', tbl: 'TBL', el: 'EuroLeague', ec: 'EuroCup', bcl: 'BCL', fec: 'FIBA Europe Cup' };
+const IST_BOLUM = { '': 'Ana sayfa', maclar: 'Maçlar', mac: 'Maç sayfaları', takim: 'Takımlar', oyuncu: 'Oyuncular', avrupa: 'Avrupa', yayin: 'Yayın', fantezi: 'Fantezi', durum: 'Durum' };
+function istBolumAdi(yol) {
+  const [kok, h = ''] = yol.split('#');
+  if (/\/tbl\/$/.test(kok)) return 'TBL Fantezi';
+  if (/\/bsl\/$/.test(kok)) return 'BSL Fantezi';
+  const [s = '', l] = h.replace(/^\//, '').split('/');
+  const lig = IST_LIG[l];
+  if (s === 'lig') return lig ?? 'Lig';
+  if (s === 'avrupa') return lig ? `Avrupa · ${lig}` : 'Avrupa';
+  const ad = IST_BOLUM[s] ?? s;
+  return lig ? `${lig} · ${ad.toLocaleLowerCase('tr-TR')}` : ad;
+}
+function istCihazAdi(x) {
+  const t = `${x.id} ${x.ad}`.toLowerCase();
+  return /phone/.test(t) ? 'Telefon' : /tablet/.test(t) ? 'Tablet' : /monitor|computer|desktop|laptop/.test(t) ? 'Bilgisayar' : 'Bilinmiyor';
+}
+const IST_ULKE = { Turkey: 'Türkiye', 'Türkiye': 'Türkiye', Germany: 'Almanya', Netherlands: 'Hollanda', 'United States': 'ABD', 'United Kingdom': 'Birleşik Krallık',
+  France: 'Fransa', Belgium: 'Belçika', Austria: 'Avusturya', Cyprus: 'Kıbrıs', Azerbaijan: 'Azerbaycan', Greece: 'Yunanistan', Spain: 'İspanya', Italy: 'İtalya' };
+const istKaynakAdi = ad => (!ad || /^\(?(no data|unknown|direct)/i.test(ad) ? 'Doğrudan' : ad);
+// Aynı ada düşenleri toplar (ör. bütün TBL Fantezi sayfaları), büyükten küçüğe
+function istTopla(liste, adFn) {
+  const m = new Map();
+  for (const x of liste ?? []) { const ad = adFn(x); m.set(ad, (m.get(ad) ?? 0) + x.n); }
+  return [...m].map(([ad, n]) => ({ ad, n })).sort((a, b) => b.n - a.n);
+}
+function istDagilim(baslik, liste, { yuzdeli = true, kac = 6 } = {}) {
+  if (!liste.length) return `<div class="kart ist-kart"><h3>${baslik}</h3><p class="soluk kucuk" style="margin:0">Bu dönemde veri yok.</p></div>`;
+  const top = liste.reduce((t, x) => t + x.n, 0);
+  const goster = liste.length > kac ? [...liste.slice(0, kac - 1), { ad: 'Diğer', n: liste.slice(kac - 1).reduce((t, x) => t + x.n, 0) }] : liste;
+  const max = Math.max(...goster.map(x => x.n));
+  return `<div class="kart ist-kart"><h3>${baslik}</h3>${goster.map(x => `<div class="ist-satir"><span class="ad">${esc(x.ad)}</span>
+    <span class="ist-bar"><i style="width:${Math.max(2, (x.n / (yuzdeli ? top : max)) * 100)}%"></i></span>
+    <span class="deger">${binlik(x.n)}${yuzdeli ? `<small>%${Math.round((x.n / top) * 100)}</small>` : ''}</span></div>`).join('')}</div>`;
+}
+function istCubukGoster(el) {
+  document.querySelectorAll('.ist-cubuk.secili').forEach(x => x.classList.remove('secili'));
+  el.classList.add('secili');
+  const b = document.getElementById('ist-bilgi');
+  if (b) b.innerHTML = el.dataset.bilgi;
+}
+function gorunumIstatistik() {
+  if (!yoneticiMi()) return '<p class="bos">Bu sayfa yöneticiye özel.</p>';
+  yukle(S.istatistik, 'veri', 'data/istatistik.json', { bosDeger: null });
+  const v = S.istatistik.veri;
+  if (v === undefined) return '<p class="bos">Yükleniyor…</p>';
+  if (!v) return '<div class="kart"><h2>Ziyaret istatistikleri</h2><p class="soluk">Henüz veri yok. Ziyaret sayacı (GoatCounter) kurulunca ilk sayılar yarım saat içinde burada görünür.</p></div>';
+  const donem = S.ui.istDonem, d = v.donemler?.[donem] ?? {};
+  // Çubuklar yalnızca sayfa açılınca ve dönem değişince büyüyerek gelir (dakikalık yenilemede yeniden oynamaz)
+  const anim = S.ui.istAnim !== donem;
+  S.ui.istAnim = donem;
+  const gunAnahtari = t => new Date(t + 3 * 3600e3).toISOString().slice(0, 10);
+  const bugun = gunAnahtari(Date.now()), dun = gunAnahtari(Date.now() - 864e5);
+  // Son 60 günün her günü (ziyaret olmayan gün de 0 olarak)
+  const gunZ = new Map((v.gunler ?? []).map(g => [g.gun, g.z]));
+  const gunler = Array.from({ length: 60 }, (_, i) => { const g = gunAnahtari(Date.now() - (59 - i) * 864e5); return { gun: g, z: gunZ.get(g) ?? 0 }; });
+  const topla = l => l.reduce((t, g) => t + g.z, 0);
+  const saatSimdi = (new Date().getUTCHours() + 3) % 24;
+  const saatlik = g => Array.from({ length: 24 }, (_, i) => v.saatlik?.[g]?.[i] ?? 0);
+  const iki = n => String(n).padStart(2, '0');
+  const gunYazi = g => new Date(`${g}T12:00:00Z`).toLocaleDateString('tr-TR', { weekday: 'short', day: 'numeric', month: 'short' });
+  let ziyaretci, kiyasBu, onceki, kiyasYazi, cubuklar;
+  if (donem === 'bugun') {
+    ziyaretci = gunZ.get(bugun) ?? 0;
+    // Kıyas saatlik toplamlarla (bugün şu saate kadar / dün aynı saate kadar): günlük tekil sayı saatliklerin toplamı değil
+    kiyasBu = saatlik(bugun).slice(0, saatSimdi + 1).reduce((t, x) => t + x, 0);
+    onceki = saatlik(dun).slice(0, saatSimdi + 1).reduce((t, x) => t + x, 0);
+    kiyasYazi = 'dünün aynı saatine göre';
+    cubuklar = saatlik(bugun).map((z, i) => ({ z, bos: i > saatSimdi, etiket: i % 6 === 0 ? `${iki(i)}:00` : '', saat: `${iki(i)}:00`,
+      bilgi: `<b>${iki(i)}:00–${iki((i + 1) % 24)}:00</b> · ${binlik(z)} ziyaretçi` }));
+  } else {
+    const n = donem === 'hafta' ? 7 : 30;
+    const son = gunler.slice(-n);
+    ziyaretci = kiyasBu = topla(son);
+    onceki = topla(gunler.slice(-2 * n, -n));
+    kiyasYazi = `önceki ${n} güne göre`;
+    cubuklar = son.map((g, i) => ({ z: g.z, etiket: n === 7 ? new Date(`${g.gun}T12:00:00Z`).toLocaleDateString('tr-TR', { weekday: 'short' })
+      : (i % 5 === 4 || i === n - 1 ? String(Number(g.gun.slice(8))) : ''), bilgi: `<b>${gunYazi(g.gun)}</b> · ${binlik(g.z)} ziyaretçi` }));
+  }
+  const degisim = onceki ? Math.round(((kiyasBu - onceki) / onceki) * 100) : null;
+  const max = Math.max(1, ...cubuklar.map(c => c.z));
+  const enYogun = cubuklar.reduce((a, c) => (c.z > a.z ? c : a), cubuklar[0]);
+  const cihaz = istTopla(d.cihaz, istCihazAdi);
+  const cihazTop = cihaz.reduce((t, x) => t + x.n, 0);
+  const telefon = cihazTop ? Math.round(((cihaz.find(x => x.ad === 'Telefon')?.n ?? 0) / cihazTop) * 100) : null;
+  const kutucuk = (deger, ad, alt = '') => `<div class="ist-kutu"><b>${deger}</b><span>${ad}</span>${alt ? `<small>${alt}</small>` : ''}</div>`;
+  const ikinci = donem === 'bugun'
+    ? kutucuk(enYogun?.z ? enYogun.saat : '–', 'En yoğun saat', enYogun?.z ? `${binlik(enYogun.z)} ziyaretçi` : '')
+    : kutucuk(binlik(Math.round(ziyaretci / (donem === 'hafta' ? 7 : 30))), 'Günlük ortalama');
+  const kiyas = degisim === null ? '' : `<span class="${degisim >= 0 ? 'artis' : 'azalis'}">${degisim >= 0 ? '▲' : '▼'} %${Math.abs(degisim)}</span> ${kiyasYazi}`;
+  return `<div class="ist${anim ? ' ist-anim' : ''}"><div class="kart"><div class="baslik-satir"><h2>Ziyaret istatistikleri</h2><small class="soluk">${v.guncelleme ? `Güncelleme: ${sureYazisi(dkOnce(v.guncelleme))}` : ''}</small></div>
+      <div class="satir ist-donem">${IST_DONEMLER.map(([k, ad]) => `<button class="secenek ${k === donem ? 'aktif' : ''}" data-is="ist-donem" data-id="${k}">${ad}</button>`).join('')}</div>
+      <div class="ist-kutular">${kutucuk(binlik(ziyaretci), 'Ziyaretçi', kiyas)}${ikinci}${kutucuk(telefon === null ? '–' : `%${telefon}`, 'Telefondan')}</div>
+      <p id="ist-bilgi" class="ist-bilgi">${enYogun?.z ? `En yoğun: ${enYogun.bilgi}` : 'Bu dönemde ziyaret yok.'}</p>
+      <div class="ist-grafik">${cubuklar.map(c => `<button class="ist-cubuk${c.bos ? ' bos' : ''}" data-is="ist-cubuk" data-bilgi="${esc(c.bilgi)}" aria-label="${esc(c.bilgi.replace(/<[^>]+>/g, ''))}"><i style="height:${c.z ? Math.max(3, (c.z / max) * 100) : 0}%"></i><span>${c.etiket}</span></button>`).join('')}</div>
+      <p class="soluk kucuk" style="margin:10px 0 0">Ziyaretçi: siteyi açan kişi (aynı kişi gün içinde birkaç kez açsa da bir sayılır). Yöneticilerin kendi gezintisi sayılmaz.</p></div>
+    <div class="ist-izgara">
+      ${istDagilim('Cihaz', cihaz)}
+      ${istDagilim('İşletim sistemi', istTopla(d.sistem, x => x.ad || 'Bilinmiyor'))}
+      ${istDagilim('Nereden geldi', istTopla(d.kaynak, x => istKaynakAdi(x.ad)))}
+      ${istDagilim('Tarayıcı', istTopla(d.tarayici, x => x.ad || 'Bilinmiyor'))}
+      ${istDagilim('En çok bakılan bölümler', istTopla(d.bolum, x => istBolumAdi(x.ad)), { yuzdeli: false, kac: 10 })}
+      ${istDagilim('Ülke', istTopla(d.ulke, x => IST_ULKE[x.ad] ?? x.ad ?? 'Bilinmiyor'))}
+    </div></div>`;
+}
+// Bilgisayarda çubuğun üstüne gelince de değer yazar (telefonda dokununca)
+document.addEventListener('pointerover', e => {
+  const el = e.pointerType === 'mouse' && e.target.closest?.('.ist-cubuk');
+  if (el) istCubukGoster(el);
+});
+
 // ---------- Olaylar ----------
 document.addEventListener('click', e => {
   const el = e.target.closest('[data-is]');
   if (!el) return;
+  if (el.dataset.is === 'ist-donem') { S.ui.istDonem = el.dataset.id; ciz(); }
+  if (el.dataset.is === 'ist-cubuk') istCubukGoster(el);
   if (el.dataset.is === 'oyuncu-sirala') { S.ui.oyuncuSirala = el.dataset.id; ciz(); }
   if (el.dataset.is === 'kd-sirala') {
     const k = el.dataset.id, o = S.ui.kadroSirala;

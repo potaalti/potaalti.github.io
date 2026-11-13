@@ -492,3 +492,35 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
 
 /* Maç önü: o istatistikte daha iyi olan takımın değeri */
 .ileri-satir b.iyi { color: var(--vurgu); }
+
+/* Ziyaret istatistikleri (yönetici): özet kutular, tek renk çubuk grafik, yatay dağılım çubukları */
+.ist-donem { margin: 4px 0 14px; }
+.ist-kutular { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.ist-kutu { background: var(--zemin); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ist-kutu b { font-size: 1.55rem; font-weight: 800; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.ist-kutu span { font-size: .78rem; font-weight: 600; color: var(--soluk); }
+.ist-kutu small { font-size: .72rem; color: var(--soluk); }
+.ist-kutu .artis { color: var(--yesil); font-weight: 700; }
+.ist-kutu .azalis { color: var(--kirmizi); font-weight: 700; }
+.ist-bilgi { margin: 16px 0 6px; font-size: .85rem; color: var(--soluk); min-height: 1.3em; }
+.ist-bilgi b { color: var(--yazi); }
+.ist-grafik { display: flex; align-items: stretch; gap: 2px; height: 150px; border-bottom: 1px solid var(--cizgi); padding-bottom: 18px; position: relative; }
+.ist-cubuk { flex: 1; min-width: 0; position: relative; display: flex; align-items: flex-end; background: none; border: 0; padding: 0; cursor: pointer; }
+.ist-cubuk i { display: block; width: 100%; background: var(--vurgu); border-radius: 4px 4px 0 0; transform-origin: bottom; transition: background .12s; }
+.ist-anim .ist-cubuk i { animation: ist-buyu .45s cubic-bezier(.2, .8, .2, 1) both; }
+.ist-cubuk:hover i, .ist-cubuk.secili i { background: color-mix(in srgb, var(--vurgu) 70%, var(--yazi)); }
+.ist-cubuk.bos i { background: var(--cizgi); }
+.ist-cubuk span { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 3px; font-size: .68rem; color: var(--soluk); white-space: nowrap; }
+@keyframes ist-buyu { from { transform: scaleY(0); } }
+.ist-izgara { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 14px; }
+.ist-izgara .ist-kart { margin: 0; }
+.ist-kart h3 { margin: 0 0 8px; }
+.ist-satir { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 6px 0; font-size: .88rem; }
+.ist-satir .ad { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.ist-bar { height: 8px; background: var(--zemin); border-radius: 99px; overflow: hidden; }
+.ist-bar i { display: block; height: 100%; background: var(--vurgu); border-radius: 99px; transform-origin: left; }
+.ist-anim .ist-bar i { animation: ist-yana .5s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes ist-yana { from { transform: scaleX(0); } }
+.ist-satir .deger { font-variant-numeric: tabular-nums; font-weight: 700; text-align: right; min-width: 64px; }
+.ist-satir .deger small { font-weight: 500; color: var(--soluk); margin-left: 6px; }
+@media (prefers-reduced-motion: reduce) { .ist-cubuk i, .ist-bar i { animation: none; } }

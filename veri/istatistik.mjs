@@ -5,7 +5,10 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const KOK = new URL('..', import.meta.url);
-const KOD = readFileSync(new URL('site/sayac.js', KOK), 'utf8').match(/var KOD = '([^']*)'/)?.[1];
+const SAYAC = readFileSync(new URL('site/sayac.js', KOK), 'utf8');
+const KOD = SAYAC.match(/var KOD = '([^']*)'/)?.[1];
+// Giriş sayacı: ikinci GoatCounter sitesi (oturum sayımı kapalı: her açılış ve dönüş ayrı sayılır); aynı anahtar iki siteye de erişmeli
+const GIRIS_KOD = SAYAC.match(/var GIRIS_KOD = '([^']*)'/)?.[1];
 const ANAHTAR = process.env.GOATCOUNTER_ANAHTAR;
 if (!KOD || !ANAHTAR) {
   console.log(!KOD ? 'site/sayac.js içinde GoatCounter KOD boş: sayaç kapalı.' : 'GOATCOUNTER_ANAHTAR sırrı yok: istatistik çekilmedi.');
@@ -14,10 +17,10 @@ if (!KOD || !ANAHTAR) {
 const API = `https://${KOD}.goatcounter.com/api/v0`;
 const bekle = ms => new Promise(r => setTimeout(r, ms));
 
-async function getir(yol, sorgu) {
+async function getir(yol, sorgu, api = API) {
   for (let deneme = 0; ; deneme++) {
     await bekle(300); // GoatCounter sınırı saniyede 4 istek
-    const r = await fetch(`${API}${yol}?${new URLSearchParams(sorgu)}`, { headers: { Authorization: `Bearer ${ANAHTAR}`, 'Content-Type': 'application/json' } });
+    const r = await fetch(`${api}${yol}?${new URLSearchParams(sorgu)}`, { headers: { Authorization: `Bearer ${ANAHTAR}`, 'Content-Type': 'application/json' } });
     if (r.status === 429 && deneme < 3) { await bekle(2000); continue; }
     if (!r.ok) throw new Error(`${yol}: HTTP ${r.status} ${await r.text()}`);
     return r.json();
@@ -73,6 +76,34 @@ try {
     saatlik: Object.fromEntries(gunler.slice(-2).map(g => [g.gun, g.saat])),
     donemler: { bugun: await donem(bugunBas), hafta: await donem(bugunBas - 6 * GUN), ay: await donem(bugunBas - 29 * GUN) },
   };
+  if (GIRIS_KOD) {
+    try {
+      // Girişler: günlük ve saatlik toplam, dönem dönem hangi sayfadan açıldığı (günlük sayılardan; ek istek yok)
+      const g60 = await getir('/stats/hits', { start: iso(bugunBas - 59 * GUN), end: iso(bitis), limit: 100 }, `https://${GIRIS_KOD}.goatcounter.com/api/v0`);
+      const gun = new Map(), gunAd = t => new Date(t + 3 * SAAT).toISOString().slice(0, 10);
+      const baslar = { bugun: gunAd(bugunBas), hafta: gunAd(bugunBas - 6 * GUN), ay: gunAd(bugunBas - 29 * GUN) };
+      const yer = { bugun: new Map(), hafta: new Map(), ay: new Map() };
+      for (const h of (g60.hits ?? []).filter(x => !x.event)) {
+        for (const st of h.stats ?? []) {
+          const gn = st.day.slice(0, 10);
+          const g = gun.get(gn) ?? { z: 0, saat: Array(24).fill(0) };
+          g.z += st.daily ?? 0;
+          (st.hourly ?? []).forEach((x, i) => { g.saat[i] += x ?? 0; });
+          gun.set(gn, g);
+          for (const [d, bas] of Object.entries(baslar)) if (gn >= bas && st.daily) yer[d].set(h.path, (yer[d].get(h.path) ?? 0) + st.daily);
+        }
+      }
+      const gl = [...gun].map(([g, v]) => ({ gun: g, ...v })).sort((a, b) => a.gun.localeCompare(b.gun));
+      veri.giris = {
+        gunler: gl.map(({ gun: g, z }) => ({ gun: g, z })),
+        saatlik: Object.fromEntries(gl.slice(-2).map(g => [g.gun, g.saat])),
+        yer: Object.fromEntries(Object.entries(yer).map(([d, m]) => [d, [...m].map(([ad, n]) => ({ ad, n })).sort((a, b) => b.n - a.n)])),
+      };
+    } catch (e) {
+      console.log('Giriş sayacı okunamadı:', e.message);
+      veri.girisHata = String(e.message).slice(0, 300);
+    }
+  }
 } catch (e) {
   // Hata dosyaya yazılır (önceki sayılar kalır): yönetici sayfasında görünür, GitHub kaydına giriş yapmadan da okunur
   console.log('GoatCounter okunamadı:', e.message);

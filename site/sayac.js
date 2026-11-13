@@ -6,6 +6,9 @@
 // İstatistikler: veri/istatistik.mjs (GitHub "Site istatistikleri" işi) GoatCounter'dan çekip data/istatistik.json'a yazar.
 (function () {
   var KOD = 'potaalti'; // GoatCounter site kodu (ör. 'potaalti' -> potaalti.goatcounter.com); boşken sayaç kapalı
+  // Giriş sayacı: ikinci GoatCounter sitesi, ayarlarında oturum sayımı (Sessions) KAPALI; her açılış, yenileme ve 1 dakikadan uzun
+  // aradan sonra uygulamaya her dönüş bir giriş sayılır (maç izlerken girip çıkanlar). Boşken kapalı.
+  var GIRIS_KOD = 'potaaltigiris';
   if (!KOD) return;
   try { if (localStorage.getItem('potaAltiYonetici') === '1') return; } catch (e) { /* gizli sekme */ }
   var LIG = /^(bsl|tbl|el|ec|bcl|fec)$/;
@@ -27,6 +30,20 @@
     son = yol;
     gc.count({ path: yol, title: document.title, event: true });
   }
+  function giris() {
+    if (!GIRIS_KOD) return;
+    var url = 'https://' + GIRIS_KOD + '.goatcounter.com/count?p=' + encodeURIComponent(location.pathname.replace(/index\.html$/, ''))
+      + '&t=' + encodeURIComponent(document.title) + '&s=' + encodeURIComponent([screen.width, screen.height, window.devicePixelRatio || 1].join(','))
+      + '&rnd=' + Math.random().toString(36).slice(2);
+    try { if (!(navigator.sendBeacon && navigator.sendBeacon(url))) new Image().src = url; } catch (e) { /* sayım düşerse önemli değil */ }
+  }
+  var gizlendi = 0;
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') gizlendi = Date.now();
+    else if (gizlendi && Date.now() - gizlendi > 60000) { gizlendi = 0; giris(); }
+  });
+  window.addEventListener('pageshow', function (e) { if (e.persisted) giris(); }); // geri tuşuyla önbellekten dönüş
+  giris();
   window.goatcounter = { no_onload: true };
   var s = document.createElement('script');
   s.async = true;

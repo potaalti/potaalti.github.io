@@ -495,7 +495,11 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
 
 /* Ziyaret istatistikleri (yönetici): özet kutular, tek renk çubuk grafik, yatay dağılım çubukları */
 .ist-donem { margin: 4px 0 14px; }
-.ist-kutular { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.ist-kutular { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+@media (min-width: 760px) { .ist-kutular { grid-template-columns: repeat(4, 1fr); } }
+.ist-grafik-ust { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin: 16px 0 6px; }
+.ist-grafik-ust .ist-bilgi { margin: 0; }
+.ist-olcu .secenek { padding: 4px 11px; font-size: .78rem; }
 .ist-kutu { background: var(--zemin); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .ist-kutu b { font-size: 1.55rem; font-weight: 800; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .ist-kutu span { font-size: .78rem; font-weight: 600; color: var(--soluk); }

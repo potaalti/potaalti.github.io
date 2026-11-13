@@ -1741,56 +1741,66 @@ function gorunumIstatistik() {
   const hataNotu = v?.hata ? `<p class="ist-hata">GoatCounter'dan okunamadı (${esc(sureYazisi(dkOnce(v.hataZamani)))}): ${esc(v.hata)}</p>` : '';
   if (!v || !v.donemler) return `<div class="kart"><h2>Ziyaret istatistikleri</h2>${hataNotu}<p class="soluk">Henüz veri yok. Ziyaret sayacı (GoatCounter) kurulunca ilk sayılar yarım saat içinde burada görünür.</p></div>`;
   const donem = S.ui.istDonem, d = v.donemler?.[donem] ?? {};
-  // Çubuklar yalnızca sayfa açılınca ve dönem değişince büyüyerek gelir (dakikalık yenilemede yeniden oynamaz)
-  const anim = S.ui.istAnim !== donem;
-  S.ui.istAnim = donem;
+  // Çubuklar yalnızca sayfa açılınca, dönem ya da ölçü değişince büyüyerek gelir (dakikalık yenilemede yeniden oynamaz)
+  const girisVar = !!v.giris?.gunler;
+  const olcuSecili = girisVar && S.ui.istOlcu !== 'kisi' ? 'giris' : 'kisi';
+  const anim = S.ui.istAnim !== `${donem}-${olcuSecili}`;
+  S.ui.istAnim = `${donem}-${olcuSecili}`;
   const gunAnahtari = t => new Date(t + 3 * 3600e3).toISOString().slice(0, 10);
   const bugun = gunAnahtari(Date.now()), dun = gunAnahtari(Date.now() - 864e5);
-  // Son 60 günün her günü (ziyaret olmayan gün de 0 olarak)
-  const gunZ = new Map((v.gunler ?? []).map(g => [g.gun, g.z]));
-  const gunler = Array.from({ length: 60 }, (_, i) => { const g = gunAnahtari(Date.now() - (59 - i) * 864e5); return { gun: g, z: gunZ.get(g) ?? 0 }; });
-  const topla = l => l.reduce((t, g) => t + g.z, 0);
   const saatSimdi = (new Date().getUTCHours() + 3) % 24;
-  const saatlik = g => Array.from({ length: 24 }, (_, i) => v.saatlik?.[g]?.[i] ?? 0);
   const iki = n => String(n).padStart(2, '0');
   const gunYazi = g => new Date(`${g}T12:00:00Z`).toLocaleDateString('tr-TR', { weekday: 'short', day: 'numeric', month: 'short' });
-  let ziyaretci, kiyasBu, onceki, kiyasYazi, cubuklar;
-  if (donem === 'bugun') {
-    ziyaretci = gunZ.get(bugun) ?? 0;
-    // Kıyas saatlik toplamlarla (bugün şu saate kadar / dün aynı saate kadar): günlük tekil sayı saatliklerin toplamı değil
-    kiyasBu = saatlik(bugun).slice(0, saatSimdi + 1).reduce((t, x) => t + x, 0);
-    onceki = saatlik(dun).slice(0, saatSimdi + 1).reduce((t, x) => t + x, 0);
-    kiyasYazi = 'dünün aynı saatine göre';
-    cubuklar = saatlik(bugun).map((z, i) => ({ z, bos: i > saatSimdi, etiket: i % 6 === 0 ? `${iki(i)}:00` : '', saat: `${iki(i)}:00`,
-      bilgi: `<b>${iki(i)}:00–${iki((i + 1) % 24)}:00</b> · ${binlik(z)} ziyaretçi` }));
-  } else {
-    const n = donem === 'hafta' ? 7 : 30;
-    const son = gunler.slice(-n);
-    ziyaretci = kiyasBu = topla(son);
-    onceki = topla(gunler.slice(-2 * n, -n));
-    kiyasYazi = `önceki ${n} güne göre`;
-    cubuklar = son.map((g, i) => ({ z: g.z, etiket: n === 7 ? new Date(`${g.gun}T12:00:00Z`).toLocaleDateString('tr-TR', { weekday: 'short' })
-      : (i % 5 === 4 || i === n - 1 ? String(Number(g.gun.slice(8))) : ''), bilgi: `<b>${gunYazi(g.gun)}</b> · ${binlik(g.z)} ziyaretçi` }));
+  const n = donem === 'hafta' ? 7 : 30;
+  // Bir ölçünün (kişi ya da giriş) dönemdeki değeri, önceki döneme göre değişimi ve çubukları
+  function olcu(gunlerVeri, saatlikVeri, birim) {
+    const gunZ = new Map((gunlerVeri ?? []).map(g => [g.gun, g.z]));
+    const gunler = Array.from({ length: 60 }, (_, i) => { const g = gunAnahtari(Date.now() - (59 - i) * 864e5); return { gun: g, z: gunZ.get(g) ?? 0 }; });
+    const topla = l => l.reduce((t, g) => t + g.z, 0);
+    const saatlik = g => Array.from({ length: 24 }, (_, i) => saatlikVeri?.[g]?.[i] ?? 0);
+    let deger, kiyasBu, onceki, kiyasYazi, cubuklar;
+    if (donem === 'bugun') {
+      deger = gunZ.get(bugun) ?? 0;
+      // Kıyas saatlik toplamlarla (bugün şu saate kadar / dün aynı saate kadar)
+      kiyasBu = saatlik(bugun).slice(0, saatSimdi + 1).reduce((t, x) => t + x, 0);
+      onceki = saatlik(dun).slice(0, saatSimdi + 1).reduce((t, x) => t + x, 0);
+      kiyasYazi = 'dünün aynı saatine göre';
+      cubuklar = saatlik(bugun).map((z, i) => ({ z, bos: i > saatSimdi, etiket: i % 6 === 0 ? `${iki(i)}:00` : '', saat: `${iki(i)}:00`,
+        bilgi: `<b>${iki(i)}:00–${iki((i + 1) % 24)}:00</b> · ${binlik(z)} ${birim}` }));
+    } else {
+      const son = gunler.slice(-n);
+      deger = kiyasBu = topla(son);
+      onceki = topla(gunler.slice(-2 * n, -n));
+      kiyasYazi = `önceki ${n} güne göre`;
+      cubuklar = son.map((g, i) => ({ z: g.z, etiket: n === 7 ? new Date(`${g.gun}T12:00:00Z`).toLocaleDateString('tr-TR', { weekday: 'short' })
+        : (i % 5 === 4 || i === n - 1 ? String(Number(g.gun.slice(8))) : ''), bilgi: `<b>${gunYazi(g.gun)}</b> · ${binlik(g.z)} ${birim}` }));
+    }
+    const degisim = onceki ? Math.round(((kiyasBu - onceki) / onceki) * 100) : null;
+    const kiyas = degisim === null ? '' : `<span class="${degisim >= 0 ? 'artis' : 'azalis'}">${degisim >= 0 ? '▲' : '▼'} %${Math.abs(degisim)}</span> ${kiyasYazi}`;
+    return { deger, kiyas, cubuklar, enYogun: cubuklar.reduce((a, c) => (c.z > a.z ? c : a), cubuklar[0]) };
   }
-  const degisim = onceki ? Math.round(((kiyasBu - onceki) / onceki) * 100) : null;
-  const max = Math.max(1, ...cubuklar.map(c => c.z));
-  const enYogun = cubuklar.reduce((a, c) => (c.z > a.z ? c : a), cubuklar[0]);
+  const kisi = olcu(v.gunler, v.saatlik, 'kişi');
+  const giris = girisVar ? olcu(v.giris.gunler, v.giris.saatlik, 'giriş') : null;
+  const g = olcuSecili === 'giris' ? giris : kisi;
+  const max = Math.max(1, ...g.cubuklar.map(c => c.z));
   const cihaz = istTopla(d.cihaz, istCihazAdi);
   const cihazTop = cihaz.reduce((t, x) => t + x.n, 0);
   const mobil = cihazTop ? Math.round((cihaz.filter(x => x.ad === 'Telefon' || x.ad.startsWith('Tablet')).reduce((t, x) => t + x.n, 0) / cihazTop) * 100) : null;
   const kutucuk = (deger, ad, alt = '') => `<div class="ist-kutu"><b>${deger}</b><span>${ad}</span>${alt ? `<small>${alt}</small>` : ''}</div>`;
-  const ikinci = donem === 'bugun'
-    ? kutucuk(enYogun?.z ? enYogun.saat : '–', 'En yoğun saat', enYogun?.z ? `${binlik(enYogun.z)} ziyaretçi` : '')
-    : kutucuk(binlik(Math.round(ziyaretci / (donem === 'hafta' ? 7 : 30))), 'Günlük ortalama');
-  const kiyas = degisim === null ? '' : `<span class="${degisim >= 0 ? 'artis' : 'azalis'}">${degisim >= 0 ? '▲' : '▼'} %${Math.abs(degisim)}</span> ${kiyasYazi}`;
+  const ucuncu = donem === 'bugun'
+    ? kutucuk(g.enYogun?.z ? g.enYogun.saat : '–', 'En yoğun saat', g.enYogun?.z ? `${binlik(g.enYogun.z)} ${olcuSecili === 'giris' ? 'giriş' : 'kişi'}` : '')
+    : kutucuk(binlik(Math.round(g.deger / n)), olcuSecili === 'giris' ? 'Günlük ortalama giriş' : 'Günlük ortalama kişi');
+  const olcuSecici = girisVar ? `<span class="satir ist-olcu">${[['giris', 'Giriş'], ['kisi', 'Kişi']].map(([k, ad]) => `<button class="secenek ${k === olcuSecili ? 'aktif' : ''}" data-is="ist-olcu" data-id="${k}">${ad}</button>`).join('')}</span>` : '';
+  const yer = girisVar ? (v.giris.yer?.[donem] ?? []) : d.giris;
   return `<div class="ist${anim ? ' ist-anim' : ''}"><div class="kart"><div class="baslik-satir"><h2>Ziyaret istatistikleri</h2><small class="soluk">${v.guncelleme ? `Güncelleme: ${sureYazisi(dkOnce(v.guncelleme))}` : ''}</small></div>
-      ${hataNotu}<div class="satir ist-donem">${IST_DONEMLER.map(([k, ad]) => `<button class="secenek ${k === donem ? 'aktif' : ''}" data-is="ist-donem" data-id="${k}">${ad}</button>`).join('')}</div>
-      <div class="ist-kutular">${kutucuk(binlik(ziyaretci), 'Ziyaretçi', kiyas)}${ikinci}${kutucuk(mobil === null ? '–' : `%${mobil}`, 'Mobilden', 'telefon ve tablet')}</div>
-      <p id="ist-bilgi" class="ist-bilgi">${enYogun?.z ? `En yoğun: ${enYogun.bilgi}` : 'Bu dönemde ziyaret yok.'}</p>
-      <div class="ist-grafik">${cubuklar.map(c => `<button class="ist-cubuk${c.bos ? ' bos' : ''}" data-is="ist-cubuk" data-bilgi="${esc(c.bilgi)}" aria-label="${esc(c.bilgi.replace(/<[^>]+>/g, ''))}"><i style="height:${c.z ? Math.max(3, (c.z / max) * 100) : 0}%"></i><span>${c.etiket}</span></button>`).join('')}</div>
-      <p class="soluk kucuk" style="margin:10px 0 0">Ziyaretçi: siteyi açan kişi. Sayfayı yenilemek ya da 8 saat içinde yeniden açmak yeni ziyaret sayılmaz (aynı telefon ve tarayıcı); bölümler arası gezinti ziyaretçiye eklenmez. Yöneticilerin kendi gezintisi sayılmaz.</p></div>
+      ${hataNotu}${v.girisHata ? `<p class="ist-hata">Giriş sayacı okunamadı (ikinci GoatCounter sitesi kurulu olmalı ve anahtar ona da erişebilmeli): ${esc(v.girisHata)}</p>` : ''}
+      <div class="satir ist-donem">${IST_DONEMLER.map(([k, ad]) => `<button class="secenek ${k === donem ? 'aktif' : ''}" data-is="ist-donem" data-id="${k}">${ad}</button>`).join('')}</div>
+      <div class="ist-kutular">${kutucuk(binlik(kisi.deger), 'Kişi', kisi.kiyas)}${kutucuk(giris ? binlik(giris.deger) : '–', 'Giriş', giris ? giris.kiyas : 'giriş sayacı kurulunca')}${ucuncu}${kutucuk(mobil === null ? '–' : `%${mobil}`, 'Mobilden', 'telefon ve tablet')}</div>
+      <div class="ist-grafik-ust"><p id="ist-bilgi" class="ist-bilgi">${g.enYogun?.z ? `En yoğun: ${g.enYogun.bilgi}` : 'Bu dönemde ziyaret yok.'}</p>${olcuSecici}</div>
+      <div class="ist-grafik">${g.cubuklar.map(c => `<button class="ist-cubuk${c.bos ? ' bos' : ''}" data-is="ist-cubuk" data-bilgi="${esc(c.bilgi)}" aria-label="${esc(c.bilgi.replace(/<[^>]+>/g, ''))}"><i style="height:${c.z ? Math.max(3, (c.z / max) * 100) : 0}%"></i><span>${c.etiket}</span></button>`).join('')}</div>
+      <p class="soluk kucuk" style="margin:10px 0 0"><b>Kişi:</b> siteyi açan farklı kişi; aynı telefon ve tarayıcı 8 saat içinde yeniden açsa da bir sayılır. <b>Giriş:</b> her açılış, her yenileme ve 1 dakikadan uzun aradan sonra uygulamaya her dönüş (maç izlerken girip çıkanlar dahil). Bölümler arası gezinti sayılmaz; yöneticilerin kendi gezintisi sayılmaz.</p></div>
     <div class="ist-izgara">
-      ${istDagilim('Nereden açıldı', istTopla(d.giris, x => istGirisAdi(x.ad)))}
+      ${istDagilim(girisVar ? 'Nereden açıldı (giriş)' : 'Nereden açıldı', istTopla(yer, x => istGirisAdi(x.ad)))}
       ${istDagilim('Cihaz', cihaz)}
       ${istDagilim('İşletim sistemi', istTopla(d.sistem, x => x.ad || 'Bilinmiyor'))}
       ${istDagilim('Nereden geldi', istTopla(d.kaynak, x => istKaynakAdi(x.ad)))}
@@ -1810,6 +1820,7 @@ document.addEventListener('click', e => {
   const el = e.target.closest('[data-is]');
   if (!el) return;
   if (el.dataset.is === 'ist-donem') { S.ui.istDonem = el.dataset.id; ciz(); }
+  if (el.dataset.is === 'ist-olcu') { S.ui.istOlcu = el.dataset.id; ciz(); }
   if (el.dataset.is === 'ist-cubuk') istCubukGoster(el);
   if (el.dataset.is === 'oyuncu-sirala') { S.ui.oyuncuSirala = el.dataset.id; ciz(); }
   if (el.dataset.is === 'kd-sirala') {

@@ -524,3 +524,4 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
 .ist-satir .deger { font-variant-numeric: tabular-nums; font-weight: 700; text-align: right; min-width: 64px; }
 .ist-satir .deger small { font-weight: 500; color: var(--soluk); margin-left: 6px; }
 @media (prefers-reduced-motion: reduce) { .ist-cubuk i, .ist-bar i { animation: none; } }
+.ist-hata { margin: 0 0 12px; padding: 10px 12px; border-radius: 12px; font-size: .85rem; background: color-mix(in srgb, var(--kirmizi) 12%, transparent); color: var(--kirmizi); }

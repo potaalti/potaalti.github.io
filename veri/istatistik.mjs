@@ -31,9 +31,6 @@ const bugunBas = Math.floor((simdi + 3 * SAAT) / GUN) * GUN - 3 * SAAT;
 const bitis = Math.ceil(simdi / SAAT) * SAAT;
 const iso = t => new Date(t).toISOString().replace(/\.\d+Z$/, 'Z');
 
-// Günlük ve saatlik ziyaretçi (sitenin GoatCounter ayarındaki saat dilimine göre): 60 gün (30 günü öncekiyle kıyaslamak için)
-const toplam = await getir('/stats/total', { start: iso(bugunBas - 59 * GUN), end: iso(bitis) });
-const gunler = (toplam.stats ?? []).map(s => ({ gun: s.day.slice(0, 10), z: s.daily ?? 0, saat: s.hourly ?? [] })).sort((a, b) => a.gun.localeCompare(b.gun));
 
 const liste = (x, ad = s => s.name) => (x.stats ?? []).map(s => ({ ad: ad(s), id: s.id ?? '', n: s.count ?? 0 })).filter(s => s.n > 0);
 async function donem(bas) {
@@ -48,18 +45,28 @@ async function donem(bas) {
   return sonuc;
 }
 
-const veri = {
-  guncelleme: new Date(simdi).toISOString(),
-  gunler: gunler.map(({ gun, z }) => ({ gun, z })),
-  saatlik: Object.fromEntries(gunler.slice(-2).map(g => [g.gun, g.saat])),
-  donemler: { bugun: await donem(bugunBas), hafta: await donem(bugunBas - 6 * GUN), ay: await donem(bugunBas - 29 * GUN) },
-};
 const dosya = new URL('site/data/istatistik.json', KOK);
 let eski = null;
 try { eski = JSON.parse(readFileSync(dosya, 'utf8')); } catch { /* ilk çalışma */ }
-if (eski && JSON.stringify({ ...eski, guncelleme: 0 }) === JSON.stringify({ ...veri, guncelleme: 0 })) {
+let veri;
+try {
+  // Günlük ve saatlik ziyaretçi (sitenin GoatCounter ayarındaki saat dilimine göre): 60 gün (30 günü öncekiyle kıyaslamak için)
+  const toplam = await getir('/stats/total', { start: iso(bugunBas - 59 * GUN), end: iso(bitis) });
+  const gunler = (toplam.stats ?? []).map(s => ({ gun: s.day.slice(0, 10), z: s.daily ?? 0, saat: s.hourly ?? [] })).sort((a, b) => a.gun.localeCompare(b.gun));
+  veri = {
+    guncelleme: new Date(simdi).toISOString(),
+    gunler: gunler.map(({ gun, z }) => ({ gun, z })),
+    saatlik: Object.fromEntries(gunler.slice(-2).map(g => [g.gun, g.saat])),
+    donemler: { bugun: await donem(bugunBas), hafta: await donem(bugunBas - 6 * GUN), ay: await donem(bugunBas - 29 * GUN) },
+  };
+} catch (e) {
+  // Hata dosyaya yazılır (önceki sayılar kalır): yönetici sayfasında görünür, GitHub kaydına giriş yapmadan da okunur
+  console.log('GoatCounter okunamadı:', e.message);
+  veri = { ...(eski ?? {}), hata: String(e.message).slice(0, 300), hataZamani: new Date(simdi).toISOString() };
+}
+if (eski && JSON.stringify({ ...eski, guncelleme: 0, hataZamani: 0 }) === JSON.stringify({ ...veri, guncelleme: 0, hataZamani: 0 })) {
   console.log('Değişiklik yok.');
   process.exit(0);
 }
 writeFileSync(dosya, `${JSON.stringify(veri)}\n`);
-console.log(`İstatistik yazıldı: bugün ${veri.donemler.bugun.ziyaretci}, 7 gün ${veri.donemler.hafta.ziyaretci}, 30 gün ${veri.donemler.ay.ziyaretci} ziyaretçi`);
+if (!veri.hata) console.log(`İstatistik yazıldı: bugün ${veri.donemler.bugun.ziyaretci}, 7 gün ${veri.donemler.hafta.ziyaretci}, 30 gün ${veri.donemler.ay.ziyaretci} ziyaretçi`);

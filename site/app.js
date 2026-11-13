@@ -1731,7 +1731,8 @@ function gorunumIstatistik() {
   yukle(S.istatistik, 'veri', 'data/istatistik.json', { bosDeger: null });
   const v = S.istatistik.veri;
   if (v === undefined) return '<p class="bos">Yükleniyor…</p>';
-  if (!v) return '<div class="kart"><h2>Ziyaret istatistikleri</h2><p class="soluk">Henüz veri yok. Ziyaret sayacı (GoatCounter) kurulunca ilk sayılar yarım saat içinde burada görünür.</p></div>';
+  const hataNotu = v?.hata ? `<p class="ist-hata">GoatCounter'dan okunamadı (${esc(sureYazisi(dkOnce(v.hataZamani)))}): ${esc(v.hata)}</p>` : '';
+  if (!v || !v.donemler) return `<div class="kart"><h2>Ziyaret istatistikleri</h2>${hataNotu}<p class="soluk">Henüz veri yok. Ziyaret sayacı (GoatCounter) kurulunca ilk sayılar yarım saat içinde burada görünür.</p></div>`;
   const donem = S.ui.istDonem, d = v.donemler?.[donem] ?? {};
   // Çubuklar yalnızca sayfa açılınca ve dönem değişince büyüyerek gelir (dakikalık yenilemede yeniden oynamaz)
   const anim = S.ui.istAnim !== donem;
@@ -1776,7 +1777,7 @@ function gorunumIstatistik() {
     : kutucuk(binlik(Math.round(ziyaretci / (donem === 'hafta' ? 7 : 30))), 'Günlük ortalama');
   const kiyas = degisim === null ? '' : `<span class="${degisim >= 0 ? 'artis' : 'azalis'}">${degisim >= 0 ? '▲' : '▼'} %${Math.abs(degisim)}</span> ${kiyasYazi}`;
   return `<div class="ist${anim ? ' ist-anim' : ''}"><div class="kart"><div class="baslik-satir"><h2>Ziyaret istatistikleri</h2><small class="soluk">${v.guncelleme ? `Güncelleme: ${sureYazisi(dkOnce(v.guncelleme))}` : ''}</small></div>
-      <div class="satir ist-donem">${IST_DONEMLER.map(([k, ad]) => `<button class="secenek ${k === donem ? 'aktif' : ''}" data-is="ist-donem" data-id="${k}">${ad}</button>`).join('')}</div>
+      ${hataNotu}<div class="satir ist-donem">${IST_DONEMLER.map(([k, ad]) => `<button class="secenek ${k === donem ? 'aktif' : ''}" data-is="ist-donem" data-id="${k}">${ad}</button>`).join('')}</div>
       <div class="ist-kutular">${kutucuk(binlik(ziyaretci), 'Ziyaretçi', kiyas)}${ikinci}${kutucuk(mobil === null ? '–' : `%${mobil}`, 'Mobilden', 'telefon ve tablet')}</div>
       <p id="ist-bilgi" class="ist-bilgi">${enYogun?.z ? `En yoğun: ${enYogun.bilgi}` : 'Bu dönemde ziyaret yok.'}</p>
       <div class="ist-grafik">${cubuklar.map(c => `<button class="ist-cubuk${c.bos ? ' bos' : ''}" data-is="ist-cubuk" data-bilgi="${esc(c.bilgi)}" aria-label="${esc(c.bilgi.replace(/<[^>]+>/g, ''))}"><i style="height:${c.z ? Math.max(3, (c.z / max) * 100) : 0}%"></i><span>${c.etiket}</span></button>`).join('')}</div>

@@ -1704,7 +1704,11 @@ function istCihazAdi(x) {
 }
 const IST_ULKE = { Turkey: 'Türkiye', 'Türkiye': 'Türkiye', Germany: 'Almanya', Netherlands: 'Hollanda', 'United States': 'ABD', 'United Kingdom': 'Birleşik Krallık',
   France: 'Fransa', Belgium: 'Belçika', Austria: 'Avusturya', Cyprus: 'Kıbrıs', Azerbaijan: 'Azerbaycan', Greece: 'Yunanistan', Spain: 'İspanya', Italy: 'İtalya' };
-const istKaynakAdi = ad => (!ad || /^\(?(no data|unknown|direct)/i.test(ad) ? 'Doğrudan' : ad);
+const IST_KAYNAK = [[/youtube|youtu\.be/, 'YouTube'], [/instagram/, 'Instagram'], [/whatsapp|wa\.me/, 'WhatsApp'], [/facebook|fb\.com/, 'Facebook'],
+  [/(^|\.)(x|twitter)\.com|^t\.co$/, 'X (Twitter)'], [/google/, 'Google'], [/telegram|t\.me/, 'Telegram'], [/tiktok/, 'TikTok'], [/bing/, 'Bing']];
+// Kaynak adı: boşsa doğrudan (adres, ana ekran simgesi, mesajlaşma uygulaması); bilinen siteler adıyla, diğerleri www'siz alan adıyla
+const istKaynakAdi = ad => (!ad || /^\(?(no data|unknown|direct)/i.test(ad) ? 'Doğrudan'
+  : IST_KAYNAK.find(([d]) => d.test(ad.toLowerCase()))?.[1] ?? ad.replace(/^www\./, ''));
 // Aynı ada düşenleri toplar (ör. bütün TBL Fantezi sayfaları), büyükten küçüğe
 function istTopla(liste, adFn) {
   const m = new Map();

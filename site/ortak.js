@@ -1,7 +1,9 @@
 // Uygulamanın bütün bölümlerinde kullanılan yardımcılar
 
 export const KAYNAK_SITE = 'https://potaalti.github.io/tbl_fantezi_lig';
-export const KAYNAK = `${KAYNAK_SITE}/data`;
+// Veriler doğrudan depodan (raw.githubusercontent, her istekte ?t= ile önbelleksiz): eski TBL sitesinin GitHub Pages yayını
+// takılınca (2026-11-13 maç sırasında 18:30'dan sonra) canlı skorlar durmasın; Pages yayınını beklemeden telefonun gönderdiği an gelir
+export const KAYNAK = 'https://raw.githubusercontent.com/potaalti/tbl_fantezi_lig/main/site/data';
 
 export const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 export const sayi = n => (Math.round((Number(n) || 0) * 10) / 10).toLocaleString('tr-TR');

@@ -36,12 +36,12 @@
    "evSkor": "80",
    "dep": "GALATASARAY MCT TECHNIC",
    "depId": 266026,
-   "depSkor": "79",
+   "depSkor": "81",
    "salon": "Şehit Polis Recep Topaloğlu Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "00:24",
+    "saat": "00:01",
     "uzatma": false
    }
   },
@@ -501,15 +501,15 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 21,
-   "saniye": 2096,
+   "saniye": 2119,
    "mac": 1
   },
   "778161": {
    "ad": "Johnny Davis",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 24,
-   "saniye": 1966,
+   "vp": 23,
+   "saniye": 1988,
    "mac": 1
   },
   "419874": {
@@ -517,7 +517,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 0,
-   "saniye": 1716,
+   "saniye": 1739,
    "mac": 1
   },
   "609266": {
@@ -525,7 +525,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 15,
-   "saniye": 1810,
+   "saniye": 1832,
    "mac": 1
   },
   "778182": {
@@ -533,7 +533,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 17,
-   "saniye": 1950,
+   "saniye": 1973,
    "mac": 1
   },
   "254785": {
@@ -597,7 +597,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 9,
-   "saniye": 1340,
+   "saniye": 1363,
    "mac": 1
   },
   "250129": {
@@ -605,7 +605,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 9,
-   "saniye": 1676,
+   "saniye": 1698,
    "mac": 1
   },
   "502492": {
@@ -613,7 +613,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 19,
-   "saniye": 1880,
+   "saniye": 1902,
    "mac": 1
   },
   "779275": {
@@ -621,7 +621,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 16,
-   "saniye": 1835,
+   "saniye": 1857,
    "mac": 1
   },
   "779274": {
@@ -652,8 +652,8 @@
    "ad": "Alen Smailagic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 7,
-   "saniye": 1227,
+   "vp": 9,
+   "saniye": 1249,
    "mac": 1
   },
   "609092": {

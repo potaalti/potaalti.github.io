@@ -46,15 +46,15 @@
    "durum": "canli",
    "ev": "PİZZABULLS BORDO BANDIRMA",
    "evId": 265993,
-   "evSkor": "71",
+   "evSkor": "73",
    "dep": "KARŞIYAKA",
    "depId": 266027,
-   "depSkor": "65",
+   "depSkor": "67",
    "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "06:49",
+    "saat": "05:59",
     "uzatma": false
    }
   },
@@ -716,8 +716,8 @@
    "ad": "Peyton Aldridge",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 12,
-   "saniye": 1865,
+   "vp": 13,
+   "saniye": 1914,
    "mac": 1
   },
   "501076": {
@@ -725,7 +725,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 16,
-   "saniye": 1247,
+   "saniye": 1296,
    "mac": 1
   },
   "441857": {
@@ -741,7 +741,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 9,
-   "saniye": 873,
+   "saniye": 922,
    "mac": 1
   },
   "109611": {
@@ -764,8 +764,8 @@
    "ad": "Damien Jefferson",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 7,
-   "saniye": 768,
+   "vp": 10,
+   "saniye": 817,
    "mac": 1
   },
   "307500": {
@@ -781,7 +781,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 15,
-   "saniye": 945,
+   "saniye": 994,
    "mac": 1
   },
   "573226": {
@@ -797,15 +797,15 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 19,
-   "saniye": 1747,
+   "saniye": 1796,
    "mac": 1
   },
   "500079": {
    "ad": "Rashard Kelly",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 16,
-   "saniye": 1869,
+   "vp": 18,
+   "saniye": 1918,
    "mac": 1
   },
   "254789": {
@@ -813,15 +813,15 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 6,
-   "saniye": 1399,
+   "saniye": 1448,
    "mac": 1
   },
   "609083": {
    "ad": "Steven Enoch",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 5,
-   "saniye": 799,
+   "vp": 6,
+   "saniye": 848,
    "mac": 1
   },
   "228502": {
@@ -836,8 +836,8 @@
    "ad": "Markel Starks",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 19,
-   "saniye": 888,
+   "vp": 18,
+   "saniye": 937,
    "mac": 1
   },
   "218536": {

@@ -7,7 +7,8 @@ etiketiyle gönderir; o arada başkası (telefon, GitHub) göndermişse son hali
   python veri/pc_dongu.py canli    2 dakikada bir: TBL ve BSL canlı skor ve VP (maç saatinde; değilse internete çıkmadan
                                    biter), Avrupa (Türkiye saatiyle 18:00–02:00)
   python veri/pc_dongu.py gunluk   15 dakikada bir, zamanı gelen işler (Türkiye saati; o saat kaçtıysa açılınca bir kez):
-      TBL ve BSL verilerinin tamamı, istatistik liderleri, seyirci, oyuncu fotoğrafı ve takım logoları: 08, 13, 18, 23
+      TBL ve BSL verilerinin tamamı (TBL takım kadroları dahil), istatistik liderleri, seyirci, oyuncu fotoğrafı ve
+      takım logoları: 08, 13, 18, 23
       puan tablosu, takım ve oyuncu istatistikleri: saat başı
       YouTube canlı yayın ve video listesi: 07, 11, 15, 19, 23
   --is ad1,ad2   zamanına bakmadan yalnızca bu işler (tbl, bsl, avrupa | veri, istatistik, gunluk, youtube)
@@ -153,7 +154,9 @@ def gunluk(kok, secili, kuru):
 
     if yap["veri"]:
         log("TBL ve BSL verilerinin tamamı güncelleniyor")
-        t1 = is_yap("TBL tam", tbl, [(["fetch_tbf.py"], ".", 1500)], ["."], "Veriler güncellendi (pc)", kuru)
+        # --kadrolar: TBF takım kadroları da her seferinde (transferler aynı gün görünsün; telefonun 2026-11-14 12:12'de
+        # çektiği eski kadrolar transferleri geri almıştı)
+        t1 = is_yap("TBL tam", tbl, [(["fetch_tbf.py", "--kadrolar"], ".", 1500)], ["."], "Veriler güncellendi (pc)", kuru)
         t2 = is_yap("BSL tam", app, [(["veri_guncelle.py"], "bsl", 1800)], ["site/bsl/data"], "BSL verileri güncellendi (pc)", kuru)
         bitti("veri", t1 and t2)
     if yap["gunluk"] or yap["istatistik"]:

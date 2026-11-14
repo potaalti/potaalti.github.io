@@ -7,7 +7,7 @@
    "durum": "canli",
    "ev": "ALİAĞA PETKİM SPOR",
    "evId": 266048,
-   "evSkor": "62",
+   "evSkor": "63",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
    "depSkor": "61",
@@ -15,7 +15,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "00:27",
+    "saat": "00:08",
     "uzatma": false
    }
   },
@@ -124,8 +124,8 @@
    "ad": "Keandre Cook",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 9,
-   "saniye": 1078,
+   "vp": 8,
+   "saniye": 1097,
    "mac": 1
   },
   "310250": {
@@ -157,7 +157,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 6,
-   "saniye": 877,
+   "saniye": 896,
    "mac": 1
   },
   "778246": {
@@ -165,7 +165,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 4,
-   "saniye": 863,
+   "saniye": 882,
    "mac": 1
   },
   "269217": {
@@ -173,7 +173,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": -1,
-   "saniye": 395,
+   "saniye": 414,
    "mac": 1
   },
   "284983": {
@@ -189,7 +189,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": -1,
-   "saniye": 466,
+   "saniye": 485,
    "mac": 1
   },
   "475706": {
@@ -212,16 +212,16 @@
    "ad": "Jerrick Harding",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": -1,
-   "saniye": 895,
+   "vp": -2,
+   "saniye": 914,
    "mac": 1
   },
   "418533": {
    "ad": "Uros Trifunovic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 6,
-   "saniye": 1171,
+   "vp": 7,
+   "saniye": 1190,
    "mac": 1
   },
   "129216": {
@@ -229,7 +229,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 16,
-   "saniye": 1404,
+   "saniye": 1423,
    "mac": 1
   },
   "778727": {
@@ -277,7 +277,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 26,
-   "saniye": 1082,
+   "saniye": 1101,
    "mac": 1
   },
   "272903": {

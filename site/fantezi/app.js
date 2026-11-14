@@ -2737,7 +2737,7 @@ const talepIstisnasi = (pid, b) => {
 };
 // Süresi istisnaya göre henüz değiştirilmemiş talep (değiştirilene kadar kurası çekilmez)
 const istisnaBekliyor = (pid, b) => [LIG.talepIstisnalari?.[pid]?.baslangic ?? []].flat().map(Date.parse).includes(b?.zaman?.toMillis?.());
-// Aynı anda süresi biten kuralar: en çok talibi olan önce (eşitlikte süresi önce biten), sırayla ve birbirini bekleyerek
+// Aynı anda süresi biten kuralar: en çok talibi olan önce (eşitlikte süresi önce biten, o da eşitse kurayla), sırayla ve birbirini bekleyerek
 // çekilir. Bir takım kurayı kazanınca bıraktığı oyuncu kadrosundan çıktığı için, aynı oyuncuyu bırakarak başka oyuncuya
 // yaptığı talep sonraki kurada geçersiz sayılır (o kuradan çıkar); kazanamazsa diğer kurada aynen devam eder
 // (talepKurasi işlem içinde kadronun o anki halini okur). Talepler silinmez, yalnızca kura sırası belirlenir.
@@ -2747,7 +2747,8 @@ async function talepKuralariniCek() {
   const bitis = b => b?.zaman?.toMillis?.() ?? 0;
   const hazir = Object.entries(S.bekleme).filter(([pid, b]) => Object.keys(b.talepler ?? {}).length && D.beklemeKalan(b) <= 0
     && !istisnaBekliyor(pid, b) && !LIG.haricOyuncular?.includes(pid) && Date.now() - (kuraDenenen.get(pid) ?? 0) >= 60000)
-    .sort(([, a], [, c]) => Object.keys(c.talepler).length - Object.keys(a.talepler).length || bitis(a) - bitis(c));
+    .map(x => [...x, Math.random()])
+    .sort(([, a, ra], [, c, rc]) => Object.keys(c.talepler).length - Object.keys(a.talepler).length || bitis(a) - bitis(c) || ra - rc);
   if (!hazir.length) return;
   kuraSuruyor = true;
   try {

@@ -20,15 +20,15 @@
    "durum": "canli",
    "ev": "TOFAŞ",
    "evId": 265995,
-   "evSkor": "37",
+   "evSkor": "41",
    "dep": "TRABZONSPOR",
    "depId": 266029,
-   "depSkor": "42",
+   "depSkor": "44",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "07:57",
+    "saat": "06:36",
     "uzatma": false
    }
   },
@@ -332,8 +332,8 @@
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 4,
-   "saniye": 1011,
+   "vp": 6,
+   "saniye": 1091,
    "mac": 1
   },
   "778398": {
@@ -341,7 +341,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 6,
-   "saniye": 824,
+   "saniye": 904,
    "mac": 1
   },
   "452216": {
@@ -356,16 +356,16 @@
    "ad": "Sadık Kabaca",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 5,
-   "saniye": 739,
+   "vp": 6,
+   "saniye": 819,
    "mac": 1
   },
   "508900": {
    "ad": "Jamuni Mcneace",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 0,
-   "saniye": 265,
+   "vp": 4,
+   "saniye": 345,
    "mac": 1
   },
   "732657": {
@@ -373,7 +373,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 6,
-   "saniye": 464,
+   "saniye": 517,
    "mac": 1
   },
   "434482": {
@@ -389,7 +389,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -5,
-   "saniye": 755,
+   "saniye": 782,
    "mac": 1
   },
   "197570": {
@@ -404,8 +404,8 @@
    "ad": "Marcus Keene",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 7,
-   "saniye": 1191,
+   "vp": 6,
+   "saniye": 1271,
    "mac": 1
   },
   "735812": {
@@ -413,15 +413,15 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 9,
-   "saniye": 1187,
+   "saniye": 1267,
    "mac": 1
   },
   "133530": {
    "ad": "Tolga Geçim",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 6,
-   "saniye": 631,
+   "vp": 8,
+   "saniye": 711,
    "mac": 1
   },
   "512899": {
@@ -429,7 +429,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 7,
-   "saniye": 840,
+   "saniye": 920,
    "mac": 1
   },
   "473256": {
@@ -437,7 +437,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 5,
-   "saniye": 658,
+   "saniye": 738,
    "mac": 1
   },
   "105532": {

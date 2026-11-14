@@ -214,7 +214,7 @@ def el_kupa(k):
                                                s.get("timePlayed") or 0, {
                     "sayi": int(s["points"]), "rib": int(s["totalRebounds"]), "or": int(s["offensiveRebounds"]), "dr": int(s["defensiveRebounds"]),
                     "ast": int(s["assistances"]), "tc": int(s["steals"]), "blk": int(s["blocksFavour"]), "tk": int(s["turnovers"]),
-                    "faul": int(s["foulsCommited"]), "vp": int(s["valuation"]), "pm": int(s.get("plusMinus") or 0),
+                    "faul": int(s["foulsCommited"]), "af": int(s.get("foulsReceived") or 0), "vp": int(s["valuation"]), "pm": int(s.get("plusMinus") or 0),
                     "iki": [int(s["fieldGoalsMade2"]), int(s["fieldGoalsAttempted2"])], "uc": [int(s["fieldGoalsMade3"]), int(s["fieldGoalsAttempted3"])],
                     "sa": [int(s["freeThrowsMade"]), int(s["freeThrowsAttempted"])]}))
             tm = t.get("team") or {}
@@ -244,7 +244,7 @@ def el_kupa(k):
                                                sure_sn(p.get("Minutes")), {
                     "sayi": n("Points"), "rib": n("TotalRebounds"), "or": n("OffensiveRebounds"), "dr": n("DefensiveRebounds"),
                     "ast": n("Assistances"), "tc": n("Steals"), "blk": n("BlocksFavour"), "tk": n("Turnovers"),
-                    "faul": n("FoulsCommited"), "vp": n("Valuation"), "pm": n("Plusminus"),
+                    "faul": n("FoulsCommited"), "af": n("FoulsReceived"), "vp": n("Valuation"), "pm": n("Plusminus"),
                     "iki": [n("FieldGoalsMade2"), n("FieldGoalsAttempted2")], "uc": [n("FieldGoalsMade3"), n("FieldGoalsAttempted3")],
                     "sa": [n("FreeThrowsMade"), n("FreeThrowsAttempted")],
                     **({"sahada": True} if p.get("IsPlaying") else {})}))  # şu an sahadaki 5 (uygulama adın sonuna * koyar)
@@ -392,7 +392,7 @@ def fiba_kupa(k):
                 ad = " ".join(w.capitalize() if w.isupper() and len(w) > 2 else w for w in ad.split())
                 oyuncular.append(oyuncu_satiri(pid, ad, kisi.get("uniformNumber"), st.get("Starter"), sure_sn(st.get("TP")) if st.get("HasPlayed") else 0, {
                     "sayi": st.get("PTS", 0), "rib": st.get("REB", 0), "or": st.get("OR", 0), "dr": st.get("DR", 0), "ast": st.get("AS", 0),
-                    "tc": st.get("ST", 0), "blk": st.get("BS", 0), "tk": st.get("TO", 0), "faul": st.get("PF", 0), "vp": st.get("EFF", 0),
+                    "tc": st.get("ST", 0), "blk": st.get("BS", 0), "tk": st.get("TO", 0), "faul": st.get("PF", 0), "af": st.get("FD", 0), "vp": st.get("EFF", 0),
                     "pm": st.get("PM", 0) or 0, "iki": [st.get("FG2M", 0), st.get("FG2A", 0)], "uc": [st.get("FG3M", 0), st.get("FG3A", 0)],
                     "sa": [st.get("FTM", 0), st.get("FTA", 0)]}))
             st = t.get("Stats") or {}
@@ -595,7 +595,9 @@ def kupa_uret(k):
         yol = CIKTI / k["kod"] / "mac" / f"{m['id']}.json"
         kayit = oku(yol)
         # Canlı maçın kutu skoru her çalışmada yeniden çekilir; canlıyken kaydedilmiş maç bitince bir kez daha (son hali)
-        if kayit is None or m["durum"] == "canli" or kayit.get("canli") or "takim" not in (kayit.get("ev") or {}):
+        # Alınan faul (af) sonradan eklendi (2026-11-14): oyuncularında olmayan eski kutu skorlar bir kez yeniden çekilir
+        eski_kutu = bool((kayit or {}).get("ev", {}).get("oyuncular")) and "af" not in kayit["ev"]["oyuncular"][0]
+        if kayit is None or m["durum"] == "canli" or kayit.get("canli") or "takim" not in (kayit.get("ev") or {}) or eski_kutu:
             try:
                 kayit = kutu(m)
                 kayit["canli"] = m["durum"] == "canli"

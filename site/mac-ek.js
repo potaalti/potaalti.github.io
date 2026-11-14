@@ -16,6 +16,7 @@ const KUTU_SUTUNLARI = [
   ['HR', o => o.hr ?? '', 'hr', '', 'Hücum ribaundu'], ['SR', o => o.sr ?? '', 'sr', '', 'Savunma ribaundu'],
   ['Rb', o => o.rib, 'rib', 'rb', 'Toplam ribaund'], ['As', o => o.ast, 'ast', '', 'Asist'], ['Tç', o => o.tc, 'tc', '', 'Top çalma'],
   ['Bl', o => o.blk, 'blk', '', 'Blok'], ['Tk', o => o.tk, 'tk', '', 'Top kaybı'], ['F', o => o.faul, 'faul', '', 'Faul'],
+  ['AF', o => o.af ?? '', 'af', '', 'Alınan faul'],
   ['+/-', o => o.pm ?? '', null, '', 'Sahadayken skor farkı'], ['VP', o => o.vp, 'vp', 'vp', 'Verimlilik puanı'],
 ];
 const kutuHucresi = (o, [, f, , sinif]) => `<td class="${sinif}">${esc(f(o))}</td>`;
@@ -47,7 +48,9 @@ const TAKIM_ALANLARI = ['hr', 'sr', 'rib', 'tk', 'faul'];
 const takimSatiri = takim => (!takim ? '' : `<tr class="takim-satir"><th>Takım</th>${KUTU_SUTUNLARI.map(([, , alan, sinif]) =>
   `<td class="${sinif}">${TAKIM_ALANLARI.includes(alan) ? takim[alan] ?? 0 : ''}</td>`).join('')}</tr>`);
 function kutuToplami(oyuncular, takim) {
-  const topla = alan => oyuncular.reduce((x, o) => x + (Number(o[alan]) || 0), 0) + (takim?.[alan] ?? 0);
+  // Alınan faul eski kutu skorlarda yok: hiçbir oyuncuda yoksa toplam da boş kalır
+  const topla = alan => (alan === 'af' && !oyuncular.some(o => o.af != null) ? ''
+    : oyuncular.reduce((x, o) => x + (Number(o[alan]) || 0), 0) + (takim?.[alan] ?? 0));
   const toplaAtis = alan => atis([0, 1].map(i => oyuncular.reduce((x, o) => x + (o[alan]?.[i] ?? 0), 0)));
   return KUTU_SUTUNLARI.map(([, , alan, sinif]) => `<td class="${sinif}">${!alan ? '' : ['iki', 'uc', 'sa'].includes(alan) ? toplaAtis(alan) : topla(alan)}</td>`).join('');
 }
@@ -91,7 +94,7 @@ export function macGovdesi(kutu, ayar) {
   return `${ceyrekTablosu(kutu, a)}${farkGrafigi(evAd, depAd, kutu.fark ?? a.fark)}
     ${kutuSkorTablosu(kutu.ev, kutu.ev.takim ?? a.takimIst?.ev, a, kutu.ev.koc ?? ileri?.ev?.koc)}${kutuSkorTablosu(kutu.dep, kutu.dep.takim ?? a.takimIst?.dep, a, kutu.dep.koc ?? ileri?.dep?.koc)}
     ${ileriIstatistikKarti(evAd, depAd, ileri, a.takimBasligi(kutu.ev), a.takimBasligi(kutu.dep))}
-    <p class="soluk kucuk">Kalın: ilk 5${a.canli ? ' · *: sahada' : ''} · 2S/3S/SA: isabet/deneme · Tç: top çalma · Bl: blok · Tk: top kaybı · VP: verimlilik${a.aciklamaEki}</p>`;
+    <p class="soluk kucuk">Kalın: ilk 5${a.canli ? ' · *: sahada' : ''} · 2S/3S/SA: isabet/deneme · Tç: top çalma · Bl: blok · Tk: top kaybı · F: faul · AF: alınan faul · VP: verimlilik${a.aciklamaEki}</p>`;
 }
 
 // Skor farkı grafiği (kullanıcı: geçmiş haftalara gerek yok): veri bu haftalardan itibaren var; veri/uret.py FARK_ILK_HAFTA ile aynı

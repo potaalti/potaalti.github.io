@@ -49,12 +49,12 @@
    "evSkor": "74",
    "dep": "KARŞIYAKA",
    "depId": 266027,
-   "depSkor": "69",
+   "depSkor": "71",
    "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "04:24",
+    "saat": "03:56",
     "uzatma": false
    }
   },
@@ -701,7 +701,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 1,
-   "saniye": 1213,
+   "saniye": 1241,
    "mac": 1
   },
   "512379": {
@@ -717,7 +717,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 13,
-   "saniye": 2009,
+   "saniye": 2037,
    "mac": 1
   },
   "501076": {
@@ -725,7 +725,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 15,
-   "saniye": 1391,
+   "saniye": 1419,
    "mac": 1
   },
   "441857": {
@@ -733,7 +733,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 3,
-   "saniye": 608,
+   "saniye": 636,
    "mac": 1
   },
   "106461": {
@@ -781,7 +781,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 15,
-   "saniye": 1089,
+   "saniye": 1117,
    "mac": 1
   },
   "573226": {
@@ -789,7 +789,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 4,
-   "saniye": 1200,
+   "saniye": 1228,
    "mac": 1
   },
   "779071": {
@@ -797,7 +797,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 20,
-   "saniye": 1891,
+   "saniye": 1919,
    "mac": 1
   },
   "500079": {
@@ -805,15 +805,15 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 18,
-   "saniye": 2013,
+   "saniye": 2041,
    "mac": 1
   },
   "254789": {
    "ad": "Yavuz Gültekin",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 7,
-   "saniye": 1543,
+   "vp": 10,
+   "saniye": 1571,
    "mac": 1
   },
   "609083": {
@@ -821,7 +821,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 8,
-   "saniye": 943,
+   "saniye": 971,
    "mac": 1
   },
   "228502": {

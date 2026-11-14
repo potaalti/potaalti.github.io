@@ -10,12 +10,12 @@
    "evSkor": "23",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
-   "depSkor": "23",
+   "depSkor": "25",
    "salon": "Enka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "07:03",
+    "saat": "06:25",
     "uzatma": false
    }
   },
@@ -116,8 +116,8 @@
    "ad": "Khyri Thomas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 5,
-   "saniye": 519,
+   "vp": 4,
+   "saniye": 557,
    "mac": 1
   },
   "778249": {
@@ -133,7 +133,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 9,
-   "saniye": 538,
+   "saniye": 576,
    "mac": 1
   },
   "675128": {
@@ -141,7 +141,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 3,
-   "saniye": 298,
+   "saniye": 336,
    "mac": 1
   },
   "572386": {
@@ -149,7 +149,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 3,
-   "saniye": 563,
+   "saniye": 601,
    "mac": 1
   },
   "778279": {
@@ -165,7 +165,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": -1,
-   "saniye": 445,
+   "saniye": 465,
    "mac": 1
   },
   "269217": {
@@ -181,7 +181,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 18,
    "mac": 1
   },
   "470691": {
@@ -212,16 +212,16 @@
    "ad": "Jerrick Harding",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": -4,
-   "saniye": 365,
+   "vp": -2,
+   "saniye": 403,
    "mac": 1
   },
   "418533": {
    "ad": "Uros Trifunovic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 0,
-   "saniye": 353,
+   "vp": -1,
+   "saniye": 391,
    "mac": 1
   },
   "129216": {
@@ -229,15 +229,15 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 10,
-   "saniye": 553,
+   "saniye": 591,
    "mac": 1
   },
   "778727": {
    "ad": "Ismael Bako",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 7,
-   "saniye": 507,
+   "vp": 9,
+   "saniye": 545,
    "mac": 1
   },
   "277894": {
@@ -293,7 +293,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": -2,
-   "saniye": 509,
+   "saniye": 547,
    "mac": 1
   }
  }

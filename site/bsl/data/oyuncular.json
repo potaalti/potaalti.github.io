@@ -509,7 +509,7 @@
   "foto": "https://tbf.org.tr/res/3f90ba5d-4797-4175-9de4-39bbd26bf8b6_turktelekom_0004_28.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 6.1,
+  "ribOrt": 6.2,
   "astOrt": 0.4
  },
  {
@@ -3715,8 +3715,8 @@
   "foto": "https://tbf.org.tr/res/b0687139-c2b8-4b3e-bfc2-38dd0a94ab5c_ozanylmaz.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 0.7,
-  "astOrt": 0.3
+  "ribOrt": 0.5,
+  "astOrt": 0.2
  },
  {
   "id": "392627",

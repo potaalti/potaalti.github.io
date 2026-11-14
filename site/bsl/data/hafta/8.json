@@ -7,7 +7,7 @@
    "durum": "canli",
    "ev": "ALİAĞA PETKİM SPOR",
    "evId": 266048,
-   "evSkor": "69",
+   "evSkor": "72",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
    "depSkor": "66",
@@ -15,7 +15,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "07:53",
+    "saat": "07:14",
     "uzatma": false
    }
   },
@@ -116,8 +116,8 @@
    "ad": "Khyri Thomas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 18,
-   "saniye": 1482,
+   "vp": 19,
+   "saniye": 1521,
    "mac": 1
   },
   "778249": {
@@ -133,7 +133,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 21,
-   "saniye": 1567,
+   "saniye": 1606,
    "mac": 1
   },
   "675128": {
@@ -148,16 +148,16 @@
    "ad": "Olivier Hanlan",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 9,
-   "saniye": 1442,
+   "vp": 10,
+   "saniye": 1481,
    "mac": 1
   },
   "778279": {
    "ad": "Chris Horton",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 9,
-   "saniye": 1023,
+   "vp": 10,
+   "saniye": 1062,
    "mac": 1
   },
   "778246": {
@@ -165,7 +165,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 5,
-   "saniye": 1018,
+   "saniye": 1057,
    "mac": 1
   },
   "269217": {
@@ -213,7 +213,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 0,
-   "saniye": 1041,
+   "saniye": 1080,
    "mac": 1
   },
   "418533": {
@@ -228,8 +228,8 @@
    "ad": "Doğuş Özdemiroğlu",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 19,
-   "saniye": 1559,
+   "vp": 18,
+   "saniye": 1598,
    "mac": 1
   },
   "778727": {
@@ -237,7 +237,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 14,
-   "saniye": 1082,
+   "saniye": 1121,
    "mac": 1
   },
   "277894": {
@@ -269,7 +269,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": -1,
-   "saniye": 483,
+   "saniye": 522,
    "mac": 1
   },
   "668012": {
@@ -292,8 +292,8 @@
    "ad": "Shaquille Mckissic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": -2,
-   "saniye": 1125,
+   "vp": -1,
+   "saniye": 1164,
    "mac": 1
   }
  }

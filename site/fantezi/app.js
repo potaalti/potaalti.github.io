@@ -120,7 +120,10 @@ const secimKisiti = tid => C.kisitMetni(izinliTipler(tid));
 const dizilisSorunu = k => C.dizilisHatasi(k.as.map(bilgi), k.yedek.map(bilgi), kural());
 const draftDizilisi = idler => C.dizilisOner(idler.map(havuzBilgi), kural());
 // BSL takım adı: telefonda kısaltması (BSK, ERK...), geniş ekranda tam adı
-const bslTakimHucre = o => `<span class="uzun-ad">${esc(o.takim)}</span><span class="kisa-ad" title="${esc(o.takim)}">${esc(o.takimKod || o.takim)}</span>`;
+// Gerçek (TBL/BSL) takım adı: ana uygulamadaki takım sayfasına bağlantı (takım kimlikleri aynı: takimKimligi)
+const takimLinki = (ad, gorunen = ad, ham = false) => (!ad ? ''
+  : `<a href="../#/takim/${LIG.kod}/${takimKimligi(ad)}" class="takim-link">${esc(ham ? gorunen : baslik(gorunen))}</a>`);
+const bslTakimHucre = o => `<span class="uzun-ad">${takimLinki(o.takim, o.takim, true)}</span><span class="kisa-ad" title="${esc(o.takim)}">${takimLinki(o.takim, o.takimKod || o.takim, true)}</span>`;
 // Oyuncuların Ön/Arka mevkisi herkese gösterilir; yönetici Mevkiler sayfasından gizleyebilir (ayar.mevkilerHazir)
 const mevkilerHazir = () => LIG.mevki && S.ayar?.mevkilerHazir !== false;
 const mevkiRozeti = m => !mevkilerHazir() ? '' : `<span class="rozet mv" title="${m === 'on' ? 'Ön saha (uzun/forvet)' : 'Arka saha (oyun kurucu/şutör)'}">${C.MEVKI_ADI[m]}</span>`;
@@ -1227,7 +1230,7 @@ function haftaDetayi(s, h) {
       : o.yerineGiren ? `<span class="detay-not">süre almadı · yerine ${esc(o.yerineGiren)}</span>` : '';
     return `<div class="detay-satir ${o.sayildi ? '' : 'soluk-satir'}">
       <div class="detay-ad">${oyuncuLinki(o.id, o.ad)}${trRozeti(o)} ${not}
-        <small>${esc(baslik(o.takimKod || o.takim || ''))} · ${macBilgisi(o)}</small></div>
+        <small>${takimLinki(o.takim, o.takimKod || o.takim)} · ${macBilgisi(o)}</small></div>
       <b class="detay-vp">${oynanmadi && !o.vp ? '–' : sayi(o.vp)}</b></div>`;
   };
   return `<div class="hafta-detay"><div class="detay-grup">As</div>${s.aslar.map(satir).join('')}
@@ -1390,7 +1393,7 @@ function gorunumOyuncu(pid) {
   return `<div class="kart oyuncu-baslik">
       ${o.foto ? `<img src="${esc(o.foto)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}
       <div><h2 style="margin:0">${esc(o.ad)} ${mevkiRozeti(mevki(pid))}${trRozeti(o)}</h2>
-        <div class="soluk">${esc(o.takim)}${o.ulke ? ` · ${esc(o.ulke)}` : ''}</div>
+        <div class="soluk">${takimLinki(o.takim)}${o.ulke ? ` · ${esc(o.ulke)}` : ''}</div>
         <div style="margin-top:6px">${durum}</div>
         ${secim ? `<div class="kucuk soluk" style="margin-top:4px">Draft: ${secim.no + 1}. seçim (${esc(takimAdi(secim.takim))})${secim.otomatik ? ' · otomatik' : ''}</div>` : ''}
         ${yonetici() && !sahip && kalan && S.bekleme[pid] ? `<button class="btn kucuk" data-is="bekleme-kaldir" data-id="${esc(pid)}" style="margin-top:6px">Beklemeyi kaldır</button>` : ''}
@@ -1402,7 +1405,7 @@ function gorunumOyuncu(pid) {
       <thead><tr><th>Hf</th><th>Rakip</th><th class="sayi">Dk</th><th class="sayi">Sy</th><th class="sayi">Rb</th><th class="sayi">As</th><th class="sayi">VP</th></tr></thead>
       <tbody>${kutuk.join('')}</tbody></table></div>${macMac?.length ? '<p class="soluk kucuk" style="margin:6px 0 0">Maça dokununca kutu skor açılır.</p>' : ''}`
       : `<p class="soluk" style="margin:0">${S.tumHaftalarYuklendi && macMac !== undefined ? 'Bu sezon henüz maçı yok.' : 'Yükleniyor…'}</p>`}
-      ${gelecek.length ? `<h4>Sıradaki maçlar</h4>${gelecek.map(m => `<div class="kucuk">${tarih(m.tarih)} · ${m.evId === o.takimId ? `${esc(m.dep)} (iç saha)` : `@ ${esc(m.ev)}`}</div>`).join('')}` : ''}</div>
+      ${gelecek.length ? `<h4>Sıradaki maçlar</h4>${gelecek.map(m => `<div class="kucuk">${tarih(m.tarih)} · ${m.evId === o.takimId ? `${takimLinki(m.dep)} (iç saha)` : `@ ${takimLinki(m.ev)}`}</div>`).join('')}` : ''}</div>
     ${ilgili.length ? `<div class="kart"><h3>Fantezi hareketleri</h3>${ilgili.map(hareketSatiri).join('')}</div>` : ''}`;
 }
 
@@ -1507,7 +1510,7 @@ function haftaMaclariKarti(tid) {
       : m.durum === 'oynanmadi' ? `${gunBasligi(m.tarih)} · ${saatYazisi(m.tarih)}`
         : m.durum === 'canli' ? '<span class="canli-yazi">canlı</span>' : `MS ${m.evSkor}-${m.depSkor}`;
     return `<li><span><b>${oyuncuLinki(p, o.ad)}</b> <span class="rozet ${rol}">${rol === 'as' ? 'As' : 'Yedek'}</span>
-      <small class="soluk" style="display:block">${m ? `${ev ? 'vs' : '@'} ${esc(baslik(ev ? m.dep : m.ev))} · ` : ''}${durum}</small></span>
+      <small class="soluk" style="display:block">${m ? `${ev ? 'vs' : '@'} ${takimLinki(ev ? m.dep : m.ev)} · ` : ''}${durum}</small></span>
       <span class="sayi"><b>${m && m.durum !== 'oynanmadi' && v ? sayi(v.vp) : '–'}</b></span></li>`;
   };
   return `<div class="kart"><div class="baslik-satir"><h3>${hf(n)}. hafta maçları</h3><a href="#/maclar/${n}">Fikstür ›</a></div>
@@ -1605,7 +1608,7 @@ function gorunumSerbest() {
   const gosterilen = liste.slice(0, 300);
   const listeHtml = telefon()
     ? `<div class="fa-liste">${gosterilen.map(o => `<div class="fa-kart">
-        <div class="ad">${adLinki(o)} ${mevkiRozeti(mevki(o.id))}${trRozeti(o)}<small>${esc(baslik(o.takim))} · ${o.mac} maç</small></div>
+        <div class="ad">${adLinki(o)} ${mevkiRozeti(mevki(o.id))}${trRozeti(o)}<small>${takimLinki(o.takim)} · ${o.mac} maç</small></div>
         <div class="fa-vp"><b>${haftaSutunu ? (sonHafta.oyuncular[o.id] ? sayi(sonHafta.oyuncular[o.id].vp) : '–') : sirala === 'sayi' ? sayi(o.sayiOrt) : sayi(o.vpOrt)}</b><small>${SIRALAR[sirala][0]}</small></div>
         <div class="fa-al">${alHucresi(o)}</div></div>`).join('') || '<p class="bos">Oyuncu bulunamadı</p>'}</div>`
     : `<div class="tablo-kap"><table>
@@ -1622,7 +1625,7 @@ function gorunumSerbest() {
     <div class="fa-liste">${talepte.map(({ pid, td }) => {
       const o = S.rehber.get(pid);
       return `<div class="fa-kart">
-        <div class="ad">${adLinki(o)} ${mevkiRozeti(mevki(pid))}${trRozeti(o)}<small>${esc(talepKaynagi(pid))} · ${esc(baslik(o.takim ?? ''))}</small></div>
+        <div class="ad">${adLinki(o)} ${mevkiRozeti(mevki(pid))}${trRozeti(o)}<small>${esc(talepKaynagi(pid))} · ${takimLinki(o.takim)}</small></div>
         <div class="fa-vp"><b>${sayi(o.vpOrt)}</b><small>VP ort.</small></div>
         <div class="fa-al">${talepHucresi(pid, td, hak > 0)}</div></div>`;
     }).join('')}</div></div>` : '';
@@ -2138,9 +2141,9 @@ function gorunumMac(id) {
   const bilgi = [gunSaat(m.tarih), m.salon, m.yayin].filter(Boolean).map(esc).join(' · ');
   const ust = `<p style="margin:0 0 10px"><a href="#/maclar/${n}">‹ ${n}. hafta maçları</a></p>
     <div class="kart mac-baslik"><div class="mac-takimlar">
-      <strong class="${kazananSinifi(m, 'ev')}">${esc(baslik(m.ev))}</strong>
+      <strong class="${kazananSinifi(m, 'ev')}">${takimLinki(m.ev)}</strong>
       <div class="mac-skor"><strong>${m.durum === 'oynanmadi' ? '–' : `${m.evSkor ?? 0} - ${m.depSkor ?? 0}`}</strong><small>${durum}</small></div>
-      <strong class="${kazananSinifi(m, 'dep')}">${esc(baslik(m.dep))}</strong></div>
+      <strong class="${kazananSinifi(m, 'dep')}">${takimLinki(m.dep)}</strong></div>
       <p class="soluk kucuk" style="margin:8px 0 0;text-align:center">${LIG.kisa} ${n}. hafta · ${bilgi}</p></div>`;
   const fantezi = bulunan && m.evId ? `<div class="kart"><h3>Bu maçtaki fantezi oyuncuları</h3>${macDetayi(m, n)}</div>` : '';
   if (!kutu) {
@@ -2155,6 +2158,7 @@ function gorunumMac(id) {
     ileriDosya: kutu.ev.ileri ? null : ileriIstatistigi(kutu.id),
     fark: !kutu.fark && ME.farkVarMi(LIG.kod, kutu.hafta ?? n) ? farkVerisi(id) : null,
     oyuncuAdi: o => oyuncuLinki(o.id, o.ad),
+    takimBasligi: t => takimLinki(t.ad),
     benimMi: pid => !!benim && sahip.get(pid) === benim,
     aciklamaEki: benim ? ' · Senin oyuncuların vurgulu' : '',
   })}`;
@@ -2176,7 +2180,7 @@ function macDetayi(m, n) {
   };
   const blok = (ad, id) => {
     const liste = taraf(id);
-    return `<div><b class="kucuk">${esc(baslik(ad))}</b>${liste.length ? `<ul class="oyuncu-liste">${liste.map(satir).join('')}</ul>`
+    return `<div><b class="kucuk">${takimLinki(ad)}</b>${liste.length ? `<ul class="oyuncu-liste">${liste.map(satir).join('')}</ul>`
       : '<p class="soluk kucuk" style="margin:4px 0">Fantezi takımlarında oyuncusu yok.</p>'}</div>`;
   };
   return `<div class="iki-kolon">${blok(m.ev, m.evId)}${blok(m.dep, m.depId)}</div>`;

@@ -7,15 +7,15 @@
    "durum": "canli",
    "ev": "ALİAĞA PETKİM SPOR",
    "evId": 266048,
-   "evSkor": "55",
+   "evSkor": "57",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
-   "depSkor": "53",
+   "depSkor": "57",
    "salon": "Enka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "03:09",
+    "saat": "02:09",
     "uzatma": false
    }
   },
@@ -116,8 +116,8 @@
    "ad": "Khyri Thomas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 12,
-   "saniye": 1207,
+   "vp": 14,
+   "saniye": 1267,
    "mac": 1
   },
   "778249": {
@@ -133,7 +133,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 19,
-   "saniye": 1371,
+   "saniye": 1431,
    "mac": 1
   },
   "675128": {
@@ -157,15 +157,15 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 3,
-   "saniye": 716,
+   "saniye": 776,
    "mac": 1
   },
   "778246": {
    "ad": "Max Abmas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 2,
-   "saniye": 702,
+   "vp": 1,
+   "saniye": 762,
    "mac": 1
   },
   "269217": {
@@ -189,7 +189,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": -2,
-   "saniye": 305,
+   "saniye": 365,
    "mac": 1
   },
   "475706": {
@@ -212,16 +212,16 @@
    "ad": "Jerrick Harding",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": -1,
-   "saniye": 756,
+   "vp": 0,
+   "saniye": 816,
    "mac": 1
   },
   "418533": {
    "ad": "Uros Trifunovic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 5,
-   "saniye": 1010,
+   "vp": 7,
+   "saniye": 1070,
    "mac": 1
   },
   "129216": {
@@ -276,8 +276,8 @@
    "ad": "Kris Bankston",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 23,
-   "saniye": 921,
+   "vp": 24,
+   "saniye": 981,
    "mac": 1
   },
   "272903": {
@@ -293,7 +293,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": -4,
-   "saniye": 913,
+   "saniye": 973,
    "mac": 1
   }
  }

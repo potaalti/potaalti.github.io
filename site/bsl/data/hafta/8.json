@@ -28,7 +28,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "03:52",
+    "saat": "03:09",
     "uzatma": false
    }
   },
@@ -341,7 +341,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 10,
-   "saniye": 1168,
+   "saniye": 1198,
    "mac": 1
   },
   "452216": {
@@ -357,23 +357,23 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 8,
-   "saniye": 1117,
+   "saniye": 1161,
    "mac": 1
   },
   "508900": {
    "ad": "Jamuni Mcneace",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 13,
-   "saniye": 1109,
+   "vp": 14,
+   "saniye": 1153,
    "mac": 1
   },
   "732657": {
    "ad": "Mantas Rubstavicius",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 11,
-   "saniye": 995,
+   "vp": 10,
+   "saniye": 1039,
    "mac": 1
   },
   "434482": {
@@ -388,8 +388,8 @@
    "ad": "Shavar Reynolds Jr.",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": -3,
-   "saniye": 1282,
+   "vp": -4,
+   "saniye": 1326,
    "mac": 1
   },
   "197570": {
@@ -397,23 +397,23 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 3,
-   "saniye": 856,
+   "saniye": 870,
    "mac": 1
   },
   "779255": {
    "ad": "Marcus Keene",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 8,
-   "saniye": 1899,
+   "vp": 7,
+   "saniye": 1943,
    "mac": 1
   },
   "735812": {
    "ad": "Brandon Boston Jr.",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 13,
-   "saniye": 1930,
+   "vp": 14,
+   "saniye": 1974,
    "mac": 1
   },
   "133530": {
@@ -428,8 +428,8 @@
    "ad": "Akwasi Yeboah",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 11,
-   "saniye": 1537,
+   "vp": 10,
+   "saniye": 1581,
    "mac": 1
   },
   "473256": {
@@ -437,7 +437,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 7,
-   "saniye": 1204,
+   "saniye": 1248,
    "mac": 1
   },
   "105532": {
@@ -445,7 +445,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 6,
-   "saniye": 1398,
+   "saniye": 1442,
    "mac": 1
   },
   "368413": {

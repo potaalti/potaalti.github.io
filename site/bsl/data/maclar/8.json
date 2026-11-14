@@ -17,15 +17,20 @@
   {
    "id": 346333,
    "tarih": "2026-11-14T15:30:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "TOFAŞ",
    "evId": 265995,
-   "evSkor": null,
+   "evSkor": "0",
    "dep": "TRABZONSPOR",
    "depId": 266029,
-   "depSkor": null,
+   "depSkor": "0",
    "salon": "Tofaş Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "09:59",
+    "uzatma": false
+   }
   },
   {
    "id": 346331,

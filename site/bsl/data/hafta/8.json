@@ -20,15 +20,15 @@
    "durum": "canli",
    "ev": "TOFAŞ",
    "evId": 265995,
-   "evSkor": "36",
+   "evSkor": "37",
    "dep": "TRABZONSPOR",
    "depId": 266029,
-   "depSkor": "40",
+   "depSkor": "42",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "08:48",
+    "saat": "07:57",
     "uzatma": false
    }
   },
@@ -309,7 +309,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 2,
-   "saniye": 833,
+   "saniye": 864,
    "mac": 1
   },
   "736069": {
@@ -332,8 +332,8 @@
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 3,
-   "saniye": 966,
+   "vp": 4,
+   "saniye": 1011,
    "mac": 1
   },
   "778398": {
@@ -341,7 +341,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 6,
-   "saniye": 779,
+   "saniye": 824,
    "mac": 1
   },
   "452216": {
@@ -357,7 +357,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 5,
-   "saniye": 694,
+   "saniye": 739,
    "mac": 1
   },
   "508900": {
@@ -365,7 +365,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 251,
+   "saniye": 265,
    "mac": 1
   },
   "732657": {
@@ -388,8 +388,8 @@
    "ad": "Shavar Reynolds Jr.",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": -4,
-   "saniye": 710,
+   "vp": -5,
+   "saniye": 755,
    "mac": 1
   },
   "197570": {
@@ -404,16 +404,16 @@
    "ad": "Marcus Keene",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 6,
-   "saniye": 1146,
+   "vp": 7,
+   "saniye": 1191,
    "mac": 1
   },
   "735812": {
    "ad": "Brandon Boston Jr.",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 7,
-   "saniye": 1142,
+   "vp": 9,
+   "saniye": 1187,
    "mac": 1
   },
   "133530": {
@@ -421,23 +421,23 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 6,
-   "saniye": 586,
+   "saniye": 631,
    "mac": 1
   },
   "512899": {
    "ad": "Akwasi Yeboah",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 8,
-   "saniye": 795,
+   "vp": 7,
+   "saniye": 840,
    "mac": 1
   },
   "473256": {
    "ad": "Emanuel Terry",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 4,
-   "saniye": 613,
+   "vp": 5,
+   "saniye": 658,
    "mac": 1
   },
   "105532": {

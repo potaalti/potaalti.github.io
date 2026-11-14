@@ -23,12 +23,12 @@
    "evSkor": "36",
    "dep": "TRABZONSPOR",
    "depId": 266029,
-   "depSkor": "39",
+   "depSkor": "40",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "09:25",
+    "saat": "08:48",
     "uzatma": false
    }
   },
@@ -309,7 +309,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 2,
-   "saniye": 791,
+   "saniye": 833,
    "mac": 1
   },
   "736069": {
@@ -333,7 +333,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 3,
-   "saniye": 924,
+   "saniye": 966,
    "mac": 1
   },
   "778398": {
@@ -341,7 +341,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 6,
-   "saniye": 737,
+   "saniye": 779,
    "mac": 1
   },
   "452216": {
@@ -356,8 +356,8 @@
    "ad": "Sadık Kabaca",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 4,
-   "saniye": 652,
+   "vp": 5,
+   "saniye": 694,
    "mac": 1
   },
   "508900": {
@@ -388,8 +388,8 @@
    "ad": "Shavar Reynolds Jr.",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": -3,
-   "saniye": 668,
+   "vp": -4,
+   "saniye": 710,
    "mac": 1
   },
   "197570": {
@@ -405,7 +405,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 6,
-   "saniye": 1104,
+   "saniye": 1146,
    "mac": 1
   },
   "735812": {
@@ -413,23 +413,23 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 7,
-   "saniye": 1100,
+   "saniye": 1142,
    "mac": 1
   },
   "133530": {
    "ad": "Tolga Geçim",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 5,
-   "saniye": 544,
+   "vp": 6,
+   "saniye": 586,
    "mac": 1
   },
   "512899": {
    "ad": "Akwasi Yeboah",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 7,
-   "saniye": 753,
+   "vp": 8,
+   "saniye": 795,
    "mac": 1
   },
   "473256": {
@@ -437,7 +437,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 4,
-   "saniye": 571,
+   "saniye": 613,
    "mac": 1
   },
   "105532": {

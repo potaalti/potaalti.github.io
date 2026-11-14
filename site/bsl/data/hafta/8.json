@@ -20,15 +20,15 @@
    "durum": "canli",
    "ev": "TOFAŞ",
    "evId": 265995,
-   "evSkor": "8",
+   "evSkor": "11",
    "dep": "TRABZONSPOR",
    "depId": 266029,
-   "depSkor": "11",
+   "depSkor": "14",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "04:46",
+    "saat": "03:48",
     "uzatma": false
    }
   },
@@ -324,8 +324,8 @@
    "ad": "Efe Postel",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 4,
-   "saniye": 328,
+   "vp": 7,
+   "saniye": 390,
    "mac": 1
   },
   "778401": {
@@ -340,8 +340,8 @@
    "ad": "Gabe Brown",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 5,
-   "saniye": 328,
+   "vp": 6,
+   "saniye": 390,
    "mac": 1
   },
   "452216": {
@@ -357,7 +357,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 14,
+   "saniye": 76,
    "mac": 1
   },
   "508900": {
@@ -365,7 +365,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 14,
+   "saniye": 76,
    "mac": 1
   },
   "732657": {
@@ -388,8 +388,8 @@
    "ad": "Shavar Reynolds Jr.",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 0,
-   "saniye": 14,
+   "vp": -1,
+   "saniye": 76,
    "mac": 1
   },
   "197570": {
@@ -405,7 +405,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 1,
-   "saniye": 328,
+   "saniye": 390,
    "mac": 1
   },
   "735812": {
@@ -413,7 +413,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 2,
-   "saniye": 328,
+   "saniye": 390,
    "mac": 1
   },
   "133530": {
@@ -428,16 +428,16 @@
    "ad": "Akwasi Yeboah",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 7,
-   "saniye": 328,
+   "vp": 8,
+   "saniye": 390,
    "mac": 1
   },
   "473256": {
    "ad": "Emanuel Terry",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 3,
-   "saniye": 328,
+   "vp": 5,
+   "saniye": 390,
    "mac": 1
   },
   "105532": {
@@ -445,7 +445,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 0,
-   "saniye": 14,
+   "saniye": 76,
    "mac": 1
   },
   "368413": {

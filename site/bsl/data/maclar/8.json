@@ -20,15 +20,15 @@
    "durum": "canli",
    "ev": "TOFAŞ",
    "evId": 265995,
-   "evSkor": "8",
+   "evSkor": "11",
    "dep": "TRABZONSPOR",
    "depId": 266029,
-   "depSkor": "11",
+   "depSkor": "14",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "04:46",
+    "saat": "03:48",
     "uzatma": false
    }
   },

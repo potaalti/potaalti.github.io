@@ -46,7 +46,7 @@
    "durum": "canli",
    "ev": "PİZZABULLS BORDO BANDIRMA",
    "evId": 265993,
-   "evSkor": "26",
+   "evSkor": "27",
    "dep": "KARŞIYAKA",
    "depId": 266027,
    "depSkor": "27",
@@ -54,7 +54,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "10:00",
+    "saat": "09:39",
     "uzatma": false
    }
   },
@@ -701,7 +701,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 428,
+   "saniye": 449,
    "mac": 1
   },
   "512379": {
@@ -725,7 +725,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 10,
-   "saniye": 453,
+   "saniye": 474,
    "mac": 1
   },
   "441857": {
@@ -733,7 +733,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 4,
-   "saniye": 284,
+   "saniye": 305,
    "mac": 1
   },
   "106461": {
@@ -765,7 +765,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 2,
-   "saniye": 165,
+   "saniye": 186,
    "mac": 1
   },
   "307500": {
@@ -780,8 +780,8 @@
    "ad": "Zach Hankins",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 7,
-   "saniye": 198,
+   "vp": 8,
+   "saniye": 219,
    "mac": 1
   },
   "573226": {
@@ -828,8 +828,8 @@
    "ad": "Muhaymin Mustafa",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 0,
-   "saniye": 40,
+   "vp": -1,
+   "saniye": 61,
    "mac": 1
   },
   "410874": {
@@ -837,7 +837,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 5,
-   "saniye": 220,
+   "saniye": 241,
    "mac": 1
   },
   "218536": {
@@ -845,7 +845,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 0,
-   "saniye": 18,
+   "saniye": 39,
    "mac": 1
   },
   "400519": {
@@ -869,7 +869,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 0,
-   "saniye": 165,
+   "saniye": 186,
    "mac": 1
   },
   "786430": {
@@ -877,7 +877,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 0,
-   "saniye": 238,
+   "saniye": 259,
    "mac": 1
   }
  }

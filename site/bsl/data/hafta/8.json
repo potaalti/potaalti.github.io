@@ -20,15 +20,15 @@
    "durum": "canli",
    "ev": "TOFAŞ",
    "evId": 265995,
-   "evSkor": "58",
+   "evSkor": "61",
    "dep": "TRABZONSPOR",
    "depId": 266029,
-   "depSkor": "51",
+   "depSkor": "54",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "08:32",
+    "saat": "07:21",
     "uzatma": false
    }
   },
@@ -317,7 +317,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 7,
-   "saniye": 999,
+   "saniye": 1070,
    "mac": 1
   },
   "389934": {
@@ -333,7 +333,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 9,
-   "saniye": 1448,
+   "saniye": 1519,
    "mac": 1
   },
   "778398": {
@@ -365,7 +365,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 9,
-   "saniye": 830,
+   "saniye": 901,
    "mac": 1
   },
   "732657": {
@@ -388,24 +388,24 @@
    "ad": "Shavar Reynolds Jr.",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": -3,
-   "saniye": 1003,
+   "vp": -2,
+   "saniye": 1074,
    "mac": 1
   },
   "197570": {
    "ad": "Leon Apaydın",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 1,
-   "saniye": 577,
+   "vp": 4,
+   "saniye": 648,
    "mac": 1
   },
   "779255": {
    "ad": "Marcus Keene",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 5,
-   "saniye": 1620,
+   "vp": 8,
+   "saniye": 1691,
    "mac": 1
   },
   "735812": {
@@ -413,7 +413,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 14,
-   "saniye": 1659,
+   "saniye": 1722,
    "mac": 1
   },
   "133530": {
@@ -429,15 +429,15 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 9,
-   "saniye": 1258,
+   "saniye": 1329,
    "mac": 1
   },
   "473256": {
    "ad": "Emanuel Terry",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 5,
-   "saniye": 925,
+   "vp": 6,
+   "saniye": 996,
    "mac": 1
   },
   "105532": {
@@ -445,7 +445,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 6,
-   "saniye": 1119,
+   "saniye": 1190,
    "mac": 1
   },
   "368413": {
@@ -468,8 +468,8 @@
    "ad": "Royce Hamm Jr.",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": -1,
-   "saniye": 693,
+   "vp": -2,
+   "saniye": 701,
    "mac": 1
   },
   "129295": {

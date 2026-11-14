@@ -46,15 +46,15 @@
    "durum": "canli",
    "ev": "PİZZABULLS BORDO BANDIRMA",
    "evId": 265993,
-   "evSkor": "11",
+   "evSkor": "13",
    "dep": "KARŞIYAKA",
    "depId": 266027,
-   "depSkor": "16",
+   "depSkor": "18",
    "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "04:44",
+    "saat": "03:58",
     "uzatma": false
    }
   },
@@ -693,7 +693,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 318,
+   "saniye": 316,
    "mac": 1
   },
   "130898": {
@@ -701,7 +701,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 318,
+   "saniye": 362,
    "mac": 1
   },
   "512379": {
@@ -709,7 +709,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 5,
-   "saniye": 318,
+   "saniye": 362,
    "mac": 1
   },
   "473261": {
@@ -717,15 +717,15 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": -1,
-   "saniye": 318,
+   "saniye": 362,
    "mac": 1
   },
   "501076": {
    "ad": "Quentin Peterson",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 7,
-   "saniye": 318,
+   "vp": 9,
+   "saniye": 362,
    "mac": 1
   },
   "441857": {
@@ -733,7 +733,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 46,
    "mac": 1
   },
   "106461": {
@@ -788,8 +788,8 @@
    "ad": "Briante Weber",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 5,
-   "saniye": 318,
+   "vp": 6,
+   "saniye": 362,
    "mac": 1
   },
   "779071": {
@@ -797,7 +797,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 10,
-   "saniye": 318,
+   "saniye": 362,
    "mac": 1
   },
   "500079": {
@@ -805,7 +805,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 1,
-   "saniye": 318,
+   "saniye": 362,
    "mac": 1
   },
   "254789": {
@@ -813,15 +813,15 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 2,
-   "saniye": 318,
+   "saniye": 362,
    "mac": 1
   },
   "609083": {
    "ad": "Steven Enoch",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 2,
-   "saniye": 318,
+   "vp": 4,
+   "saniye": 362,
    "mac": 1
   },
   "228502": {

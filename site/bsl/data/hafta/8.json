@@ -28,7 +28,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "03:44",
+    "saat": "02:45",
     "uzatma": false
    }
   },
@@ -308,16 +308,16 @@
    "ad": "Terrell Carter Ii",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 3,
-   "saniye": 725,
+   "vp": 2,
+   "saniye": 755,
    "mac": 1
   },
   "736069": {
    "ad": "Tre'shawn Thurman",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 3,
-   "saniye": 554,
+   "vp": 2,
+   "saniye": 616,
    "mac": 1
   },
   "389934": {
@@ -333,15 +333,15 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -2,
-   "saniye": 694,
+   "saniye": 726,
    "mac": 1
   },
   "778398": {
    "ad": "Gabe Brown",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 4,
-   "saniye": 477,
+   "vp": 5,
+   "saniye": 539,
    "mac": 1
   },
   "452216": {
@@ -356,8 +356,8 @@
    "ad": "Sadık Kabaca",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 1,
-   "saniye": 422,
+   "vp": 2,
+   "saniye": 454,
    "mac": 1
   },
   "508900": {
@@ -389,7 +389,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -2,
-   "saniye": 408,
+   "saniye": 470,
    "mac": 1
   },
   "197570": {
@@ -397,7 +397,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 326,
+   "saniye": 356,
    "mac": 1
   },
   "779255": {
@@ -405,7 +405,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 6,
-   "saniye": 885,
+   "saniye": 947,
    "mac": 1
   },
   "735812": {
@@ -413,7 +413,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 7,
-   "saniye": 840,
+   "saniye": 902,
    "mac": 1
   },
   "133530": {
@@ -421,15 +421,15 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 4,
-   "saniye": 314,
+   "saniye": 346,
    "mac": 1
   },
   "512899": {
    "ad": "Akwasi Yeboah",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 9,
-   "saniye": 512,
+   "vp": 8,
+   "saniye": 574,
    "mac": 1
   },
   "473256": {
@@ -437,7 +437,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 5,
-   "saniye": 390,
+   "saniye": 422,
    "mac": 1
   },
   "105532": {
@@ -445,7 +445,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 4,
-   "saniye": 662,
+   "saniye": 692,
    "mac": 1
   },
   "368413": {
@@ -477,7 +477,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 4,
-   "saniye": 240,
+   "saniye": 270,
    "mac": 1
   },
   "590409": {

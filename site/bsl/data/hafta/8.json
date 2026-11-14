@@ -41,7 +41,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "03:29",
+    "saat": "02:53",
     "uzatma": false
    }
   },
@@ -501,7 +501,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 22,
-   "saniye": 1925,
+   "saniye": 1960,
    "mac": 1
   },
   "778161": {
@@ -509,7 +509,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 20,
-   "saniye": 1779,
+   "saniye": 1814,
    "mac": 1
   },
   "419874": {
@@ -517,7 +517,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 0,
-   "saniye": 1530,
+   "saniye": 1565,
    "mac": 1
   },
   "609266": {
@@ -532,8 +532,8 @@
    "ad": "Alex Reese",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 16,
-   "saniye": 1764,
+   "vp": 17,
+   "saniye": 1799,
    "mac": 1
   },
   "254785": {
@@ -588,16 +588,16 @@
    "ad": "Filip Barna",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": -1,
-   "saniye": 863,
+   "vp": -2,
+   "saniye": 898,
    "mac": 1
   },
   "736340": {
    "ad": "Jerome Robinson Jr.",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 10,
-   "saniye": 1154,
+   "vp": 9,
+   "saniye": 1189,
    "mac": 1
   },
   "250129": {
@@ -605,23 +605,23 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 6,
-   "saniye": 1489,
+   "saniye": 1524,
    "mac": 1
   },
   "502492": {
    "ad": "Aleksej Nikolic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 16,
-   "saniye": 1693,
+   "vp": 17,
+   "saniye": 1728,
    "mac": 1
   },
   "779275": {
    "ad": "Chimezie Metu",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 17,
-   "saniye": 1648,
+   "vp": 16,
+   "saniye": 1683,
    "mac": 1
   },
   "779274": {
@@ -652,8 +652,8 @@
    "ad": "Alen Smailagic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 7,
-   "saniye": 1040,
+   "vp": 8,
+   "saniye": 1075,
    "mac": 1
   },
   "609092": {

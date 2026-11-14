@@ -54,7 +54,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "00:08",
+    "saat": "00:00",
     "uzatma": false
    }
   },
@@ -692,8 +692,8 @@
    "ad": "Ty Gordon",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 4,
-   "saniye": 836,
+   "vp": 3,
+   "saniye": 844,
    "mac": 1
   },
   "130898": {
@@ -717,7 +717,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 7,
-   "saniye": 1064,
+   "saniye": 1073,
    "mac": 1
   },
   "501076": {
@@ -725,7 +725,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 12,
-   "saniye": 848,
+   "saniye": 856,
    "mac": 1
   },
   "441857": {
@@ -741,7 +741,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 1,
-   "saniye": 364,
+   "saniye": 372,
    "mac": 1
   },
   "109611": {
@@ -765,7 +765,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 3,
-   "saniye": 357,
+   "saniye": 366,
    "mac": 1
   },
   "307500": {
@@ -789,7 +789,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 7,
-   "saniye": 900,
+   "saniye": 908,
    "mac": 1
   },
   "779071": {
@@ -805,7 +805,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 11,
-   "saniye": 1069,
+   "saniye": 1077,
    "mac": 1
   },
   "254789": {
@@ -829,7 +829,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 2,
-   "saniye": 271,
+   "saniye": 280,
    "mac": 1
   },
   "410874": {
@@ -844,8 +844,8 @@
    "ad": "Hakan Sayılı",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 0,
-   "saniye": 574,
+   "vp": 1,
+   "saniye": 583,
    "mac": 1
   },
   "400519": {
@@ -869,7 +869,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": -1,
-   "saniye": 237,
+   "saniye": 245,
    "mac": 1
   },
   "786430": {

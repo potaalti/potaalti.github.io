@@ -148,8 +148,8 @@
   "foto": "https://tbf.org.tr/res/517b3e73-3d23-44f8-ae2e-ff67d1c93b96_1.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 7.0,
-  "astOrt": 2.7
+  "ribOrt": 6.0,
+  "astOrt": 2.3
  },
  {
   "id": "609083",
@@ -680,8 +680,8 @@
   "foto": "https://tbf.org.tr/res/cd2600fd-0882-4293-909a-2c42a50739ff_galatasaray_0014_10.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 5.7,
-  "astOrt": 1.7
+  "ribOrt": 5.0,
+  "astOrt": 1.5
  },
  {
   "id": "500079",
@@ -851,8 +851,8 @@
   "foto": "https://tbf.org.tr/res/ddca2f66-04a7-4575-9348-7baaed59ad4d_galatasaray_0004_2.webp",
   "boy": 190,
   "mevkiTahmini": "arka",
-  "ribOrt": 2.9,
-  "astOrt": 3.3
+  "ribOrt": 2.5,
+  "astOrt": 2.9
  },
  {
   "id": "196413",
@@ -1060,8 +1060,8 @@
   "foto": "https://tbf.org.tr/res/fd0a3198-3ddc-4e99-830e-565f367bcdf3_galatasaray_0013_11.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 5.9,
-  "astOrt": 0.3
+  "ribOrt": 5.1,
+  "astOrt": 0.2
  },
  {
   "id": "777704",
@@ -1136,8 +1136,8 @@
   "foto": "https://tbf.org.tr/res/28f4fe45-69b5-4ae1-9e82-3bfff59bee03_65.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 3.1,
-  "astOrt": 0.7
+  "ribOrt": 2.8,
+  "astOrt": 0.6
  },
  {
   "id": "778249",
@@ -1630,8 +1630,8 @@
   "foto": "https://tbf.org.tr/res/e42e87ca-e32d-4cb2-8b4b-018fbf988fdd_0.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 1.9,
-  "astOrt": 4.7
+  "ribOrt": 1.6,
+  "astOrt": 4.1
  },
  {
   "id": "157002",
@@ -2218,8 +2218,8 @@
   "foto": "https://tbf.org.tr/res/20042f27-d037-4ccc-9a4a-ba2def05a0c2_11.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 1.4,
-  "astOrt": 2.0
+  "ribOrt": 1.2,
+  "astOrt": 1.8
  },
  {
   "id": "283725",
@@ -2312,8 +2312,8 @@
   "foto": "https://tbf.org.tr/res/cd317d41-30ad-4790-b98b-355f5581c911_galatasaray_0005_1.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 2.0,
-  "astOrt": 2.0
+  "ribOrt": 1.7,
+  "astOrt": 1.7
  },
  {
   "id": "753775",
@@ -2710,8 +2710,8 @@
   "foto": "https://tbf.org.tr/res/db600b49-e8aa-41b1-87d9-198c8eb6fce6_galatasaray_0001_5.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 1.0,
-  "astOrt": 1.6
+  "ribOrt": 0.9,
+  "astOrt": 1.4
  },
  {
   "id": "27541",
@@ -3164,8 +3164,8 @@
   "foto": "https://tbf.org.tr/res/6eaff3ef-52d7-4169-a194-217792595e52_10.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 1.4,
-  "astOrt": 0.7
+  "ribOrt": 1.2,
+  "astOrt": 0.6
  },
  {
   "id": "358272",

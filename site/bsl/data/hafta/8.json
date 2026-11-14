@@ -30,15 +30,20 @@
   {
    "id": 346331,
    "tarih": "2026-11-14T18:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "BİOTEKNO KÖRFEZ BASKET",
    "evId": 268222,
-   "evSkor": null,
+   "evSkor": "0",
    "dep": "GALATASARAY MCT TECHNIC",
    "depId": 266026,
-   "depSkor": null,
+   "depSkor": "0",
    "salon": "Şehit Polis Recep Topaloğlu Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "09:43",
+    "uzatma": false
+   }
   },
   {
    "id": 346336,
@@ -489,6 +494,198 @@
    "takimId": 266029,
    "vp": 2,
    "saniye": 422,
+   "mac": 1
+  },
+  "778181": {
+   "ad": "Boo Buie",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 0,
+   "saniye": 17,
+   "mac": 1
+  },
+  "778161": {
+   "ad": "Johnny Davis",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 0,
+   "saniye": 17,
+   "mac": 1
+  },
+  "419874": {
+   "ad": "Berk Can Akın",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 0,
+   "saniye": 17,
+   "mac": 1
+  },
+  "609266": {
+   "ad": "Matt Mitchell",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 0,
+   "saniye": 17,
+   "mac": 1
+  },
+  "778182": {
+   "ad": "Alex Reese",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 0,
+   "saniye": 17,
+   "mac": 1
+  },
+  "254785": {
+   "ad": "Mert Akay",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "217226": {
+   "ad": "Atahan Demirtaş",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "358964": {
+   "ad": "Efe Sarıca",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "397073": {
+   "ad": "Altan Çamoğlu",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "778184": {
+   "ad": "Oscar Cluff",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "778183": {
+   "ad": "Paulius Danusevicius",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "470601": {
+   "ad": "Filip Barna",
+   "takim": "BİOTEKNO KÖRFEZ BASKET",
+   "takimId": 268222,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "736340": {
+   "ad": "Jerome Robinson Jr.",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 17,
+   "mac": 1
+  },
+  "250129": {
+   "ad": "Şehmus Hazer",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 17,
+   "mac": 1
+  },
+  "502492": {
+   "ad": "Aleksej Nikolic",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 17,
+   "mac": 1
+  },
+  "779275": {
+   "ad": "Chimezie Metu",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": -1,
+   "saniye": 17,
+   "mac": 1
+  },
+  "779274": {
+   "ad": "Oumar Ballo",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 17,
+   "mac": 1
+  },
+  "128768": {
+   "ad": "Berkan Durmaz",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "221447": {
+   "ad": "Can Korkmaz",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "779278": {
+   "ad": "Alen Smailagic",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "609092": {
+   "ad": "Vrenz Bleijenbergh",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "363559": {
+   "ad": "Efe Şekeroğlu",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "54128": {
+   "ad": "Buğrahan Tuncer",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "781548": {
+   "ad": "Kj Simpson",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
    "mac": 1
   }
  }

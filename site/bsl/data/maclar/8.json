@@ -30,15 +30,20 @@
   {
    "id": 346331,
    "tarih": "2026-11-14T18:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "BİOTEKNO KÖRFEZ BASKET",
    "evId": 268222,
-   "evSkor": null,
+   "evSkor": "0",
    "dep": "GALATASARAY MCT TECHNIC",
    "depId": 266026,
-   "depSkor": null,
+   "depSkor": "0",
    "salon": "Şehit Polis Recep Topaloğlu Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "09:43",
+    "uzatma": false
+   }
   },
   {
    "id": 346336,

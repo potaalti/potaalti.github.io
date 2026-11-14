@@ -33,7 +33,7 @@
    "durum": "canli",
    "ev": "BİOTEKNO KÖRFEZ BASKET",
    "evId": 268222,
-   "evSkor": "14",
+   "evSkor": "16",
    "dep": "GALATASARAY MCT TECHNIC",
    "depId": 266026,
    "depSkor": "3",
@@ -41,7 +41,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "05:21",
+    "saat": "04:28",
     "uzatma": false
    }
   },
@@ -500,16 +500,16 @@
    "ad": "Boo Buie",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 9,
-   "saniye": 278,
+   "vp": 8,
+   "saniye": 331,
    "mac": 1
   },
   "778161": {
    "ad": "Johnny Davis",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 2,
-   "saniye": 278,
+   "vp": 5,
+   "saniye": 331,
    "mac": 1
   },
   "419874": {
@@ -517,7 +517,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 0,
-   "saniye": 278,
+   "saniye": 331,
    "mac": 1
   },
   "609266": {
@@ -525,15 +525,15 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 4,
-   "saniye": 278,
+   "saniye": 331,
    "mac": 1
   },
   "778182": {
    "ad": "Alex Reese",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 3,
-   "saniye": 278,
+   "vp": 4,
+   "saniye": 331,
    "mac": 1
   },
   "254785": {
@@ -597,7 +597,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": -2,
-   "saniye": 278,
+   "saniye": 331,
    "mac": 1
   },
   "250129": {
@@ -605,23 +605,23 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": -1,
-   "saniye": 278,
+   "saniye": 331,
    "mac": 1
   },
   "502492": {
    "ad": "Aleksej Nikolic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": -1,
-   "saniye": 278,
+   "vp": -2,
+   "saniye": 331,
    "mac": 1
   },
   "779275": {
    "ad": "Chimezie Metu",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 0,
-   "saniye": 278,
+   "vp": -1,
+   "saniye": 331,
    "mac": 1
   },
   "779274": {
@@ -652,8 +652,8 @@
    "ad": "Alen Smailagic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 0,
-   "saniye": 30,
+   "vp": 1,
+   "saniye": 83,
    "mac": 1
   },
   "609092": {

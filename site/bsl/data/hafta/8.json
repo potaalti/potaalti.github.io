@@ -10,12 +10,12 @@
    "evSkor": "37",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
-   "depSkor": "28",
+   "depSkor": "30",
    "salon": "Enka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "03:48",
+    "saat": "03:20",
     "uzatma": false
    }
   },
@@ -117,7 +117,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 5,
-   "saniye": 714,
+   "saniye": 742,
    "mac": 1
   },
   "778249": {
@@ -133,7 +133,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 18,
-   "saniye": 733,
+   "saniye": 761,
    "mac": 1
   },
   "675128": {
@@ -141,7 +141,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 7,
-   "saniye": 493,
+   "saniye": 521,
    "mac": 1
   },
   "572386": {
@@ -149,7 +149,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 6,
-   "saniye": 758,
+   "saniye": 786,
    "mac": 1
   },
   "778279": {
@@ -181,7 +181,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 5,
-   "saniye": 175,
+   "saniye": 203,
    "mac": 1
   },
   "470691": {
@@ -229,7 +229,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 14,
-   "saniye": 748,
+   "saniye": 776,
    "mac": 1
   },
   "778727": {
@@ -245,7 +245,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 4,
-   "saniye": 443,
+   "saniye": 471,
    "mac": 1
   },
   "408785": {
@@ -269,15 +269,15 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": -1,
-   "saniye": 373,
+   "saniye": 401,
    "mac": 1
   },
   "668012": {
    "ad": "Kris Bankston",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 9,
-   "saniye": 540,
+   "vp": 12,
+   "saniye": 568,
    "mac": 1
   },
   "272903": {

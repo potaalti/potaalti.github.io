@@ -49,12 +49,12 @@
    "evSkor": "81",
    "dep": "KARŞIYAKA",
    "depId": 266027,
-   "depSkor": "73",
+   "depSkor": "75",
    "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "01:17",
+    "saat": "01:02",
     "uzatma": false
    }
   },
@@ -701,7 +701,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 2,
-   "saniye": 1409,
+   "saniye": 1415,
    "mac": 1
   },
   "512379": {
@@ -717,7 +717,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 17,
-   "saniye": 2205,
+   "saniye": 2211,
    "mac": 1
   },
   "501076": {
@@ -725,7 +725,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 15,
-   "saniye": 1587,
+   "saniye": 1593,
    "mac": 1
   },
   "441857": {
@@ -733,7 +733,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 7,
-   "saniye": 804,
+   "saniye": 810,
    "mac": 1
   },
   "106461": {
@@ -781,7 +781,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 14,
-   "saniye": 1285,
+   "saniye": 1291,
    "mac": 1
   },
   "573226": {
@@ -796,24 +796,24 @@
    "ad": "Ishmael El-Amin",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 20,
-   "saniye": 2087,
+   "vp": 19,
+   "saniye": 2093,
    "mac": 1
   },
   "500079": {
    "ad": "Rashard Kelly",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 17,
-   "saniye": 2209,
+   "vp": 16,
+   "saniye": 2215,
    "mac": 1
   },
   "254789": {
    "ad": "Yavuz Gültekin",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 11,
-   "saniye": 1739,
+   "vp": 14,
+   "saniye": 1745,
    "mac": 1
   },
   "609083": {
@@ -821,7 +821,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 10,
-   "saniye": 1139,
+   "saniye": 1145,
    "mac": 1
   },
   "228502": {
@@ -837,7 +837,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 19,
-   "saniye": 1091,
+   "saniye": 1097,
    "mac": 1
   },
   "218536": {

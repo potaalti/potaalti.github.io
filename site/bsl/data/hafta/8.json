@@ -7,15 +7,15 @@
    "durum": "canli",
    "ev": "ALİAĞA PETKİM SPOR",
    "evId": 266048,
-   "evSkor": "85",
+   "evSkor": "88",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
-   "depSkor": "81",
+   "depSkor": "84",
    "salon": "Enka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "00:15",
+    "saat": "00:03",
     "uzatma": false
    }
   },
@@ -117,7 +117,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 24,
-   "saniye": 1939,
+   "saniye": 1955,
    "mac": 1
   },
   "778249": {
@@ -125,7 +125,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 11,
-   "saniye": 1328,
+   "saniye": 1343,
    "mac": 1
   },
   "310250": {
@@ -133,7 +133,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 21,
-   "saniye": 1917,
+   "saniye": 1932,
    "mac": 1
   },
   "675128": {
@@ -149,7 +149,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 14,
-   "saniye": 1899,
+   "saniye": 1915,
    "mac": 1
   },
   "778279": {
@@ -164,8 +164,8 @@
    "ad": "Max Abmas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 3,
-   "saniye": 1247,
+   "vp": 5,
+   "saniye": 1263,
    "mac": 1
   },
   "269217": {
@@ -221,15 +221,15 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 8,
-   "saniye": 1530,
+   "saniye": 1546,
    "mac": 1
   },
   "129216": {
    "ad": "Doğuş Özdemiroğlu",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 21,
-   "saniye": 1869,
+   "vp": 24,
+   "saniye": 1885,
    "mac": 1
   },
   "778727": {
@@ -277,7 +277,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 26,
-   "saniye": 1448,
+   "saniye": 1463,
    "mac": 1
   },
   "272903": {
@@ -293,7 +293,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 1,
-   "saniye": 1535,
+   "saniye": 1551,
    "mac": 1
   }
  }

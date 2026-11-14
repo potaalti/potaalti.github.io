@@ -4,7 +4,7 @@
   {
    "id": 346332,
    "tarih": "2026-11-14T13:00:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "ALİAĞA PETKİM SPOR",
    "evId": 266048,
    "evSkor": "88",
@@ -12,12 +12,7 @@
    "depId": 266030,
    "depSkor": "84",
    "salon": "Enka Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "00:00",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346333,
@@ -256,6 +251,14 @@
    "saniye": 0,
    "mac": 1
   },
+  "444994": {
+   "ad": "Ata Vatansever",
+   "takim": "TÜRK TELEKOM",
+   "takimId": 266030,
+   "vp": 4,
+   "saniye": 1155,
+   "mac": 1
+  },
   "112715": {
    "ad": "Emircan Koşut",
    "takim": "TÜRK TELEKOM",
@@ -289,7 +292,7 @@
    "mac": 1
   },
   "386159": {
-   "ad": "Shaquille Mckissic",
+   "ad": "Shaquille McKissic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 1,

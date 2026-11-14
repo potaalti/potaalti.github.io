@@ -3093,6 +3093,24 @@
   "astOrt": 0.3
  },
  {
+  "id": "444994",
+  "ad": "Ata Vatansever",
+  "takim": "TÜRK TELEKOM",
+  "takimId": 266030,
+  "takimKod": "",
+  "ulke": "",
+  "turk": false,
+  "aktif": false,
+  "mac": 1,
+  "vpOrt": 4.0,
+  "sayiOrt": 0,
+  "sureOrt": "00:00",
+  "foto": null,
+  "mevkiTahmini": "arka",
+  "ribOrt": 3.0,
+  "astOrt": 5.0
+ },
+ {
   "id": "278617",
   "ad": "Erten Gazi",
   "takim": "YUKATEL DENİZLİ BASKET",

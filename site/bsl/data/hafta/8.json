@@ -28,7 +28,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "00:28",
+    "saat": "00:00",
     "uzatma": false
    }
   },
@@ -308,8 +308,8 @@
    "ad": "Terrell Carter Ii",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": -1,
-   "saniye": 320,
+   "vp": 0,
+   "saniye": 349,
    "mac": 1
   },
   "736069": {
@@ -333,7 +333,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -3,
-   "saniye": 376,
+   "saniye": 405,
    "mac": 1
   },
   "778398": {
@@ -357,7 +357,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 1,
-   "saniye": 257,
+   "saniye": 286,
    "mac": 1
   },
   "508900": {
@@ -373,7 +373,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 5,
-   "saniye": 181,
+   "saniye": 210,
    "mac": 1
   },
   "434482": {
@@ -388,8 +388,8 @@
    "ad": "Shavar Reynolds Jr.",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": -1,
-   "saniye": 257,
+   "vp": -2,
+   "saniye": 286,
    "mac": 1
   },
   "197570": {
@@ -413,7 +413,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 6,
-   "saniye": 571,
+   "saniye": 600,
    "mac": 1
   },
   "133530": {
@@ -444,8 +444,8 @@
    "ad": "Yiğit Arslan",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 1,
-   "saniye": 257,
+   "vp": 0,
+   "saniye": 286,
    "mac": 1
   },
   "368413": {
@@ -468,8 +468,8 @@
    "ad": "Royce Hamm Jr.",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 1,
-   "saniye": 181,
+   "vp": 2,
+   "saniye": 210,
    "mac": 1
   },
   "129295": {
@@ -485,7 +485,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 3,
-   "saniye": 181,
+   "saniye": 210,
    "mac": 1
   },
   "192987": {
@@ -493,7 +493,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 0,
-   "saniye": 62,
+   "saniye": 91,
    "mac": 1
   }
  }

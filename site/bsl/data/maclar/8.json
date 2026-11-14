@@ -46,7 +46,7 @@
    "durum": "canli",
    "ev": "PİZZABULLS BORDO BANDIRMA",
    "evId": 265993,
-   "evSkor": "13",
+   "evSkor": "15",
    "dep": "KARŞIYAKA",
    "depId": 266027,
    "depSkor": "18",
@@ -54,7 +54,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "03:58",
+    "saat": "03:40",
     "uzatma": false
    }
   },

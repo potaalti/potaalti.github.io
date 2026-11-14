@@ -43,7 +43,7 @@
   {
    "id": 346336,
    "tarih": "2026-11-14T20:30:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "PİZZABULLS BORDO BANDIRMA",
    "evId": 265993,
    "evSkor": "83",
@@ -51,12 +51,7 @@
    "depId": 266027,
    "depSkor": "75",
    "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "00:00",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346330,
@@ -797,7 +792,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 18,
-   "saniye": 2155,
+   "saniye": 2154,
    "mac": 1
   },
   "500079": {
@@ -869,11 +864,11 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": -1,
-   "saniye": 245,
+   "saniye": 246,
    "mac": 1
   },
   "786430": {
-   "ad": "Cyrıl  Langevıne",
+   "ad": "Cyril Langevine",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": -2,

@@ -43,7 +43,7 @@
   {
    "id": 346336,
    "tarih": "2026-11-14T20:30:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "PİZZABULLS BORDO BANDIRMA",
    "evId": 265993,
    "evSkor": "83",
@@ -51,12 +51,7 @@
    "depId": 266027,
    "depSkor": "75",
    "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "00:00",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346330,

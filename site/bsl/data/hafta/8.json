@@ -46,15 +46,15 @@
    "durum": "canli",
    "ev": "PİZZABULLS BORDO BANDIRMA",
    "evId": 265993,
-   "evSkor": "9",
+   "evSkor": "11",
    "dep": "KARŞIYAKA",
    "depId": 266027,
-   "depSkor": "12",
+   "depSkor": "16",
    "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "06:09",
+    "saat": "04:44",
     "uzatma": false
    }
   },
@@ -692,24 +692,24 @@
    "ad": "Ty Gordon",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": -1,
-   "saniye": 231,
+   "vp": 0,
+   "saniye": 318,
    "mac": 1
   },
   "130898": {
    "ad": "Okben Ulubay",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 1,
-   "saniye": 231,
+   "vp": 0,
+   "saniye": 318,
    "mac": 1
   },
   "512379": {
    "ad": "Boubacar Toure",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 3,
-   "saniye": 231,
+   "vp": 5,
+   "saniye": 318,
    "mac": 1
   },
   "473261": {
@@ -717,15 +717,15 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": -1,
-   "saniye": 231,
+   "saniye": 318,
    "mac": 1
   },
   "501076": {
    "ad": "Quentin Peterson",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 6,
-   "saniye": 231,
+   "vp": 7,
+   "saniye": 318,
    "mac": 1
   },
   "441857": {
@@ -788,16 +788,16 @@
    "ad": "Briante Weber",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 3,
-   "saniye": 231,
+   "vp": 5,
+   "saniye": 318,
    "mac": 1
   },
   "779071": {
    "ad": "Ishmael El-Amin",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 8,
-   "saniye": 231,
+   "vp": 10,
+   "saniye": 318,
    "mac": 1
   },
   "500079": {
@@ -805,7 +805,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 1,
-   "saniye": 231,
+   "saniye": 318,
    "mac": 1
   },
   "254789": {
@@ -813,7 +813,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 2,
-   "saniye": 231,
+   "saniye": 318,
    "mac": 1
   },
   "609083": {
@@ -821,7 +821,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 2,
-   "saniye": 231,
+   "saniye": 318,
    "mac": 1
   },
   "228502": {

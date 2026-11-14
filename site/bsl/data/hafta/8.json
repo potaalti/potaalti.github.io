@@ -10,12 +10,12 @@
    "evSkor": "23",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
-   "depSkor": "18",
+   "depSkor": "23",
    "salon": "Enka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "08:40",
+    "saat": "07:03",
     "uzatma": false
    }
   },
@@ -117,15 +117,15 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 5,
-   "saniye": 494,
+   "saniye": 519,
    "mac": 1
   },
   "778249": {
    "ad": "Keandre Cook",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 6,
-   "saniye": 518,
+   "vp": 7,
+   "saniye": 590,
    "mac": 1
   },
   "310250": {
@@ -140,8 +140,8 @@
    "ad": "Anzejs Pasecniks",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 4,
-   "saniye": 273,
+   "vp": 3,
+   "saniye": 298,
    "mac": 1
   },
   "572386": {
@@ -149,15 +149,15 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 3,
-   "saniye": 538,
+   "saniye": 563,
    "mac": 1
   },
   "778279": {
    "ad": "Chris Horton",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 2,
-   "saniye": 407,
+   "vp": 1,
+   "saniye": 479,
    "mac": 1
   },
   "778246": {
@@ -165,7 +165,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": -1,
-   "saniye": 348,
+   "saniye": 445,
    "mac": 1
   },
   "269217": {
@@ -173,7 +173,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 0,
-   "saniye": 142,
+   "saniye": 239,
    "mac": 1
   },
   "284983": {
@@ -189,7 +189,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 0,
-   "saniye": 142,
+   "saniye": 214,
    "mac": 1
   },
   "475706": {
@@ -212,32 +212,32 @@
    "ad": "Jerrick Harding",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": -5,
-   "saniye": 329,
+   "vp": -4,
+   "saniye": 365,
    "mac": 1
   },
   "418533": {
    "ad": "Uros Trifunovic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": -1,
-   "saniye": 268,
+   "vp": 0,
+   "saniye": 353,
    "mac": 1
   },
   "129216": {
    "ad": "Doğuş Özdemiroğlu",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 8,
-   "saniye": 456,
+   "vp": 10,
+   "saniye": 553,
    "mac": 1
   },
   "778727": {
    "ad": "Ismael Bako",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 6,
-   "saniye": 410,
+   "vp": 7,
+   "saniye": 507,
    "mac": 1
   },
   "277894": {
@@ -277,7 +277,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 9,
-   "saniye": 412,
+   "saniye": 473,
    "mac": 1
   },
   "272903": {
@@ -292,8 +292,8 @@
    "ad": "Shaquille Mckissic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": -4,
-   "saniye": 412,
+   "vp": -2,
+   "saniye": 509,
    "mac": 1
   }
  }

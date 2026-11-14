@@ -23,12 +23,12 @@
    "evSkor": "16",
    "dep": "TRABZONSPOR",
    "depId": 266029,
-   "depSkor": "19",
+   "depSkor": "22",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "01:31",
+    "saat": "00:28",
     "uzatma": false
    }
   },
@@ -309,7 +309,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -1,
-   "saniye": 314,
+   "saniye": 320,
    "mac": 1
   },
   "736069": {
@@ -332,8 +332,8 @@
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": -2,
-   "saniye": 314,
+   "vp": -3,
+   "saniye": 376,
    "mac": 1
   },
   "778398": {
@@ -357,7 +357,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 1,
-   "saniye": 195,
+   "saniye": 257,
    "mac": 1
   },
   "508900": {
@@ -365,15 +365,15 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 195,
+   "saniye": 251,
    "mac": 1
   },
   "732657": {
    "ad": "Mantas Rubstavicius",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 3,
-   "saniye": 119,
+   "vp": 5,
+   "saniye": 181,
    "mac": 1
   },
   "434482": {
@@ -388,8 +388,8 @@
    "ad": "Shavar Reynolds Jr.",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 0,
-   "saniye": 195,
+   "vp": -1,
+   "saniye": 257,
    "mac": 1
   },
   "197570": {
@@ -412,8 +412,8 @@
    "ad": "Brandon Boston Jr.",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 4,
-   "saniye": 509,
+   "vp": 6,
+   "saniye": 571,
    "mac": 1
   },
   "133530": {
@@ -445,7 +445,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 1,
-   "saniye": 195,
+   "saniye": 257,
    "mac": 1
   },
   "368413": {
@@ -468,8 +468,8 @@
    "ad": "Royce Hamm Jr.",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 0,
-   "saniye": 119,
+   "vp": 1,
+   "saniye": 181,
    "mac": 1
   },
   "129295": {
@@ -485,7 +485,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 3,
-   "saniye": 119,
+   "saniye": 181,
    "mac": 1
   },
   "192987": {
@@ -493,7 +493,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 62,
    "mac": 1
   }
  }

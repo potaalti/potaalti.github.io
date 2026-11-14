@@ -20,7 +20,7 @@
    "durum": "canli",
    "ev": "TOFAŞ",
    "evId": 265995,
-   "evSkor": "41",
+   "evSkor": "46",
    "dep": "TRABZONSPOR",
    "depId": 266029,
    "depSkor": "44",
@@ -28,7 +28,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "06:36",
+    "saat": "05:32",
     "uzatma": false
    }
   },
@@ -332,8 +332,8 @@
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 6,
-   "saniye": 1091,
+   "vp": 9,
+   "saniye": 1156,
    "mac": 1
   },
   "778398": {
@@ -341,7 +341,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 6,
-   "saniye": 904,
+   "saniye": 969,
    "mac": 1
   },
   "452216": {
@@ -357,23 +357,23 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 6,
-   "saniye": 819,
+   "saniye": 884,
    "mac": 1
   },
   "508900": {
    "ad": "Jamuni Mcneace",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 4,
-   "saniye": 345,
+   "vp": 5,
+   "saniye": 410,
    "mac": 1
   },
   "732657": {
    "ad": "Mantas Rubstavicius",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 6,
-   "saniye": 517,
+   "vp": 9,
+   "saniye": 582,
    "mac": 1
   },
   "434482": {
@@ -404,8 +404,8 @@
    "ad": "Marcus Keene",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 6,
-   "saniye": 1271,
+   "vp": 5,
+   "saniye": 1336,
    "mac": 1
   },
   "735812": {
@@ -413,7 +413,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 9,
-   "saniye": 1267,
+   "saniye": 1332,
    "mac": 1
   },
   "133530": {
@@ -421,7 +421,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 8,
-   "saniye": 711,
+   "saniye": 769,
    "mac": 1
   },
   "512899": {
@@ -429,7 +429,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 7,
-   "saniye": 920,
+   "saniye": 978,
    "mac": 1
   },
   "473256": {
@@ -437,7 +437,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 5,
-   "saniye": 738,
+   "saniye": 803,
    "mac": 1
   },
   "105532": {
@@ -445,7 +445,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 4,
-   "saniye": 692,
+   "saniye": 699,
    "mac": 1
   },
   "368413": {
@@ -484,8 +484,8 @@
    "ad": "Brady Manek",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 6,
-   "saniye": 483,
+   "vp": 5,
+   "saniye": 490,
    "mac": 1
   },
   "192987": {

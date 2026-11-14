@@ -17,7 +17,7 @@
   {
    "id": 346333,
    "tarih": "2026-11-14T15:30:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "TOFAŞ",
    "evId": 265995,
    "evSkor": "75",
@@ -25,12 +25,7 @@
    "depId": 266029,
    "depSkor": "61",
    "salon": "Tofaş Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "00:00",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346331,
@@ -305,7 +300,7 @@
    "mac": 1
   },
   "485299": {
-   "ad": "Terrell Carter Ii",
+   "ad": "Terrell Carter II",
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 2,
@@ -361,7 +356,7 @@
    "mac": 1
   },
   "508900": {
-   "ad": "Jamuni Mcneace",
+   "ad": "Jamuni McNeace",
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 19,

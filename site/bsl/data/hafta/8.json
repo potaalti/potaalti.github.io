@@ -7,15 +7,15 @@
    "durum": "canli",
    "ev": "ALİAĞA PETKİM SPOR",
    "evId": 266048,
-   "evSkor": "37",
+   "evSkor": "38",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
-   "depSkor": "30",
+   "depSkor": "33",
    "salon": "Enka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "03:20",
+    "saat": "02:53",
     "uzatma": false
    }
   },
@@ -117,7 +117,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 5,
-   "saniye": 742,
+   "saniye": 769,
    "mac": 1
   },
   "778249": {
@@ -133,7 +133,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 18,
-   "saniye": 761,
+   "saniye": 788,
    "mac": 1
   },
   "675128": {
@@ -149,7 +149,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 6,
-   "saniye": 786,
+   "saniye": 813,
    "mac": 1
   },
   "778279": {
@@ -173,7 +173,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 0,
-   "saniye": 239,
+   "saniye": 266,
    "mac": 1
   },
   "284983": {
@@ -181,7 +181,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 5,
-   "saniye": 203,
+   "saniye": 230,
    "mac": 1
   },
   "470691": {
@@ -220,8 +220,8 @@
    "ad": "Uros Trifunovic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": -1,
-   "saniye": 399,
+   "vp": 0,
+   "saniye": 426,
    "mac": 1
   },
   "129216": {
@@ -229,7 +229,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 14,
-   "saniye": 776,
+   "saniye": 803,
    "mac": 1
   },
   "778727": {
@@ -244,8 +244,8 @@
    "ad": "Göktuğ Baş",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 4,
-   "saniye": 471,
+   "vp": 5,
+   "saniye": 498,
    "mac": 1
   },
   "408785": {
@@ -276,8 +276,8 @@
    "ad": "Kris Bankston",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 12,
-   "saniye": 568,
+   "vp": 15,
+   "saniye": 595,
    "mac": 1
   },
   "272903": {

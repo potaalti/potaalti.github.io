@@ -7,15 +7,15 @@
    "durum": "canli",
    "ev": "ALİAĞA PETKİM SPOR",
    "evId": 266048,
-   "evSkor": "57",
+   "evSkor": "60",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
-   "depSkor": "57",
+   "depSkor": "59",
    "salon": "Enka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "02:09",
+    "saat": "01:19",
     "uzatma": false
    }
   },
@@ -116,8 +116,8 @@
    "ad": "Khyri Thomas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 14,
-   "saniye": 1267,
+   "vp": 15,
+   "saniye": 1317,
    "mac": 1
   },
   "778249": {
@@ -156,24 +156,24 @@
    "ad": "Chris Horton",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 3,
-   "saniye": 776,
+   "vp": 4,
+   "saniye": 826,
    "mac": 1
   },
   "778246": {
    "ad": "Max Abmas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 1,
-   "saniye": 762,
+   "vp": 4,
+   "saniye": 812,
    "mac": 1
   },
   "269217": {
    "ad": "Tibet Görener",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 0,
-   "saniye": 294,
+   "vp": -1,
+   "saniye": 344,
    "mac": 1
   },
   "284983": {
@@ -188,8 +188,8 @@
    "ad": "Thomas Akyazılı",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": -2,
-   "saniye": 365,
+   "vp": -1,
+   "saniye": 415,
    "mac": 1
   },
   "475706": {
@@ -212,16 +212,16 @@
    "ad": "Jerrick Harding",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 0,
-   "saniye": 816,
+   "vp": -1,
+   "saniye": 866,
    "mac": 1
   },
   "418533": {
    "ad": "Uros Trifunovic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 7,
-   "saniye": 1070,
+   "vp": 6,
+   "saniye": 1120,
    "mac": 1
   },
   "129216": {
@@ -276,8 +276,8 @@
    "ad": "Kris Bankston",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 24,
-   "saniye": 981,
+   "vp": 26,
+   "saniye": 1031,
    "mac": 1
   },
   "272903": {
@@ -292,8 +292,8 @@
    "ad": "Shaquille Mckissic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": -4,
-   "saniye": 973,
+   "vp": -3,
+   "saniye": 1023,
    "mac": 1
   }
  }

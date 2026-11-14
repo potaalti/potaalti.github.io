@@ -7,15 +7,15 @@
    "durum": "canli",
    "ev": "ALİAĞA PETKİM SPOR",
    "evId": 266048,
-   "evSkor": "31",
+   "evSkor": "37",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
-   "depSkor": "25",
+   "depSkor": "28",
    "salon": "Enka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "04:55",
+    "saat": "03:48",
     "uzatma": false
    }
   },
@@ -117,7 +117,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 5,
-   "saniye": 647,
+   "saniye": 714,
    "mac": 1
   },
   "778249": {
@@ -132,8 +132,8 @@
    "ad": "Yiğit Onan",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 11,
-   "saniye": 666,
+   "vp": 18,
+   "saniye": 733,
    "mac": 1
   },
   "675128": {
@@ -141,15 +141,15 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 7,
-   "saniye": 426,
+   "saniye": 493,
    "mac": 1
   },
   "572386": {
    "ad": "Olivier Hanlan",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 5,
-   "saniye": 691,
+   "vp": 6,
+   "saniye": 758,
    "mac": 1
   },
   "778279": {
@@ -180,8 +180,8 @@
    "ad": "Ozan Yılmaz",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 4,
-   "saniye": 108,
+   "vp": 5,
+   "saniye": 175,
    "mac": 1
   },
   "470691": {
@@ -228,8 +228,8 @@
    "ad": "Doğuş Özdemiroğlu",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 11,
-   "saniye": 681,
+   "vp": 14,
+   "saniye": 748,
    "mac": 1
   },
   "778727": {
@@ -245,7 +245,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 4,
-   "saniye": 376,
+   "saniye": 443,
    "mac": 1
   },
   "408785": {
@@ -268,8 +268,8 @@
    "ad": "Tony Taylor",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 0,
-   "saniye": 306,
+   "vp": -1,
+   "saniye": 373,
    "mac": 1
   },
   "668012": {
@@ -277,7 +277,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 9,
-   "saniye": 473,
+   "saniye": 540,
    "mac": 1
   },
   "272903": {

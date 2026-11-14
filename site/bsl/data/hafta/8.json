@@ -46,15 +46,15 @@
    "durum": "canli",
    "ev": "PİZZABULLS BORDO BANDIRMA",
    "evId": 265993,
-   "evSkor": "3",
+   "evSkor": "4",
    "dep": "KARŞIYAKA",
    "depId": 266027,
-   "depSkor": "7",
+   "depSkor": "10",
    "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "07:44",
+    "saat": "07:04",
     "uzatma": false
    }
   },
@@ -692,8 +692,8 @@
    "ad": "Ty Gordon",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 0,
-   "saniye": 138,
+   "vp": -1,
+   "saniye": 176,
    "mac": 1
   },
   "130898": {
@@ -701,7 +701,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 1,
-   "saniye": 138,
+   "saniye": 176,
    "mac": 1
   },
   "512379": {
@@ -709,7 +709,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 138,
+   "saniye": 176,
    "mac": 1
   },
   "473261": {
@@ -717,15 +717,15 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": -1,
-   "saniye": 138,
+   "saniye": 176,
    "mac": 1
   },
   "501076": {
    "ad": "Quentin Peterson",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 1,
-   "saniye": 138,
+   "vp": 2,
+   "saniye": 176,
    "mac": 1
   },
   "441857": {
@@ -789,23 +789,23 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 3,
-   "saniye": 138,
+   "saniye": 176,
    "mac": 1
   },
   "779071": {
    "ad": "Ishmael El-Amin",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 4,
-   "saniye": 138,
+   "vp": 6,
+   "saniye": 176,
    "mac": 1
   },
   "500079": {
    "ad": "Rashard Kelly",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 2,
-   "saniye": 138,
+   "vp": 1,
+   "saniye": 176,
    "mac": 1
   },
   "254789": {
@@ -813,15 +813,15 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 2,
-   "saniye": 138,
+   "saniye": 176,
    "mac": 1
   },
   "609083": {
    "ad": "Steven Enoch",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 0,
-   "saniye": 138,
+   "vp": 2,
+   "saniye": 176,
    "mac": 1
   },
   "228502": {

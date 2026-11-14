@@ -54,7 +54,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "09:39",
+    "saat": "08:33",
     "uzatma": false
    }
   },
@@ -693,15 +693,15 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 316,
+   "saniye": 331,
    "mac": 1
   },
   "130898": {
    "ad": "Okben Ulubay",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 0,
-   "saniye": 449,
+   "vp": -1,
+   "saniye": 515,
    "mac": 1
   },
   "512379": {
@@ -724,8 +724,8 @@
    "ad": "Quentin Peterson",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 10,
-   "saniye": 474,
+   "vp": 9,
+   "saniye": 540,
    "mac": 1
   },
   "441857": {
@@ -733,7 +733,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 4,
-   "saniye": 305,
+   "saniye": 371,
    "mac": 1
   },
   "106461": {
@@ -765,7 +765,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 2,
-   "saniye": 186,
+   "saniye": 237,
    "mac": 1
   },
   "307500": {
@@ -781,7 +781,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 8,
-   "saniye": 219,
+   "saniye": 285,
    "mac": 1
   },
   "573226": {
@@ -789,7 +789,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 6,
-   "saniye": 380,
+   "saniye": 395,
    "mac": 1
   },
   "779071": {
@@ -797,7 +797,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 10,
-   "saniye": 435,
+   "saniye": 450,
    "mac": 1
   },
   "500079": {
@@ -828,8 +828,8 @@
    "ad": "Muhaymin Mustafa",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": -1,
-   "saniye": 61,
+   "vp": 0,
+   "saniye": 127,
    "mac": 1
   },
   "410874": {
@@ -837,7 +837,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 5,
-   "saniye": 241,
+   "saniye": 292,
    "mac": 1
   },
   "218536": {
@@ -845,7 +845,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 0,
-   "saniye": 39,
+   "saniye": 105,
    "mac": 1
   },
   "400519": {
@@ -868,16 +868,16 @@
    "ad": "Yakuba Ouattara",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 0,
-   "saniye": 186,
+   "vp": -1,
+   "saniye": 237,
    "mac": 1
   },
   "786430": {
    "ad": "Cyrıl  Langevıne",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 0,
-   "saniye": 259,
+   "vp": -1,
+   "saniye": 325,
    "mac": 1
   }
  }

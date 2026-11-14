@@ -15,7 +15,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "01:33",
+    "saat": "00:50",
     "uzatma": false
    }
   },
@@ -116,8 +116,8 @@
    "ad": "Khyri Thomas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 25,
-   "saniye": 1862,
+   "vp": 24,
+   "saniye": 1905,
    "mac": 1
   },
   "778249": {
@@ -125,7 +125,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 9,
-   "saniye": 1250,
+   "saniye": 1293,
    "mac": 1
   },
   "310250": {
@@ -133,7 +133,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 20,
-   "saniye": 1874,
+   "saniye": 1882,
    "mac": 1
   },
   "675128": {
@@ -149,15 +149,15 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 14,
-   "saniye": 1822,
+   "saniye": 1865,
    "mac": 1
   },
   "778279": {
    "ad": "Chris Horton",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 16,
-   "saniye": 1403,
+   "vp": 17,
+   "saniye": 1446,
    "mac": 1
   },
   "778246": {
@@ -188,8 +188,8 @@
    "ad": "Thomas Akyazılı",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 0,
-   "saniye": 567,
+   "vp": 1,
+   "saniye": 601,
    "mac": 1
   },
   "475706": {
@@ -221,7 +221,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 9,
-   "saniye": 1453,
+   "saniye": 1496,
    "mac": 1
   },
   "129216": {
@@ -229,7 +229,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 18,
-   "saniye": 1826,
+   "saniye": 1835,
    "mac": 1
   },
   "778727": {
@@ -269,7 +269,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": -1,
-   "saniye": 635,
+   "saniye": 678,
    "mac": 1
   },
   "668012": {
@@ -277,7 +277,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 26,
-   "saniye": 1370,
+   "saniye": 1413,
    "mac": 1
   },
   "272903": {
@@ -293,7 +293,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 1,
-   "saniye": 1458,
+   "saniye": 1501,
    "mac": 1
   }
  }

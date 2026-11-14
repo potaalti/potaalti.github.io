@@ -4,15 +4,20 @@
   {
    "id": 346332,
    "tarih": "2026-11-14T13:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "ALİAĞA PETKİM SPOR",
    "evId": 266048,
-   "evSkor": null,
+   "evSkor": "13",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
-   "depSkor": null,
+   "depSkor": "6",
    "salon": "Enka Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "05:32",
+    "uzatma": false
+   }
   },
   {
    "id": 346333,

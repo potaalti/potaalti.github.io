@@ -36,12 +36,12 @@
    "evSkor": "59",
    "dep": "GALATASARAY MCT TECHNIC",
    "depId": 266026,
-   "depSkor": "43",
+   "depSkor": "44",
    "salon": "Şehit Polis Recep Topaloğlu Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "05:51",
+    "saat": "05:27",
     "uzatma": false
    }
   },
@@ -500,8 +500,8 @@
    "ad": "Boo Buie",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 16,
-   "saniye": 1344,
+   "vp": 17,
+   "saniye": 1364,
    "mac": 1
   },
   "778161": {
@@ -509,15 +509,15 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 17,
-   "saniye": 1041,
+   "saniye": 1061,
    "mac": 1
   },
   "419874": {
    "ad": "Berk Can Akın",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 2,
-   "saniye": 960,
+   "vp": 1,
+   "saniye": 980,
    "mac": 1
   },
   "609266": {
@@ -525,15 +525,15 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 11,
-   "saniye": 1099,
+   "saniye": 1119,
    "mac": 1
   },
   "778182": {
    "ad": "Alex Reese",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 14,
-   "saniye": 1120,
+   "vp": 13,
+   "saniye": 1140,
    "mac": 1
   },
   "254785": {
@@ -597,7 +597,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 6,
-   "saniye": 664,
+   "saniye": 684,
    "mac": 1
   },
   "250129": {
@@ -621,7 +621,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 10,
-   "saniye": 1052,
+   "saniye": 1072,
    "mac": 1
   },
   "779274": {
@@ -629,7 +629,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 6,
-   "saniye": 804,
+   "saniye": 824,
    "mac": 1
   },
   "128768": {
@@ -676,8 +676,8 @@
    "ad": "Buğrahan Tuncer",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 3,
-   "saniye": 596,
+   "vp": 4,
+   "saniye": 616,
    "mac": 1
   },
   "781548": {
@@ -685,7 +685,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 1,
-   "saniye": 921,
+   "saniye": 941,
    "mac": 1
   }
  }

@@ -15,7 +15,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "06:01",
+    "saat": "05:41",
     "uzatma": false
    }
   },
@@ -117,7 +117,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 10,
-   "saniye": 1035,
+   "saniye": 1069,
    "mac": 1
   },
   "778249": {
@@ -125,7 +125,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 9,
-   "saniye": 975,
+   "saniye": 1009,
    "mac": 1
   },
   "310250": {
@@ -133,15 +133,15 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 19,
-   "saniye": 1199,
+   "saniye": 1233,
    "mac": 1
   },
   "675128": {
    "ad": "Anzejs Pasecniks",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 6,
-   "saniye": 760,
+   "vp": 5,
+   "saniye": 794,
    "mac": 1
   },
   "572386": {
@@ -149,7 +149,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 8,
-   "saniye": 1225,
+   "saniye": 1259,
    "mac": 1
   },
   "778279": {
@@ -213,7 +213,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": -1,
-   "saniye": 732,
+   "saniye": 751,
    "mac": 1
   },
   "418533": {
@@ -221,15 +221,15 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 2,
-   "saniye": 838,
+   "saniye": 872,
    "mac": 1
   },
   "129216": {
    "ad": "Doğuş Özdemiroğlu",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 17,
-   "saniye": 1215,
+   "vp": 16,
+   "saniye": 1249,
    "mac": 1
   },
   "778727": {
@@ -237,7 +237,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 11,
-   "saniye": 874,
+   "saniye": 908,
    "mac": 1
   },
   "277894": {
@@ -245,7 +245,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 4,
-   "saniye": 787,
+   "saniye": 806,
    "mac": 1
   },
   "408785": {
@@ -276,8 +276,8 @@
    "ad": "Kris Bankston",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 19,
-   "saniye": 768,
+   "vp": 20,
+   "saniye": 783,
    "mac": 1
   },
   "272903": {
@@ -293,7 +293,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": -2,
-   "saniye": 760,
+   "saniye": 775,
    "mac": 1
   }
  }

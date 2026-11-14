@@ -20,7 +20,7 @@
    "durum": "canli",
    "ev": "TOFAŞ",
    "evId": 265995,
-   "evSkor": "56",
+   "evSkor": "58",
    "dep": "TRABZONSPOR",
    "depId": 266029,
    "depSkor": "51",
@@ -28,7 +28,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "09:16",
+    "saat": "08:32",
     "uzatma": false
    }
   },
@@ -317,7 +317,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 7,
-   "saniye": 955,
+   "saniye": 999,
    "mac": 1
   },
   "389934": {
@@ -332,8 +332,8 @@
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 7,
-   "saniye": 1404,
+   "vp": 9,
+   "saniye": 1448,
    "mac": 1
   },
   "778398": {
@@ -365,7 +365,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 9,
-   "saniye": 786,
+   "saniye": 830,
    "mac": 1
   },
   "732657": {
@@ -389,7 +389,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -3,
-   "saniye": 959,
+   "saniye": 1003,
    "mac": 1
   },
   "197570": {
@@ -397,7 +397,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 1,
-   "saniye": 533,
+   "saniye": 577,
    "mac": 1
   },
   "779255": {
@@ -429,7 +429,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 9,
-   "saniye": 1214,
+   "saniye": 1258,
    "mac": 1
   },
   "473256": {
@@ -445,7 +445,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 6,
-   "saniye": 1075,
+   "saniye": 1119,
    "mac": 1
   },
   "368413": {
@@ -468,8 +468,8 @@
    "ad": "Royce Hamm Jr.",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 0,
-   "saniye": 649,
+   "vp": -1,
+   "saniye": 693,
    "mac": 1
   },
   "129295": {
@@ -477,7 +477,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 4,
-   "saniye": 319,
+   "saniye": 363,
    "mac": 1
   },
   "590409": {
@@ -493,7 +493,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 2,
-   "saniye": 378,
+   "saniye": 422,
    "mac": 1
   }
  }

@@ -680,7 +680,7 @@
   "foto": "https://tbf.org.tr/res/cd2600fd-0882-4293-909a-2c42a50739ff_galatasaray_0014_10.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 5.2,
+  "ribOrt": 5.4,
   "astOrt": 1.9
  },
  {
@@ -776,7 +776,7 @@
   "boy": null,
   "mevkiTahmini": "arka",
   "ribOrt": 2.2,
-  "astOrt": 3.8
+  "astOrt": 4.0
  },
  {
   "id": "666515",
@@ -1136,7 +1136,7 @@
   "foto": "https://tbf.org.tr/res/28f4fe45-69b5-4ae1-9e82-3bfff59bee03_65.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 3.0,
+  "ribOrt": 3.1,
   "astOrt": 0.6
  },
  {
@@ -1631,7 +1631,7 @@
   "boy": null,
   "mevkiTahmini": "arka",
   "ribOrt": 1.9,
-  "astOrt": 4.2
+  "astOrt": 4.4
  },
  {
   "id": "157002",

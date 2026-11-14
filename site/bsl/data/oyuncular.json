@@ -282,7 +282,7 @@
   "boy": null,
   "mevkiTahmini": "arka",
   "ribOrt": 2.1,
-  "astOrt": 4.8
+  "astOrt": 4.9
  },
  {
   "id": "779278",
@@ -1212,8 +1212,8 @@
   "foto": "https://tbf.org.tr/res/8110f8d4-72d6-4c17-8a8e-a95e98dfc342_5.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 2.6,
-  "astOrt": 0.9
+  "ribOrt": 3.2,
+  "astOrt": 1.0
  },
  {
   "id": "397202",
@@ -1630,7 +1630,7 @@
   "foto": "https://tbf.org.tr/res/47c69b15-e971-463a-81ae-21e0149eb0c0_15.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 3.1,
+  "ribOrt": 3.4,
   "astOrt": 0.8
  },
  {
@@ -3582,7 +3582,7 @@
   "boy": 206,
   "mevkiTahmini": "arka",
   "ribOrt": 0.8,
-  "astOrt": 1.5
+  "astOrt": 1.7
  },
  {
   "id": "197570",

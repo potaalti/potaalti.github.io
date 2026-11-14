@@ -20,15 +20,15 @@
    "durum": "canli",
    "ev": "TOFAŞ",
    "evId": 265995,
-   "evSkor": "16",
+   "evSkor": "20",
    "dep": "TRABZONSPOR",
    "depId": 266029,
-   "depSkor": "22",
+   "depSkor": "25",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "09:07",
+    "saat": "08:04",
     "uzatma": false
    }
   },
@@ -308,8 +308,8 @@
    "ad": "Terrell Carter Ii",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 0,
-   "saniye": 402,
+   "vp": 2,
+   "saniye": 465,
    "mac": 1
   },
   "736069": {
@@ -333,7 +333,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -4,
-   "saniye": 458,
+   "saniye": 521,
    "mac": 1
   },
   "778398": {
@@ -357,7 +357,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 1,
-   "saniye": 339,
+   "saniye": 402,
    "mac": 1
   },
   "508900": {
@@ -372,8 +372,8 @@
    "ad": "Mantas Rubstavicius",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 5,
-   "saniye": 263,
+   "vp": 7,
+   "saniye": 326,
    "mac": 1
   },
   "434482": {
@@ -397,7 +397,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 53,
+   "saniye": 116,
    "mac": 1
   },
   "779255": {
@@ -405,7 +405,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 2,
-   "saniye": 562,
+   "saniye": 625,
    "mac": 1
   },
   "735812": {
@@ -444,8 +444,8 @@
    "ad": "Yiğit Arslan",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 0,
-   "saniye": 339,
+   "vp": 1,
+   "saniye": 402,
    "mac": 1
   },
   "368413": {
@@ -469,7 +469,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 2,
-   "saniye": 263,
+   "saniye": 326,
    "mac": 1
   },
   "129295": {
@@ -485,15 +485,15 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 3,
-   "saniye": 263,
+   "saniye": 326,
    "mac": 1
   },
   "192987": {
    "ad": "Rıdvan Öncel",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 0,
-   "saniye": 144,
+   "vp": 2,
+   "saniye": 207,
    "mac": 1
   }
  }

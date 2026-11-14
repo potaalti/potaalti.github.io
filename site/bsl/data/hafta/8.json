@@ -49,12 +49,12 @@
    "evSkor": "27",
    "dep": "KARŞIYAKA",
    "depId": 266027,
-   "depSkor": "29",
+   "depSkor": "31",
    "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "08:15",
+    "saat": "07:37",
     "uzatma": false
    }
   },
@@ -693,7 +693,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": -1,
-   "saniye": 349,
+   "saniye": 389,
    "mac": 1
   },
   "130898": {
@@ -716,16 +716,16 @@
    "ad": "Peyton Aldridge",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": -1,
-   "saniye": 578,
+   "vp": -2,
+   "saniye": 618,
    "mac": 1
   },
   "501076": {
    "ad": "Quentin Peterson",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 9,
-   "saniye": 558,
+   "vp": 8,
+   "saniye": 598,
    "mac": 1
   },
   "441857": {
@@ -741,7 +741,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 2,
-   "saniye": 212,
+   "saniye": 252,
    "mac": 1
   },
   "109611": {
@@ -781,7 +781,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 8,
-   "saniye": 303,
+   "saniye": 343,
    "mac": 1
   },
   "573226": {
@@ -789,15 +789,15 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 6,
-   "saniye": 413,
+   "saniye": 453,
    "mac": 1
   },
   "779071": {
    "ad": "Ishmael El-Amin",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 10,
-   "saniye": 468,
+   "vp": 12,
+   "saniye": 508,
    "mac": 1
   },
   "500079": {
@@ -805,7 +805,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 2,
-   "saniye": 582,
+   "saniye": 622,
    "mac": 1
   },
   "254789": {
@@ -829,7 +829,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 2,
-   "saniye": 145,
+   "saniye": 185,
    "mac": 1
   },
   "410874": {
@@ -844,8 +844,8 @@
    "ad": "Hakan Sayılı",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 0,
-   "saniye": 123,
+   "vp": 2,
+   "saniye": 163,
    "mac": 1
   },
   "400519": {

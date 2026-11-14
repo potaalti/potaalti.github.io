@@ -224,8 +224,8 @@
   "foto": "https://tbf.org.tr/res/74ae5bfa-8c31-4f91-b0bb-2bcdae052873_ChrisHorton.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 5.4,
-  "astOrt": 1.6
+  "ribOrt": 5.6,
+  "astOrt": 1.8
  },
  {
   "id": "501076",
@@ -757,7 +757,7 @@
   "boy": 191,
   "mevkiTahmini": "arka",
   "ribOrt": 4.9,
-  "astOrt": 5.2
+  "astOrt": 5.4
  },
  {
   "id": "781548",
@@ -1042,7 +1042,7 @@
   "boy": null,
   "mevkiTahmini": "arka",
   "ribOrt": 2.2,
-  "astOrt": 4.2
+  "astOrt": 4.4
  },
  {
   "id": "386159",
@@ -1060,7 +1060,7 @@
   "foto": "https://tbf.org.tr/res/1dea80db-9d22-402c-ab8f-c962e2d1f03d_turktelekom_0000_77.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 1.8,
+  "ribOrt": 2.0,
   "astOrt": 2.8
  },
  {

@@ -7,15 +7,15 @@
    "durum": "canli",
    "ev": "ALİAĞA PETKİM SPOR",
    "evId": 266048,
-   "evSkor": "39",
+   "evSkor": "44",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
-   "depSkor": "37",
+   "depSkor": "39",
    "salon": "Enka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "01:38",
+    "saat": "00:00",
     "uzatma": false
    }
   },
@@ -124,8 +124,8 @@
    "ad": "Keandre Cook",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 7,
-   "saniye": 658,
+   "vp": 9,
+   "saniye": 736,
    "mac": 1
   },
   "310250": {
@@ -133,7 +133,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 18,
-   "saniye": 883,
+   "saniye": 961,
    "mac": 1
   },
   "675128": {
@@ -149,23 +149,23 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 6,
-   "saniye": 908,
+   "saniye": 986,
    "mac": 1
   },
   "778279": {
    "ad": "Chris Horton",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 1,
-   "saniye": 547,
+   "vp": 3,
+   "saniye": 625,
    "mac": 1
   },
   "778246": {
    "ad": "Max Abmas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": -1,
-   "saniye": 533,
+   "vp": 2,
+   "saniye": 611,
    "mac": 1
   },
   "269217": {
@@ -221,15 +221,15 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 1,
-   "saniye": 521,
+   "saniye": 599,
    "mac": 1
   },
   "129216": {
    "ad": "Doğuş Özdemiroğlu",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 16,
-   "saniye": 898,
+   "vp": 17,
+   "saniye": 976,
    "mac": 1
   },
   "778727": {
@@ -245,7 +245,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 5,
-   "saniye": 593,
+   "saniye": 548,
    "mac": 1
   },
   "408785": {
@@ -276,8 +276,8 @@
    "ad": "Kris Bankston",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 17,
-   "saniye": 690,
+   "vp": 19,
+   "saniye": 768,
    "mac": 1
   },
   "272903": {
@@ -292,8 +292,8 @@
    "ad": "Shaquille Mckissic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": -3,
-   "saniye": 637,
+   "vp": -2,
+   "saniye": 760,
    "mac": 1
   }
  }

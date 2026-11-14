@@ -20,7 +20,7 @@
    "durum": "canli",
    "ev": "TOFAŞ",
    "evId": 265995,
-   "evSkor": "27",
+   "evSkor": "32",
    "dep": "TRABZONSPOR",
    "depId": 266029,
    "depSkor": "37",
@@ -28,7 +28,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "02:45",
+    "saat": "02:01",
     "uzatma": false
    }
   },
@@ -316,8 +316,8 @@
    "ad": "Tre'shawn Thurman",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 2,
-   "saniye": 616,
+   "vp": 5,
+   "saniye": 657,
    "mac": 1
   },
   "389934": {
@@ -332,16 +332,16 @@
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": -2,
-   "saniye": 726,
+   "vp": 2,
+   "saniye": 767,
    "mac": 1
   },
   "778398": {
    "ad": "Gabe Brown",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 5,
-   "saniye": 539,
+   "vp": 6,
+   "saniye": 580,
    "mac": 1
   },
   "452216": {
@@ -357,7 +357,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 2,
-   "saniye": 454,
+   "saniye": 495,
    "mac": 1
   },
   "508900": {
@@ -389,7 +389,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -2,
-   "saniye": 470,
+   "saniye": 511,
    "mac": 1
   },
   "197570": {
@@ -405,15 +405,15 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 6,
-   "saniye": 947,
+   "saniye": 988,
    "mac": 1
   },
   "735812": {
    "ad": "Brandon Boston Jr.",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 7,
-   "saniye": 902,
+   "vp": 6,
+   "saniye": 943,
    "mac": 1
   },
   "133530": {
@@ -421,7 +421,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 4,
-   "saniye": 346,
+   "saniye": 387,
    "mac": 1
   },
   "512899": {
@@ -429,7 +429,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 8,
-   "saniye": 574,
+   "saniye": 615,
    "mac": 1
   },
   "473256": {
@@ -437,7 +437,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 5,
-   "saniye": 422,
+   "saniye": 463,
    "mac": 1
   },
   "105532": {

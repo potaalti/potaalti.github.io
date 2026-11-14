@@ -20,7 +20,7 @@
    "durum": "canli",
    "ev": "TOFAŞ",
    "evId": 265995,
-   "evSkor": "27",
+   "evSkor": "32",
    "dep": "TRABZONSPOR",
    "depId": 266029,
    "depSkor": "37",
@@ -28,7 +28,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "02:45",
+    "saat": "02:01",
     "uzatma": false
    }
   },

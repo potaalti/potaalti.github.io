@@ -7,15 +7,15 @@
    "durum": "canli",
    "ev": "ALİAĞA PETKİM SPOR",
    "evId": 266048,
-   "evSkor": "83",
+   "evSkor": "85",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
-   "depSkor": "79",
+   "depSkor": "81",
    "salon": "Enka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "00:42",
+    "saat": "00:15",
     "uzatma": false
    }
   },
@@ -117,23 +117,23 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 24,
-   "saniye": 1912,
+   "saniye": 1939,
    "mac": 1
   },
   "778249": {
    "ad": "Keandre Cook",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 9,
-   "saniye": 1301,
+   "vp": 11,
+   "saniye": 1328,
    "mac": 1
   },
   "310250": {
    "ad": "Yiğit Onan",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 20,
-   "saniye": 1890,
+   "vp": 21,
+   "saniye": 1917,
    "mac": 1
   },
   "675128": {
@@ -149,7 +149,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 14,
-   "saniye": 1873,
+   "saniye": 1899,
    "mac": 1
   },
   "778279": {
@@ -157,7 +157,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 17,
-   "saniye": 1454,
+   "saniye": 1479,
    "mac": 1
   },
   "778246": {
@@ -165,7 +165,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 3,
-   "saniye": 1245,
+   "saniye": 1247,
    "mac": 1
   },
   "269217": {
@@ -221,15 +221,15 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 8,
-   "saniye": 1504,
+   "saniye": 1530,
    "mac": 1
   },
   "129216": {
    "ad": "Doğuş Özdemiroğlu",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 20,
-   "saniye": 1843,
+   "vp": 21,
+   "saniye": 1869,
    "mac": 1
   },
   "778727": {
@@ -269,7 +269,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": -1,
-   "saniye": 685,
+   "saniye": 712,
    "mac": 1
   },
   "668012": {
@@ -277,7 +277,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 26,
-   "saniye": 1421,
+   "saniye": 1448,
    "mac": 1
   },
   "272903": {
@@ -293,7 +293,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 1,
-   "saniye": 1509,
+   "saniye": 1535,
    "mac": 1
   }
  }

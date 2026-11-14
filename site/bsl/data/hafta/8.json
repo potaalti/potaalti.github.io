@@ -7,7 +7,7 @@
    "durum": "canli",
    "ev": "ALİAĞA PETKİM SPOR",
    "evId": 266048,
-   "evSkor": "25",
+   "evSkor": "31",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
    "depSkor": "25",
@@ -15,7 +15,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "06:17",
+    "saat": "04:55",
     "uzatma": false
    }
   },
@@ -116,8 +116,8 @@
    "ad": "Khyri Thomas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 4,
-   "saniye": 565,
+   "vp": 5,
+   "saniye": 647,
    "mac": 1
   },
   "778249": {
@@ -132,24 +132,24 @@
    "ad": "Yiğit Onan",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 10,
-   "saniye": 584,
+   "vp": 11,
+   "saniye": 666,
    "mac": 1
   },
   "675128": {
    "ad": "Anzejs Pasecniks",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 5,
-   "saniye": 344,
+   "vp": 7,
+   "saniye": 426,
    "mac": 1
   },
   "572386": {
    "ad": "Olivier Hanlan",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 3,
-   "saniye": 609,
+   "vp": 5,
+   "saniye": 691,
    "mac": 1
   },
   "778279": {
@@ -180,8 +180,8 @@
    "ad": "Ozan Yılmaz",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 0,
-   "saniye": 26,
+   "vp": 4,
+   "saniye": 108,
    "mac": 1
   },
   "470691": {
@@ -212,8 +212,8 @@
    "ad": "Jerrick Harding",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": -2,
-   "saniye": 411,
+   "vp": -4,
+   "saniye": 493,
    "mac": 1
   },
   "418533": {
@@ -228,8 +228,8 @@
    "ad": "Doğuş Özdemiroğlu",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 10,
-   "saniye": 599,
+   "vp": 11,
+   "saniye": 681,
    "mac": 1
   },
   "778727": {
@@ -237,7 +237,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 9,
-   "saniye": 553,
+   "saniye": 635,
    "mac": 1
   },
   "277894": {
@@ -269,7 +269,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 0,
-   "saniye": 224,
+   "saniye": 306,
    "mac": 1
   },
   "668012": {
@@ -292,8 +292,8 @@
    "ad": "Shaquille Mckissic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": -2,
-   "saniye": 555,
+   "vp": -3,
+   "saniye": 637,
    "mac": 1
   }
  }

@@ -20,15 +20,15 @@
    "durum": "canli",
    "ev": "TOFAŞ",
    "evId": 265995,
-   "evSkor": "20",
+   "evSkor": "25",
    "dep": "TRABZONSPOR",
    "depId": 266029,
-   "depSkor": "25",
+   "depSkor": "27",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "07:12",
+    "saat": "06:15",
     "uzatma": false
    }
   },
@@ -308,16 +308,16 @@
    "ad": "Terrell Carter Ii",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 2,
-   "saniye": 517,
+   "vp": 3,
+   "saniye": 573,
    "mac": 1
   },
   "736069": {
    "ad": "Tre'shawn Thurman",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 0,
-   "saniye": 346,
+   "vp": 2,
+   "saniye": 402,
    "mac": 1
   },
   "389934": {
@@ -332,8 +332,8 @@
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": -5,
-   "saniye": 573,
+   "vp": -2,
+   "saniye": 629,
    "mac": 1
   },
   "778398": {
@@ -373,7 +373,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 7,
-   "saniye": 378,
+   "saniye": 434,
    "mac": 1
   },
   "434482": {
@@ -397,23 +397,23 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 168,
+   "saniye": 224,
    "mac": 1
   },
   "779255": {
    "ad": "Marcus Keene",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 2,
-   "saniye": 677,
+   "vp": 3,
+   "saniye": 733,
    "mac": 1
   },
   "735812": {
    "ad": "Brandon Boston Jr.",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 6,
-   "saniye": 632,
+   "vp": 5,
+   "saniye": 688,
    "mac": 1
   },
   "133530": {
@@ -445,7 +445,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 1,
-   "saniye": 454,
+   "saniye": 510,
    "mac": 1
   },
   "368413": {
@@ -477,15 +477,15 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 1,
-   "saniye": 32,
+   "saniye": 88,
    "mac": 1
   },
   "590409": {
    "ad": "Brady Manek",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 3,
-   "saniye": 378,
+   "vp": 5,
+   "saniye": 434,
    "mac": 1
   },
   "192987": {

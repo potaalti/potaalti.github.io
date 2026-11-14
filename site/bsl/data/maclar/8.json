@@ -33,7 +33,7 @@
    "durum": "canli",
    "ev": "BİOTEKNO KÖRFEZ BASKET",
    "evId": 268222,
-   "evSkor": "0",
+   "evSkor": "4",
    "dep": "GALATASARAY MCT TECHNIC",
    "depId": 266026,
    "depSkor": "0",
@@ -41,7 +41,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "09:43",
+    "saat": "09:05",
     "uzatma": false
    }
   },

@@ -23,12 +23,12 @@
    "evSkor": "65",
    "dep": "TRABZONSPOR",
    "depId": 266029,
-   "depSkor": "57",
+   "depSkor": "58",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "04:53",
+    "saat": "03:52",
     "uzatma": false
    }
   },
@@ -316,8 +316,8 @@
    "ad": "Tre'shawn Thurman",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 9,
-   "saniye": 1218,
+   "vp": 8,
+   "saniye": 1244,
    "mac": 1
   },
   "389934": {
@@ -357,7 +357,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 8,
-   "saniye": 1083,
+   "saniye": 1117,
    "mac": 1
   },
   "508900": {
@@ -365,7 +365,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 13,
-   "saniye": 1049,
+   "saniye": 1109,
    "mac": 1
   },
   "732657": {
@@ -373,7 +373,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 11,
-   "saniye": 935,
+   "saniye": 995,
    "mac": 1
   },
   "434482": {
@@ -389,15 +389,15 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -3,
-   "saniye": 1222,
+   "saniye": 1282,
    "mac": 1
   },
   "197570": {
    "ad": "Leon Apaydın",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 4,
-   "saniye": 796,
+   "vp": 3,
+   "saniye": 856,
    "mac": 1
   },
   "779255": {
@@ -405,7 +405,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 8,
-   "saniye": 1839,
+   "saniye": 1899,
    "mac": 1
   },
   "735812": {
@@ -413,7 +413,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 13,
-   "saniye": 1870,
+   "saniye": 1930,
    "mac": 1
   },
   "133530": {
@@ -429,15 +429,15 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 11,
-   "saniye": 1477,
+   "saniye": 1537,
    "mac": 1
   },
   "473256": {
    "ad": "Emanuel Terry",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 6,
-   "saniye": 1144,
+   "vp": 7,
+   "saniye": 1204,
    "mac": 1
   },
   "105532": {
@@ -445,7 +445,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 6,
-   "saniye": 1338,
+   "saniye": 1398,
    "mac": 1
   },
   "368413": {

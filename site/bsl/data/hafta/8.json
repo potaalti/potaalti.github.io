@@ -46,15 +46,15 @@
    "durum": "canli",
    "ev": "PİZZABULLS BORDO BANDIRMA",
    "evId": 265993,
-   "evSkor": "22",
+   "evSkor": "26",
    "dep": "KARŞIYAKA",
    "depId": 266027,
-   "depSkor": "22",
+   "depSkor": "25",
    "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "01:54",
+    "saat": "00:40",
     "uzatma": false
    }
   },
@@ -717,7 +717,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": -1,
-   "saniye": 488,
+   "saniye": 560,
    "mac": 1
   },
   "501076": {
@@ -732,16 +732,16 @@
    "ad": "Alex Perez",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 4,
-   "saniye": 172,
+   "vp": 5,
+   "saniye": 244,
    "mac": 1
   },
   "106461": {
    "ad": "Kadir Bayram",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 1,
-   "saniye": 100,
+   "vp": 2,
+   "saniye": 172,
    "mac": 1
   },
   "109611": {
@@ -765,7 +765,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 2,
-   "saniye": 53,
+   "saniye": 125,
    "mac": 1
   },
   "307500": {
@@ -780,8 +780,8 @@
    "ad": "Zach Hankins",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 3,
-   "saniye": 126,
+   "vp": 7,
+   "saniye": 198,
    "mac": 1
   },
   "573226": {
@@ -805,7 +805,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 2,
-   "saniye": 488,
+   "saniye": 560,
    "mac": 1
   },
   "254789": {
@@ -813,7 +813,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 5,
-   "saniye": 488,
+   "saniye": 560,
    "mac": 1
   },
   "609083": {
@@ -836,8 +836,8 @@
    "ad": "Markel Starks",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": -1,
-   "saniye": 108,
+   "vp": 2,
+   "saniye": 180,
    "mac": 1
   },
   "218536": {
@@ -869,15 +869,15 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 0,
-   "saniye": 53,
+   "saniye": 125,
    "mac": 1
   },
   "786430": {
    "ad": "Cyrıl  Langevıne",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 1,
-   "saniye": 126,
+   "vp": 0,
+   "saniye": 198,
    "mac": 1
   }
  }

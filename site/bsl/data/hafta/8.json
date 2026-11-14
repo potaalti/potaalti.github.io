@@ -7,15 +7,15 @@
    "durum": "canli",
    "ev": "ALİAĞA PETKİM SPOR",
    "evId": 266048,
-   "evSkor": "45",
+   "evSkor": "47",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
-   "depSkor": "39",
+   "depSkor": "43",
    "salon": "Enka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "08:01",
+    "saat": "06:57",
     "uzatma": false
    }
   },
@@ -116,8 +116,8 @@
    "ad": "Khyri Thomas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 3,
-   "saniye": 915,
+   "vp": 5,
+   "saniye": 979,
    "mac": 1
   },
   "778249": {
@@ -125,7 +125,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 9,
-   "saniye": 855,
+   "saniye": 919,
    "mac": 1
   },
   "310250": {
@@ -133,15 +133,15 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 18,
-   "saniye": 1079,
+   "saniye": 1143,
    "mac": 1
   },
   "675128": {
    "ad": "Anzejs Pasecniks",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 7,
-   "saniye": 640,
+   "vp": 6,
+   "saniye": 704,
    "mac": 1
   },
   "572386": {
@@ -149,7 +149,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 7,
-   "saniye": 1105,
+   "saniye": 1169,
    "mac": 1
   },
   "778279": {
@@ -212,8 +212,8 @@
    "ad": "Jerrick Harding",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": -4,
-   "saniye": 612,
+   "vp": 0,
+   "saniye": 676,
    "mac": 1
   },
   "418533": {
@@ -221,7 +221,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 2,
-   "saniye": 718,
+   "saniye": 782,
    "mac": 1
   },
   "129216": {
@@ -229,7 +229,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 17,
-   "saniye": 1095,
+   "saniye": 1159,
    "mac": 1
   },
   "778727": {
@@ -237,7 +237,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 9,
-   "saniye": 754,
+   "saniye": 818,
    "mac": 1
   },
   "277894": {
@@ -245,7 +245,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 4,
-   "saniye": 667,
+   "saniye": 731,
    "mac": 1
   },
   "408785": {

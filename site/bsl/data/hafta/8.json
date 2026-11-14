@@ -27,8 +27,8 @@
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
-    "periyot": 1,
-    "saat": "00:00",
+    "periyot": 2,
+    "saat": "09:07",
     "uzatma": false
    }
   },
@@ -309,7 +309,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 349,
+   "saniye": 402,
    "mac": 1
   },
   "736069": {
@@ -332,8 +332,8 @@
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": -3,
-   "saniye": 405,
+   "vp": -4,
+   "saniye": 458,
    "mac": 1
   },
   "778398": {
@@ -357,7 +357,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 1,
-   "saniye": 286,
+   "saniye": 339,
    "mac": 1
   },
   "508900": {
@@ -373,7 +373,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 5,
-   "saniye": 210,
+   "saniye": 263,
    "mac": 1
   },
   "434482": {
@@ -397,7 +397,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 53,
    "mac": 1
   },
   "779255": {
@@ -405,7 +405,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 2,
-   "saniye": 509,
+   "saniye": 562,
    "mac": 1
   },
   "735812": {
@@ -445,7 +445,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 0,
-   "saniye": 286,
+   "saniye": 339,
    "mac": 1
   },
   "368413": {
@@ -469,7 +469,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 2,
-   "saniye": 210,
+   "saniye": 263,
    "mac": 1
   },
   "129295": {
@@ -485,7 +485,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 3,
-   "saniye": 210,
+   "saniye": 263,
    "mac": 1
   },
   "192987": {
@@ -493,7 +493,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 0,
-   "saniye": 91,
+   "saniye": 144,
    "mac": 1
   }
  }

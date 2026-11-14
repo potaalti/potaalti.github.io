@@ -41,7 +41,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "01:41",
+    "saat": "01:17",
     "uzatma": false
    }
   },
@@ -500,8 +500,8 @@
    "ad": "Boo Buie",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 8,
-   "saniye": 390,
+   "vp": 7,
+   "saniye": 414,
    "mac": 1
   },
   "778161": {
@@ -517,7 +517,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 0,
-   "saniye": 359,
+   "saniye": 383,
    "mac": 1
   },
   "609266": {
@@ -525,7 +525,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 4,
-   "saniye": 411,
+   "saniye": 435,
    "mac": 1
   },
   "778182": {
@@ -581,7 +581,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": -1,
-   "saniye": 88,
+   "saniye": 112,
    "mac": 1
   },
   "470601": {
@@ -589,7 +589,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 0,
-   "saniye": 140,
+   "saniye": 164,
    "mac": 1
   },
   "736340": {
@@ -613,7 +613,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 0,
-   "saniye": 390,
+   "saniye": 414,
    "mac": 1
   },
   "779275": {
@@ -637,7 +637,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 1,
-   "saniye": 114,
+   "saniye": 138,
    "mac": 1
   },
   "221447": {
@@ -652,8 +652,8 @@
    "ad": "Alen Smailagic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 4,
-   "saniye": 251,
+   "vp": 5,
+   "saniye": 275,
    "mac": 1
   },
   "609092": {
@@ -677,7 +677,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 0,
-   "saniye": 88,
+   "saniye": 112,
    "mac": 1
   },
   "781548": {
@@ -685,7 +685,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 1,
-   "saniye": 140,
+   "saniye": 164,
    "mac": 1
   }
  }

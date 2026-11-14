@@ -33,15 +33,15 @@
    "durum": "canli",
    "ev": "BİOTEKNO KÖRFEZ BASKET",
    "evId": 268222,
-   "evSkor": "76",
+   "evSkor": "78",
    "dep": "GALATASARAY MCT TECHNIC",
    "depId": 266026,
-   "depSkor": "76",
+   "depSkor": "79",
    "salon": "Şehit Polis Recep Topaloğlu Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "02:53",
+    "saat": "01:29",
     "uzatma": false
    }
   },
@@ -501,15 +501,15 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 22,
-   "saniye": 1960,
+   "saniye": 2045,
    "mac": 1
   },
   "778161": {
    "ad": "Johnny Davis",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 20,
-   "saniye": 1814,
+   "vp": 21,
+   "saniye": 1899,
    "mac": 1
   },
   "419874": {
@@ -517,7 +517,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 0,
-   "saniye": 1565,
+   "saniye": 1650,
    "mac": 1
   },
   "609266": {
@@ -533,7 +533,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 17,
-   "saniye": 1799,
+   "saniye": 1884,
    "mac": 1
   },
   "254785": {
@@ -589,7 +589,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": -2,
-   "saniye": 898,
+   "saniye": 983,
    "mac": 1
   },
   "736340": {
@@ -597,31 +597,31 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 9,
-   "saniye": 1189,
+   "saniye": 1274,
    "mac": 1
   },
   "250129": {
    "ad": "Şehmus Hazer",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 6,
-   "saniye": 1524,
+   "vp": 8,
+   "saniye": 1609,
    "mac": 1
   },
   "502492": {
    "ad": "Aleksej Nikolic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 17,
-   "saniye": 1728,
+   "vp": 20,
+   "saniye": 1813,
    "mac": 1
   },
   "779275": {
    "ad": "Chimezie Metu",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 16,
-   "saniye": 1683,
+   "vp": 17,
+   "saniye": 1768,
    "mac": 1
   },
   "779274": {
@@ -652,8 +652,8 @@
    "ad": "Alen Smailagic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 8,
-   "saniye": 1075,
+   "vp": 7,
+   "saniye": 1160,
    "mac": 1
   },
   "609092": {

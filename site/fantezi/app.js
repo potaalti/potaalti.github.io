@@ -1818,7 +1818,7 @@ function gorunumKurallar() {
         : `<li>Her takım sezon boyunca en fazla ${a.faHakki} serbest oyuncu (hiçbir takımda olmayan oyuncu) alabilir; alırken bir oyuncusunu bırakır.</li>`}
       <li><b>Boştakiler</b> sayfasında hiçbir fantezi takımında olmayan ${LIG.kisa} oyuncuları listelenir; serbest oyuncu oradan alınır.
         Talep süresindeki oyuncular sayfanın en üstünde ayrı görünür (kim bıraktı ya da lisansı yeni mi çıktı, kalan süre, talip sayısı).</li>
-      <li>Bir takımın bıraktığı ya da ${LIG.kisa}'ye yeni katılan (lisansı yeni çıkan) oyuncuyu ${beklemeSaati()} saat kimse alamaz. Bu sürede takımlar oyuncuya talep eder (kazanırsa bırakacağı oyuncuyu seçer); süre bitince talip olanlar arasında kura çekilir${faSinirsiz() ? '' : ` ve kazanan takımın ${hakAdi()}ndan 1 düşer`}. Talep eden olmazsa oyuncu boştakilere düşer ve isteyen alır. Kimlerin talip olduğu oyuncunun sayfasında görünür.</li>
+      <li>Bir takımın bıraktığı ya da ${LIG.kisa}'ye yeni katılan (lisansı yeni çıkan) oyuncuyu ${beklemeSaati()} saat kimse alamaz. Bu sürede takımlar oyuncuya talep eder (kazanırsa bırakacağı oyuncuyu seçer); süre bitince talip olanlar arasında kura çekilir${faSinirsiz() ? '' : ` ve kazanan takımın ${hakAdi()}ndan 1 düşer`}. Aynı anda süresi biten kuralardan önce en çok talibi olan çekilir; bir takım kazandığında, aynı oyuncusunu bırakarak başka oyuncuya yaptığı talep o kuradan çıkar (kazanamazsa diğer kurada devam eder). Talep eden olmazsa oyuncu boştakilere düşer ve isteyen alır. Kimlerin talip olduğu oyuncunun sayfasında görünür.</li>
       ${LIG.otomatikYerine ? `<li>Fantezi takımındaki yabancı bir oyuncunun lisansı düşer ve ${LIG.kisa} takımı yerine yabancı bir oyuncu alırsa, yeni oyuncu fantezi takımına <b>otomatik</b> geçer; ${hakAdi()}ndan düşmez. Yerine kimse gelmezse takım boştakilerden oyuncu almak zorundadır (bu da hakkından düşmez).</li>` : ''}
       <li>Yöneticiler gerektiğinde her takımın kadrosunu düzenleyebilir${LIG.hareketler ? "; yaptıkları değişiklikler Hareketler'de görünür" : ''}.</li>
       ${ortakHak() ? '' : `<li>Her takım sezon boyunca ${hakSayisi(a.degisiklikHakki)} As–Yedek değişikliği yapabilir.</li>`}
@@ -2737,14 +2737,31 @@ const talepIstisnasi = (pid, b) => {
 };
 // Süresi istisnaya göre henüz değiştirilmemiş talep (değiştirilene kadar kurası çekilmez)
 const istisnaBekliyor = (pid, b) => [LIG.talepIstisnalari?.[pid]?.baslangic ?? []].flat().map(Date.parse).includes(b?.zaman?.toMillis?.());
-function talepKuralariniCek() {
-  if (!yonetici() || asama() !== 'sezon' || !S.beklemeYuklendi) return;
-  for (const [pid, b] of Object.entries(S.bekleme)) {
-    if (!Object.keys(b.talepler ?? {}).length || D.beklemeKalan(b) > 0 || istisnaBekliyor(pid, b) || LIG.haricOyuncular?.includes(pid) || Date.now() - (kuraDenenen.get(pid) ?? 0) < 60000) continue;
-    kuraDenenen.set(pid, Date.now());
-    D.talepKurasi(pid, talepIstisnasi(pid, b)?.hafta ?? etkinHafta(), dizilisSorunu)
-      .then(sonuc => bildir(sonuc ? `Talep kurası: ${oyuncu(pid).ad} → ${takimAdi(sonuc.kazanan)} (${sonuc.talipler.length} talip)` : `${oyuncu(pid).ad}: uygun talep yoktu, boştakilere düştü`))
-      .catch(e => { if (!(e instanceof D.Hata)) console.warn('Talep kurası çekilemedi', e); });
+// Aynı anda süresi biten kuralar: en çok talibi olan önce (eşitlikte süresi önce biten), sırayla ve birbirini bekleyerek
+// çekilir. Bir takım kurayı kazanınca bıraktığı oyuncu kadrosundan çıktığı için, aynı oyuncuyu bırakarak başka oyuncuya
+// yaptığı talep sonraki kurada geçersiz sayılır (o kuradan çıkar); kazanamazsa diğer kurada aynen devam eder
+// (talepKurasi işlem içinde kadronun o anki halini okur). Talepler silinmez, yalnızca kura sırası belirlenir.
+let kuraSuruyor = false;
+async function talepKuralariniCek() {
+  if (!yonetici() || asama() !== 'sezon' || !S.beklemeYuklendi || kuraSuruyor) return;
+  const bitis = b => b?.zaman?.toMillis?.() ?? 0;
+  const hazir = Object.entries(S.bekleme).filter(([pid, b]) => Object.keys(b.talepler ?? {}).length && D.beklemeKalan(b) <= 0
+    && !istisnaBekliyor(pid, b) && !LIG.haricOyuncular?.includes(pid) && Date.now() - (kuraDenenen.get(pid) ?? 0) >= 60000)
+    .sort(([, a], [, c]) => Object.keys(c.talepler).length - Object.keys(a.talepler).length || bitis(a) - bitis(c));
+  if (!hazir.length) return;
+  kuraSuruyor = true;
+  try {
+    for (const [pid, b] of hazir) {
+      kuraDenenen.set(pid, Date.now());
+      try {
+        const sonuc = await D.talepKurasi(pid, talepIstisnasi(pid, b)?.hafta ?? etkinHafta(), dizilisSorunu);
+        bildir(sonuc ? `Talep kurası: ${oyuncu(pid).ad} → ${takimAdi(sonuc.kazanan)} (${sonuc.talipler.length} talip)` : `${oyuncu(pid).ad}: uygun talep yoktu, boştakilere düştü`);
+      } catch (e) {
+        if (!(e instanceof D.Hata)) console.warn('Talep kurası çekilemedi', e);
+      }
+    }
+  } finally {
+    kuraSuruyor = false;
   }
 }
 setInterval(() => { talepKuralariniCek(); beklemeleriEsitle(); }, 30000); // giriş/kadrolar sonradan gelirse

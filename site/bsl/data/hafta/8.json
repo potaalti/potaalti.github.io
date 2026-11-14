@@ -46,15 +46,15 @@
    "durum": "canli",
    "ev": "PİZZABULLS BORDO BANDIRMA",
    "evId": 265993,
-   "evSkor": "2",
+   "evSkor": "3",
    "dep": "KARŞIYAKA",
    "depId": 266027,
-   "depSkor": "5",
+   "depSkor": "7",
    "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "09:08",
+    "saat": "07:44",
     "uzatma": false
    }
   },
@@ -693,15 +693,15 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 51,
+   "saniye": 138,
    "mac": 1
   },
   "130898": {
    "ad": "Okben Ulubay",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 0,
-   "saniye": 51,
+   "vp": 1,
+   "saniye": 138,
    "mac": 1
   },
   "512379": {
@@ -709,15 +709,15 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 51,
+   "saniye": 138,
    "mac": 1
   },
   "473261": {
    "ad": "Peyton Aldridge",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 0,
-   "saniye": 51,
+   "vp": -1,
+   "saniye": 138,
    "mac": 1
   },
   "501076": {
@@ -725,7 +725,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 1,
-   "saniye": 51,
+   "saniye": 138,
    "mac": 1
   },
   "441857": {
@@ -788,40 +788,40 @@
    "ad": "Briante Weber",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 2,
-   "saniye": 51,
+   "vp": 3,
+   "saniye": 138,
    "mac": 1
   },
   "779071": {
    "ad": "Ishmael El-Amin",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 3,
-   "saniye": 51,
+   "vp": 4,
+   "saniye": 138,
    "mac": 1
   },
   "500079": {
    "ad": "Rashard Kelly",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 0,
-   "saniye": 51,
+   "vp": 2,
+   "saniye": 138,
    "mac": 1
   },
   "254789": {
    "ad": "Yavuz Gültekin",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 0,
-   "saniye": 51,
+   "vp": 2,
+   "saniye": 138,
    "mac": 1
   },
   "609083": {
    "ad": "Steven Enoch",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 1,
-   "saniye": 51,
+   "vp": 0,
+   "saniye": 138,
    "mac": 1
   },
   "228502": {

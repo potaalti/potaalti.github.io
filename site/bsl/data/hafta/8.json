@@ -46,7 +46,7 @@
    "durum": "canli",
    "ev": "PİZZABULLS BORDO BANDIRMA",
    "evId": 265993,
-   "evSkor": "74",
+   "evSkor": "76",
    "dep": "KARŞIYAKA",
    "depId": 266027,
    "depSkor": "71",
@@ -54,7 +54,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "03:44",
+    "saat": "03:43",
     "uzatma": false
    }
   },
@@ -724,7 +724,7 @@
    "ad": "Quentin Peterson",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 14,
+   "vp": 15,
    "saniye": 1432,
    "mac": 1
   },
@@ -796,7 +796,7 @@
    "ad": "Ishmael El-Amin",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 20,
+   "vp": 21,
    "saniye": 1932,
    "mac": 1
   },
@@ -876,7 +876,7 @@
    "ad": "Cyrıl  Langevıne",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": -1,
+   "vp": -2,
    "saniye": 537,
    "mac": 1
   }

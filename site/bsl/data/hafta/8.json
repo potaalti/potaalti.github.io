@@ -41,7 +41,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "00:03",
+    "saat": "00:00",
     "uzatma": false
    }
   },
@@ -500,8 +500,8 @@
    "ad": "Boo Buie",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 13,
-   "saniye": 1087,
+   "vp": 12,
+   "saniye": 1091,
    "mac": 1
   },
   "778161": {
@@ -517,7 +517,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": -1,
-   "saniye": 703,
+   "saniye": 707,
    "mac": 1
   },
   "609266": {
@@ -549,7 +549,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 1,
    "mac": 1
   },
   "358964": {
@@ -565,7 +565,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 1,
-   "saniye": 362,
+   "saniye": 365,
    "mac": 1
   },
   "778184": {
@@ -581,7 +581,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": -1,
-   "saniye": 482,
+   "saniye": 486,
    "mac": 1
   },
   "470601": {
@@ -589,7 +589,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 0,
-   "saniye": 658,
+   "saniye": 662,
    "mac": 1
   },
   "736340": {
@@ -605,7 +605,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 3,
-   "saniye": 954,
+   "saniye": 958,
    "mac": 1
   },
   "502492": {
@@ -613,7 +613,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 4,
-   "saniye": 1087,
+   "saniye": 1091,
    "mac": 1
   },
   "779275": {
@@ -621,7 +621,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 9,
-   "saniye": 795,
+   "saniye": 799,
    "mac": 1
   },
   "779274": {
@@ -652,8 +652,8 @@
    "ad": "Alen Smailagic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 6,
-   "saniye": 645,
+   "vp": 5,
+   "saniye": 649,
    "mac": 1
   },
   "609092": {
@@ -677,7 +677,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 2,
-   "saniye": 468,
+   "saniye": 472,
    "mac": 1
   },
   "781548": {

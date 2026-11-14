@@ -33,15 +33,15 @@
    "durum": "canli",
    "ev": "BİOTEKNO KÖRFEZ BASKET",
    "evId": 268222,
-   "evSkor": "4",
+   "evSkor": "7",
    "dep": "GALATASARAY MCT TECHNIC",
    "depId": 266026,
-   "depSkor": "0",
+   "depSkor": "1",
    "salon": "Şehit Polis Recep Topaloğlu Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "09:05",
+    "saat": "07:58",
     "uzatma": false
    }
   },
@@ -500,8 +500,8 @@
    "ad": "Boo Buie",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 2,
-   "saniye": 71,
+   "vp": 6,
+   "saniye": 122,
    "mac": 1
   },
   "778161": {
@@ -509,7 +509,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 3,
-   "saniye": 71,
+   "saniye": 122,
    "mac": 1
   },
   "419874": {
@@ -517,7 +517,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 0,
-   "saniye": 71,
+   "saniye": 122,
    "mac": 1
   },
   "609266": {
@@ -525,7 +525,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 0,
-   "saniye": 71,
+   "saniye": 122,
    "mac": 1
   },
   "778182": {
@@ -533,7 +533,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 0,
-   "saniye": 71,
+   "saniye": 122,
    "mac": 1
   },
   "254785": {
@@ -597,7 +597,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": -1,
-   "saniye": 71,
+   "saniye": 122,
    "mac": 1
   },
   "250129": {
@@ -605,15 +605,15 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 0,
-   "saniye": 71,
+   "saniye": 122,
    "mac": 1
   },
   "502492": {
    "ad": "Aleksej Nikolic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 0,
-   "saniye": 71,
+   "vp": -2,
+   "saniye": 122,
    "mac": 1
   },
   "779275": {
@@ -621,15 +621,15 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": -1,
-   "saniye": 71,
+   "saniye": 122,
    "mac": 1
   },
   "779274": {
    "ad": "Oumar Ballo",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 0,
-   "saniye": 71,
+   "vp": 1,
+   "saniye": 122,
    "mac": 1
   },
   "128768": {

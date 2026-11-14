@@ -33,7 +33,7 @@
    "durum": "canli",
    "ev": "BİOTEKNO KÖRFEZ BASKET",
    "evId": 268222,
-   "evSkor": "49",
+   "evSkor": "52",
    "dep": "GALATASARAY MCT TECHNIC",
    "depId": 266026,
    "depSkor": "37",
@@ -41,7 +41,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "08:39",
+    "saat": "08:07",
     "uzatma": false
    }
   },
@@ -501,23 +501,23 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 15,
-   "saniye": 1172,
+   "saniye": 1204,
    "mac": 1
   },
   "778161": {
    "ad": "Johnny Davis",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 10,
-   "saniye": 869,
+   "vp": 11,
+   "saniye": 901,
    "mac": 1
   },
   "419874": {
    "ad": "Berk Can Akın",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": -1,
-   "saniye": 788,
+   "vp": 2,
+   "saniye": 820,
    "mac": 1
   },
   "609266": {
@@ -525,7 +525,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 10,
-   "saniye": 927,
+   "saniye": 959,
    "mac": 1
   },
   "778182": {
@@ -533,7 +533,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 12,
-   "saniye": 948,
+   "saniye": 980,
    "mac": 1
   },
   "254785": {
@@ -597,7 +597,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 0,
-   "saniye": 492,
+   "saniye": 524,
    "mac": 1
   },
   "250129": {
@@ -605,7 +605,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 2,
-   "saniye": 1039,
+   "saniye": 1071,
    "mac": 1
   },
   "502492": {
@@ -621,7 +621,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 9,
-   "saniye": 880,
+   "saniye": 912,
    "mac": 1
   },
   "779274": {
@@ -629,7 +629,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 6,
-   "saniye": 632,
+   "saniye": 664,
    "mac": 1
   },
   "128768": {
@@ -684,8 +684,8 @@
    "ad": "Kj Simpson",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 2,
-   "saniye": 749,
+   "vp": 1,
+   "saniye": 781,
    "mac": 1
   }
  }

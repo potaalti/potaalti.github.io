@@ -23,12 +23,12 @@
    "evSkor": "27",
    "dep": "TRABZONSPOR",
    "depId": 266029,
-   "depSkor": "35",
+   "depSkor": "37",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "04:21",
+    "saat": "03:44",
     "uzatma": false
    }
   },
@@ -309,7 +309,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 3,
-   "saniye": 688,
+   "saniye": 725,
    "mac": 1
   },
   "736069": {
@@ -317,7 +317,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 3,
-   "saniye": 517,
+   "saniye": 554,
    "mac": 1
   },
   "389934": {
@@ -340,8 +340,8 @@
    "ad": "Gabe Brown",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 5,
-   "saniye": 440,
+   "vp": 4,
+   "saniye": 477,
    "mac": 1
   },
   "452216": {
@@ -389,7 +389,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -2,
-   "saniye": 371,
+   "saniye": 408,
    "mac": 1
   },
   "197570": {
@@ -397,15 +397,15 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 289,
+   "saniye": 326,
    "mac": 1
   },
   "779255": {
    "ad": "Marcus Keene",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 4,
-   "saniye": 848,
+   "vp": 6,
+   "saniye": 885,
    "mac": 1
   },
   "735812": {
@@ -413,7 +413,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 7,
-   "saniye": 803,
+   "saniye": 840,
    "mac": 1
   },
   "133530": {
@@ -429,7 +429,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 9,
-   "saniye": 475,
+   "saniye": 512,
    "mac": 1
   },
   "473256": {
@@ -445,7 +445,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 4,
-   "saniye": 625,
+   "saniye": 662,
    "mac": 1
   },
   "368413": {
@@ -476,8 +476,8 @@
    "ad": "Ege Arar",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 3,
-   "saniye": 203,
+   "vp": 4,
+   "saniye": 240,
    "mac": 1
   },
   "590409": {

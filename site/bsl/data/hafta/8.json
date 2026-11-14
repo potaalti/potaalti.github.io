@@ -30,7 +30,7 @@
   {
    "id": 346331,
    "tarih": "2026-11-14T18:00:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "BİOTEKNO KÖRFEZ BASKET",
    "evId": 268222,
    "evSkor": "82",
@@ -38,12 +38,7 @@
    "depId": 266026,
    "depSkor": "81",
    "salon": "Şehit Polis Recep Topaloğlu Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "00:00",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346336,
@@ -501,7 +496,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 21,
-   "saniye": 2119,
+   "saniye": 2118,
    "mac": 1
   },
   "778161": {
@@ -681,7 +676,7 @@
    "mac": 1
   },
   "781548": {
-   "ad": "Kj Simpson",
+   "ad": "KJ Simpson",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 3,

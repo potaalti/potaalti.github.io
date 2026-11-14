@@ -46,15 +46,15 @@
    "durum": "canli",
    "ev": "PİZZABULLS BORDO BANDIRMA",
    "evId": 265993,
-   "evSkor": "15",
+   "evSkor": "18",
    "dep": "KARŞIYAKA",
    "depId": 266027,
-   "depSkor": "18",
+   "depSkor": "20",
    "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "03:40",
+    "saat": "02:45",
     "uzatma": false
    }
   },
@@ -701,7 +701,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 382,
+   "saniye": 388,
    "mac": 1
   },
   "512379": {
@@ -717,7 +717,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": -1,
-   "saniye": 382,
+   "saniye": 436,
    "mac": 1
   },
   "501076": {
@@ -725,15 +725,15 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 11,
-   "saniye": 382,
+   "saniye": 435,
    "mac": 1
   },
   "441857": {
    "ad": "Alex Perez",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 0,
-   "saniye": 66,
+   "vp": 3,
+   "saniye": 120,
    "mac": 1
   },
   "106461": {
@@ -741,7 +741,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 48,
    "mac": 1
   },
   "109611": {
@@ -765,7 +765,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 1,
    "mac": 1
   },
   "307500": {
@@ -781,7 +781,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 20,
+   "saniye": 74,
    "mac": 1
   },
   "573226": {
@@ -797,7 +797,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 10,
-   "saniye": 382,
+   "saniye": 435,
    "mac": 1
   },
   "500079": {
@@ -805,15 +805,15 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 1,
-   "saniye": 382,
+   "saniye": 436,
    "mac": 1
   },
   "254789": {
    "ad": "Yavuz Gültekin",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 2,
-   "saniye": 382,
+   "vp": 3,
+   "saniye": 436,
    "mac": 1
   },
   "609083": {
@@ -837,7 +837,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 0,
-   "saniye": 2,
+   "saniye": 56,
    "mac": 1
   },
   "218536": {
@@ -869,15 +869,15 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 1,
    "mac": 1
   },
   "786430": {
    "ad": "Cyrıl  Langevıne",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 0,
-   "saniye": 20,
+   "vp": 1,
+   "saniye": 74,
    "mac": 1
   }
  }

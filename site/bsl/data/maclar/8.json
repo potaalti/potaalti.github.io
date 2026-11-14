@@ -46,15 +46,15 @@
    "durum": "canli",
    "ev": "PİZZABULLS BORDO BANDIRMA",
    "evId": 265993,
-   "evSkor": "60",
+   "evSkor": "66",
    "dep": "KARŞIYAKA",
    "depId": 266027,
-   "depSkor": "53",
+   "depSkor": "58",
    "salon": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "01:33",
+    "saat": "00:00",
     "uzatma": false
    }
   },

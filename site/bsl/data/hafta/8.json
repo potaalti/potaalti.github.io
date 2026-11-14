@@ -46,7 +46,7 @@
    "durum": "canli",
    "ev": "PİZZABULLS BORDO BANDIRMA",
    "evId": 265993,
-   "evSkor": "40",
+   "evSkor": "41",
    "dep": "KARŞIYAKA",
    "depId": 266027,
    "depSkor": "37",
@@ -54,7 +54,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "02:41",
+    "saat": "02:09",
     "uzatma": false
    }
   },
@@ -693,7 +693,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 4,
-   "saniye": 683,
+   "saniye": 716,
    "mac": 1
   },
   "130898": {
@@ -701,7 +701,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 741,
+   "saniye": 774,
    "mac": 1
   },
   "512379": {
@@ -717,7 +717,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 5,
-   "saniye": 912,
+   "saniye": 945,
    "mac": 1
   },
   "501076": {
@@ -733,7 +733,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 4,
-   "saniye": 415,
+   "saniye": 448,
    "mac": 1
   },
   "106461": {
@@ -780,8 +780,8 @@
    "ad": "Zach Hankins",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 8,
-   "saniye": 473,
+   "vp": 9,
+   "saniye": 506,
    "mac": 1
   },
   "573226": {
@@ -789,7 +789,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 6,
-   "saniye": 747,
+   "saniye": 780,
    "mac": 1
   },
   "779071": {
@@ -797,15 +797,15 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 11,
-   "saniye": 802,
+   "saniye": 835,
    "mac": 1
   },
   "500079": {
    "ad": "Rashard Kelly",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 9,
-   "saniye": 916,
+   "vp": 8,
+   "saniye": 949,
    "mac": 1
   },
   "254789": {
@@ -813,7 +813,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 6,
-   "saniye": 768,
+   "saniye": 801,
    "mac": 1
   },
   "609083": {
@@ -845,7 +845,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 0,
-   "saniye": 422,
+   "saniye": 455,
    "mac": 1
   },
   "400519": {

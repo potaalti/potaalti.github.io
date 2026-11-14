@@ -20,15 +20,15 @@
    "durum": "canli",
    "ev": "TOFAŞ",
    "evId": 265995,
-   "evSkor": "0",
+   "evSkor": "6",
    "dep": "TRABZONSPOR",
    "depId": 266029,
-   "depSkor": "2",
+   "depSkor": "4",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "08:22",
+    "saat": "06:41",
     "uzatma": false
    }
   },
@@ -308,8 +308,8 @@
    "ad": "Terrell Carter Ii",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": -1,
-   "saniye": 98,
+   "vp": -2,
+   "saniye": 198,
    "mac": 1
   },
   "736069": {
@@ -317,31 +317,31 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 98,
+   "saniye": 198,
    "mac": 1
   },
   "389934": {
    "ad": "Efe Postel",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 1,
-   "saniye": 98,
+   "vp": 4,
+   "saniye": 198,
    "mac": 1
   },
   "778401": {
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": -2,
-   "saniye": 98,
+   "vp": -1,
+   "saniye": 198,
    "mac": 1
   },
   "778398": {
    "ad": "Gabe Brown",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 0,
-   "saniye": 98,
+   "vp": 3,
+   "saniye": 198,
    "mac": 1
   },
   "452216": {
@@ -405,7 +405,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 0,
-   "saniye": 98,
+   "saniye": 198,
    "mac": 1
   },
   "735812": {
@@ -413,23 +413,23 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 1,
-   "saniye": 98,
+   "saniye": 198,
    "mac": 1
   },
   "133530": {
    "ad": "Tolga Geçim",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 2,
-   "saniye": 98,
+   "vp": 3,
+   "saniye": 198,
    "mac": 1
   },
   "512899": {
    "ad": "Akwasi Yeboah",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 0,
-   "saniye": 98,
+   "vp": 2,
+   "saniye": 198,
    "mac": 1
   },
   "473256": {
@@ -437,7 +437,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 1,
-   "saniye": 98,
+   "saniye": 198,
    "mac": 1
   },
   "105532": {

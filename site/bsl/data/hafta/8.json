@@ -10,12 +10,12 @@
    "evSkor": "52",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
-   "depSkor": "47",
+   "depSkor": "49",
    "salon": "Enka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "05:07",
+    "saat": "04:42",
     "uzatma": false
    }
   },
@@ -117,7 +117,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 9,
-   "saniye": 1088,
+   "saniye": 1114,
    "mac": 1
   },
   "778249": {
@@ -125,7 +125,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 9,
-   "saniye": 1028,
+   "saniye": 1054,
    "mac": 1
   },
   "310250": {
@@ -133,7 +133,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 19,
-   "saniye": 1252,
+   "saniye": 1278,
    "mac": 1
   },
   "675128": {
@@ -141,7 +141,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 5,
-   "saniye": 813,
+   "saniye": 839,
    "mac": 1
   },
   "572386": {
@@ -149,7 +149,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 8,
-   "saniye": 1278,
+   "saniye": 1304,
    "mac": 1
   },
   "778279": {
@@ -221,7 +221,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 3,
-   "saniye": 891,
+   "saniye": 917,
    "mac": 1
   },
   "129216": {
@@ -229,15 +229,15 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 16,
-   "saniye": 1268,
+   "saniye": 1294,
    "mac": 1
   },
   "778727": {
    "ad": "Ismael Bako",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 11,
-   "saniye": 927,
+   "vp": 14,
+   "saniye": 953,
    "mac": 1
   },
   "277894": {
@@ -277,7 +277,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 20,
-   "saniye": 802,
+   "saniye": 828,
    "mac": 1
   },
   "272903": {
@@ -292,8 +292,8 @@
    "ad": "Shaquille Mckissic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": -2,
-   "saniye": 794,
+   "vp": -3,
+   "saniye": 820,
    "mac": 1
   }
  }

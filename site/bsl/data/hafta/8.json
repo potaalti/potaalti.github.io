@@ -10,12 +10,12 @@
    "evSkor": "83",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
-   "depSkor": "78",
+   "depSkor": "79",
    "salon": "Enka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "00:50",
+    "saat": "00:42",
     "uzatma": false
    }
   },
@@ -117,7 +117,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 24,
-   "saniye": 1905,
+   "saniye": 1912,
    "mac": 1
   },
   "778249": {
@@ -125,7 +125,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 9,
-   "saniye": 1293,
+   "saniye": 1301,
    "mac": 1
   },
   "310250": {
@@ -133,7 +133,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 20,
-   "saniye": 1882,
+   "saniye": 1890,
    "mac": 1
   },
   "675128": {
@@ -149,7 +149,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 14,
-   "saniye": 1865,
+   "saniye": 1873,
    "mac": 1
   },
   "778279": {
@@ -157,7 +157,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 17,
-   "saniye": 1446,
+   "saniye": 1454,
    "mac": 1
   },
   "778246": {
@@ -220,16 +220,16 @@
    "ad": "Uros Trifunovic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 9,
-   "saniye": 1496,
+   "vp": 8,
+   "saniye": 1504,
    "mac": 1
   },
   "129216": {
    "ad": "Doğuş Özdemiroğlu",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 18,
-   "saniye": 1835,
+   "vp": 20,
+   "saniye": 1843,
    "mac": 1
   },
   "778727": {
@@ -269,7 +269,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": -1,
-   "saniye": 678,
+   "saniye": 685,
    "mac": 1
   },
   "668012": {
@@ -277,7 +277,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 26,
-   "saniye": 1413,
+   "saniye": 1421,
    "mac": 1
   },
   "272903": {
@@ -293,7 +293,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 1,
-   "saniye": 1501,
+   "saniye": 1509,
    "mac": 1
   }
  }

@@ -33,15 +33,15 @@
    "durum": "canli",
    "ev": "BİOTEKNO KÖRFEZ BASKET",
    "evId": 268222,
-   "evSkor": "65",
+   "evSkor": "68",
    "dep": "GALATASARAY MCT TECHNIC",
    "depId": 266026,
-   "depSkor": "54",
+   "depSkor": "60",
    "salon": "Şehit Polis Recep Topaloğlu Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "02:13",
+    "saat": "00:47",
     "uzatma": false
    }
   },
@@ -500,24 +500,24 @@
    "ad": "Boo Buie",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 20,
-   "saniye": 1556,
+   "vp": 22,
+   "saniye": 1643,
    "mac": 1
   },
   "778161": {
    "ad": "Johnny Davis",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 15,
-   "saniye": 1253,
+   "vp": 17,
+   "saniye": 1340,
    "mac": 1
   },
   "419874": {
    "ad": "Berk Can Akın",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 1,
-   "saniye": 1004,
+   "vp": 0,
+   "saniye": 1091,
    "mac": 1
   },
   "609266": {
@@ -525,15 +525,15 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 13,
-   "saniye": 1267,
+   "saniye": 1354,
    "mac": 1
   },
   "778182": {
    "ad": "Alex Reese",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 13,
-   "saniye": 1238,
+   "vp": 16,
+   "saniye": 1325,
    "mac": 1
   },
   "254785": {
@@ -596,8 +596,8 @@
    "ad": "Jerome Robinson Jr.",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 8,
-   "saniye": 876,
+   "vp": 9,
+   "saniye": 963,
    "mac": 1
   },
   "250129": {
@@ -612,8 +612,8 @@
    "ad": "Aleksej Nikolic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 6,
-   "saniye": 1167,
+   "vp": 9,
+   "saniye": 1254,
    "mac": 1
   },
   "779275": {
@@ -621,7 +621,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 11,
-   "saniye": 1264,
+   "saniye": 1351,
    "mac": 1
   },
   "779274": {
@@ -637,7 +637,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 11,
-   "saniye": 593,
+   "saniye": 680,
    "mac": 1
   },
   "221447": {
@@ -676,8 +676,8 @@
    "ad": "Buğrahan Tuncer",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 5,
-   "saniye": 808,
+   "vp": 8,
+   "saniye": 895,
    "mac": 1
   },
   "781548": {

@@ -7,7 +7,7 @@
    "durum": "canli",
    "ev": "ALİAĞA PETKİM SPOR",
    "evId": 266048,
-   "evSkor": "63",
+   "evSkor": "65",
    "dep": "TÜRK TELEKOM",
    "depId": 266030,
    "depSkor": "61",
@@ -15,7 +15,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "00:08",
+    "saat": "00:00",
     "uzatma": false
    }
   },

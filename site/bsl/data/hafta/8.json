@@ -85,15 +85,15 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ",
    "evId": 265992,
-   "evSkor": "33",
+   "evSkor": "35",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
-   "depSkor": "19",
+   "depSkor": "22",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "04:51",
+    "saat": "04:16",
     "uzatma": false
    }
   },
@@ -1268,16 +1268,16 @@
    "ad": "Devon Dotson",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 4,
-   "saniye": 436,
+   "vp": 3,
+   "saniye": 471,
    "mac": 1
   },
   "777634": {
    "ad": "Daquan Jeffries",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 6,
-   "saniye": 257,
+   "vp": 8,
+   "saniye": 292,
    "mac": 1
   },
   "777636": {
@@ -1285,7 +1285,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 326,
+   "saniye": 361,
    "mac": 1
   },
   "163489": {
@@ -1293,15 +1293,15 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 477,
+   "saniye": 512,
    "mac": 1
   },
   "397202": {
    "ad": "Ante Zizic",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": -1,
-   "saniye": 477,
+   "vp": 2,
+   "saniye": 512,
    "mac": 1
   },
   "697020": {
@@ -1365,23 +1365,23 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 4,
-   "saniye": 909,
+   "saniye": 944,
    "mac": 1
   },
   "247547": {
    "ad": "Ergi Tırpancı",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": -1,
-   "saniye": 257,
+   "vp": 0,
+   "saniye": 292,
    "mac": 1
   },
   "778460": {
    "ad": "Brandon Taylor",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 8,
-   "saniye": 787,
+   "vp": 9,
+   "saniye": 822,
    "mac": 1
   },
   "778459": {
@@ -1405,7 +1405,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 519,
+   "saniye": 554,
    "mac": 1
   },
   "402930": {
@@ -1420,8 +1420,8 @@
    "ad": "Nate Watson",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 4,
-   "saniye": 424,
+   "vp": 6,
+   "saniye": 459,
    "mac": 1
   },
   "443749": {

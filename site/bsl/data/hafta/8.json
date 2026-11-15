@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "05:45",
+    "saat": "05:19",
     "uzatma": false
    }
   },
@@ -1268,8 +1268,8 @@
    "ad": "Devon Dotson",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 3,
-   "saniye": 382,
+   "vp": 4,
+   "saniye": 408,
    "mac": 1
   },
   "777634": {
@@ -1293,7 +1293,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 423,
+   "saniye": 449,
    "mac": 1
   },
   "397202": {
@@ -1301,7 +1301,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": -1,
-   "saniye": 423,
+   "saniye": 449,
    "mac": 1
   },
   "697020": {
@@ -1341,7 +1341,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 12,
-   "saniye": 536,
+   "saniye": 562,
    "mac": 1
   },
   "363061": {
@@ -1357,7 +1357,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 7,
-   "saniye": 605,
+   "saniye": 631,
    "mac": 1
   },
   "510723": {
@@ -1365,15 +1365,15 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 3,
-   "saniye": 855,
+   "saniye": 881,
    "mac": 1
   },
   "247547": {
    "ad": "Ergi Tırpancı",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 0,
-   "saniye": 203,
+   "vp": -1,
+   "saniye": 229,
    "mac": 1
   },
   "778460": {
@@ -1381,7 +1381,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 8,
-   "saniye": 733,
+   "saniye": 759,
    "mac": 1
   },
   "778459": {
@@ -1405,7 +1405,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 465,
+   "saniye": 491,
    "mac": 1
   },
   "402930": {
@@ -1421,7 +1421,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 4,
-   "saniye": 370,
+   "saniye": 396,
    "mac": 1
   },
   "443749": {

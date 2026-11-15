@@ -85,15 +85,15 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ",
    "evId": 265992,
-   "evSkor": "40",
+   "evSkor": "41",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
-   "depSkor": "22",
+   "depSkor": "25",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "01:29",
+    "saat": "01:01",
     "uzatma": false
    }
   },
@@ -1285,7 +1285,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 528,
+   "saniye": 556,
    "mac": 1
   },
   "163489": {
@@ -1300,7 +1300,7 @@
    "ad": "Ante Zizic",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 7,
+   "vp": 8,
    "saniye": 679,
    "mac": 1
   },
@@ -1309,7 +1309,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 473,
+   "saniye": 501,
    "mac": 1
   },
   "114257": {
@@ -1317,7 +1317,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 558,
+   "saniye": 586,
    "mac": 1
   },
   "445794": {
@@ -1341,7 +1341,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 11,
-   "saniye": 583,
+   "saniye": 611,
    "mac": 1
   },
   "363061": {
@@ -1357,7 +1357,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 7,
-   "saniye": 760,
+   "saniye": 788,
    "mac": 1
   },
   "510723": {
@@ -1380,8 +1380,8 @@
    "ad": "Brandon Taylor",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 9,
-   "saniye": 989,
+   "vp": 12,
+   "saniye": 1017,
    "mac": 1
   },
   "778459": {
@@ -1389,15 +1389,15 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 2,
-   "saniye": 611,
+   "saniye": 639,
    "mac": 1
   },
   "502519": {
    "ad": "Bryce Brown",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 1,
-   "saniye": 628,
+   "vp": 2,
+   "saniye": 656,
    "mac": 1
   },
   "736260": {
@@ -1405,7 +1405,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": -1,
-   "saniye": 721,
+   "saniye": 749,
    "mac": 1
   },
   "402930": {
@@ -1437,7 +1437,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": -1,
-   "saniye": 269,
+   "saniye": 297,
    "mac": 1
   },
   "227653": {

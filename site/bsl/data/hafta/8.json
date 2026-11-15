@@ -85,15 +85,15 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ",
    "evId": 265992,
-   "evSkor": "71",
+   "evSkor": "72",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
-   "depSkor": "63",
+   "depSkor": "65",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "02:44",
+    "saat": "02:22",
     "uzatma": false
    }
   },
@@ -1277,7 +1277,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 9,
-   "saniye": 671,
+   "saniye": 693,
    "mac": 1
   },
   "777636": {
@@ -1292,8 +1292,8 @@
    "ad": "Furkan Korkmaz",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 9,
-   "saniye": 1442,
+   "vp": 10,
+   "saniye": 1464,
    "mac": 1
   },
   "397202": {
@@ -1309,7 +1309,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 1419,
+   "saniye": 1441,
    "mac": 1
   },
   "114257": {
@@ -1332,8 +1332,8 @@
    "ad": "Conor Morgan",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 4,
-   "saniye": 1055,
+   "vp": 3,
+   "saniye": 1077,
    "mac": 1
   },
   "133112": {
@@ -1341,7 +1341,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 13,
-   "saniye": 1235,
+   "saniye": 1257,
    "mac": 1
   },
   "363061": {
@@ -1373,15 +1373,15 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 6,
-   "saniye": 1394,
+   "saniye": 1416,
    "mac": 1
   },
   "778460": {
    "ad": "Brandon Taylor",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 28,
-   "saniye": 2096,
+   "vp": 30,
+   "saniye": 2118,
    "mac": 1
   },
   "778459": {
@@ -1389,7 +1389,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 13,
-   "saniye": 1583,
+   "saniye": 1605,
    "mac": 1
   },
   "502519": {
@@ -1397,15 +1397,15 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 2,
-   "saniye": 1753,
+   "saniye": 1775,
    "mac": 1
   },
   "736260": {
    "ad": "Micheal Moore",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 9,
-   "saniye": 1846,
+   "vp": 10,
+   "saniye": 1868,
    "mac": 1
   },
   "402930": {

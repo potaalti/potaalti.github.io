@@ -62,12 +62,12 @@
    "evSkor": "28",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
-   "depSkor": "32",
+   "depSkor": "34",
    "salon": "Beşiktaş Akatlar Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "03:08",
+    "saat": "01:16",
     "uzatma": false
    }
   },
@@ -885,15 +885,15 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": -2,
-   "saniye": 571,
+   "saniye": 665,
    "mac": 1
   },
   "606624": {
    "ad": "Mike Davis Jr.",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 8,
-   "saniye": 571,
+   "vp": 7,
+   "saniye": 665,
    "mac": 1
   },
   "667498": {
@@ -901,15 +901,15 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 3,
-   "saniye": 509,
+   "saniye": 603,
    "mac": 1
   },
   "120437": {
    "ad": "Egehan Arna",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 4,
-   "saniye": 642,
+   "vp": 5,
+   "saniye": 736,
    "mac": 1
   },
   "249031": {
@@ -948,8 +948,8 @@
    "ad": "Amadou Sow",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 5,
-   "saniye": 609,
+   "vp": 4,
+   "saniye": 703,
    "mac": 1
   },
   "351474": {
@@ -981,15 +981,15 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 7,
-   "saniye": 679,
+   "saniye": 773,
    "mac": 1
   },
   "734506": {
    "ad": "Malachi Flynn",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 7,
-   "saniye": 619,
+   "vp": 6,
+   "saniye": 713,
    "mac": 1
   },
   "608898": {
@@ -1004,8 +1004,8 @@
    "ad": "Mateusz Ponitka",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 2,
-   "saniye": 645,
+   "vp": 3,
+   "saniye": 739,
    "mac": 1
   },
   "734505": {
@@ -1036,8 +1036,8 @@
    "ad": "Damien Inglis",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 6,
-   "saniye": 720,
+   "vp": 9,
+   "saniye": 814,
    "mac": 1
   },
   "283725": {
@@ -1045,7 +1045,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 4,
-   "saniye": 175,
+   "saniye": 269,
    "mac": 1
   },
   "47659": {

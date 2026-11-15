@@ -95,15 +95,20 @@
   {
    "id": 346334,
    "tarih": "2026-11-15T20:30:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "FENERBAHÇE TARFİN",
    "evId": 266025,
-   "evSkor": null,
+   "evSkor": "2",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": null,
+   "depSkor": "0",
    "salon": "Ülker Spor ve Etkinlik Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "09:36",
+    "uzatma": false
+   }
   }
  ]
 }

@@ -186,8 +186,8 @@
   "foto": "https://tbf.org.tr/res/e11f2ac4-05b7-4297-abc7-2fa11af309a7_12web.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 4.2,
-  "astOrt": 3.2
+  "ribOrt": 3.4,
+  "astOrt": 2.6
  },
  {
   "id": "609083",
@@ -357,8 +357,8 @@
   "foto": "https://tbf.org.tr/res/ceca6a71-bb08-4fc0-ba58-774100fca09f_17.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 3.8,
-  "astOrt": 1.8
+  "ribOrt": 3.3,
+  "astOrt": 1.6
  },
  {
   "id": "778727",
@@ -471,8 +471,8 @@
   "foto": "https://tbf.org.tr/res/13564b4f-96dd-41ba-8872-3b4f99dfed11_5.webp",
   "boy": 207,
   "mevkiTahmini": "on",
-  "ribOrt": 5.3,
-  "astOrt": 2.3
+  "ribOrt": 4.6,
+  "astOrt": 2.0
  },
  {
   "id": "735812",
@@ -604,8 +604,8 @@
   "foto": "https://tbf.org.tr/res/caefe816-95e5-41d0-80f8-1e23d8d8fe30_fb31shavon.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 4.7,
-  "astOrt": 1.3
+  "ribOrt": 3.5,
+  "astOrt": 1.0
  },
  {
   "id": "779275",
@@ -737,8 +737,8 @@
   "foto": "https://tbf.org.tr/res/0887a2dc-b409-4b9f-ad34-4df53c57e338_payne.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 2.0,
-  "astOrt": 5.0
+  "ribOrt": 1.5,
+  "astOrt": 3.8
  },
  {
   "id": "778996",
@@ -1117,8 +1117,8 @@
   "foto": "https://tbf.org.tr/res/3639b8e1-8ef7-455a-bc0e-489b6aac10c3_11web.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 2.8,
-  "astOrt": 3.2
+  "ribOrt": 2.4,
+  "astOrt": 2.7
  },
  {
   "id": "778403",
@@ -1914,8 +1914,8 @@
   "foto": "https://tbf.org.tr/res/593d4a5c-38a0-4973-956f-bc7abbc8c77f_24.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 3.6,
-  "astOrt": 1.1
+  "ribOrt": 3.1,
+  "astOrt": 1.0
  },
  {
   "id": "778462",
@@ -2937,8 +2937,8 @@
   "foto": "https://tbf.org.tr/res/0b642118-2654-4b11-8e78-c128ac9c7f7b_larkin.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 1.0,
-  "astOrt": 1.3
+  "ribOrt": 0.9,
+  "astOrt": 1.1
  },
  {
   "id": "221447",
@@ -4662,8 +4662,8 @@
   "foto": "https://tbf.org.tr/res/0358ce53-9d88-4de4-9720-75d791324e8f_15.webp",
   "boy": null,
   "mevkiTahmini": null,
-  "ribOrt": 0,
-  "astOrt": 0
+  "ribOrt": 0.0,
+  "astOrt": 0.0
  },
  {
   "id": "450092",

@@ -95,15 +95,20 @@
   {
    "id": 346334,
    "tarih": "2026-11-15T20:30:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "FENERBAHÇE TARFİN",
    "evId": 266025,
-   "evSkor": null,
+   "evSkor": "2",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": null,
+   "depSkor": "0",
    "salon": "Ülker Spor ve Etkinlik Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "09:36",
+    "uzatma": false
+   }
   }
  ],
  "oyuncular": {
@@ -1447,6 +1452,190 @@
    "ad": "Doruk Toprak Karadağ",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "442131": {
+   "ad": "Shane Larkin",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 24,
+   "mac": 1
+  },
+  "777704": {
+   "ad": "Trent Forrest",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 2,
+   "saniye": 24,
+   "mac": 1
+  },
+  "777675": {
+   "ad": "Braxton Key",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 24,
+   "mac": 1
+  },
+  "777705": {
+   "ad": "Shavon Shields",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 24,
+   "mac": 1
+  },
+  "667814": {
+   "ad": "Wade Baldwin Iv",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "54659": {
+   "ad": "Sertaç Şanlı",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "735811": {
+   "ad": "Talen Horton-Tucker",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "27541": {
+   "ad": "Melih Mahmutoğlu",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "144725": {
+   "ad": "Onuralp Bitim",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "386832": {
+   "ad": "Will Clyburn",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "450016": {
+   "ad": "Doruk Alp Yancı",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "333434": {
+   "ad": "Dario Saric",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 0,
+   "saniye": 24,
+   "mac": 1
+  },
+  "689440": {
+   "ad": "Pj Dozier",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 0,
+   "saniye": 24,
+   "mac": 1
+  },
+  "778400": {
+   "ad": "Collin Malcolm",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 0,
+   "saniye": 24,
+   "mac": 1
+  },
+  "782949": {
+   "ad": "Cameron Payne",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 0,
+   "saniye": 24,
+   "mac": 1
+  },
+  "370740": {
+   "ad": "Ercan Osmani",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 0,
+   "saniye": 24,
+   "mac": 1
+  },
+  "508583": {
+   "ad": "Darius Karutasu",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "736126": {
+   "ad": "Jordan Loyd",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "587569": {
+   "ad": "Fatts Russell",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "137459": {
+   "ad": "Burak Can Yıldızlı",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "281408": {
+   "ad": "David Mutaf",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "157002": {
+   "ad": "Erkan Yılmaz",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "735850": {
+   "ad": "Kai Jones",
+   "takim": "ANADOLU EFES",
+   "takimId": 265990,
    "vp": 0,
    "saniye": 0,
    "mac": 1

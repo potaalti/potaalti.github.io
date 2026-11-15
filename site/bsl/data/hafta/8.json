@@ -67,7 +67,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "04:44",
+    "saat": "04:13",
     "uzatma": false
    }
   },
@@ -885,7 +885,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": -1,
-   "saniye": 1184,
+   "saniye": 1215,
    "mac": 1
   },
   "606624": {
@@ -893,7 +893,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 6,
-   "saniye": 1398,
+   "saniye": 1429,
    "mac": 1
   },
   "667498": {
@@ -932,8 +932,8 @@
    "ad": "Jordan Usher",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 7,
-   "saniye": 984,
+   "vp": 6,
+   "saniye": 1015,
    "mac": 1
   },
   "776570": {
@@ -957,7 +957,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 31,
    "mac": 1
   },
   "57737": {
@@ -973,7 +973,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 1,
-   "saniye": 316,
+   "saniye": 347,
    "mac": 1
   },
   "776935": {
@@ -1021,7 +1021,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 6,
-   "saniye": 1141,
+   "saniye": 1172,
    "mac": 1
   },
   "358272": {
@@ -1029,15 +1029,15 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 0,
-   "saniye": 846,
+   "saniye": 877,
    "mac": 1
   },
   "776654": {
    "ad": "Damien Inglis",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 18,
-   "saniye": 1351,
+   "vp": 19,
+   "saniye": 1382,
    "mac": 1
   },
   "283725": {
@@ -1045,7 +1045,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 3,
-   "saniye": 472,
+   "saniye": 503,
    "mac": 1
   },
   "47659": {
@@ -1061,7 +1061,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 11,
-   "saniye": 770,
+   "saniye": 801,
    "mac": 1
   },
   "780954": {

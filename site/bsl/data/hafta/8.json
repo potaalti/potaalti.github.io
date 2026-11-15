@@ -62,12 +62,12 @@
    "evSkor": "17",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
-   "depSkor": "17",
+   "depSkor": "19",
    "salon": "Beşiktaş Akatlar Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "02:11",
+    "saat": "02:00",
     "uzatma": false
    }
   },
@@ -909,7 +909,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 4,
-   "saniye": 469,
+   "saniye": 480,
    "mac": 1
   },
   "249031": {
@@ -924,8 +924,8 @@
    "ad": "Errick Mccollum",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 0,
-   "saniye": 7,
+   "vp": -1,
+   "saniye": 18,
    "mac": 1
   },
   "502518": {
@@ -941,7 +941,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 159,
+   "saniye": 170,
    "mac": 1
   },
   "778079": {
@@ -949,7 +949,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 3,
-   "saniye": 48,
+   "saniye": 59,
    "mac": 1
   },
   "351474": {
@@ -965,7 +965,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 7,
+   "saniye": 18,
    "mac": 1
   },
   "151935": {
@@ -1020,8 +1020,8 @@
    "ad": "Marcquise Reed",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 0,
-   "saniye": 159,
+   "vp": 2,
+   "saniye": 170,
    "mac": 1
   },
   "358272": {
@@ -1029,7 +1029,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 0,
-   "saniye": 7,
+   "saniye": 18,
    "mac": 1
   },
   "776654": {
@@ -1037,7 +1037,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 3,
-   "saniye": 159,
+   "saniye": 170,
    "mac": 1
   },
   "283725": {
@@ -1061,7 +1061,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 1,
-   "saniye": 159,
+   "saniye": 170,
    "mac": 1
   },
   "780954": {
@@ -1069,7 +1069,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 0,
-   "saniye": 48,
+   "saniye": 59,
    "mac": 1
   }
  }

@@ -72,7 +72,7 @@
    "durum": "canli",
    "ev": "YUKATEL DENİZLİ BASKET",
    "evId": 266028,
-   "evSkor": "34",
+   "evSkor": "37",
    "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
    "depId": 265994,
    "depSkor": "47",
@@ -80,7 +80,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "03:29",
+    "saat": "02:45",
     "uzatma": false
    }
   },
@@ -1077,7 +1077,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 3,
-   "saniye": 830,
+   "saniye": 874,
    "mac": 1
   },
   "779010": {
@@ -1085,15 +1085,15 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 9,
-   "saniye": 892,
+   "saniye": 936,
    "mac": 1
   },
   "736366": {
    "ad": "John Meeks",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 11,
-   "saniye": 835,
+   "vp": 14,
+   "saniye": 879,
    "mac": 1
   },
   "411597": {
@@ -1101,7 +1101,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 2,
-   "saniye": 838,
+   "saniye": 882,
    "mac": 1
   },
   "470765": {
@@ -1109,7 +1109,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 10,
-   "saniye": 736,
+   "saniye": 780,
    "mac": 1
   },
   "779011": {
@@ -1173,7 +1173,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 6,
-   "saniye": 471,
+   "saniye": 515,
    "mac": 1
   },
   "666080": {
@@ -1197,7 +1197,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 4,
-   "saniye": 901,
+   "saniye": 945,
    "mac": 1
   },
   "502472": {
@@ -1205,7 +1205,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 15,
-   "saniye": 560,
+   "saniye": 604,
    "mac": 1
   },
   "756112": {
@@ -1237,15 +1237,15 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 13,
-   "saniye": 661,
+   "saniye": 705,
    "mac": 1
   },
   "122136": {
    "ad": "Canberk Kuş",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 3,
-   "saniye": 661,
+   "vp": 2,
+   "saniye": 705,
    "mac": 1
   },
   "367110": {

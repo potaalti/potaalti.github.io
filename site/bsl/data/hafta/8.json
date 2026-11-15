@@ -85,7 +85,7 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ",
    "evId": 265992,
-   "evSkor": "53",
+   "evSkor": "55",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
    "depSkor": "50",
@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "00:17",
+    "saat": "00:00",
     "uzatma": false
    }
   },
@@ -1293,15 +1293,15 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 5,
-   "saniye": 989,
+   "saniye": 1006,
    "mac": 1
   },
   "397202": {
    "ad": "Ante Zizic",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 14,
-   "saniye": 1045,
+   "vp": 16,
+   "saniye": 1062,
    "mac": 1
   },
   "697020": {
@@ -1309,7 +1309,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 966,
+   "saniye": 983,
    "mac": 1
   },
   "114257": {
@@ -1333,7 +1333,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 780,
+   "saniye": 797,
    "mac": 1
   },
   "133112": {
@@ -1357,7 +1357,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 6,
-   "saniye": 1209,
+   "saniye": 1227,
    "mac": 1
   },
   "510723": {
@@ -1380,8 +1380,8 @@
    "ad": "Brandon Taylor",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 24,
-   "saniye": 1643,
+   "vp": 23,
+   "saniye": 1660,
    "mac": 1
   },
   "778459": {
@@ -1389,7 +1389,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 8,
-   "saniye": 1130,
+   "saniye": 1147,
    "mac": 1
   },
   "502519": {
@@ -1397,7 +1397,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 1300,
+   "saniye": 1317,
    "mac": 1
   },
   "736260": {
@@ -1405,7 +1405,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 7,
-   "saniye": 1393,
+   "saniye": 1410,
    "mac": 1
   },
   "402930": {
@@ -1437,7 +1437,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": -1,
-   "saniye": 393,
+   "saniye": 411,
    "mac": 1
   },
   "227653": {

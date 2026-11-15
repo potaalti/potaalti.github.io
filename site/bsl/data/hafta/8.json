@@ -72,15 +72,15 @@
    "durum": "canli",
    "ev": "YUKATEL DENİZLİ BASKET",
    "evId": 266028,
-   "evSkor": "0",
+   "evSkor": "2",
    "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
    "depId": 265994,
-   "depSkor": "0",
+   "depSkor": "5",
    "salon": "Pamukkale Üniversitesi Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "09:43",
+    "saat": "08:45",
     "uzatma": false
    }
   },
@@ -1076,8 +1076,8 @@
    "ad": "Brae Ivey",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 0,
-   "saniye": 29,
+   "vp": 2,
+   "saniye": 77,
    "mac": 1
   },
   "779010": {
@@ -1085,15 +1085,15 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 0,
-   "saniye": 29,
+   "saniye": 77,
    "mac": 1
   },
   "736366": {
    "ad": "John Meeks",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 0,
-   "saniye": 29,
+   "vp": -1,
+   "saniye": 77,
    "mac": 1
   },
   "411597": {
@@ -1101,7 +1101,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 0,
-   "saniye": 29,
+   "saniye": 77,
    "mac": 1
   },
   "470765": {
@@ -1109,7 +1109,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 1,
-   "saniye": 29,
+   "saniye": 77,
    "mac": 1
   },
   "779011": {
@@ -1172,40 +1172,40 @@
    "ad": "Jordon Crawford",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 0,
-   "saniye": 29,
+   "vp": 2,
+   "saniye": 77,
    "mac": 1
   },
   "666080": {
    "ad": "Fabian White Jr.",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 0,
-   "saniye": 29,
+   "vp": 1,
+   "saniye": 77,
    "mac": 1
   },
   "160245": {
    "ad": "Enes Berkay Taşkıran",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": -1,
-   "saniye": 29,
+   "vp": 1,
+   "saniye": 77,
    "mac": 1
   },
   "500074": {
    "ad": "Jeremy Simmons",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 0,
-   "saniye": 29,
+   "vp": -1,
+   "saniye": 77,
    "mac": 1
   },
   "502472": {
    "ad": "Michal Sokolowski",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 0,
-   "saniye": 29,
+   "vp": 3,
+   "saniye": 77,
    "mac": 1
   },
   "756112": {

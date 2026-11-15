@@ -62,12 +62,12 @@
    "evSkor": "36",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
-   "depSkor": "56",
+   "depSkor": "61",
    "salon": "Beşiktaş Akatlar Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "02:25",
+    "saat": "01:52",
     "uzatma": false
    }
   },
@@ -901,7 +901,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 2,
-   "saniye": 882,
+   "saniye": 915,
    "mac": 1
   },
   "120437": {
@@ -924,8 +924,8 @@
    "ad": "Errick Mccollum",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": -1,
-   "saniye": 711,
+   "vp": -2,
+   "saniye": 744,
    "mac": 1
   },
   "502518": {
@@ -933,7 +933,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 7,
-   "saniye": 523,
+   "saniye": 556,
    "mac": 1
   },
   "776570": {
@@ -949,7 +949,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 4,
-   "saniye": 955,
+   "saniye": 988,
    "mac": 1
   },
   "351474": {
@@ -965,7 +965,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 3,
-   "saniye": 670,
+   "saniye": 703,
    "mac": 1
   },
   "151935": {
@@ -996,7 +996,7 @@
    "ad": "Tyler Cavanaugh",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 9,
+   "vp": 11,
    "saniye": 765,
    "mac": 1
   },
@@ -1021,7 +1021,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 0,
-   "saniye": 680,
+   "saniye": 713,
    "mac": 1
   },
   "358272": {
@@ -1029,15 +1029,15 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 1,
-   "saniye": 385,
+   "saniye": 418,
    "mac": 1
   },
   "776654": {
    "ad": "Damien Inglis",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 10,
-   "saniye": 890,
+   "vp": 11,
+   "saniye": 923,
    "mac": 1
   },
   "283725": {
@@ -1060,16 +1060,16 @@
    "ad": "Kenan Sipahi",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 3,
-   "saniye": 309,
+   "vp": 7,
+   "saniye": 342,
    "mac": 1
   },
   "780954": {
    "ad": "Luka Mitrovic",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 1,
-   "saniye": 326,
+   "vp": 2,
+   "saniye": 359,
    "mac": 1
   }
  }

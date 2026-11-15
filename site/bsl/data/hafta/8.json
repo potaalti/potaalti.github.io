@@ -82,7 +82,7 @@
   {
    "id": 346337,
    "tarih": "2026-11-15T18:00:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "BEŞİKTAŞ",
    "evId": 265992,
    "evSkor": "76",
@@ -90,12 +90,7 @@
    "depId": 266176,
    "depSkor": "71",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "00:00",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346334,
@@ -1305,7 +1300,7 @@
    "mac": 1
   },
   "697020": {
-   "ad": "David Dejulius",
+   "ad": "David DeJulius",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 3,

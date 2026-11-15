@@ -88,12 +88,12 @@
    "evSkor": "64",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
-   "depSkor": "54",
+   "depSkor": "58",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "06:42",
+    "saat": "06:03",
     "uzatma": false
    }
   },
@@ -1292,8 +1292,8 @@
    "ad": "Furkan Korkmaz",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 5,
-   "saniye": 1204,
+   "vp": 4,
+   "saniye": 1242,
    "mac": 1
   },
   "397202": {
@@ -1301,7 +1301,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 19,
-   "saniye": 1260,
+   "saniye": 1298,
    "mac": 1
   },
   "697020": {
@@ -1309,7 +1309,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 1181,
+   "saniye": 1219,
    "mac": 1
   },
   "114257": {
@@ -1341,7 +1341,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 13,
-   "saniye": 997,
+   "saniye": 1035,
    "mac": 1
   },
   "363061": {
@@ -1357,7 +1357,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 9,
-   "saniye": 1425,
+   "saniye": 1463,
    "mac": 1
   },
   "510723": {
@@ -1373,31 +1373,31 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 6,
-   "saniye": 1156,
+   "saniye": 1194,
    "mac": 1
   },
   "778460": {
    "ad": "Brandon Taylor",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 26,
-   "saniye": 1858,
+   "vp": 27,
+   "saniye": 1896,
    "mac": 1
   },
   "778459": {
    "ad": "Warren Washington",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 10,
-   "saniye": 1345,
+   "vp": 11,
+   "saniye": 1383,
    "mac": 1
   },
   "502519": {
    "ad": "Bryce Brown",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 0,
-   "saniye": 1515,
+   "vp": 3,
+   "saniye": 1553,
    "mac": 1
   },
   "736260": {
@@ -1405,7 +1405,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 6,
-   "saniye": 1608,
+   "saniye": 1646,
    "mac": 1
   },
   "402930": {

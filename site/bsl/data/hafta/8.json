@@ -59,15 +59,15 @@
    "durum": "canli",
    "ev": "ESENLER EROKSPOR",
    "evId": 266024,
-   "evSkor": "36",
+   "evSkor": "42",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
-   "depSkor": "65",
+   "depSkor": "72",
    "salon": "Beşiktaş Akatlar Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "09:35",
+    "saat": "07:59",
     "uzatma": false
    }
   },
@@ -884,24 +884,24 @@
    "ad": "Keye Van Der Vuurst",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": -4,
-   "saniye": 904,
+   "vp": -2,
+   "saniye": 989,
    "mac": 1
   },
   "606624": {
    "ad": "Mike Davis Jr.",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 4,
-   "saniye": 1118,
+   "vp": 3,
+   "saniye": 1203,
    "mac": 1
   },
   "667498": {
    "ad": "James Webb Iii",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 2,
-   "saniye": 1063,
+   "vp": 8,
+   "saniye": 1148,
    "mac": 1
   },
   "120437": {
@@ -933,7 +933,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 7,
-   "saniye": 704,
+   "saniye": 789,
    "mac": 1
   },
   "776570": {
@@ -973,7 +973,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 36,
+   "saniye": 121,
    "mac": 1
   },
   "776935": {
@@ -1020,8 +1020,8 @@
    "ad": "Marcquise Reed",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 1,
-   "saniye": 861,
+   "vp": 4,
+   "saniye": 946,
    "mac": 1
   },
   "358272": {
@@ -1029,15 +1029,15 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 0,
-   "saniye": 566,
+   "saniye": 651,
    "mac": 1
   },
   "776654": {
    "ad": "Damien Inglis",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 11,
-   "saniye": 1071,
+   "vp": 14,
+   "saniye": 1156,
    "mac": 1
   },
   "283725": {
@@ -1060,8 +1060,8 @@
    "ad": "Kenan Sipahi",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 7,
-   "saniye": 490,
+   "vp": 9,
+   "saniye": 575,
    "mac": 1
   },
   "780954": {
@@ -1069,7 +1069,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 7,
-   "saniye": 507,
+   "saniye": 592,
    "mac": 1
   }
  }

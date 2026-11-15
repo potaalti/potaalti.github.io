@@ -62,12 +62,12 @@
    "evSkor": "28",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
-   "depSkor": "30",
+   "depSkor": "32",
    "salon": "Beşiktaş Akatlar Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "04:45",
+    "saat": "04:18",
     "uzatma": false
    }
   },
@@ -885,7 +885,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": -3,
-   "saniye": 462,
+   "saniye": 483,
    "mac": 1
   },
   "606624": {
@@ -893,7 +893,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 8,
-   "saniye": 462,
+   "saniye": 483,
    "mac": 1
   },
   "667498": {
@@ -909,7 +909,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 4,
-   "saniye": 533,
+   "saniye": 554,
    "mac": 1
   },
   "249031": {
@@ -925,7 +925,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 453,
+   "saniye": 459,
    "mac": 1
   },
   "502518": {
@@ -933,15 +933,15 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 4,
-   "saniye": 382,
+   "saniye": 388,
    "mac": 1
   },
   "776570": {
    "ad": "Kevin Yebo",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 3,
-   "saniye": 605,
+   "vp": 2,
+   "saniye": 632,
    "mac": 1
   },
   "778079": {
@@ -949,7 +949,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 7,
-   "saniye": 494,
+   "saniye": 521,
    "mac": 1
   },
   "351474": {
@@ -965,7 +965,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 3,
-   "saniye": 453,
+   "saniye": 459,
    "mac": 1
   },
   "151935": {
@@ -980,16 +980,16 @@
    "ad": "Aleksa Avramovic",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 8,
-   "saniye": 564,
+   "vp": 7,
+   "saniye": 591,
    "mac": 1
   },
   "734506": {
    "ad": "Malachi Flynn",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 5,
-   "saniye": 504,
+   "vp": 6,
+   "saniye": 531,
    "mac": 1
   },
   "608898": {
@@ -1005,7 +1005,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 2,
-   "saniye": 530,
+   "saniye": 557,
    "mac": 1
   },
   "734505": {
@@ -1037,15 +1037,15 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 7,
-   "saniye": 605,
+   "saniye": 632,
    "mac": 1
   },
   "283725": {
    "ad": "Furkan Haltalı",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 1,
-   "saniye": 60,
+   "vp": 4,
+   "saniye": 87,
    "mac": 1
   },
   "47659": {

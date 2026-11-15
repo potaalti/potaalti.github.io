@@ -101,12 +101,12 @@
    "evSkor": "16",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "22",
+   "depSkor": "24",
    "salon": "Ülker Spor ve Etkinlik Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "03:08",
+    "saat": "01:57",
     "uzatma": false
    }
   }
@@ -1493,7 +1493,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 89,
+   "saniye": 162,
    "mac": 1
   },
   "54659": {
@@ -1501,15 +1501,15 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 12,
+   "saniye": 85,
    "mac": 1
   },
   "735811": {
    "ad": "Talen Horton-Tucker",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 1,
-   "saniye": 12,
+   "vp": -1,
+   "saniye": 85,
    "mac": 1
   },
   "27541": {
@@ -1525,15 +1525,15 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 12,
+   "saniye": 85,
    "mac": 1
   },
   "386832": {
    "ad": "Will Clyburn",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 3,
-   "saniye": 89,
+   "vp": 4,
+   "saniye": 162,
    "mac": 1
   },
   "450016": {
@@ -1549,15 +1549,15 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 7,
-   "saniye": 412,
+   "saniye": 485,
    "mac": 1
   },
   "689440": {
    "ad": "Pj Dozier",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 6,
-   "saniye": 412,
+   "vp": 5,
+   "saniye": 483,
    "mac": 1
   },
   "778400": {
@@ -1565,15 +1565,15 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 7,
-   "saniye": 412,
+   "saniye": 485,
    "mac": 1
   },
   "782949": {
    "ad": "Cameron Payne",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 4,
-   "saniye": 412,
+   "vp": 7,
+   "saniye": 485,
    "mac": 1
   },
   "370740": {
@@ -1581,7 +1581,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 6,
-   "saniye": 412,
+   "saniye": 485,
    "mac": 1
   },
   "508583": {
@@ -1597,7 +1597,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 2,
    "mac": 1
   },
   "587569": {

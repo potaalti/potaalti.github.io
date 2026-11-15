@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "04:58",
+    "saat": "04:41",
     "uzatma": false
    }
   },
@@ -1285,7 +1285,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 301,
+   "saniye": 319,
    "mac": 1
   },
   "163489": {
@@ -1293,7 +1293,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 1,
-   "saniye": 301,
+   "saniye": 319,
    "mac": 1
   },
   "397202": {
@@ -1301,15 +1301,15 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 301,
+   "saniye": 319,
    "mac": 1
   },
   "697020": {
    "ad": "David Dejulius",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 1,
-   "saniye": 23,
+   "vp": 0,
+   "saniye": 41,
    "mac": 1
   },
   "114257": {
@@ -1357,7 +1357,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 3,
-   "saniye": 51,
+   "saniye": 69,
    "mac": 1
   },
   "510723": {
@@ -1365,7 +1365,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": -2,
-   "saniye": 301,
+   "saniye": 319,
    "mac": 1
   },
   "247547": {
@@ -1380,8 +1380,8 @@
    "ad": "Brandon Taylor",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 7,
-   "saniye": 301,
+   "vp": 8,
+   "saniye": 319,
    "mac": 1
   },
   "778459": {
@@ -1389,15 +1389,15 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 2,
-   "saniye": 301,
+   "saniye": 319,
    "mac": 1
   },
   "502519": {
    "ad": "Bryce Brown",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 0,
-   "saniye": 301,
+   "vp": 1,
+   "saniye": 319,
    "mac": 1
   },
   "736260": {
@@ -1437,7 +1437,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 1,
-   "saniye": 132,
+   "saniye": 150,
    "mac": 1
   },
   "227653": {

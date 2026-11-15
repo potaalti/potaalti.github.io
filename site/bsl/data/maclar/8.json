@@ -98,7 +98,7 @@
    "durum": "canli",
    "ev": "FENERBAHÇE TARFİN",
    "evId": 266025,
-   "evSkor": "54",
+   "evSkor": "58",
    "dep": "ANADOLU EFES",
    "depId": 265990,
    "depSkor": "50",
@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "03:13",
+    "saat": "02:20",
     "uzatma": false
    }
   }

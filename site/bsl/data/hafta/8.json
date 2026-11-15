@@ -101,12 +101,12 @@
    "evSkor": "18",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "32",
+   "depSkor": "34",
    "salon": "Ülker Spor ve Etkinlik Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "09:11",
+    "saat": "08:42",
     "uzatma": false
    }
   }
@@ -1477,7 +1477,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 3,
-   "saniye": 372,
+   "saniye": 400,
    "mac": 1
   },
   "777705": {
@@ -1493,7 +1493,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 326,
+   "saniye": 354,
    "mac": 1
   },
   "54659": {
@@ -1508,8 +1508,8 @@
    "ad": "Talen Horton-Tucker",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": -2,
-   "saniye": 249,
+   "vp": -3,
+   "saniye": 277,
    "mac": 1
   },
   "27541": {
@@ -1525,7 +1525,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 249,
+   "saniye": 277,
    "mac": 1
   },
   "386832": {
@@ -1533,7 +1533,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 3,
-   "saniye": 326,
+   "saniye": 354,
    "mac": 1
   },
   "450016": {
@@ -1548,8 +1548,8 @@
    "ad": "Dario Saric",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 10,
-   "saniye": 649,
+   "vp": 12,
+   "saniye": 677,
    "mac": 1
   },
   "689440": {
@@ -1565,7 +1565,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 11,
-   "saniye": 649,
+   "saniye": 677,
    "mac": 1
   },
   "782949": {
@@ -1597,7 +1597,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 2,
-   "saniye": 166,
+   "saniye": 194,
    "mac": 1
   },
   "587569": {
@@ -1605,7 +1605,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": -2,
-   "saniye": 104,
+   "saniye": 132,
    "mac": 1
   },
   "137459": {
@@ -1628,8 +1628,8 @@
    "ad": "Erkan Yılmaz",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 0,
-   "saniye": 104,
+   "vp": 1,
+   "saniye": 132,
    "mac": 1
   },
   "735850": {

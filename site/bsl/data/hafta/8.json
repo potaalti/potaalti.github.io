@@ -62,12 +62,12 @@
    "evSkor": "31",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
-   "depSkor": "35",
+   "depSkor": "37",
    "salon": "Beşiktaş Akatlar Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "10:00",
+    "saat": "09:01",
     "uzatma": false
    }
   },
@@ -885,7 +885,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": -2,
-   "saniye": 665,
+   "saniye": 723,
    "mac": 1
   },
   "606624": {
@@ -893,31 +893,31 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 5,
-   "saniye": 741,
+   "saniye": 799,
    "mac": 1
   },
   "667498": {
    "ad": "James Webb Iii",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 4,
-   "saniye": 679,
+   "vp": 3,
+   "saniye": 737,
    "mac": 1
   },
   "120437": {
    "ad": "Egehan Arna",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 8,
-   "saniye": 812,
+   "vp": 9,
+   "saniye": 870,
    "mac": 1
   },
   "249031": {
    "ad": "Metehan Akyel",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 3,
-   "saniye": 386,
+   "vp": 2,
+   "saniye": 444,
    "mac": 1
   },
   "359434": {
@@ -981,23 +981,23 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 6,
-   "saniye": 849,
+   "saniye": 907,
    "mac": 1
   },
   "734506": {
    "ad": "Malachi Flynn",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 5,
-   "saniye": 789,
+   "vp": 4,
+   "saniye": 847,
    "mac": 1
   },
   "608898": {
    "ad": "Tyler Cavanaugh",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": -2,
-   "saniye": 310,
+   "vp": -1,
+   "saniye": 368,
    "mac": 1
   },
   "384595": {
@@ -1005,15 +1005,15 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 3,
-   "saniye": 815,
+   "saniye": 873,
    "mac": 1
   },
   "734505": {
    "ad": "Trevion Williams",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 6,
-   "saniye": 549,
+   "vp": 8,
+   "saniye": 607,
    "mac": 1
   },
   "609095": {

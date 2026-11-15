@@ -56,15 +56,20 @@
   {
    "id": 346330,
    "tarih": "2026-11-15T13:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "ESENLER EROKSPOR",
    "evId": 266024,
-   "evSkor": null,
+   "evSkor": "0",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
-   "depSkor": null,
+   "depSkor": "0",
    "salon": "Beşiktaş Akatlar Spor Kompleksi",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "09:39",
+    "uzatma": false
+   }
   },
   {
    "id": 346335,

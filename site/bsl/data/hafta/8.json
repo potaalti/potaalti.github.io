@@ -56,15 +56,20 @@
   {
    "id": 346330,
    "tarih": "2026-11-15T13:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "ESENLER EROKSPOR",
    "evId": 266024,
-   "evSkor": null,
+   "evSkor": "0",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
-   "depSkor": null,
+   "depSkor": "0",
    "salon": "Beşiktaş Akatlar Spor Kompleksi",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "09:39",
+    "uzatma": false
+   }
   },
   {
    "id": 346335,
@@ -873,6 +878,198 @@
    "takimId": 266027,
    "vp": -2,
    "saniye": 537,
+   "mac": 1
+  },
+  "470574": {
+   "ad": "Keye Van Der Vuurst",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 26,
+   "mac": 1
+  },
+  "606624": {
+   "ad": "Mike Davis Jr.",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 26,
+   "mac": 1
+  },
+  "667498": {
+   "ad": "James Webb Iii",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 26,
+   "mac": 1
+  },
+  "120437": {
+   "ad": "Egehan Arna",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 26,
+   "mac": 1
+  },
+  "249031": {
+   "ad": "Metehan Akyel",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 26,
+   "mac": 1
+  },
+  "359434": {
+   "ad": "Errick Mccollum",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "502518": {
+   "ad": "Jordan Usher",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "776570": {
+   "ad": "Kevin Yebo",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "778079": {
+   "ad": "Amadou Sow",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "351474": {
+   "ad": "Melih Tunca",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "57737": {
+   "ad": "Yunus Emre Sonsırma",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "151935": {
+   "ad": "Muhsin Yaşar",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "776935": {
+   "ad": "Aleksa Avramovic",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 26,
+   "mac": 1
+  },
+  "734506": {
+   "ad": "Malachi Flynn",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 26,
+   "mac": 1
+  },
+  "608898": {
+   "ad": "Tyler Cavanaugh",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": -1,
+   "saniye": 26,
+   "mac": 1
+  },
+  "384595": {
+   "ad": "Mateusz Ponitka",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 26,
+   "mac": 1
+  },
+  "734505": {
+   "ad": "Trevion Williams",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 26,
+   "mac": 1
+  },
+  "609095": {
+   "ad": "Marcquise Reed",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "358272": {
+   "ad": "İsmet Akpınar",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "776654": {
+   "ad": "Damien Inglis",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "283725": {
+   "ad": "Furkan Haltalı",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "47659": {
+   "ad": "Maxim Mutaf",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "131296": {
+   "ad": "Kenan Sipahi",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "780954": {
+   "ad": "Luka Mitrovic",
+   "takim": "BAHÇEŞEHİR KOLEJİ",
+   "takimId": 265991,
+   "vp": 0,
+   "saniye": 0,
    "mac": 1
   }
  }

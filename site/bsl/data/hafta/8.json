@@ -59,15 +59,15 @@
    "durum": "canli",
    "ev": "ESENLER EROKSPOR",
    "evId": 266024,
-   "evSkor": "7",
+   "evSkor": "9",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
-   "depSkor": "11",
+   "depSkor": "14",
    "salon": "Beşiktaş Akatlar Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "04:50",
+    "saat": "03:58",
     "uzatma": false
    }
   },
@@ -885,15 +885,15 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": -3,
-   "saniye": 310,
+   "saniye": 371,
    "mac": 1
   },
   "606624": {
    "ad": "Mike Davis Jr.",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 1,
-   "saniye": 310,
+   "vp": 3,
+   "saniye": 371,
    "mac": 1
   },
   "667498": {
@@ -901,7 +901,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 5,
-   "saniye": 310,
+   "saniye": 371,
    "mac": 1
   },
   "120437": {
@@ -909,7 +909,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 310,
+   "saniye": 371,
    "mac": 1
   },
   "249031": {
@@ -941,7 +941,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 61,
    "mac": 1
   },
   "778079": {
@@ -1005,7 +1005,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 2,
-   "saniye": 310,
+   "saniye": 371,
    "mac": 1
   },
   "734505": {
@@ -1013,7 +1013,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 2,
-   "saniye": 310,
+   "saniye": 371,
    "mac": 1
   },
   "609095": {
@@ -1021,7 +1021,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 61,
    "mac": 1
   },
   "358272": {
@@ -1036,8 +1036,8 @@
    "ad": "Damien Inglis",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 1,
+   "saniye": 61,
    "mac": 1
   },
   "283725": {
@@ -1060,8 +1060,8 @@
    "ad": "Kenan Sipahi",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 3,
+   "saniye": 61,
    "mac": 1
   },
   "780954": {

@@ -72,15 +72,15 @@
    "durum": "canli",
    "ev": "YUKATEL DENİZLİ BASKET",
    "evId": 266028,
-   "evSkor": "72",
+   "evSkor": "74",
    "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
    "depId": 265994,
-   "depSkor": "68",
+   "depSkor": "72",
    "salon": "Pamukkale Üniversitesi Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "08:13",
+    "saat": "06:37",
     "uzatma": false
    }
   },
@@ -1084,16 +1084,16 @@
    "ad": "Victor Bailey Jr.",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 20,
-   "saniye": 1825,
+   "vp": 19,
+   "saniye": 1904,
    "mac": 1
   },
   "736366": {
    "ad": "John Meeks",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 19,
-   "saniye": 1768,
+   "vp": 18,
+   "saniye": 1847,
    "mac": 1
   },
   "411597": {
@@ -1101,7 +1101,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 16,
-   "saniye": 1771,
+   "saniye": 1850,
    "mac": 1
   },
   "470765": {
@@ -1109,7 +1109,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 22,
-   "saniye": 1459,
+   "saniye": 1538,
    "mac": 1
   },
   "779011": {
@@ -1156,8 +1156,8 @@
    "ad": "Erten Gazi",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 6,
-   "saniye": 390,
+   "vp": 8,
+   "saniye": 469,
    "mac": 1
   },
   "124128": {
@@ -1172,8 +1172,8 @@
    "ad": "Jordon Crawford",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 6,
-   "saniye": 1065,
+   "vp": 8,
+   "saniye": 1144,
    "mac": 1
   },
   "666080": {
@@ -1197,7 +1197,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 10,
-   "saniye": 1624,
+   "saniye": 1703,
    "mac": 1
   },
   "502472": {
@@ -1205,7 +1205,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 14,
-   "saniye": 1355,
+   "saniye": 1434,
    "mac": 1
   },
   "756112": {
@@ -1236,16 +1236,16 @@
    "ad": "Rasheed Sulaimon",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 23,
-   "saniye": 1425,
+   "vp": 25,
+   "saniye": 1504,
    "mac": 1
   },
   "122136": {
    "ad": "Canberk Kuş",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 2,
-   "saniye": 1195,
+   "vp": 5,
+   "saniye": 1274,
    "mac": 1
   },
   "367110": {

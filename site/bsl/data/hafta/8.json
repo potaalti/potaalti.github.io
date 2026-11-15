@@ -59,7 +59,7 @@
    "durum": "canli",
    "ev": "ESENLER EROKSPOR",
    "evId": 266024,
-   "evSkor": "42",
+   "evSkor": "44",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
    "depSkor": "72",
@@ -67,7 +67,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "07:59",
+    "saat": "06:51",
     "uzatma": false
    }
   },
@@ -884,8 +884,8 @@
    "ad": "Keye Van Der Vuurst",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": -2,
-   "saniye": 989,
+   "vp": -1,
+   "saniye": 1057,
    "mac": 1
   },
   "606624": {
@@ -893,7 +893,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 3,
-   "saniye": 1203,
+   "saniye": 1271,
    "mac": 1
   },
   "667498": {
@@ -901,7 +901,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 8,
-   "saniye": 1148,
+   "saniye": 1216,
    "mac": 1
   },
   "120437": {
@@ -933,7 +933,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 7,
-   "saniye": 789,
+   "saniye": 857,
    "mac": 1
   },
   "776570": {
@@ -973,7 +973,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 121,
+   "saniye": 189,
    "mac": 1
   },
   "776935": {
@@ -1021,15 +1021,15 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 4,
-   "saniye": 946,
+   "saniye": 1014,
    "mac": 1
   },
   "358272": {
    "ad": "İsmet Akpınar",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 0,
-   "saniye": 651,
+   "vp": -1,
+   "saniye": 719,
    "mac": 1
   },
   "776654": {
@@ -1037,7 +1037,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 14,
-   "saniye": 1156,
+   "saniye": 1224,
    "mac": 1
   },
   "283725": {
@@ -1061,7 +1061,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 9,
-   "saniye": 575,
+   "saniye": 643,
    "mac": 1
   },
   "780954": {
@@ -1069,7 +1069,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 7,
-   "saniye": 592,
+   "saniye": 660,
    "mac": 1
   }
  }

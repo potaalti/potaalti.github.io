@@ -1003,7 +1003,7 @@
   "foto": "https://tbf.org.tr/res/48b1d5d4-bda4-4099-b01a-7a0236d165b2_denizlibasket_0005_10.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 1.9,
+  "ribOrt": 2.0,
   "astOrt": 2.5
  },
  {
@@ -4471,8 +4471,8 @@
   "sureOrt": "00:00:00",
   "foto": "https://tbf.org.tr/res/450548-5422-0409142C-D0FC-4672-8891-F29F3131DC35.jpg",
   "boy": null,
-  "mevkiTahmini": "arka",
-  "ribOrt": 9.0,
+  "mevkiTahmini": "on",
+  "ribOrt": 10.0,
   "astOrt": 5.0
  },
  {

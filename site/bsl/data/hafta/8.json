@@ -101,12 +101,12 @@
    "evSkor": "77",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "73",
+   "depSkor": "75",
    "salon": "Ülker Spor ve Etkinlik Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "00:14",
+    "saat": "00:08",
     "uzatma": false
    }
   }
@@ -1461,7 +1461,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 4,
-   "saniye": 1336,
+   "saniye": 1342,
    "mac": 1
   },
   "777704": {
@@ -1485,7 +1485,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 8,
-   "saniye": 1854,
+   "saniye": 1860,
    "mac": 1
   },
   "667814": {
@@ -1493,7 +1493,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 7,
-   "saniye": 1433,
+   "saniye": 1439,
    "mac": 1
   },
   "54659": {
@@ -1533,7 +1533,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 18,
-   "saniye": 1322,
+   "saniye": 1328,
    "mac": 1
   },
   "450016": {
@@ -1549,7 +1549,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 13,
-   "saniye": 1845,
+   "saniye": 1851,
    "mac": 1
   },
   "689440": {
@@ -1565,7 +1565,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 18,
-   "saniye": 1721,
+   "saniye": 1727,
    "mac": 1
   },
   "782949": {
@@ -1581,7 +1581,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 22,
-   "saniye": 1607,
+   "saniye": 1614,
    "mac": 1
   },
   "508583": {
@@ -1597,15 +1597,15 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 8,
-   "saniye": 1665,
+   "saniye": 1671,
    "mac": 1
   },
   "587569": {
    "ad": "Fatts Russell",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": -1,
-   "saniye": 1211,
+   "vp": 1,
+   "saniye": 1217,
    "mac": 1
   },
   "137459": {

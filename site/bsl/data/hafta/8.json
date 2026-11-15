@@ -88,12 +88,12 @@
    "evSkor": "72",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
-   "depSkor": "65",
+   "depSkor": "67",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "02:22",
+    "saat": "01:49",
     "uzatma": false
    }
   },
@@ -1277,7 +1277,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 9,
-   "saniye": 693,
+   "saniye": 736,
    "mac": 1
   },
   "777636": {
@@ -1293,7 +1293,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 10,
-   "saniye": 1464,
+   "saniye": 1507,
    "mac": 1
   },
   "397202": {
@@ -1309,7 +1309,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 1441,
+   "saniye": 1484,
    "mac": 1
   },
   "114257": {
@@ -1332,16 +1332,16 @@
    "ad": "Conor Morgan",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 3,
-   "saniye": 1077,
+   "vp": 2,
+   "saniye": 1120,
    "mac": 1
   },
   "133112": {
    "ad": "Metecan Birsen",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 13,
-   "saniye": 1257,
+   "vp": 12,
+   "saniye": 1300,
    "mac": 1
   },
   "363061": {
@@ -1373,7 +1373,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 6,
-   "saniye": 1416,
+   "saniye": 1459,
    "mac": 1
   },
   "778460": {
@@ -1381,7 +1381,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 30,
-   "saniye": 2118,
+   "saniye": 2161,
    "mac": 1
   },
   "778459": {
@@ -1389,15 +1389,15 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 13,
-   "saniye": 1605,
+   "saniye": 1648,
    "mac": 1
   },
   "502519": {
    "ad": "Bryce Brown",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 2,
-   "saniye": 1775,
+   "vp": 5,
+   "saniye": 1818,
    "mac": 1
   },
   "736260": {
@@ -1405,7 +1405,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 10,
-   "saniye": 1868,
+   "saniye": 1911,
    "mac": 1
   },
   "402930": {

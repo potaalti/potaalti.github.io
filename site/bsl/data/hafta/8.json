@@ -80,7 +80,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "00:06",
+    "saat": "00:00",
     "uzatma": true
    }
   },
@@ -1076,8 +1076,8 @@
    "ad": "Brae Ivey",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 14,
-   "saniye": 2330,
+   "vp": 13,
+   "saniye": 2336,
    "mac": 1
   },
   "779010": {
@@ -1093,7 +1093,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 24,
-   "saniye": 2372,
+   "saniye": 2378,
    "mac": 1
   },
   "411597": {
@@ -1101,7 +1101,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 21,
-   "saniye": 2541,
+   "saniye": 2547,
    "mac": 1
   },
   "470765": {
@@ -1109,7 +1109,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 27,
-   "saniye": 2229,
+   "saniye": 2235,
    "mac": 1
   },
   "779011": {
@@ -1148,8 +1148,8 @@
    "ad": "Tyron Deshun Brewer",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 0,
-   "saniye": 399,
+   "vp": 1,
+   "saniye": 405,
    "mac": 1
   },
   "278617": {
@@ -1172,8 +1172,8 @@
    "ad": "Jordon Crawford",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 17,
-   "saniye": 1820,
+   "vp": 16,
+   "saniye": 1826,
    "mac": 1
   },
   "666080": {
@@ -1197,15 +1197,15 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 17,
-   "saniye": 2394,
+   "saniye": 2400,
    "mac": 1
   },
   "502472": {
    "ad": "Michal Sokolowski",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 15,
-   "saniye": 2125,
+   "vp": 16,
+   "saniye": 2131,
    "mac": 1
   },
   "756112": {
@@ -1236,8 +1236,8 @@
    "ad": "Rasheed Sulaimon",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 31,
-   "saniye": 2108,
+   "vp": 30,
+   "saniye": 2114,
    "mac": 1
   },
   "122136": {
@@ -1245,7 +1245,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 11,
-   "saniye": 1965,
+   "saniye": 1971,
    "mac": 1
   },
   "367110": {

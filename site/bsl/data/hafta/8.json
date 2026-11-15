@@ -75,12 +75,12 @@
    "evSkor": "89",
    "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
    "depId": 265994,
-   "depSkor": "87",
+   "depSkor": "89",
    "salon": "Pamukkale Üniversitesi Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "00:15",
+    "saat": "00:14",
     "uzatma": false
    }
   },
@@ -1077,7 +1077,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 11,
-   "saniye": 2020,
+   "saniye": 2021,
    "mac": 1
   },
   "779010": {
@@ -1085,7 +1085,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 20,
-   "saniye": 2119,
+   "saniye": 2120,
    "mac": 1
   },
   "736366": {
@@ -1093,7 +1093,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 17,
-   "saniye": 2062,
+   "saniye": 2063,
    "mac": 1
   },
   "411597": {
@@ -1101,7 +1101,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 20,
-   "saniye": 2231,
+   "saniye": 2233,
    "mac": 1
   },
   "470765": {
@@ -1109,7 +1109,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 23,
-   "saniye": 1919,
+   "saniye": 1920,
    "mac": 1
   },
   "779011": {
@@ -1172,8 +1172,8 @@
    "ad": "Jordon Crawford",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 15,
-   "saniye": 1525,
+   "vp": 16,
+   "saniye": 1526,
    "mac": 1
   },
   "666080": {
@@ -1197,15 +1197,15 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 16,
-   "saniye": 2084,
+   "saniye": 2085,
    "mac": 1
   },
   "502472": {
    "ad": "Michal Sokolowski",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 13,
-   "saniye": 1815,
+   "vp": 15,
+   "saniye": 1816,
    "mac": 1
   },
   "756112": {
@@ -1237,7 +1237,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 28,
-   "saniye": 1798,
+   "saniye": 1799,
    "mac": 1
   },
   "122136": {
@@ -1245,7 +1245,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 8,
-   "saniye": 1655,
+   "saniye": 1656,
    "mac": 1
   },
   "367110": {

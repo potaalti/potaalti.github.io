@@ -88,12 +88,12 @@
    "evSkor": "51",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
-   "depSkor": "42",
+   "depSkor": "46",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "03:04",
+    "saat": "02:28",
     "uzatma": false
    }
   },
@@ -1268,8 +1268,8 @@
    "ad": "Devon Dotson",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 4,
-   "saniye": 656,
+   "vp": 2,
+   "saniye": 692,
    "mac": 1
   },
   "777634": {
@@ -1277,7 +1277,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 7,
-   "saniye": 481,
+   "saniye": 517,
    "mac": 1
   },
   "777636": {
@@ -1285,7 +1285,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 1,
-   "saniye": 709,
+   "saniye": 745,
    "mac": 1
   },
   "163489": {
@@ -1293,7 +1293,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 5,
-   "saniye": 823,
+   "saniye": 859,
    "mac": 1
   },
   "397202": {
@@ -1333,7 +1333,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 614,
+   "saniye": 650,
    "mac": 1
   },
   "133112": {
@@ -1373,15 +1373,15 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 6,
-   "saniye": 828,
+   "saniye": 864,
    "mac": 1
   },
   "778460": {
    "ad": "Brandon Taylor",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 17,
-   "saniye": 1495,
+   "vp": 22,
+   "saniye": 1531,
    "mac": 1
   },
   "778459": {
@@ -1389,15 +1389,15 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 7,
-   "saniye": 964,
+   "saniye": 1000,
    "mac": 1
   },
   "502519": {
    "ad": "Bryce Brown",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": -1,
-   "saniye": 1134,
+   "vp": 1,
+   "saniye": 1170,
    "mac": 1
   },
   "736260": {
@@ -1405,7 +1405,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 5,
-   "saniye": 1227,
+   "saniye": 1263,
    "mac": 1
   },
   "402930": {

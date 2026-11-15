@@ -59,7 +59,7 @@
    "durum": "canli",
    "ev": "ESENLER EROKSPOR",
    "evId": 266024,
-   "evSkor": "11",
+   "evSkor": "17",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
    "depSkor": "17",
@@ -67,7 +67,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "02:59",
+    "saat": "02:11",
     "uzatma": false
    }
   },

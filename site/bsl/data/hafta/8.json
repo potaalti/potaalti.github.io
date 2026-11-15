@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "09:52",
+    "saat": "09:11",
     "uzatma": false
    }
   }
@@ -1476,8 +1476,8 @@
    "ad": "Braxton Key",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 2,
-   "saniye": 331,
+   "vp": 3,
+   "saniye": 372,
    "mac": 1
   },
   "777705": {
@@ -1493,7 +1493,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 285,
+   "saniye": 326,
    "mac": 1
   },
   "54659": {
@@ -1509,7 +1509,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -2,
-   "saniye": 208,
+   "saniye": 249,
    "mac": 1
   },
   "27541": {
@@ -1525,7 +1525,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 208,
+   "saniye": 249,
    "mac": 1
   },
   "386832": {
@@ -1533,7 +1533,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 3,
-   "saniye": 285,
+   "saniye": 326,
    "mac": 1
   },
   "450016": {
@@ -1549,7 +1549,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 10,
-   "saniye": 608,
+   "saniye": 649,
    "mac": 1
   },
   "689440": {
@@ -1564,8 +1564,8 @@
    "ad": "Collin Malcolm",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 10,
-   "saniye": 608,
+   "vp": 11,
+   "saniye": 649,
    "mac": 1
   },
   "782949": {
@@ -1596,16 +1596,16 @@
    "ad": "Jordan Loyd",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 3,
-   "saniye": 125,
+   "vp": 2,
+   "saniye": 166,
    "mac": 1
   },
   "587569": {
    "ad": "Fatts Russell",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 0,
-   "saniye": 63,
+   "vp": -2,
+   "saniye": 104,
    "mac": 1
   },
   "137459": {
@@ -1629,7 +1629,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 0,
-   "saniye": 63,
+   "saniye": 104,
    "mac": 1
   },
   "735850": {

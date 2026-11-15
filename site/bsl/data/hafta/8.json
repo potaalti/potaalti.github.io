@@ -98,15 +98,15 @@
    "durum": "canli",
    "ev": "FENERBAHÇE TARFİN",
    "evId": 266025,
-   "evSkor": "72",
+   "evSkor": "75",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "67",
+   "depSkor": "69",
    "salon": "Ülker Spor ve Etkinlik Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "03:21",
+    "saat": "02:35",
     "uzatma": false
    }
   }
@@ -1461,7 +1461,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 5,
-   "saniye": 1157,
+   "saniye": 1195,
    "mac": 1
   },
   "777704": {
@@ -1485,15 +1485,15 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 8,
-   "saniye": 1675,
+   "saniye": 1713,
    "mac": 1
   },
   "667814": {
    "ad": "Wade Baldwin Iv",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 6,
-   "saniye": 1254,
+   "vp": 9,
+   "saniye": 1292,
    "mac": 1
   },
   "54659": {
@@ -1533,7 +1533,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 16,
-   "saniye": 1143,
+   "saniye": 1181,
    "mac": 1
   },
   "450016": {
@@ -1548,8 +1548,8 @@
    "ad": "Dario Saric",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 14,
-   "saniye": 1676,
+   "vp": 13,
+   "saniye": 1714,
    "mac": 1
   },
   "689440": {
@@ -1564,8 +1564,8 @@
    "ad": "Collin Malcolm",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 16,
-   "saniye": 1542,
+   "vp": 18,
+   "saniye": 1580,
    "mac": 1
   },
   "782949": {
@@ -1581,7 +1581,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 22,
-   "saniye": 1439,
+   "saniye": 1477,
    "mac": 1
   },
   "508583": {
@@ -1597,7 +1597,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 7,
-   "saniye": 1486,
+   "saniye": 1524,
    "mac": 1
   },
   "587569": {
@@ -1605,7 +1605,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": -5,
-   "saniye": 1032,
+   "saniye": 1070,
    "mac": 1
   },
   "137459": {

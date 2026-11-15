@@ -85,7 +85,7 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ",
    "evId": 265992,
-   "evSkor": "38",
+   "evSkor": "39",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
    "depSkor": "22",
@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "02:17",
+    "saat": "01:43",
     "uzatma": false
    }
   },
@@ -1284,16 +1284,16 @@
    "ad": "Eugene Omoruyi",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 1,
-   "saniye": 481,
+   "vp": 0,
+   "saniye": 513,
    "mac": 1
   },
   "163489": {
    "ad": "Furkan Korkmaz",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 6,
-   "saniye": 632,
+   "vp": 7,
+   "saniye": 664,
    "mac": 1
   },
   "397202": {
@@ -1301,7 +1301,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 5,
-   "saniye": 632,
+   "saniye": 664,
    "mac": 1
   },
   "697020": {
@@ -1317,7 +1317,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 511,
+   "saniye": 543,
    "mac": 1
   },
   "445794": {
@@ -1357,7 +1357,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 7,
-   "saniye": 713,
+   "saniye": 745,
    "mac": 1
   },
   "510723": {
@@ -1381,7 +1381,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 9,
-   "saniye": 942,
+   "saniye": 974,
    "mac": 1
   },
   "778459": {
@@ -1389,7 +1389,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 2,
-   "saniye": 564,
+   "saniye": 596,
    "mac": 1
   },
   "502519": {
@@ -1397,7 +1397,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 1,
-   "saniye": 581,
+   "saniye": 613,
    "mac": 1
   },
   "736260": {
@@ -1405,7 +1405,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": -1,
-   "saniye": 674,
+   "saniye": 706,
    "mac": 1
   },
   "402930": {
@@ -1436,8 +1436,8 @@
    "ad": "Buğra Çal",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 0,
-   "saniye": 222,
+   "vp": -1,
+   "saniye": 254,
    "mac": 1
   },
   "227653": {

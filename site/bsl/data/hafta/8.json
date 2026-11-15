@@ -67,7 +67,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "08:00",
+    "saat": "06:57",
     "uzatma": false
    }
   },
@@ -884,8 +884,8 @@
    "ad": "Keye Van Der Vuurst",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": -1,
-   "saniye": 120,
+   "vp": -2,
+   "saniye": 189,
    "mac": 1
   },
   "606624": {
@@ -893,31 +893,31 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 120,
+   "saniye": 189,
    "mac": 1
   },
   "667498": {
    "ad": "James Webb Iii",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 2,
-   "saniye": 120,
+   "vp": 1,
+   "saniye": 189,
    "mac": 1
   },
   "120437": {
    "ad": "Egehan Arna",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 1,
-   "saniye": 120,
+   "vp": 2,
+   "saniye": 189,
    "mac": 1
   },
   "249031": {
    "ad": "Metehan Akyel",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 0,
-   "saniye": 120,
+   "vp": 1,
+   "saniye": 189,
    "mac": 1
   },
   "359434": {
@@ -981,7 +981,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 3,
-   "saniye": 120,
+   "saniye": 189,
    "mac": 1
   },
   "734506": {
@@ -989,7 +989,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 3,
-   "saniye": 120,
+   "saniye": 189,
    "mac": 1
   },
   "608898": {
@@ -997,7 +997,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": -1,
-   "saniye": 120,
+   "saniye": 189,
    "mac": 1
   },
   "384595": {
@@ -1005,7 +1005,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 2,
-   "saniye": 120,
+   "saniye": 189,
    "mac": 1
   },
   "734505": {
@@ -1013,7 +1013,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 1,
-   "saniye": 120,
+   "saniye": 189,
    "mac": 1
   },
   "609095": {

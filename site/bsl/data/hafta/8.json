@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "07:16",
+    "saat": "06:52",
     "uzatma": false
    }
   }
@@ -1485,7 +1485,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 1,
-   "saniye": 400,
+   "saniye": 424,
    "mac": 1
   },
   "667814": {
@@ -1493,7 +1493,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 441,
+   "saniye": 465,
    "mac": 1
   },
   "54659": {
@@ -1501,7 +1501,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 200,
+   "saniye": 224,
    "mac": 1
   },
   "735811": {
@@ -1509,7 +1509,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -3,
-   "saniye": 364,
+   "saniye": 388,
    "mac": 1
   },
   "27541": {
@@ -1525,7 +1525,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 364,
+   "saniye": 388,
    "mac": 1
   },
   "386832": {
@@ -1556,8 +1556,8 @@
    "ad": "Pj Dozier",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 5,
-   "saniye": 539,
+   "vp": 4,
+   "saniye": 563,
    "mac": 1
   },
   "778400": {
@@ -1597,7 +1597,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 2,
-   "saniye": 281,
+   "saniye": 305,
    "mac": 1
   },
   "587569": {
@@ -1605,7 +1605,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": -2,
-   "saniye": 219,
+   "saniye": 243,
    "mac": 1
   },
   "137459": {
@@ -1629,7 +1629,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 2,
-   "saniye": 219,
+   "saniye": 243,
    "mac": 1
   },
   "735850": {
@@ -1637,7 +1637,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 24,
    "mac": 1
   }
  }

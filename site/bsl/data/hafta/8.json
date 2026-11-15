@@ -69,7 +69,7 @@
   {
    "id": 346335,
    "tarih": "2026-11-15T15:30:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "YUKATEL DENİZLİ BASKET",
    "evId": 266028,
    "evSkor": "101",
@@ -77,12 +77,7 @@
    "depId": 265994,
    "depSkor": "98",
    "salon": "Pamukkale Üniversitesi Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 1,
-    "saat": "00:00",
-    "uzatma": true
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346337,
@@ -1145,7 +1140,7 @@
    "mac": 1
   },
   "779130": {
-   "ad": "Tyron Deshun Brewer",
+   "ad": "TYRON DESHUN BREWER",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 1,
@@ -1173,7 +1168,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 16,
-   "saniye": 1826,
+   "saniye": 1827,
    "mac": 1
   },
   "666080": {
@@ -1221,7 +1216,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 3,
-   "saniye": 892,
+   "saniye": 891,
    "mac": 1
   },
   "127089": {

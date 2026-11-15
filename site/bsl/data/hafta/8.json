@@ -72,7 +72,7 @@
    "durum": "canli",
    "ev": "YUKATEL DENİZLİ BASKET",
    "evId": 266028,
-   "evSkor": "56",
+   "evSkor": "58",
    "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
    "depId": 265994,
    "depSkor": "56",
@@ -80,7 +80,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "05:55",
+    "saat": "05:32",
     "uzatma": false
    }
   },
@@ -1076,8 +1076,8 @@
    "ad": "Brae Ivey",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 1,
-   "saniye": 1285,
+   "vp": 2,
+   "saniye": 1307,
    "mac": 1
   },
   "779010": {
@@ -1085,15 +1085,15 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 13,
-   "saniye": 1347,
+   "saniye": 1369,
    "mac": 1
   },
   "736366": {
    "ad": "John Meeks",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 20,
-   "saniye": 1290,
+   "vp": 19,
+   "saniye": 1312,
    "mac": 1
   },
   "411597": {
@@ -1101,15 +1101,15 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 12,
-   "saniye": 1293,
+   "saniye": 1315,
    "mac": 1
   },
   "470765": {
    "ad": "Mahir Ağva",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 18,
-   "saniye": 1191,
+   "vp": 20,
+   "saniye": 1213,
    "mac": 1
   },
   "779011": {
@@ -1173,7 +1173,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 3,
-   "saniye": 926,
+   "saniye": 941,
    "mac": 1
   },
   "666080": {
@@ -1189,7 +1189,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 7,
-   "saniye": 681,
+   "saniye": 696,
    "mac": 1
   },
   "500074": {
@@ -1197,7 +1197,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 4,
-   "saniye": 1356,
+   "saniye": 1378,
    "mac": 1
   },
   "502472": {
@@ -1205,7 +1205,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 15,
-   "saniye": 877,
+   "saniye": 899,
    "mac": 1
   },
   "756112": {
@@ -1221,7 +1221,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 4,
-   "saniye": 552,
+   "saniye": 559,
    "mac": 1
   },
   "127089": {
@@ -1237,7 +1237,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 18,
-   "saniye": 947,
+   "saniye": 969,
    "mac": 1
   },
   "122136": {
@@ -1245,7 +1245,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 2,
-   "saniye": 732,
+   "saniye": 739,
    "mac": 1
   },
   "367110": {

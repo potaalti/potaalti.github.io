@@ -85,7 +85,7 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ",
    "evId": 265992,
-   "evSkor": "15",
+   "evSkor": "18",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
    "depSkor": "11",
@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "03:30",
+    "saat": "03:05",
     "uzatma": false
    }
   },
@@ -1308,8 +1308,8 @@
    "ad": "David Dejulius",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 1,
-   "saniye": 112,
+   "vp": 4,
+   "saniye": 141,
    "mac": 1
   },
   "114257": {
@@ -1317,7 +1317,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": -1,
-   "saniye": 71,
+   "saniye": 100,
    "mac": 1
   },
   "445794": {
@@ -1333,15 +1333,15 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 71,
+   "saniye": 100,
    "mac": 1
   },
   "133112": {
    "ad": "Metecan Birsen",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 1,
-   "saniye": 71,
+   "vp": 3,
+   "saniye": 100,
    "mac": 1
   },
   "363061": {
@@ -1356,16 +1356,16 @@
    "ad": "Anthony Brown",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 6,
-   "saniye": 140,
+   "vp": 5,
+   "saniye": 169,
    "mac": 1
   },
   "510723": {
    "ad": "Leyton Hammonds",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": -2,
-   "saniye": 390,
+   "vp": -3,
+   "saniye": 419,
    "mac": 1
   },
   "247547": {
@@ -1381,7 +1381,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 9,
-   "saniye": 390,
+   "saniye": 419,
    "mac": 1
   },
   "778459": {
@@ -1389,7 +1389,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 2,
-   "saniye": 390,
+   "saniye": 419,
    "mac": 1
   },
   "502519": {
@@ -1405,7 +1405,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 29,
    "mac": 1
   },
   "402930": {
@@ -1445,7 +1445,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 29,
    "mac": 1
   },
   "425130": {

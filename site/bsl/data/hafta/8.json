@@ -98,15 +98,15 @@
    "durum": "canli",
    "ev": "FENERBAHÇE TARFİN",
    "evId": 266025,
-   "evSkor": "22",
+   "evSkor": "24",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "36",
+   "depSkor": "39",
    "salon": "Ülker Spor ve Etkinlik Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "06:52",
+    "saat": "05:45",
     "uzatma": false
    }
   }
@@ -1460,8 +1460,8 @@
    "ad": "Shane Larkin",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": -1,
-   "saniye": 400,
+   "vp": 1,
+   "saniye": 449,
    "mac": 1
   },
   "777704": {
@@ -1484,8 +1484,8 @@
    "ad": "Shavon Shields",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 1,
-   "saniye": 424,
+   "vp": 0,
+   "saniye": 490,
    "mac": 1
   },
   "667814": {
@@ -1493,15 +1493,15 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 465,
+   "saniye": 531,
    "mac": 1
   },
   "54659": {
    "ad": "Sertaç Şanlı",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": -1,
-   "saniye": 224,
+   "vp": 0,
+   "saniye": 290,
    "mac": 1
   },
   "735811": {
@@ -1509,7 +1509,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -3,
-   "saniye": 388,
+   "saniye": 454,
    "mac": 1
   },
   "27541": {
@@ -1525,7 +1525,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 388,
+   "saniye": 405,
    "mac": 1
   },
   "386832": {
@@ -1557,7 +1557,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 4,
-   "saniye": 563,
+   "saniye": 629,
    "mac": 1
   },
   "778400": {
@@ -1596,16 +1596,16 @@
    "ad": "Jordan Loyd",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 2,
-   "saniye": 305,
+   "vp": 5,
+   "saniye": 371,
    "mac": 1
   },
   "587569": {
    "ad": "Fatts Russell",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": -2,
-   "saniye": 243,
+   "vp": -3,
+   "saniye": 309,
    "mac": 1
   },
   "137459": {
@@ -1628,8 +1628,8 @@
    "ad": "Erkan Yılmaz",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 2,
-   "saniye": 243,
+   "vp": 3,
+   "saniye": 309,
    "mac": 1
   },
   "735850": {
@@ -1637,7 +1637,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 0,
-   "saniye": 24,
+   "saniye": 90,
    "mac": 1
   }
  }

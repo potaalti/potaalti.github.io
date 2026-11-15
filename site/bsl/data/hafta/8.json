@@ -59,15 +59,15 @@
    "durum": "canli",
    "ev": "ESENLER EROKSPOR",
    "evId": 266024,
-   "evSkor": "19",
+   "evSkor": "21",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
-   "depSkor": "22",
+   "depSkor": "25",
    "salon": "Beşiktaş Akatlar Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
-    "periyot": 1,
-    "saat": "00:00",
+    "periyot": 2,
+    "saat": "09:03",
     "uzatma": false
    }
   },
@@ -925,15 +925,15 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 1,
-   "saniye": 138,
+   "saniye": 193,
    "mac": 1
   },
   "502518": {
    "ad": "Jordan Usher",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 1,
-   "saniye": 67,
+   "vp": 3,
+   "saniye": 122,
    "mac": 1
   },
   "776570": {
@@ -941,7 +941,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 290,
+   "saniye": 345,
    "mac": 1
   },
   "778079": {
@@ -949,7 +949,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 3,
-   "saniye": 179,
+   "saniye": 234,
    "mac": 1
   },
   "351474": {
@@ -965,7 +965,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 138,
+   "saniye": 193,
    "mac": 1
   },
   "151935": {
@@ -981,7 +981,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 6,
-   "saniye": 377,
+   "saniye": 432,
    "mac": 1
   },
   "734506": {
@@ -1021,23 +1021,23 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 1,
-   "saniye": 290,
+   "saniye": 345,
    "mac": 1
   },
   "358272": {
    "ad": "İsmet Akpınar",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": -1,
-   "saniye": 138,
+   "vp": 2,
+   "saniye": 193,
    "mac": 1
   },
   "776654": {
    "ad": "Damien Inglis",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 6,
-   "saniye": 290,
+   "vp": 7,
+   "saniye": 345,
    "mac": 1
   },
   "283725": {
@@ -1069,7 +1069,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 1,
-   "saniye": 173,
+   "saniye": 228,
    "mac": 1
   }
  }

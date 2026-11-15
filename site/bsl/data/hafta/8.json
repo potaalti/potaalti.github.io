@@ -88,12 +88,12 @@
    "evSkor": "71",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
-   "depSkor": "62",
+   "depSkor": "63",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "03:31",
+    "saat": "03:13",
     "uzatma": false
    }
   },
@@ -1277,7 +1277,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 9,
-   "saniye": 624,
+   "saniye": 642,
    "mac": 1
   },
   "777636": {
@@ -1293,7 +1293,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 8,
-   "saniye": 1395,
+   "saniye": 1413,
    "mac": 1
   },
   "397202": {
@@ -1308,8 +1308,8 @@
    "ad": "David Dejulius",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 5,
-   "saniye": 1372,
+   "vp": 4,
+   "saniye": 1390,
    "mac": 1
   },
   "114257": {
@@ -1333,7 +1333,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 1008,
+   "saniye": 1026,
    "mac": 1
   },
   "133112": {
@@ -1341,7 +1341,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 13,
-   "saniye": 1188,
+   "saniye": 1206,
    "mac": 1
   },
   "363061": {
@@ -1373,7 +1373,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 6,
-   "saniye": 1347,
+   "saniye": 1365,
    "mac": 1
   },
   "778460": {
@@ -1381,7 +1381,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 28,
-   "saniye": 2049,
+   "saniye": 2067,
    "mac": 1
   },
   "778459": {
@@ -1389,7 +1389,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 13,
-   "saniye": 1536,
+   "saniye": 1554,
    "mac": 1
   },
   "502519": {
@@ -1397,15 +1397,15 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 3,
-   "saniye": 1706,
+   "saniye": 1724,
    "mac": 1
   },
   "736260": {
    "ad": "Micheal Moore",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 7,
-   "saniye": 1799,
+   "vp": 9,
+   "saniye": 1817,
    "mac": 1
   },
   "402930": {

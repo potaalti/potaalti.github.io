@@ -3,7 +3,7 @@
 // liderler ve sezon istatistikleri veri/uret.py'nin ürettiği site/data dosyalarındandır.
 
 import {
-  KAYNAK, esc, sayi, isaretli, aramaNorm, baslik, gunBasligi, gunSaat, saatYazisi, tarihSaat, sureSn, getir, canliYazisi,
+  KAYNAK, kaynakSec, esc, sayi, isaretli, aramaNorm, baslik, gunBasligi, gunSaat, saatYazisi, tarihSaat, sureSn, getir, canliYazisi,
 } from './ortak.js';
 import * as Yayin from './yayin.js';
 import * as AE from './fantezi/artieksi.js';
@@ -1921,6 +1921,7 @@ window.addEventListener('hashchange', () => { S.ui.kutuSirala = null; S.ui.odulA
 // ---------- Canlı yenileme: başlamış ama bitmemiş maçı olan haftaların listesi ve açık kutu skor ----------
 async function canliYenile() {
   if (document.hidden || !S.index) return;
+  await kaynakSec(); // Pages yayını takıldıysa depodan oku
   const simdi = Date.now();
   for (const [k, v] of Object.entries(S.maclar)) {
     if (!v?.maclar?.some(m => m.durum !== 'bitti' && !m.tarih.endsWith('T00:00:00') && simdi >= new Date(m.tarih).getTime() - 10 * 60000)) continue;

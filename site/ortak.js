@@ -1,9 +1,27 @@
 // Uygulamanın bütün bölümlerinde kullanılan yardımcılar
 
 export const KAYNAK_SITE = 'https://potaalti.github.io/tbl_fantezi_lig';
-// Veriler doğrudan depodan (raw.githubusercontent, her istekte ?t= ile önbelleksiz): eski TBL sitesinin GitHub Pages yayını
-// takılınca (2026-11-13 maç sırasında 18:30'dan sonra) canlı skorlar durmasın; Pages yayınını beklemeden telefonun gönderdiği an gelir
-export const KAYNAK = 'https://raw.githubusercontent.com/potaalti/tbl_fantezi_lig/main/site/data';
+// Canlı veri iki yerden okunabilir: eski TBL sitesinin GitHub Pages yayını (gönderimden ~30-40 sn sonra yeni; yayında önbelleği
+// temizlenir) ya da doğrudan depo (raw.githubusercontent: Pages yayını takılsa da gelir ama 5 dakikaya kadar önbellekte kalıyor,
+// ?t= işaretini yok sayıyor; 2026-11-15 ölçümü: FIBA 14-18 iken raw 6-5 veriyordu). Varsayılan Pages; kaynakSec ikisinin
+// hafta/index.json güncelleme zamanına bakar, Pages 1 dakikadan fazla gerideyse (yayın takıldıysa, 2026-11-13) raw'a geçer.
+const KAYNAK_PAGES = `${KAYNAK_SITE}/data`;
+const KAYNAK_RAW = 'https://raw.githubusercontent.com/potaalti/tbl_fantezi_lig/main/site/data';
+export let KAYNAK = KAYNAK_PAGES;  // içe aktaranlar her zaman güncel değeri görür (canlı bağ)
+let kaynakSecildi = 0;
+export async function kaynakSec() {
+  if (Date.now() - kaynakSecildi < 45000) return KAYNAK;
+  kaynakSecildi = Date.now();
+  const zaman = async u => {
+    try {
+      const r = await fetch(`${u}/hafta/index.json?t=${Date.now()}`, { cache: 'no-store' });
+      return Date.parse((await r.json()).guncelleme) || 0;
+    } catch { return 0; }
+  };
+  const [p, r] = await Promise.all([zaman(KAYNAK_PAGES), zaman(KAYNAK_RAW)]);
+  KAYNAK = r > p + 60000 ? KAYNAK_RAW : KAYNAK_PAGES;
+  return KAYNAK;
+}
 
 export const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 export const sayi = n => (Math.round((Number(n) || 0) * 10) / 10).toLocaleString('tr-TR');

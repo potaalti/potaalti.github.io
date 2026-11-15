@@ -8,6 +8,8 @@ import { firebaseConfig, lig as LIG_AYARI } from 'lig-ayar';
 import * as C from './core.js';
 import * as D from './db.js';
 import * as ME from '../mac-ek.js';
+// TBL verisi (eski TBL sitesi): Pages ya da depo, hangisi yeniyse (../ortak.js kaynakSec); TBL_VERI canlı bağ, her an güncel
+import { KAYNAK as TBL_VERI, kaynakSec } from '../ortak.js';
 
 // Aynı motor iki lig için çalışır. BSL: draftla kurulur, As 3 Ön + 2 Arka ve Türk kuralı.
 // TBL: kadrolar eski TBL Fantezi Ligi'nden içe aktarılır (draft yok), As'ta en fazla 2 yabancı, fantezi hafta numaraları.
@@ -2979,7 +2981,6 @@ setInterval(() => { if (S.uid && !S.ligYok) D.saatFarki(S.uid).then(f => { S.saa
 // TBL Fantezi Ligi'nin telefondaki güncellemesi maç saatlerinde 3 dakikada bir BSL'nin canlı skorlarını ve kutu
 // skorlarını (oyuncu VP'leri) yayınlıyor. Bu ve sıradaki haftanın başlamış ama bizim verimizde henüz kesinleşmemiş
 // maçları oradan okunur (dakikada bir); kesin sonuçlar günde 2 bizim güncellememizle gelir.
-const TBL_VERI = 'https://raw.githubusercontent.com/potaalti/tbl_fantezi_lig/main/site/data'; // doğrudan depodan: eski sitenin Pages yayını takılsa da canlı veri gelir (2026-11-13)
 
 // ---------- Veri kaynağı ----------
 // BSL: kendi data/ klasörü (bsl/veri_guncelle.py). TBL: eski TBL Fantezi Ligi sitesinin dosyaları (Termux günceller;
@@ -3164,6 +3165,7 @@ async function canliYenile() {
   const haftalar = eksikHaftalar();
   if (!haftalar.length) return;
   S.canliYenileniyor = true;
+  await kaynakSec().catch(() => {});
   try {
     for (const n of haftalar) {
       const fantezi = S.haftalar[n] || (S.ayar && n >= S.ayar.baslangicHaftasi);

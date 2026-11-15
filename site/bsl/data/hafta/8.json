@@ -85,7 +85,7 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ",
    "evId": 265992,
-   "evSkor": "39",
+   "evSkor": "40",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
    "depSkor": "22",
@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "01:43",
+    "saat": "01:29",
     "uzatma": false
    }
   },
@@ -1285,23 +1285,23 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 513,
+   "saniye": 528,
    "mac": 1
   },
   "163489": {
    "ad": "Furkan Korkmaz",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 7,
-   "saniye": 664,
+   "vp": 6,
+   "saniye": 679,
    "mac": 1
   },
   "397202": {
    "ad": "Ante Zizic",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 5,
-   "saniye": 664,
+   "vp": 7,
+   "saniye": 679,
    "mac": 1
   },
   "697020": {
@@ -1316,8 +1316,8 @@
    "ad": "Berk Uğurlu",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 2,
-   "saniye": 543,
+   "vp": 4,
+   "saniye": 558,
    "mac": 1
   },
   "445794": {
@@ -1357,7 +1357,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 7,
-   "saniye": 745,
+   "saniye": 760,
    "mac": 1
   },
   "510723": {
@@ -1381,7 +1381,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 9,
-   "saniye": 974,
+   "saniye": 989,
    "mac": 1
   },
   "778459": {
@@ -1389,7 +1389,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 2,
-   "saniye": 596,
+   "saniye": 611,
    "mac": 1
   },
   "502519": {
@@ -1397,7 +1397,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 1,
-   "saniye": 613,
+   "saniye": 628,
    "mac": 1
   },
   "736260": {
@@ -1405,7 +1405,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": -1,
-   "saniye": 706,
+   "saniye": 721,
    "mac": 1
   },
   "402930": {
@@ -1437,7 +1437,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": -1,
-   "saniye": 254,
+   "saniye": 269,
    "mac": 1
   },
   "227653": {

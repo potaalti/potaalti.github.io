@@ -98,7 +98,7 @@
    "durum": "canli",
    "ev": "FENERBAHÇE TARFİN",
    "evId": 266025,
-   "evSkor": "52",
+   "evSkor": "54",
    "dep": "ANADOLU EFES",
    "depId": 265990,
    "depSkor": "47",
@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "04:21",
+    "saat": "03:48",
     "uzatma": false
    }
   }
@@ -1468,16 +1468,16 @@
    "ad": "Trent Forrest",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 12,
-   "saniye": 975,
+   "vp": 14,
+   "saniye": 1009,
    "mac": 1
   },
   "777675": {
    "ad": "Braxton Key",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 7,
-   "saniye": 740,
+   "vp": 9,
+   "saniye": 774,
    "mac": 1
   },
   "777705": {
@@ -1485,7 +1485,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 7,
-   "saniye": 1174,
+   "saniye": 1208,
    "mac": 1
   },
   "667814": {
@@ -1525,7 +1525,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 5,
-   "saniye": 466,
+   "saniye": 500,
    "mac": 1
   },
   "386832": {
@@ -1549,7 +1549,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 10,
-   "saniye": 1147,
+   "saniye": 1181,
    "mac": 1
   },
   "689440": {
@@ -1565,15 +1565,15 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 14,
-   "saniye": 1046,
+   "saniye": 1080,
    "mac": 1
   },
   "782949": {
    "ad": "Cameron Payne",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 6,
-   "saniye": 1120,
+   "vp": 5,
+   "saniye": 1154,
    "mac": 1
   },
   "370740": {
@@ -1581,7 +1581,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 9,
-   "saniye": 883,
+   "saniye": 917,
    "mac": 1
   },
   "508583": {
@@ -1597,7 +1597,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 5,
-   "saniye": 817,
+   "saniye": 851,
    "mac": 1
   },
   "587569": {

@@ -908,8 +908,8 @@
   "foto": "https://tbf.org.tr/res/9af9d00c-c3a2-40d8-8d90-0eec26957b88_denizlibasket_0010_46.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 6.4,
-  "astOrt": 1.9
+  "ribOrt": 6.5,
+  "astOrt": 2.0
  },
  {
   "id": "778182",
@@ -2861,7 +2861,7 @@
   "foto": "https://tbf.org.tr/res/ffaf1e3e-404d-416c-bfef-972090921bd1_cayrova_0005_10.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 1.9,
+  "ribOrt": 2.1,
   "astOrt": 2.1
  },
  {
@@ -4472,7 +4472,7 @@
   "foto": "https://tbf.org.tr/res/450548-5422-0409142C-D0FC-4672-8891-F29F3131DC35.jpg",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 3.0,
+  "ribOrt": 4.0,
   "astOrt": 1.0
  },
  {

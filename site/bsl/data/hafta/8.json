@@ -72,7 +72,7 @@
    "durum": "canli",
    "ev": "YUKATEL DENİZLİ BASKET",
    "evId": 266028,
-   "evSkor": "39",
+   "evSkor": "42",
    "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
    "depId": 265994,
    "depSkor": "47",
@@ -80,7 +80,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "01:46",
+    "saat": "00:36",
     "uzatma": false
    }
   },
@@ -1076,8 +1076,8 @@
    "ad": "Brae Ivey",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 3,
-   "saniye": 933,
+   "vp": 2,
+   "saniye": 1005,
    "mac": 1
   },
   "779010": {
@@ -1085,7 +1085,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 9,
-   "saniye": 995,
+   "saniye": 1067,
    "mac": 1
   },
   "736366": {
@@ -1093,23 +1093,23 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 14,
-   "saniye": 938,
+   "saniye": 1010,
    "mac": 1
   },
   "411597": {
    "ad": "Isaiah Miles",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 1,
-   "saniye": 941,
+   "vp": 4,
+   "saniye": 1014,
    "mac": 1
   },
   "470765": {
    "ad": "Mahir Ağva",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 13,
-   "saniye": 839,
+   "vp": 16,
+   "saniye": 911,
    "mac": 1
   },
   "779011": {
@@ -1172,8 +1172,8 @@
    "ad": "Jordon Crawford",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 6,
-   "saniye": 574,
+   "vp": 4,
+   "saniye": 646,
    "mac": 1
   },
   "666080": {
@@ -1181,15 +1181,15 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 9,
-   "saniye": 775,
+   "saniye": 847,
    "mac": 1
   },
   "160245": {
    "ad": "Enes Berkay Taşkıran",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 3,
-   "saniye": 380,
+   "vp": 2,
+   "saniye": 435,
    "mac": 1
   },
   "500074": {
@@ -1197,7 +1197,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 4,
-   "saniye": 1004,
+   "saniye": 1076,
    "mac": 1
   },
   "502472": {
@@ -1221,7 +1221,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 4,
-   "saniye": 502,
+   "saniye": 519,
    "mac": 1
   },
   "127089": {
@@ -1236,8 +1236,8 @@
    "ad": "Rasheed Sulaimon",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 13,
-   "saniye": 764,
+   "vp": 15,
+   "saniye": 836,
    "mac": 1
   },
   "122136": {

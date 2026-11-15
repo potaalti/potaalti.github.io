@@ -56,7 +56,7 @@
   {
    "id": 346330,
    "tarih": "2026-11-15T13:00:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "ESENLER EROKSPOR",
    "evId": 266024,
    "evSkor": "57",
@@ -64,12 +64,7 @@
    "depId": 265991,
    "depSkor": "93",
    "salon": "Beşiktaş Akatlar Spor Kompleksi",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "00:00",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346335,
@@ -881,7 +876,7 @@
    "mac": 1
   },
   "470574": {
-   "ad": "Keye Van Der Vuurst",
+   "ad": "Keye Van der Vuurst",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": -3,
@@ -897,7 +892,7 @@
    "mac": 1
   },
   "667498": {
-   "ad": "James Webb Iii",
+   "ad": "James Webb III",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 6,
@@ -921,7 +916,7 @@
    "mac": 1
   },
   "359434": {
-   "ad": "Errick Mccollum",
+   "ad": "Errick McCollum",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": -2,

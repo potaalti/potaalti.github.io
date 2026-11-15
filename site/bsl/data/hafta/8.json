@@ -72,7 +72,7 @@
    "durum": "canli",
    "ev": "YUKATEL DENİZLİ BASKET",
    "evId": 266028,
-   "evSkor": "97",
+   "evSkor": "98",
    "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
    "depId": 265994,
    "depSkor": "97",
@@ -80,7 +80,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "01:35",
+    "saat": "01:13",
     "uzatma": true
    }
   },
@@ -1077,7 +1077,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 13,
-   "saniye": 2262,
+   "saniye": 2263,
    "mac": 1
   },
   "779010": {
@@ -1085,15 +1085,15 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 21,
-   "saniye": 2361,
+   "saniye": 2362,
    "mac": 1
   },
   "736366": {
    "ad": "John Meeks",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 20,
-   "saniye": 2304,
+   "vp": 21,
+   "saniye": 2305,
    "mac": 1
   },
   "411597": {
@@ -1101,15 +1101,15 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 21,
-   "saniye": 2473,
+   "saniye": 2474,
    "mac": 1
   },
   "470765": {
    "ad": "Mahir Ağva",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 25,
-   "saniye": 2161,
+   "vp": 26,
+   "saniye": 2162,
    "mac": 1
   },
   "779011": {
@@ -1173,7 +1173,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 18,
-   "saniye": 1752,
+   "saniye": 1753,
    "mac": 1
   },
   "666080": {
@@ -1197,7 +1197,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 16,
-   "saniye": 2326,
+   "saniye": 2327,
    "mac": 1
   },
   "502472": {
@@ -1205,7 +1205,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 14,
-   "saniye": 2057,
+   "saniye": 2058,
    "mac": 1
   },
   "756112": {
@@ -1237,7 +1237,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 32,
-   "saniye": 2040,
+   "saniye": 2041,
    "mac": 1
   },
   "122136": {
@@ -1245,7 +1245,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 11,
-   "saniye": 1897,
+   "saniye": 1898,
    "mac": 1
   },
   "367110": {

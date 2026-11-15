@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "00:20",
+    "saat": "00:00",
     "uzatma": false
    }
   },
@@ -1285,7 +1285,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 597,
+   "saniye": 617,
    "mac": 1
   },
   "163489": {
@@ -1309,7 +1309,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 542,
+   "saniye": 562,
    "mac": 1
   },
   "114257": {
@@ -1317,7 +1317,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 627,
+   "saniye": 647,
    "mac": 1
   },
   "445794": {
@@ -1341,7 +1341,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 13,
-   "saniye": 652,
+   "saniye": 672,
    "mac": 1
   },
   "363061": {
@@ -1356,8 +1356,8 @@
    "ad": "Anthony Brown",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 7,
-   "saniye": 829,
+   "vp": 8,
+   "saniye": 849,
    "mac": 1
   },
   "510723": {
@@ -1381,7 +1381,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 13,
-   "saniye": 1058,
+   "saniye": 1078,
    "mac": 1
   },
   "778459": {
@@ -1389,15 +1389,15 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 4,
-   "saniye": 680,
+   "saniye": 700,
    "mac": 1
   },
   "502519": {
    "ad": "Bryce Brown",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 2,
-   "saniye": 697,
+   "vp": 1,
+   "saniye": 717,
    "mac": 1
   },
   "736260": {
@@ -1405,7 +1405,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": -1,
-   "saniye": 790,
+   "saniye": 810,
    "mac": 1
   },
   "402930": {
@@ -1437,7 +1437,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": -1,
-   "saniye": 338,
+   "saniye": 358,
    "mac": 1
   },
   "227653": {

@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "00:44",
+    "saat": "00:00",
     "uzatma": false
    }
   }
@@ -1460,8 +1460,8 @@
    "ad": "Shane Larkin",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 3,
-   "saniye": 750,
+   "vp": 2,
+   "saniye": 795,
    "mac": 1
   },
   "777704": {
@@ -1469,7 +1469,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 8,
-   "saniye": 592,
+   "saniye": 637,
    "mac": 1
   },
   "777675": {
@@ -1485,7 +1485,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 4,
-   "saniye": 791,
+   "saniye": 836,
    "mac": 1
   },
   "667814": {
@@ -1532,8 +1532,8 @@
    "ad": "Will Clyburn",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 6,
-   "saniye": 633,
+   "vp": 7,
+   "saniye": 678,
    "mac": 1
   },
   "450016": {
@@ -1549,7 +1549,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 11,
-   "saniye": 764,
+   "saniye": 809,
    "mac": 1
   },
   "689440": {
@@ -1557,7 +1557,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 7,
-   "saniye": 930,
+   "saniye": 975,
    "mac": 1
   },
   "778400": {
@@ -1573,7 +1573,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 9,
-   "saniye": 737,
+   "saniye": 782,
    "mac": 1
   },
   "370740": {
@@ -1597,7 +1597,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 3,
-   "saniye": 672,
+   "saniye": 717,
    "mac": 1
   },
   "587569": {
@@ -1620,8 +1620,8 @@
    "ad": "David Mutaf",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 0,
-   "saniye": 0,
+   "vp": -1,
+   "saniye": 45,
    "mac": 1
   },
   "157002": {

@@ -168,7 +168,7 @@
   "boy": null,
   "mevkiTahmini": "on",
   "ribOrt": 7.2,
-  "astOrt": 1.6
+  "astOrt": 1.8
  },
  {
   "id": "777675",
@@ -908,7 +908,7 @@
   "foto": "https://tbf.org.tr/res/9af9d00c-c3a2-40d8-8d90-0eec26957b88_denizlibasket_0010_46.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 6.6,
+  "ribOrt": 6.8,
   "astOrt": 2.0
  },
  {
@@ -4471,9 +4471,9 @@
   "sureOrt": "00:00:00",
   "foto": "https://tbf.org.tr/res/450548-5422-0409142C-D0FC-4672-8891-F29F3131DC35.jpg",
   "boy": null,
-  "mevkiTahmini": "on",
+  "mevkiTahmini": "arka",
   "ribOrt": 5.0,
-  "astOrt": 1.0
+  "astOrt": 3.0
  },
  {
   "id": "381976",

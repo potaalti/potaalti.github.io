@@ -85,15 +85,15 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ",
    "evId": 265992,
-   "evSkor": "23",
+   "evSkor": "24",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
-   "depSkor": "13",
+   "depSkor": "15",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "00:40",
+    "saat": "00:24",
     "uzatma": false
    }
   },
@@ -1309,7 +1309,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 282,
+   "saniye": 298,
    "mac": 1
   },
   "114257": {
@@ -1317,7 +1317,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 241,
+   "saniye": 257,
    "mac": 1
   },
   "445794": {
@@ -1333,15 +1333,15 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": -1,
-   "saniye": 241,
+   "saniye": 257,
    "mac": 1
   },
   "133112": {
    "ad": "Metecan Birsen",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 11,
-   "saniye": 241,
+   "vp": 10,
+   "saniye": 257,
    "mac": 1
   },
   "363061": {
@@ -1357,7 +1357,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 6,
-   "saniye": 310,
+   "saniye": 326,
    "mac": 1
   },
   "510723": {
@@ -1365,7 +1365,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": -1,
-   "saniye": 560,
+   "saniye": 576,
    "mac": 1
   },
   "247547": {
@@ -1381,7 +1381,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 8,
-   "saniye": 560,
+   "saniye": 576,
    "mac": 1
   },
   "778459": {
@@ -1404,8 +1404,8 @@
    "ad": "Micheal Moore",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": -1,
-   "saniye": 170,
+   "vp": 0,
+   "saniye": 186,
    "mac": 1
   },
   "402930": {
@@ -1420,8 +1420,8 @@
    "ad": "Nate Watson",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 0,
-   "saniye": 75,
+   "vp": 3,
+   "saniye": 91,
    "mac": 1
   },
   "443749": {
@@ -1445,7 +1445,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": -1,
-   "saniye": 170,
+   "saniye": 186,
    "mac": 1
   },
   "425130": {

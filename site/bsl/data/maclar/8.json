@@ -85,7 +85,7 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ",
    "evId": 265992,
-   "evSkor": "3",
+   "evSkor": "9",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
    "depSkor": "4",
@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "06:44",
+    "saat": "05:50",
     "uzatma": false
    }
   },

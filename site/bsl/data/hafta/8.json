@@ -75,12 +75,12 @@
    "evSkor": "34",
    "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
    "depId": 265994,
-   "depSkor": "45",
+   "depSkor": "47",
    "salon": "Pamukkale Üniversitesi Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "03:56",
+    "saat": "03:29",
     "uzatma": false
    }
   },
@@ -1076,8 +1076,8 @@
    "ad": "Brae Ivey",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 4,
-   "saniye": 803,
+   "vp": 3,
+   "saniye": 830,
    "mac": 1
   },
   "779010": {
@@ -1085,7 +1085,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 9,
-   "saniye": 865,
+   "saniye": 892,
    "mac": 1
   },
   "736366": {
@@ -1093,7 +1093,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 11,
-   "saniye": 808,
+   "saniye": 835,
    "mac": 1
   },
   "411597": {
@@ -1101,7 +1101,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 2,
-   "saniye": 811,
+   "saniye": 838,
    "mac": 1
   },
   "470765": {
@@ -1109,7 +1109,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 10,
-   "saniye": 709,
+   "saniye": 736,
    "mac": 1
   },
   "779011": {
@@ -1173,7 +1173,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 6,
-   "saniye": 444,
+   "saniye": 471,
    "mac": 1
   },
   "666080": {
@@ -1197,15 +1197,15 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 4,
-   "saniye": 874,
+   "saniye": 901,
    "mac": 1
   },
   "502472": {
    "ad": "Michal Sokolowski",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 13,
-   "saniye": 533,
+   "vp": 15,
+   "saniye": 560,
    "mac": 1
   },
   "756112": {
@@ -1236,8 +1236,8 @@
    "ad": "Rasheed Sulaimon",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 11,
-   "saniye": 634,
+   "vp": 13,
+   "saniye": 661,
    "mac": 1
   },
   "122136": {
@@ -1245,7 +1245,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 3,
-   "saniye": 634,
+   "saniye": 661,
    "mac": 1
   },
   "367110": {

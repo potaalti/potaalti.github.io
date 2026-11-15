@@ -4,7 +4,7 @@ kaynak budur; telefon ve GitHub yedektir. Telefon, son 5 dakikada '(pc)' etiketl
 Üst üste basmaz: her iş kendi kopyasında GitHub'daki son hali alır (git reset), veriyi üretir, değişiklik varsa '(pc)'
 etiketiyle gönderir; o arada başkası (telefon, GitHub) göndermişse son hali alıp yeniden üretir.
 
-  python veri/pc_dongu.py canli    2 dakikada bir: TBL ve BSL canlı skor ve VP (maç saatinde; değilse internete çıkmadan
+  python veri/pc_dongu.py canli    dakikada bir: TBL ve BSL canlı skor ve VP (maç saatinde; değilse internete çıkmadan
                                    biter), Avrupa (Türkiye saatiyle 18:00–02:00)
   python veri/pc_dongu.py gunluk   15 dakikada bir, zamanı gelen işler (Türkiye saati; o saat kaçtıysa açılınca bir kez):
       TBL ve BSL verilerinin tamamı (TBL takım kadroları dahil), istatistik liderleri, seyirci, oyuncu fotoğrafı ve

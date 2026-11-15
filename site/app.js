@@ -1946,7 +1946,7 @@ async function canliYenile() {
   }
   ciz();
 }
-setInterval(canliYenile, 60 * 1000);
+setInterval(canliYenile, 30 * 1000); // canlı skor: bilgisayar dakikada bir gönderir, Pages ~40 sn sonra yayınlar
 document.addEventListener('visibilitychange', () => { if (!document.hidden) canliYenile(); });
 
 Yayin.baglan(() => ciz());

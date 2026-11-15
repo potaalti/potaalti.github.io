@@ -3186,7 +3186,7 @@ async function canliYenile() {
   }
   S.canliYenileniyor = false;
 }
-setInterval(canliYenile, 60 * 1000);
+setInterval(canliYenile, 30 * 1000); // canlı skor: bilgisayar dakikada bir gönderir, Pages ~40 sn sonra yayınlar
 
 // Yönetici kendi takımına katılır: önce takıma yönetici yetkisi verilir (yöneticilik sürsün), sonra hesap takıma bağlanır
 async function yoneticiTakimaKatil(tid, kod) {

@@ -62,12 +62,12 @@
    "evSkor": "33",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
-   "depSkor": "47",
+   "depSkor": "50",
    "salon": "Beşiktaş Akatlar Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "04:15",
+    "saat": "03:44",
     "uzatma": false
    }
   },
@@ -925,7 +925,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": -1,
-   "saniye": 601,
+   "saniye": 631,
    "mac": 1
   },
   "502518": {
@@ -933,7 +933,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 4,
-   "saniye": 413,
+   "saniye": 443,
    "mac": 1
   },
   "776570": {
@@ -941,7 +941,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 4,
-   "saniye": 847,
+   "saniye": 877,
    "mac": 1
   },
   "778079": {
@@ -949,7 +949,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 3,
-   "saniye": 845,
+   "saniye": 875,
    "mac": 1
   },
   "351474": {
@@ -965,7 +965,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 3,
-   "saniye": 560,
+   "saniye": 590,
    "mac": 1
   },
   "151935": {
@@ -989,39 +989,39 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 4,
-   "saniye": 1134,
+   "saniye": 1158,
    "mac": 1
   },
   "608898": {
    "ad": "Tyler Cavanaugh",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 5,
-   "saniye": 655,
+   "vp": 8,
+   "saniye": 685,
    "mac": 1
   },
   "384595": {
    "ad": "Mateusz Ponitka",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 6,
-   "saniye": 1160,
+   "vp": 8,
+   "saniye": 1190,
    "mac": 1
   },
   "734505": {
    "ad": "Trevion Williams",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 15,
-   "saniye": 894,
+   "vp": 16,
+   "saniye": 924,
    "mac": 1
   },
   "609095": {
    "ad": "Marcquise Reed",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 1,
-   "saniye": 570,
+   "vp": 0,
+   "saniye": 600,
    "mac": 1
   },
   "358272": {
@@ -1061,7 +1061,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 2,
-   "saniye": 223,
+   "saniye": 229,
    "mac": 1
   },
   "780954": {

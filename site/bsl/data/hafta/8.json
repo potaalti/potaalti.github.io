@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "03:57",
+    "saat": "03:21",
     "uzatma": false
    }
   }
@@ -1461,7 +1461,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 5,
-   "saniye": 1113,
+   "saniye": 1157,
    "mac": 1
   },
   "777704": {
@@ -1484,16 +1484,16 @@
    "ad": "Shavon Shields",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 7,
-   "saniye": 1631,
+   "vp": 8,
+   "saniye": 1675,
    "mac": 1
   },
   "667814": {
    "ad": "Wade Baldwin Iv",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 7,
-   "saniye": 1210,
+   "vp": 6,
+   "saniye": 1254,
    "mac": 1
   },
   "54659": {
@@ -1532,8 +1532,8 @@
    "ad": "Will Clyburn",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 17,
-   "saniye": 1099,
+   "vp": 16,
+   "saniye": 1143,
    "mac": 1
   },
   "450016": {
@@ -1549,7 +1549,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 14,
-   "saniye": 1632,
+   "saniye": 1676,
    "mac": 1
   },
   "689440": {
@@ -1565,7 +1565,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 16,
-   "saniye": 1498,
+   "saniye": 1542,
    "mac": 1
   },
   "782949": {
@@ -1580,8 +1580,8 @@
    "ad": "Ercan Osmani",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 21,
-   "saniye": 1395,
+   "vp": 22,
+   "saniye": 1439,
    "mac": 1
   },
   "508583": {
@@ -1597,7 +1597,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 7,
-   "saniye": 1442,
+   "saniye": 1486,
    "mac": 1
   },
   "587569": {
@@ -1605,7 +1605,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": -5,
-   "saniye": 988,
+   "saniye": 1032,
    "mac": 1
   },
   "137459": {

@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "00:24",
+    "saat": "00:00",
     "uzatma": false
    }
   },
@@ -1308,8 +1308,8 @@
    "ad": "David Dejulius",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 4,
-   "saniye": 298,
+   "vp": 3,
+   "saniye": 322,
    "mac": 1
   },
   "114257": {
@@ -1317,7 +1317,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 257,
+   "saniye": 281,
    "mac": 1
   },
   "445794": {
@@ -1333,7 +1333,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": -1,
-   "saniye": 257,
+   "saniye": 281,
    "mac": 1
   },
   "133112": {
@@ -1341,7 +1341,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 10,
-   "saniye": 257,
+   "saniye": 281,
    "mac": 1
   },
   "363061": {
@@ -1357,7 +1357,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 6,
-   "saniye": 326,
+   "saniye": 350,
    "mac": 1
   },
   "510723": {
@@ -1365,7 +1365,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": -1,
-   "saniye": 576,
+   "saniye": 600,
    "mac": 1
   },
   "247547": {
@@ -1380,8 +1380,8 @@
    "ad": "Brandon Taylor",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 8,
-   "saniye": 576,
+   "vp": 9,
+   "saniye": 600,
    "mac": 1
   },
   "778459": {
@@ -1405,7 +1405,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 186,
+   "saniye": 210,
    "mac": 1
   },
   "402930": {
@@ -1421,7 +1421,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 3,
-   "saniye": 91,
+   "saniye": 115,
    "mac": 1
   },
   "443749": {
@@ -1445,7 +1445,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": -1,
-   "saniye": 186,
+   "saniye": 210,
    "mac": 1
   },
   "425130": {

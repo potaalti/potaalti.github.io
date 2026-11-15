@@ -69,15 +69,20 @@
   {
    "id": 346335,
    "tarih": "2026-11-15T15:30:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "YUKATEL DENİZLİ BASKET",
    "evId": 266028,
-   "evSkor": null,
+   "evSkor": "0",
    "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
    "depId": 265994,
-   "depSkor": null,
+   "depSkor": "0",
    "salon": "Pamukkale Üniversitesi Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "09:43",
+    "uzatma": false
+   }
   },
   {
    "id": 346337,

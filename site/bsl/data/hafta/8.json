@@ -59,15 +59,15 @@
    "durum": "canli",
    "ev": "ESENLER EROKSPOR",
    "evId": 266024,
-   "evSkor": "33",
+   "evSkor": "36",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
-   "depSkor": "50",
+   "depSkor": "56",
    "salon": "Beşiktaş Akatlar Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "03:44",
+    "saat": "02:25",
     "uzatma": false
    }
   },
@@ -925,31 +925,31 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": -1,
-   "saniye": 631,
+   "saniye": 711,
    "mac": 1
   },
   "502518": {
    "ad": "Jordan Usher",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 4,
-   "saniye": 443,
+   "vp": 7,
+   "saniye": 523,
    "mac": 1
   },
   "776570": {
    "ad": "Kevin Yebo",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 4,
-   "saniye": 877,
+   "vp": 3,
+   "saniye": 957,
    "mac": 1
   },
   "778079": {
    "ad": "Amadou Sow",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 3,
-   "saniye": 875,
+   "vp": 4,
+   "saniye": 955,
    "mac": 1
   },
   "351474": {
@@ -965,7 +965,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 3,
-   "saniye": 590,
+   "saniye": 670,
    "mac": 1
   },
   "151935": {
@@ -996,24 +996,24 @@
    "ad": "Tyler Cavanaugh",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 8,
-   "saniye": 685,
+   "vp": 9,
+   "saniye": 765,
    "mac": 1
   },
   "384595": {
    "ad": "Mateusz Ponitka",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 8,
-   "saniye": 1190,
+   "vp": 11,
+   "saniye": 1270,
    "mac": 1
   },
   "734505": {
    "ad": "Trevion Williams",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 16,
-   "saniye": 924,
+   "vp": 19,
+   "saniye": 978,
    "mac": 1
   },
   "609095": {
@@ -1021,7 +1021,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 0,
-   "saniye": 600,
+   "saniye": 680,
    "mac": 1
   },
   "358272": {
@@ -1060,8 +1060,8 @@
    "ad": "Kenan Sipahi",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 2,
-   "saniye": 229,
+   "vp": 3,
+   "saniye": 309,
    "mac": 1
   },
   "780954": {
@@ -1069,7 +1069,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 1,
-   "saniye": 300,
+   "saniye": 326,
    "mac": 1
   }
  }

@@ -98,15 +98,15 @@
    "durum": "canli",
    "ev": "FENERBAHÇE TARFİN",
    "evId": 266025,
-   "evSkor": "6",
+   "evSkor": "8",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "8",
+   "depSkor": "10",
    "salon": "Ülker Spor ve Etkinlik Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "07:36",
+    "saat": "06:21",
     "uzatma": false
    }
   }
@@ -1460,8 +1460,8 @@
    "ad": "Shane Larkin",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": -1,
-   "saniye": 143,
+   "vp": 0,
+   "saniye": 219,
    "mac": 1
   },
   "777704": {
@@ -1469,23 +1469,23 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 4,
-   "saniye": 143,
+   "saniye": 219,
    "mac": 1
   },
   "777675": {
    "ad": "Braxton Key",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 1,
-   "saniye": 143,
+   "vp": 0,
+   "saniye": 219,
    "mac": 1
   },
   "777705": {
    "ad": "Shavon Shields",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 0,
-   "saniye": 143,
+   "vp": 1,
+   "saniye": 219,
    "mac": 1
   },
   "667814": {
@@ -1548,8 +1548,8 @@
    "ad": "Dario Saric",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 4,
-   "saniye": 143,
+   "vp": 5,
+   "saniye": 219,
    "mac": 1
   },
   "689440": {
@@ -1557,7 +1557,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": -1,
-   "saniye": 143,
+   "saniye": 219,
    "mac": 1
   },
   "778400": {
@@ -1565,7 +1565,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 0,
-   "saniye": 143,
+   "saniye": 219,
    "mac": 1
   },
   "782949": {
@@ -1573,15 +1573,15 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 4,
-   "saniye": 143,
+   "saniye": 219,
    "mac": 1
   },
   "370740": {
    "ad": "Ercan Osmani",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 2,
-   "saniye": 143,
+   "vp": 4,
+   "saniye": 219,
    "mac": 1
   },
   "508583": {

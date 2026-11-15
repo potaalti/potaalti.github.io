@@ -85,15 +85,15 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ",
    "evId": 265992,
-   "evSkor": "74",
+   "evSkor": "76",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
-   "depSkor": "68",
+   "depSkor": "71",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "00:56",
+    "saat": "00:25",
     "uzatma": false
    }
   },

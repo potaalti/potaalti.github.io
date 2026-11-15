@@ -95,7 +95,7 @@
   {
    "id": 346334,
    "tarih": "2026-11-15T20:30:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "FENERBAHÇE TARFİN",
    "evId": 266025,
    "evSkor": "77",
@@ -103,12 +103,7 @@
    "depId": 265990,
    "depSkor": "75",
    "salon": "Ülker Spor ve Etkinlik Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "00:00",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   }
  ],
  "oyuncular": {
@@ -1480,6 +1475,14 @@
    "saniye": 925,
    "mac": 1
   },
+  "785063": {
+   "ad": "Dwight Powell",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 19,
+   "saniye": 1498,
+   "mac": 1
+  },
   "777705": {
    "ad": "Shavon Shields",
    "takim": "FENERBAHÇE TARFİN",
@@ -1489,7 +1492,7 @@
    "mac": 1
   },
   "667814": {
-   "ad": "Wade Baldwin Iv",
+   "ad": "Wade Baldwin IV",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 7,
@@ -1553,7 +1556,7 @@
    "mac": 1
   },
   "689440": {
-   "ad": "Pj Dozier",
+   "ad": "PJ Dozier",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 9,

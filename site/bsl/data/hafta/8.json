@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "03:27",
+    "saat": "03:13",
     "uzatma": false
    }
   }
@@ -1461,7 +1461,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 1,
-   "saniye": 588,
+   "saniye": 602,
    "mac": 1
   },
   "777704": {
@@ -1469,7 +1469,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 7,
-   "saniye": 430,
+   "saniye": 444,
    "mac": 1
   },
   "777675": {
@@ -1485,7 +1485,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 1,
-   "saniye": 629,
+   "saniye": 643,
    "mac": 1
   },
   "667814": {
@@ -1501,7 +1501,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 429,
+   "saniye": 443,
    "mac": 1
   },
   "735811": {
@@ -1533,7 +1533,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 3,
-   "saniye": 471,
+   "saniye": 485,
    "mac": 1
   },
   "450016": {
@@ -1557,7 +1557,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 7,
-   "saniye": 768,
+   "saniye": 782,
    "mac": 1
   },
   "778400": {
@@ -1573,7 +1573,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 9,
-   "saniye": 575,
+   "saniye": 589,
    "mac": 1
   },
   "370740": {
@@ -1597,7 +1597,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 4,
-   "saniye": 510,
+   "saniye": 524,
    "mac": 1
   },
   "587569": {
@@ -1628,8 +1628,8 @@
    "ad": "Erkan Yılmaz",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 3,
-   "saniye": 448,
+   "vp": 2,
+   "saniye": 462,
    "mac": 1
   },
   "735850": {
@@ -1637,7 +1637,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 1,
-   "saniye": 229,
+   "saniye": 243,
    "mac": 1
   }
  }

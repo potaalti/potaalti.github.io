@@ -59,7 +59,7 @@
    "durum": "canli",
    "ev": "ESENLER EROKSPOR",
    "evId": 266024,
-   "evSkor": "31",
+   "evSkor": "33",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
    "depSkor": "47",
@@ -67,7 +67,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "05:31",
+    "saat": "04:15",
     "uzatma": false
    }
   },
@@ -892,8 +892,8 @@
    "ad": "Mike Davis Jr.",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 1,
-   "saniye": 1010,
+   "vp": 3,
+   "saniye": 1061,
    "mac": 1
   },
   "667498": {
@@ -909,7 +909,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 11,
-   "saniye": 1081,
+   "saniye": 1132,
    "mac": 1
   },
   "249031": {
@@ -925,7 +925,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": -1,
-   "saniye": 525,
+   "saniye": 601,
    "mac": 1
   },
   "502518": {
@@ -933,23 +933,23 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 4,
-   "saniye": 388,
+   "saniye": 413,
    "mac": 1
   },
   "776570": {
    "ad": "Kevin Yebo",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 2,
-   "saniye": 771,
+   "vp": 4,
+   "saniye": 847,
    "mac": 1
   },
   "778079": {
    "ad": "Amadou Sow",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 4,
-   "saniye": 769,
+   "vp": 3,
+   "saniye": 845,
    "mac": 1
   },
   "351474": {
@@ -965,7 +965,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 3,
-   "saniye": 535,
+   "saniye": 560,
    "mac": 1
   },
   "151935": {
@@ -981,23 +981,23 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 8,
-   "saniye": 1118,
+   "saniye": 1169,
    "mac": 1
   },
   "734506": {
    "ad": "Malachi Flynn",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 5,
-   "saniye": 1058,
+   "vp": 4,
+   "saniye": 1134,
    "mac": 1
   },
   "608898": {
    "ad": "Tyler Cavanaugh",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 6,
-   "saniye": 579,
+   "vp": 5,
+   "saniye": 655,
    "mac": 1
   },
   "384595": {
@@ -1005,15 +1005,15 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 6,
-   "saniye": 1084,
+   "saniye": 1160,
    "mac": 1
   },
   "734505": {
    "ad": "Trevion Williams",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 14,
-   "saniye": 818,
+   "vp": 15,
+   "saniye": 894,
    "mac": 1
   },
   "609095": {
@@ -1021,7 +1021,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 1,
-   "saniye": 545,
+   "saniye": 570,
    "mac": 1
   },
   "358272": {

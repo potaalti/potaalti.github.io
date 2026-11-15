@@ -101,7 +101,7 @@
    "evSkor": "75",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "69",
+   "depSkor": "70",
    "salon": "Ülker Spor ve Etkinlik Salonu",
    "yayin": "beINSports",
    "canliDurum": {
@@ -1580,7 +1580,7 @@
    "ad": "Ercan Osmani",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 21,
+   "vp": 22,
    "saniye": 1560,
    "mac": 1
   },
@@ -1604,7 +1604,7 @@
    "ad": "Fatts Russell",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": -5,
+   "vp": -4,
    "saniye": 1153,
    "mac": 1
   },

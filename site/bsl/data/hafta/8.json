@@ -98,7 +98,7 @@
    "durum": "canli",
    "ev": "FENERBAHÇE TARFİN",
    "evId": 266025,
-   "evSkor": "60",
+   "evSkor": "61",
    "dep": "ANADOLU EFES",
    "depId": 265990,
    "depSkor": "54",
@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "09:49",
+    "saat": "09:32",
     "uzatma": false
    }
   }
@@ -1493,7 +1493,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 6,
-   "saniye": 858,
+   "saniye": 875,
    "mac": 1
   },
   "54659": {
@@ -1501,7 +1501,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 531,
+   "saniye": 548,
    "mac": 1
   },
   "735811": {
@@ -1509,7 +1509,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -4,
-   "saniye": 637,
+   "saniye": 654,
    "mac": 1
   },
   "27541": {
@@ -1525,15 +1525,15 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 5,
-   "saniye": 739,
+   "saniye": 756,
    "mac": 1
   },
   "386832": {
    "ad": "Will Clyburn",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 9,
-   "saniye": 896,
+   "vp": 10,
+   "saniye": 913,
    "mac": 1
   },
   "450016": {
@@ -1549,7 +1549,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 9,
-   "saniye": 1280,
+   "saniye": 1297,
    "mac": 1
   },
   "689440": {
@@ -1597,7 +1597,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 7,
-   "saniye": 1090,
+   "saniye": 1107,
    "mac": 1
   },
   "587569": {
@@ -1605,7 +1605,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": -5,
-   "saniye": 636,
+   "saniye": 653,
    "mac": 1
   },
   "137459": {
@@ -1629,7 +1629,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 2,
-   "saniye": 621,
+   "saniye": 638,
    "mac": 1
   },
   "735850": {
@@ -1637,7 +1637,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 2,
-   "saniye": 542,
+   "saniye": 559,
    "mac": 1
   }
  }

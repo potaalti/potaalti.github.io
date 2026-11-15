@@ -88,12 +88,12 @@
    "evSkor": "51",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
-   "depSkor": "41",
+   "depSkor": "42",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "03:09",
+    "saat": "03:04",
     "uzatma": false
    }
   },
@@ -1380,7 +1380,7 @@
    "ad": "Brandon Taylor",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 16,
+   "vp": 17,
    "saniye": 1495,
    "mac": 1
   },

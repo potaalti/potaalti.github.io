@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "07:30",
+    "saat": "07:05",
     "uzatma": false
    }
   }
@@ -1461,7 +1461,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 945,
+   "saniye": 970,
    "mac": 1
   },
   "777704": {
@@ -1469,7 +1469,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 11,
-   "saniye": 787,
+   "saniye": 812,
    "mac": 1
   },
   "777675": {
@@ -1477,7 +1477,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 5,
-   "saniye": 552,
+   "saniye": 577,
    "mac": 1
   },
   "777705": {
@@ -1485,7 +1485,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 3,
-   "saniye": 986,
+   "saniye": 1011,
    "mac": 1
   },
   "667814": {
@@ -1548,8 +1548,8 @@
    "ad": "Dario Saric",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 12,
-   "saniye": 959,
+   "vp": 11,
+   "saniye": 984,
    "mac": 1
   },
   "689440": {
@@ -1557,7 +1557,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 9,
-   "saniye": 1125,
+   "saniye": 1150,
    "mac": 1
   },
   "778400": {
@@ -1565,7 +1565,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 14,
-   "saniye": 858,
+   "saniye": 883,
    "mac": 1
   },
   "782949": {
@@ -1573,7 +1573,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 8,
-   "saniye": 932,
+   "saniye": 957,
    "mac": 1
   },
   "370740": {
@@ -1581,7 +1581,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 8,
-   "saniye": 695,
+   "saniye": 720,
    "mac": 1
   },
   "508583": {

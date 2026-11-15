@@ -67,7 +67,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "00:46",
+    "saat": "00:00",
     "uzatma": false
    }
   },
@@ -892,16 +892,16 @@
    "ad": "Mike Davis Jr.",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 7,
-   "saniye": 699,
+   "vp": 5,
+   "saniye": 741,
    "mac": 1
   },
   "667498": {
    "ad": "James Webb Iii",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 3,
-   "saniye": 637,
+   "vp": 4,
+   "saniye": 679,
    "mac": 1
   },
   "120437": {
@@ -909,7 +909,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 8,
-   "saniye": 770,
+   "saniye": 812,
    "mac": 1
   },
   "249031": {
@@ -917,7 +917,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 3,
-   "saniye": 344,
+   "saniye": 386,
    "mac": 1
   },
   "359434": {
@@ -965,7 +965,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 3,
-   "saniye": 493,
+   "saniye": 535,
    "mac": 1
   },
   "151935": {
@@ -980,8 +980,8 @@
    "ad": "Aleksa Avramovic",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 7,
-   "saniye": 807,
+   "vp": 6,
+   "saniye": 849,
    "mac": 1
   },
   "734506": {
@@ -989,7 +989,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 5,
-   "saniye": 747,
+   "saniye": 789,
    "mac": 1
   },
   "608898": {
@@ -1005,7 +1005,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 3,
-   "saniye": 773,
+   "saniye": 815,
    "mac": 1
   },
   "734505": {
@@ -1036,8 +1036,8 @@
    "ad": "Damien Inglis",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 9,
-   "saniye": 848,
+   "vp": 10,
+   "saniye": 890,
    "mac": 1
   },
   "283725": {
@@ -1045,7 +1045,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 4,
-   "saniye": 303,
+   "saniye": 345,
    "mac": 1
   },
   "47659": {

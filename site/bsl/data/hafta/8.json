@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "00:25",
+    "saat": "00:00",
     "uzatma": false
    }
   },
@@ -1269,7 +1269,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 735,
+   "saniye": 761,
    "mac": 1
   },
   "777634": {
@@ -1301,15 +1301,15 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 24,
-   "saniye": 1510,
+   "saniye": 1536,
    "mac": 1
   },
   "697020": {
    "ad": "David Dejulius",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 4,
-   "saniye": 1557,
+   "vp": 3,
+   "saniye": 1583,
    "mac": 1
   },
   "114257": {
@@ -1340,8 +1340,8 @@
    "ad": "Metecan Birsen",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 13,
-   "saniye": 1374,
+   "vp": 14,
+   "saniye": 1399,
    "mac": 1
   },
   "363061": {
@@ -1357,7 +1357,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 14,
-   "saniye": 1675,
+   "saniye": 1701,
    "mac": 1
   },
   "510723": {
@@ -1373,7 +1373,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 6,
-   "saniye": 1533,
+   "saniye": 1558,
    "mac": 1
   },
   "778460": {
@@ -1388,8 +1388,8 @@
    "ad": "Warren Washington",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 14,
-   "saniye": 1721,
+   "vp": 15,
+   "saniye": 1747,
    "mac": 1
   },
   "502519": {
@@ -1397,15 +1397,15 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 5,
-   "saniye": 1891,
+   "saniye": 1917,
    "mac": 1
   },
   "736260": {
    "ad": "Micheal Moore",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 10,
-   "saniye": 1984,
+   "vp": 9,
+   "saniye": 2010,
    "mac": 1
   },
   "402930": {
@@ -1445,7 +1445,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": -2,
-   "saniye": 441,
+   "saniye": 466,
    "mac": 1
   },
   "425130": {

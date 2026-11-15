@@ -59,15 +59,15 @@
    "durum": "canli",
    "ev": "ESENLER EROKSPOR",
    "evId": 266024,
-   "evSkor": "29",
+   "evSkor": "31",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
-   "depSkor": "34",
+   "depSkor": "35",
    "salon": "Beşiktaş Akatlar Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "01:16",
+    "saat": "00:46",
     "uzatma": false
    }
   },
@@ -893,7 +893,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 7,
-   "saniye": 665,
+   "saniye": 699,
    "mac": 1
   },
   "667498": {
@@ -901,15 +901,15 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 3,
-   "saniye": 603,
+   "saniye": 637,
    "mac": 1
   },
   "120437": {
    "ad": "Egehan Arna",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 5,
-   "saniye": 736,
+   "vp": 8,
+   "saniye": 770,
    "mac": 1
   },
   "249031": {
@@ -917,7 +917,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 3,
-   "saniye": 310,
+   "saniye": 344,
    "mac": 1
   },
   "359434": {
@@ -965,7 +965,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 3,
-   "saniye": 459,
+   "saniye": 493,
    "mac": 1
   },
   "151935": {
@@ -981,15 +981,15 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 7,
-   "saniye": 773,
+   "saniye": 807,
    "mac": 1
   },
   "734506": {
    "ad": "Malachi Flynn",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 6,
-   "saniye": 713,
+   "vp": 5,
+   "saniye": 747,
    "mac": 1
   },
   "608898": {
@@ -1005,7 +1005,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 3,
-   "saniye": 739,
+   "saniye": 773,
    "mac": 1
   },
   "734505": {
@@ -1037,7 +1037,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 9,
-   "saniye": 814,
+   "saniye": 848,
    "mac": 1
   },
   "283725": {
@@ -1045,7 +1045,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 4,
-   "saniye": 269,
+   "saniye": 303,
    "mac": 1
   },
   "47659": {

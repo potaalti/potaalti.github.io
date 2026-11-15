@@ -16,7 +16,7 @@
   "boy": null,
   "mevkiTahmini": "arka",
   "ribOrt": 2.8,
-  "astOrt": 7.0
+  "astOrt": 7.1
  },
  {
   "id": "734505",
@@ -2767,8 +2767,8 @@
   "foto": "https://tbf.org.tr/res/0a1cb3e2-e15d-46c5-b964-fbf25067bc02_cayrova_0003_12.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 2.0,
-  "astOrt": 0.5
+  "ribOrt": 1.6,
+  "astOrt": 0.4
  },
  {
   "id": "778244",
@@ -2861,8 +2861,8 @@
   "foto": "https://tbf.org.tr/res/ffaf1e3e-404d-416c-bfef-972090921bd1_cayrova_0005_10.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 2.0,
-  "astOrt": 2.1
+  "ribOrt": 1.8,
+  "astOrt": 1.9
  },
  {
   "id": "778402",

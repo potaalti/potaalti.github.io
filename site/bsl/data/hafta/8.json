@@ -75,7 +75,7 @@
    "evSkor": "101",
    "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
    "depId": 265994,
-   "depSkor": "97",
+   "depSkor": "98",
    "salon": "Pamukkale Üniversitesi Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
@@ -1148,7 +1148,7 @@
    "ad": "Tyron Deshun Brewer",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 2,
+   "vp": 0,
    "saniye": 387,
    "mac": 1
   },
@@ -1172,7 +1172,7 @@
    "ad": "Jordon Crawford",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 17,
+   "vp": 18,
    "saniye": 1808,
    "mac": 1
   },

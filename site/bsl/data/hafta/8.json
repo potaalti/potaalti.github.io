@@ -59,15 +59,15 @@
    "durum": "canli",
    "ev": "ESENLER EROKSPOR",
    "evId": 266024,
-   "evSkor": "25",
+   "evSkor": "27",
    "dep": "BAHÇEŞEHİR KOLEJİ",
    "depId": 265991,
-   "depSkor": "25",
+   "depSkor": "28",
    "salon": "Beşiktaş Akatlar Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "06:57",
+    "saat": "05:53",
     "uzatma": false
    }
   },
@@ -925,7 +925,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 321,
+   "saniye": 385,
    "mac": 1
   },
   "502518": {
@@ -933,15 +933,15 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 4,
-   "saniye": 250,
+   "saniye": 314,
    "mac": 1
   },
   "776570": {
    "ad": "Kevin Yebo",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 2,
-   "saniye": 473,
+   "vp": 4,
+   "saniye": 537,
    "mac": 1
   },
   "778079": {
@@ -949,7 +949,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 7,
-   "saniye": 362,
+   "saniye": 426,
    "mac": 1
   },
   "351474": {
@@ -964,8 +964,8 @@
    "ad": "Yunus Emre Sonsırma",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 2,
-   "saniye": 321,
+   "vp": 3,
+   "saniye": 385,
    "mac": 1
   },
   "151935": {
@@ -989,7 +989,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 4,
-   "saniye": 372,
+   "saniye": 436,
    "mac": 1
   },
   "608898": {
@@ -1012,8 +1012,8 @@
    "ad": "Trevion Williams",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 3,
-   "saniye": 477,
+   "vp": 6,
+   "saniye": 541,
    "mac": 1
   },
   "609095": {
@@ -1021,7 +1021,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 1,
-   "saniye": 473,
+   "saniye": 537,
    "mac": 1
   },
   "358272": {
@@ -1029,7 +1029,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 1,
-   "saniye": 321,
+   "saniye": 385,
    "mac": 1
   },
   "776654": {
@@ -1037,7 +1037,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 7,
-   "saniye": 473,
+   "saniye": 537,
    "mac": 1
   },
   "283725": {

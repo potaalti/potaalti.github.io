@@ -101,12 +101,12 @@
    "evSkor": "35",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "43",
+   "depSkor": "45",
    "salon": "Ülker Spor ve Etkinlik Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "09:39",
+    "saat": "08:37",
     "uzatma": false
    }
   }
@@ -1461,7 +1461,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 816,
+   "saniye": 878,
    "mac": 1
   },
   "777704": {
@@ -1469,7 +1469,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 8,
-   "saniye": 658,
+   "saniye": 720,
    "mac": 1
   },
   "777675": {
@@ -1477,15 +1477,15 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 423,
+   "saniye": 485,
    "mac": 1
   },
   "777705": {
    "ad": "Shavon Shields",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 4,
-   "saniye": 857,
+   "vp": 3,
+   "saniye": 919,
    "mac": 1
   },
   "667814": {
@@ -1548,32 +1548,32 @@
    "ad": "Dario Saric",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 11,
-   "saniye": 830,
+   "vp": 12,
+   "saniye": 892,
    "mac": 1
   },
   "689440": {
    "ad": "Pj Dozier",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 8,
-   "saniye": 996,
+   "vp": 9,
+   "saniye": 1058,
    "mac": 1
   },
   "778400": {
    "ad": "Collin Malcolm",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 13,
-   "saniye": 729,
+   "vp": 15,
+   "saniye": 791,
    "mac": 1
   },
   "782949": {
    "ad": "Cameron Payne",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 9,
-   "saniye": 803,
+   "vp": 8,
+   "saniye": 865,
    "mac": 1
   },
   "370740": {
@@ -1581,7 +1581,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 8,
-   "saniye": 566,
+   "saniye": 628,
    "mac": 1
   },
   "508583": {

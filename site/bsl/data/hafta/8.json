@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "01:37",
+    "saat": "00:40",
     "uzatma": false
    }
   },
@@ -1309,7 +1309,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 224,
+   "saniye": 282,
    "mac": 1
   },
   "114257": {
@@ -1317,7 +1317,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 183,
+   "saniye": 241,
    "mac": 1
   },
   "445794": {
@@ -1332,16 +1332,16 @@
    "ad": "Conor Morgan",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 0,
-   "saniye": 183,
+   "vp": -1,
+   "saniye": 241,
    "mac": 1
   },
   "133112": {
    "ad": "Metecan Birsen",
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
-   "vp": 8,
-   "saniye": 183,
+   "vp": 11,
+   "saniye": 241,
    "mac": 1
   },
   "363061": {
@@ -1357,15 +1357,15 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 6,
-   "saniye": 252,
+   "saniye": 310,
    "mac": 1
   },
   "510723": {
    "ad": "Leyton Hammonds",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 0,
-   "saniye": 502,
+   "vp": -1,
+   "saniye": 560,
    "mac": 1
   },
   "247547": {
@@ -1381,7 +1381,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 8,
-   "saniye": 502,
+   "saniye": 560,
    "mac": 1
   },
   "778459": {
@@ -1404,8 +1404,8 @@
    "ad": "Micheal Moore",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 0,
-   "saniye": 112,
+   "vp": -1,
+   "saniye": 170,
    "mac": 1
   },
   "402930": {
@@ -1421,7 +1421,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 17,
+   "saniye": 75,
    "mac": 1
   },
   "443749": {
@@ -1444,8 +1444,8 @@
    "ad": "Ömer Can İlyasoğlu",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": -2,
-   "saniye": 112,
+   "vp": -1,
+   "saniye": 170,
    "mac": 1
   },
   "425130": {

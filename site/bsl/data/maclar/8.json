@@ -72,15 +72,15 @@
    "durum": "canli",
    "ev": "YUKATEL DENİZLİ BASKET",
    "evId": 266028,
-   "evSkor": "26",
+   "evSkor": "32",
    "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
    "depId": 265994,
-   "depSkor": "38",
+   "depSkor": "41",
    "salon": "Pamukkale Üniversitesi Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "06:20",
+    "saat": "05:22",
     "uzatma": false
    }
   },

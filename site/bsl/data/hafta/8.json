@@ -101,12 +101,12 @@
    "evSkor": "16",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "24",
+   "depSkor": "26",
    "salon": "Ülker Spor ve Etkinlik Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "01:57",
+    "saat": "01:08",
     "uzatma": false
    }
   }
@@ -1493,7 +1493,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 162,
+   "saniye": 220,
    "mac": 1
   },
   "54659": {
@@ -1501,7 +1501,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 85,
+   "saniye": 143,
    "mac": 1
   },
   "735811": {
@@ -1509,7 +1509,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 85,
+   "saniye": 143,
    "mac": 1
   },
   "27541": {
@@ -1524,16 +1524,16 @@
    "ad": "Onuralp Bitim",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 0,
-   "saniye": 85,
+   "vp": -1,
+   "saniye": 143,
    "mac": 1
   },
   "386832": {
    "ad": "Will Clyburn",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 4,
-   "saniye": 162,
+   "vp": 3,
+   "saniye": 220,
    "mac": 1
   },
   "450016": {
@@ -1549,7 +1549,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 7,
-   "saniye": 485,
+   "saniye": 543,
    "mac": 1
   },
   "689440": {
@@ -1565,23 +1565,23 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 7,
-   "saniye": 485,
+   "saniye": 543,
    "mac": 1
   },
   "782949": {
    "ad": "Cameron Payne",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 7,
-   "saniye": 485,
+   "vp": 9,
+   "saniye": 543,
    "mac": 1
   },
   "370740": {
    "ad": "Ercan Osmani",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 6,
-   "saniye": 485,
+   "vp": 8,
+   "saniye": 543,
    "mac": 1
   },
   "508583": {
@@ -1596,8 +1596,8 @@
    "ad": "Jordan Loyd",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 0,
-   "saniye": 2,
+   "vp": 1,
+   "saniye": 60,
    "mac": 1
   },
   "587569": {

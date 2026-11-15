@@ -88,12 +88,12 @@
    "evSkor": "50",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
-   "depSkor": "34",
+   "depSkor": "36",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "06:05",
+    "saat": "05:33",
     "uzatma": false
    }
   },
@@ -1293,7 +1293,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 6,
-   "saniye": 679,
+   "saniye": 711,
    "mac": 1
   },
   "397202": {
@@ -1309,7 +1309,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 797,
+   "saniye": 829,
    "mac": 1
   },
   "114257": {
@@ -1333,7 +1333,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 432,
+   "saniye": 464,
    "mac": 1
   },
   "133112": {
@@ -1341,7 +1341,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 12,
-   "saniye": 907,
+   "saniye": 939,
    "mac": 1
   },
   "363061": {
@@ -1357,7 +1357,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 7,
-   "saniye": 1084,
+   "saniye": 1116,
    "mac": 1
   },
   "510723": {
@@ -1372,16 +1372,16 @@
    "ad": "Ergi Tırpancı",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 3,
-   "saniye": 646,
+   "vp": 6,
+   "saniye": 678,
    "mac": 1
   },
   "778460": {
    "ad": "Brandon Taylor",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 13,
-   "saniye": 1313,
+   "vp": 12,
+   "saniye": 1345,
    "mac": 1
   },
   "778459": {
@@ -1389,7 +1389,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 4,
-   "saniye": 782,
+   "saniye": 814,
    "mac": 1
   },
   "502519": {
@@ -1397,7 +1397,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 952,
+   "saniye": 984,
    "mac": 1
   },
   "736260": {
@@ -1405,7 +1405,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 5,
-   "saniye": 1045,
+   "saniye": 1077,
    "mac": 1
   },
   "402930": {

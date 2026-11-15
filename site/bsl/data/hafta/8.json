@@ -72,15 +72,15 @@
    "durum": "canli",
    "ev": "YUKATEL DENİZLİ BASKET",
    "evId": 266028,
-   "evSkor": "66",
+   "evSkor": "69",
    "dep": "GLİNT ÇAYIROVA BELEDİYESİ",
    "depId": 265994,
-   "depSkor": "63",
+   "depSkor": "66",
    "salon": "Pamukkale Üniversitesi Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "00:42",
+    "saat": "00:00",
     "uzatma": false
    }
   },
@@ -1076,16 +1076,16 @@
    "ad": "Brae Ivey",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 3,
-   "saniye": 1597,
+   "vp": 2,
+   "saniye": 1639,
    "mac": 1
   },
   "779010": {
    "ad": "Victor Bailey Jr.",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 17,
-   "saniye": 1659,
+   "vp": 20,
+   "saniye": 1701,
    "mac": 1
   },
   "736366": {
@@ -1093,7 +1093,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 19,
-   "saniye": 1602,
+   "saniye": 1644,
    "mac": 1
   },
   "411597": {
@@ -1101,7 +1101,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 14,
-   "saniye": 1605,
+   "saniye": 1647,
    "mac": 1
   },
   "470765": {
@@ -1156,8 +1156,8 @@
    "ad": "Erten Gazi",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 1,
-   "saniye": 223,
+   "vp": 3,
+   "saniye": 266,
    "mac": 1
   },
   "124128": {
@@ -1181,7 +1181,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 9,
-   "saniye": 1218,
+   "saniye": 1260,
    "mac": 1
   },
   "160245": {
@@ -1205,7 +1205,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 15,
-   "saniye": 1189,
+   "saniye": 1231,
    "mac": 1
   },
   "756112": {
@@ -1221,7 +1221,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 3,
-   "saniye": 849,
+   "saniye": 892,
    "mac": 1
   },
   "127089": {
@@ -1236,8 +1236,8 @@
    "ad": "Rasheed Sulaimon",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 22,
-   "saniye": 1259,
+   "vp": 25,
+   "saniye": 1301,
    "mac": 1
   },
   "122136": {
@@ -1245,7 +1245,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 2,
-   "saniye": 1029,
+   "saniye": 1071,
    "mac": 1
   },
   "367110": {

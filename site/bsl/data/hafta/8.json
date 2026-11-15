@@ -98,15 +98,15 @@
    "durum": "canli",
    "ev": "FENERBAHÇE TARFİN",
    "evId": 266025,
-   "evSkor": "58",
+   "evSkor": "60",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "50",
+   "depSkor": "54",
    "salon": "Ülker Spor ve Etkinlik Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "01:25",
+    "saat": "00:07",
     "uzatma": false
    }
   }
@@ -1492,8 +1492,8 @@
    "ad": "Wade Baldwin Iv",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 4,
-   "saniye": 762,
+   "vp": 6,
+   "saniye": 839,
    "mac": 1
   },
   "54659": {
@@ -1501,7 +1501,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 443,
+   "saniye": 520,
    "mac": 1
   },
   "735811": {
@@ -1509,7 +1509,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -4,
-   "saniye": 541,
+   "saniye": 618,
    "mac": 1
   },
   "27541": {
@@ -1525,7 +1525,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 5,
-   "saniye": 643,
+   "saniye": 720,
    "mac": 1
   },
   "386832": {
@@ -1533,7 +1533,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 9,
-   "saniye": 800,
+   "saniye": 877,
    "mac": 1
   },
   "450016": {
@@ -1565,7 +1565,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 15,
-   "saniye": 1223,
+   "saniye": 1300,
    "mac": 1
   },
   "782949": {
@@ -1580,8 +1580,8 @@
    "ad": "Ercan Osmani",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 10,
-   "saniye": 1060,
+   "vp": 13,
+   "saniye": 1137,
    "mac": 1
   },
   "508583": {
@@ -1597,15 +1597,15 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 7,
-   "saniye": 994,
+   "saniye": 1071,
    "mac": 1
   },
   "587569": {
    "ad": "Fatts Russell",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": -5,
-   "saniye": 540,
+   "vp": -4,
+   "saniye": 618,
    "mac": 1
   },
   "137459": {
@@ -1637,7 +1637,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 2,
-   "saniye": 446,
+   "saniye": 523,
    "mac": 1
   }
  }

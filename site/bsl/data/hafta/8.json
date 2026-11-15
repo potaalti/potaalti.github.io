@@ -82,15 +82,20 @@
   {
    "id": 346337,
    "tarih": "2026-11-15T18:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "BEŞİKTAŞ",
    "evId": 265992,
-   "evSkor": null,
+   "evSkor": "0",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
-   "depSkor": null,
+   "depSkor": "0",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "09:39",
+    "uzatma": false
+   }
   },
   {
    "id": 346334,
@@ -1255,6 +1260,198 @@
    "ad": "Roberto Gallinat",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "735336": {
+   "ad": "Devon Dotson",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": -1,
+   "saniye": 21,
+   "mac": 1
+  },
+  "777634": {
+   "ad": "Daquan Jeffries",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 21,
+   "mac": 1
+  },
+  "777636": {
+   "ad": "Eugene Omoruyi",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 21,
+   "mac": 1
+  },
+  "163489": {
+   "ad": "Furkan Korkmaz",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 21,
+   "mac": 1
+  },
+  "397202": {
+   "ad": "Ante Zizic",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 1,
+   "saniye": 21,
+   "mac": 1
+  },
+  "697020": {
+   "ad": "David Dejulius",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "114257": {
+   "ad": "Berk Uğurlu",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "445794": {
+   "ad": "Burak Çeçen",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "589830": {
+   "ad": "Conor Morgan",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "133112": {
+   "ad": "Metecan Birsen",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "363061": {
+   "ad": "Scottie Wilbekin",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "501381": {
+   "ad": "Anthony Brown",
+   "takim": "BEŞİKTAŞ",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "510723": {
+   "ad": "Leyton Hammonds",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 21,
+   "mac": 1
+  },
+  "247547": {
+   "ad": "Ergi Tırpancı",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 21,
+   "mac": 1
+  },
+  "778460": {
+   "ad": "Brandon Taylor",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 21,
+   "mac": 1
+  },
+  "778459": {
+   "ad": "Warren Washington",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 1,
+   "saniye": 21,
+   "mac": 1
+  },
+  "502519": {
+   "ad": "Bryce Brown",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 21,
+   "mac": 1
+  },
+  "736260": {
+   "ad": "Micheal Moore",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "402930": {
+   "ad": "Mete Paçacı",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "778461": {
+   "ad": "Nate Watson",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "443749": {
+   "ad": "Ahmet Aldin Türkoğlu",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "303549": {
+   "ad": "Buğra Çal",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "227653": {
+   "ad": "Ömer Can İlyasoğlu",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "425130": {
+   "ad": "Doruk Toprak Karadağ",
+   "takim": "BURSASPOR BASKETBOL",
+   "takimId": 266176,
    "vp": 0,
    "saniye": 0,
    "mac": 1

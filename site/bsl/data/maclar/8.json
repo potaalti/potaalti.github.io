@@ -82,15 +82,20 @@
   {
    "id": 346337,
    "tarih": "2026-11-15T18:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "BEŞİKTAŞ",
    "evId": 265992,
-   "evSkor": null,
+   "evSkor": "0",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
-   "depSkor": null,
+   "depSkor": "0",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "09:39",
+    "uzatma": false
+   }
   },
   {
    "id": 346334,

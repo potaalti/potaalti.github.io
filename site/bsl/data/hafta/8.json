@@ -85,15 +85,15 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ",
    "evId": 265992,
-   "evSkor": "50",
+   "evSkor": "51",
    "dep": "BURSASPOR BASKETBOL",
    "depId": 266176,
-   "depSkor": "39",
+   "depSkor": "41",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "04:17",
+    "saat": "03:54",
     "uzatma": false
    }
   },
@@ -1269,7 +1269,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 582,
+   "saniye": 631,
    "mac": 1
   },
   "777634": {
@@ -1277,7 +1277,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 7,
-   "saniye": 407,
+   "saniye": 456,
    "mac": 1
   },
   "777636": {
@@ -1285,7 +1285,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 635,
+   "saniye": 684,
    "mac": 1
   },
   "163489": {
@@ -1293,7 +1293,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 5,
-   "saniye": 749,
+   "saniye": 798,
    "mac": 1
   },
   "397202": {
@@ -1333,7 +1333,7 @@
    "takim": "BEŞİKTAŞ",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 540,
+   "saniye": 589,
    "mac": 1
   },
   "133112": {
@@ -1373,15 +1373,15 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 6,
-   "saniye": 754,
+   "saniye": 803,
    "mac": 1
   },
   "778460": {
    "ad": "Brandon Taylor",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 14,
-   "saniye": 1421,
+   "vp": 16,
+   "saniye": 1470,
    "mac": 1
   },
   "778459": {
@@ -1389,7 +1389,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 6,
-   "saniye": 890,
+   "saniye": 939,
    "mac": 1
   },
   "502519": {
@@ -1397,7 +1397,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 1060,
+   "saniye": 1109,
    "mac": 1
   },
   "736260": {
@@ -1405,7 +1405,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 5,
-   "saniye": 1153,
+   "saniye": 1202,
    "mac": 1
   },
   "402930": {

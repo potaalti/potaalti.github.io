@@ -1763,7 +1763,7 @@
   "foto": "https://tbf.org.tr/res/3c80347a-4d7b-45e3-92a4-dd1eba4c1577_7.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 3.1,
+  "ribOrt": 3.3,
   "astOrt": 2.7
  },
  {
@@ -3542,8 +3542,8 @@
   "sureOrt": "07:05",
   "foto": "https://tbf.org.tr/res/954420b9-ae42-4705-a733-ec383f26fe20_77.webp",
   "boy": 205,
-  "mevkiTahmini": "arka",
-  "ribOrt": 0.8,
+  "mevkiTahmini": "on",
+  "ribOrt": 1.0,
   "astOrt": 0.5
  },
  {

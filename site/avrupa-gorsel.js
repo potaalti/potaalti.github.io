@@ -55,8 +55,9 @@ export async function haftaGorseli({ maclar, tur, aralik }) {
   // Başlık
   const sonuc = tur === 'sonuc';
   logoCiz(g, 92, 92, 56);
-  yaz(g, 'HAFTANIN', G / 2, 105, { font: '74px Anton', hiza: 'center' });
-  yaz(g, sonuc ? 'AVRUPA SONUÇLARI' : 'AVRUPA PROGRAMI', G / 2, 200, { font: '100px Anton', renk: RENK.vurgu, hiza: 'center', gen: 980 });
+  // Başlık (kullanıcı 2026-11-16): "Haftanın Avrupa Temsilcilerimizin Programı / Sonuçları"
+  yaz(g, 'HAFTANIN AVRUPA TEMSİLCİLERİMİZİN', G / 2 + 30, 96, { font: '60px Anton', hiza: 'center', gen: 740 });
+  yaz(g, sonuc ? 'SONUÇLARI' : 'PROGRAMI', G / 2, 198, { font: '112px Anton', renk: RENK.vurgu, hiza: 'center', gen: 760 });
   g.font = '700 30px Oswald';
   const ew = g.measureText(aralik).width + 56;
   yuvarlak(g, G / 2 - ew / 2, 262, ew, 52, 26); g.fillStyle = RENK.beyaz; g.fill();

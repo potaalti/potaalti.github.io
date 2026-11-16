@@ -1421,8 +1421,8 @@ function avGorselKarti(idx) {
     <button class="secenek" data-is="av-paylas" data-id="${tur}">📤 Paylaş</button><button class="secenek" data-is="av-indir" data-id="${tur}">⬇ İndir</button></span></div>`;
   const secici = `<div class="secenekler" style="margin-bottom:6px">${[[-1, 'Geçen hafta'], [0, 'Bu hafta'], [1, 'Gelecek hafta']].map(([k, ad]) =>
     `<button class="secenek ${(S.ui.avKaydir ?? 0) === k ? 'aktif' : ''}" data-is="av-hafta" data-id="${k}">${ad}</button>`).join('')}</div>`;
-  return `<div class="kart gorsel-kart">${secici}${satir('program', 'Haftanın Avrupa programı')}
-    ${liste.some(x => x.m.durum === 'bitti') ? satir('sonuc', 'Haftanın Avrupa sonuçları') : ''}</div>`;
+  return `<div class="kart gorsel-kart">${secici}${satir('program', 'Haftanın Avrupa temsilcilerimizin programı')}
+    ${liste.some(x => x.m.durum === 'bitti') ? satir('sonuc', 'Haftanın Avrupa temsilcilerimizin sonuçları') : ''}</div>`;
 }
 async function avGorselPaylas(tur, indir) {
   const idx = S.avrupa.index;

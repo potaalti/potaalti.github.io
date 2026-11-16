@@ -21,11 +21,11 @@ const LIGLER = { bsl: { kisa: 'BSL', ad: 'Basketbol Süper Ligi' }, tbl: { kisa:
 
 const S = {
   meta: null, index: null, hata: null,
-  tablo: {}, liderler: {}, takimIst: {}, ileriIst: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, artieksi: {}, seyirci: {}, odul: {}, avrupa: {}, durum: {}, rekorlar: {}, istatistik: {}, // lig -> veri (oyuncu: lig -> id -> detay)
+  tablo: {}, liderler: {}, rehber: {}, takimIst: {}, ileriIst: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, artieksi: {}, seyirci: {}, odul: {}, avrupa: {}, durum: {}, rekorlar: {}, istatistik: {}, // lig -> veri (oyuncu: lig -> id -> detay)
   maclar: {}, // `${lig}-${hafta}` -> maç listesi
   kutular: {}, // maç id -> kutu skor (null: yok)
   farklar: {}, // maç id -> skor farkı grafiği verisi (biten maçlar, null: yok)
-  ui: { ara: '', oyuncuSirala: 'vp', seyirciSirala: { k: 'ort', yon: 1 }, seyirciHaftaSirala: { k: 'seyirci', yon: 1 }, tabloSirala: null, kadroSirala: null, liderKategori: {}, anaLig: anaLigOku(), istDonem: 'hafta' },
+  ui: { ara: '', oyuncuSirala: 'vp', seyirciSirala: { k: 'ort', yon: 1 }, seyirciHaftaSirala: { k: 'seyirci', yon: 1 }, tabloSirala: null, kadroSirala: null, liderKategori: {}, liderYerli: {}, anaLig: anaLigOku(), istDonem: 'hafta' },
 };
 // Telefon ve bilgisayar ayrı düzen: telefonda ana sayfa tek lig gösterir (BSL | TBL seçici), bilgisayarda yan menü ve iki sütun
 const TELEFON = matchMedia('(max-width: 759px)');
@@ -1000,8 +1000,20 @@ function tabloKarti(lig, ilk = null) {
     ${ilk ? '' : `<p class="soluk kucuk" style="margin:8px 0 0">O: oynanan · G: galibiyet · M: mağlubiyet · A/Y: atılan/yenilen sayı · Av.: averaj. ${lig === 'tbl' ? 'G%: galibiyet yüzdesi. Sıralama galibiyet yüzdesine göre, eşitlikte averaj' : 'Sıralama galibiyete göre, eşitlikte averaj'} (resmi sıralamada ikili averaj gibi farklı kurallar olabilir). A, Y ya da Av. başlığına dokununca o sütuna göre sıralanır; üçüncü dokunuş resmi sıraya döner.</p>`}</div>`;
 }
 
+// Yerli liderler: bütün oyuncuların ortalamalarından (en az eşik kadar maç), oyuncu rehberinde Türk olanlar; rehber
+// TBL'de { id: { ulke } }, BSL'de [{ id, turk }]
+function yerliLiderleri(lig, kod, esik, oyuncular, rehberHam) {
+  const rehber = new Map((Array.isArray(rehberHam) ? rehberHam : Object.entries(rehberHam ?? {}).map(([id, v]) => ({ id, ...v }))).map(r => [String(r.id), r]));
+  const turkMu = id => { const r = rehber.get(String(id)); return typeof r?.turk === 'boolean' ? r.turk : ['TÜRKİYE', 'KKTC'].includes(r?.ulke); };
+  return (oyuncular ?? []).filter(o => o.mac >= esik && turkMu(o.id))
+    .map(o => ({ id: o.id, ad: o.ad, takim: o.takim, mac: o.mac, deger: liderDegeri(kod, o), atis: kod === 'uc' ? o.uc : null }))
+    .sort((a, b) => b.deger - a.deger);
+}
+const rehberAdresi = lig => (lig === 'bsl' ? 'bsl/data/oyuncular.json' : `${KAYNAK}/oyuncular.json`);
+
 function liderListesi(lig, k, kac) {
   const deger = x => (k.tur === 'atis' ? `${x.atis[0]}<small class="soluk" style="font-weight:400"> / ${x.atis[1]}</small>` : k.tur === 'toplam' ? isaretli(x.deger) : sayi(x.deger));
+  if (!k.liste.length) return '<p class="bos">Yükleniyor…</p>';
   return `<ol class="lider-listesi">${k.liste.slice(0, kac).map((x, i) => `<li><span class="no">${i + 1}</span>
     <span class="ad"><a href="#/oyuncu/${lig}/${x.id}" class="oyuncu-link"><b>${esc(x.ad)}</b></a><small><a href="#/takim/${lig}/${x.takim}">${esc(takimAdi(lig, x.takim))}</a> · ${x.mac} maç</small></span>
     <span class="deger">${deger(x)}</span></li>`).join('')}</ol>`;
@@ -1012,7 +1024,17 @@ function liderlerKarti(lig) {
   ligVerisi(lig, 'tablo');
   if (!l) return '<p class="bos">Yükleniyor…</p>';
   return `<p class="soluk kucuk">Maç başı ortalamalar (+/- ve 3 sayılık: sezon toplamı). Listeye girmek için en az ${l.esik} maç oynamış olmak gerekir.</p>
-    <div class="izgara">${l.kategoriler.map(k => `<div class="kart" style="margin:0"><div class="baslik-satir"><h3>${esc(k.ad)}</h3>${liderDugmeleri(lig, k.id)}</div>${liderListesi(lig, k, 10)}</div>`).join('')}</div>`;
+    <div class="izgara">${l.kategoriler.map(k => {
+      // "Yerli"ye dokununca kartın listesi yalnız yerli oyunculara döner (kullanıcı 2026-11-16), "Tümü" geri getirir
+      const yerli = !!S.ui.liderYerli[`${lig}|${k.id}`];
+      let liste = k;
+      if (yerli) {
+        const oyuncular = ligVerisi(lig, 'oyuncular');
+        yukle(S.rehber, lig, rehberAdresi(lig));
+        liste = { ...k, liste: oyuncular && S.rehber[lig] ? yerliLiderleri(lig, k.id, l.esik, oyuncular, S.rehber[lig]) : [] };
+      }
+      return `<div class="kart" style="margin:0"><div class="baslik-satir"><h3>${esc(k.ad)}${yerli ? ' <small class="soluk">· Yerli</small>' : ''}</h3>${liderDugmeleri(lig, k.id, yerli)}</div>${liderListesi(lig, liste, 10)}</div>`;
+    }).join('')}</div>`;
 }
 
 // ---------- Liderler görseli (yönetici): her istatistikte ilk 5, bir de yalnız yerli oyuncularla (lider-gorsel.js) ----------
@@ -1026,11 +1048,12 @@ const LIDER_GORSEL = {
 const liderDegeri = (kod, o) => (kod === 'uc' ? (Array.isArray(o.uc) ? o.uc[0] : o.uc) : o[kod]);
 const liderYazisi = (kod, v) => (kod === 'uc' ? String(v) : kod === 'pm' ? isaretli(v)
   : (Math.round(Number(v) * 10) / 10).toLocaleString('tr-TR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }));
-function liderDugmeleri(lig, kod) {
-  if (!yoneticiMi() || !LIDER_GORSEL[kod]) return '';
-  const d = (yerli, ad) => `<span class="satir" title="${ad} ilk 5 görseli"><small class="soluk">${ad}</small>
-    <button class="secenek" data-is="ld-paylas" data-id="${lig}|${kod}|${yerli}">📤</button><button class="secenek" data-is="ld-indir" data-id="${lig}|${kod}|${yerli}">⬇</button></span>`;
-  return `<span class="satir">${d(0, 'İlk 5')}${d(1, 'Yerli')}</span>`;
+// Herkes: Tümü / Yerli seçimi (liste değişir); yönetici: her birinin yanında görsel paylaş / indir. İki grup tek satırda yan yana.
+function liderDugmeleri(lig, kod, secili) {
+  const yonetici = yoneticiMi() && LIDER_GORSEL[kod];
+  const d = (yerli, ad) => `<span class="ld-grup"><button class="ld-sec${!!yerli === !!secili ? ' aktif' : ''}" data-is="ld-yerli" data-id="${lig}|${kod}|${yerli}">${ad}</button>${!yonetici ? ''
+    : `<button class="secenek" data-is="ld-paylas" data-id="${lig}|${kod}|${yerli}" title="${ad} görselini paylaş">📤</button><button class="secenek" data-is="ld-indir" data-id="${lig}|${kod}|${yerli}" title="${ad} görselini indir">⬇</button>`}</span>`;
+  return `<span class="ld-dugmeler">${d(0, yonetici ? 'İlk 5' : 'Tümü')}${d(1, 'Yerli')}</span>`;
 }
 async function liderGorselPaylas(anahtar, indir) {
   const [lig, kod, yerliMi] = anahtar.split('|');
@@ -1038,18 +1061,13 @@ async function liderGorselPaylas(anahtar, indir) {
   const l = ligVerisi(lig, 'liderler');
   const k = l.kategoriler.find(x => x.id === kod);
   const [gorsel, elle, rehberHam] = await Promise.all([getir(`data/${lig}/gorsel.json`).catch(() => ({ foto: {}, logo: {} })),
-    getir('odul/foto/liste.json').catch(() => ({})), yerli ? getir(lig === 'bsl' ? 'bsl/data/oyuncular.json' : `${KAYNAK}/oyuncular.json`) : null]);
+    getir('odul/foto/liste.json').catch(() => ({})), yerli ? S.rehber[lig] ?? getir(rehberAdresi(lig)) : null]);
   const logolar = new Map(Object.entries(gorsel.logo ?? {}).map(([ad, url]) => [takimAnahtari(ad), `data/${lig}/logo/${dosyaAnahtari(ad)}${uzanti(url)}`]));
   const foto = id => (elle[id] ? `odul/foto/${elle[id]}` : gorsel.foto?.[id] ? `data/${lig}/foto/${id}${uzanti(gorsel.foto[id])}` : null);
   let liste;
   if (yerli) {
-    // Yerli: bütün oyuncuların ortalamalarından (en az eşik kadar maç), Türk oyuncular
-    const rehber = new Map((Array.isArray(rehberHam) ? rehberHam : Object.entries(rehberHam ?? {}).map(([id, v]) => ({ id, ...v }))).map(r => [String(r.id), r]));
-    const turkMu = id => { const r = rehber.get(String(id)); return typeof r?.turk === 'boolean' ? r.turk : ['TÜRKİYE', 'KKTC'].includes(r?.ulke); };
     const oyuncular = S.oyuncular?.[lig] ?? await getir(`data/${lig}/oyuncular.json`);
-    liste = (oyuncular ?? []).filter(o => o.mac >= l.esik && turkMu(o.id))
-      .map(o => ({ id: o.id, ad: o.ad, takim: o.takim, mac: o.mac, deger: liderDegeri(kod, o), atis: kod === 'uc' ? o.uc : null }))
-      .sort((a, b) => b.deger - a.deger).slice(0, 5);
+    liste = yerliLiderleri(lig, kod, l.esik, oyuncular, rehberHam).slice(0, 5);
   } else {
     liste = k.liste.slice(0, 5);
   }
@@ -1904,6 +1922,12 @@ document.addEventListener('click', e => {
   if (el.dataset.is === 'kutu-sirala') { S.ui.kutuSirala = ME.kutuSiralamaDegistir(S.ui.kutuSirala, el.dataset.id); ciz(); }
   // Paylaş / İndir yalnızca yöneticiye (kullanıcı kararı 2026-11-09); ödül üreticisi (?uret) zaten yöneticiye
   if (/^(ae|sy|odul|av|rk)-(paylas|indir)$|^odul-hepsi(-indir|-paylas)?$/.test(el.dataset.is) && !yoneticiMi()) return;
+  if (el.dataset.is === 'ld-yerli') {
+    const [lig, kod, yerli] = el.dataset.id.split('|');
+    S.ui.liderYerli[`${lig}|${kod}`] = yerli === '1';
+    ciz();
+    return;
+  }
   if (el.dataset.is === 'ld-paylas' || el.dataset.is === 'ld-indir') {
     el.disabled = true;
     liderGorselPaylas(el.dataset.id, el.dataset.is === 'ld-indir').catch(e => alert(`Görsel hazırlanamadı: ${e.message}`)).finally(() => { el.disabled = false; });

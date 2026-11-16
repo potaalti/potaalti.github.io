@@ -1,4 +1,4 @@
-// Haftalık Avrupa görseli (yönetici, Avrupa sayfası): "Temsilcilerimizin haftası" — o haftanın (Pazartesi–Pazar) programı ya da
+// Haftalık Avrupa görseli (yönetici, Avrupa sayfası): "Haftanın Avrupa sonuçları / programı" — seçilen haftanın (Pazartesi–Pazar) programı ya da
 // sonuçları, 1080x1350. TBL/BSL görsellerinin aksine kullanıcı şablonu yok: Pota Altı renkleriyle tuvale çizilir.
 // Temsilcilerimizin logoları BSL logolarından (data/bsl/logo), rakiplerin yalnızca adı yazılır.
 import { markaYazilari, logoCiz, sosyalCiz } from './marka.js';
@@ -37,8 +37,9 @@ function yuvarlak(g, x, y, w, h, r) {
   g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
 }
 
-// maclar: [{ kupa: 'el', kupaKisa: 'EL', tarih, biz, bizLogo, rakip, evde, bizSkor, rakipSkor, durum, yayin }]
-// tur: 'program' | 'sonuc'; araliK: '9–15 KASIM'
+// maclar: [{ kupa: 'el', kupaKisa: 'EL', tarih, biz, bizLogo, rakip, evde, bizSkor, rakipSkor, durum }]
+// Haftanın Avrupa sonuçları / programı: başlık, tarih aralığı ve özet; maçlar gün gün gruplu (gün başlığı bir kez yazılır),
+// satır yüksekliği maç ve gün sayısına göre kendiliğinden ayarlanır (13 maçlık hafta da sığar).
 export async function haftaGorseli({ maclar, tur, aralik }) {
   await Promise.all([yaziTipleri(), markaYazilari()]);
   const logolar = await Promise.all(maclar.map(m => resim(m.bizLogo)));
@@ -52,51 +53,81 @@ export async function haftaGorseli({ maclar, tur, aralik }) {
   g.strokeStyle = 'rgba(255,255,255,0.035)'; g.lineWidth = 2;
   for (let i = -Y; i < G; i += 46) { g.beginPath(); g.moveTo(i, Y); g.lineTo(i + Y, 0); g.stroke(); }
   // Başlık
+  const sonuc = tur === 'sonuc';
   logoCiz(g, 92, 92, 56);
-  yaz(g, 'TEMSİLCİLERİMİZİN', G / 2, 150, { font: '92px Anton', hiza: 'center', gen: 980 });
-  yaz(g, 'HAFTASI', G / 2, 250, { font: '92px Anton', renk: RENK.vurgu, hiza: 'center' });
-  const etiket = `${aralik} · ${tur === 'sonuc' ? 'SONUÇLAR' : 'PROGRAM'}`;
+  yaz(g, 'HAFTANIN', G / 2, 105, { font: '74px Anton', hiza: 'center' });
+  yaz(g, sonuc ? 'AVRUPA SONUÇLARI' : 'AVRUPA PROGRAMI', G / 2, 200, { font: '100px Anton', renk: RENK.vurgu, hiza: 'center', gen: 980 });
   g.font = '700 30px Oswald';
-  const ew = g.measureText(etiket).width + 56;
-  yuvarlak(g, G / 2 - ew / 2, 312, ew, 54, 27); g.fillStyle = RENK.beyaz; g.fill();
-  yaz(g, etiket, G / 2, 340, { font: '700 30px Oswald', renk: RENK.zemin1, hiza: 'center' });
-  // Satırlar
-  const ust = 390, alt = Y - 80, n = Math.max(1, maclar.length);
-  const ara = 10, h = Math.min(104, (alt - ust - ara * (n - 1)) / n);
-  const kucuk = h < 80;  // çok maçlı haftada satırlar alçalır: yazılar küçülür
-  maclar.forEach((m, i) => {
-    const y = ust + i * (h + ara), orta = y + h / 2;
-    yuvarlak(g, 50, y, G - 100, h, 18); g.fillStyle = RENK.satir; g.fill();
-    // Kupa rozeti
-    yuvarlak(g, 70, orta - 22, 86, 44, 10); g.fillStyle = KUPA_RENK[m.kupa] ?? RENK.vurgu; g.fill();
-    yaz(g, m.kupaKisa, 113, orta + 1, { font: '700 26px Oswald', hiza: 'center' });
-    // Logo
-    const lg = logolar[i], ls = Math.min(68, h - 18);
-    if (lg) {
-      g.save(); g.beginPath(); g.arc(214, orta, ls / 2 + 4, 0, 7); g.fillStyle = '#ffffff'; g.fill(); g.restore();
-      const k = Math.min(ls / lg.width, ls / lg.height);
-      g.drawImage(lg, 214 - (lg.width * k) / 2, orta - (lg.height * k) / 2, lg.width * k, lg.height * k);
+  const ew = g.measureText(aralik).width + 56;
+  yuvarlak(g, G / 2 - ew / 2, 262, ew, 52, 26); g.fillStyle = RENK.beyaz; g.fill();
+  yaz(g, aralik, G / 2, 289, { font: '700 30px Oswald', renk: RENK.zemin1, hiza: 'center' });
+  // Özet: sonuçlarda galibiyet / mağlubiyet, programda maç ve gün sayısı
+  const gunAnahtari = m => m.tarih.slice(0, 10);
+  const gunler = [...new Set(maclar.map(gunAnahtari))];
+  if (sonuc) {
+    const gal = maclar.filter(m => m.bizSkor > m.rakipSkor).length, mag = maclar.length - gal;
+    const parcalar = [[`${maclar.length} MAÇ`, RENK.soluk], ['  ·  ', RENK.soluk], [`${gal} GALİBİYET`, RENK.yesil], ['  ·  ', RENK.soluk], [`${mag} MAĞLUBİYET`, RENK.kirmizi]];
+    g.font = '700 28px Oswald';
+    let x = G / 2 - parcalar.reduce((t, [m]) => t + g.measureText(m).width, 0) / 2;
+    for (const [m, r] of parcalar) { yaz(g, m, x, 350, { font: '700 28px Oswald', renk: r }); g.font = '700 28px Oswald'; x += g.measureText(m).width; }
+  } else {
+    yaz(g, `${maclar.length} MAÇ  ·  ${gunler.length} GÜN`, G / 2, 350, { font: '700 28px Oswald', renk: RENK.soluk, hiza: 'center' });
+  }
+  // Gün gün satırlar: gün başlığı + maçlar; yükseklikler alana göre
+  const ust = 392, alt = Y - 88;
+  const satirAra = 8, gunAra = 14;
+  const sabit = maclar.length * satirAra + gunler.length * gunAra;
+  const k = Math.min(1, (alt - ust - sabit) / (maclar.length * 92 + gunler.length * 40));
+  const h = 92 * k, gh = 40 * k;
+  const kucuk = h < 74;
+  const gunFont = `700 ${Math.round(Math.max(22, 27 * k))}px Oswald`;
+  let y = ust;
+  for (const gn of gunler) {
+    const gunMac = maclar.map((m, i) => [m, i]).filter(([m]) => gunAnahtari(m) === gn);
+    const gunYazi = buyuk(new Date(gunMac[0][0].tarih).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', weekday: 'long' }));
+    yaz(g, gunYazi, 60, y + gh / 2, { font: gunFont, renk: RENK.vurgu });
+    g.font = gunFont;
+    const cx = 60 + g.measureText(gunYazi).width + 18;
+    g.strokeStyle = 'rgba(47,224,234,0.35)'; g.lineWidth = 2; g.beginPath(); g.moveTo(cx, y + gh / 2); g.lineTo(G - 50, y + gh / 2); g.stroke();
+    y += gh;
+    for (const [m, i] of gunMac) {
+      const orta = y + h / 2;
+      yuvarlak(g, 50, y, G - 100, h, 16); g.fillStyle = RENK.satir; g.fill();
+      // Kupa rozeti
+      const rh = Math.min(42, h - 16);
+      yuvarlak(g, 68, orta - rh / 2, 80, rh, 9); g.fillStyle = KUPA_RENK[m.kupa] ?? RENK.vurgu; g.fill();
+      yaz(g, m.kupaKisa, 108, orta + 1, { font: `700 ${kucuk ? 22 : 25}px Oswald`, hiza: 'center' });
+      // Logo
+      const lg = logolar[i], ls = Math.min(64, h - 14);
+      if (lg) {
+        g.save(); g.beginPath(); g.arc(200, orta, ls / 2 + 4, 0, 7); g.fillStyle = '#ffffff'; g.fill(); g.restore();
+        const o = Math.min(ls / lg.width, ls / lg.height);
+        g.drawImage(lg, 200 - (lg.width * o) / 2, orta - (lg.height * o) / 2, lg.width * o, lg.height * o);
+      }
+      // Takımlar: temsilcimiz üstte, rakip altta
+      const sag = sonuc ? 770 : 860;
+      if (h >= 60) {
+        yaz(g, buyuk(m.biz), 252, orta - h * 0.19, { font: `700 ${kucuk ? 27 : 31}px Oswald`, gen: sag - 270 });
+        yaz(g, `${m.evde ? 'vs' : '@'}  ${BUYUK(m.rakip)}`, 252, orta + h * 0.22, { font: `600 ${kucuk ? 20 : 24}px Montserrat`, renk: RENK.soluk, gen: sag - 270 });
+      } else {
+        yaz(g, `${buyuk(m.biz)}  ${m.evde ? 'vs' : '@'} ${BUYUK(m.rakip)}`, 252, orta + 1, { font: '700 24px Oswald', gen: sag - 270 });
+      }
+      // Sağ: sonuçta G/M ve skor, programda saat
+      if (sonuc) {
+        const kazandi = m.bizSkor > m.rakipSkor;
+        const kh = Math.min(54, h - 18);
+        yuvarlak(g, sag, orta - kh / 2, 50, kh, 10); g.fillStyle = kazandi ? RENK.yesil : RENK.kirmizi; g.fill();
+        yaz(g, kazandi ? 'G' : 'M', sag + 25, orta + 2, { font: `${Math.round(kh * 0.72)}px Anton`, renk: RENK.zemin1, hiza: 'center' });
+        yaz(g, `${m.bizSkor} - ${m.rakipSkor}`, G - 76, orta + 2, { font: `${Math.round(Math.min(54, h * 0.62))}px Anton`, hiza: 'right', gen: G - 76 - sag - 70 });
+      } else {
+        const saat = new Date(m.tarih).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+        yaz(g, saat, G - 76, orta + 2, { font: `${Math.round(Math.min(54, h * 0.62))}px Anton`, renk: RENK.vurgu, hiza: 'right' });
+      }
+      y += h + satirAra;
     }
-    // Takımlar
-    const sag = 760;
-    yaz(g, buyuk(m.biz), 270, orta - (kucuk ? 14 : 17), { font: `700 ${kucuk ? 29 : 32}px Oswald`, gen: sag - 290 });
-    yaz(g, `${m.evde ? 'vs' : '@'}  ${BUYUK(m.rakip)}`, 270, orta + (kucuk ? 17 : 21), { font: `600 ${kucuk ? 22 : 25}px Montserrat`, renk: RENK.soluk, gen: sag - 290 });
-    // Sağ: skor ya da gün/saat
-    const gun = new Date(m.tarih).toLocaleDateString('tr-TR', { weekday: 'long', day: 'numeric', month: 'long' });
-    const saat = new Date(m.tarih).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
-    if (tur === 'sonuc' && m.durum === 'bitti') {
-      const kazandi = m.bizSkor > m.rakipSkor;
-      const kh = kucuk ? 46 : 60;
-      yuvarlak(g, sag - 20, orta - kh / 2, 52, kh, 10); g.fillStyle = kazandi ? RENK.yesil : RENK.kirmizi; g.fill();
-      yaz(g, kazandi ? 'G' : 'M', sag + 6, orta + 2, { font: `${kucuk ? 32 : 40}px Anton`, renk: RENK.zemin1, hiza: 'center' });
-      yaz(g, `${m.bizSkor} - ${m.rakipSkor}`, G - 80, orta - (kucuk ? 9 : 10), { font: `${kucuk ? 42 : 52}px Anton`, hiza: 'right', gen: G - 80 - sag - 50 });
-      yaz(g, buyuk(gun), G - 80, orta + (kucuk ? 22 : 30), { font: `600 ${kucuk ? 16 : 19}px Montserrat`, renk: RENK.soluk, hiza: 'right' });
-    } else {
-      yaz(g, saat, G - 80, orta - (kucuk ? 9 : 12), { font: `${kucuk ? 42 : 52}px Anton`, renk: RENK.vurgu, hiza: 'right' });
-      yaz(g, buyuk([gun, m.yayin].filter(Boolean).join(' · ')), G - 80, orta + (kucuk ? 22 : 30), { font: `600 ${kucuk ? 15 : 19}px Montserrat`, renk: RENK.soluk, hiza: 'right', gen: G - 80 - sag + 20 });
-    }
-  });
-  if (!maclar.length) yaz(g, 'BU HAFTA MAÇ YOK', G / 2, 700, { font: '60px Anton', renk: RENK.soluk, hiza: 'center' });
+    y += gunAra;
+  }
+  if (!maclar.length) yaz(g, sonuc ? 'BU HAFTA SONUÇ YOK' : 'BU HAFTA MAÇ YOK', G / 2, 700, { font: '60px Anton', renk: RENK.soluk, hiza: 'center' });
   // Alt bilgi
   sosyalCiz(g, G / 2, Y - 42, 34);
   return new Promise(ok => c.toBlob(ok, 'image/png'));

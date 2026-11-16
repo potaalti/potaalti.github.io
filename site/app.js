@@ -1394,9 +1394,10 @@ function avGunKarti(idx, sadeceBugun = false) {
 }
 
 // Haftalık Avrupa görseli (yönetici): bu haftanın (Pazartesi–Pazar, Türkiye saati) programı ve sonuçları
+// Hafta seçimi (S.ui.avKaydir): 0 bu hafta, -1 geçen hafta (pazartesi geçen haftanın sonuçları), 1 gelecek hafta
 function avHafta() {
   const bugun = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Istanbul' });
-  const g = new Date(`${bugun}T12:00:00Z`);
+  const g = new Date(new Date(`${bugun}T12:00:00Z`).getTime() + (S.ui.avKaydir ?? 0) * 7 * 864e5);
   const pzt = new Date(g.getTime() - ((g.getUTCDay() + 6) % 7) * 864e5);
   const pz = new Date(pzt.getTime() + 6 * 864e5);
   const gun = d => d.toISOString().slice(0, 10);
@@ -1418,8 +1419,10 @@ function avGorselKarti(idx) {
   const { aralik } = avHafta();
   const satir = (tur, ad) => `<div class="f-satir"><div class="ad"><strong>${ad}</strong><small>${aralik} · ${liste.length} maç</small></div><span class="satir">
     <button class="secenek" data-is="av-paylas" data-id="${tur}">📤 Paylaş</button><button class="secenek" data-is="av-indir" data-id="${tur}">⬇ İndir</button></span></div>`;
-  return `<div class="kart gorsel-kart">${satir('program', 'Temsilcilerimizin haftası · program')}
-    ${liste.some(x => x.m.durum === 'bitti') ? satir('sonuc', 'Temsilcilerimizin haftası · sonuçlar') : ''}</div>`;
+  const secici = `<div class="secenekler" style="margin-bottom:6px">${[[-1, 'Geçen hafta'], [0, 'Bu hafta'], [1, 'Gelecek hafta']].map(([k, ad]) =>
+    `<button class="secenek ${(S.ui.avKaydir ?? 0) === k ? 'aktif' : ''}" data-is="av-hafta" data-id="${k}">${ad}</button>`).join('')}</div>`;
+  return `<div class="kart gorsel-kart">${secici}${satir('program', 'Haftanın Avrupa programı')}
+    ${liste.some(x => x.m.durum === 'bitti') ? satir('sonuc', 'Haftanın Avrupa sonuçları') : ''}</div>`;
 }
 async function avGorselPaylas(tur, indir) {
   const idx = S.avrupa.index;
@@ -1857,6 +1860,7 @@ document.addEventListener('click', e => {
       .finally(() => { el.disabled = false; el.textContent = yazi; });
     return;
   }
+  if (el.dataset.is === 'av-hafta') { S.ui.avKaydir = Number(el.dataset.id); ciz(); }
   if (el.dataset.is === 'av-paylas' || el.dataset.is === 'av-indir') {
     const yazi = el.textContent;
     el.disabled = true; el.textContent = 'Hazırlanıyor…';

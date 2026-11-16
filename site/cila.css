@@ -536,3 +536,11 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
 .ld-grup .secenek { padding: 3px 8px; font-size: .78rem; }
 .ld-sec { padding: 3px 9px; border-radius: 99px; border: 1px solid var(--cizgi); background: transparent; color: var(--soluk); font-size: .78rem; font-weight: 600; cursor: pointer; }
 .ld-sec.aktif { background: var(--ana-degrade); border-color: transparent; color: #fff; }
+
+/* Telefonda puan durumundaki Son 5 kutucukları küçük: tablo ekrana sığsın (kullanıcı 2026-11-16 telefonda da Son 5 istedi) */
+@media (max-width: 759px) {
+  .form { gap: 2px; }
+  .form i { width: 14px; height: 16px; border-radius: 3px; font-size: .56rem; }
+  table.puan-tablosu th, table.puan-tablosu td { padding-left: 3px; padding-right: 3px; }
+  table.puan-tablosu { font-size: .86rem; }
+}

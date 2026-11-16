@@ -440,9 +440,9 @@ function seyirciKarti(lig, istenen) {
     const liste = seyirciOrtSirali(v);
     const th = (k, ad, ek = '') => `<th class="sayi sirala ${ek} ${k === sk ? 'aktif' : ''}" data-is="sy-sirala" data-id="${k}">${ad}${k === sk ? (yon > 0 ? ' ▼' : ' ▲') : ''}</th>`;
     const satirlar = liste.map((k, i) => `<tr class="tikla" onclick="location.hash='#/takim/${lig}/${k.id}'"><td class="sayi"><span class="f-sira ${i < 3 ? `s${i + 1}` : ''}">${i + 1}</span></td><td><b>${esc(baslik(k.ad))}</b></td>
-      <td class="sayi dar-gizle">${k.mac}</td><td class="sayi">${sk === 'toplam' ? `<b>${binlik(k.toplam)}</b>` : binlik(k.toplam)}</td><td class="sayi">${sk === 'ort' ? `<b>${binlik(k.ort)}</b>` : binlik(k.ort)}</td><td class="sayi">${sk === 'doluluk' ? `<b>${dolulukYazisi(k.doluluk)}</b>` : dolulukYazisi(k.doluluk)}</td></tr>`).join('');
+      <td class="sayi">${k.mac}</td><td class="sayi">${sk === 'toplam' ? `<b>${binlik(k.toplam)}</b>` : binlik(k.toplam)}</td><td class="sayi">${sk === 'ort' ? `<b>${binlik(k.ort)}</b>` : binlik(k.ort)}</td><td class="sayi">${sk === 'doluluk' ? `<b>${dolulukYazisi(k.doluluk)}</b>` : dolulukYazisi(k.doluluk)}</td></tr>`).join('');
     return `${cipler}<div class="kart"><div class="baslik-satir"><h2>İlk ${v.haftalar.at(-1)} hafta · seyirci ortalamaları</h2>${dugmeler}</div>
-      <div class="tablo-kap"><table class="seyirci-ort"><thead><tr><th class="sayi">#</th><th>Takım</th>${th('mac', 'Maç', 'dar-gizle')}${th('toplam', 'Toplam')}${th('ort', 'Ortalama')}${th('doluluk', 'Doluluk')}</tr></thead>
+      <div class="tablo-kap"><table class="seyirci-ort"><thead><tr><th class="sayi">#</th><th>Takım</th>${th('mac', 'Maç')}${th('toplam', 'Toplam')}${th('ort', 'Ortalama')}${th('doluluk', 'Doluluk')}</tr></thead>
       <tbody>${satirlar}</tbody></table></div>
       <p class="soluk kucuk" style="margin-bottom:0">Maç: seyirci sayısı girilmiş maç sayısı; sayısı girilmemiş maçlar ortalamaya katılmaz. Doluluk: seyircinin salon kapasitesine oranı (iç saha maçlarının ortalaması; kapasitesi bilinmeyen salonda –). Sıralamak için sütun başlığına dokun; ikinci dokunuş tersine çevirir. İndirilen görsel de bu sırayla çıkar.</p></div>`;
   }
@@ -932,7 +932,9 @@ function canliTablo(lig, tablo) {
 // Puan tablosu sıralaması (veri/uret.py ile aynı): TBL galibiyet yüzdesine göre (bay yüzünden maç sayıları farklı), eşitlikte genel
 // averaj; BSL galibiyet sayısına göre
 const galibiyetYuzdesi = s => (s.o ? s.g / s.o : 0);
-const yuzdeYazisi = s => `%${(Math.round(galibiyetYuzdesi(s) * 10000) / 100).toLocaleString('tr-TR', { maximumFractionDigits: 2 })}`;
+// Telefonda tam sayı (%82): Son 5 ile birlikte tablo ekrana sığsın
+const yuzdeYazisi = s => (TELEFON.matches ? `%${Math.round(galibiyetYuzdesi(s) * 100)}`
+  : `%${(Math.round(galibiyetYuzdesi(s) * 10000) / 100).toLocaleString('tr-TR', { maximumFractionDigits: 2 })}`);
 const siralamaKarsilastir = lig => (lig === 'tbl'
   ? (x, y) => galibiyetYuzdesi(y) - galibiyetYuzdesi(x) || y.averaj - x.averaj || y.atilan - x.atilan
   : (x, y) => y.g - x.g || x.m - y.m || y.averaj - x.averaj || y.atilan - x.atilan);
@@ -989,12 +991,12 @@ function tabloKarti(lig, ilk = null) {
       <td class="sira"><span class="madalya ${bolgeSinifi(lig, s.sira) && `bolge-${bolgeSinifi(lig, s.sira)}`}">${s.sira}</span></td><td class="takim-ad">${esc(baslik(s.ad))}${s.canli ? ' <span class="canli-yazi kucuk">canlı</span>' : ''}</td>
       <td class="sayi">${s.o}</td><td class="sayi"><b>${s.g}</b></td><td class="sayi">${s.m}</td>${lig === 'tbl' ? `<td class="sayi">${yuzdeYazisi(s)}</td>` : ''}
       <td class="sayi dar-gizle">${s.atilan}</td><td class="sayi dar-gizle">${s.yenilen}</td><td class="sayi">${isaretli(s.averaj)}</td>
-      ${ilk ? '' : `<td class="dar-gizle"><span class="form">${s.son5.map(x => `<i class="${x}">${x}</i>`).join('')}</span></td>`}</tr>`).join('');
+      ${ilk ? '' : `<td><span class="form">${s.son5.map(x => `<i class="${x}">${x}</i>`).join('')}</span></td>`}</tr>`).join('');
   return `<div class="kart">${ilk ? `<div class="baslik-satir"><h2>${LIGLER[lig].kisa} puan tablosu</h2><a href="#/lig/${lig}/tablo">Tümü ›</a></div>`
     : yoneticiMi() ? `<div class="baslik-satir"><h2>Puan durumu</h2><span class="satir"><button class="secenek" data-is="pt-paylas" data-id="${lig}">📤 Paylaş</button><button class="secenek" data-is="pt-indir" data-id="${lig}">⬇ İndir</button></span></div>` : ''}
-    <div class="tablo-kap"><table>
+    <div class="tablo-kap"><table class="puan-tablosu">
     <thead><tr><th>#</th><th>Takım</th><th class="sayi">O</th><th class="sayi">G</th><th class="sayi">M</th>${lig === 'tbl' ? '<th class="sayi">G%</th>' : ''}
-      ${th('atilan', 'A', 'dar-gizle')}${th('yenilen', 'Y', 'dar-gizle')}${th('averaj', 'Av.')}${ilk ? '' : '<th class="dar-gizle">Son 5</th>'}</tr></thead>
+      ${th('atilan', 'A', 'dar-gizle')}${th('yenilen', 'Y', 'dar-gizle')}${th('averaj', 'Av.')}${ilk ? '' : '<th>Son 5</th>'}</tr></thead>
     <tbody>${satirlar}</tbody></table></div>
     ${bolgeLejanti(lig)}
     ${ilk ? '' : `<p class="soluk kucuk" style="margin:8px 0 0">O: oynanan · G: galibiyet · M: mağlubiyet · A/Y: atılan/yenilen sayı · Av.: averaj. ${lig === 'tbl' ? 'G%: galibiyet yüzdesi. Sıralama galibiyet yüzdesine göre, eşitlikte averaj' : 'Sıralama galibiyete göre, eşitlikte averaj'} (resmi sıralamada ikili averaj gibi farklı kurallar olabilir). A, Y ya da Av. başlığına dokununca o sütuna göre sıralanır; üçüncü dokunuş resmi sıraya döner.</p>`}</div>`;
@@ -1102,10 +1104,10 @@ function oyuncularKarti(lig) {
   return `<input type="search" id="ara" data-ui="ara" placeholder="Oyuncu ya da takım ara" value="${esc(S.ui.ara)}" style="margin-bottom:10px">
     <div class="secenekler">${OYUNCU_SIRALARI.map(([k, ad]) => `<button class="secenek ${k === sirala ? 'aktif' : ''}" data-is="oyuncu-sirala" data-id="${k}">${ad}</button>`).join('')}</div>
     <div class="kart" style="padding:6px 10px"><div class="tablo-kap"><table>
-      <thead><tr><th>Oyuncu</th><th class="sayi">M</th><th class="sayi dar-gizle">Dk</th><th class="sayi">Sy</th><th class="sayi">Rb</th><th class="sayi">As</th><th class="sayi dar-gizle">+/-</th><th class="sayi">VP</th></tr></thead>
+      <thead><tr><th>Oyuncu</th><th class="sayi">M</th><th class="sayi">Dk</th><th class="sayi">Sy</th><th class="sayi">Rb</th><th class="sayi">As</th><th class="sayi">+/-</th><th class="sayi">VP</th></tr></thead>
       <tbody>${secili.slice(0, 150).map(o => `<tr class="tikla" onclick="location.hash='#/oyuncu/${lig}/${o.id}'">
-        <td><b>${esc(o.ad)}</b><div class="soluk kucuk">${esc(takimAdi(lig, o.takim))}</div></td><td class="sayi">${o.mac}</td><td class="sayi dar-gizle">${sayi(o.dk)}</td>
-        <td class="sayi">${sayi(o.sayi)}</td><td class="sayi">${sayi(o.rib)}</td><td class="sayi">${sayi(o.ast)}</td><td class="sayi dar-gizle">${isaretli(o.pm)}</td>
+        <td><b>${esc(o.ad)}</b><div class="soluk kucuk">${esc(takimAdi(lig, o.takim))}</div></td><td class="sayi">${o.mac}</td><td class="sayi">${sayi(o.dk)}</td>
+        <td class="sayi">${sayi(o.sayi)}</td><td class="sayi">${sayi(o.rib)}</td><td class="sayi">${sayi(o.ast)}</td><td class="sayi">${isaretli(o.pm)}</td>
         <td class="sayi"><b>${sayi(o.vp)}</b></td></tr>`).join('') || '<tr><td colspan="8" class="bos">Oyuncu bulunamadı</td></tr>'}</tbody></table></div></div>
     <p class="soluk kucuk">Maç başı ortalamalar (+/-: sezon toplamı). ${secili.length > 150 ? `İlk 150 oyuncu gösteriliyor; aramayla daralt.` : ''}</p>`;
 }
@@ -1186,7 +1188,7 @@ function gorunumOyuncu(lig, id) {
     return `<tr class="tikla" onclick="location.hash='#/mac/${lig}/${x.mac}'"><td class="sira">${x.hafta}.</td>
       <td>${x.evde ? '' : '@ '}${esc(takimAdi(lig, x.rakip))}<div class="soluk kucuk">${sonuc}</div></td>
       <td class="sayi">${oynadi ? x.sure.split(':')[0] : '—'}</td><td class="sayi">${oynadi ? x.sayi : ''}</td><td class="sayi">${oynadi ? x.rib : ''}</td>
-      <td class="sayi">${oynadi ? x.ast : ''}</td><td class="sayi dar-gizle">${oynadi ? isaretli(x.pm) : ''}</td><td class="sayi"><b>${oynadi ? x.vp : ''}</b></td></tr>`;
+      <td class="sayi">${oynadi ? x.ast : ''}</td><td class="sayi">${oynadi ? isaretli(x.pm) : ''}</td><td class="sayi"><b>${oynadi ? x.vp : ''}</b></td></tr>`;
   }).join('');
   return `<a class="geri" href="#/takim/${lig}/${o.takim}">‹ ${esc(takimAdi(lig, o.takim))}</a>
     <div class="kart sayfa-baslik"><h1>${esc(o.ad)}</h1>
@@ -1195,7 +1197,7 @@ function gorunumOyuncu(lig, id) {
         .map(([ad, v, atis]) => `<div><b>${typeof v === 'number' ? sayi(v) : v}</b><span>${ad}</span>${atis ? `<small>${macBasiAtis(atis, o.mac)}</small>` : ''}</div>`).join('')}</div>
       <p class="soluk kucuk" style="margin:8px 0 0">Maç başı ortalamalar (+/-: sezon toplamı). Atış yüzdelerinin altında maç başı isabet/deneme.</p></div>
     <div class="kart"><h3>Maç maç</h3><div class="tablo-kap"><table>
-      <thead><tr><th>Hf</th><th>Rakip</th><th class="sayi">Dk</th><th class="sayi">Sy</th><th class="sayi">Rb</th><th class="sayi">As</th><th class="sayi dar-gizle">+/-</th><th class="sayi">VP</th></tr></thead>
+      <thead><tr><th>Hf</th><th>Rakip</th><th class="sayi">Dk</th><th class="sayi">Sy</th><th class="sayi">Rb</th><th class="sayi">As</th><th class="sayi">+/-</th><th class="sayi">VP</th></tr></thead>
       <tbody>${satirlar || '<tr><td colspan="8" class="bos">Henüz maç yok</td></tr>'}</tbody></table></div>
       <p class="soluk kucuk" style="margin:6px 0 0">Maça dokununca kutu skor açılır.</p></div>`;
 }
@@ -1213,7 +1215,7 @@ function buHaftaKarti(lig) {
 function gorunumAna() {
   // Ana sayfada solda BSL, sağda TBL (puan tablosunun ilk 10'u). Bugün temsilcilerimizin Avrupa maçı varsa en üstte kartı;
   // yoksa Avrupa bölümü TBL/BSL'nin altında (telefonda BSL · TBL · Avrupa seçimi)
-  const sutun = lig => `<div>${buHaftaKarti(lig)}${tabloKarti(lig, 10)}</div>`;
+  const sutun = lig => `<div>${buHaftaKarti(lig)}${tabloKarti(lig, 11)}</div>`;
   const karsilama = `<div class="karsilama"><img src="icon-192.png" alt=""><div><strong>Pota Altı</strong><small>TBL ve BSL canlı skorlar, istatistikler, fantezi ligleri ve yayınlar</small></div></div>`;
   const fantezi = `<h2 class="bolum-baslik">Fantezi ligleri</h2><div class="fantezi-kartlari">${fantezKartlari()}</div>`;
   const avIdx = av('index');
@@ -1358,7 +1360,7 @@ function avOyuncu(kod, k, id) {
     return `<tr class="tikla" onclick="location.hash='#/avrupa/${kod}/mac/${x.mac}'"><td class="sira kucuk">${kisaTarih(x.tarih)}</td>
       <td>${x.evde ? '' : '@ '}${esc(avTakimAdi(d, x.rakip))}<div class="soluk kucuk">${sonuc}</div></td>
       <td class="sayi">${oynadi ? Math.round(x.sn / 60) : '—'}</td><td class="sayi">${oynadi ? x.sayi : ''}</td><td class="sayi">${oynadi ? x.rib : ''}</td>
-      <td class="sayi">${oynadi ? x.ast : ''}</td><td class="sayi dar-gizle">${oynadi ? isaretli(x.pm) : ''}</td><td class="sayi"><b>${oynadi ? x.vp : ''}</b></td></tr>`;
+      <td class="sayi">${oynadi ? x.ast : ''}</td><td class="sayi">${oynadi ? isaretli(x.pm) : ''}</td><td class="sayi"><b>${oynadi ? x.vp : ''}</b></td></tr>`;
   }).join('');
   return `<a class="geri" href="#/avrupa/${kod}/takim/${p.takim}">‹ ${esc(avTakimAdi(d, p.takim))}</a>
     <div class="kart sayfa-baslik"><h1>${esc(p.ad)}</h1>
@@ -1368,7 +1370,7 @@ function avOyuncu(kod, k, id) {
         .map(([ad, v, atis]) => `<div><b>${typeof v === 'number' ? sayi(v) : v}</b><span>${ad}</span>${atis ? `<small>${macBasiAtis(atis, o.mac)}</small>` : ''}</div>`).join('')}</div>
       <p class="soluk kucuk" style="margin:8px 0 0">${esc(k.ad)} maç başı ortalamaları (+/-: turnuva toplamı). Atış yüzdelerinin altında maç başı isabet/deneme.</p></div>
     <div class="kart"><h3>Maç maç</h3><div class="tablo-kap"><table>
-      <thead><tr><th>Tarih</th><th>Rakip</th><th class="sayi">Dk</th><th class="sayi">Sy</th><th class="sayi">Rb</th><th class="sayi">As</th><th class="sayi dar-gizle">+/-</th><th class="sayi">VP</th></tr></thead>
+      <thead><tr><th>Tarih</th><th>Rakip</th><th class="sayi">Dk</th><th class="sayi">Sy</th><th class="sayi">Rb</th><th class="sayi">As</th><th class="sayi">+/-</th><th class="sayi">VP</th></tr></thead>
       <tbody>${satirlar || '<tr><td colspan="8" class="bos">Henüz maç yok</td></tr>'}</tbody></table></div>
       <p class="soluk kucuk" style="margin:6px 0 0">Maça dokununca kutu skor açılır.</p></div>`;
 }

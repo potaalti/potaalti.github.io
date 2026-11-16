@@ -1,0 +1,96 @@
+{
+ "hafta": 11,
+ "guncelleme": "2026-11-16T12:49:34.091Z",
+ "notlar": [
+  "Turan Altunbaş (Mersin Spor): formalı fotoğrafı yok, TBF'de vesikalık var",
+  "Jamari Traylor (Keçiören Belediyesi Bağlum): formalı fotoğrafı yok, TBF'de vesikalık var",
+  "Tevfik Akdamar (Büyükçekmece Basketbol): formalı fotoğrafı yok, TBF'de vesikalık var"
+ ],
+ "gorseller": [
+  {
+   "dosya": "01-11-haftanin-panoramasi.jpg",
+   "tur": "kapak",
+   "baslik": "11. Haftanın Panoraması"
+  },
+  {
+   "dosya": "02-mvp-robert-smith.jpg",
+   "tur": "mvp",
+   "baslik": "MVP",
+   "oyuncu": "Robert Smith",
+   "takim": "KONYA BÜYÜKŞEHİR BELEDİYESİ SPOR",
+   "vp": 47
+  },
+  {
+   "dosya": "03-yerli-mvp-can-ugur-ogut.jpg",
+   "tur": "yerli",
+   "baslik": "Yerli MVP",
+   "oyuncu": "Can Uğur Öğüt",
+   "takim": "BÜYÜKÇEKMECE BASKETBOL",
+   "vp": 25
+  },
+  {
+   "dosya": "04-kaybeden-yabanci-mvp-jaquan-scott.jpg",
+   "tur": "kaybedenYabanci",
+   "baslik": "Kaybeden Yabancı MVP",
+   "oyuncu": "Jaquan Scott",
+   "takim": "BALIKESİR BÜYÜKŞEHİR BELEDİYE SPOR",
+   "vp": 46
+  },
+  {
+   "dosya": "05-kaybeden-yerli-mvp-turan-altunbas.jpg",
+   "tur": "kaybedenYerli",
+   "baslik": "Kaybeden Yerli MVP",
+   "oyuncu": "Turan Altunbaş",
+   "takim": "MERSİN SPOR",
+   "vp": 26
+  },
+  {
+   "dosya": "06-yerli-5.jpg",
+   "tur": "besli",
+   "baslik": "Yerli 5",
+   "oyuncular": [
+    "Ömer Yasir Küçük",
+    "Can Uğur Öğüt",
+    "Zahid İsaoğlu",
+    "Arda Birkeser",
+    "İsmail Karabilen"
+   ]
+  },
+  {
+   "dosya": "07-yabanci-5.jpg",
+   "tur": "besli",
+   "baslik": "Yabancı 5",
+   "oyuncular": [
+    "Kahlil Dukes",
+    "Jordan Barnes",
+    "Robert Smith",
+    "Jamari Traylor",
+    "Abdoulaye Gueye"
+   ]
+  },
+  {
+   "dosya": "08-mansiyon-5-i-i.jpg",
+   "tur": "besli",
+   "baslik": "Mansiyon 5'i – I",
+   "oyuncular": [
+    "Josh Sharkey",
+    "Sam Sessoms",
+    "Oğuzhan Tosun",
+    "Jarmar Gulley",
+    "Metin Türen"
+   ]
+  },
+  {
+   "dosya": "09-mansiyon-5-i-ii.jpg",
+   "tur": "besli",
+   "baslik": "Mansiyon 5'i – II",
+   "oyuncular": [
+    "Scoochie Smith",
+    "Diante Watkins",
+    "TreVion Crews",
+    "Tevfik Akdamar",
+    "Berke Atar"
+   ]
+  }
+ ]
+}

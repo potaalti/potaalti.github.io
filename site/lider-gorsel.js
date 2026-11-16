@@ -96,8 +96,8 @@ function dekupeMi(im) {
   } catch { return false; }
 }
 
+// Beş satır da aynı boyda (kullanıcı 2026-11-16); sıra numarası solda ayrı şeritte (ilk üçü madalya renginde)
 function kart(g, o, i, x, y, w, h, L) {
-  const lider = i === 0;
   const [ana, ikinci] = o.renk;
   // Zemin: takım renginde, solda koyu; ince çapraz çizgiler
   g.save();
@@ -108,23 +108,22 @@ function kart(g, o, i, x, y, w, h, L) {
   g.strokeStyle = 'rgba(255,255,255,0.05)'; g.lineWidth = 2;
   for (let k = x - h; k < x + w; k += 22) { g.beginPath(); g.moveTo(k, y + h); g.lineTo(k + h, y); g.stroke(); }
   // Sağda ikinci renkte eğik blok ve logo
-  const pw = 170, egim = lider ? 70 : 56;
+  const pw = 170, egim = 60, sw = 54;
   g.beginPath(); g.moveTo(x + w - pw, y); g.lineTo(x + w, y); g.lineTo(x + w, y + h); g.lineTo(x + w - pw - egim, y + h); g.closePath();
   g.fillStyle = hex(ikinci); g.fill();
   g.beginPath(); g.moveTo(x + w - pw - 10, y); g.lineTo(x + w - pw, y); g.lineTo(x + w - pw - egim, y + h); g.lineTo(x + w - pw - egim - 10, y + h); g.closePath();
   g.fillStyle = 'rgba(255,255,255,0.85)'; g.fill();
+  // Sıra şeridi (sol)
+  g.fillStyle = i < 3 ? MADALYA[i] : 'rgba(0,0,0,0.32)'; g.fillRect(x, y, sw, h);
   g.restore();
-  logoDaire(g, o.logoResmi, x + w - pw / 2 - egim / 4, y + h / 2, lider ? 70 : 54);
-  // Değer ve birimi (solda)
-  const dx = x + (lider ? 148 : 136);
-  yaz(g, o.deger, dx, y + h * (lider ? 0.46 : 0.44), { font: `${lider ? 140 : 96}px Anton`, hiza: 'center', gen: lider ? 214 : 180, golge: true });
-  yaz(g, o.birim, dx, y + h * (lider ? 0.84 : 0.83), { font: `600 ${lider ? 24 : 19}px Oswald`, renk: 'rgba(255,255,255,0.82)', hiza: 'center' });
-  // Sıra rozeti (sol üst)
-  const rr = lider ? 26 : 19;
-  g.beginPath(); g.arc(x + rr + 12, y + rr + 12, rr, 0, Math.PI * 2); g.fillStyle = i < 3 ? MADALYA[i] : 'rgba(255,255,255,0.22)'; g.fill();
-  yaz(g, String(i + 1), x + rr + 12, y + rr + 13, { font: `${lider ? 32 : 24}px Anton`, renk: i < 3 ? '#111111' : '#ffffff', hiza: 'center' });
+  yaz(g, String(i + 1), x + sw / 2, y + h / 2 + 2, { font: '44px Anton', renk: i < 3 ? '#111111' : '#ffffff', hiza: 'center' });
+  logoDaire(g, o.logoResmi, x + w - pw / 2 - egim / 4, y + h / 2, 60);
+  // Değer ve birimi (şeridin sağında)
+  const dx = x + sw + 100;
+  yaz(g, o.deger, dx, y + h * 0.44, { font: '104px Anton', hiza: 'center', gen: 176, golge: true });
+  yaz(g, o.birim, dx, y + h * 0.83, { font: '600 20px Oswald', renk: 'rgba(255,255,255,0.82)', hiza: 'center', gen: 180 });
   // Fotoğraf: değerin sağındaki pencerede; dekupede baş kartın üstüne taşar
-  const fx0 = x + (lider ? 262 : 240), fw = lider ? 210 : 190, tasma = lider ? 44 : 30;
+  const fx0 = x + 262, fw = 196, tasma = 34;
   const f = o.fotoResmi;
   if (f) {
     g.save();
@@ -153,13 +152,13 @@ function kart(g, o, i, x, y, w, h, L) {
   const [ad, soyad] = adParcala(o.ad);
   // Yazı genişliği satırın yüksekliğine göre: sağdaki eğik bloğa değmesin
   const ax = fx0 + fw + 22, agen = t => x + w - pw - egim * t - ax - 22;
-  yaz(g, buyuk(ad), ax, y + h * 0.235, { font: `600 ${lider ? 34 : 25}px Oswald`, renk: 'rgba(255,255,255,0.86)', gen: agen(0.33) });
-  yaz(g, buyuk(soyad), ax, y + h * 0.535, { font: `${lider ? 74 : 50}px Anton`, gen: agen(0.68), golge: true });
-  yaz(g, buyuk(o.alt), ax, y + h * 0.81, { font: `600 ${lider ? 21 : 17}px Montserrat`, renk: 'rgba(255,255,255,0.72)', gen: agen(0.9) });
+  yaz(g, buyuk(ad), ax, y + h * 0.235, { font: '600 28px Oswald', renk: 'rgba(255,255,255,0.86)', gen: agen(0.33) });
+  yaz(g, buyuk(soyad), ax, y + h * 0.535, { font: '56px Anton', gen: agen(0.68), golge: true });
+  yaz(g, buyuk(o.alt), ax, y + h * 0.81, { font: '600 18px Montserrat', renk: 'rgba(255,255,255,0.72)', gen: agen(0.9) });
 }
 
 // satirlar: [{ ad, alt (takım · maç), deger (yazı), foto, logo }] (sıralı, ilk 5); baslik: 'SAYI LİDERLERİ'; yerli: başına "YERLİ";
-// ingilizce: 'POINTS PER GAME'; birim: değerin altındaki yazı ('SAYI / MAÇ'); altBilgi: '2026-27 · 11. HAFTA SONU'
+// ingilizce: 'POINTS PER GAME'; birim: değerin altındaki yazı ('SAYI / MAÇ'); altBilgi: '2026-27'
 export async function liderGorseli({ lig, baslik, yerli = false, ingilizce, birim, altBilgi, satirlar }) {
   const L = LIG[lig];
   await Promise.all([yaziTipleri(), markaYazilari()]);
@@ -195,14 +194,9 @@ export async function liderGorseli({ lig, baslik, yerli = false, ingilizce, biri
   const ew = Math.min(900, g.measureText(serit).width + 56);
   yuvarlak(g, ox - ew / 2, 210, ew, 50, 25); g.fillStyle = L.vurgu; g.fill();
   yaz(g, serit, ox, 236, { font: '700 26px Oswald', renk: L.zemin1, hiza: 'center', gen: ew - 36 });
-  // Kartlar: lider büyük, 2–5 ince
-  const x = 50, w = G - 100;
-  let y = 300;
-  veri.forEach((o, i) => {
-    const h = i === 0 ? 250 : 160;
-    kart(g, o, i, x, y, w, h, L);
-    y += h + 16;
-  });
+  // Kartlar: beşi de aynı boyda
+  const x = 50, w = G - 100, h = 180;
+  veri.forEach((o, i) => kart(g, o, i, x, 300 + i * (h + 14), w, h, L));
   if (!veri.length) yaz(g, 'VERİ YOK', G / 2, 700, { font: '60px Anton', renk: 'rgba(255,255,255,0.6)', hiza: 'center' });
   sosyalCiz(g, G / 2, Y - 42, 34);
   return new Promise(ok => c.toBlob(ok, 'image/png'));

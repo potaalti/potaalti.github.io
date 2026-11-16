@@ -1054,11 +1054,10 @@ async function liderGorselPaylas(anahtar, indir) {
     liste = k.liste.slice(0, 5);
   }
   const [baslik, ingilizce, birim] = LIDER_GORSEL[kod];
-  const hafta = S.meta?.ligler?.[lig]?.guncel;
   const satirlar = liste.map(x => ({ ad: x.ad, takimId: x.takim, deger: liderYazisi(kod, x.deger), foto: foto(x.id),
     logo: logolar.get(takimAnahtari(takimAdi(lig, x.takim))) ?? null,
     alt: kod === 'uc' && x.atis?.[1] ? `${takimAdi(lig, x.takim)} · ${x.atis[0]}/${x.atis[1]} · %${Math.round((100 * x.atis[0]) / x.atis[1])}` : `${takimAdi(lig, x.takim)} · ${x.mac} maç` }));
-  const blob = await LG.liderGorseli({ lig, baslik, yerli, ingilizce, birim, altBilgi: hafta ? `2026-27 · ${hafta}. HAFTA` : '2026-27', satirlar });
+  const blob = await LG.liderGorseli({ lig, baslik, yerli, ingilizce, birim, altBilgi: '2026-27', satirlar });
   const dosya = new File([blob], `pota-alti-${lig}-lider-${kod}${yerli ? '-yerli' : ''}.png`, { type: 'image/png' });
   if (!indir && navigator.canShare?.({ files: [dosya] })) {
     try { await navigator.share({ files: [dosya] }); return; } catch (e) { if (e?.name === 'AbortError') return; }

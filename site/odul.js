@@ -267,7 +267,7 @@ export async function tekli({ lig = 'tbl', tur, hafta, o, foto, logo }) {
 // ---------- 5'li (TBL: Yerli 5, Yabancı 5, Mansiyon 5'i I–II; BSL: Altın, Gümüş, Bronz, Mansiyon 5) — 720x900 ölçüsünde ----------
 // BSL başlığında 5'in adı kendi renginde; şablonun iki şeridine sezon ve İngilizce satır yazılır
 const BSL_5 = { altin: ['ALTIN', '#fdd702', '1ST TEAM'], gumus: ['GÜMÜŞ', '#8491a2', '2ND TEAM'], bronz: ['BRONZ', '#ce7f31', '3RD TEAM'],
-  mansiyon: ['MANSİYON', '#5de1e6', 'HONORABLE MENTIONS'] };
+  mansiyon: ['MANSİYON', '#5de1e6', 'HONORABLE MENTIONS'], kaybeden: ['KAYBEDENLER KULÜBÜ', '#ff6b6b', "LOSERS' CLUB"] };
 function parcaliBaslik(g, parcalar, cx, y, { yazi, boy, gen, cizgi }) {
   const metin = parcalar.map(p => p[0]).join('');
   let { px, w } = olcu(g, metin, yazi, boy);
@@ -293,7 +293,8 @@ export async function besli({ lig = 'tbl', tur, hafta, oyuncular }) {
   if (lig === 'bsl') {
     const [ad, renk, ing] = BSL_5[tur];
     seritYazisi(g, '2026-2027 TÜRKİYE SİGORTA BSL', 359, 106, 400, 12.5);
-    parcaliBaslik(g, [[`${hafta}. HAFTANIN `, RENK], [ad, renk], [" 5'İ", RENK]], 359, 176, { yazi: BS, boy: 47, gen: 427, cizgi: 4 });
+    // Kaybedenler Kulübü'nde "5'İ" eklenmez ("8. HAFTANIN KAYBEDENLER KULÜBÜ")
+    parcaliBaslik(g, [[`${hafta}. HAFTANIN `, RENK], [ad, renk], ...(tur === 'kaybeden' ? [] : [[" 5'İ", RENK]])], 359, 176, { yazi: BS, boy: 47, gen: 427, cizgi: 4 });
     seritYazisi(g, `${ing} OF THE ${sira(hafta)} WEEK`, 359, 198, 400, 11.5);
     await besliKartlar(g, oyuncular);
     return blob(c);

@@ -488,9 +488,10 @@ async function seyirciGorseliniPaylas(anahtar, indir) {
 // BSL'de liste gelmez: oyuncular kurallara göre seçilir (bslListesi), liste aynı biçimde yazılır.
 const TEKLI = { 'mvp': 'mvp', 'yerli mvp': 'yerli', 'kazanan yerli mvp': 'yerli', 'yabanci mvp': 'yabanci', 'kaybeden yerli mvp': 'kaybedenYerli', 'kaybeden yabanci mvp': 'kaybedenYabanci' };
 const TEKLI_AD = { mvp: 'MVP', yerli: 'Yerli MVP', yabanci: 'Yabancı MVP', kaybedenYerli: 'Kaybeden Yerli MVP', kaybedenYabanci: 'Kaybeden Yabancı MVP' };
-const BESLI = { tbl: ['yerli', 'yabanci', 'mansiyon1', 'mansiyon2'], bsl: ['altin', 'gumus', 'bronz', 'mansiyon'] };
+// BSL 5. beşli (2026-11-16, kullanıcı): Haftanın Kaybedenler Kulübü, kaybeden takımlardan en yüksek VP'li 5 oyuncu (listeyi kullanıcı yazar)
+const BESLI = { tbl: ['yerli', 'yabanci', 'mansiyon1', 'mansiyon2'], bsl: ['altin', 'gumus', 'bronz', 'mansiyon', 'kaybeden'] };
 const BESLI_AD = { yerli: 'Yerli 5', yabanci: 'Yabancı 5', mansiyon1: "Mansiyon 5'i – I", mansiyon2: "Mansiyon 5'i – II",
-  altin: 'Altın 5', gumus: 'Gümüş 5', bronz: 'Bronz 5', mansiyon: 'Mansiyon 5' };
+  altin: 'Altın 5', gumus: 'Gümüş 5', bronz: 'Bronz 5', mansiyon: 'Mansiyon 5', kaybeden: 'Kaybedenler Kulübü' };
 // Ödüller sayfasının ligi (sayfa adresinden) ve yayınlanan görsellerin klasörü
 const OL = () => (rota()[1] === 'bsl' ? 'bsl' : 'tbl');
 // BSL'de yerli MVP'nin takımı kazanmış olmalı ("Kazanan Yerli MVP"), MVP'nin de
@@ -514,7 +515,7 @@ function odulListesiCoz(metin) {
     }
     gruplar.at(-1).push(satir);
   }
-  return { tekli, gruplar: gruplar.filter(g => g.length).slice(0, 4) };
+  return { tekli, gruplar: gruplar.filter(g => g.length).slice(0, Math.max(...Object.values(BESLI).map(b => b.length))) }; // BSL'de 5 beşli
 }
 // Haftanın oyuncuları: biten maçların kutu skorlarından, hafta toplamı (iki maç oynadıysa toplanır)
 async function odulHaftasi(h) {

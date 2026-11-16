@@ -1,9 +1,8 @@
 {
  "hafta": 8,
- "guncelleme": "2026-11-16T12:55:42.276Z",
+ "guncelleme": "2026-11-16T13:56:58.786Z",
  "notlar": [
   "Dwight Powell (Fenerbahçe Tarfin): formalı fotoğrafı yok, TBF'de vesikalık var",
-  "Bryce Brown (Bursaspor Basketbol): forması takım arkadaşlarınınkinden farklı görünüyor (fotoğraf eski takımından olabilir)",
   "Isaiah Miles (Yukatel Denizli Basket): formalı fotoğrafı yok, TBF'de vesikalık var"
  ],
  "gorseller": [
@@ -73,7 +72,7 @@
    "tur": "besli",
    "baslik": "Bronz 5",
    "oyuncular": [
-    "Bryce Brown",
+    "Bryce Jones",
     "QJ Peterson",
     "Will Clyburn",
     "Isaiah Miles",
@@ -90,6 +89,18 @@
     "Matt Mitchell",
     "Damien Inglis",
     "Jamuni McNeace"
+   ]
+  },
+  {
+   "dosya": "10-kaybedenler-kulubu.jpg",
+   "tur": "besli",
+   "baslik": "Kaybedenler Kulübü",
+   "oyuncular": [
+    "Brandon Taylor",
+    "Rasheed Sulaimon",
+    "Kris Bankston",
+    "Doğuş Özdemiroğlu",
+    "Ercan Osmani"
    ]
   }
  ]

@@ -15,7 +15,7 @@ Yiğit Onan 21
 Peyton Aldridge 20
 Dwight Powell 19
 -
-Bryce Brown 14
+Bryce Jones 14
 QJ Peterson 14
 Will Clyburn 18
 Isaiah Miles 21
@@ -26,3 +26,9 @@ Anthony Brown 14
 Matt Mitchell 17
 Damien Inglis 19
 Jamuni McNeace 19
+-
+Brandon Taylor 32
+Rasheed Sulaimon 30
+Kris Bankston 26
+Doğuş Özdemiroğlu 24
+Ercan Osmani 22

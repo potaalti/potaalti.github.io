@@ -1,5 +1,6 @@
-// Pota Altı marka öğeleri (tuvale çizilir, her boyutta net): beyaz halkalı "POTA ALTI" logosu ve YouTube · X · Instagram
-// @PotaAltiTV şeridi. Kullanıcının TBL/BSL şablonlarındaki öğelerin aynısı (2026-11-12 isteği): Avrupa ve rekor görsellerinde.
+// Pota Altı marka öğeleri: "POTA ALTI" logosu ve YouTube · X · Instagram @PotaAltiTV şeridi (Avrupa, rekor ve Fantezi sıralama
+// görsellerinde). Logo 2026-11-16'dan beri kullanıcının gönderdiği resim (marka/logo.webp: beyaz yazı, gölge, krem halka, saydam);
+// kullanıcının kendi şablonlarındaki logolara dokunulmaz.
 const YAZI = 'https://fonts.googleapis.com/css2?family=Russo+One&family=Montserrat:wght@600;700&display=block';
 let hazir;
 export function markaYazilari() {
@@ -7,12 +8,21 @@ export function markaYazilari() {
     const l = document.createElement('link');
     l.rel = 'stylesheet'; l.href = YAZI; l.onload = ok; l.onerror = ok;
     document.head.append(l);
-  }).then(() => Promise.all(['60px "Russo One"', '600 30px Montserrat'].map(f => document.fonts.load(f, 'POTALI@'))));
+  }).then(() => Promise.all([...['60px "Russo One"', '600 30px Montserrat'].map(f => document.fonts.load(f, 'POTALI@')), logoYukle()]));
   return Promise.race([hazir, new Promise(ok => setTimeout(ok, 6000))]);
 }
 
-// Logo: (cx, cy) merkezli, r yarıçaplı beyaz halka; içinde iki satır "POTA" / "ALTI"
+export const LOGO_ADRESI = new URL('./marka/logo.webp', import.meta.url).href;
+let logoResmi = null, logoSozu;
+export function logoYukle() {
+  logoSozu ??= new Promise(ok => { const i = new Image(); i.onload = () => { logoResmi = i; ok(i); }; i.onerror = () => ok(null); i.src = LOGO_ADRESI; });
+  return logoSozu;
+}
+
+// Logo: (cx, cy) merkezli, r yarıçaplı (halkanın dış çapı 2r). Kullanıcının logosu yüklendiyse o; yüklenemediyse yedek olarak
+// kodla çizilen beyaz halka ve iki satır "POTA" / "ALTI"
 export function logoCiz(g, cx, cy, r, renk = '#ffffff') {
+  if (logoResmi) { g.drawImage(logoResmi, cx - r, cy - r, r * 2, r * 2); return; }
   g.save();
   g.strokeStyle = renk; g.lineWidth = r * 0.12;
   g.beginPath(); g.arc(cx, cy, r - g.lineWidth / 2, 0, Math.PI * 2); g.stroke();

@@ -1044,7 +1044,7 @@ async function siralamaGorseli({ baslik: ustYazi, altBaslik, sutunlar, satirlar 
   ctx.fillRect(0, 0, g.genislik, g.baslikYuk);
   try {
     const logo = new Image();
-    logo.src = 'icon-192.png';
+    logo.src = new URL('../marka/logo.webp', import.meta.url).href; // Pota Altı logosu (kullanıcının, 2026-11-16)
     // Logo takılırsa paylaşım beklemede kalmasın
     await Promise.race([logo.decode(), new Promise((_, hata) => setTimeout(() => hata(new Error('logo')), 3000))]);
     ctx.drawImage(logo, g.kenar, 45, 120, 120);

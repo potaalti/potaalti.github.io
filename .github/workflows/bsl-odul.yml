@@ -2,11 +2,12 @@
 # Her gece 22:45–01:45 (Türkiye saati) saat başı bakar: son yayınlanandan sonra biten hafta varsa oyuncuları kurallarla seçer,
 # görselleri site/odul/gorsel/bsl/ altına yazar, kaydeder ve siteyi yeniden yayınlatır. Biten hafta yoksa bir şey yapmaz.
 # Veriler eski TBL sitesinden (telefonun güncellediği), fotoğraf ve logolar sitede kayıtlı olanlardan gelir (TBF'ye istek atılmaz).
+# 2026-11-16'dan beri KAPALI (kullanıcı isteği): BSL ödül listesini (tekliler ve 5'ler) kullanıcı sohbete atar, Claude
+# site/odul/liste/bsl-<hafta>.txt olarak ekleyip `node veri/odul_yayinla.mjs <hafta> bsl` ile yayınlar. Zamanlayıcı kaldırıldı;
+# elle çalıştırma (Run workflow) duruyor.
 name: BSL haftanın ödülleri
 
 on:
-  schedule:
-    - cron: '45 19-22 * * *'
   workflow_dispatch:
     inputs:
       hafta:

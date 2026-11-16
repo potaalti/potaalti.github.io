@@ -1,0 +1,96 @@
+{
+ "hafta": 8,
+ "guncelleme": "2026-11-16T12:55:42.276Z",
+ "notlar": [
+  "Dwight Powell (Fenerbahçe Tarfin): formalı fotoğrafı yok, TBF'de vesikalık var",
+  "Bryce Brown (Bursaspor Basketbol): forması takım arkadaşlarınınkinden farklı görünüyor (fotoğraf eski takımından olabilir)",
+  "Isaiah Miles (Yukatel Denizli Basket): formalı fotoğrafı yok, TBF'de vesikalık var"
+ ],
+ "gorseller": [
+  {
+   "dosya": "01-8-haftanin-panoramasi.jpg",
+   "tur": "kapak",
+   "baslik": "8. Haftanın Panoraması"
+  },
+  {
+   "dosya": "02-mvp-mahir-agva.jpg",
+   "tur": "mvp",
+   "baslik": "MVP",
+   "oyuncu": "Mahir Ağva",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "vp": 27
+  },
+  {
+   "dosya": "03-yabanci-mvp-john-meeks.jpg",
+   "tur": "yabanci",
+   "baslik": "Yabancı MVP",
+   "oyuncu": "John Meeks",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "vp": 24
+  },
+  {
+   "dosya": "04-kaybeden-yabanci-mvp-brandon-taylor.jpg",
+   "tur": "kaybedenYabanci",
+   "baslik": "Kaybeden Yabancı MVP",
+   "oyuncu": "Brandon Taylor",
+   "takim": "BURSASPOR BASKETBOL",
+   "vp": 32
+  },
+  {
+   "dosya": "05-kaybeden-yerli-mvp-dogus-ozdemiroglu.jpg",
+   "tur": "kaybedenYerli",
+   "baslik": "Kaybeden Yerli MVP",
+   "oyuncu": "Doğuş Özdemiroğlu",
+   "takim": "TÜRK TELEKOM",
+   "vp": 24
+  },
+  {
+   "dosya": "06-altin-5.jpg",
+   "tur": "besli",
+   "baslik": "Altın 5",
+   "oyuncular": [
+    "Khyri Thomas",
+    "Johnny Davis",
+    "John Meeks",
+    "Mahir Ağva",
+    "Ante Zizic"
+   ]
+  },
+  {
+   "dosya": "07-gumus-5.jpg",
+   "tur": "besli",
+   "baslik": "Gümüş 5",
+   "oyuncular": [
+    "Boo Buie",
+    "Victor Bailey",
+    "Yiğit Onan",
+    "Peyton Aldridge",
+    "Dwight Powell"
+   ]
+  },
+  {
+   "dosya": "08-bronz-5.jpg",
+   "tur": "besli",
+   "baslik": "Bronz 5",
+   "oyuncular": [
+    "Bryce Brown",
+    "QJ Peterson",
+    "Will Clyburn",
+    "Isaiah Miles",
+    "TreVion Williams"
+   ]
+  },
+  {
+   "dosya": "09-mansiyon-5.jpg",
+   "tur": "besli",
+   "baslik": "Mansiyon 5",
+   "oyuncular": [
+    "Kenan Sipahi",
+    "Anthony Brown",
+    "Matt Mitchell",
+    "Damien Inglis",
+    "Jamuni McNeace"
+   ]
+  }
+ ]
+}

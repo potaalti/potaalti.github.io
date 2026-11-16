@@ -12,6 +12,7 @@ import * as OD from './odul.js';
 import * as ME from './mac-ek.js';
 import * as AG from './avrupa-gorsel.js';
 import * as RG from './rekor-gorsel.js';
+import * as LG from './lider-gorsel.js';
 import * as PR from './program.js';
 
 const YEREL = ['localhost', '127.0.0.1'].includes(location.hostname);
@@ -1011,7 +1012,58 @@ function liderlerKarti(lig) {
   ligVerisi(lig, 'tablo');
   if (!l) return '<p class="bos">Yükleniyor…</p>';
   return `<p class="soluk kucuk">Maç başı ortalamalar (+/- ve 3 sayılık: sezon toplamı). Listeye girmek için en az ${l.esik} maç oynamış olmak gerekir.</p>
-    <div class="izgara">${l.kategoriler.map(k => `<div class="kart" style="margin:0"><h3>${esc(k.ad)}</h3>${liderListesi(lig, k, 10)}</div>`).join('')}</div>`;
+    <div class="izgara">${l.kategoriler.map(k => `<div class="kart" style="margin:0"><div class="baslik-satir"><h3>${esc(k.ad)}</h3>${liderDugmeleri(lig, k.id)}</div>${liderListesi(lig, k, 10)}</div>`).join('')}</div>`;
+}
+
+// ---------- Liderler görseli (yönetici): her istatistikte ilk 5, bir de yalnız yerli oyuncularla (lider-gorsel.js) ----------
+const LIDER_GORSEL = {
+  sayi: ['SAYI LİDERLERİ', 'POINTS PER GAME', 'SAYI / MAÇ'], rib: ['RİBAUND LİDERLERİ', 'REBOUNDS PER GAME', 'RİBAUND / MAÇ'],
+  ast: ['ASİST LİDERLERİ', 'ASSISTS PER GAME', 'ASİST / MAÇ'], vp: ['VERİMLİLİK LİDERLERİ', 'EFFICIENCY PER GAME', 'VP / MAÇ'],
+  tc: ['TOP ÇALMA LİDERLERİ', 'STEALS PER GAME', 'TOP ÇALMA / MAÇ'], blk: ['BLOK LİDERLERİ', 'BLOCKS PER GAME', 'BLOK / MAÇ'],
+  pm: ['+/- LİDERLERİ', 'PLUS-MINUS (TOTAL)', 'SEZON TOPLAMI'], dk: ['SÜRE LİDERLERİ', 'MINUTES PER GAME', 'DAKİKA / MAÇ'],
+  uc: ['ÜÇLÜK LİDERLERİ', '3-POINTERS MADE', 'İSABETLİ ÜÇLÜK'],
+};
+const liderDegeri = (kod, o) => (kod === 'uc' ? (Array.isArray(o.uc) ? o.uc[0] : o.uc) : o[kod]);
+const liderYazisi = (kod, v) => (kod === 'uc' ? String(v) : kod === 'pm' ? isaretli(v)
+  : (Math.round(Number(v) * 10) / 10).toLocaleString('tr-TR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }));
+function liderDugmeleri(lig, kod) {
+  if (!yoneticiMi() || !LIDER_GORSEL[kod]) return '';
+  const d = (yerli, ad) => `<span class="satir" title="${ad} ilk 5 görseli"><small class="soluk">${ad}</small>
+    <button class="secenek" data-is="ld-paylas" data-id="${lig}|${kod}|${yerli}">📤</button><button class="secenek" data-is="ld-indir" data-id="${lig}|${kod}|${yerli}">⬇</button></span>`;
+  return `<span class="satir">${d(0, 'İlk 5')}${d(1, 'Yerli')}</span>`;
+}
+async function liderGorselPaylas(anahtar, indir) {
+  const [lig, kod, yerliMi] = anahtar.split('|');
+  const yerli = yerliMi === '1';
+  const l = ligVerisi(lig, 'liderler');
+  const k = l.kategoriler.find(x => x.id === kod);
+  const [gorsel, elle, rehberHam] = await Promise.all([getir(`data/${lig}/gorsel.json`).catch(() => ({ foto: {}, logo: {} })),
+    getir('odul/foto/liste.json').catch(() => ({})), yerli ? getir(lig === 'bsl' ? 'bsl/data/oyuncular.json' : `${KAYNAK}/oyuncular.json`) : null]);
+  const logolar = new Map(Object.entries(gorsel.logo ?? {}).map(([ad, url]) => [takimAnahtari(ad), `data/${lig}/logo/${dosyaAnahtari(ad)}${uzanti(url)}`]));
+  const foto = id => (elle[id] ? `odul/foto/${elle[id]}` : gorsel.foto?.[id] ? `data/${lig}/foto/${id}${uzanti(gorsel.foto[id])}` : null);
+  let liste;
+  if (yerli) {
+    // Yerli: bütün oyuncuların ortalamalarından (en az eşik kadar maç), Türk oyuncular
+    const rehber = new Map((Array.isArray(rehberHam) ? rehberHam : Object.entries(rehberHam ?? {}).map(([id, v]) => ({ id, ...v }))).map(r => [String(r.id), r]));
+    const turkMu = id => { const r = rehber.get(String(id)); return typeof r?.turk === 'boolean' ? r.turk : ['TÜRKİYE', 'KKTC'].includes(r?.ulke); };
+    const oyuncular = S.oyuncular?.[lig] ?? await getir(`data/${lig}/oyuncular.json`);
+    liste = (oyuncular ?? []).filter(o => o.mac >= l.esik && turkMu(o.id))
+      .map(o => ({ id: o.id, ad: o.ad, takim: o.takim, mac: o.mac, deger: liderDegeri(kod, o), atis: kod === 'uc' ? o.uc : null }))
+      .sort((a, b) => b.deger - a.deger).slice(0, 5);
+  } else {
+    liste = k.liste.slice(0, 5);
+  }
+  const [baslik, ingilizce, birim] = LIDER_GORSEL[kod];
+  const hafta = S.meta?.ligler?.[lig]?.guncel;
+  const satirlar = liste.map(x => ({ ad: x.ad, takimId: x.takim, deger: liderYazisi(kod, x.deger), foto: foto(x.id),
+    logo: logolar.get(takimAnahtari(takimAdi(lig, x.takim))) ?? null,
+    alt: kod === 'uc' && x.atis?.[1] ? `${takimAdi(lig, x.takim)} · ${x.atis[0]}/${x.atis[1]} · %${Math.round((100 * x.atis[0]) / x.atis[1])}` : `${takimAdi(lig, x.takim)} · ${x.mac} maç` }));
+  const blob = await LG.liderGorseli({ lig, baslik, yerli, ingilizce, birim, altBilgi: hafta ? `2026-27 · ${hafta}. HAFTA` : '2026-27', satirlar });
+  const dosya = new File([blob], `pota-alti-${lig}-lider-${kod}${yerli ? '-yerli' : ''}.png`, { type: 'image/png' });
+  if (!indir && navigator.canShare?.({ files: [dosya] })) {
+    try { await navigator.share({ files: [dosya] }); return; } catch (e) { if (e?.name === 'AbortError') return; }
+  }
+  dosyaIndir(dosya);
 }
 
 function takimlarKarti(lig) {
@@ -1853,6 +1905,11 @@ document.addEventListener('click', e => {
   if (el.dataset.is === 'kutu-sirala') { S.ui.kutuSirala = ME.kutuSiralamaDegistir(S.ui.kutuSirala, el.dataset.id); ciz(); }
   // Paylaş / İndir yalnızca yöneticiye (kullanıcı kararı 2026-11-09); ödül üreticisi (?uret) zaten yöneticiye
   if (/^(ae|sy|odul|av|rk)-(paylas|indir)$|^odul-hepsi(-indir|-paylas)?$/.test(el.dataset.is) && !yoneticiMi()) return;
+  if (el.dataset.is === 'ld-paylas' || el.dataset.is === 'ld-indir') {
+    el.disabled = true;
+    liderGorselPaylas(el.dataset.id, el.dataset.is === 'ld-indir').catch(e => alert(`Görsel hazırlanamadı: ${e.message}`)).finally(() => { el.disabled = false; });
+    return;
+  }
   if (el.dataset.is === 'rk-paylas' || el.dataset.is === 'rk-indir') {
     const yazi = el.textContent;
     el.disabled = true; el.textContent = '…';

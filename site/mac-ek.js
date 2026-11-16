@@ -87,12 +87,58 @@ function ceyrekTablosu(k, a) {
 //   canli: maç sürüyor mu (sahadaki 5'e *), takimIst: { ev, dep } biten maçın takım istatistiği (canlıda kutudan gelir),
 //   ileriDosya: biten maçın gelişmiş istatistiği, fark: skor farkı verisi, sirala: sıralama durumu,
 //   takimBasligi(t), oyuncuAdi(o): arayüze göre HTML; benimMi(id): oyuncu benim fantezi takımımda mı; aciklamaEki: açıklamanın sonu
+// ---------- Dönem seçici (NBA'deki gibi): Toplam · 1.Ç · 2.Ç · 3.Ç · 4.Ç · 1. Yarı · 2. Yarı · Uzatma ----------
+// Veri kutu.donemler'de (eski TBL sitesinin fetch_tbf.py'si FIBA sayı sayı akışından hesaplar; TBL 11. ve BSL 8. haftadan beri,
+// canlıda da): [{ ad: '1'|'2'|…|'U1', ev: { oyuncular: { formaNo: {sn, sayi, iki, …} }, takim }, dep }]. Seçim ayar.donem'de
+// ('T' toplam, '1'…'4', 'Y1', 'Y2', 'U1'…); dokununca data-is="kutu-donem" (uygulama ayar.donem'i değiştirip yeniden çizer).
+const mmss = sn => `${Math.floor(sn / 60)}:${String(sn % 60).padStart(2, '0')}`;
+const DONEM_SAYI = ['sn', 'sayi', 'hr', 'sr', 'rib', 'ast', 'tc', 'blk', 'tk', 'faul', 'af', 'pm', 'vp'];
+function donemSecenekleri(donemler) {
+  const adlar = donemler.map(d => d.ad);
+  const s = [['T', 'Toplam'], ...adlar.filter(x => !x.startsWith('U')).map(x => [x, `${x}.Ç`])];
+  if (adlar.includes('2')) s.push(['Y1', '1. Yarı']);
+  if (adlar.includes('4')) s.push(['Y2', '2. Yarı']);
+  adlar.filter(x => x.startsWith('U')).forEach((x, i, l) => s.push([x, l.length > 1 ? `${i + 1}. Uzatma` : 'Uzatma']));
+  return s;
+}
+const donemKapsami = secim => (secim === 'Y1' ? ['1', '2'] : secim === 'Y2' ? ['3', '4'] : [secim]);
+// Seçilen dönemlerin toplamıyla takımın kutu skoru (oyuncular aynı sırada; o dönemde süre almayan sıfırla, soluk görünür)
+function donemTarafi(t, taraf, donemler, secim) {
+  const secili = donemler.filter(d => donemKapsami(secim).includes(d.ad));
+  const topla = kayitlar => {
+    const o = Object.fromEntries(DONEM_SAYI.map(k => [k, 0]));
+    o.iki = [0, 0]; o.uc = [0, 0]; o.sa = [0, 0];
+    for (const x of kayitlar) {
+      for (const k of DONEM_SAYI) o[k] += x[k] ?? 0;
+      for (const k of ['iki', 'uc', 'sa']) { o[k][0] += x[k]?.[0] ?? 0; o[k][1] += x[k]?.[1] ?? 0; }
+    }
+    return o;
+  };
+  const oyuncular = t.oyuncular.map(o => {
+    const p = topla(secili.map(d => d[taraf].oyuncular[String(o.no)]).filter(Boolean));
+    return { ...o, ...p, sure: mmss(p.sn), sahada: o.sahada };
+  });
+  const takim = Object.fromEntries(['hr', 'sr', 'rib', 'tk', 'faul'].map(k => [k, secili.reduce((x, d) => x + (d[taraf].takim?.[k] ?? 0), 0)]));
+  return { t: { ...t, oyuncular }, takim };
+}
+
 export function macGovdesi(kutu, ayar) {
   const a = { takimBasligi: t => esc(baslik(t.ad)), oyuncuAdi: o => esc(o.ad), benimMi: () => false, aciklamaEki: '', ...ayar };
   const evAd = baslik(kutu.ev.ad), depAd = baslik(kutu.dep.ad);
   const ileri = ileriVerisi(kutu, a.ileriDosya);
+  const donemler = kutu.donemler?.length ? kutu.donemler : null;
+  const secenekler = donemler ? donemSecenekleri(donemler) : [];
+  const secim = secenekler.some(([k]) => k === a.donem) ? a.donem : 'T';
+  const kutuTarafi = taraf => {
+    const t = kutu[taraf], takim = t.takim ?? a.takimIst?.[taraf], koc = t.koc ?? ileri?.[taraf]?.koc;
+    if (secim === 'T') return kutuSkorTablosu(t, takim, a, koc);
+    const d = donemTarafi(t, taraf, donemler, secim);
+    return kutuSkorTablosu(d.t, d.takim, a, koc);
+  };
+  const secici = donemler ? `<div class="secenekler kutu-donem">${secenekler.map(([k, ad]) =>
+    `<button class="secenek ${k === secim ? 'aktif' : ''}" data-is="kutu-donem" data-id="${k}">${ad}</button>`).join('')}</div>` : '';
   return `${ceyrekTablosu(kutu, a)}${farkGrafigi(evAd, depAd, kutu.fark ?? a.fark)}
-    ${kutuSkorTablosu(kutu.ev, kutu.ev.takim ?? a.takimIst?.ev, a, kutu.ev.koc ?? ileri?.ev?.koc)}${kutuSkorTablosu(kutu.dep, kutu.dep.takim ?? a.takimIst?.dep, a, kutu.dep.koc ?? ileri?.dep?.koc)}
+    ${secici}${kutuTarafi('ev')}${kutuTarafi('dep')}
     ${ileriIstatistikKarti(evAd, depAd, ileri, a.takimBasligi(kutu.ev), a.takimBasligi(kutu.dep))}
     <p class="soluk kucuk">Kalın: ilk 5${a.canli ? ' · *: sahada' : ''} · 2S/3S/SA: isabet/deneme · Tç: top çalma · Bl: blok · Tk: top kaybı · F: faul · AF: alınan faul · VP: verimlilik${a.aciklamaEki}</p>`;
 }

@@ -264,7 +264,7 @@ function gorunumMac(lig, id) {
   if (!kutu.fark && ME.farkVarMi(lig, kutu.hafta ?? hafta)) yukle(S.farklar, id, `data/${lig}/fark/${id}.json`);
   const benim = takimim(lig);
   return `${ust}${ME.macGovdesi(kutu, {
-    canli, sirala: S.ui.kutuSirala, takimIst: takimIstatistigi(lig, kutu.id),
+    canli, sirala: S.ui.kutuSirala, donem: S.ui.kutuDonem, takimIst: takimIstatistigi(lig, kutu.id),
     ileriDosya: kutu.ev.ileri ? null : ileriIstatistigi(lig, kutu.id), fark: S.farklar[id],
     takimBasligi: t => takimLinki(lig, t.ad),
     oyuncuAdi: o => (String(o.id).startsWith('fiba-') ? esc(o.ad) : `<a href="#/oyuncu/${lig}/${o.id}" class="oyuncu-link">${esc(o.ad)}</a>`),
@@ -1845,6 +1845,7 @@ document.addEventListener('click', e => {
     S.ui.seyirciSirala = { k: el.dataset.id, yon: o.k === el.dataset.id ? -o.yon : 1 };
     ciz();
   }
+  if (el.dataset.is === 'kutu-donem') { S.ui.kutuDonem = el.dataset.id; ciz(); }
   if (el.dataset.is === 'kutu-sirala') { S.ui.kutuSirala = ME.kutuSiralamaDegistir(S.ui.kutuSirala, el.dataset.id); ciz(); }
   // Paylaş / İndir yalnızca yöneticiye (kullanıcı kararı 2026-11-09); ödül üreticisi (?uret) zaten yöneticiye
   if (/^(ae|sy|odul|av|rk)-(paylas|indir)$|^odul-hepsi(-indir|-paylas)?$/.test(el.dataset.is) && !yoneticiMi()) return;
@@ -1916,7 +1917,7 @@ document.addEventListener('input', e => {
   S.ui[k] = e.target.value;
   ciz();
 });
-window.addEventListener('hashchange', () => { S.ui.kutuSirala = null; S.ui.odulAcik = null; ciz(); window.scrollTo(0, 0); });
+window.addEventListener('hashchange', () => { S.ui.kutuSirala = null; S.ui.kutuDonem = null; S.ui.odulAcik = null; ciz(); window.scrollTo(0, 0); });
 
 // ---------- Canlı yenileme: başlamış ama bitmemiş maçı olan haftaların listesi ve açık kutu skor ----------
 async function canliYenile() {

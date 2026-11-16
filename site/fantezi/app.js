@@ -2156,7 +2156,7 @@ function gorunumMac(id) {
   const sahip = sahipler();
   const benim = benimTakimim();
   return `${ust}${ME.macGovdesi(kutu, {
-    canli, sirala: S.ui.kutuSirala, takimIst: takimIstatistigi(kutu.id),
+    canli, sirala: S.ui.kutuSirala, donem: S.ui.kutuDonem, takimIst: takimIstatistigi(kutu.id),
     ileriDosya: kutu.ev.ileri ? null : ileriIstatistigi(kutu.id),
     fark: !kutu.fark && ME.farkVarMi(LIG.kod, kutu.hafta ?? n) ? farkVerisi(id) : null,
     oyuncuAdi: o => oyuncuLinki(o.id, o.ad),
@@ -2276,6 +2276,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && S.ui.panel
 window.addEventListener('hashchange', () => {
   S.ui.panel = null;
   S.ui.kutuSirala = null;
+  S.ui.kutuDonem = null;
   S.ui.faAl = S.ui.faAlSonraki ?? null;
   S.ui.faAlSonraki = null;
   S.ui.acik = S.ui.acikSonraki ?? null;
@@ -2415,6 +2416,7 @@ async function eylem(is, id, el) {
     case 'sec-yedek': S.ui.secYedek = S.ui.secYedek === id ? null : id; return ciz();
     case 'sec-temizle': S.ui.secAs = null; S.ui.secYedek = null; S.ui.degisimModu = false; return ciz();
     case 'kutu-sirala': S.ui.kutuSirala = ME.kutuSiralamaDegistir(S.ui.kutuSirala, id); return ciz();
+    case 'kutu-donem': S.ui.kutuDonem = id; return ciz();
     case 'saha-hafta': S.ui.sahaHafta = id === 'sonraki' ? null : Number(id); return ciz();
     case 'degisim-modu':
       // Düğme sayfanın altında: seçim sahada yapılır, oraya kaydır

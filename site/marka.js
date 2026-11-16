@@ -74,3 +74,35 @@ export function sosyalCiz(g, x, y, h, { hiza = 'orta', renk = '#ffffff', metin =
   g.restore();
   return toplam;
 }
+
+// Takım logosu beyaz daire içinde: logonun boş (saydam/beyaz) kenarları atılır, çapraz uzunluğu daireye sığacak kadar
+// küçültülür ve daireye kırpılır; böylece geniş ya da köşeli logolar beyaz alandan taşmaz (2026-11-16 kullanıcı isteği)
+const logoKutulari = new WeakMap();
+function doluKutu(img) {
+  if (logoKutulari.has(img)) return logoKutulari.get(img);
+  let kutu = [0, 0, img.width, img.height];
+  try {
+    const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
+    const g = c.getContext('2d'); g.drawImage(img, 0, 0);
+    const d = g.getImageData(0, 0, c.width, c.height).data;
+    let x0 = c.width, y0 = c.height, x1 = -1, y1 = -1;
+    for (let y = 0; y < c.height; y++) for (let x = 0; x < c.width; x++) {
+      const k = (y * c.width + x) * 4;
+      if (d[k + 3] > 20 && !(d[k] > 238 && d[k + 1] > 238 && d[k + 2] > 238)) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+    }
+    if (x1 >= x0) kutu = [x0, y0, x1 - x0 + 1, y1 - y0 + 1];
+  } catch { /* başka kaynaktan resim okunamazsa tamamı */ }
+  logoKutulari.set(img, kutu);
+  return kutu;
+}
+export function logoDaire(g, img, cx, cy, r) {
+  g.save();
+  g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.fillStyle = '#ffffff'; g.fill();
+  if (img) {
+    g.clip();
+    const [x, y, w, h] = doluKutu(img);
+    const k = (r * 2 * 0.86) / Math.hypot(w, h);  // çapraz, iç payıyla daireye sığar
+    g.drawImage(img, x, y, w, h, cx - (w * k) / 2, cy - (h * k) / 2, w * k, h * k);
+  }
+  g.restore();
+}

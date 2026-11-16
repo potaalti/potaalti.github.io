@@ -1,6 +1,6 @@
 // Sezon rekorları görseli (yönetici, Rekorlar sekmesi): her kategori ayrı, ilk 10, takım logolu, 1080x1350.
 // Pota Altı logosu ve sosyal medya şeridi marka.js'ten; renkler lige göre (TBL turkuaz, BSL mor; seyirci görselleriyle aynı).
-import { markaYazilari, logoCiz, sosyalCiz } from './marka.js';
+import { markaYazilari, logoCiz, logoDaire, sosyalCiz } from './marka.js';
 const YAZI_TIPLERI = 'https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;600;700&family=Montserrat:wght@500;600;700&display=block';
 const G = 1080, Y = 1350;
 const LIG = {
@@ -63,12 +63,8 @@ export async function rekorGorseli({ lig, baslik, satirlar }) {
     g.beginPath(); g.arc(104, orta, 26, 0, Math.PI * 2); g.fillStyle = i < 3 ? MADALYA[i] : 'rgba(255,255,255,0.14)'; g.fill();
     yaz(g, String(i + 1), 104, orta + 1, { font: '34px Anton', renk: i < 3 ? '#111111' : '#ffffff', hiza: 'center' });
     // Logo
-    const lg = logolar[i], ls = Math.min(62, h - 16);
-    if (lg) {
-      g.beginPath(); g.arc(186, orta, ls / 2 + 5, 0, Math.PI * 2); g.fillStyle = '#ffffff'; g.fill();
-      const k = Math.min(ls / lg.width, ls / lg.height);
-      g.drawImage(lg, 186 - (lg.width * k) / 2, orta - (lg.height * k) / 2, lg.width * k, lg.height * k);
-    }
+    const lg = logolar[i];
+    if (lg) logoDaire(g, lg, 186, orta, Math.min(38, h / 2 - 4));
     yaz(g, buyuk(x.ad), 240, orta - 15, { font: '700 32px Oswald', gen: 600 });
     yaz(g, buyuk(x.alt), 240, orta + 20, { font: '600 20px Montserrat', renk: 'rgba(255,255,255,0.7)', gen: 600 });
     yaz(g, String(x.deger), G - 80, orta + 2, { font: '58px Anton', renk: i === 0 ? L.vurgu : '#ffffff', hiza: 'right' });

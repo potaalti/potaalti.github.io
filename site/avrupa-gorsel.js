@@ -1,7 +1,7 @@
 // Haftalık Avrupa görseli (yönetici, Avrupa sayfası): "Haftanın Avrupa sonuçları / programı" — seçilen haftanın (Pazartesi–Pazar) programı ya da
 // sonuçları, 1080x1350. TBL/BSL görsellerinin aksine kullanıcı şablonu yok: Pota Altı renkleriyle tuvale çizilir.
 // Temsilcilerimizin logoları BSL logolarından (data/bsl/logo), rakiplerin yalnızca adı yazılır.
-import { markaYazilari, logoCiz, sosyalCiz } from './marka.js';
+import { markaYazilari, logoCiz, logoDaire, sosyalCiz } from './marka.js';
 const YAZI_TIPLERI = 'https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;600;700&family=Montserrat:wght@500;600;700&display=block';
 const G = 1080, Y = 1350;
 const RENK = { zemin1: '#05161b', zemin2: '#0a3940', vurgu: '#2fe0ea', beyaz: '#ffffff', soluk: '#9fc3c7', satir: 'rgba(255,255,255,0.06)', yesil: '#3ddc84', kirmizi: '#ff6b6b' };
@@ -98,12 +98,8 @@ export async function haftaGorseli({ maclar, tur, aralik }) {
       yuvarlak(g, 68, orta - rh / 2, 80, rh, 9); g.fillStyle = KUPA_RENK[m.kupa] ?? RENK.vurgu; g.fill();
       yaz(g, m.kupaKisa, 108, orta + 1, { font: `700 ${kucuk ? 22 : 25}px Oswald`, hiza: 'center' });
       // Logo
-      const lg = logolar[i], ls = Math.min(64, h - 14);
-      if (lg) {
-        g.save(); g.beginPath(); g.arc(200, orta, ls / 2 + 4, 0, 7); g.fillStyle = '#ffffff'; g.fill(); g.restore();
-        const o = Math.min(ls / lg.width, ls / lg.height);
-        g.drawImage(lg, 200 - (lg.width * o) / 2, orta - (lg.height * o) / 2, lg.width * o, lg.height * o);
-      }
+      const lg = logolar[i];
+      if (lg) logoDaire(g, lg, 200, orta, Math.min(38, h / 2 - 3));
       // Takımlar: temsilcimiz üstte, rakip altta
       const sag = sonuc ? 770 : 860;
       if (h >= 60) {

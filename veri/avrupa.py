@@ -175,9 +175,10 @@ def el_kupa(k):
         ev, dep = g["local"]["club"]["code"], g["road"]["club"]["code"]
         for c in (g["local"]["club"], g["road"]["club"]):
             takimlar.setdefault(c["code"], {"ad": c["name"], "turk": c["code"] in turk, "logoUrl": el_logo(c)})
-        if ev not in turk and dep not in turk:
+        diger = ev not in turk and dep not in turk
+        if diger and not g["played"]:
             continue
-        maclar.append({"id": str(g["gameCode"]), "tarih": tr_saat(g["utcDate"]), "tur": f"{g['round']}. tur",
+        maclar.append({**({"diger": True} if diger else {}), "id": str(g["gameCode"]), "tarih": tr_saat(g["utcDate"]), "tur": f"{g['round']}. tur",
                        "evre": (g.get("phaseType") or {}).get("name"), "ev": ev, "dep": dep,
                        "evSkor": g["local"]["score"] if g["played"] else None, "depSkor": g["road"]["score"] if g["played"] else None,
                        "durum": "bitti" if g["played"] else "oynanmadi",
@@ -412,12 +413,13 @@ def fiba_kupa(k):
     maclar = []
     for g in sorted(oyunlar.values(), key=lambda g: g.get("gameDateTimeUTC") or ""):
         ev, dep = str(g["teamA"]["teamId"]), str(g["teamB"]["teamId"])
-        if ev not in turk and dep not in turk:
-            continue
         canli = bool(g.get("isLive"))
         bitti = (g.get("liveGameStatus") == 999 or g.get("currentPeriodStatus") == "E") and not canli and (g.get("teamAScore") or g.get("teamBScore"))
+        diger = ev not in turk and dep not in turk
+        if diger and not bitti:
+            continue
         tur = g.get("round") or {}
-        maclar.append({"id": str(g["gameId"]), "tarih": tr_saat(g["gameDateTimeUTC"] + "Z") if g.get("gameDateTimeUTC") else None,
+        maclar.append({**({"diger": True} if diger else {}), "id": str(g["gameId"]), "tarih": tr_saat(g["gameDateTimeUTC"] + "Z") if g.get("gameDateTimeUTC") else None,
                        "tur": None, "evre": tur.get("roundName"),
                        "grup": g.get("groupPairingCode"), "ev": ev, "dep": dep,
                        "evSkor": g.get("teamAScore") if (bitti or canli) else None, "depSkor": g.get("teamBScore") if (bitti or canli) else None,
@@ -853,6 +855,7 @@ def takim_oyuncu_uret(k, takimlar, maclar, kutular, gruplar=()):
     rakipler = sorted(({t for m in maclar if m["id"] in kutular for t in (m["ev"], m["dep"])}
                        | {s["takim"] for g in gruplar for s in g["satirlar"]}) - set(turk))
     oyuncular_hepsi = {}
+    sirali = []  # kupadaki bütün oyuncular (maç önündeki "kupada N." sıraları için): <kupa>/oyuncular.json
     for tid in turk + rakipler:
         oynanan = [m for m in maclar if tid in (m["ev"], m["dep"]) and m["id"] in kutular]
         toplam = {a: 0 for a in ALANLAR} | {"iki": [0, 0], "uc": [0, 0], "sa": [0, 0]}
@@ -880,11 +883,12 @@ def takim_oyuncu_uret(k, takimlar, maclar, kutular, gruplar=()):
                     **{a: [sum(x[a][0] for x in oyn), sum(x[a][1] for x in oyn)] for a in ("iki", "uc", "sa")}}
             if n:
                 kadro.append({"id": o["id"], "ad": o["ad"], "no": o["no"], **ozet,
-                              **({} if takimlar[tid]["turk"] else {"karsi": [[x["rakip"], x["sayi"]] for x in oyn]})})
+                              **({} if takimlar[tid]["turk"] else {"karsi": [[x["rakip"], x["sayi"]] for x in oyn if takimlar.get(x["rakip"], {}).get("turk")]})})
             oyuncular_hepsi[o["id"]] = {"id": o["id"], "ad": o["ad"], "no": o["no"], "takim": tid, "takimAd": takimlar[tid]["ad"], "kupa": k["kod"],
                                         **({"gorsel": oyuncu_gorseli(k, takimlar[tid], o)} if takimlar[tid]["turk"] else {}),
                                         "ozet": ozet, "maclar": o["maclar"]}
         kadro.sort(key=lambda x: (-x["dk"], x["ad"]))
+        sirali += [{"id": x["id"], "takim": tid, **{a: x[a] for a in ("mac", "dk", "sayi", "rib", "or", "ast", "tc", "blk", "vp", "iki", "uc", "sa") if a in x}} for x in kadro]
         n = len(oynanan)
         g = sum(1 for m in oynanan if (kutular[m["id"]]["ev"]["skor"] > kutular[m["id"]]["dep"]["skor"]) == (m["ev"] == tid))
         yaz(kok / "takim" / f"{tid}.json", {
@@ -893,6 +897,7 @@ def takim_oyuncu_uret(k, takimlar, maclar, kutular, gruplar=()):
             "maclar": [m for m in maclar if tid in (m["ev"], m["dep"])], "kadro": kadro})
     for o in oyuncular_hepsi.values():
         yaz(kok / "oyuncu" / f"{o['id']}.json", o)
+    yaz(kok / "oyuncular.json", sirali)
 
 
 def kupa_uret(k):
@@ -900,6 +905,12 @@ def kupa_uret(k):
     takimlar, gruplar, maclar, kutu, akis, donem = (el_kupa if k["tur"] == "el" else fiba_kupa)(k)
     for v in takimlar.values():
         v["ad"] = TR_AD.get(v["ad"], v["ad"])
+    # Rakiplerimizin temsilcilerimiz dışındaki maçları (kullanıcı 2026-11-17: rakiplerin bütün Avrupa istatistikleri): yalnız biten
+    # maçların kutu skoru, takım ve oyuncu istatistiklerine katılır; maç listesinde, çeyrek/akış/skor farkında yer almaz
+    diger = [m for m in maclar if m.get("diger")]
+    maclar = [m for m in maclar if not m.get("diger")]
+    rakip = ({t for m in maclar for t in (m["ev"], m["dep"])} | {s["takim"] for g in gruplar for s in g["satirlar"]}) - {t for t, v in takimlar.items() if v["turk"]}
+    diger = [m for m in diger if m["ev"] in rakip or m["dep"] in rakip]
     logolari_indir(k, takimlar, maclar)
     kutular = {}
     for m in maclar:
@@ -954,13 +965,30 @@ def kupa_uret(k):
             except Exception as e:  # noqa: BLE001 - sonraki çalışmada yeniden denenir
                 print(f"  {k['kod']} {m['id']}: akış alınamadı:", e)
         kutular[m["id"]] = kayit
-    for m in maclar:
+    yeni = 0
+    for m in diger:
+        yol = CIKTI / k["kod"] / "mac" / f"{m['id']}.json"
+        kayit = oku(yol)
+        if kayit is None or "takim" not in (kayit.get("ev") or {}):
+            try:
+                kayit = kutu(m)
+                kayit.update({"canli": False, "diger": True, "tarih": m["tarih"], "tur": m.get("tur") or m.get("evre")})
+                yaz(yol, kayit)
+                yeni += 1
+            except Exception as e:  # noqa: BLE001 - sonraki çalışmada yeniden denenir
+                print(f"  {k['kod']} {m['id']} (diğer): kutu skor alınamadı:", e)
+                continue
+        if kayit.get("ev", {}).get("oyuncular"):
+            kutular[m["id"]] = kayit
+    if yeni:
+        print(f"  rakiplerin diğer maçlarından {yeni} yeni kutu skor")
+    for m in maclar + diger:
         m.pop("sayfa", None)
         m.pop("_an", None)
         m.pop("yayin", None)  # Avrupa maçlarında yayıncı gösterilmiyor (kanal maç maç doğrulanamıyor)
         if not m.get("ceyrekler") and m["id"] in kutular:
             m["ceyrekler"] = [kutular[m["id"]]["ev"].get("ceyrekler") or [], kutular[m["id"]]["dep"].get("ceyrekler") or []]
-    takim_oyuncu_uret(k, takimlar, maclar, kutular, gruplar)
+    takim_oyuncu_uret(k, takimlar, maclar + [{k2: v for k2, v in m.items() if k2 != "diger"} for m in diger], kutular, gruplar)
     yaz(CIKTI / f"{k['kod']}.json", {"kod": k["kod"], "ad": k["ad"], "takimlar": {t: {"ad": v["ad"], "turk": v["turk"], **({"logo": v["logo"]} if v.get("logo") else {})} for t, v in takimlar.items()},
                                      "gruplar": gruplar, "maclar": maclar, "tempoOrt": tempo_ortalamasi(kutular)})
     turkler = [{"id": t, "ad": v["ad"]} for t, v in takimlar.items() if v["turk"]]

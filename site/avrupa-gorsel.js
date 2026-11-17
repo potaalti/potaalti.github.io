@@ -103,7 +103,8 @@ export async function haftaGorseli({ maclar, tur, aralik }) {
       yuvarlak(g, 68, orta - rh / 2, 80, rh, 9); g.fillStyle = KUPA_RENK[m.kupa] ?? RENK.vurgu; g.fill();
       yaz(g, m.kupaKisa, 108, orta + 1, { font: `700 ${kucuk ? 22 : 25}px Oswald`, hiza: 'center' });
       // Ev sahibi solda (logosu kupa rozetinin yanında), deplasman sağda (logosu saatin / G-M'nin yanında). Adlar iki logonun
-      // arasında ortalı: ev sahibi – deplasman (sonuçta ortada skor). Sığmazsa hepsi birlikte daraltılır.
+      // arasında: ortadaki çizgi (sonuçta skorun çizgisi) bütün satırlarda aynı hizada (kullanıcı 2026-11-17); ev sahibi çizgiye
+      // sağdan, deplasman soldan yaslanır, sığmayan ad kendi yarısına daraltılır.
       const lr = Math.min(36, h / 2 - 4);
       const sagLogo = sonuc ? G - 178 : G - 196;  // sağ logonun merkezi
       const [le, ld] = [logolar[2 * i], logolar[2 * i + 1]];
@@ -113,19 +114,23 @@ export async function haftaGorseli({ maclar, tur, aralik }) {
       const adFont = `700 ${kucuk ? 26 : 30}px Oswald`, ortaFont = sonuc ? `${Math.round(Math.min(44, h * 0.55))}px Anton` : adFont;
       const ad = (t, turk) => (turk ? buyuk(t) : BUYUK(t));
       const evAd = ad(m.ev, m.biz !== 'dep'), depAd = ad(m.dep, m.biz !== 'ev');
-      const ortaYazi = sonuc ? `${m.evSkor} - ${m.depSkor}` : '–';
-      g.font = adFont; const we = g.measureText(evAd).width, wd = g.measureText(depAd).width;
-      g.font = ortaFont; const wo = g.measureText(ortaYazi).width;
-      const bosluk = sonuc ? 20 : 14;
-      const k2 = Math.min(1, (sagSinir - solSinir) / (we + wd + wo + 2 * bosluk));
-      let x = (solSinir + sagSinir) / 2 - ((we + wd + wo + 2 * bosluk) * k2) / 2;
+      const cx = (solSinir + sagSinir) / 2;
+      // Çizgiden adlara uzaklık: programda çizginin yarısı + boşluk; sonuçta en geniş skorun (3 hane) yeri + boşluk
+      g.font = ortaFont;
+      const skorYeri = sonuc ? g.measureText('100').width + 12 : 0;
+      const ara = sonuc ? skorYeri + 22 : 24;
+      const yari = cx - ara - solSinir;
       // Sonuçta kazanan beyaz, kaybeden soluk; programda ikisi de beyaz
       const renkEv = sonuc && m.evSkor < m.depSkor ? RENK.soluk : RENK.beyaz, renkDep = sonuc && m.depSkor < m.evSkor ? RENK.soluk : RENK.beyaz;
-      yaz(g, evAd, x, orta + 1, { font: adFont, renk: renkEv, gen: we * k2 });
-      x += (we + bosluk) * k2;
-      yaz(g, ortaYazi, x + (wo * k2) / 2, orta + 2, { font: ortaFont, renk: sonuc ? RENK.vurgu : RENK.soluk, hiza: 'center', gen: wo * k2 });
-      x += (wo + bosluk) * k2;
-      yaz(g, depAd, x, orta + 1, { font: adFont, renk: renkDep, gen: wd * k2 });
+      yaz(g, evAd, cx - ara, orta + 1, { font: adFont, renk: renkEv, hiza: 'right', gen: yari });
+      yaz(g, depAd, cx + ara, orta + 1, { font: adFont, renk: renkDep, gen: yari });
+      if (sonuc) {
+        yaz(g, String(m.evSkor), cx - 12, orta + 2, { font: ortaFont, renk: RENK.vurgu, hiza: 'right' });
+        yaz(g, '-', cx, orta + 2, { font: ortaFont, renk: RENK.vurgu, hiza: 'center' });
+        yaz(g, String(m.depSkor), cx + 12, orta + 2, { font: ortaFont, renk: RENK.vurgu });
+      } else {
+        yaz(g, '–', cx, orta + 1, { font: adFont, renk: RENK.soluk, hiza: 'center' });
+      }
       // Sağ uç: sonuçta temsilcimizin G/M'si, programda saat
       if (sonuc) {
         if (m.biz !== 'ikisi') {

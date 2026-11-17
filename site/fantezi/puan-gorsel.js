@@ -1,7 +1,8 @@
 // Fantezi puan durumu görseli (yönetici, Haftalık ve Genel sayfalarındaki 📤 / ⬇): 1080 genişlik, en az 1350 yükseklik (takım
 // çoksa uzar). Kullanıcı 2026-11-17 "çok şık bir tasarım" istedi: koyu zemin, ilk üç kürsüde (1. ortada, yüksek), kalanlar ince
 // satırlarda. Genelde haftalık puan çubukları ve geçen haftaya göre sıra değişimi; haftalıkta her takımın haftanın yıldızı (en
-// yüksek VP'li sayılan oyuncusu), kürsüde fotoğrafıyla. Renkler ligin (TBL turkuaz, BSL mor), ilk üç altın / gümüş / bronz.
+// yüksek VP'li sayılan oyuncusu, fotoğrafsız). Toplam VP yalnız puanı eşit takımlarda yazılır (eşitliği o bozar; kullanıcı
+// 2026-11-17: toplam VP kafa karıştırıyor). Renkler ligin (TBL turkuaz, BSL mor), ilk üç altın / gümüş / bronz.
 import { markaYazilari, logoCiz, sosyalCiz } from '../marka.js';
 const YAZI_TIPLERI = 'https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;600;700&family=Montserrat:wght@500;600;700&display=block';
 const G = 1080, YMIN = 1350;
@@ -22,7 +23,6 @@ function yaziTipleri() {
     .map(f => document.fonts.load(f, 'ŞĞÜİÖÇ0123'))));
   return Promise.race([yaziHazir, new Promise(ok => setTimeout(ok, 6000))]);
 }
-const resim = url => new Promise(ok => { if (!url) return ok(null); const i = new Image(); i.onload = () => ok(i); i.onerror = () => ok(null); i.src = url; });
 const buyuk = s => String(s ?? '').toLocaleUpperCase('tr');
 function yaz(g, metin, x, y, { font, renk = '#ffffff', hiza = 'left', gen = Infinity, golge = false }) {
   metin = String(metin);
@@ -43,51 +43,6 @@ const degrade = (g, x0, y0, x1, y1, renkler) => {
   renkler.forEach((r, i) => d.addColorStop(i / (renkler.length - 1), r));
   return d;
 };
-// Dekupe (saydam köşeli) fotoğraf mı
-function dekupeMi(im) {
-  try {
-    const c = document.createElement('canvas'); c.width = c.height = 20;
-    const g = c.getContext('2d'); g.drawImage(im, 0, 0, 20, 20);
-    const d = g.getImageData(0, 0, 20, 20).data;
-    return d[3] < 20 && d[19 * 4 + 3] < 20;
-  } catch { return false; }
-}
-// Baş-omuz bölgesi [x, y, w, h]: dekupede saydam olmayan alanın sınırları bulunur (kollar açık da olsa), üstten genişliğin
-// ~%55'i kadar yükseklik alınır; vesikalıkta görselin üst %72'si
-function basBolgesi(im) {
-  if (dekupeMi(im)) {
-    try {
-      const n = 120, c = document.createElement('canvas'); c.width = n; c.height = Math.round((n * im.height) / im.width);
-      const g = c.getContext('2d'); g.drawImage(im, 0, 0, c.width, c.height);
-      const d = g.getImageData(0, 0, c.width, c.height).data;
-      let ust = -1;
-      for (let y = 0; y < c.height && ust < 0; y++) for (let x = 0; x < n; x++) if (d[(y * n + x) * 4 + 3] > 40) { ust = y; break; }
-      // Başın genişliği: üstten biraz aşağıdaki satırda dolu piksellerin ortası
-      const olc = im.width / n;
-      const satir = Math.min(c.height - 1, ust + Math.round(c.height * 0.06));
-      let sol = n, sag = 0;
-      for (let x = 0; x < n; x++) if (d[(satir * n + x) * 4 + 3] > 40) { sol = Math.min(sol, x); sag = Math.max(sag, x); }
-      const orta = ((sol + sag) / 2) * olc, kenar = im.height * 0.2;
-      return [orta - kenar / 2, Math.max(0, ust * olc - kenar * 0.08), kenar, kenar];
-    } catch { /* aşağıdaki varsayılan */ }
-  }
-  const k = Math.min(im.width, im.height * 0.72);
-  return [(im.width - k) / 2, 0, k, k];
-}
-// Fotoğrafın baş-omuz kısmı daire içinde
-function avatar(g, im, cx, cy, r, renk) {
-  g.save();
-  g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2);
-  g.fillStyle = degrade(g, cx, cy - r, cx, cy + r, ['rgba(255,255,255,0.22)', 'rgba(255,255,255,0.06)']); g.fill();
-  g.clip();
-  if (im) {
-    const [sx, sy, sw, sh] = basBolgesi(im);
-    const olcek = (r * 2.1) / sh;
-    g.drawImage(im, sx, sy, sw, sh, cx - (sw * olcek) / 2, cy - r * 0.92, sw * olcek, sh * olcek);
-  }
-  g.restore();
-  g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.lineWidth = 4; g.strokeStyle = renk; g.stroke();
-}
 // "Kruize Pinkins" -> "K. PINKINS" (dar yerler için)
 function kisaAd(ad) {
   const k = String(ad ?? '').trim().split(/\s+/);
@@ -97,19 +52,19 @@ function kisaAd(ad) {
 }
 const sayi = v => (Math.round(Number(v) * 10) / 10).toLocaleString('tr-TR', { maximumFractionDigits: 1 });
 
-// tur: 'genel' | 'hafta'; baslik: 'GENEL KLASMAN' / '11. HAFTA'; serit: başlık altındaki yazı;
+// tur: 'genel' | 'hafta'; baslik: 'GENEL KLASMAN' / '11. HAFTA'; serit: başlık altındaki yazı (boşsa şerit yok, her şey yukarı kayar);
 // satirlar (sıralı): [{ sira, ad, menajer, puan, vp, degisim (genel, + yukarı), haftalar: [puan…] (genel),
-//   kazandi: hafta puanı (hafta), yildiz: { ad, vp, foto } (hafta) }]; enCokPuan: haftalık en yüksek lig puanı (çubuk ölçeği)
+//   esitlik: puanı başka takımla eşit (genel, VP yazılır), kazandi: hafta puanı (hafta), yildiz: { ad, vp } (hafta) }]; enCokPuan: haftalık en yüksek lig puanı (çubuk ölçeği)
 export async function puanGorseli({ lig = 'tbl', tur, baslik, serit, satirlar, enCokPuan = 5, notlar = '' }) {
   const L = LIG[lig] ?? LIG.tbl;
   const genel = tur === 'genel';
   await Promise.all([yaziTipleri(), markaYazilari()]);
   const kursu = satirlar.slice(0, 3);
   const kalan = satirlar.slice(3);
-  const fotolar = await Promise.all(kursu.map(s => resim(!genel && s.yildiz?.foto)));
   // Yükseklik: kalan satırlar en az 46 px; sığmazsa görsel uzar
   // 17 takımlık lig 1080x1350'ye (Instagram 4:5) sığar
-  const ust = 616, alt = 84;
+  const kay = serit ? 0 : -40;
+  const ust = 616 + kay, alt = notlar ? 108 : 84;
   const satirH = Math.max(40, Math.min(62, (YMIN - ust - alt - 46) / Math.max(1, kalan.length)));
   const Y = Math.max(YMIN, Math.ceil(ust + 46 + kalan.length * satirH + alt));
   const c = document.createElement('canvas'); c.width = G; c.height = Y;
@@ -131,14 +86,16 @@ export async function puanGorseli({ lig = 'tbl', tur, baslik, serit, satirlar, e
   const ox = G / 2 + 40;
   yaz(g, L.ad, ox, 56, { font: '700 26px Oswald', renk: L.vurgu, hiza: 'center' });
   yaz(g, buyuk(baslik), ox, 134, { font: '100px Anton', hiza: 'center', gen: 800, golge: true });
-  g.font = '700 25px Oswald';
-  const ew = Math.min(820, g.measureText(serit).width + 60);
-  yuvarlak(g, ox - ew / 2, 196, ew, 46, 23); g.fillStyle = L.vurgu; g.fill();
-  yaz(g, serit, ox, 220, { font: '700 25px Oswald', renk: L.zemin1, hiza: 'center', gen: ew - 40 });
+  if (serit) {
+    g.font = '700 25px Oswald';
+    const ew = Math.min(820, g.measureText(serit).width + 60);
+    yuvarlak(g, ox - ew / 2, 196, ew, 46, 23); g.fillStyle = L.vurgu; g.fill();
+    yaz(g, serit, ox, 220, { font: '700 25px Oswald', renk: L.zemin1, hiza: 'center', gen: ew - 40 });
+  }
 
   // ---- Kürsü: 2 · 1 · 3
   const kw = 318, kx = [G / 2 - kw * 1.5 - 16, G / 2 - kw / 2, G / 2 + kw / 2 + 16];
-  const kTaban = 598, kUst = [320, 286, 342];
+  const kTaban = 598 + kay, kUst = [320, 286, 342].map(v => v + kay);
   [1, 0, 2].forEach(i => {
     const s = kursu[i];
     if (!s) return;
@@ -171,14 +128,13 @@ export async function puanGorseli({ lig = 'tbl', tur, baslik, serit, satirlar, e
     let altUst;
     if (genel) {
       cubuklar(g, s.haftalar ?? [], cx - 95, kTaban - 22, 190, 22, enCokPuan, acik);
-      yaz(g, `${sayi(s.vp)} VP`, cx, kTaban - 62, { font: '600 23px Oswald', renk: 'rgba(255,255,255,0.85)', hiza: 'center' });
-      altUst = kTaban - 80;
+      if (s.esitlik) yaz(g, `EŞİTLİKTE ${sayi(s.vp)} VP`, cx, kTaban - 58, { font: '600 19px Oswald', renk: 'rgba(255,255,255,0.7)', hiza: 'center' });
+      altUst = kTaban - (s.esitlik ? 76 : 44);
     } else {
       const ay = kTaban - 42;
       if (s.yildiz) {
         g.save(); yuvarlak(g, x + 16, ay - 27, kw - 32, 54, 27); g.fillStyle = 'rgba(0,0,0,0.3)'; g.fill(); g.restore();
-        avatar(g, fotolar[i], x + 43, ay, 25, acik);
-        yaz(g, `★ ${kisaAd(s.yildiz.ad)}`, x + 78, ay + 1, { font: '600 19px Oswald', gen: kw - 78 - 66 });
+        yaz(g, `★ ${kisaAd(s.yildiz.ad)}`, x + 36, ay + 1, { font: '600 20px Oswald', gen: kw - 36 - 70 });
         yaz(g, sayi(s.yildiz.vp), x + kw - 30, ay + 1, { font: '25px Anton', renk: acik, hiza: 'right' });
       }
       altUst = ay - 36;
@@ -200,8 +156,8 @@ export async function puanGorseli({ lig = 'tbl', tur, baslik, serit, satirlar, e
   const bas = (m, xx, hiza = 'right') => yaz(g, m, xx, y + 14, { font: '600 17px Oswald', renk: 'rgba(255,255,255,0.45)', hiza });
   bas('TAKIM', x + 92, 'left');
   if (genel) bas('HAFTALIK PUANLAR', sut.cubuk[0], 'left'); else bas('HAFTANIN YILDIZI', sut.yildiz[0], 'left');
-  bas(genel ? 'VP' : 'VP', sut.vp);
-  bas(genel ? 'PUAN' : 'PUAN', sut.puan);
+  if (!genel) bas('VP', sut.vp);
+  bas('PUAN', sut.puan);
   y += 36;
   kalan.forEach((s, k) => {
     const orta = y + satirH / 2;
@@ -225,14 +181,15 @@ export async function puanGorseli({ lig = 'tbl', tur, baslik, serit, satirlar, e
       const yw = yaz(g, kisaAd(s.yildiz.ad), sut.yildiz[0], orta + 1, { font: '600 19px Oswald', renk: 'rgba(255,255,255,0.8)', gen: sut.yildiz[1] - 50 });
       yaz(g, sayi(s.yildiz.vp), sut.yildiz[0] + yw + 10, orta + 1, { font: '600 19px Oswald', renk: L.vurgu });
     }
-    yaz(g, sayi(s.vp), sut.vp, orta + 1, { font: `600 ${Math.round(satirH * 0.46)}px Oswald`, renk: 'rgba(255,255,255,0.78)', hiza: 'right' });
+    if (!genel) yaz(g, sayi(s.vp), sut.vp, orta + 1, { font: `600 ${Math.round(satirH * 0.46)}px Oswald`, renk: 'rgba(255,255,255,0.78)', hiza: 'right' });
+    else if (s.esitlik) yaz(g, `${sayi(s.vp)} VP`, sut.vp, orta + 1, { font: '500 17px Montserrat', renk: 'rgba(255,255,255,0.5)', hiza: 'right' });
     const pz = genel ? String(s.puan) : `+${s.kazandi}`;
     yaz(g, pz, sut.puan, orta + 2, { font: `${Math.round(satirH * 0.62)}px Anton`, renk: genel ? '#ffffff' : L.vurgu, hiza: 'right' });
     y += satirH;
   });
 
   // ---- Alt bilgi
-  if (notlar) yaz(g, notlar, G / 2, Y - 80, { font: '500 17px Montserrat', renk: 'rgba(255,255,255,0.5)', hiza: 'center', gen: G - 120 });
+  if (notlar) yaz(g, notlar, G / 2, Y - 84, { font: '500 17px Montserrat', renk: 'rgba(255,255,255,0.5)', hiza: 'center', gen: G - 120 });
   sosyalCiz(g, G / 2, Y - 38, 32);
   return new Promise(ok => c.toBlob(ok, 'image/png'));
 }

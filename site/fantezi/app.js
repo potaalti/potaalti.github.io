@@ -923,6 +923,8 @@ function haftaTakimlari(hafta) {
 function genelTablo() {
   return C.genelKlasman(haftaTakimlari, puanHaftalari());
 }
+// Toplam VP yalnız eşitliği bozmak için: puanı başka bir takımla aynı olan takımlarda yazılır (kullanıcı 2026-11-17)
+const puanEsit = (tablo, s) => tablo.some(x => x.id !== s.id && x.puan === s.puan);
 
 // Genel sıralamada geçen haftaya göre değişim: takım id -> kaç sıra yükseldi (eksi: düştü)
 function siraDegisimleri() {
@@ -959,7 +961,7 @@ function takimOzetKarti(tid) {
     <div class="baslik-satir"><h2>${esc(takimAdi(tid))}${menajer && tid !== benimTakimim() ? ` <span class="soluk kucuk">${esc(menajer)}</span>` : ''}</h2><a href="#/puan">Genel klasman ›</a></div>
     <div class="ozet-kutular">
       ${kutu(`${g.sira}.`, 'Genel sıra', degisimHtml(siraDegisimleri().get(tid) ?? 0))}
-      ${kutu(g.puan, 'Puan', `<small>${sayi(g.vp)} VP</small>`)}
+      ${kutu(g.puan, 'Puan', puanEsit(genelTablo(), g) ? `<small>eşitlikte ${sayi(g.vp)} VP</small>` : '')}
       ${kutu(sayi(hs?.toplam ?? 0), `${hf(son.hafta)}. hafta VP`, hs ? `<small>${hs.sira}. sırada${surdu ? ' · sürüyor' : ''}</small>` : '')}
       ${kutu(faKalan(k), ortakHak() ? 'Transfer hakkı' : 'Serbest oyuncu hakkı')}
     </div>
@@ -987,12 +989,12 @@ function genelKart(haftalar) {
     <div class="baslik-satir"><h2>Genel klasman</h2>${paylasDugmeleri('genel')}</div>
     <p class="soluk kucuk">${hf(haftalar[0].hafta)}.–${hf(son.hafta)}. haftalar${devam ? ` · ${hf(son.hafta)}. hafta devam ediyor (puanlar kesin değil)` : ''} · Güncelleme: ${S.index?.guncelleme ? tarih(S.index.guncelleme) : '-'}</p>
     <div class="tablo-kap"><table>
-      <thead><tr><th class="sayi">#</th><th>Takım</th><th class="sayi">Puan</th><th class="sayi">Toplam VP</th><th class="dar-gizle">Haftalar</th><th class="sayi dar-gizle">Son hafta</th></tr></thead>
+      <thead><tr><th class="sayi">#</th><th>Takım</th><th class="sayi">Puan</th><th class="dar-gizle">Haftalar</th><th class="sayi dar-gizle">Son hafta</th></tr></thead>
       <tbody>${tablo.map(s => {
         const sh = s.haftalar.at(-1);
         return `<tr class="tikla ${s.id === benimTakimim() ? 'ben' : ''}" data-is="git" data-yol="#/takim/${s.id}">
           <td class="sayi"><span class="sira-hucre"><span class="madalya m${s.sira}">${s.sira}</span>${degisimHtml(degisim.get(s.id) ?? 0)}</span></td><td><b>${esc(s.ad)}</b> <span class="soluk kucuk">${esc(s.menajer ?? '')}</span></td>
-          <td class="sayi"><b>${s.puan}</b></td><td class="sayi">${sayi(s.vp)}</td><td class="dar-gizle">${haftaCubuklari(s)}</td>
+          <td class="sayi"><b>${s.puan}</b>${puanEsit(tablo, s) ? `<div class="kucuk soluk" style="white-space:nowrap">${sayi(s.vp)} VP</div>` : ''}</td><td class="dar-gizle">${haftaCubuklari(s)}</td>
           <td class="sayi soluk dar-gizle" style="white-space:nowrap">${sh ? `${sh.sira}. · ${sayi(sh.vp)} VP` : ''}</td></tr>`;
       }).join('')}</tbody></table></div>
     <p class="kucuk soluk" style="margin-bottom:0">Haftalık sıraya göre ${C.PUAN_TABLOSU.join(', ')} puan. Eşit puanda toplam VP yüksek olan üstte.</p>
@@ -1006,40 +1008,38 @@ const paylasDugmeleri = (tur, n = '') => !yonetici() ? '' : `<span class="satir"
     <button class="btn kucuk" data-is="paylas" data-tur="${tur}" data-id="${n}" data-islem="indir" title="Görseli indir">⬇</button></span>`;
 
 // Görsel verisi (puan-gorsel.js, kullanıcı 2026-11-17 yeni tasarım): genelde puan, VP, sıra değişimi ve haftalık puanlar;
-// haftalıkta VP, kazanılan puan ve takımın haftanın yıldızı (sayılan oyuncularından en yüksek VP, kürsüde fotoğrafıyla)
+// haftalıkta VP, kazanılan puan ve takımın haftanın yıldızı (sayılan oyuncularından en yüksek VP)
 async function gorselVerisi(tur, n) {
   const enCokPuan = Math.max(...C.PUAN_TABLOSU);
   if (tur === 'genel') {
     const haftalar = puanHaftalari();
     const tablo = genelTablo();
     const degisim = siraDegisimleri();
-    const [ilk, son] = [haftalar[0].hafta, haftalar.at(-1).hafta];
+    const son = haftalar.at(-1).hafta;
     const devam = !C.haftaDurumu(haftalar.at(-1)).tamamlandi;
     return {
       dosyaAdi: `pota-alti-${LIG.kod}-fantezi-genel-klasman.png`,
       bilgi: {
         lig: LIG.kod, tur, enCokPuan, baslik: 'GENEL KLASMAN', paylasimBaslik: S.ayar.ad,
-        serit: `${ilk === son ? `${hf(ilk)}. HAFTA` : `${hf(ilk)}.–${hf(son)}. HAFTALAR`}  ·  ${tablo.length} TAKIM${devam ? `  ·  ${hf(son)}. HAFTA SÜRÜYOR` : ''}`,
-        satirlar: tablo.map(s => ({ sira: s.sira, ad: s.ad, menajer: s.menajer ?? '', puan: s.puan, vp: s.vp,
+        // Şerit yalnız hafta sürerken (kullanıcı 2026-11-17: hafta aralığı ve takım sayısı yazılmasın)
+        serit: devam ? `${hf(son)}. HAFTA SÜRÜYOR` : '',
+        notlar: tablo.some(s => puanEsit(tablo, s)) ? 'Eşit puanda toplam VP yüksek olan üstte' : '',
+        satirlar: tablo.map(s => ({ sira: s.sira, ad: s.ad, menajer: s.menajer ?? '', puan: s.puan, vp: s.vp, esitlik: puanEsit(tablo, s),
           degisim: degisim.get(s.id) ?? 0, haftalar: s.haftalar.map(h => h.puan) })),
       },
     };
   }
   const h = S.haftalar[n];
   const hd = C.haftaDurumu(h);
-  const [gorsel, elle] = await Promise.all([fetch(new URL(`../data/${LIG.kod}/gorsel.json`, import.meta.url)).then(x => x.json()).catch(() => ({})),
-    fetch(new URL('../odul/foto/liste.json', import.meta.url)).then(x => x.json()).catch(() => ({}))]);
-  const foto = id => (elle[id] ? new URL(`../odul/foto/${elle[id]}`, import.meta.url).href
-    : gorsel.foto?.[id] ? new URL(`../data/${LIG.kod}/foto/${id}${(gorsel.foto[id].match(/\.\w+$/) ?? ['.webp'])[0]}`, import.meta.url).href : null);
   return {
     dosyaAdi: `pota-alti-${LIG.kod}-fantezi-${hf(n)}-hafta.png`,
     bilgi: {
       lig: LIG.kod, tur, enCokPuan, baslik: `${hf(n)}. HAFTA`, paylasimBaslik: S.ayar.ad,
-      serit: `HAFTALIK SIRALAMA  ·  ${hd.tamamlandi ? 'KESİN SONUÇ' : `ARA SONUÇ (${hd.bitti}/${hd.toplam} MAÇ BİTTİ)`}`,
+      serit: hd.tamamlandi ? '' : `ARA SONUÇ · ${hd.bitti}/${hd.toplam} MAÇ BİTTİ`,
       satirlar: C.haftaSiralamasi(haftaTakimlari(n), h).map(s => {
         const y = [...s.aslar, ...s.yedekler].filter(o => o.sayildi).sort((a, b) => b.vp - a.vp)[0];
         return { sira: s.sira, ad: s.ad, menajer: s.menajer ?? '', vp: s.toplam, kazandi: s.puan,
-          yildiz: y ? { ad: y.ad, vp: y.vp, foto: foto(y.id) } : null };
+          yildiz: y ? { ad: y.ad, vp: y.vp } : null };
       }),
     },
   };
@@ -1172,7 +1172,7 @@ function gorunumTakim(tid) {
     haftalik = g ? `<div class="kart"><h3>Haftalar</h3><div class="tablo-kap"><table>
       <thead><tr><th>Hafta</th><th class="sayi">VP</th><th class="sayi">Sıra</th><th class="sayi">Puan</th></tr></thead>
       <tbody>${g.haftalar.map(h => `<tr class="tikla" data-is="git" data-yol="#/haftalik/${h.hafta}" data-acik="${tid}"><td>${hf(h.hafta)}. hafta</td><td class="sayi">${sayi(h.vp)}</td><td class="sayi">${h.sira}.</td><td class="sayi"><b>${h.puan}</b></td></tr>`).join('')}
-      <tr><td><b>Toplam</b> (${g.sira}. sırada)</td><td class="sayi"><b>${sayi(g.vp)}</b></td><td></td><td class="sayi"><b>${g.puan}</b></td></tr></tbody></table></div></div>` : '';
+      <tr><td><b>Toplam</b> (${g.sira}. sırada)</td><td></td><td></td><td class="sayi"><b>${g.puan}</b></td></tr></tbody></table></div></div>` : '';
   }
   const hareket = Object.values(S.hareketler).filter(h => h.takim === tid || h.veren === tid);
   const alt = `${haftalik}${hareket.length ? `<div class="kart"><h3>Hareketler</h3>${hareket.map(hareketSatiri).join('')}</div>` : ''}${yoneticiKadroPaneli(tid)}`; // yönetici paneli en altta

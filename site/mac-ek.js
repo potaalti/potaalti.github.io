@@ -129,18 +129,21 @@ export function macGovdesi(kutu, ayar) {
   const donemler = kutu.donemler?.length ? kutu.donemler : null;
   const secenekler = donemler ? donemSecenekleri(donemler) : [];
   const secim = secenekler.some(([k]) => k === a.donem) ? a.donem : 'T';
-  const kutuTarafi = taraf => {
-    const t = kutu[taraf], takim = t.takim ?? a.takimIst?.[taraf], koc = t.koc ?? ileri?.[taraf]?.koc;
-    if (secim === 'T') return kutuSkorTablosu(t, takim, a, koc);
-    const d = donemTarafi(t, taraf, donemler, secim);
-    return kutuSkorTablosu(d.t, d.takim, a, koc);
+  // Seçili dönemin (ya da toplamın) kutu verisi: tablo ve 100 hücum hesabı aynı veriden
+  const tarafVerisi = taraf => {
+    const t = kutu[taraf];
+    if (secim === 'T') return { t, takim: t.takim ?? a.takimIst?.[taraf] };
+    return donemTarafi(t, taraf, donemler, secim);
   };
+  const veri = { ev: tarafVerisi('ev'), dep: tarafVerisi('dep') };
+  const kutuTarafi = taraf => kutuSkorTablosu(veri[taraf].t, veri[taraf].takim, a, kutu[taraf].koc ?? ileri?.[taraf]?.koc);
+  const hucum = hucumVerisi(veri.ev, veri.dep);
   const secici = donemler ? `<div class="secenekler kutu-donem">${secenekler.map(([k, ad]) =>
     `<button class="secenek ${k === secim ? 'aktif' : ''}" data-is="kutu-donem" data-id="${k}">${ad}</button>`).join('')}</div>` : '';
   return `${ceyrekTablosu(kutu, a)}${farkGrafigi(evAd, depAd, kutu.fark ?? a.fark)}
     ${secici}${kutuTarafi('ev')}${kutuTarafi('dep')}
-    ${secim === 'T' ? ileriIstatistikKarti(evAd, depAd, ileri, a.takimBasligi(kutu.ev), a.takimBasligi(kutu.dep))
-    : ileriIstatistikKarti(evAd, depAd, kutu.donemIleri?.[secim], a.takimBasligi(kutu.ev), a.takimBasligi(kutu.dep), secenekler.find(([k]) => k === secim)?.[1])}
+    ${secim === 'T' ? ileriIstatistikKarti(evAd, depAd, ileri, a.takimBasligi(kutu.ev), a.takimBasligi(kutu.dep), null, hucum)
+    : ileriIstatistikKarti(evAd, depAd, kutu.donemIleri?.[secim], a.takimBasligi(kutu.ev), a.takimBasligi(kutu.dep), secenekler.find(([k]) => k === secim)?.[1], hucum)}
     <p class="soluk kucuk">Kalın: ilk 5${a.canli ? ' · *: sahada' : ''} · 2S/3S/SA: isabet/deneme · Tç: top çalma · Bl: blok · Tk: top kaybı · F: faul · AF: alınan faul · VP: verimlilik${a.aciklamaEki}</p>`;
 }
 
@@ -275,14 +278,38 @@ if (typeof document !== 'undefined' && !globalThis.farkImleciKurulu) {
   }).observe(document.body, { childList: true, subtree: true });
 }
 
+// 100 hücumda atılan / yenilen sayı (kullanıcı 2026-11-17). Hücum sayısı kutu skordan tahmin edilir (FIBA / NBA'deki yaygın
+// formül): saha içi atış denemesi − hücum ribaundu + top kaybı + 0,44 × serbest atış denemesi. İki takımın hücum sayısı neredeyse
+// eşit olduğundan ortalaması kullanılır; 100 hücumda atılan = 100 × sayı / hücum, yenilen = rakibinki.
+function hucumToplami({ t, takim }) {
+  const o = t?.oyuncular ?? [];
+  const top = f => o.reduce((x, p) => x + (f(p) ?? 0), 0);
+  return {
+    sayi: top(p => p.sayi),
+    saha: top(p => (p.iki?.[1] ?? 0) + (p.uc?.[1] ?? 0)),
+    sa: top(p => p.sa?.[1]),
+    hr: top(p => p.hr) + (takim?.hr ?? 0),
+    tk: top(p => p.tk) + (takim?.tk ?? 0),
+  };
+}
+export function hucumVerisi(evVeri, depVeri) {
+  const e = hucumToplami(evVeri), d = hucumToplami(depVeri);
+  const hucum = x => x.saha - x.hr + x.tk + 0.44 * x.sa;
+  const n = (hucum(e) + hucum(d)) / 2;
+  if (!(n >= 5) || !(e.sayi + d.sayi)) return null;  // dönem çok kısa ya da veri yok
+  const yuz = v => Math.round((1000 * v) / n) / 10;
+  return { hucum: Math.round(n), ev: { atilan: yuz(e.sayi), yenilen: yuz(d.sayi) }, dep: { atilan: yuz(d.sayi), yenilen: yuz(e.sayi) } };
+}
+const ondalik = v => v.toLocaleString('tr-TR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+
 // Gelişmiş istatistikler: iki takım karşılıklı çubuklar (o istatistikte önde olan vurgu renginde), altında fark / seri / liderlik
 const ILERI_CUBUKLAR = [['tks', 'Top kaybından sayı'], ['hh', 'Hızlı hücum sayısı'], ['is', 'İkinci şans sayısı'], ['ba', 'Boyalı alan sayısı'], ['benc', 'Benç sayısı']];
 const dakikaSaniye = sn => `${Math.floor(sn / 60)}:${String(sn % 60).padStart(2, '0')}`;
 // donemAdi: dönem seçiliyse ("3.Ç", "1. Yarı") başlıkta yazar; fark/seri/liderlik o dönemin içinden (kutu.donemIleri)
-export function ileriIstatistikKarti(evAd, depAd, ileri, evLink, depLink, donemAdi = null) {
+export function ileriIstatistikKarti(evAd, depAd, ileri, evLink, depLink, donemAdi = null, hucum = null) {
   const ev = ileri?.ev;
   const dep = ileri?.dep;
-  if (!ev || !dep) return '';
+  if ((!ev || !dep) && !hucum) return '';
   const cubuk = ([k, ad]) => {
     const a = ev[k] ?? 0;
     const b = dep[k] ?? 0;
@@ -291,9 +318,21 @@ export function ileriIstatistikKarti(evAd, depAd, ileri, evLink, depLink, donemA
       <div class="ileri-ad">${ad}</div><div class="ileri-iz"><span class="${b > a ? 'onde' : ''}" style="width:${pay(b)}%">${b}</span></div></div>`;
   };
   const satir = (ad, a, b) => `<div class="ileri-satir"><b>${a}</b><span>${ad}</span><b>${b}</b></div>`;
+  // İyi olan taraf vurgulu: atılanda yüksek, yenilende düşük
+  const kiyas = (ad, a, b, yuksekIyi) => `<div class="ileri-satir"><b class="${(yuksekIyi ? a > b : a < b) ? 'iyi' : ''}">${ondalik(a)}</b><span>${ad}</span><b class="${(yuksekIyi ? b > a : b < a) ? 'iyi' : ''}">${ondalik(b)}</b></div>`;
+  const hucumBolumu = !hucum ? '' : `<div class="ileri-bolum">100 hücumda</div>
+    ${kiyas('Atılan sayı', hucum.ev.atilan, hucum.dep.atilan, true)}${kiyas('Yenilen sayı', hucum.ev.yenilen, hucum.dep.yenilen, false)}
+    <div class="ileri-satir orta"><span>Hücum sayısı (tahmini) <b>${hucum.hucum}</b></span></div>`;
+  const ileriBolumu = !ev || !dep ? '' : `${ILERI_CUBUKLAR.filter(([k]) => ev[k] != null && dep[k] != null).map(cubuk).join('')}
+    ${satir('En büyük fark', ev.fark, dep.fark)}${satir('En büyük seri', ev.seri, dep.seri)}${satir('Liderlik süresi', dakikaSaniye(ev.lider), dakikaSaniye(dep.lider))}
+    <div class="ileri-satir orta"><span>Liderlik değişimi <b>${ev.degisim}</b></span><span>Eşitlik <b>${ev.esitlik}</b></span></div>`;
   return `<div class="kart ileri-kart"><h3>Gelişmiş istatistikler${donemAdi ? ` <small class="soluk">· ${esc(donemAdi)}</small>` : ''}</h3>
     <div class="ileri-takimlar"><span>${evLink ?? esc(evAd)}</span><span>${depLink ?? esc(depAd)}</span></div>
-    ${ILERI_CUBUKLAR.filter(([k]) => ev[k] != null && dep[k] != null).map(cubuk).join('')}
-    ${satir('En büyük fark', ev.fark, dep.fark)}${satir('En büyük seri', ev.seri, dep.seri)}${satir('Liderlik süresi', dakikaSaniye(ev.lider), dakikaSaniye(dep.lider))}
-    <div class="ileri-satir orta"><span>Liderlik değişimi <b>${ev.degisim}</b></span><span>Eşitlik <b>${ev.esitlik}</b></span></div></div>`;
+    ${ileriBolumu}${hucumBolumu}
+    <div class="ileri-aciklama">${ileriBolumu ? `<p><b>Top kaybından sayı:</b> rakibin top kaybından sonraki hücumlarda atılan sayı. <b>Hızlı hücum:</b> rakip yerleşmeden, hızlı çıkışla atılan sayı.
+      <b>İkinci şans:</b> hücum ribaundundan sonra atılan sayı. <b>Boyalı alan:</b> pota altındaki boyalı bölgeden atılan sayı. <b>Benç:</b> ilk 5 dışındaki oyuncuların sayısı.
+      <b>En büyük seri:</b> rakip sayı atmadan üst üste atılan en çok sayı. <b>Liderlik süresi:</b> skorda önde geçen süre.</p>` : ''}
+      ${hucum ? `<p><b>Hücum sayısı:</b> bir takımın topu kaç kez kullandığı; şut, top kaybı ya da serbest atışla biter. Kutu skordan tahmin edilir (saha içi atış denemesi − hücum ribaundu + top kaybı + 0,44 × serbest atış denemesi).
+      <b>100 hücumda atılan sayı</b> hücumun verimini, <b>100 hücumda yenilen sayı</b> savunmanın gücünü gösterir: hücum sayısı farklı (hızlı ya da yavaş oynanan) maçları ve dönemleri karşılaştırmayı sağlar.
+      Atılanın yüksek, yenilenin düşük olması iyidir; ikisinin farkı takımın 100 hücumdaki üstünlüğüdür.</p>` : ''}</div></div>`;
 }

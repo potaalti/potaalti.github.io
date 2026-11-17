@@ -1464,6 +1464,29 @@ function gorunumKadrom() {
 }
 
 // ---------- Serbest oyuncular ----------
+// Form (kullanıcı 2026-11-17): oyuncunun süre aldığı son 3 haftanın VP ortalaması; sezon ortalamasından 3 VP ve daha fazla
+// yüksekse yükselen (▲), düşükse düşen (▼). Bir de değişikliğin sayılacağı haftada takımının maçı yoksa "bay".
+function formBilgisi(pid) {
+  const son = Object.values(S.haftalar).filter(h => h.oyuncular?.[pid]?.saniye > 0).sort((a, b) => b.hafta - a.hafta).slice(0, 3);
+  if (!son.length) return null;
+  const vpler = son.map(h => h.oyuncular[pid].vp ?? 0);
+  const ort = vpler.reduce((t, v) => t + v, 0) / vpler.length;
+  const fark = ort - (oyuncu(pid).vpOrt ?? 0);
+  return { ort, vpler, haftalar: son.map(h => h.hafta), yon: fark >= 3 ? 1 : fark <= -3 ? -1 : 0 };
+}
+const formHtml = f => (!f ? '<span class="soluk">–</span>'
+  : `<span class="form-deger" title="Son ${f.vpler.length} maç VP: ${f.vpler.map((v, i) => `${hf(f.haftalar[i])}. hf ${sayi(v)}`).join(', ')}">${sayi(f.ort)}${f.yon > 0 ? ' <i class="form-ok yukari">▲</i>' : f.yon < 0 ? ' <i class="form-ok asagi">▼</i>' : ''}</span>`);
+// Değişikliğin sayılacağı haftada takımın maçı var mı (hafta verisi yoksa bilinmez: null)
+function bayMi(o) {
+  const n = etkinHafta();
+  if (n && S.maclar[n] === undefined) maclariYukle(n);
+  const maclar = S.haftalar[n]?.maclar?.length ? S.haftalar[n].maclar : S.maclar[n];
+  const tk = o.takimId;
+  if (!maclar?.length || !tk) return null;
+  return !maclar.some(m => m.evId === tk || m.depId === tk);
+}
+const bayRozeti = o => (bayMi(o) ? ` <span class="rozet bay-rozet" title="${hf(etkinHafta())}. haftada takımının maçı yok">${hf(etkinHafta())}. hf bay</span>` : '');
+
 function gorunumSerbest() {
   if (!['kadro', 'sezon'].includes(asama())) return '<div class="kart"><p class="bos">Boştaki oyuncular draft bitince burada görünür.</p></div>';
   const alimAcik = asama() === 'sezon';
@@ -1480,7 +1503,9 @@ function gorunumSerbest() {
     && (!ara || aramaNorm(o.ad).includes(ara)));
   // Sıralama: VP ortalaması, son oynanan haftanın VP'si ya da sayı ortalaması
   const sonHafta = Object.values(S.haftalar).filter(h => h.maclar?.some(m => m.durum !== 'oynanmadi')).sort((a, b) => b.hafta - a.hafta)[0];
-  const SIRALAR = { vp: ['VP ort.', o => o.vpOrt ?? 0], ...(sonHafta ? { hafta: [`${sonHafta.hafta}. hafta VP`, o => sonHafta.oyuncular[o.id]?.vp ?? -99] } : {}), sayi: ['Sayı ort.', o => o.sayiOrt ?? 0] };
+  const formlar = new Map(liste.map(o => [o.id, formBilgisi(o.id)]));
+  const SIRALAR = { vp: ['VP ort.', o => o.vpOrt ?? 0], form: ['Form (son 3)', o => formlar.get(o.id)?.ort ?? -99],
+    ...(sonHafta ? { hafta: [`${sonHafta.hafta}. hafta VP`, o => sonHafta.oyuncular[o.id]?.vp ?? -99] } : {}), sayi: ['Sayı ort.', o => o.sayiOrt ?? 0] };
   const sirala = SIRALAR[S.ui.faSirala] ? S.ui.faSirala : 'vp';
   liste.sort((a, b) => SIRALAR[sirala][1](b) - SIRALAR[sirala][1](a));
   const haftaSutunu = sirala === 'hafta';
@@ -1518,16 +1543,16 @@ function gorunumSerbest() {
   const gosterilen = liste.slice(0, 300);
   const listeHtml = telefon()
     ? `<div class="fa-liste">${gosterilen.map(o => `<div class="fa-kart">
-        <div class="ad">${adLinki(o)} ${mevkiRozeti(mevki(o.id))}${trRozeti(o)}<small>${takimLinki(o.takim)} · ${o.mac} maç</small></div>
-        <div class="fa-vp"><b>${haftaSutunu ? (sonHafta.oyuncular[o.id] ? sayi(sonHafta.oyuncular[o.id].vp) : '–') : sirala === 'sayi' ? sayi(o.sayiOrt) : sayi(o.vpOrt)}</b><small>${SIRALAR[sirala][0]}</small></div>
+        <div class="ad">${adLinki(o)} ${mevkiRozeti(mevki(o.id))}${trRozeti(o)}${bayRozeti(o)}<small>${takimLinki(o.takim)} · ${o.mac} maç${sirala === 'form' ? ` · VP ort. ${sayi(o.vpOrt)}` : formlar.get(o.id) ? ` · form ${formHtml(formlar.get(o.id))}` : ''}</small></div>
+        <div class="fa-vp"><b>${haftaSutunu ? (sonHafta.oyuncular[o.id] ? sayi(sonHafta.oyuncular[o.id].vp) : '–') : sirala === 'sayi' ? sayi(o.sayiOrt) : sirala === 'form' ? formHtml(formlar.get(o.id)) : sayi(o.vpOrt)}</b><small>${SIRALAR[sirala][0]}</small></div>
         <div class="fa-al">${alHucresi(o)}</div></div>`).join('') || '<p class="bos">Oyuncu bulunamadı</p>'}</div>`
     : `<div class="tablo-kap"><table>
-        <thead><tr><th>Oyuncu</th><th>${LIG.kisa} takımı</th><th class="sayi ${haftaSutunu ? 'dar-gizle' : ''}">Maç</th><th class="sayi">VP ort.</th>${haftaSutunu ? `<th class="sayi">${sonHafta.hafta}. hf</th>` : '<th class="sayi dar-gizle">Sayı</th>'}<th></th></tr></thead>
+        <thead><tr><th>Oyuncu</th><th>${LIG.kisa} takımı</th><th class="sayi ${haftaSutunu ? 'dar-gizle' : ''}">Maç</th><th class="sayi">VP ort.</th><th class="sayi" title="Süre aldığı son 3 haftanın VP ortalaması; ▲ ▼ sezon ortalamasına göre">Form</th>${haftaSutunu ? `<th class="sayi">${sonHafta.hafta}. hf</th>` : '<th class="sayi dar-gizle">Sayı</th>'}<th></th></tr></thead>
         <tbody>${gosterilen.map(o => `<tr class="${S.ui.panel === o.id ? 'ben' : ''}">
-          <td>${adLinki(o)} ${mevkiRozeti(mevki(o.id))}${trRozeti(o)}</td><td class="kucuk">${bslTakimHucre(o)}</td>
-          <td class="sayi ${haftaSutunu ? 'dar-gizle' : ''}">${o.mac}</td><td class="sayi"><b>${sayi(o.vpOrt)}</b></td>${haftaSutunu ? `<td class="sayi"><b>${sonHafta.oyuncular[o.id] ? sayi(sonHafta.oyuncular[o.id].vp) : '–'}</b></td>` : `<td class="sayi dar-gizle">${sayi(o.sayiOrt)}</td>`}
+          <td>${adLinki(o)} ${mevkiRozeti(mevki(o.id))}${trRozeti(o)}${bayRozeti(o)}</td><td class="kucuk">${bslTakimHucre(o)}</td>
+          <td class="sayi ${haftaSutunu ? 'dar-gizle' : ''}">${o.mac}</td><td class="sayi"><b>${sayi(o.vpOrt)}</b></td><td class="sayi">${formHtml(formlar.get(o.id))}</td>${haftaSutunu ? `<td class="sayi"><b>${sonHafta.oyuncular[o.id] ? sayi(sonHafta.oyuncular[o.id].vp) : '–'}</b></td>` : `<td class="sayi dar-gizle">${sayi(o.sayiOrt)}</td>`}
           <td class="sayi">${alHucresi(o)}</td></tr>`).join('')
-          || '<tr><td colspan="6" class="bos">Oyuncu bulunamadı</td></tr>'}</tbody>
+          || '<tr><td colspan="7" class="bos">Oyuncu bulunamadı</td></tr>'}</tbody>
       </table></div>`;
   // Sezon boyunca hep görünür (boşsa da), menajerler yerini bilsin
   const talepKarti = alimAcik ? `<div class="kart talep-kart"><h3>Talep süresindeki oyuncular <span class="soluk">(${talepte.length})</span></h3>
@@ -1553,6 +1578,7 @@ function gorunumSerbest() {
       </div>
       <div class="secenekler">${Object.entries(SIRALAR).map(([k2, [ad]]) => `<button class="secenek ${k2 === sirala ? 'aktif' : ''}" data-is="fa-sirala" data-id="${k2}">${ad}</button>`).join('')}</div>
       ${listeHtml}
+      <p class="kucuk soluk" style="margin:8px 0 0">Form: oyuncunun süre aldığı son 3 maçın VP ortalaması. <span class="form-ok yukari">▲</span> sezon ortalamasının 3 VP ve daha fazla üstünde, <span class="form-ok asagi">▼</span> altında. "Bay": değişikliğin sayılacağı haftada takımının maçı yok.</p>
     </div>`;
 }
 

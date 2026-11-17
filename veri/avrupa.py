@@ -12,6 +12,8 @@ Kaynaklar (hepsi herkese açık):
   <kupa>/takim/<id>.json          takım: maçlar, maç başı takım ortalamaları, oyuncuların turnuva ortalamaları
   <kupa>/oyuncu/<id>.json         oyuncu: turnuva ortalamaları ve maç maç
 Türk takımı: EuroLeague/EuroCup'ta kulübün ülkesi TUR; FIBA kupalarında iç saha maçının ülkesi TUR olan takım.
+Çeyrek çeyrek kutu skor (donemler, 2026-11-17): sayı sayı akıştan (EuroLeague/EuroCup PlayByPlay servisi, FIBA kupalarında maç
+sayfasındaki akış); DONEM_ILK_TARIH'ten itibaren oynanan maçlar için, canlı maçta her çalışmada.
 
   python veri/avrupa.py
 """
@@ -284,7 +286,37 @@ def el_kupa(k):
                     sonuc["ileri"][taraf][alan] = int(c[anahtar])
         return sonuc
 
-    return takimlar, gruplar, maclar, kutu, akis
+    def donem(m, kayit):
+        """Çeyrek çeyrek kutu skor: PlayByPlay servisinin olayları (PLAYTYPE kodları) ortak biçime çevrilir."""
+        d = getir(f"https://live.euroleague.net/api/PlayByPlay?gamecode={m['id']}&seasoncode={k['sezon']}")
+        olaylar = []
+        for alan, per in (("FirstQuarter", "1"), ("SecondQuarter", "2"), ("ThirdQuarter", "3"), ("ForthQuarter", "4"), ("ExtraTime", None)):
+            for i, r in enumerate(d.get(alan) or []):
+                kod = (r.get("PLAYTYPE") or "").strip()
+                # Faul türleri: CM, CMU, CMT, CMT1, CMD… (teknik dahil, resmi kutu skordaki gibi); CCH koç faulü sayılmaz
+                tur = EL_OLAY.get(kod) or ({"a": "faul"} if kod.startswith("CM") else None)
+                takim = (r.get("CODETEAM") or "").strip()
+                if not tur or not takim:
+                    continue
+                p = per or f"U{max(1, (int(r.get('MINUTE') or 41) - 41) // 5 + 1)}"
+                pid = (r.get("PLAYER_ID") or "").strip().lstrip("P") or None
+                olaylar.append({"per": p, "kalan": sure_sn(r.get("MARKERTIME")) if r.get("MARKERTIME") else None, "sira": r.get("NUMBEROFPLAY") or i,
+                                "taraf": "ev" if takim == m["ev"] else "dep", "pid": pid, **tur})
+        return donem_hesapla(olaylar, kayit, "pir")
+
+    return takimlar, gruplar, maclar, kutu, akis, donem
+
+
+# EuroLeague PlayByPlay olay kodları -> ortak olay (a: alan, isabet: atışta girdi mi)
+EL_OLAY = {
+    "2FGM": {"a": "iki", "isabet": True}, "DUNK": {"a": "iki", "isabet": True}, "LAYUPMD": {"a": "iki", "isabet": True},
+    "2FGA": {"a": "iki", "isabet": False}, "LAYUPATT": {"a": "iki", "isabet": False},
+    "3FGM": {"a": "uc", "isabet": True}, "3FGA": {"a": "uc", "isabet": False},
+    "FTM": {"a": "sa", "isabet": True}, "FTA": {"a": "sa", "isabet": False},
+    "O": {"a": "hr"}, "D": {"a": "sr"}, "AS": {"a": "ast"}, "ST": {"a": "tc"}, "TO": {"a": "tk"}, "FV": {"a": "blk"}, "AG": {"a": "blkA"},
+    "CM": {"a": "faul"}, "CMU": {"a": "faul"}, "CMT": {"a": "faul"}, "CMD": {"a": "faul"}, "OF": {"a": "faul"}, "CMTI": {"a": "faul"},
+    "RV": {"a": "af"}, "IN": {"a": "in"}, "OUT": {"a": "out"},
+}
 
 
 # ---------- BCL / FIBA Europe Cup ----------
@@ -473,7 +505,148 @@ def fiba_kupa(k):
             sonuc["ileriResmi"] = True
         return sonuc
 
-    return takimlar, gruplar, maclar, kutu, akis
+    def donem(m, kayit):
+        """Çeyrek çeyrek kutu skor: maç sayfasındaki sayı sayı akışın olayları ortak biçime çevrilir."""
+        sayfa = sayfa_getir(m)
+        i = sayfa.find('"playByPlay":{"items"')
+        if i < 0:
+            raise ValueError("sayı sayı akış yok")
+        veri, _ = json.JSONDecoder().raw_decode(sayfa, i + len('"playByPlay":'))
+        org = {str(takimlar[m["ev"]]["org"]): "ev", str(takimlar[m["dep"]]["org"]): "dep"}
+        olaylar = []
+        for ad, per in veri["items"].items():
+            p = f"U{int(ad[2:] or 1)}" if ad.startswith("OT") else ad[1:]
+            for it in per["items"]:
+                taraf = org.get(str(it.get("oId")))
+                ac, txt = it.get("ac"), (it.get("txt") or "").lower()
+                if not taraf:
+                    continue
+                if ac in ("P2", "P3", "FT"):
+                    tur = {"a": {"P2": "iki", "P3": "uc", "FT": "sa"}[ac], "isabet": bool(it.get("made"))}
+                elif ac in ("REB", "TREB"):
+                    tur = {"a": "hr" if "offensive" in txt else "sr"}
+                elif ac == "SUBST":
+                    tur = {"a": "in" if it.get("in") == "IN" else "out"}
+                else:
+                    tur = FIBA_OLAY.get(ac)
+                if not tur:
+                    continue
+                pid = it.get("pId")
+                olaylar.append({"per": p, "kalan": sure_sn(it.get("Time")), "sira": it.get("order") or 0, "taraf": taraf,
+                                "pid": str(pid) if isinstance(pid, int) else None, **tur})
+        return donem_hesapla(olaylar, kayit, "eff")
+
+    return takimlar, gruplar, maclar, kutu, akis, donem
+
+
+FIBA_OLAY = {"ASS": {"a": "ast"}, "ST": {"a": "tc"}, "TO": {"a": "tk"}, "TTO": {"a": "tk"}, "BS": {"a": "blk"}, "FOUL": {"a": "faul"}, "RFOUL": {"a": "af"}}
+
+
+# ---------- Ortak: çeyrek çeyrek kutu skor ----------
+
+DONEM_ILK_TARIH = "2026-11-09"  # kullanıcı 2026-11-17: geçen haftadan (9 Kasım haftası) itibaren
+DONEM_ALANLARI = ["sn", "sayi", "hr", "sr", "rib", "ast", "tc", "blk", "tk", "faul", "af", "pm", "vp"]
+
+
+def donem_hesapla(olaylar, kayit, vp_turu):
+    """olaylar: [{per ('1'…'4', 'U1'…), kalan (periyotta kalan saniye), sira, taraf, pid, a, isabet}]. Sahadakiler ilk 5'ten
+    başlayıp oyuncu değişikliklerinden izlenir: süre, +/- buradan. Çıktı BSL/TBL'deki gibi (site/mac-ek.js donemTarafi):
+    [{ad, ev: {oyuncular: {formaNo: {sn, sayi, iki, uc, sa, hr, sr, rib, ast, tc, blk, tk, faul, af, pm, vp}}, takim}, dep}].
+    vp_turu: 'pir' (EuroLeague: sayı+rib+ast+tç+blok+alınan faul − kaçan atışlar − top kaybı − yenen blok − faul) ya da
+    'eff' (FIBA: sayı+rib+ast+tç+blok − kaçan atışlar − top kaybı)."""
+    formalar = {t: {str(o["id"]): str(o.get("no") or "") for o in kayit[t]["oyuncular"]} for t in ("ev", "dep")}
+    sahada = {t: {str(o["id"]) for o in kayit[t]["oyuncular"] if o.get("ilk5")} for t in ("ev", "dep")}
+    sira = lambda p: (0, int(p)) if p.isdigit() else (1, int(p[1:] or 1))  # noqa: E731
+    sonuc = []
+    for per in sorted({o["per"] for o in olaylar}, key=sira):
+        uz = 300 if per.startswith("U") else 600
+        d = {t: {"oyuncular": {}, "takim": {"hr": 0, "sr": 0, "rib": 0, "tk": 0, "faul": 0}} for t in ("ev", "dep")}
+
+        def oyuncu(t, pid):
+            x = d[t]["oyuncular"].get(pid)
+            if x is None:
+                x = d[t]["oyuncular"][pid] = {**{a: 0 for a in DONEM_ALANLARI}, "iki": [0, 0], "uc": [0, 0], "sa": [0, 0], "blkA": 0}
+            return x
+
+        onceki = 0
+        # Olay sırası: önce kaynağın kendi sırası (aynı saniyedeki değişiklikler ve atışlar doğru sırada kalır)
+        for o in sorted((o for o in olaylar if o["per"] == per), key=lambda o: o["sira"]):
+            an = uz - o["kalan"] if o["kalan"] is not None else onceki
+            if an > onceki:
+                for t in ("ev", "dep"):
+                    for pid in sahada[t]:
+                        oyuncu(t, pid)["sn"] += an - onceki
+                onceki = an
+            t, pid, a = o["taraf"], o["pid"], o["a"]
+            if a == "in":
+                if pid:
+                    sahada[t].add(pid)
+                continue
+            if a == "out":
+                sahada[t].discard(pid)
+                continue
+            if not pid:  # takım olayı (takım ribaundu, takım top kaybı, kenar faulü)
+                if a in ("hr", "sr"):
+                    d[t]["takim"][a] += 1
+                    d[t]["takim"]["rib"] += 1
+                elif a in ("tk", "faul"):
+                    d[t]["takim"][a] += 1
+                continue
+            x = oyuncu(t, pid)
+            if a in ("iki", "uc", "sa"):
+                x[a][1] += 1
+                if o.get("isabet"):
+                    x[a][0] += 1
+                    pts = {"iki": 2, "uc": 3, "sa": 1}[a]
+                    x["sayi"] += pts
+                    rakip = "dep" if t == "ev" else "ev"
+                    for q in sahada[t]:
+                        oyuncu(t, q)["pm"] += pts
+                    for q in sahada[rakip]:
+                        oyuncu(rakip, q)["pm"] -= pts
+            elif a in ("hr", "sr"):
+                x[a] += 1
+                x["rib"] += 1
+            else:
+                x[a] += 1
+        if uz > onceki:
+            for t in ("ev", "dep"):
+                for pid in sahada[t]:
+                    oyuncu(t, pid)["sn"] += uz - onceki
+        kayit_per = {"ad": per}
+        for t in ("ev", "dep"):
+            oyuncular = {}
+            for pid, x in d[t]["oyuncular"].items():
+                kacan = (x["iki"][1] - x["iki"][0]) + (x["uc"][1] - x["uc"][0]) + (x["sa"][1] - x["sa"][0])
+                x["vp"] = x["sayi"] + x["rib"] + x["ast"] + x["tc"] + x["blk"] - kacan - x["tk"]
+                if vp_turu == "pir":
+                    x["vp"] += x["af"] - x["blkA"] - x["faul"]
+                del x["blkA"]
+                no = formalar[t].get(pid)
+                if no:
+                    oyuncular[no] = x
+            kayit_per[t] = {"oyuncular": oyuncular, "takim": d[t]["takim"]}
+        sonuc.append(kayit_per)
+    return {"donemler": sonuc}
+
+
+def donem_denetle(kayit):
+    """Dönemlerin toplamı kutu skorla tutuyor mu (oyuncu başına; tutmayanların listesi)."""
+    farklar = []
+    for t in ("ev", "dep"):
+        for o in kayit[t]["oyuncular"]:
+            no = str(o.get("no") or "")
+            toplam = {}
+            for per in kayit.get("donemler") or []:
+                x = per[t]["oyuncular"].get(no) or {}
+                for a in ("sayi", "rib", "ast", "tc", "blk", "tk", "faul", "af", "vp", "pm", "sn"):
+                    toplam[a] = toplam.get(a, 0) + x.get(a, 0)
+            beklenen = {"sayi": o["sayi"], "rib": o["rib"], "ast": o["ast"], "tc": o["tc"], "blk": o["blk"], "tk": o["tk"],
+                        "faul": o["faul"], "af": o.get("af", 0), "vp": o["vp"], "pm": o.get("pm", 0), "sn": o["sn"]}
+            fark = {a: (toplam.get(a, 0), v) for a, v in beklenen.items() if (abs(toplam.get(a, 0) - v) > 30 if a == "sn" else toplam.get(a, 0) != v)}
+            if fark:
+                farklar.append(f"{o['ad']}: {fark}")
+    return farklar
 
 
 # ---------- Ortak: skor farkı ve gelişmiş istatistik ----------
@@ -585,7 +758,7 @@ def takim_oyuncu_uret(k, takimlar, maclar, kutular, gruplar=()):
 
 def kupa_uret(k):
     print(k["ad"], "…")
-    takimlar, gruplar, maclar, kutu, akis = (el_kupa if k["tur"] == "el" else fiba_kupa)(k)
+    takimlar, gruplar, maclar, kutu, akis, donem = (el_kupa if k["tur"] == "el" else fiba_kupa)(k)
     for v in takimlar.values():
         v["ad"] = TR_AD.get(v["ad"], v["ad"])
     kutular = {}
@@ -622,6 +795,16 @@ def kupa_uret(k):
             except Exception as e:  # noqa: BLE001 - sonraki çalışmada yeniden denenir
                 print(f"  {k['kod']} {m['id']}: akış alınamadı:", e)
             yaz(yol, kayit)
+        # Çeyrek çeyrek kutu skor: DONEM_ILK_TARIH'ten itibaren; canlıyken her çalışmada, bitince bir kez son haliyle
+        if (m["tarih"] or "") >= DONEM_ILK_TARIH and kayit.get("ev", {}).get("oyuncular") and (m["durum"] == "canli" or "donemler" not in kayit):
+            try:
+                kayit.update(donem(m, kayit))
+                if m["durum"] == "bitti":
+                    for f in donem_denetle(kayit)[:6]:
+                        print(f"  {k['kod']} {m['id']} dönem toplamı tutmuyor: {f}")
+                yaz(yol, kayit)
+            except Exception as e:  # noqa: BLE001 - sonraki çalışmada yeniden denenir
+                print(f"  {k['kod']} {m['id']}: çeyrek kutu skor alınamadı:", e)
         if m["durum"] == "canli":
             continue  # canlı maç takım ve oyuncu istatistiklerine bitince katılır
         if "ileri" not in kayit:  # skor farkı ve gelişmiş istatistik (sonradan eklendi: eski kayıtlara da bir kez eklenir)

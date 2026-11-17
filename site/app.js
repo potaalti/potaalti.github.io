@@ -1383,7 +1383,8 @@ function avMac(kod, k, id) {
   const m = liste ?? { tarih: kb.tarih, ev: kb.ev.id, dep: kb.dep.id, evSkor: kb.ev.skor, depSkor: kb.dep.skor, durum: 'bitti' };
   const taraf = (t, i) => ({ id: t.id, ad: avTakimAdi(d, t.id), skor: t.skor, ceyrekler: m.ceyrekler?.[i] ?? t.ceyrekler, takim: t.takim, koc: t.koc,
     oyuncular: t.oyuncular.map(o => ({ ...o, sure: mmss(o.sn), hr: o.or, sr: o.dr })) });
-  const kutu = kb?.ev?.oyuncular ? { ev: taraf(kb.ev, 0), dep: taraf(kb.dep, 1) } : null;
+  // Çeyrek çeyrek kutu skor (veri/avrupa.py donemler, 9 Kasım 2026 haftasından itibaren): BSL/TBL'deki dönem seçiciyle aynı
+  const kutu = kb?.ev?.oyuncular ? { ev: taraf(kb.ev, 0), dep: taraf(kb.dep, 1), donemler: kb.donemler } : null;
   const bilgi = [gunSaat(m.tarih), m.tur, m.salon, m.seyirci ? `${binlik(m.seyirci)} seyirci` : ''].filter(Boolean).map(esc).join(' · ');
   const takimLink = t => `<a href="#/avrupa/${kod}/takim/${t}">${esc(avTakimAdi(d, t))}</a>`;
   return `<a class="geri" href="#/avrupa/${kod}">‹ ${esc(k.ad)}</a>
@@ -1394,7 +1395,7 @@ function avMac(kod, k, id) {
       <p class="soluk kucuk" style="margin:10px 0 0;text-align:center"><span class="lig-etiket">${esc(k.kisa)}</span> ${bilgi}</p></div>
     ${!kb && m.durum === 'oynanmadi' ? avMacOnu(kod, d, m) : !kutu ? `${kb?.fark ? ME.farkGrafigi(avTakimAdi(d, m.ev), avTakimAdi(d, m.dep), kb.fark) : ''}<p class="bos">${m.durum === 'canli'
       ? 'Bu kupada kutu skor ve gelişmiş istatistikler maç bitince gelir. Skor farkı grafiği maç sırasında birkaç dakikada bir güncellenir.'
-      : 'Kutu skor maç başlayınca gelir (birkaç dakika sürebilir).'}</p>` : ME.macGovdesi(kutu, { canli: m.durum === 'canli', sirala: S.ui.kutuSirala, fark: kb.fark, ileriDosya: kb.ileri,
+      : 'Kutu skor maç başlayınca gelir (birkaç dakika sürebilir).'}</p>` : ME.macGovdesi(kutu, { canli: m.durum === 'canli', sirala: S.ui.kutuSirala, donem: S.ui.kutuDonem, fark: kb.fark, ileriDosya: kb.ileri,
       aciklamaEki: kb?.ileriResmi === false ? ' · Gelişmiş istatistiklerde top kaybından, ikinci şanstan ve boyalı alandan sayılar maç akışından hesaplandı (resmi değil); hızlı hücum bu kupanın verisinde yok.' : '',
       takimBasligi: t => `<a href="#/avrupa/${kod}/takim/${t.id}">${esc(t.ad)}</a>`,
       oyuncuAdi: o => `<a href="#/avrupa/${kod}/oyuncu/${o.id}" class="oyuncu-link">${esc(o.ad)}</a>` })}`;

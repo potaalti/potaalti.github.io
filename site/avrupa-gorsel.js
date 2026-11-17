@@ -56,9 +56,9 @@ export async function haftaGorseli({ maclar, tur, aralik }) {
   // Başlık
   const sonuc = tur === 'sonuc';
   logoCiz(g, 92, 92, 56);
-  // Başlık (kullanıcı 2026-11-16): "Haftanın Avrupa Temsilcilerimizin Programı / Sonuçları"
-  yaz(g, 'HAFTANIN AVRUPA TEMSİLCİLERİMİZİN', G / 2 + 30, 96, { font: '60px Anton', hiza: 'center', gen: 740 });
-  yaz(g, sonuc ? 'SONUÇLARI' : 'PROGRAMI', G / 2, 198, { font: '112px Anton', renk: RENK.vurgu, hiza: 'center', gen: 760 });
+  // Başlık (kullanıcı 2026-11-17, yazıyla aynı): "Avrupa Kupalarındaki Temsilcilerimizin Maç Programı / Sonuçları"
+  yaz(g, 'AVRUPA KUPALARINDAKİ TEMSİLCİLERİMİZİN', G / 2 + 30, 96, { font: '56px Anton', hiza: 'center', gen: 760 });
+  yaz(g, sonuc ? 'MAÇ SONUÇLARI' : 'MAÇ PROGRAMI', G / 2, 198, { font: '112px Anton', renk: RENK.vurgu, hiza: 'center', gen: 800 });
   g.font = '700 30px Oswald';
   aralik = buyuk(aralik);
   const ew = g.measureText(aralik).width + 56;

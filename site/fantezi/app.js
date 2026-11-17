@@ -2038,6 +2038,15 @@ async function kutuYukle(id) {
 // Kutu skor, çeyrekler, grafik ve gelişmiş istatistikler ortak ../mac-ek.js'te: ana uygulamadaki box score ile AYNI olsun diye
 
 // Takım istatistikleri ana uygulamanın verisinden (data/<lig>/takim-istatistik.json, saatte bir güncellenir); oturumda bir kez okunur
+// Ligin ortalama temposu (gelişmiş istatistikteki tempo için): ana uygulamanın takimlar.json'u
+function ligTempoOrt() {
+  if (S.ligTakimlar === undefined) {
+    S.ligTakimlar = null;
+    fetch(new URL(`../data/${LIG.kod}/takimlar.json`, location.href)).then(r => (r.ok ? r.json() : {})).catch(() => ({}))
+      .then(v => { S.ligTakimlar = v?.takimlar ?? {}; ciz(); });
+  }
+  return S.ligTakimlar ? ME.ligTempoOrtalamasi(S.ligTakimlar) : null;
+}
 function takimIstatistigi(id) {
   if (S.takimIst === undefined) {
     S.takimIst = null;
@@ -2090,7 +2099,7 @@ function gorunumMac(id) {
   const sahip = sahipler();
   const benim = benimTakimim();
   return `${ust}${ME.macGovdesi(kutu, {
-    canli, sirala: S.ui.kutuSirala, donem: S.ui.kutuDonem, takimIst: takimIstatistigi(kutu.id),
+    canli, sirala: S.ui.kutuSirala, donem: S.ui.kutuDonem, takimIst: takimIstatistigi(kutu.id), tempoOrt: ligTempoOrt(),
     ileriDosya: kutu.ev.ileri ? null : ileriIstatistigi(kutu.id),
     fark: !kutu.fark && ME.farkVarMi(LIG.kod, kutu.hafta ?? n) ? farkVerisi(id) : null,
     oyuncuAdi: o => oyuncuLinki(o.id, o.ad),

@@ -650,6 +650,24 @@ def donem_denetle(kayit):
     return farklar
 
 
+def tempo_ortalamasi(kutular):
+    """Kupadaki (temsilcilerimizin) biten maçların 40 dakikaya göre ortalama hücum sayısı: maç sayfasındaki tempo bununla kıyaslanır
+    (site/mac-ek.js hucumVerisi ile aynı formül: saha içi atış denemesi − hücum ribaundu + top kaybı + 0,44 × serbest atış denemesi)."""
+    degerler = []
+    for kayit in kutular.values():
+        if not (kayit.get("ev") or {}).get("oyuncular") or kayit.get("canli"):
+            continue
+        hucumlar = []
+        for t in ("ev", "dep"):
+            o, tk = kayit[t]["oyuncular"], kayit[t].get("takim") or {}
+            saha = sum(p["iki"][1] + p["uc"][1] for p in o)
+            hucumlar.append(saha - sum(p.get("or", 0) for p in o) - tk.get("hr", 0) + sum(p["tk"] for p in o) + tk.get("tk", 0)
+                            + 0.44 * sum(p["sa"][1] for p in o))
+        n = max(len(kayit["ev"].get("ceyrekler") or []), len(kayit.get("donemler") or []), 4)
+        degerler.append(sum(hucumlar) / 2 * 2400 / (2400 + (n - 4) * 300))
+    return round(sum(degerler) / len(degerler), 1) if len(degerler) >= 3 else None
+
+
 # ---------- Ortak: skor farkı ve gelişmiş istatistik ----------
 
 def akis_hesapla(sayilar, sure, kayit, resmi):
@@ -823,7 +841,7 @@ def kupa_uret(k):
             m["ceyrekler"] = [kutular[m["id"]]["ev"].get("ceyrekler") or [], kutular[m["id"]]["dep"].get("ceyrekler") or []]
     takim_oyuncu_uret(k, takimlar, maclar, kutular, gruplar)
     yaz(CIKTI / f"{k['kod']}.json", {"kod": k["kod"], "ad": k["ad"], "takimlar": {t: {"ad": v["ad"], "turk": v["turk"]} for t, v in takimlar.items()},
-                                     "gruplar": gruplar, "maclar": maclar})
+                                     "gruplar": gruplar, "maclar": maclar, "tempoOrt": tempo_ortalamasi(kutular)})
     turkler = [{"id": t, "ad": v["ad"]} for t, v in takimlar.items() if v["turk"]]
     print(f"  temsilciler: {', '.join(t['ad'] for t in turkler)} · {len(maclar)} maç · {len(kutular)} kutu skor")
     return {"kod": k["kod"], "ad": k["ad"], "kisa": k["kisa"], "temsilciler": turkler}

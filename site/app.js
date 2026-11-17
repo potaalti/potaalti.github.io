@@ -265,7 +265,7 @@ function gorunumMac(lig, id) {
   if (!kutu.fark && ME.farkVarMi(lig, kutu.hafta ?? hafta)) yukle(S.farklar, id, `data/${lig}/fark/${id}.json`);
   const benim = takimim(lig);
   return `${ust}${ME.macGovdesi(kutu, {
-    canli, sirala: S.ui.kutuSirala, donem: S.ui.kutuDonem, takimIst: takimIstatistigi(lig, kutu.id),
+    canli, sirala: S.ui.kutuSirala, donem: S.ui.kutuDonem, takimIst: takimIstatistigi(lig, kutu.id), tempoOrt: ME.ligTempoOrtalamasi(ligVerisi(lig, 'takimlar')?.takimlar),
     ileriDosya: kutu.ev.ileri ? null : ileriIstatistigi(lig, kutu.id), fark: S.farklar[id],
     takimBasligi: t => takimLinki(lig, t.ad),
     oyuncuAdi: o => (String(o.id).startsWith('fiba-') ? esc(o.ad) : `<a href="#/oyuncu/${lig}/${o.id}" class="oyuncu-link">${esc(o.ad)}</a>`),
@@ -1396,6 +1396,7 @@ function avMac(kod, k, id) {
     ${!kb && m.durum === 'oynanmadi' ? avMacOnu(kod, d, m) : !kutu ? `${kb?.fark ? ME.farkGrafigi(avTakimAdi(d, m.ev), avTakimAdi(d, m.dep), kb.fark) : ''}<p class="bos">${m.durum === 'canli'
       ? 'Bu kupada kutu skor ve gelişmiş istatistikler maç bitince gelir. Skor farkı grafiği maç sırasında birkaç dakikada bir güncellenir.'
       : 'Kutu skor maç başlayınca gelir (birkaç dakika sürebilir).'}</p>` : ME.macGovdesi(kutu, { canli: m.durum === 'canli', sirala: S.ui.kutuSirala, donem: S.ui.kutuDonem, fark: kb.fark, ileriDosya: kb.ileri,
+      tempoOrt: d.tempoOrt, tempoAd: 'kupa ortalaması',
       aciklamaEki: kb?.ileriResmi === false ? ' · Gelişmiş istatistiklerde top kaybından, ikinci şanstan ve boyalı alandan sayılar maç akışından hesaplandı (resmi değil); hızlı hücum bu kupanın verisinde yok.' : '',
       takimBasligi: t => `<a href="#/avrupa/${kod}/takim/${t.id}">${esc(t.ad)}</a>`,
       oyuncuAdi: o => `<a href="#/avrupa/${kod}/oyuncu/${o.id}" class="oyuncu-link">${esc(o.ad)}</a>` })}`;

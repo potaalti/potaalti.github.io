@@ -80,6 +80,14 @@ function logoRenkleri(img, yedek) {
   return [ana, ikinci];
 }
 
+// Oyuncu sayfası için takım renkleri (#rrggbb): [koyu zemin, ikinci renk]; logo yoksa ya da okunamazsa koyu camgöbeği
+export async function takimRenkleri(takimId, logoUrl) {
+  if (TAKIM_RENK[takimId]) return TAKIM_RENK[takimId];
+  const [a, b] = logoRenkleri(await resim(logoUrl), [12, 74, 84]);
+  const koyu = parlaklik(a) > 0.32 ? karistir(a, [0, 0, 0], 0.35) : a;
+  return [hex(koyu), hex(b)];
+}
+
 // ---------- Kart ----------
 // Ad: son kelime soyad (Jr, II gibi ekler soyadla birlikte); önü ad
 function adParcala(ad) {

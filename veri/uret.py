@@ -412,6 +412,22 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
     def ort(t, n):
         return round(t / n, 1) if n else 0
 
+    # Oyuncu sayfasının fotoğrafı ve takım logosu (data/<lig>/ altına göre): küçük kopya (veri/foto_kucult.mjs) yoksa TBF'nin aslı
+    kucuk = CIKTI / lig / "foto-k" / "liste.json"
+    kucuk = json.loads(kucuk.read_text(encoding="utf-8")) if kucuk.exists() else {}
+    asil = {f.stem: f.name for f in (CIKTI / lig / "foto").glob("*.*")} if (CIKTI / lig / "foto").exists() else {}
+    logolar = {f.stem: f.name for f in (CIKTI / lig / "logo").glob("*.*")} if (CIKTI / lig / "logo").exists() else {}
+
+    def gorsel(p):
+        g = {}
+        if p["id"] in kucuk:
+            g = {"foto": f"foto-k/{p['id']}.webp", "dekupe": bool(kucuk[p["id"]])}
+        elif p["id"] in asil:
+            g = {"foto": f"foto/{asil[p['id']]}"}
+        if p["takim"] in logolar:
+            g["logo"] = f"logo/{logolar[p['takim']]}"
+        return g
+
     oyuncu_ozet = []
     for p in oyuncular.values():
         biten = [x for x in p["maclar"] if x["durum"] == "bitti" and x["sn"] > 0]
@@ -425,7 +441,7 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
             "iki": atis["iki"], "uc": atis["uc"], "sa": atis["sa"],
         }
         oyuncu_ozet.append(p["ozet"])
-        yaz(CIKTI / lig / "oyuncu" / f"{p['id']}.json", {"ozet": p["ozet"], "maclar": sorted(p["maclar"], key=lambda x: x["tarih"])})
+        yaz(CIKTI / lig / "oyuncu" / f"{p['id']}.json", {"ozet": p["ozet"], "gorsel": gorsel(p), "maclar": sorted(p["maclar"], key=lambda x: x["tarih"])})
 
     # ---------- Puan tablosu: galibiyet, eşitlikte sayı averajı ----------
     tablo = []

@@ -563,3 +563,51 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
 .ileri-aciklama { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--cizgi); }
 .ileri-aciklama p { margin: 0 0 6px; font-size: .76rem; line-height: 1.5; color: var(--soluk); }
 .ileri-aciklama b { color: var(--yazi); font-weight: 600; }
+
+/* Oyuncu sayfası vitrini: takım renklerinde zemin (--t1 koyu, --t2 ikinci renk; logodan), solda ad ve numara, sağda fotoğraf */
+.oyuncu-vitrin { --t1: #0c4a54; --t2: #2fe0ea; position: relative; overflow: hidden; isolation: isolate; color: #fff; border: 0;
+  display: flex; align-items: flex-end; gap: 8px; min-height: 210px; padding: 22px 22px 18px;
+  background: radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--t2) 42%, transparent), transparent 58%),
+    linear-gradient(140deg, var(--t1) 30%, color-mix(in srgb, var(--t1) 55%, #000)); }
+.oyuncu-vitrin::before { content: ''; position: absolute; z-index: -1; inset: -40% 20% -40% auto; width: 90px; transform: rotate(18deg);
+  background: linear-gradient(var(--t2), transparent); opacity: .22; }
+.ov-arka-no { position: absolute; z-index: -1; right: 150px; bottom: -.18em; font: italic 900 11rem/1 system-ui, sans-serif; letter-spacing: -.05em;
+  color: rgba(255, 255, 255, .08); pointer-events: none; }
+.oyuncu-vitrin.fotosuz .ov-arka-no { right: 12px; }
+.ov-yazi { flex: 1; min-width: 0; }
+.ov-ust { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.ov-lig { font-size: .68rem; font-weight: 800; letter-spacing: .08em; padding: 2px 7px; border-radius: 6px; background: rgba(255, 255, 255, .16); }
+.ov-no { font-weight: 900; font-size: 1.05rem; letter-spacing: .02em; }
+/* Büyük harfe çevrilmez: yabancı adlarda i -> İ olur (Nikolic -> NİKOLİC) */
+.oyuncu-vitrin h1 { margin: 0; font-size: 2.3rem; line-height: 1.02; font-weight: 900; letter-spacing: -.015em;
+  overflow-wrap: anywhere; text-shadow: 0 2px 12px rgba(0, 0, 0, .25); }
+.oyuncu-vitrin h1 span { display: block; font-size: .5em; font-weight: 600; text-transform: none; letter-spacing: 0; opacity: .88; margin-bottom: 2px; }
+.ov-takim { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; padding: 4px 12px 4px 4px; border-radius: 999px;
+  background: rgba(255, 255, 255, .13); color: #fff !important; font-weight: 600; font-size: .9rem; text-decoration: none; max-width: 100%; }
+.ov-takim:hover { background: rgba(255, 255, 255, .22); }
+.ov-takim img { width: 28px; height: 28px; flex: none; object-fit: contain; background: #fff; border-radius: 50%; padding: 3px; box-sizing: border-box; }
+.oyuncu-vitrin small { display: block; margin-top: 10px; font-size: .8rem; opacity: .8; }
+.ov-foto { flex: none; position: relative; }
+.ov-foto.dekupe { height: 260px; margin: -22px -12px -18px 0; }
+.ov-foto.dekupe img { height: 100%; width: auto; display: block; filter: drop-shadow(0 8px 18px rgba(0, 0, 0, .35)); }
+.ov-foto.vesikalik { align-self: center; width: 132px; aspect-ratio: 4 / 5; border-radius: 16px; overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, .85); box-shadow: 0 10px 24px rgba(0, 0, 0, .3); }
+.ov-foto.vesikalik img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (max-width: 759px) {
+  .oyuncu-vitrin { min-height: 180px; padding: 16px 14px 14px; }
+  .oyuncu-vitrin h1 { font-size: 1.7rem; }
+  .ov-arka-no { font-size: 8rem; right: 110px; }
+  .ov-foto.dekupe { height: 205px; margin: -16px -8px -14px 0; }
+  .ov-foto.vesikalik { width: 100px; border-radius: 12px; }
+  .ov-takim { font-size: .8rem; }
+  .ov-takim img { width: 24px; height: 24px; }
+}
+/* Sezonun en iyi maçları: maç başı istatistiklerin altında */
+.ov-eniyi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
+.ov-eniyi > span { grid-column: 1 / -1; font-weight: 600; }
+.ov-eniyi a { background: var(--zemin); border-radius: 10px; padding: 8px 6px; text-align: center; color: var(--soluk); text-decoration: none; font-size: .74rem; min-width: 0; }
+.ov-eniyi a:hover { background: var(--vurgu-acik); }
+.ov-eniyi b { display: block; font-size: 1.2rem; color: var(--yazi); font-variant-numeric: tabular-nums; }
+.ov-eniyi small { display: block; margin-top: 2px; font-size: .68rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 420px) { .ov-eniyi { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 759px) { .oyuncu-ist { grid-template-columns: repeat(3, 1fr); } }

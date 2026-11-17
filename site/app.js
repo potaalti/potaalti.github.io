@@ -21,7 +21,7 @@ const LIGLER = { bsl: { kisa: 'BSL', ad: 'Basketbol Süper Ligi' }, tbl: { kisa:
 
 const S = {
   meta: null, index: null, hata: null,
-  tablo: {}, liderler: {}, rehber: {}, takimIst: {}, ileriIst: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, artieksi: {}, seyirci: {}, odul: {}, avrupa: {}, durum: {}, rekorlar: {}, istatistik: {}, // lig -> veri (oyuncu: lig -> id -> detay)
+  tablo: {}, liderler: {}, rehber: {}, takimRenk: {}, takimIst: {}, ileriIst: {}, oyuncular: {}, takimlar: {}, oyuncu: {}, artieksi: {}, seyirci: {}, odul: {}, avrupa: {}, durum: {}, rekorlar: {}, istatistik: {}, // lig -> veri (oyuncu: lig -> id -> detay)
   maclar: {}, // `${lig}-${hafta}` -> maç listesi
   kutular: {}, // maç id -> kutu skor (null: yok)
   farklar: {}, // maç id -> skor farkı grafiği verisi (biten maçlar, null: yok)
@@ -1173,6 +1173,42 @@ function gorunumTakim(lig, id) {
 // ---------- Oyuncu sayfası ----------
 // Atışlar maç başı isabet/deneme: [16, 19] ve 4 maç -> "4/4,8"
 const macBasiAtis = ([b, d], mac) => { const f = x => (mac ? x / mac : 0).toLocaleString('tr-TR', { maximumFractionDigits: 1 }); return `${f(b)}/${f(d)}`; };
+// Oyuncu sayfasının vitrini: takım renklerinde zemin (logodan), adın üstünde forma numarası, sağda fotoğraf (dekupe belden
+// yukarı zemine oturur, vesikalık çerçeveli), arkada büyük soluk numara. Fotoğrafı yoksa yalnız numara.
+function takimRengi(lig, takim, logo) {
+  const k = `${lig}|${takim}`;
+  if (!(k in S.takimRenk)) {
+    S.takimRenk[k] = null;
+    LG.takimRenkleri(takim, logo).then(r => { S.takimRenk[k] = r; ciz(); }).catch(() => {});
+  }
+  return S.takimRenk[k];
+}
+function oyuncuVitrini(lig, o, g = {}) {
+  const yol = x => (x ? `data/${lig}/${x}` : null);
+  const renk = takimRengi(lig, o.takim, yol(g.logo));
+  const k = String(o.ad).trim().split(/\s+/);
+  const ek = /^(jr\.?|sr\.?|ii|iii|iv)$/i.test(k.at(-1) ?? '') && k.length > 2 ? 2 : 1;
+  const [ad, soyad] = [k.slice(0, -ek).join(' '), k.slice(-ek).join(' ')];
+  const no = String(o.no ?? '').trim();
+  const foto = g.foto ? `<div class="ov-foto ${g.dekupe ? 'dekupe' : 'vesikalik'}"><img src="${yol(g.foto)}" alt="${esc(o.ad)}" decoding="async" onerror="this.parentNode.remove()"></div>` : '';
+  return `<div class="kart oyuncu-vitrin${foto ? '' : ' fotosuz'}"${renk ? ` style="--t1:${renk[0]};--t2:${renk[1]}"` : ''}>
+    ${no ? `<span class="ov-arka-no" aria-hidden="true">${esc(no)}</span>` : ''}
+    <div class="ov-yazi">
+      <div class="ov-ust"><span class="ov-lig">${LIGLER[lig].kisa}</span>${no ? `<span class="ov-no">#${esc(no)}</span>` : ''}</div>
+      <h1>${ad ? `<span>${esc(ad)}</span>` : ''}${esc(soyad)}</h1>
+      <a class="ov-takim" href="#/takim/${lig}/${o.takim}">${g.logo ? `<img src="${yol(g.logo)}" alt="" decoding="async">` : ''}${esc(takimAdi(lig, o.takim))}</a>
+      <small>${o.mac} maç · ${o.ilk5} kez ilk 5${o.mac ? ` · ${sayi(o.dk)} dk` : ''}</small>
+    </div>${foto}</div>`;
+}
+// Sezonun en iyi maçları: sayı, ribaund, asist, VP (eşitlikte ilk); maça dokununca kutu skor
+function sezonEnIyisi(lig, maclar) {
+  const oynanan = maclar.filter(x => x.sn > 0 && x.durum === 'bitti');
+  if (!oynanan.length) return '';
+  return `<div class="ov-eniyi"><span class="soluk kucuk">Sezonun en iyisi</span>${[['sayi', 'sayı'], ['rib', 'ribaund'], ['ast', 'asist'], ['vp', 'VP']].map(([a, ad]) => {
+    const m = oynanan.reduce((x, y) => (y[a] > x[a] ? y : x));
+    return `<a href="#/mac/${lig}/${m.mac}" title="${m.hafta}. hafta, ${esc(takimAdi(lig, m.rakip))}"><b>${m[a]}</b> ${ad}<small>${m.hafta}. hf · ${esc(takimAdi(lig, m.rakip))}</small></a>`;
+  }).join('')}</div>`;
+}
 function gorunumOyuncu(lig, id) {
   S.oyuncu[lig] ??= {};
   yukle(S.oyuncu[lig], id, `data/${lig}/oyuncu/${id}.json`);
@@ -1191,10 +1227,11 @@ function gorunumOyuncu(lig, id) {
       <td class="sayi">${oynadi ? x.ast : ''}</td><td class="sayi">${oynadi ? isaretli(x.pm) : ''}</td><td class="sayi"><b>${oynadi ? x.vp : ''}</b></td></tr>`;
   }).join('');
   return `<a class="geri" href="#/takim/${lig}/${o.takim}">‹ ${esc(takimAdi(lig, o.takim))}</a>
-    <div class="kart sayfa-baslik"><h1>${esc(o.ad)}</h1>
-      <p class="soluk" style="margin:0 0 12px"><span class="lig-etiket">${LIGLER[lig].kisa}</span> <a href="#/takim/${lig}/${o.takim}">${esc(takimAdi(lig, o.takim))}</a> · ${o.mac} maç (${o.ilk5} ilk 5)</p>
-      <div class="istatistik">${[['Dakika', o.dk], ['Sayı', o.sayi], ['Ribaund', o.rib], ['Asist', o.ast], ['VP', o.vp], ['+/-', isaretli(o.pm)], ['2S %', yuzde(o.iki), o.iki], ['3S %', yuzde(o.uc), o.uc], ['SA %', yuzde(o.sa), o.sa]]
+    ${oyuncuVitrini(lig, o, d.gorsel)}
+    <div class="kart"><h3>Maç başı</h3>
+      <div class="istatistik oyuncu-ist">${[['Dakika', o.dk], ['Sayı', o.sayi], ['Ribaund', o.rib], ['Asist', o.ast], ['VP', o.vp], ['+/-', isaretli(o.pm)], ['2S %', yuzde(o.iki), o.iki], ['3S %', yuzde(o.uc), o.uc], ['SA %', yuzde(o.sa), o.sa]]
         .map(([ad, v, atis]) => `<div><b>${typeof v === 'number' ? sayi(v) : v}</b><span>${ad}</span>${atis ? `<small>${macBasiAtis(atis, o.mac)}</small>` : ''}</div>`).join('')}</div>
+      ${sezonEnIyisi(lig, d.maclar)}
       <p class="soluk kucuk" style="margin:8px 0 0">Maç başı ortalamalar (+/-: sezon toplamı). Atış yüzdelerinin altında maç başı isabet/deneme.</p></div>
     <div class="kart"><h3>Maç maç</h3><div class="tablo-kap"><table>
       <thead><tr><th>Hf</th><th>Rakip</th><th class="sayi">Dk</th><th class="sayi">Sy</th><th class="sayi">Rb</th><th class="sayi">As</th><th class="sayi">+/-</th><th class="sayi">VP</th></tr></thead>

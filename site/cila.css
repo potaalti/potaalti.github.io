@@ -608,3 +608,6 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
 .av-yazi textarea { width: 100%; box-sizing: border-box; margin-top: 6px; padding: 10px; border: 1px solid var(--cizgi); border-radius: 10px;
   background: var(--zemin); color: var(--yazi); font: .88rem/1.5 system-ui, sans-serif; resize: vertical; }
 .oyuncu-vitrin small a { color: #fff; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+/* Maç önü öne çıkan oyuncular: ligdeki sıra (ilk 15) */
+.f-satir .lig-sira { color: var(--vurgu); font-weight: 600; }
+.f-satir .f-sayi .lig-sira { display: block; font-size: .68rem; white-space: nowrap; }

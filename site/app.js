@@ -1687,6 +1687,13 @@ function gucluYanlari(o, havuz) {
   return adaylar.length ? `<small class="guclu">${adaylar.map(x => esc(x.yazi)).join(' · ')}</small>` : '';
 }
 
+// Ligdeki sıra (ilk 15'teyse): sayı, ribaund, asist, dakika ve VP'nin yanına "(ligde 3.)" (kullanıcı 2026-11-17: bütün kıyaslarda)
+function ligSirasi(v, alan, havuz) {
+  if (!havuz || !(v > 0)) return '';
+  const sira = havuz.filter(x => (x[alan] ?? 0) > v).length + 1;
+  return sira <= 15 ? ` <span class="lig-sira">(ligde ${sira}.)</span>` : '';
+}
+
 // ---------- Maç önü (oynanmamış maç) ----------
 // İki takımın sezon kıyası (iyi olan vurgulu), son 5 maç, bu sezonki karşılaşmaları ve öne çıkan oyuncular. Yayın hazırlığı için.
 function macOnu(lig, m) {
@@ -1724,7 +1731,8 @@ function macOnu(lig, m) {
   const havuz = (ligVerisi(lig, 'oyuncular') ?? []).filter(x => x.mac >= 3);
   const yildizlar = tk => [...tk.kadro].filter(x => x.mac >= Math.min(2, tk.o)).sort((a, b) => b.vp - a.vp).slice(0, 5)
     .map(x => `<div class="f-satir"><div class="ad"><a href="#/oyuncu/${lig}/${x.id}" class="oyuncu-link"><strong>${esc(x.ad)}</strong></a>
-      <small>${sayi(x.sayi)} sayı · ${sayi(x.rib)} ribaund · ${sayi(x.ast)} asist · ${sayi(x.dk)} dk</small>${gucluYanlari(x, havuz)}</div><div class="f-sayi"><strong>${sayi(x.vp)}</strong><small>VP</small></div></div>`).join('');
+      <small>${[['sayi', 'sayı'], ['rib', 'ribaund'], ['ast', 'asist'], ['dk', 'dk']].map(([a, ad]) => `${sayi(x[a])} ${ad}${ligSirasi(x[a], a, havuz)}`).join(' · ')}</small>${gucluYanlari(x, havuz)}</div>
+      <div class="f-sayi"><strong>${sayi(x.vp)}</strong><small>VP</small>${ligSirasi(x.vp, 'vp', havuz)}</div></div>`).join('');
   const takimKarti = (id, tk, st) => `<div class="kart"><h3><a href="#/takim/${lig}/${id}">${esc(baslik(tk.ad))}</a></h3>
     <h3 style="margin-top:4px">Öne çıkan oyuncular</h3>${yildizlar(tk) || '<p class="bos">—</p>'}
     <h3 style="margin-top:14px">Son 5 maç <span class="form" style="margin-left:6px">${st.son5.map(x => `<i class="${x}">${x}</i>`).join('')}</span></h3>

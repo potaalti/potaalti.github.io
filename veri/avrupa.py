@@ -639,11 +639,12 @@ def donem_denetle(kayit):
             toplam = {}
             for per in kayit.get("donemler") or []:
                 x = per[t]["oyuncular"].get(no) or {}
-                for a in ("sayi", "rib", "ast", "tc", "blk", "tk", "faul", "af", "vp", "pm", "sn"):
+                for a in ("sayi", "rib", "ast", "tc", "blk", "tk", "faul", "af", "vp"):
                     toplam[a] = toplam.get(a, 0) + x.get(a, 0)
             beklenen = {"sayi": o["sayi"], "rib": o["rib"], "ast": o["ast"], "tc": o["tc"], "blk": o["blk"], "tk": o["tk"],
-                        "faul": o["faul"], "af": o.get("af", 0), "vp": o["vp"], "pm": o.get("pm", 0), "sn": o["sn"]}
-            fark = {a: (toplam.get(a, 0), v) for a, v in beklenen.items() if (abs(toplam.get(a, 0) - v) > 30 if a == "sn" else toplam.get(a, 0) != v)}
+                        "faul": o["faul"], "af": o.get("af", 0), "vp": o["vp"]}
+            # Süre ve +/- denetlenmez: akıştaki oyuncu değişikliği saatleri EuroLeague'de resmi süreden 1-2 dk sapabiliyor
+            fark = {a: (toplam.get(a, 0), v) for a, v in beklenen.items() if toplam.get(a, 0) != v}
             if fark:
                 farklar.append(f"{o['ad']}: {fark}")
     return farklar

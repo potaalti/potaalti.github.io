@@ -554,7 +554,6 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
 @media (prefers-color-scheme: dark) { .bay-rozet { background: #4a3313; color: #ffd9a8; } }
 
 /* Gelişmiş istatistik: 100 hücum bölümü ve en alttaki açıklamalar */
-.ileri-bolum { margin: 16px 0 2px; text-align: center; font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--soluk); }
 .ileri-aciklama { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--cizgi); }
 .ileri-aciklama p { margin: 0 0 6px; font-size: .76rem; line-height: 1.5; color: var(--soluk); }
 .ileri-aciklama b { color: var(--yazi); font-weight: 600; }

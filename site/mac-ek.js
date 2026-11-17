@@ -318,10 +318,9 @@ export function ileriIstatistikKarti(evAd, depAd, ileri, evLink, depLink, donemA
       <div class="ileri-ad">${ad}</div><div class="ileri-iz"><span class="${b > a ? 'onde' : ''}" style="width:${pay(b)}%">${b}</span></div></div>`;
   };
   const satir = (ad, a, b) => `<div class="ileri-satir"><b>${a}</b><span>${ad}</span><b>${b}</b></div>`;
-  // İyi olan taraf vurgulu: atılanda yüksek, yenilende düşük
-  const kiyas = (ad, a, b, yuksekIyi) => `<div class="ileri-satir"><b class="${(yuksekIyi ? a > b : a < b) ? 'iyi' : ''}">${ondalik(a)}</b><span>${ad}</span><b class="${(yuksekIyi ? b > a : b < a) ? 'iyi' : ''}">${ondalik(b)}</b></div>`;
-  const hucumBolumu = !hucum ? '' : `<div class="ileri-bolum">100 hücumda</div>
-    ${kiyas('Atılan sayı', hucum.ev.atilan, hucum.dep.atilan, true)}${kiyas('Yenilen sayı', hucum.ev.yenilen, hucum.dep.yenilen, false)}
+  // 100 hücumda sayı: yüksek olan vurgulu. Yenilen sayı rakibin atılanıyla aynı olduğundan ayrıca yazılmaz (kullanıcı 2026-11-17)
+  const a1 = hucum?.ev.atilan, b1 = hucum?.dep.atilan;
+  const hucumBolumu = !hucum ? '' : `<div class="ileri-satir"><b class="${a1 > b1 ? 'iyi' : ''}">${ondalik(a1)}</b><span>100 hücumda sayı</span><b class="${b1 > a1 ? 'iyi' : ''}">${ondalik(b1)}</b></div>
     <div class="ileri-satir orta"><span>Hücum sayısı (tahmini) <b>${hucum.hucum}</b></span></div>`;
   const ileriBolumu = !ev || !dep ? '' : `${ILERI_CUBUKLAR.filter(([k]) => ev[k] != null && dep[k] != null).map(cubuk).join('')}
     ${satir('En büyük fark', ev.fark, dep.fark)}${satir('En büyük seri', ev.seri, dep.seri)}${satir('Liderlik süresi', dakikaSaniye(ev.lider), dakikaSaniye(dep.lider))}
@@ -329,10 +328,5 @@ export function ileriIstatistikKarti(evAd, depAd, ileri, evLink, depLink, donemA
   return `<div class="kart ileri-kart"><h3>Gelişmiş istatistikler${donemAdi ? ` <small class="soluk">· ${esc(donemAdi)}</small>` : ''}</h3>
     <div class="ileri-takimlar"><span>${evLink ?? esc(evAd)}</span><span>${depLink ?? esc(depAd)}</span></div>
     ${ileriBolumu}${hucumBolumu}
-    <div class="ileri-aciklama">${ileriBolumu ? `<p><b>Top kaybından sayı:</b> rakibin top kaybından sonraki hücumlarda atılan sayı. <b>Hızlı hücum:</b> rakip yerleşmeden, hızlı çıkışla atılan sayı.
-      <b>İkinci şans:</b> hücum ribaundundan sonra atılan sayı. <b>Boyalı alan:</b> pota altındaki boyalı bölgeden atılan sayı. <b>Benç:</b> ilk 5 dışındaki oyuncuların sayısı.
-      <b>En büyük seri:</b> rakip sayı atmadan üst üste atılan en çok sayı. <b>Liderlik süresi:</b> skorda önde geçen süre.</p>` : ''}
-      ${hucum ? `<p><b>Hücum sayısı:</b> bir takımın topu kaç kez kullandığı; şut, top kaybı ya da serbest atışla biter. Kutu skordan tahmin edilir (saha içi atış denemesi − hücum ribaundu + top kaybı + 0,44 × serbest atış denemesi).
-      <b>100 hücumda atılan sayı</b> hücumun verimini, <b>100 hücumda yenilen sayı</b> savunmanın gücünü gösterir: hücum sayısı farklı (hızlı ya da yavaş oynanan) maçları ve dönemleri karşılaştırmayı sağlar.
-      Atılanın yüksek, yenilenin düşük olması iyidir; ikisinin farkı takımın 100 hücumdaki üstünlüğüdür.</p>` : ''}</div></div>`;
+    ${hucum ? `<div class="ileri-aciklama"><p><b>100 hücumda sayı:</b> takım 100 hücum yapsaydı kaç sayı atacağı; maçın hızından bağımsız olarak hücumun ne kadar verimli olduğunu gösterir. Yüksek olan daha verimli oynamıştır.</p></div>` : ''}</div>`;
 }

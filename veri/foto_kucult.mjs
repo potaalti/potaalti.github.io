@@ -11,7 +11,8 @@ import puppeteer from 'puppeteer-core';
 const KOK = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'site');
 const CHROME = process.env.CHROME ?? (process.platform === 'win32' ? 'C:/Program Files/Google/Chrome/Application/chrome.exe' : '/usr/bin/google-chrome');
 const TUR = { '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.gif': 'image/gif' };
-const ligler = process.argv.slice(2).length ? process.argv.slice(2) : ['tbl', 'bsl'];
+// avrupa: temsilcilerimizin oyuncularının kupa fotoğrafları (site/data/avrupa/foto/<kupa>-<id>, veri/avrupa.py indirir)
+const ligler = process.argv.slice(2).length ? process.argv.slice(2) : ['tbl', 'bsl', 'avrupa'];
 
 const elle = JSON.parse(fs.readFileSync(path.join(KOK, 'odul/foto/liste.json'), 'utf8'));
 const tarayici = await puppeteer.launch({ executablePath: CHROME, headless: true });
@@ -58,6 +59,7 @@ async function kucult(veriUrl) {
 
 for (const lig of ligler) {
   const kaynakKlasor = path.join(KOK, 'data', lig, 'foto');
+  if (!fs.existsSync(kaynakKlasor)) continue;
   const hedefKlasor = path.join(KOK, 'data', lig, 'foto-k');
   fs.mkdirSync(hedefKlasor, { recursive: true });
   const listeYolu = path.join(hedefKlasor, 'liste.json');
@@ -65,8 +67,10 @@ for (const lig of ligler) {
   const kaynaklar = new Map(fs.readdirSync(kaynakKlasor).filter(f => TUR[path.extname(f).toLowerCase()])
     .map(f => [path.basename(f, path.extname(f)), path.join(kaynakKlasor, f)]));
   // Haftanın ödüllerinde elle verilen fotoğraflar öncelikli (TBF'de fotoğrafı olmayan oyuncu da bu ligdeyse alınır)
-  const ligde = new Set(JSON.parse(fs.readFileSync(path.join(KOK, 'data', lig, 'oyuncular.json'), 'utf8')).map(o => String(o.id)));
-  for (const [id, dosya] of Object.entries(elle)) if (kaynaklar.has(id) || ligde.has(id)) kaynaklar.set(id, path.join(KOK, 'odul/foto', dosya));
+  if (lig !== 'avrupa') {
+    const ligde = new Set(JSON.parse(fs.readFileSync(path.join(KOK, 'data', lig, 'oyuncular.json'), 'utf8')).map(o => String(o.id)));
+    for (const [id, dosya] of Object.entries(elle)) if (kaynaklar.has(id) || ligde.has(id)) kaynaklar.set(id, path.join(KOK, 'odul/foto', dosya));
+  }
   let yeni = 0;
   for (const [id, kaynak] of kaynaklar) {
     const hedef = path.join(hedefKlasor, `${id}.webp`);
@@ -88,6 +92,7 @@ for (const lig of ligler) {
 
   // Takım logoları: logo/<takım>.* -> logo-k/<takım>.webp, uzun kenar 128 px (oyuncu sayfasında 28 px gösterilir; TBF'nin
   // asılları 500 KB'a kadar çıkıyor). Saydamlık korunur.
+  if (lig === 'avrupa') continue;
   const logoKlasor = path.join(KOK, 'data', lig, 'logo');
   const logoHedef = path.join(KOK, 'data', lig, 'logo-k');
   fs.mkdirSync(logoHedef, { recursive: true });

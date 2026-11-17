@@ -1183,9 +1183,11 @@ function takimRengi(lig, takim, logo) {
   }
   return S.takimRenk[k];
 }
-function oyuncuVitrini(lig, o, g = {}) {
-  const yol = x => (x ? `data/${lig}/${x}` : null);
-  const renk = takimRengi(lig, o.takim, yol(g.logo));
+// a (Avrupa için): kok (görsel yollarının başı), etiket, takimId (renk), takimAd, takimHref, ek (alt satırın sonuna HTML)
+function oyuncuVitrini(lig, o, g = {}, a = {}) {
+  const kok = a.kok ?? `data/${lig}/`;
+  const yol = x => (x ? `${kok}${x}` : null);
+  const renk = takimRengi(lig, a.takimId ?? o.takim, yol(g.logo));
   const k = String(o.ad).trim().split(/\s+/);
   const ek = /^(jr\.?|sr\.?|ii|iii|iv)$/i.test(k.at(-1) ?? '') && k.length > 2 ? 2 : 1;
   const [ad, soyad] = [k.slice(0, -ek).join(' '), k.slice(-ek).join(' ')];
@@ -1194,10 +1196,10 @@ function oyuncuVitrini(lig, o, g = {}) {
   return `<div class="kart oyuncu-vitrin${foto ? '' : ' fotosuz'}"${renk ? ` style="--t1:${renk[0]};--t2:${renk[1]}"` : ''}>
     ${no ? `<span class="ov-arka-no" aria-hidden="true">${esc(no)}</span>` : ''}
     <div class="ov-yazi">
-      <div class="ov-ust"><span class="ov-lig">${LIGLER[lig].kisa}</span>${no ? `<span class="ov-no">#${esc(no)}</span>` : ''}</div>
+      <div class="ov-ust"><span class="ov-lig">${esc(a.etiket ?? LIGLER[lig].kisa)}</span>${no ? `<span class="ov-no">#${esc(no)}</span>` : ''}</div>
       <h1>${ad ? `<span>${esc(ad)}</span>` : ''}${esc(soyad)}</h1>
-      <a class="ov-takim" href="#/takim/${lig}/${o.takim}">${g.logo ? `<img src="${yol(g.logo)}" alt="" decoding="async">` : ''}${esc(takimAdi(lig, o.takim))}</a>
-      <small>${o.mac} maç · ${o.ilk5} kez ilk 5${o.mac ? ` · ${sayi(o.dk)} dk` : ''}</small>
+      <a class="ov-takim" href="${a.takimHref ?? `#/takim/${lig}/${o.takim}`}">${g.logo ? `<img src="${yol(g.logo)}" alt="" decoding="async">` : ''}${esc(a.takimAd ?? takimAdi(lig, o.takim))}</a>
+      <small>${o.mac} maç · ${o.ilk5} kez ilk 5${o.mac ? ` · ${sayi(o.dk)} dk` : ''}${a.ek ?? ''}</small>
     </div>${foto}</div>`;
 }
 function gorunumOyuncu(lig, id) {
@@ -1389,10 +1391,18 @@ function avOyuncu(kod, k, id) {
       <td class="sayi">${oynadi ? Math.round(x.sn / 60) : '—'}</td><td class="sayi">${oynadi ? x.sayi : ''}</td><td class="sayi">${oynadi ? x.rib : ''}</td>
       <td class="sayi">${oynadi ? x.ast : ''}</td><td class="sayi">${oynadi ? isaretli(x.pm) : ''}</td><td class="sayi"><b>${oynadi ? x.vp : ''}</b></td></tr>`;
   }).join('');
-  return `<a class="geri" href="#/avrupa/${kod}/takim/${p.takim}">‹ ${esc(avTakimAdi(d, p.takim))}</a>
-    <div class="kart sayfa-baslik"><h1>${esc(p.ad)}</h1>
-      <p class="soluk" style="margin:0 0 12px"><span class="lig-etiket">${esc(k.kisa)}</span> <a href="#/avrupa/${kod}/takim/${p.takim}">${esc(avTakimAdi(d, p.takim))}</a> · ${o.mac} maç (${o.ilk5} ilk 5)</p>
-      <div class="istatistik">${[['Dakika', o.dk], ['Sayı', o.sayi], ['Ribaund', o.rib], ['Asist', o.ast], ['VP', o.vp], ['+/-', isaretli(o.pm)],
+  // Temsilcilerimizin oyuncularında fotoğraflı vitrin (veri/avrupa.py: BSL'deki TBF fotoğrafı ya da kupanınki), rakiplerde sade başlık
+  const takimHref = `#/avrupa/${kod}/takim/${p.takim}`;
+  const baslikHtml = p.gorsel
+    ? `${oyuncuVitrini('avrupa', { ad: p.ad, no: p.no, takim: p.takim, mac: o.mac, ilk5: o.ilk5, dk: o.dk }, p.gorsel, {
+      kok: 'data/', etiket: k.kisa, takimId: takimAnahtari(avTakimAdi(d, p.takim)), takimAd: avTakimAdi(d, p.takim), takimHref,
+      ek: p.gorsel.bsl ? ` · <a href="#/oyuncu/bsl/${p.gorsel.bsl}">BSL istatistikleri ›</a>` : '' })}
+    <div class="kart"><h3>Maç başı</h3>`
+    : `<div class="kart sayfa-baslik"><h1>${esc(p.ad)}</h1>
+      <p class="soluk" style="margin:0 0 12px"><span class="lig-etiket">${esc(k.kisa)}</span> <a href="${takimHref}">${esc(avTakimAdi(d, p.takim))}</a> · ${o.mac} maç (${o.ilk5} ilk 5)</p>`;
+  return `<a class="geri" href="${takimHref}">‹ ${esc(avTakimAdi(d, p.takim))}</a>
+    ${baslikHtml}
+      <div class="istatistik oyuncu-ist">${[['Dakika', o.dk], ['Sayı', o.sayi], ['Ribaund', o.rib], ['Asist', o.ast], ['VP', o.vp], ['+/-', isaretli(o.pm)],
         ['2S %', yuzde(o.iki), o.iki], ['3S %', yuzde(o.uc), o.uc], ['SA %', yuzde(o.sa), o.sa]]
         .map(([ad, v, atis]) => `<div><b>${typeof v === 'number' ? sayi(v) : v}</b><span>${ad}</span>${atis ? `<small>${macBasiAtis(atis, o.mac)}</small>` : ''}</div>`).join('')}</div>
       <p class="soluk kucuk" style="margin:8px 0 0">${esc(k.ad)} maç başı ortalamaları (+/-: turnuva toplamı). Atış yüzdelerinin altında maç başı isabet/deneme.</p></div>

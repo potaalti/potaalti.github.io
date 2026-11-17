@@ -20,6 +20,7 @@ sayfasındaki akış); DONEM_ILK_TARIH'ten itibaren oynanan maçlar için, canl�
 import json
 import re
 import time
+import unicodedata
 import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -310,6 +311,14 @@ def el_kupa(k):
                                 "taraf": "ev" if takim == m["ev"] else "dep", "pid": pid, **tur})
         return donem_hesapla(olaylar, kayit, "pir")
 
+    # Temsilcilerimizin oyuncularının EuroLeague fotoğrafları (oyuncu sayfası; BSL'de TBF'nin formalı fotoğrafı yoksa)
+    for kod in turk:
+        try:
+            kisiler = getir(f"{EL_API}/v2/competitions/{k['api']}/seasons/{k['sezon']}/clubs/{kod}/people")
+            takimlar[kod]["fotolar"] = {x["person"]["code"]: (x.get("images") or {}).get("headshot") for x in kisiler
+                                        if x.get("type") == "J" and (x.get("images") or {}).get("headshot")}
+        except Exception as e:  # noqa: BLE001 - fotoğrafsız kalır, sonraki çalışmada yeniden
+            print(f"{kod}: oyuncu fotoğrafları alınamadı ({e})")
     return takimlar, gruplar, maclar, kutu, akis, donem
 
 
@@ -354,6 +363,8 @@ def sure_sn(tp):
 
 # FIBA takım logosu (FIBA sitelerinin kendi kullandığı adres; açık zemin sürümü, 256 px PNG)
 FIBA_LOGO = "https://assets.fiba.basketball/image/upload/w_256/f_png/q_auto/.logoflag--light--organisation_{}"
+# FIBA oyuncu fotoğrafı (formalı, arka planı silinmiş; yoksa 404)
+FIBA_FOTO = "https://assets.fiba.basketball/image/upload/w_500/f_png/q_auto/.headshot--person_{}"
 
 
 def logolari_indir(k, takimlar, maclar):
@@ -764,6 +775,76 @@ def ort(x, n):
     return round(x / n, 1) if n else 0
 
 
+# ---------- Oyuncu fotoğrafı (temsilcilerimiz) ----------
+# Önce BSL'deki TBF formalı (dekupe) fotoğrafı (ad ve takımla eşleştirilir), yoksa kupanın kendi fotoğrafı (EuroLeague/EuroCup, FIBA:
+# site/data/avrupa/foto/<kupa>-<id>, küçüğü foto-k/ veri/foto_kucult.mjs ile), o da yoksa TBF'nin vesikalığı.
+# Yollar site/data/'ya göre. Logo: BSL'nin küçük logosu, yoksa kupanınki.
+BSL_VERI = KOK / "site" / "data" / "bsl"
+_onbellek = {}
+
+
+def ad_parcalari(ad):
+    s = str(ad).replace("ı", "i").replace("İ", "I")
+    s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode().lower()
+    return [w for w in re.sub(r"[^a-z ]", " ", s).split() if w not in ("jr", "sr", "ii", "iii", "iv")]
+
+
+def takim_anahtari(ad):
+    s = str(ad).replace("ı", "i").replace("İ", "I")
+    s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode().lower()
+    return re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+
+
+def gorsel_verisi():
+    if not _onbellek:
+        _onbellek["bsl"] = oku(BSL_VERI / "oyuncular.json") or []
+        _onbellek["kucuk"] = oku(BSL_VERI / "foto-k" / "liste.json") or {}
+        _onbellek["logo"] = {f.stem: f"bsl/logo-k/{f.name}" for f in (BSL_VERI / "logo-k").glob("*.webp")}
+        _onbellek["av"] = oku(CIKTI / "foto-k" / "liste.json") or {}
+    return _onbellek
+
+
+def oyuncu_gorseli(k, takim, o):
+    v = gorsel_verisi()
+    tkey, n = takim_anahtari(takim["ad"]), ad_parcalari(o["ad"])
+    es = lambda b: (bn := ad_parcalari(b["ad"])) == n or (len(n) > 1 and len(bn) > 1 and (set(bn) >= set(n) or set(n) >= set(bn)))
+    aday = [b for b in v["bsl"] if b["takim"] == tkey and es(b)] or [b for b in v["bsl"] if ad_parcalari(b["ad"]) == n]
+    bsl = str(aday[0]["id"]) if len(aday) == 1 else None
+    anah = f"{k['kod']}-{o['id']}"
+    g = {}
+    if bsl and v["kucuk"].get(bsl) == 1:
+        g = {"foto": f"bsl/foto-k/{bsl}.webp", "dekupe": True}
+    else:
+        url = (takim.get("fotolar") or {}).get(o["id"])
+        url = f"{url}?width=500" if url else FIBA_FOTO.format(o["id"]) if k["tur"] == "fiba" else None
+        asil = next(iter((CIKTI / "foto").glob(f"{anah}.*")), None)
+        if url and not asil:
+            try:
+                req = urllib.request.Request(url, headers={"User-Agent": TARAYICI})
+                with urllib.request.urlopen(req, timeout=40) as y:
+                    tur, veri = y.headers.get_content_type(), y.read()
+                uz = {"image/png": ".png", "image/webp": ".webp", "image/jpeg": ".jpg"}.get(tur)
+                if uz and veri:
+                    (CIKTI / "foto").mkdir(parents=True, exist_ok=True)
+                    asil = CIKTI / "foto" / f"{anah}{uz}"
+                    asil.write_bytes(veri)
+                time.sleep(0.2)
+            except Exception as e:  # noqa: BLE001
+                print(f"{anah}: fotoğraf indirilemedi ({e})")
+        if anah in v["av"]:
+            g = {"foto": f"avrupa/foto-k/{anah}.webp", "dekupe": bool(v["av"][anah])}
+        elif asil:
+            g = {"foto": f"avrupa/foto/{asil.name}"}
+        elif bsl and bsl in v["kucuk"]:
+            g = {"foto": f"bsl/foto-k/{bsl}.webp", "dekupe": False}
+    logo = v["logo"].get(tkey) or (f"avrupa/{takim['logo']}" if takim.get("logo") else None)
+    if logo:
+        g["logo"] = logo
+    if bsl:
+        g["bsl"] = bsl
+    return g
+
+
 def takim_oyuncu_uret(k, takimlar, maclar, kutular, gruplar=()):
     kok = CIKTI / k["kod"]
     turk = [t for t, v in takimlar.items() if v["turk"]]
@@ -801,6 +882,7 @@ def takim_oyuncu_uret(k, takimlar, maclar, kutular, gruplar=()):
                 kadro.append({"id": o["id"], "ad": o["ad"], "no": o["no"], **ozet,
                               **({} if takimlar[tid]["turk"] else {"karsi": [[x["rakip"], x["sayi"]] for x in oyn]})})
             oyuncular_hepsi[o["id"]] = {"id": o["id"], "ad": o["ad"], "no": o["no"], "takim": tid, "takimAd": takimlar[tid]["ad"], "kupa": k["kod"],
+                                        **({"gorsel": oyuncu_gorseli(k, takimlar[tid], o)} if takimlar[tid]["turk"] else {}),
                                         "ozet": ozet, "maclar": o["maclar"]}
         kadro.sort(key=lambda x: (-x["dk"], x["ad"]))
         n = len(oynanan)

@@ -1343,6 +1343,16 @@ function sahaHaftasi() {
   return { hafta, n: hafta?.hafta ?? maclarVarsayilanHafta(), onceki: sira[i - 1], sonraki: sira[i + 1] };
 }
 
+// Forma numarası (Takımım ve takım sayfasındaki saha kartları): ana uygulamanın oyuncu listesinden (data/<lig>/oyuncular.json,
+// en son giydiği numara); bir kez yüklenir
+function formaNo(pid) {
+  if (S.formalar === undefined) {
+    S.formalar = null;
+    fetch(new URL(`../data/${LIG.kod}/oyuncular.json`, location.href)).then(r => (r.ok ? r.json() : [])).catch(() => [])
+      .then(l => { S.formalar = new Map((Array.isArray(l) ? l : []).map(o => [String(o.id), String(o.no ?? '').trim()])); ciz(); });
+  }
+  return S.formalar?.get(String(pid)) ?? '';
+}
 function sahaKarti(tid, kGuncel, secilebilir) {
   const zorunlu = zorunluBekleyen(tid);
   const secimModu = secilebilir && S.ui.degisimModu;
@@ -1370,7 +1380,8 @@ function sahaKarti(tid, kGuncel, secilebilir) {
     const o = oyuncu(p);
     const d = hafta && durum.get(p);
     const secili = rol === 'as' ? S.ui.secAs === p : S.ui.secYedek === p;
-    const ic = `<b>${esc(o.ad)}</b><small>${esc(baslik(o.takimKod || o.takim || ''))}</small><span class="saha-vp">${deger(p)}</span>${not(p)}${mevkiRozeti(mevki(p))}`;
+    const no = formaNo(p);
+    const ic = `${no ? `<span class="saha-no">#${esc(no)}</span>` : ''}<b>${esc(o.ad)}</b><small>${esc(baslik(o.takimKod || o.takim || ''))}</small><span class="saha-vp">${deger(p)}</span>${not(p)}${mevkiRozeti(mevki(p))}`;
     const soluk = d && d.rol === 'as' && !d.sayildi;
     const sinif = `saha-oyuncu ${rol} ${secili ? 'secili' : ''} ${zorunlu.includes(p) ? 'uyari' : ''} ${soluk ? 'soluk-kart' : ''} ${d?.yerineGirdigi ? 'sayilan' : ''}`;
     return secimModu ? `<button class="${sinif}" data-is="sec-${rol}" data-id="${esc(p)}" aria-pressed="${secili}">${ic}</button>`
@@ -1419,7 +1430,8 @@ function haftaMaclariKarti(tid) {
     const durum = !m ? 'bu hafta maçı yok'
       : m.durum === 'oynanmadi' ? `${gunBasligi(m.tarih)} · ${saatYazisi(m.tarih)}`
         : m.durum === 'canli' ? '<span class="canli-yazi">canlı</span>' : `MS ${m.evSkor}-${m.depSkor}`;
-    return `<li><span><b>${oyuncuLinki(p, o.ad)}</b> <span class="rozet ${rol}">${rol === 'as' ? 'As' : 'Yedek'}</span>
+    const no = formaNo(p);
+    return `<li><span><b>${no ? `<span class="liste-no">#${esc(no)}</span>` : ''}${oyuncuLinki(p, o.ad)}</b> <span class="rozet ${rol}">${rol === 'as' ? 'As' : 'Yedek'}</span>
       <small class="soluk" style="display:block">${m ? `${ev ? 'vs' : '@'} ${takimLinki(ev ? m.dep : m.ev)} · ` : ''}${durum}</small></span>
       <span class="sayi"><b>${m && m.durum !== 'oynanmadi' && v ? sayi(v.vp) : '–'}</b></span></li>`;
   };

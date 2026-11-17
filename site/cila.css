@@ -611,3 +611,6 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
 /* Maç önü öne çıkan oyuncular: ligdeki sıra (ilk 15) */
 .f-satir .lig-sira { color: var(--vurgu); font-weight: 600; }
 .f-satir .f-sayi .lig-sira { display: block; font-size: .68rem; white-space: nowrap; }
+/* Fantezi saha kartı: forma numarası adın üstünde (köşede uzun adların üstüne biniyordu) */
+.saha-no { font-size: .72rem; font-weight: 800; color: var(--vurgu); font-variant-numeric: tabular-nums; line-height: 1; letter-spacing: .02em; }
+.liste-no { display: inline-block; min-width: 2.1em; margin-right: 4px; color: var(--vurgu); font-size: .78em; font-weight: 800; font-variant-numeric: tabular-nums; }

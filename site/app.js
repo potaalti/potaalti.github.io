@@ -1549,7 +1549,12 @@ function avHaftaYazisi(tur) {
     return `${isaret} ${ev} ${m.evSkor}-${m.depSkor} ${dep} (${k.ad})`;
   };
   const govde = [...gunler].map(([g, liste]) => `📅 ${gunBasligi(`${g}T12:00:00`)}\n${liste.map(satir).join('\n')}`).join('\n\n');
-  return `${baslik}\n${ayAdi(avHafta().aralik)}\n\n${govde || (tur === 'program' ? 'Bu hafta maç yok.' : 'Bu hafta biten maç yok.')}`;
+  // Tarih aralığı haftanın günleri değil, ilk ve son maç günü ("17–20 Kasım", ay değişirse "30 Kasım – 3 Aralık"; tek gün "17 Kasım")
+  const g = [...gunler.keys()].sort();
+  const gunAy = iso => new Date(`${iso}T12:00:00`).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' });
+  const aralik = !g.length ? ayAdi(avHafta().aralik) : g.length === 1 || g[0] === g.at(-1) ? gunAy(g[0])
+    : g[0].slice(0, 7) === g.at(-1).slice(0, 7) ? `${Number(g[0].slice(8))}–${gunAy(g.at(-1))}` : `${gunAy(g[0])} – ${gunAy(g.at(-1))}`;
+  return `${baslik}\n${aralik}\n\n${govde || (tur === 'program' ? 'Bu hafta maç yok.' : 'Bu hafta biten maç yok.')}`;
 }
 async function avGorselPaylas(tur, indir) {
   const idx = S.avrupa.index;

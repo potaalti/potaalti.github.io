@@ -61,12 +61,14 @@ const kocAdi = k => {
   const tr = /[İŞĞÜÖÇışğüöç]/.test(k);  // Türkçe harf varsa Türkçe küçük harf (YILMAZ -> Yılmaz), yoksa MARKOVIC -> Markovic
   return ad.map(w => (w === w.toLocaleUpperCase('tr') ? w[0] + (tr ? w.slice(1).toLocaleLowerCase('tr') : w.slice(1).toLowerCase()) : w)).join(' ');
 };
+// Forma numarası: adın önünde soluk, sabit genişlikte (numarası olmayanlarda boş kalır, adlar hizalı durur)
+export const formaNo = no => `<span class="forma-no">${esc(String(no ?? '').trim())}</span>`;
 function kutuSkorTablosu(t, takim, a, koc) {
   const oyuncular = t.oyuncular ?? [];
   const satirlar = kutuSirasi(oyuncular, a.sirala).map(o => {
     const sahada = a.canli && o.sahada;
     const ad = a.oyuncuAdi(o);
-    return `<tr class="${sureSn(o.sure) > 0 ? '' : 'oynamadi'} ${a.benimMi(String(o.id)) ? 'ben benim-oyuncu' : ''}"><th${sahada ? ' class="sahada"' : ''}>${o.ilk5 ? `<b>${ad}</b>` : ad}${sahada ? '<span class="sahada-yildiz">*</span>' : ''}</th>
+    return `<tr class="${sureSn(o.sure) > 0 ? '' : 'oynamadi'} ${a.benimMi(String(o.id)) ? 'ben benim-oyuncu' : ''}"><th${sahada ? ' class="sahada"' : ''}>${formaNo(o.no)}${o.ilk5 ? `<b>${ad}</b>` : ad}${sahada ? '<span class="sahada-yildiz">*</span>' : ''}</th>
       ${KUTU_SUTUNLARI.map(c => kutuHucresi(o, c)).join('')}</tr>`;
   }).join('');
   return `<div class="kart"><h3>${a.takimBasligi(t)}${koc ? ` <small class="koc">Koç: ${esc(kocAdi(koc))}</small>` : ''}</h3><div class="tablo-kap"><table class="kutu">

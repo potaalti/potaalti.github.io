@@ -400,6 +400,7 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
                     p = oyuncular.setdefault(pid, {"id": pid, "ad": o["ad"], "takim": t["id"], "maclar": []})
                     p["ad"] = o["ad"]
                     p["takim"] = t["id"]  # en son oynadığı takım
+                    p["no"] = str(o.get("no") or "").strip() or p.get("no", "")  # en son giydiği forma numarası
                     p["maclar"].append({
                         "mac": m["id"], "hafta": h, "tarih": m["tarih"], "durum": m["durum"], "takim": t["id"], "rakip": rakip["id"],
                         "evde": taraf == "ev", "skor": skor, "rakipSkor": rakip_skor, "ilk5": bool(o.get("ilk5")), "sure": o.get("sure") or "0:00",
@@ -418,7 +419,7 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
         top = {a: sum(x[a] for x in biten) for a in ALANLAR + ["pm", "sn"]}
         atis = {a: [sum(x[a][0] for x in biten), sum(x[a][1] for x in biten)] for a in ("iki", "uc", "sa")}
         p["ozet"] = {
-            "id": p["id"], "ad": p["ad"], "takim": p["takim"], "mac": n,
+            "id": p["id"], "ad": p["ad"], "no": p.get("no", ""), "takim": p["takim"], "mac": n,
             "ilk5": sum(1 for x in biten if x["ilk5"]),
             "dk": ort(top["sn"] / 60, n), **{a: ort(top[a], n) for a in ALANLAR}, "pm": top["pm"], "pmOrt": ort(top["pm"], n),
             "iki": atis["iki"], "uc": atis["uc"], "sa": atis["sa"],

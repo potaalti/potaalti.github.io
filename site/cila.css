@@ -328,6 +328,10 @@ button.saha-oyuncu:hover, a.saha-oyuncu:hover { border-color: color-mix(in srgb,
   table.kutu .fantezi-sahip { overflow: hidden; text-overflow: ellipsis; }
 }
 
+/* Forma numarası: kutu skorda ve takım kadrosunda adın önünde */
+.forma-no { display: inline-block; min-width: 1.6em; margin-right: 5px; text-align: right; color: var(--soluk); font-size: .82em; font-weight: 600; font-variant-numeric: tabular-nums; }
+@media (max-width: 759px) { table.kutu .forma-no { min-width: 1.3em; margin-right: 3px; } }
+
 /* Kutu skorda benim fantezi takımımın oyuncuları: satır renkli şerit */
 table.kutu tr.ben th, table.kutu tr.benim-oyuncu th { background: var(--vurgu-acik) !important; }
 table.kutu tr.ben td, table.kutu tr.benim-oyuncu td { background: color-mix(in srgb, var(--vurgu) 10%, transparent) !important; }

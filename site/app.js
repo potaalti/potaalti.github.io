@@ -1132,7 +1132,7 @@ function kadroTablosu(kadro, href) {
   const th = ([k, ad]) => `<th class="sayi sirala ${s?.k === k ? 'aktif' : ''}" data-is="kd-sirala" data-id="${k}">${ad}${s?.k === k ? (s.yon > 0 ? ' ▼' : ' ▲') : ''}</th>`;
   return `<div class="tablo-kap"><table class="kadro">
     <thead><tr><th>Oyuncu</th>${KADRO_SUTUNLARI.map(th).join('')}</tr></thead>
-    <tbody>${liste.map(x => `<tr class="tikla" onclick="location.hash='${href(x)}'"><th><b>${esc(x.ad)}</b></th>
+    <tbody>${liste.map(x => `<tr class="tikla" onclick="location.hash='${href(x)}'"><th>${ME.formaNo(x.no)}<b>${esc(x.ad)}</b></th>
       ${KADRO_SUTUNLARI.map(col => `<td class="sayi">${col[3](x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 }
 function gorunumTakim(lig, id) {

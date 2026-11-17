@@ -8,6 +8,7 @@ import { firebaseConfig, lig as LIG_AYARI } from 'lig-ayar';
 import * as C from './core.js';
 import * as D from './db.js';
 import * as ME from '../mac-ek.js';
+import { puanGorseli } from './puan-gorsel.js';
 // TBL verisi (eski TBL sitesi): Pages ya da depo, hangisi yeniyse (../ortak.js kaynakSec); TBL_VERI canlı bağ, her an güncel
 import { KAYNAK as TBL_VERI, kaynakSec } from '../ortak.js';
 
@@ -1004,135 +1005,42 @@ const paylasDugmeleri = (tur, n = '') => !yonetici() ? '' : `<span class="satir"
     <button class="btn kucuk" data-is="paylas" data-tur="${tur}" data-id="${n}">📤 Paylaş</button>
     <button class="btn kucuk" data-is="paylas" data-tur="${tur}" data-id="${n}" data-islem="indir" title="Görseli indir">⬇</button></span>`;
 
-const GORSEL = {
-  genislik: 1080, kenar: 40, baslikYuk: 210, sutunYuk: 64, satirYuk: 84, altYuk: 96,
-  zemin: '#eef4f5', kart: '#ffffff', yazi: '#0f1f22', soluk: '#5f7377', cizgi: '#e3ecee', vurgu: '#097a88',
-  madalya: ['#ca8a04', '#8a8f98', '#b0662f'], yaziTipi: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
-};
-
-function yuvarlakDikdortgen(ctx, sol, ust, gen, yuk, r) {
-  ctx.beginPath();
-  ctx.moveTo(sol + r, ust);
-  ctx.arcTo(sol + gen, ust, sol + gen, ust + yuk, r);
-  ctx.arcTo(sol + gen, ust + yuk, sol, ust + yuk, r);
-  ctx.arcTo(sol, ust + yuk, sol, ust, r);
-  ctx.arcTo(sol, ust, sol + gen, ust, r);
-  ctx.closePath();
-}
-
-// Uzun takım adı kutuya sığmıyorsa küçültülür
-function sigdir(ctx, metin, enBuyuk, genislik, font) {
-  let boyut = enBuyuk;
-  do ctx.font = font(boyut); while (ctx.measureText(metin).width > genislik && --boyut > 18);
-}
-
-// satirlar: [{ sira, ad, not, degerler: [...] }], sutunlar: ['VP', 'Puan']
-async function siralamaGorseli({ baslik: ustYazi, altBaslik, sutunlar, satirlar }) {
-  const g = GORSEL;
-  const yukseklik = g.baslikYuk + g.sutunYuk + satirlar.length * g.satirYuk + g.altYuk + g.kenar;
-  const tuval = document.createElement('canvas');
-  tuval.width = g.genislik;
-  tuval.height = yukseklik;
-  const ctx = tuval.getContext('2d');
-  const font = (agirlik, boyut) => `${agirlik} ${boyut}px ${g.yaziTipi}`;
-  ctx.fillStyle = g.zemin;
-  ctx.fillRect(0, 0, g.genislik, yukseklik);
-  const degrade = ctx.createLinearGradient(0, 0, g.genislik, g.baslikYuk);
-  degrade.addColorStop(0, '#0a8a99');
-  degrade.addColorStop(1, '#06505b');
-  ctx.fillStyle = degrade;
-  ctx.fillRect(0, 0, g.genislik, g.baslikYuk);
-  try {
-    const logo = new Image();
-    logo.src = new URL('../marka/logo.webp', import.meta.url).href; // Pota Altı logosu (kullanıcının, 2026-11-16)
-    // Logo takılırsa paylaşım beklemede kalmasın
-    await Promise.race([logo.decode(), new Promise((_, hata) => setTimeout(() => hata(new Error('logo')), 3000))]);
-    ctx.drawImage(logo, g.kenar, 45, 120, 120);
-  } catch { /* logo yüklenemezse görsel yine oluşur */ }
-  ctx.fillStyle = '#ffffff';
-  sigdir(ctx, ustYazi, 46, g.genislik - g.kenar * 2 - 150, b => font(800, b));
-  ctx.fillText(ustYazi, g.kenar + 150, 100);
-  ctx.fillStyle = '#d6f4f6';
-  ctx.font = font(500, 32);
-  ctx.fillText(altBaslik, g.kenar + 150, 148);
-
-  const kartUst = g.baslikYuk + 16;
-  ctx.fillStyle = g.kart;
-  yuvarlakDikdortgen(ctx, g.kenar - 16, kartUst, g.genislik - 2 * (g.kenar - 16), g.sutunYuk + satirlar.length * g.satirYuk + 8, 24);
-  ctx.fill();
-  const sutunX = sutunlar.map((_, i) => g.genislik - g.kenar - 10 - (sutunlar.length - 1 - i) * 150);
-  ctx.fillStyle = g.soluk;
-  ctx.font = font(700, 24);
-  ctx.textAlign = 'left';
-  ctx.fillText('TAKIM', g.kenar + 80, kartUst + 44);
-  ctx.textAlign = 'right';
-  sutunlar.forEach((s, i) => ctx.fillText(s.toLocaleUpperCase('tr'), sutunX[i], kartUst + 44));
-  const adGenisligi = sutunX[0] - 110 - (g.kenar + 80);
-  satirlar.forEach((s, i) => {
-    const ust = kartUst + g.sutunYuk + i * g.satirYuk;
-    const orta = ust + g.satirYuk / 2;
-    ctx.strokeStyle = g.cizgi;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(g.kenar, ust);
-    ctx.lineTo(g.genislik - g.kenar, ust);
-    ctx.stroke();
-    ctx.fillStyle = s.sira <= 3 ? g.madalya[s.sira - 1] : g.zemin;
-    ctx.beginPath();
-    ctx.arc(g.kenar + 30, orta, 26, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = s.sira <= 3 ? '#ffffff' : g.yazi;
-    ctx.font = font(800, 26);
-    ctx.textAlign = 'center';
-    ctx.fillText(String(s.sira), g.kenar + 30, orta + 9);
-    ctx.textAlign = 'left';
-    ctx.fillStyle = g.yazi;
-    sigdir(ctx, s.ad, 31, adGenisligi, b => font(800, b));
-    ctx.fillText(s.ad, g.kenar + 80, s.not ? orta - 4 : orta + 11);
-    if (s.not) {
-      ctx.fillStyle = g.soluk;
-      sigdir(ctx, s.not, 22, adGenisligi, b => font(500, b));
-      ctx.fillText(s.not, g.kenar + 80, orta + 26);
-    }
-    ctx.textAlign = 'right';
-    s.degerler.forEach((d, j) => {
-      const son = j === s.degerler.length - 1;
-      ctx.fillStyle = son ? g.vurgu : g.yazi;
-      ctx.font = font(800, son ? 34 : 31);
-      ctx.fillText(String(d), sutunX[j], orta + 11);
-    });
-  });
-  ctx.textAlign = 'center';
-  ctx.fillStyle = g.soluk;
-  ctx.font = font(500, 24);
-  const zaman = new Date().toLocaleString('tr-TR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
-  ctx.fillText(`${location.host}${location.pathname.replace(/\/$/, '')} · ${zaman}`, g.genislik / 2, yukseklik - g.kenar - 10);
-  return new Promise(ok => tuval.toBlob(ok, 'image/png'));
-}
-
-function gorselVerisi(tur, n) {
+// Görsel verisi (puan-gorsel.js, kullanıcı 2026-11-17 yeni tasarım): genelde puan, VP, sıra değişimi ve haftalık puanlar;
+// haftalıkta VP, kazanılan puan ve takımın haftanın yıldızı (sayılan oyuncularından en yüksek VP, kürsüde fotoğrafıyla)
+async function gorselVerisi(tur, n) {
+  const enCokPuan = Math.max(...C.PUAN_TABLOSU);
   if (tur === 'genel') {
     const haftalar = puanHaftalari();
     const tablo = genelTablo();
+    const degisim = siraDegisimleri();
     const [ilk, son] = [haftalar[0].hafta, haftalar.at(-1).hafta];
+    const devam = !C.haftaDurumu(haftalar.at(-1)).tamamlandi;
     return {
-      dosyaAdi: 'pota-alti-bsl-genel-klasman.png',
+      dosyaAdi: `pota-alti-${LIG.kod}-fantezi-genel-klasman.png`,
       bilgi: {
-        baslik: S.ayar.ad, altBaslik: `Genel Klasman · ${ilk === son ? `${hf(ilk)}. hafta` : `${hf(ilk)}–${hf(son)}. haftalar`}`, sutunlar: ['VP', 'Puan'],
-        satirlar: tablo.map(s => ({ sira: s.sira, ad: s.ad, not: s.menajer ?? '', degerler: [sayi(s.vp), s.puan] })),
+        lig: LIG.kod, tur, enCokPuan, baslik: 'GENEL KLASMAN', paylasimBaslik: S.ayar.ad,
+        serit: `${ilk === son ? `${hf(ilk)}. HAFTA` : `${hf(ilk)}.–${hf(son)}. HAFTALAR`}  ·  ${tablo.length} TAKIM${devam ? `  ·  ${hf(son)}. HAFTA SÜRÜYOR` : ''}`,
+        satirlar: tablo.map(s => ({ sira: s.sira, ad: s.ad, menajer: s.menajer ?? '', puan: s.puan, vp: s.vp,
+          degisim: degisim.get(s.id) ?? 0, haftalar: s.haftalar.map(h => h.puan) })),
       },
     };
   }
   const h = S.haftalar[n];
   const hd = C.haftaDurumu(h);
+  const [gorsel, elle] = await Promise.all([fetch(new URL(`../data/${LIG.kod}/gorsel.json`, import.meta.url)).then(x => x.json()).catch(() => ({})),
+    fetch(new URL('../odul/foto/liste.json', import.meta.url)).then(x => x.json()).catch(() => ({}))]);
+  const foto = id => (elle[id] ? new URL(`../odul/foto/${elle[id]}`, import.meta.url).href
+    : gorsel.foto?.[id] ? new URL(`../data/${LIG.kod}/foto/${id}${(gorsel.foto[id].match(/\.\w+$/) ?? ['.webp'])[0]}`, import.meta.url).href : null);
   return {
-    dosyaAdi: `pota-alti-${LIG.kod}-${hf(n)}-hafta.png`,
+    dosyaAdi: `pota-alti-${LIG.kod}-fantezi-${hf(n)}-hafta.png`,
     bilgi: {
-      baslik: S.ayar.ad, altBaslik: `${hf(n)}. Hafta · ${hd.tamamlandi ? 'Kesin sonuç' : `Ara sonuç (${hd.bitti}/${hd.toplam} maç bitti)`}`, sutunlar: ['VP', 'Puan'],
-      satirlar: C.haftaSiralamasi(haftaTakimlari(n), h).map(s => ({
-        sira: s.sira, ad: s.ad, degerler: [sayi(s.toplam), `+${s.puan}`],
-        not: s.vpEsitligi ? (s.enIyiTurk ? `Eşitlik: ${s.enIyiTurk.ad} ${sayi(s.enIyiTurk.vp)} VP` : 'Eşitlik: Türk oyuncu yok') : '',
-      })),
+      lig: LIG.kod, tur, enCokPuan, baslik: `${hf(n)}. HAFTA`, paylasimBaslik: S.ayar.ad,
+      serit: `HAFTALIK SIRALAMA  ·  ${hd.tamamlandi ? 'KESİN SONUÇ' : `ARA SONUÇ (${hd.bitti}/${hd.toplam} MAÇ BİTTİ)`}`,
+      satirlar: C.haftaSiralamasi(haftaTakimlari(n), h).map(s => {
+        const y = [...s.aslar, ...s.yedekler].filter(o => o.sayildi).sort((a, b) => b.vp - a.vp)[0];
+        return { sira: s.sira, ad: s.ad, menajer: s.menajer ?? '', vp: s.toplam, kazandi: s.puan,
+          yildiz: y ? { ad: y.ad, vp: y.vp, foto: foto(y.id) } : null };
+      }),
     },
   };
 }
@@ -1156,14 +1064,14 @@ async function siralamayiPaylas(dugme, tur, n, indir = false) {
   try {
     if (!hazir) {
       dugme.textContent = '…';
-      const { bilgi, dosyaAdi } = gorselVerisi(tur, n);
-      const blob = await siralamaGorseli(bilgi);
+      const { bilgi, dosyaAdi } = await gorselVerisi(tur, n);
+      const blob = await puanGorseli(bilgi);
       hazir = hazirGorsel = { anahtar, zaman: Date.now(), dosya: new File([blob], dosyaAdi, { type: 'image/png' }), bilgi };
     }
     const { dosya, bilgi } = hazir;
     if (!indir && navigator.canShare?.({ files: [dosya] })) {
       try {
-        await navigator.share({ files: [dosya], title: bilgi.baslik, text: `${bilgi.baslik} · ${bilgi.altBaslik}` });
+        await navigator.share({ files: [dosya], title: bilgi.paylasimBaslik, text: `${bilgi.paylasimBaslik} · ${bilgi.baslik}` });
         hazirGorsel = null;
       } catch (e) {
         if (e?.name === 'NotAllowedError') bildir('Görsel hazır: paylaşmak için Paylaş\'a tekrar dokun.');

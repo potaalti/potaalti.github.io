@@ -961,7 +961,7 @@ function takimOzetKarti(tid) {
     <div class="baslik-satir"><h2>${esc(takimAdi(tid))}${menajer && tid !== benimTakimim() ? ` <span class="soluk kucuk">${esc(menajer)}</span>` : ''}</h2><a href="#/puan">Genel klasman ›</a></div>
     <div class="ozet-kutular">
       ${kutu(`${g.sira}.`, 'Genel sıra', degisimHtml(siraDegisimleri().get(tid) ?? 0))}
-      ${kutu(g.puan, 'Puan', puanEsit(genelTablo(), g) ? `<small>eşitlikte ${sayi(g.vp)} VP</small>` : '')}
+      ${kutu(g.puan, 'Puan', puanEsit(genelTablo(), g) ? `<small>eşitlik ${sayi(g.vp)} VP</small>` : '')}
       ${kutu(sayi(hs?.toplam ?? 0), `${hf(son.hafta)}. hafta VP`, hs ? `<small>${hs.sira}. sırada${surdu ? ' · sürüyor' : ''}</small>` : '')}
       ${kutu(faKalan(k), ortakHak() ? 'Transfer hakkı' : 'Serbest oyuncu hakkı')}
     </div>

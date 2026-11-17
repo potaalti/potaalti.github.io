@@ -99,7 +99,7 @@ export async function puanGorseli({ lig = 'tbl', tur, baslik, serit, satirlar, e
   [1, 0, 2].forEach(i => {
     const s = kursu[i];
     if (!s) return;
-    const x = kx[[1, 0, 2].indexOf(i)], y = kUst[i], h = kTaban - y;
+    const yer = [1, 0, 2].indexOf(i), x = kx[yer], y = kUst[yer], h = kTaban - y;  // yer: soldan 2 · 1 · 3, en yüksek ortadaki 1.
     const [acik, koyu] = MADALYA[i];
     // Kart: cam efekti, üstte madalya renginde şerit
     g.save();
@@ -128,7 +128,7 @@ export async function puanGorseli({ lig = 'tbl', tur, baslik, serit, satirlar, e
     let altUst;
     if (genel) {
       cubuklar(g, s.haftalar ?? [], cx - 95, kTaban - 22, 190, 22, enCokPuan, acik);
-      if (s.esitlik) yaz(g, `EŞİTLİKTE ${sayi(s.vp)} VP`, cx, kTaban - 58, { font: '600 19px Oswald', renk: 'rgba(255,255,255,0.7)', hiza: 'center' });
+      if (s.esitlik) yaz(g, `EŞİTLİK ${sayi(s.vp)} VP`, cx, kTaban - 58, { font: '600 19px Oswald', renk: 'rgba(255,255,255,0.7)', hiza: 'center' });
       altUst = kTaban - (s.esitlik ? 76 : 44);
     } else {
       const ay = kTaban - 42;

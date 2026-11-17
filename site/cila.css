@@ -603,3 +603,7 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
   .ov-takim img { width: 24px; height: 24px; }
 }
 @media (max-width: 759px) { .oyuncu-ist { grid-template-columns: repeat(3, 1fr); } }
+/* Avrupa haftalık programı / sonuçları yazısı (yönetici) */
+.av-yazi { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--cizgi); }
+.av-yazi textarea { width: 100%; box-sizing: border-box; margin-top: 6px; padding: 10px; border: 1px solid var(--cizgi); border-radius: 10px;
+  background: var(--zemin); color: var(--yazi); font: .88rem/1.5 system-ui, sans-serif; resize: vertical; }

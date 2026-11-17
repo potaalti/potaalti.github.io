@@ -1518,11 +1518,38 @@ function avGorselKarti(idx) {
   const liste = avHaftaMaclari(idx);
   const { aralik } = avHafta();
   const satir = (tur, ad) => `<div class="f-satir"><div class="ad"><strong>${ad}</strong><small>${aralik} · ${liste.length} maç</small></div><span class="satir">
-    <button class="secenek" data-is="av-paylas" data-id="${tur}">📤 Paylaş</button><button class="secenek" data-is="av-indir" data-id="${tur}">⬇ İndir</button></span></div>`;
+    <button class="secenek" data-is="av-yazi" data-id="${tur}">📝 Yazı</button><button class="secenek" data-is="av-paylas" data-id="${tur}">📤 Paylaş</button><button class="secenek" data-is="av-indir" data-id="${tur}">⬇ İndir</button></span></div>`;
+  const y = S.ui.avYazi;
+  const yaziKutusu = y ? `<div class="av-yazi"><div class="baslik-satir"><small class="soluk">${y.kopyalandi ? '✓ Panoya kopyalandı · ' : ''}Düzenleyip kopyalayabilirsin</small>
+    <span class="satir"><button class="secenek" data-is="av-yazi-kopyala">📋 Kopyala</button><button class="secenek" data-is="av-yazi-kapat">✕</button></span></div>
+    <textarea id="av-yazi-metin" rows="${Math.min(24, y.metin.split('\n').length + 1)}">${esc(y.metin)}</textarea></div>` : '';
   const secici = `<div class="secenekler" style="margin-bottom:6px">${[[-1, 'Geçen hafta'], [0, 'Bu hafta'], [1, 'Gelecek hafta']].map(([k, ad]) =>
     `<button class="secenek ${(S.ui.avKaydir ?? 0) === k ? 'aktif' : ''}" data-is="av-hafta" data-id="${k}">${ad}</button>`).join('')}</div>`;
   return `<div class="kart gorsel-kart">${secici}${satir('program', 'Haftanın Avrupa temsilcilerimizin programı')}
-    ${liste.some(x => x.m.durum === 'bitti') ? satir('sonuc', 'Haftanın Avrupa temsilcilerimizin sonuçları') : ''}</div>`;
+    ${liste.some(x => x.m.durum === 'bitti') ? satir('sonuc', 'Haftanın Avrupa temsilcilerimizin sonuçları') : ''}${yaziKutusu}</div>`;
+}
+// Haftanın Avrupa programı ve sonuçları yazısı (yönetici; sosyal medya için kopyalanır): günlere göre, saat ve kupa adıyla.
+// İki temsilcimiz karşılaşırsa maç bir kez yazılır.
+function avHaftaYazisi(tur) {
+  const gorulen = new Set();
+  const maclar = avHaftaMaclari(S.avrupa.index).filter(x => !gorulen.has(`${x.k.kod}-${x.m.id}`) && gorulen.add(`${x.k.kod}-${x.m.id}`))
+    .filter(x => tur === 'program' || x.m.durum === 'bitti');
+  const ayAdi = s => s.replace(/[A-ZÇĞİÖŞÜ]{2,}/g, w => w[0] + w.slice(1).toLocaleLowerCase('tr'));
+  const baslik = tur === 'program' ? '🏀 Avrupa Kupalarındaki Temsilcilerimizin Maç Programı 🗓️' : '🏀 Avrupa Kupalarındaki Temsilcilerimizin Maç Sonuçları 📊';
+  const gunler = new Map();
+  for (const x of maclar) {
+    const g = x.m.tarih.slice(0, 10);
+    gunler.set(g, [...(gunler.get(g) ?? []), x]);
+  }
+  const satir = ({ k, d, m, biz }) => {
+    const ev = avTakimAdi(d, m.ev), dep = avTakimAdi(d, m.dep);
+    if (tur === 'program') return `⏰ ${m.tarih.endsWith('T00:00:00') ? 'Saat belli değil' : saatYazisi(m.tarih)} | ${ev} – ${dep} (${k.ad})`;
+    const kazanan = m.evSkor > m.depSkor ? m.ev : m.dep;
+    const isaret = avTurkMu(d, m.ev) && avTurkMu(d, m.dep) ? '🇹🇷' : kazanan === biz ? '✅' : '❌';
+    return `${isaret} ${ev} ${m.evSkor}-${m.depSkor} ${dep} (${k.ad})`;
+  };
+  const govde = [...gunler].map(([g, liste]) => `📅 ${gunBasligi(`${g}T12:00:00`)}\n${liste.map(satir).join('\n')}`).join('\n\n');
+  return `${baslik}\n${ayAdi(avHafta().aralik)}\n\n${govde || (tur === 'program' ? 'Bu hafta maç yok.' : 'Bu hafta biten maç yok.')}`;
 }
 async function avGorselPaylas(tur, indir) {
   const idx = S.avrupa.index;
@@ -1971,7 +1998,21 @@ document.addEventListener('click', e => {
       .finally(() => { el.disabled = false; el.textContent = yazi; });
     return;
   }
-  if (el.dataset.is === 'av-hafta') { S.ui.avKaydir = Number(el.dataset.id); ciz(); }
+  if (el.dataset.is === 'av-hafta') { S.ui.avKaydir = Number(el.dataset.id); S.ui.avYazi = null; ciz(); }
+  if (el.dataset.is === 'av-yazi' && yoneticiMi()) {
+    const metin = avHaftaYazisi(el.dataset.id);
+    S.ui.avYazi = { metin, kopyalandi: false };
+    navigator.clipboard?.writeText(metin).then(() => { S.ui.avYazi.kopyalandi = true; ciz(); }, () => {});
+    ciz();
+    return;
+  }
+  if (el.dataset.is === 'av-yazi-kopyala') {
+    const metin = document.getElementById('av-yazi-metin')?.value ?? '';
+    S.ui.avYazi = { metin, kopyalandi: false };
+    navigator.clipboard?.writeText(metin).then(() => { S.ui.avYazi.kopyalandi = true; ciz(); }, () => alert('Kopyalanamadı: metni seçip elle kopyala.'));
+    return;
+  }
+  if (el.dataset.is === 'av-yazi-kapat') { S.ui.avYazi = null; ciz(); return; }
   if (el.dataset.is === 'av-paylas' || el.dataset.is === 'av-indir') {
     const yazi = el.textContent;
     el.disabled = true; el.textContent = 'Hazırlanıyor…';

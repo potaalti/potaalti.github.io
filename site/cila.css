@@ -602,12 +602,4 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
   .ov-takim { font-size: .8rem; }
   .ov-takim img { width: 24px; height: 24px; }
 }
-/* Sezonun en iyi maçları: maç başı istatistiklerin altında */
-.ov-eniyi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
-.ov-eniyi > span { grid-column: 1 / -1; font-weight: 600; }
-.ov-eniyi a { background: var(--zemin); border-radius: 10px; padding: 8px 6px; text-align: center; color: var(--soluk); text-decoration: none; font-size: .74rem; min-width: 0; }
-.ov-eniyi a:hover { background: var(--vurgu-acik); }
-.ov-eniyi b { display: block; font-size: 1.2rem; color: var(--yazi); font-variant-numeric: tabular-nums; }
-.ov-eniyi small { display: block; margin-top: 2px; font-size: .68rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-@media (max-width: 420px) { .ov-eniyi { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 759px) { .oyuncu-ist { grid-template-columns: repeat(3, 1fr); } }

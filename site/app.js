@@ -1200,15 +1200,6 @@ function oyuncuVitrini(lig, o, g = {}) {
       <small>${o.mac} maç · ${o.ilk5} kez ilk 5${o.mac ? ` · ${sayi(o.dk)} dk` : ''}</small>
     </div>${foto}</div>`;
 }
-// Sezonun en iyi maçları: sayı, ribaund, asist, VP (eşitlikte ilk); maça dokununca kutu skor
-function sezonEnIyisi(lig, maclar) {
-  const oynanan = maclar.filter(x => x.sn > 0 && x.durum === 'bitti');
-  if (!oynanan.length) return '';
-  return `<div class="ov-eniyi"><span class="soluk kucuk">Sezonun en iyisi</span>${[['sayi', 'sayı'], ['rib', 'ribaund'], ['ast', 'asist'], ['vp', 'VP']].map(([a, ad]) => {
-    const m = oynanan.reduce((x, y) => (y[a] > x[a] ? y : x));
-    return `<a href="#/mac/${lig}/${m.mac}" title="${m.hafta}. hafta, ${esc(takimAdi(lig, m.rakip))}"><b>${m[a]}</b> ${ad}<small>${m.hafta}. hf · ${esc(takimAdi(lig, m.rakip))}</small></a>`;
-  }).join('')}</div>`;
-}
 function gorunumOyuncu(lig, id) {
   S.oyuncu[lig] ??= {};
   yukle(S.oyuncu[lig], id, `data/${lig}/oyuncu/${id}.json`);
@@ -1231,7 +1222,6 @@ function gorunumOyuncu(lig, id) {
     <div class="kart"><h3>Maç başı</h3>
       <div class="istatistik oyuncu-ist">${[['Dakika', o.dk], ['Sayı', o.sayi], ['Ribaund', o.rib], ['Asist', o.ast], ['VP', o.vp], ['+/-', isaretli(o.pm)], ['2S %', yuzde(o.iki), o.iki], ['3S %', yuzde(o.uc), o.uc], ['SA %', yuzde(o.sa), o.sa]]
         .map(([ad, v, atis]) => `<div><b>${typeof v === 'number' ? sayi(v) : v}</b><span>${ad}</span>${atis ? `<small>${macBasiAtis(atis, o.mac)}</small>` : ''}</div>`).join('')}</div>
-      ${sezonEnIyisi(lig, d.maclar)}
       <p class="soluk kucuk" style="margin:8px 0 0">Maç başı ortalamalar (+/-: sezon toplamı). Atış yüzdelerinin altında maç başı isabet/deneme.</p></div>
     <div class="kart"><h3>Maç maç</h3><div class="tablo-kap"><table>
       <thead><tr><th>Hf</th><th>Rakip</th><th class="sayi">Dk</th><th class="sayi">Sy</th><th class="sayi">Rb</th><th class="sayi">As</th><th class="sayi">+/-</th><th class="sayi">VP</th></tr></thead>

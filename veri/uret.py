@@ -416,7 +416,9 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
     kucuk = CIKTI / lig / "foto-k" / "liste.json"
     kucuk = json.loads(kucuk.read_text(encoding="utf-8")) if kucuk.exists() else {}
     asil = {f.stem: f.name for f in (CIKTI / lig / "foto").glob("*.*")} if (CIKTI / lig / "foto").exists() else {}
-    logolar = {f.stem: f.name for f in (CIKTI / lig / "logo").glob("*.*")} if (CIKTI / lig / "logo").exists() else {}
+    # Logo: küçük kopyası (logo-k/, veri/foto_kucult.mjs) varsa o, yoksa TBF'nin aslı
+    logolar = {f.stem: f"logo/{f.name}" for f in (CIKTI / lig / "logo").glob("*.*")} if (CIKTI / lig / "logo").exists() else {}
+    logolar |= {f.stem: f"logo-k/{f.name}" for f in (CIKTI / lig / "logo-k").glob("*.webp")} if (CIKTI / lig / "logo-k").exists() else {}
 
     def gorsel(p):
         g = {}
@@ -425,7 +427,7 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
         elif p["id"] in asil:
             g = {"foto": f"foto/{asil[p['id']]}"}
         if p["takim"] in logolar:
-            g["logo"] = f"logo/{logolar[p['takim']]}"
+            g["logo"] = logolar[p["takim"]]
         return g
 
     oyuncu_ozet = []

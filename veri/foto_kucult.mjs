@@ -85,5 +85,30 @@ for (const lig of ligler) {
   for (const id of Object.keys(liste)) if (!kaynaklar.has(id)) { delete liste[id]; fs.rmSync(path.join(hedefKlasor, `${id}.webp`), { force: true }); }
   fs.writeFileSync(listeYolu, JSON.stringify(Object.fromEntries(Object.entries(liste).sort()), null, 0) + '\n');
   console.log(`${lig}: ${yeni} yeni küçük fotoğraf, toplam ${Object.keys(liste).length}`);
+
+  // Takım logoları: logo/<takım>.* -> logo-k/<takım>.webp, uzun kenar 128 px (oyuncu sayfasında 28 px gösterilir; TBF'nin
+  // asılları 500 KB'a kadar çıkıyor). Saydamlık korunur.
+  const logoKlasor = path.join(KOK, 'data', lig, 'logo');
+  const logoHedef = path.join(KOK, 'data', lig, 'logo-k');
+  fs.mkdirSync(logoHedef, { recursive: true });
+  const logolar = fs.readdirSync(logoKlasor).filter(f => TUR[path.extname(f).toLowerCase()]);
+  let yeniLogo = 0;
+  for (const f of logolar) {
+    const kaynak = path.join(logoKlasor, f);
+    const hedef = path.join(logoHedef, `${path.basename(f, path.extname(f))}.webp`);
+    if (fs.existsSync(hedef) && fs.statSync(hedef).mtimeMs >= fs.statSync(kaynak).mtimeMs) continue;
+    const veri = await sayfa.evaluate(async src => {
+      const im = new Image(); im.src = src; await im.decode();
+      const o = Math.min(1, 128 / Math.max(im.naturalWidth, im.naturalHeight));
+      const k = document.createElement('canvas'); k.width = Math.round(im.naturalWidth * o); k.height = Math.round(im.naturalHeight * o);
+      const g = k.getContext('2d'); g.imageSmoothingQuality = 'high'; g.drawImage(im, 0, 0, k.width, k.height);
+      return k.toDataURL('image/webp', 0.9);
+    }, `data:${TUR[path.extname(f).toLowerCase()]};base64,${fs.readFileSync(kaynak).toString('base64')}`);
+    fs.writeFileSync(hedef, Buffer.from(veri.split(',')[1], 'base64'));
+    yeniLogo++;
+  }
+  const kalan = new Set(logolar.map(f => path.basename(f, path.extname(f))));
+  for (const f of fs.readdirSync(logoHedef)) if (!kalan.has(path.basename(f, '.webp'))) fs.rmSync(path.join(logoHedef, f));
+  console.log(`${lig}: ${yeniLogo} yeni küçük logo, toplam ${logolar.length}`);
 }
 await tarayici.close();

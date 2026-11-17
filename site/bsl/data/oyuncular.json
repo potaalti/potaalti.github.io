@@ -91,7 +91,7 @@
   "foto": "https://tbf.org.tr/res/204506a6-4405-4c63-9d1c-b3ae7c0d14d8_22.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 9.0,
+  "ribOrt": 9.1,
   "astOrt": 1.0
  },
  {
@@ -566,8 +566,8 @@
   "foto": "https://tbf.org.tr/res/9bfa0ec3-06e7-4679-82c2-f2d51eb0fb83_marcuskeene.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 2.2,
-  "astOrt": 5.8
+  "ribOrt": 2.4,
+  "astOrt": 5.9
  },
  {
   "id": "668012",
@@ -1437,7 +1437,7 @@
   "vpOrt": 10,
   "sayiOrt": 16,
   "sureOrt": "22:28",
-  "foto": "https://tbf.org.tr/res/1eee9bdf-6923-4bf8-a57b-2740e0467546_6791.jpg",
+  "foto": "https://tbf.org.tr/res/bf951fc2-94f2-4b33-9fac-dc5b99f91649_LonnieWalker.webp",
   "boy": null,
   "mevkiTahmini": "on",
   "ribOrt": 2.5,
@@ -1570,7 +1570,7 @@
   "vpOrt": 9.7,
   "sayiOrt": 7.9,
   "sureOrt": "22:24",
-  "foto": "https://tbf.org.tr/res/d7f30883-2e83-4477-94da-8ff9cdb2cf0e_2022012611451001.jpg",
+  "foto": "https://tbf.org.tr/res/817833ca-691c-4afa-85c4-e08276551384_markel_starks.webp",
   "boy": null,
   "mevkiTahmini": "arka",
   "ribOrt": 2.1,
@@ -1726,7 +1726,7 @@
   "boy": 194,
   "mevkiTahmini": "arka",
   "ribOrt": 2.8,
-  "astOrt": 2.1
+  "astOrt": 2.0
  },
  {
   "id": "778422",
@@ -1972,7 +1972,7 @@
   "boy": null,
   "mevkiTahmini": "arka",
   "ribOrt": 1.9,
-  "astOrt": 1.8
+  "astOrt": 1.9
  },
  {
   "id": "736260",
@@ -3757,7 +3757,7 @@
  },
  {
   "id": "779130",
-  "ad": "TYRON DESHUN BREWER",
+  "ad": "Ty Brewer",
   "takim": "YUKATEL DENİZLİ BASKET",
   "takimId": 266028,
   "takimKod": "YDB",
@@ -4090,7 +4090,7 @@
   "vpOrt": 0,
   "sayiOrt": 0,
   "sureOrt": "00:00:00",
-  "foto": "https://tbf.org.tr/res/589110-kerim-ED171C12-973C-4BE4-93D8-D658F4A9578A.jpg",
+  "foto": "https://tbf.org.tr/res/0cc569fd-83cb-4088-b35c-64770df5c624_34.webp",
   "boy": null,
   "mevkiTahmini": null,
   "ribOrt": 0,
@@ -4166,7 +4166,7 @@
   "vpOrt": 0,
   "sayiOrt": 0,
   "sureOrt": "00:00:00",
-  "foto": "https://tbf.org.tr/res/465700-41872465894-A9A2E086-BCE8-4A5C-8142-59FD5D036C5B.jpg",
+  "foto": "https://tbf.org.tr/res/37fe2795-cd28-43a1-bf9e-c674b5e1137a_alpy.webp",
   "boy": null,
   "mevkiTahmini": null,
   "ribOrt": 0,

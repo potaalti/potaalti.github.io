@@ -1530,11 +1530,22 @@ function avGorselKarti(idx) {
 }
 // Haftanın Avrupa programı ve sonuçları yazısı (yönetici; sosyal medya için kopyalanır): günlere göre, saat ve kupa adıyla.
 // İki temsilcimiz karşılaşırsa maç bir kez yazılır.
-function avHaftaYazisi(tur) {
+// Haftanın maçları, iki temsilcimizin karşılaştığı maç bir kez (yazı ve görsel ortak); sonuçlarda yalnız bitenler
+function avHaftaListesi(tur) {
   const gorulen = new Set();
-  const maclar = avHaftaMaclari(S.avrupa.index).filter(x => !gorulen.has(`${x.k.kod}-${x.m.id}`) && gorulen.add(`${x.k.kod}-${x.m.id}`))
+  return avHaftaMaclari(S.avrupa.index).filter(x => !gorulen.has(`${x.k.kod}-${x.m.id}`) && gorulen.add(`${x.k.kod}-${x.m.id}`))
     .filter(x => tur === 'program' || x.m.durum === 'bitti');
-  const ayAdi = s => s.replace(/[A-ZÇĞİÖŞÜ]{2,}/g, w => w[0] + w.slice(1).toLocaleLowerCase('tr'));
+}
+// Tarih aralığı haftanın günleri değil, ilk ve son maç günü ("17–20 Kasım", ay değişirse "30 Kasım – 3 Aralık"; tek gün "17 Kasım")
+function avMacAraligi(maclar) {
+  const g = [...new Set(maclar.map(x => x.m.tarih.slice(0, 10)))].sort();
+  const gunAy = iso => new Date(`${iso}T12:00:00`).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' });
+  if (!g.length) return avHafta().aralik.replace(/[A-ZÇĞİÖŞÜ]{2,}/g, w => w[0] + w.slice(1).toLocaleLowerCase('tr'));
+  if (g.length === 1) return gunAy(g[0]);
+  return g[0].slice(0, 7) === g.at(-1).slice(0, 7) ? `${Number(g[0].slice(8))}–${gunAy(g.at(-1))}` : `${gunAy(g[0])} – ${gunAy(g.at(-1))}`;
+}
+function avHaftaYazisi(tur) {
+  const maclar = avHaftaListesi(tur);
   const baslik = tur === 'program' ? '🏀 Avrupa Kupalarındaki Temsilcilerimizin Maç Programı 🗓️' : '🏀 Avrupa Kupalarındaki Temsilcilerimizin Maç Sonuçları 📊';
   const gunler = new Map();
   for (const x of maclar) {
@@ -1549,27 +1560,25 @@ function avHaftaYazisi(tur) {
     return `${isaret} ${ev} ${m.evSkor}-${m.depSkor} ${dep} (${k.ad})`;
   };
   const govde = [...gunler].map(([g, liste]) => `📅 ${gunBasligi(`${g}T12:00:00`)}\n${liste.map(satir).join('\n')}`).join('\n\n');
-  // Tarih aralığı haftanın günleri değil, ilk ve son maç günü ("17–20 Kasım", ay değişirse "30 Kasım – 3 Aralık"; tek gün "17 Kasım")
-  const g = [...gunler.keys()].sort();
-  const gunAy = iso => new Date(`${iso}T12:00:00`).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' });
-  const aralik = !g.length ? ayAdi(avHafta().aralik) : g.length === 1 || g[0] === g.at(-1) ? gunAy(g[0])
-    : g[0].slice(0, 7) === g.at(-1).slice(0, 7) ? `${Number(g[0].slice(8))}–${gunAy(g.at(-1))}` : `${gunAy(g[0])} – ${gunAy(g.at(-1))}`;
-  return `${baslik}\n${aralik}\n\n${govde || (tur === 'program' ? 'Bu hafta maç yok.' : 'Bu hafta biten maç yok.')}`;
+  return `${baslik}\n${avMacAraligi(maclar)}\n\n${govde || (tur === 'program' ? 'Bu hafta maç yok.' : 'Bu hafta biten maç yok.')}`;
 }
 async function avGorselPaylas(tur, indir) {
   const idx = S.avrupa.index;
   const gorsel = await getir('data/bsl/gorsel.json');
-  const logo = ad => {
-    const anah = dosyaAnahtari(ad);
-    const bsl = Object.keys(gorsel.logo ?? {}).find(x => dosyaAnahtari(x) === anah);
-    return bsl ? `data/bsl/logo/${anah}${uzanti(gorsel.logo[bsl])}` : null;
+  // Logo: temsilcilerimizde BSL'deki logo (yoksa kupanınki), rakiplerde kupa kaynağından indirilen (data/avrupa/logo, veri/avrupa.py)
+  const logo = (d, t) => {
+    const anah = dosyaAnahtari(avTakimAdi(d, t));
+    const bsl = avTurkMu(d, t) && Object.keys(gorsel.logo ?? {}).find(x => dosyaAnahtari(x) === anah);
+    return bsl ? `data/bsl/logo/${anah}${uzanti(gorsel.logo[bsl])}` : d.takimlar?.[t]?.logo ? `data/avrupa/${d.takimlar[t].logo}` : null;
   };
-  const maclar = avHaftaMaclari(idx).filter(x => tur === 'program' || x.m.durum === 'bitti').map(({ k, d, m, biz }) => {
-    const evde = m.ev === biz;
-    return { kupa: k.kod, kupaKisa: k.kisa, tarih: m.tarih, biz: avTakimAdi(d, biz), bizLogo: logo(avTakimAdi(d, biz)), rakip: avTakimAdi(d, evde ? m.dep : m.ev),
-      evde, bizSkor: evde ? m.evSkor : m.depSkor, rakipSkor: evde ? m.depSkor : m.evSkor, durum: m.durum };
-  });
-  const blob = await AG.haftaGorseli({ maclar, tur, aralik: avHafta().aralik });
+  const liste = avHaftaListesi(tur);
+  // Ev sahibi solda, deplasman sağda; biz: temsilcimiz hangi tarafta ('ev' | 'dep' | 'ikisi')
+  const maclar = liste.map(({ k, d, m }) => ({
+    kupa: k.kod, kupaKisa: k.kisa, tarih: m.tarih, durum: m.durum,
+    ev: avTakimAdi(d, m.ev), dep: avTakimAdi(d, m.dep), evLogo: logo(d, m.ev), depLogo: logo(d, m.dep), evSkor: m.evSkor, depSkor: m.depSkor,
+    biz: avTurkMu(d, m.ev) && avTurkMu(d, m.dep) ? 'ikisi' : avTurkMu(d, m.ev) ? 'ev' : 'dep',
+  }));
+  const blob = await AG.haftaGorseli({ maclar, tur, aralik: avMacAraligi(liste) });
   const dosya = new File([blob], `pota-alti-avrupa-${avHafta().bas}-${tur === 'sonuc' ? 'sonuclar' : 'program'}.png`, { type: 'image/png' });
   if (!indir && navigator.canShare?.({ files: [dosya] })) {
     try { await navigator.share({ files: [dosya] }); return; } catch (e) { if (e?.name === 'AbortError') return; }

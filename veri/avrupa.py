@@ -158,16 +158,22 @@ def ceyrek_el(p):
 
 # ---------- EuroLeague / EuroCup ----------
 
+def el_logo(kulup):
+    """EuroLeague/EuroCup kulüp arması; görsel sunucusundan 256 px genişlikte (aslı 250 KB'a kadar)"""
+    url = (kulup.get("images") or {}).get("crest")
+    return f"{url}?width=256" if url else None
+
+
 def el_kupa(k):
     kulupler = getir(f"{EL_API}/v2/competitions/{k['api']}/seasons/{k['sezon']}/clubs")["data"]
     turk = {c["code"] for c in kulupler if (c.get("country") or {}).get("code") == "TUR"}
-    takimlar = {c["code"]: {"ad": c["name"], "turk": c["code"] in turk} for c in kulupler}
+    takimlar = {c["code"]: {"ad": c["name"], "turk": c["code"] in turk, "logoUrl": el_logo(c)} for c in kulupler}
     oyunlar = getir(f"{EL_API}/v2/competitions/{k['api']}/seasons/{k['sezon']}/games")["data"]
     maclar = []
     for g in oyunlar:
         ev, dep = g["local"]["club"]["code"], g["road"]["club"]["code"]
         for c in (g["local"]["club"], g["road"]["club"]):
-            takimlar.setdefault(c["code"], {"ad": c["name"], "turk": c["code"] in turk})
+            takimlar.setdefault(c["code"], {"ad": c["name"], "turk": c["code"] in turk, "logoUrl": el_logo(c)})
         if ev not in turk and dep not in turk:
             continue
         maclar.append({"id": str(g["gameCode"]), "tarih": tr_saat(g["utcDate"]), "tur": f"{g['round']}. tur",
@@ -346,6 +352,37 @@ def sure_sn(tp):
     return int(d) * 60 + int(s)
 
 
+# FIBA takım logosu (FIBA sitelerinin kendi kullandığı adres; açık zemin sürümü, 256 px PNG)
+FIBA_LOGO = "https://assets.fiba.basketball/image/upload/w_256/f_png/q_auto/.logoflag--light--organisation_{}"
+
+
+def logolari_indir(k, takimlar, maclar):
+    """Temsilcilerimizin ve rakiplerinin logoları (haftalık Avrupa görseli için): site/data/avrupa/logo/<kupa>-<takım>.<uzantı>.
+    Yalnız temsilcilerimizin maçlarındaki takımlar, yalnız eksik olanlar indirilir. Takım kaydına "logo" (data/avrupa/'ya göre) yazılır."""
+    klasor = CIKTI / "logo"
+    klasor.mkdir(parents=True, exist_ok=True)
+    gerekli = {t for m in maclar for t in (m["ev"], m["dep"])}
+    for t in gerekli:
+        v = takimlar.get(t)
+        if not v:
+            continue
+        var = next(iter(klasor.glob(f"{k['kod']}-{t}.*")), None)
+        if not var and v.get("logoUrl"):
+            try:
+                req = urllib.request.Request(v["logoUrl"], headers={"User-Agent": TARAYICI})
+                with urllib.request.urlopen(req, timeout=40) as y:
+                    tur, veri = y.headers.get_content_type(), y.read()
+                uz = {"image/png": ".png", "image/webp": ".webp", "image/jpeg": ".jpg", "image/svg+xml": ".svg", "image/gif": ".gif"}.get(tur)
+                if uz and veri:
+                    var = klasor / f"{k['kod']}-{t}{uz}"
+                    var.write_bytes(veri)
+                time.sleep(0.2)
+            except Exception as e:  # noqa: BLE001 - sonraki çalışmada yeniden denenir
+                print(f"{k['kod']} {t}: logo indirilemedi ({e})")
+        if var:
+            v["logo"] = f"logo/{var.name}"
+
+
 def fiba_kupa(k):
     x = gomulu(getir(f"{k['taban']}/games", metin=True))
     oyunlar = {o["gameId"]: o for o in nesneler(x, "gameId") if isinstance(o.get("teamA"), dict) and isinstance(o.get("teamB"), dict)}
@@ -354,8 +391,9 @@ def fiba_kupa(k):
     for g in oyunlar.values():
         for t in ("teamA", "teamB"):
             tk = g[t]
-            takimlar.setdefault(str(tk["teamId"]), {"ad": tk.get("shortName") or tk.get("officialName"), "turk": False, "org": tk.get("organisationId"),
-                                                    "kod": tk.get("code")})
+            org = tk.get("organisationId")
+            takimlar.setdefault(str(tk["teamId"]), {"ad": tk.get("shortName") or tk.get("officialName"), "turk": False, "org": org,
+                                                    "kod": tk.get("code"), "logoUrl": FIBA_LOGO.format(org) if org else None})
         if g.get("hostCountryCode") == "TUR":
             turk.add(str(g["teamA"]["teamId"]))
     for t in turk:
@@ -780,6 +818,7 @@ def kupa_uret(k):
     takimlar, gruplar, maclar, kutu, akis, donem = (el_kupa if k["tur"] == "el" else fiba_kupa)(k)
     for v in takimlar.values():
         v["ad"] = TR_AD.get(v["ad"], v["ad"])
+    logolari_indir(k, takimlar, maclar)
     kutular = {}
     for m in maclar:
         if m["durum"] not in ("bitti", "canli"):
@@ -840,7 +879,7 @@ def kupa_uret(k):
         if not m.get("ceyrekler") and m["id"] in kutular:
             m["ceyrekler"] = [kutular[m["id"]]["ev"].get("ceyrekler") or [], kutular[m["id"]]["dep"].get("ceyrekler") or []]
     takim_oyuncu_uret(k, takimlar, maclar, kutular, gruplar)
-    yaz(CIKTI / f"{k['kod']}.json", {"kod": k["kod"], "ad": k["ad"], "takimlar": {t: {"ad": v["ad"], "turk": v["turk"]} for t, v in takimlar.items()},
+    yaz(CIKTI / f"{k['kod']}.json", {"kod": k["kod"], "ad": k["ad"], "takimlar": {t: {"ad": v["ad"], "turk": v["turk"], **({"logo": v["logo"]} if v.get("logo") else {})} for t, v in takimlar.items()},
                                      "gruplar": gruplar, "maclar": maclar, "tempoOrt": tempo_ortalamasi(kutular)})
     turkler = [{"id": t, "ad": v["ad"]} for t, v in takimlar.items() if v["turk"]]
     print(f"  temsilciler: {', '.join(t['ad'] for t in turkler)} · {len(maclar)} maç · {len(kutular)} kutu skor")

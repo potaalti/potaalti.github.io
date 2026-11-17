@@ -1,6 +1,6 @@
 // Haftalık Avrupa görseli (yönetici, Avrupa sayfası): "Haftanın Avrupa sonuçları / programı" — seçilen haftanın (Pazartesi–Pazar) programı ya da
 // sonuçları, 1080x1350. TBL/BSL görsellerinin aksine kullanıcı şablonu yok: Pota Altı renkleriyle tuvale çizilir.
-// Temsilcilerimizin logoları BSL logolarından (data/bsl/logo), rakiplerin yalnızca adı yazılır.
+// Temsilcilerimizin logoları BSL logolarından (data/bsl/logo), rakiplerinki kupa kaynağından (data/avrupa/logo, veri/avrupa.py).
 import { markaYazilari, logoCiz, logoDaire, sosyalCiz } from './marka.js';
 const YAZI_TIPLERI = 'https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;600;700&family=Montserrat:wght@500;600;700&display=block';
 const G = 1080, Y = 1350;
@@ -37,12 +37,13 @@ function yuvarlak(g, x, y, w, h, r) {
   g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
 }
 
-// maclar: [{ kupa: 'el', kupaKisa: 'EL', tarih, biz, bizLogo, rakip, evde, bizSkor, rakipSkor, durum }]
+// maclar: [{ kupa: 'el', kupaKisa: 'EL', tarih, durum, ev, dep, evLogo, depLogo, evSkor, depSkor, biz: 'ev' | 'dep' | 'ikisi' }]
+// aralik: ilk ve son maç günü ("17–20 Kasım"), büyük harfe çevrilir
 // Haftanın Avrupa sonuçları / programı: başlık, tarih aralığı ve özet; maçlar gün gün gruplu (gün başlığı bir kez yazılır),
 // satır yüksekliği maç ve gün sayısına göre kendiliğinden ayarlanır (13 maçlık hafta da sığar).
 export async function haftaGorseli({ maclar, tur, aralik }) {
   await Promise.all([yaziTipleri(), markaYazilari()]);
-  const logolar = await Promise.all(maclar.map(m => resim(m.bizLogo)));
+  const logolar = await Promise.all(maclar.flatMap(m => [resim(m.evLogo), resim(m.depLogo)]));
   const c = document.createElement('canvas'); c.width = G; c.height = Y;
   const g = c.getContext('2d');
   // Zemin: koyu gradyan, çapraz ince çizgiler, köşede turkuaz ışık
@@ -59,6 +60,7 @@ export async function haftaGorseli({ maclar, tur, aralik }) {
   yaz(g, 'HAFTANIN AVRUPA TEMSİLCİLERİMİZİN', G / 2 + 30, 96, { font: '60px Anton', hiza: 'center', gen: 740 });
   yaz(g, sonuc ? 'SONUÇLARI' : 'PROGRAMI', G / 2, 198, { font: '112px Anton', renk: RENK.vurgu, hiza: 'center', gen: 760 });
   g.font = '700 30px Oswald';
+  aralik = buyuk(aralik);
   const ew = g.measureText(aralik).width + 56;
   yuvarlak(g, G / 2 - ew / 2, 262, ew, 52, 26); g.fillStyle = RENK.beyaz; g.fill();
   yaz(g, aralik, G / 2, 289, { font: '700 30px Oswald', renk: RENK.zemin1, hiza: 'center' });
@@ -66,7 +68,9 @@ export async function haftaGorseli({ maclar, tur, aralik }) {
   const gunAnahtari = m => m.tarih.slice(0, 10);
   const gunler = [...new Set(maclar.map(gunAnahtari))];
   if (sonuc) {
-    const gal = maclar.filter(m => m.bizSkor > m.rakipSkor).length, mag = maclar.length - gal;
+    // Galibiyet / mağlubiyet temsilcilerimizin hanesine (iki temsilcimizin maçı birer G ve M)
+    const gal = maclar.filter(m => m.biz !== 'dep' && m.evSkor > m.depSkor || m.biz !== 'ev' && m.depSkor > m.evSkor).length;
+    const mag = maclar.filter(m => m.biz !== 'dep' && m.evSkor < m.depSkor || m.biz !== 'ev' && m.depSkor < m.evSkor).length;
     const parcalar = [[`${maclar.length} MAÇ`, RENK.soluk], ['  ·  ', RENK.soluk], [`${gal} GALİBİYET`, RENK.yesil], ['  ·  ', RENK.soluk], [`${mag} MAĞLUBİYET`, RENK.kirmizi]];
     g.font = '700 28px Oswald';
     let x = G / 2 - parcalar.reduce((t, [m]) => t + g.measureText(m).width, 0) / 2;
@@ -98,24 +102,38 @@ export async function haftaGorseli({ maclar, tur, aralik }) {
       const rh = Math.min(42, h - 16);
       yuvarlak(g, 68, orta - rh / 2, 80, rh, 9); g.fillStyle = KUPA_RENK[m.kupa] ?? RENK.vurgu; g.fill();
       yaz(g, m.kupaKisa, 108, orta + 1, { font: `700 ${kucuk ? 22 : 25}px Oswald`, hiza: 'center' });
-      // Logo
-      const lg = logolar[i];
-      if (lg) logoDaire(g, lg, 200, orta, Math.min(38, h / 2 - 3));
-      // Takımlar: temsilcimiz üstte, rakip altta
-      const sag = sonuc ? 770 : 860;
-      if (h >= 60) {
-        yaz(g, buyuk(m.biz), 252, orta - h * 0.19, { font: `700 ${kucuk ? 27 : 31}px Oswald`, gen: sag - 270 });
-        yaz(g, `${m.evde ? 'vs' : '@'}  ${BUYUK(m.rakip)}`, 252, orta + h * 0.22, { font: `600 ${kucuk ? 20 : 24}px Montserrat`, renk: RENK.soluk, gen: sag - 270 });
-      } else {
-        yaz(g, `${buyuk(m.biz)}  ${m.evde ? 'vs' : '@'} ${BUYUK(m.rakip)}`, 252, orta + 1, { font: '700 24px Oswald', gen: sag - 270 });
-      }
-      // Sağ: sonuçta G/M ve skor, programda saat
+      // Ev sahibi solda (logosu kupa rozetinin yanında), deplasman sağda (logosu saatin / G-M'nin yanında). Adlar iki logonun
+      // arasında ortalı: ev sahibi – deplasman (sonuçta ortada skor). Sığmazsa hepsi birlikte daraltılır.
+      const lr = Math.min(36, h / 2 - 4);
+      const sagLogo = sonuc ? G - 178 : G - 196;  // sağ logonun merkezi
+      const [le, ld] = [logolar[2 * i], logolar[2 * i + 1]];
+      if (le) logoDaire(g, le, 200, orta, lr);
+      if (ld) logoDaire(g, ld, sagLogo, orta, lr);
+      const solSinir = 200 + lr + 18, sagSinir = sagLogo - lr - 18;
+      const adFont = `700 ${kucuk ? 26 : 30}px Oswald`, ortaFont = sonuc ? `${Math.round(Math.min(44, h * 0.55))}px Anton` : adFont;
+      const ad = (t, turk) => (turk ? buyuk(t) : BUYUK(t));
+      const evAd = ad(m.ev, m.biz !== 'dep'), depAd = ad(m.dep, m.biz !== 'ev');
+      const ortaYazi = sonuc ? `${m.evSkor} - ${m.depSkor}` : '–';
+      g.font = adFont; const we = g.measureText(evAd).width, wd = g.measureText(depAd).width;
+      g.font = ortaFont; const wo = g.measureText(ortaYazi).width;
+      const bosluk = sonuc ? 20 : 14;
+      const k2 = Math.min(1, (sagSinir - solSinir) / (we + wd + wo + 2 * bosluk));
+      let x = (solSinir + sagSinir) / 2 - ((we + wd + wo + 2 * bosluk) * k2) / 2;
+      // Sonuçta kazanan beyaz, kaybeden soluk; programda ikisi de beyaz
+      const renkEv = sonuc && m.evSkor < m.depSkor ? RENK.soluk : RENK.beyaz, renkDep = sonuc && m.depSkor < m.evSkor ? RENK.soluk : RENK.beyaz;
+      yaz(g, evAd, x, orta + 1, { font: adFont, renk: renkEv, gen: we * k2 });
+      x += (we + bosluk) * k2;
+      yaz(g, ortaYazi, x + (wo * k2) / 2, orta + 2, { font: ortaFont, renk: sonuc ? RENK.vurgu : RENK.soluk, hiza: 'center', gen: wo * k2 });
+      x += (wo + bosluk) * k2;
+      yaz(g, depAd, x, orta + 1, { font: adFont, renk: renkDep, gen: wd * k2 });
+      // Sağ uç: sonuçta temsilcimizin G/M'si, programda saat
       if (sonuc) {
-        const kazandi = m.bizSkor > m.rakipSkor;
-        const kh = Math.min(54, h - 18);
-        yuvarlak(g, sag, orta - kh / 2, 50, kh, 10); g.fillStyle = kazandi ? RENK.yesil : RENK.kirmizi; g.fill();
-        yaz(g, kazandi ? 'G' : 'M', sag + 25, orta + 2, { font: `${Math.round(kh * 0.72)}px Anton`, renk: RENK.zemin1, hiza: 'center' });
-        yaz(g, `${m.bizSkor} - ${m.rakipSkor}`, G - 76, orta + 2, { font: `${Math.round(Math.min(54, h * 0.62))}px Anton`, hiza: 'right', gen: G - 76 - sag - 70 });
+        if (m.biz !== 'ikisi') {
+          const kazandi = m.biz === 'ev' ? m.evSkor > m.depSkor : m.depSkor > m.evSkor;
+          const kh = Math.min(54, h - 18);
+          yuvarlak(g, G - 126, orta - kh / 2, 50, kh, 10); g.fillStyle = kazandi ? RENK.yesil : RENK.kirmizi; g.fill();
+          yaz(g, kazandi ? 'G' : 'M', G - 101, orta + 2, { font: `${Math.round(kh * 0.72)}px Anton`, renk: RENK.zemin1, hiza: 'center' });
+        }
       } else {
         const saat = new Date(m.tarih).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
         yaz(g, saat, G - 76, orta + 2, { font: `${Math.round(Math.min(54, h * 0.62))}px Anton`, renk: RENK.vurgu, hiza: 'right' });

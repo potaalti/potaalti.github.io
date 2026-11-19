@@ -22,7 +22,10 @@ async function getir(yol, sorgu, api = API) {
     await bekle(300); // GoatCounter sınırı saniyede 4 istek
     const r = await fetch(`${api}${yol}?${new URLSearchParams(sorgu)}`, { headers: { Authorization: `Bearer ${ANAHTAR}`, 'Content-Type': 'application/json' } });
     if (r.status === 429 && deneme < 3) { await bekle(2000); continue; }
-    if (!r.ok) throw new Error(`${yol}: HTTP ${r.status} ${await r.text()}`);
+    // 404 "not found": anahtar sitede kayıtlı ama onu oluşturan GoatCounter kullanıcısı yok (GoatCounter kullanıcıyı bulamayınca
+    // 404 döndürür; anahtar hiç yoksa 401 "unknown token")
+    const ipucu = r.status === 404 ? ' — anahtarın sahibi kullanıcı GoatCounter\'da bulunamıyor: yeni API anahtarı oluşturup GOATCOUNTER_ANAHTAR sırrını güncelle' : '';
+    if (!r.ok) throw new Error(`${yol}: HTTP ${r.status} ${await r.text()}${ipucu}`);
     return r.json();
   }
 }

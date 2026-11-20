@@ -6,6 +6,7 @@ import {
   KAYNAK, kaynakSec, esc, sayi, isaretli, aramaNorm, baslik, gunBasligi, gunSaat, saatYazisi, tarihSaat, sureSn, getir, canliYazisi,
 } from './ortak.js';
 import * as Yayin from './yayin.js';
+import * as Oynatici from './oynatici.js';
 import * as AE from './fantezi/artieksi.js';
 import * as SY from './seyirci.js';
 import * as OD from './odul.js';
@@ -267,7 +268,8 @@ function gorunumMac(lig, id) {
   // ayrı dosyadan (FARK_ILK_HAFTA'dan itibaren). Gövde Fantezi Lig arayüzüyle ortak (mac-ek.js).
   if (!kutu.fark && ME.farkVarMi(lig, kutu.hafta ?? hafta)) yukle(S.farklar, id, `data/${lig}/fark/${id}.json`);
   const benim = takimim(lig);
-  return `${ust}${yayin}${ME.macGovdesi(kutu, {
+  return `${ust}${ME.macGovdesi(kutu, {
+    yayin: macYayinVerisi(lig, m),
     canli, sirala: S.ui.kutuSirala, donem: S.ui.kutuDonem, takimIst: takimIstatistigi(lig, kutu.id), tempoOrt: ME.ligTempoOrtalamasi(ligVerisi(lig, 'takimlar')?.takimlar),
     ileriDosya: kutu.ev.ileri ? null : ileriIstatistigi(lig, kutu.id), fark: S.farklar[id],
     takimBasligi: t => takimLinki(lig, t.ad),
@@ -1251,8 +1253,7 @@ function buHaftaKarti(lig) {
 const IZLE_GECIS = { gun: 3, saat: 20 };
 const tblYayinlari = () => { yukle(S, 'tblYayin', 'data/tbl/yayin.json', { bosDeger: { maclar: {} } }); return S.tblYayin; };
 const ytKapak = id => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-const ytOynatici = (id, ad) => `<div class="oynatici"><iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0" title="${esc(ad)}"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>`;
+// Video sayfanın içine gömülmez: canlı skor dakikada bir yeniden çizildikçe baştan başlardı. Yüzen oynatıcıda (oynatici.js) açılır.
 // Maç şu an oynanıyor mu (liste birkaç dakikada bir yenilenir; saati geldiyse 2,5 saat oynanıyor sayılır)
 const macOynaniyor = m => m.durum === 'canli' || (m.durum === 'oynanmadi' && !m.tarih.endsWith('T00:00:00')
   && Date.now() >= new Date(m.tarih) && Date.now() - new Date(m.tarih) < 2.5 * 3600e3);
@@ -1285,34 +1286,34 @@ function gorunumIzle(secilen) {
   const yayinli = liste.filter(m => y.maclar[m.id]);
   const secili = secilen ? t.maclar.find(m => String(m.id) === String(secilen)) : yayinli.find(macOynaniyor);
   const sv = secili && y.maclar[secili.id];
+  // Adresle gelinen maç (#/izle/<maç>) bir kez açılır; kapatılırsa sayfa yenilendikçe yeniden açılmaz
+  if (secilen && sv && S.ui.izleAcilan !== secilen) { S.ui.izleAcilan = secilen; Oynatici.ac({ v: sv.v, ad: macAdi(secili), kanal: sv.kanal }, true); }
   const durumYazisi = m => (m.durum === 'bitti' ? `${m.evSkor} - ${m.depSkor} · Maç sonu` : macOynaniyor(m) ? 'Şu an oynanıyor' : gunSaat(m.tarih));
   const kart = m => {
     const v = y.maclar[m.id];
-    return `<a class="video-kart" href="#/izle/${m.id}"><span class="kapak"><img src="${ytKapak(v.v)}" alt="" loading="lazy">${macOynaniyor(m) ? '<span class="canli-rozet">● CANLI</span>' : ''}</span>
+    return `<a class="video-kart" href="#/izle/${m.id}" data-buyuk="1" data-oynat="${esc(JSON.stringify({ v: v.v, ad: macAdi(m), kanal: v.kanal }))}"><span class="kapak"><img src="${ytKapak(v.v)}" alt="" loading="lazy">${macOynaniyor(m) ? '<span class="canli-rozet">● CANLI</span>' : ''}</span>
       <strong>${esc(macAdi(m))}</strong><small>${esc(durumYazisi(m))} · ${esc(v.kanal)}</small></a>`;
   };
   const yok = liste.filter(m => !y.maclar[m.id]);
   const bitti = liste.every(m => m.durum === 'bitti');
   return `${Yayin.sekmeler('mac')}<div class="sayfa-baslik baslik-satir"><h1>TBL maç yayınları</h1>
       <span class="satir"><a class="secenek" href="#/maclar/tbl/${h}">${h}. hafta maçları ›</a></span></div>
-    ${sv ? `<div class="kart" style="padding:0;overflow:hidden">${ytOynatici(sv.v, macAdi(secili))}
-      <p style="margin:0;padding:12px 14px"><b>${esc(macAdi(secili))}</b>${macOynaniyor(secili) ? ' <span class="canli-rozet">● CANLI</span>' : ''}<br>
-      <small class="soluk">${secili.hafta}. hafta · ${esc(durumYazisi(secili))} · ${esc(sv.kanal)} YouTube · <a href="#/mac/tbl/${secili.id}">Maç sayfası ›</a></small></p></div>` : ''}
+    ${sv ? `<div class="kart"><p style="margin:0 0 10px"><b>${esc(macAdi(secili))}</b>${macOynaniyor(secili) ? ' <span class="canli-rozet">● CANLI</span>' : ''}<br>
+      <small class="soluk">${secili.hafta}. hafta · ${esc(durumYazisi(secili))} · ${esc(sv.kanal)} YouTube</small></p>
+      <div class="oynat-satir" style="margin:0">${Oynatici.dugme(sv, macAdi(secili), secili.durum === 'bitti', 'secenek aktif oynat-dugme')}
+      <a class="secenek" href="#/mac/tbl/${secili.id}">Kutu skor ›</a></div></div>` : ''}
     <h2>${h}. hafta ${bitti ? 'maç kayıtları' : 'maçları'}</h2>
     ${yayinli.length ? `<div class="video-izgara">${yayinli.map(kart).join('')}</div>` : '<p class="bos">Bu haftanın yayınları henüz eklenmedi.</p>'}
     ${yok.length ? `<p class="soluk kucuk">YouTube yayını bulunamayan: ${yok.map(m => `<a href="#/mac/tbl/${m.id}">${esc(macAdi(m))}</a>`).join(' · ')}</p>` : ''}
-    <p class="alt-bilgi">Maçlar TBF TV ve HT Spor'un YouTube kanallarından yayınlanır. Haftanın maçları bitince Çarşamba akşamına kadar
-      kayıtlar, sonra gelecek haftanın maçları görünür. Liste ${y.guncelleme ? tarihSaat(y.guncelleme) : '-'} itibarıyla.</p>`;
+    <p class="alt-bilgi">Maçlar TBF TV ve HT Spor'un YouTube kanallarından yayınlanır. Video köşede açılır; sayfalar arasında gezerken
+      (kutu skor, oyuncular) kesilmez. Haftanın maçları bitince Çarşamba akşamına kadar kayıtlar, sonra gelecek haftanın maçları görünür. Liste ${y.guncelleme ? tarihSaat(y.guncelleme) : '-'} itibarıyla.</p>`;
 }
 
-// Maç sayfası: TBL maçının YouTube yayını (oynanıyorsa ya da oynanacaksa oynatıcı, bittiyse kaydına bağlantı)
+// Maç sayfası: TBL maçının YouTube yayını varsa "Maçı izle" düğmesi (kutu skor gelince düğme kutu skorun içinde, mac-ek.js)
+const macYayinVerisi = (lig, m) => (lig === 'tbl' ? tblYayinlari()?.maclar[m.id] ?? null : null);
 function macYayini(lig, m) {
-  if (lig !== 'tbl') return '';
-  const v = tblYayinlari()?.maclar[m.id];
-  if (!v) return '';
-  if (m.durum === 'bitti') return `<p style="margin:-4px 0 12px"><a class="secenek" href="#/izle/${m.id}">▶ Maçın kaydını izle · ${esc(v.kanal)}</a></p>`;
-  return `<div class="kart" style="padding:0;overflow:hidden">${ytOynatici(v.v, `${m.ev} - ${m.dep}`)}
-    <p class="soluk kucuk" style="margin:0;padding:8px 14px">${esc(v.kanal)} YouTube yayını</p></div>`;
+  const v = macYayinVerisi(lig, m);
+  return v ? `<div class="oynat-satir">${Oynatici.dugme(v, `${baslik(m.ev)} - ${baslik(m.dep)}`, m.durum === 'bitti')}</div>` : '';
 }
 
 function gorunumAna() {

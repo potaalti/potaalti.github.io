@@ -614,3 +614,21 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
 /* Fantezi saha kartı: forma numarası adın üstünde (köşede uzun adların üstüne biniyordu) */
 .saha-no { font-size: .72rem; font-weight: 800; color: var(--vurgu); font-variant-numeric: tabular-nums; line-height: 1; letter-spacing: .02em; }
 .liste-no { display: inline-block; min-width: 2.1em; margin-right: 4px; color: var(--vurgu); font-size: .78em; font-weight: 800; font-variant-numeric: tabular-nums; }
+/* Yüzen maç oynatıcısı (oynatici.js): sayfanın dışında durur; masaüstünde sağ altta, telefonda alt menünün üstünde */
+.yuzen-oynatici { position: fixed; right: 18px; bottom: 18px; width: 420px; z-index: 35; background: #000; border-radius: 14px; overflow: hidden;
+  box-shadow: 0 12px 36px rgba(4, 20, 24, .45); animation: arka-belir .15s; }
+.yuzen-oynatici.buyuk { width: min(880px, calc(100vw - var(--yan, 0px) - 48px)); }
+.yo-ust { display: flex; align-items: center; gap: 6px; padding: 6px 8px 6px 12px; background: #0b2329; color: #fff; }
+.yo-ust span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .84rem; font-weight: 800; }
+.yo-ust small { margin-left: 8px; color: rgba(255, 255, 255, .62); font-weight: 600; font-size: .74rem; }
+.yo-ust button { flex: none; width: 32px; height: 30px; border: 0; border-radius: 8px; background: rgba(255, 255, 255, .13); color: #fff; font-size: 1rem; cursor: pointer; }
+.yo-ust button:hover { background: rgba(255, 255, 255, .24); }
+.yo-video { position: relative; aspect-ratio: 16 / 9; }
+.yo-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.oynat-dugme { font-weight: 800; }
+.oynat-satir { margin: 0 0 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+@media (max-width: 759px) {
+  .yuzen-oynatici, .yuzen-oynatici.buyuk { left: 8px; right: 8px; width: auto; bottom: calc(68px + env(safe-area-inset-bottom)); border-radius: 12px; }
+  .yuzen-oynatici:not(.buyuk) .yo-video { aspect-ratio: auto; height: min(31vh, calc((100vw - 16px) * 9 / 16)); }
+  body.oynatici-acik { padding-bottom: calc(min(31vh, (100vw - 16px) * 9 / 16) + 50px); }
+}

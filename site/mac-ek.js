@@ -6,6 +6,7 @@
 // fark, ev/dep.ileri, ev/dep.takim, oyuncu.sahada), biten maçta veri/uret.py'nin data/<lig>/fark/<id>.json,
 // ileri-istatistik.json ve takim-istatistik.json dosyalarından.
 import { esc, baslik, sureSn } from './ortak.js';
+import { dugme as oynatDugmesi } from './oynatici.js';
 
 // ---------- Kutu skor ----------
 const atis = ([b, d] = [0, 0]) => `${b}/${d}`;
@@ -146,7 +147,9 @@ export function macGovdesi(kutu, ayar) {
   if (hucum && a.tempoOrt) hucum.tempo = { beklenen: (a.tempoOrt * sure) / 2400, ort: a.tempoOrt, ad: a.tempoAd ?? 'lig ortalaması', donem: secim !== 'T' };
   const secici = donemler ? `<div class="secenekler kutu-donem">${secenekler.map(([k, ad]) =>
     `<button class="secenek ${k === secim ? 'aktif' : ''}" data-is="kutu-donem" data-id="${k}">${ad}</button>`).join('')}</div>` : '';
-  return `${ceyrekTablosu(kutu, a)}${farkGrafigi(evAd, depAd, kutu.fark ?? a.fark)}
+  // TBL maçının YouTube yayını (data/tbl/yayin.json): yüzen oynatıcıda açılır, kutu skora bakarken video sürer
+  const izle = a.yayin ? `<div class="oynat-satir">${oynatDugmesi(a.yayin, `${evAd} - ${depAd}`, kutu.durum === 'bitti' && !a.canli)}</div>` : '';
+  return `${izle}${ceyrekTablosu(kutu, a)}${farkGrafigi(evAd, depAd, kutu.fark ?? a.fark)}
     ${secici}${kutuTarafi('ev')}${kutuTarafi('dep')}
     ${secim === 'T' ? ileriIstatistikKarti(evAd, depAd, ileri, a.takimBasligi(kutu.ev), a.takimBasligi(kutu.dep), null, hucum)
     : ileriIstatistikKarti(evAd, depAd, kutu.donemIleri?.[secim], a.takimBasligi(kutu.ev), a.takimBasligi(kutu.dep), secenekler.find(([k]) => k === secim)?.[1], hucum)}

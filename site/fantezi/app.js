@@ -8,6 +8,7 @@ import { firebaseConfig, lig as LIG_AYARI } from 'lig-ayar';
 import * as C from './core.js';
 import * as D from './db.js';
 import * as ME from '../mac-ek.js';
+import * as Oynatici from '../oynatici.js';
 import { puanGorseli } from './puan-gorsel.js';
 // TBL verisi (eski TBL sitesi): Pages ya da depo, hangisi yeniyse (../ortak.js kaynakSec); TBL_VERI canlı bağ, her an güncel
 import { KAYNAK as TBL_VERI, kaynakSec } from '../ortak.js';
@@ -2050,6 +2051,17 @@ async function kutuYukle(id) {
 // Kutu skor, çeyrekler, grafik ve gelişmiş istatistikler ortak ../mac-ek.js'te: ana uygulamadaki box score ile AYNI olsun diye
 
 // Takım istatistikleri ana uygulamanın verisinden (data/<lig>/takim-istatistik.json, saatte bir güncellenir); oturumda bir kez okunur
+// TBL maç yayınları (ana uygulamanın data/tbl/yayin.json'u; TBF TV ve HT Spor YouTube): kutu skorda "Maçı izle" düğmesi
+function macYayini(id) {
+  if (LIG.kod !== 'tbl') return null;
+  if (S.macYayin === undefined) {
+    S.macYayin = null;
+    fetch(new URL('../data/tbl/yayin.json', location.href)).then(r => (r.ok ? r.json() : {})).catch(() => ({}))
+      .then(v => { S.macYayin = v?.maclar ?? {}; ciz(); });
+  }
+  return S.macYayin?.[id] ?? null;
+}
+
 // Ligin ortalama temposu (gelişmiş istatistikteki tempo için): ana uygulamanın takimlar.json'u
 function ligTempoOrt() {
   if (S.ligTakimlar === undefined) {
@@ -2104,13 +2116,15 @@ function gorunumMac(id) {
       <p class="soluk kucuk" style="margin:8px 0 0;text-align:center">${LIG.kisa} ${n}. hafta · ${bilgi}</p></div>`;
   const fantezi = bulunan && m.evId ? `<div class="kart"><h3>Bu maçtaki fantezi oyuncuları</h3>${macDetayi(m, n)}</div>` : '';
   if (!kutu) {
-    return `${ust}${kutu === null || m.durum === 'oynanmadi' ? `<p class="bos">${m.durum === 'oynanmadi' ? 'Maç henüz oynanmadı.' : 'Kutu skor henüz gelmedi.'}</p>` : '<p class="bos">Kutu skor yükleniyor…</p>'}${fantezi}`;
+    const y = macYayini(id);
+    return `${ust}${y ? `<div class="oynat-satir">${Oynatici.dugme(y, `${baslik(m.ev)} - ${baslik(m.dep)}`)}</div>` : ''}${kutu === null || m.durum === 'oynanmadi' ? `<p class="bos">${m.durum === 'oynanmadi' ? 'Maç henüz oynanmadı.' : 'Kutu skor henüz gelmedi.'}</p>` : '<p class="bos">Kutu skor yükleniyor…</p>'}${fantezi}`;
   }
   // Gövde ana uygulamanın maç sayfasıyla ortak (mac-ek.js): sahadaki 5 (*), takım satırı, skor farkı grafiği, gelişmiş istatistikler
   const canli = m.durum === 'canli' && !canliYazisi(m).startsWith('Maç sonu');
   const sahip = sahipler();
   const benim = benimTakimim();
   return `${ust}${ME.macGovdesi(kutu, {
+    yayin: macYayini(id),
     canli, sirala: S.ui.kutuSirala, donem: S.ui.kutuDonem, takimIst: takimIstatistigi(kutu.id), tempoOrt: ligTempoOrt(),
     ileriDosya: kutu.ev.ileri ? null : ileriIstatistigi(kutu.id),
     fark: !kutu.fark && ME.farkVarMi(LIG.kod, kutu.hafta ?? n) ? farkVerisi(id) : null,

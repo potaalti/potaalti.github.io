@@ -15,7 +15,7 @@ function yukle() {
 
 const kanalLinki = k => `https://www.youtube.com/@${k.kullanici}`;
 const gorsel = id => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-const oynatici = (id, baslik) => `<div class="oynatici"><iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0" title="${esc(baslik)}"
+const oynatici = (id, baslik) => `<div class="oynatici"><iframe src="https://www.youtube.com/embed/${id}?rel=0" title="${esc(baslik)}"
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>`;
 
 // ---------- Şu an canlı mı? ----------

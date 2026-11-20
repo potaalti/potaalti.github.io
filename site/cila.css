@@ -625,10 +625,21 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
 .yo-ust button:hover { background: rgba(255, 255, 255, .24); }
 .yo-video { position: relative; aspect-ratio: 16 / 9; }
 .yo-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.yo-ust { cursor: move; touch-action: none; user-select: none; -webkit-user-select: none; }
+.yo-tutamak { position: absolute; width: 22px; height: 22px; z-index: 2; touch-action: none; cursor: nwse-resize; }
+.yo-tutamak::after { content: ''; position: absolute; width: 10px; height: 10px; border: 0 solid rgba(255, 255, 255, .75); }
+.yo-tutamak.sol-ust { left: 0; top: 0; }
+.yo-tutamak.sol-ust::after { left: 3px; top: 3px; border-left-width: 2px; border-top-width: 2px; border-top-left-radius: 4px; }
+.yo-tutamak.sag-alt { right: 0; bottom: 0; }
+.yo-tutamak.sag-alt::after { right: 3px; bottom: 3px; border-right-width: 2px; border-bottom-width: 2px; border-bottom-right-radius: 4px; }
+.yuzen-oynatici.suruklen { user-select: none; -webkit-user-select: none; box-shadow: 0 16px 44px rgba(4, 20, 24, .55); }
+.yuzen-oynatici.suruklen iframe { pointer-events: none; }
 .oynat-dugme { font-weight: 800; }
 .oynat-satir { margin: 0 0 12px; display: flex; flex-wrap: wrap; gap: 8px; }
 @media (max-width: 759px) {
   .yuzen-oynatici, .yuzen-oynatici.buyuk { left: 8px; right: 8px; width: auto; bottom: calc(68px + env(safe-area-inset-bottom)); border-radius: 12px; }
   .yuzen-oynatici:not(.buyuk) .yo-video { aspect-ratio: auto; height: min(31vh, calc((100vw - 16px) * 9 / 16)); }
   body.oynatici-acik { padding-bottom: calc(min(31vh, (100vw - 16px) * 9 / 16) + 50px); }
+  .yuzen-oynatici.serbest .yo-video { aspect-ratio: 16 / 9; height: auto; }
+  .yo-tutamak { width: 30px; height: 30px; }
 }

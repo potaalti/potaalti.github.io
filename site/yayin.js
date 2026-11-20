@@ -89,7 +89,8 @@ export function gorunum(secilenId) {
   const kisalar = v.videolar.filter(x => x.kisa);
   const uzunlar = v.videolar.filter(x => !x.kisa && !v.yayinlar.some(y => y.id === x.id));
   return `<div class="sayfa-baslik baslik-satir"><h1>Pota Altı YouTube</h1>
-      <span class="satir"><a class="secenek" href="${kanalLinki(v.kanal)}" target="_blank" rel="noopener">Kanala git ›</a>
+      <span class="satir"><a class="secenek" href="#/izle">▶ TBL'yi izle</a>
+      <a class="secenek" href="${kanalLinki(v.kanal)}" target="_blank" rel="noopener">Kanala git ›</a>
       <a class="secenek aktif" href="${kanalLinki(v.kanal)}/join" target="_blank" rel="noopener">Katıl</a></span></div>
     ${Y.canli ? `<p style="margin:0 0 10px"><span class="canli-rozet">● CANLI</span> <b>Pota Altı şu an yayında</b></p>` : ''}
     ${secili ? `<div class="kart" style="padding:0;overflow:hidden">${oynatici(secili.id, secili.baslik)}

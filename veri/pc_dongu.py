@@ -10,7 +10,7 @@ etiketiyle gönderir; o arada başkası (telefon, GitHub) göndermişse son hali
       TBL ve BSL verilerinin tamamı (TBL takım kadroları dahil), istatistik liderleri, seyirci, oyuncu fotoğrafı ve
       takım logoları: 08, 13, 18, 23
       puan tablosu, takım ve oyuncu istatistikleri: saat başı
-      YouTube canlı yayın ve video listesi: 07, 11, 15, 19, 23
+      YouTube canlı yayın ve video listesi, TBL maç yayınları (TBF TV, HT Spor): 07'den 23'e iki saatte bir
   --is ad1,ad2   zamanına bakmadan yalnızca bu işler (tbl, bsl, avrupa | veri, istatistik, gunluk, youtube)
   --kuru         üretir ama göndermez       --kok KLASÖR   kopyaların yeri (varsayılan ~/pota-pc)
 Kayıt: ~/pota-pc.log. Kopyalar: ~/pota-pc/<canli|gunluk>/{app,tbl} (çalışma klasörlerine dokunmaz).
@@ -28,7 +28,7 @@ TBL_URL = "https://github.com/potaalti/tbl_fantezi_lig.git"
 APP_SEYREK = ["/veri/", "/bsl/", "/site/data/", "/site/bsl/data/", "/site/tbl/data/"]
 AVRUPA_SAATLERI = {18, 19, 20, 21, 22, 23, 0, 1}
 VERI_SAATLERI = [8, 13, 18, 23]
-YOUTUBE_SAATLERI = [7, 11, 15, 19, 23]
+YOUTUBE_SAATLERI = [7, 9, 11, 13, 15, 17, 19, 21, 23]
 PENCERESIZ = 0x08000000 if os.name == "nt" else 0  # Windows'ta git/python penceresi açılmasın
 KAYIT = Path.home() / "pota-pc.log"
 
@@ -170,7 +170,7 @@ def gunluk(kok, secili, kuru):
             bitti("gunluk", tamam)
     if yap["youtube"]:
         bitti("youtube", is_yap("YouTube", app, [(["veri/uret.py", "--youtube", "sadece"], ".", 300)],
-                                ["site/data/youtube.json"], "YouTube listesi güncellendi (pc)", kuru))
+                                ["site/data/youtube.json", "site/data/tbl/yayin.json"], "YouTube listesi güncellendi (pc)", kuru))
 
 
 def main():

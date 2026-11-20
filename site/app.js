@@ -87,6 +87,7 @@ function aktifMenu() {
   const [s, lig] = rota();
   if (!s) return '';
   if (s === 'maclar' || s === 'mac') return 'maclar';
+  if (s === 'izle') return 'yayin';
   if (['lig', 'takim', 'oyuncu'].includes(s)) return `lig/${lig}`;
   return s;
 }
@@ -125,6 +126,7 @@ function gorunum() {
     case 'takim': return `<div class="dar">${gorunumTakim(lig, b)}</div>`;
     case 'oyuncu': return `<div class="dar">${gorunumOyuncu(lig, b)}</div>`;
     case 'yayin': return `<div class="dar">${Yayin.gorunum(a)}</div>`;
+    case 'izle': return `<div class="dar">${gorunumIzle(a)}</div>`;
     case 'durum': return `<div class="dar">${gorunumDurum()}</div>`;
     case 'istatistik': return `<div class="dar">${gorunumIstatistik()}</div>`;
     case 'avrupa': return `<div class="dar">${gorunumAvrupa(a, b, rota()[3])}</div>`;
@@ -256,15 +258,16 @@ function gorunumMac(lig, id) {
       <div class="mac-skor"><strong>${m.durum === 'oynanmadi' ? '–' : `${m.evSkor ?? 0} - ${m.depSkor ?? 0}`}</strong><small>${durum}</small></div>
       <a class="${kazananSinifi(m, 'dep')}" href="#/takim/${lig}/${takimAnahtari(m.dep)}">${esc(baslik(m.dep))}</a></div>
       <p class="soluk kucuk" style="margin:10px 0 0;text-align:center"><span class="lig-etiket">${LIGLER[lig].kisa}</span> ${hafta}. hafta · ${bilgi}</p></div>`;
-  if (!kutu && m.durum === 'oynanmadi') return `${ust}${macOnu(lig, m)}`;
-  if (!kutu) return `${ust}<p class="bos">${kutu === null ? 'Kutu skor henüz gelmedi.' : 'Yükleniyor…'}</p>`;
+  const yayin = macYayini(lig, m);
+  if (!kutu && m.durum === 'oynanmadi') return `${ust}${yayin}${macOnu(lig, m)}`;
+  if (!kutu) return `${ust}${yayin}<p class="bos">${kutu === null ? 'Kutu skor henüz gelmedi.' : 'Yükleniyor…'}</p>`;
   // Maç bitince (TBF kesinleştirmeden önceki "Maç sonu · kesinleşiyor" dahil) sahada işareti kalkar
   const canli = m.durum === 'canli' && !canliYazisi(m).startsWith('Maç sonu');
   // Takım satırı canlıda kutu skorun içinden, biten maçta TBF'nin takım istatistiğinden; grafik canlıda kutudan, biten maçta
   // ayrı dosyadan (FARK_ILK_HAFTA'dan itibaren). Gövde Fantezi Lig arayüzüyle ortak (mac-ek.js).
   if (!kutu.fark && ME.farkVarMi(lig, kutu.hafta ?? hafta)) yukle(S.farklar, id, `data/${lig}/fark/${id}.json`);
   const benim = takimim(lig);
-  return `${ust}${ME.macGovdesi(kutu, {
+  return `${ust}${yayin}${ME.macGovdesi(kutu, {
     canli, sirala: S.ui.kutuSirala, donem: S.ui.kutuDonem, takimIst: takimIstatistigi(lig, kutu.id), tempoOrt: ME.ligTempoOrtalamasi(ligVerisi(lig, 'takimlar')?.takimlar),
     ileriDosya: kutu.ev.ileri ? null : ileriIstatistigi(lig, kutu.id), fark: S.farklar[id],
     takimBasligi: t => takimLinki(lig, t.ad),
@@ -1241,6 +1244,87 @@ function buHaftaKarti(lig) {
     ${sirali.map(m => macSatiri(lig, m)).join('')}</div>`;
 }
 
+// ---------- TBL'yi izle ----------
+// TBF TV ve HT Spor'un YouTube'daki TBL maç yayınları (data/tbl/yayin.json; veri/uret.py kanalların Canlı sekmesinden eşler).
+// Sayfada tek hafta: bir haftanın maçları bittikten sonra Çarşamba akşamına (20.00) kadar o haftanın kayıtları, sonra gelecek
+// haftanın maçları (gelecek hafta daha erken başlıyorsa, hafta arası maçlarda, ilk maç günü geçilir).
+const IZLE_GECIS = { gun: 3, saat: 20 };
+const tblYayinlari = () => { yukle(S, 'tblYayin', 'data/tbl/yayin.json', { bosDeger: { maclar: {} } }); return S.tblYayin; };
+const ytKapak = id => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+const ytOynatici = (id, ad) => `<div class="oynatici"><iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0" title="${esc(ad)}"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>`;
+// Maç şu an oynanıyor mu (liste birkaç dakikada bir yenilenir; saati geldiyse 2,5 saat oynanıyor sayılır)
+const macOynaniyor = m => m.durum === 'canli' || (m.durum === 'oynanmadi' && !m.tarih.endsWith('T00:00:00')
+  && Date.now() >= new Date(m.tarih) && Date.now() - new Date(m.tarih) < 2.5 * 3600e3);
+
+function izlenecekHafta(maclar) {
+  const haftalar = [...new Set(maclar.map(m => m.hafta))].sort((a, b) => a - b);
+  const sonraki = haftalar.find(h => maclar.some(m => m.hafta === h && m.durum !== 'bitti'));
+  if (sonraki === undefined) return haftalar.at(-1);
+  const onceki = haftalar.filter(h => h < sonraki).at(-1);
+  const yeni = maclar.filter(m => m.hafta === sonraki);
+  if (onceki === undefined || yeni.some(m => m.durum !== 'oynanmadi' || macOynaniyor(m))) return sonraki;
+  // Önceki haftanın son maçından sonraki ilk Çarşamba 20.00
+  const son = new Date(Math.max(...maclar.filter(m => m.hafta === onceki).map(m => +new Date(m.tarih))));
+  const gecis = new Date(son);
+  gecis.setHours(IZLE_GECIS.saat, 0, 0, 0);
+  while (gecis.getDay() !== IZLE_GECIS.gun || gecis <= son) gecis.setDate(gecis.getDate() + 1);
+  const ilk = new Date(Math.min(...yeni.map(m => +new Date(m.tarih))));
+  ilk.setHours(0, 0, 0, 0);
+  return Date.now() < Math.min(+gecis, +ilk) ? onceki : sonraki;
+}
+
+function gorunumIzle(secilen) {
+  const t = ligVerisi('tbl', 'takimlar');
+  const y = tblYayinlari();
+  if (!t || !y) return '<p class="bos">Yükleniyor…</p>';
+  const ad = id => baslik(t.takimlar.find(x => x.id === id)?.ad ?? id);
+  const macAdi = m => `${ad(m.ev)} - ${ad(m.dep)}`;
+  const h = izlenecekHafta(t.maclar);
+  const liste = t.maclar.filter(m => m.hafta === h).sort((a, b) => a.tarih.localeCompare(b.tarih));
+  const yayinli = liste.filter(m => y.maclar[m.id]);
+  const secili = secilen ? t.maclar.find(m => String(m.id) === String(secilen)) : yayinli.find(macOynaniyor);
+  const sv = secili && y.maclar[secili.id];
+  const durumYazisi = m => (m.durum === 'bitti' ? `${m.evSkor} - ${m.depSkor} · Maç sonu` : macOynaniyor(m) ? 'Şu an oynanıyor' : gunSaat(m.tarih));
+  const kart = m => {
+    const v = y.maclar[m.id];
+    return `<a class="video-kart" href="#/izle/${m.id}"><span class="kapak"><img src="${ytKapak(v.v)}" alt="" loading="lazy">${macOynaniyor(m) ? '<span class="canli-rozet">● CANLI</span>' : ''}</span>
+      <strong>${esc(macAdi(m))}</strong><small>${esc(durumYazisi(m))} · ${esc(v.kanal)}</small></a>`;
+  };
+  const yok = liste.filter(m => !y.maclar[m.id]);
+  const bitti = liste.every(m => m.durum === 'bitti');
+  return `<div class="sayfa-baslik baslik-satir"><h1>TBL'yi izle</h1>
+      <span class="satir"><a class="secenek" href="#/maclar/tbl/${h}">${h}. hafta maçları ›</a></span></div>
+    ${sv ? `<div class="kart" style="padding:0;overflow:hidden">${ytOynatici(sv.v, macAdi(secili))}
+      <p style="margin:0;padding:12px 14px"><b>${esc(macAdi(secili))}</b>${macOynaniyor(secili) ? ' <span class="canli-rozet">● CANLI</span>' : ''}<br>
+      <small class="soluk">${secili.hafta}. hafta · ${esc(durumYazisi(secili))} · ${esc(sv.kanal)} YouTube · <a href="#/mac/tbl/${secili.id}">Maç sayfası ›</a></small></p></div>` : ''}
+    <h2>${h}. hafta ${bitti ? 'maç kayıtları' : 'maçları'}</h2>
+    ${yayinli.length ? `<div class="video-izgara">${yayinli.map(kart).join('')}</div>` : '<p class="bos">Bu haftanın yayınları henüz eklenmedi.</p>'}
+    ${yok.length ? `<p class="soluk kucuk">YouTube yayını bulunamayan: ${yok.map(m => `<a href="#/mac/tbl/${m.id}">${esc(macAdi(m))}</a>`).join(' · ')}</p>` : ''}
+    <p class="alt-bilgi">Maçlar TBF TV ve HT Spor'un YouTube kanallarından yayınlanır. Haftanın maçları bitince Çarşamba akşamına kadar
+      kayıtlar, sonra gelecek haftanın maçları görünür. Liste ${y.guncelleme ? tarihSaat(y.guncelleme) : '-'} itibarıyla.</p>`;
+}
+
+// Ana sayfa: oynanan TBL maçının YouTube yayını varsa üstte kart
+function izleKarti() {
+  const t = ligVerisi('tbl', 'takimlar'), y = tblYayinlari();
+  const m = t && y && t.maclar.find(x => y.maclar[x.id] && macOynaniyor(x));
+  if (!m) return '';
+  const ad = id => baslik(t.takimlar.find(x => x.id === id)?.ad ?? id);
+  return `<a class="kart canli-kart" href="#/izle/${m.id}"><span class="canli-rozet">● CANLI</span>
+    <div><strong>TBL: ${esc(ad(m.ev))} - ${esc(ad(m.dep))}</strong><small>${esc(y.maclar[m.id].kanal)} YouTube</small></div><span class="izle">İzle ›</span></a>`;
+}
+
+// Maç sayfası: TBL maçının YouTube yayını (oynanıyorsa ya da oynanacaksa oynatıcı, bittiyse kaydına bağlantı)
+function macYayini(lig, m) {
+  if (lig !== 'tbl') return '';
+  const v = tblYayinlari()?.maclar[m.id];
+  if (!v) return '';
+  if (m.durum === 'bitti') return `<p style="margin:-4px 0 12px"><a class="secenek" href="#/izle/${m.id}">▶ Maçın kaydını izle · ${esc(v.kanal)}</a></p>`;
+  return `<div class="kart" style="padding:0;overflow:hidden">${ytOynatici(v.v, `${m.ev} - ${m.dep}`)}
+    <p class="soluk kucuk" style="margin:0;padding:8px 14px">${esc(v.kanal)} YouTube yayını</p></div>`;
+}
+
 function gorunumAna() {
   // Ana sayfada solda BSL, sağda TBL (puan tablosunun ilk 10'u). Bugün temsilcilerimizin Avrupa maçı varsa en üstte kartı;
   // yoksa Avrupa bölümü TBL/BSL'nin altında (telefonda BSL · TBL · Avrupa seçimi)
@@ -1254,10 +1338,10 @@ function gorunumAna() {
     const lig = S.ui.anaLig;
     const secici = `<div class="lig-secici">${[...Object.entries(LIGLER).map(([l, v]) => [l, v.kisa]), ['avrupa', 'Avrupa']]
       .map(([l, ad]) => `<button class="${l === lig ? 'aktif' : ''}" data-is="ana-lig" data-id="${l}">${ad}</button>`).join('')}</div>`;
-    return `${Yayin.anaKart()}${bugun}${secici}${lig === 'avrupa' ? avrupaBolumu : sutun(lig)}${fantezi}${altBilgi()}`;
+    return `${izleKarti()}${Yayin.anaKart()}${bugun}${secici}${lig === 'avrupa' ? avrupaBolumu : sutun(lig)}${fantezi}${altBilgi()}`;
   }
   return `<div class="ana-ust">${karsilama}${Yayin.anaKart()}</div>
-    ${bugun}<div class="iki-sutun">${sutun('bsl')}${sutun('tbl')}</div>${bugun ? '' : `<h2 class="bolum-baslik">Avrupa'daki temsilcilerimiz</h2>${avrupaBolumu}`}${fantezi}${altBilgi()}`;
+    ${izleKarti()}${bugun}<div class="iki-sutun">${sutun('bsl')}${sutun('tbl')}</div>${bugun ? '' : `<h2 class="bolum-baslik">Avrupa'daki temsilcilerimiz</h2>${avrupaBolumu}`}${fantezi}${altBilgi()}`;
 }
 // Ana sayfadaki Avrupa bölümü: sıradaki maç günü (bugün varsa bugün) ve dört kupadaki son sonuçlar
 function avAnaBolum(idx, bugunUstte = false) {
@@ -1859,7 +1943,7 @@ function gorunumDurum() {
 // özet sayılar, tek renk çubuk grafik (dokununca / üstüne gelince değer yazar), cihaz · sistem · kaynak · bölüm dağılımları.
 const IST_DONEMLER = [['bugun', 'Bugün'], ['hafta', '7 gün'], ['ay', '30 gün']];
 const IST_LIG = { bsl: 'BSL', tbl: 'TBL', el: 'EuroLeague', ec: 'EuroCup', bcl: 'BCL', fec: 'FIBA Europe Cup' };
-const IST_BOLUM = { '': 'Ana sayfa', maclar: 'Maçlar', mac: 'Maç sayfaları', takim: 'Takımlar', oyuncu: 'Oyuncular', avrupa: 'Avrupa', yayin: 'Yayın', fantezi: 'Fantezi', durum: 'Durum' };
+const IST_BOLUM = { '': 'Ana sayfa', maclar: 'Maçlar', mac: 'Maç sayfaları', takim: 'Takımlar', oyuncu: 'Oyuncular', avrupa: 'Avrupa', yayin: 'Yayın', izle: "TBL'yi izle", fantezi: 'Fantezi', durum: 'Durum' };
 function istBolumAdi(yol) {
   const [kok, h = ''] = yol.split('#');
   if (/\/tbl\/$/.test(kok)) return 'TBL Fantezi';

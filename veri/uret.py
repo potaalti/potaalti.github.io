@@ -653,16 +653,187 @@ def youtube_uret():
     return len(yayinlar), len(videolar)
 
 
+# ---------- TBL maç yayınları (YouTube) ----------
+# TBF TV ve HT Spor TBL maçlarını kendi YouTube kanallarında yayınlıyor (ikisi de gömmeye izin veriyor). Kanalların Canlı
+# sekmesindeki yayınlar başlıktan maça eşlenir: "Ev - Deplasman Türkiye Sigorta Türkiye Basketbol Ligi 12.Hafta" (TBF),
+# "Ev - Deplasman | Türkiye Sigorta TBL" (HT Spor). Planlanan yayının adresi önceden belli; maç başlayınca aynı adres canlı
+# yayına, bitince kayda döner. Bulunanlar site/data/tbl/yayin.json'da birikir (eskiler silinmez). API anahtarı gerekmez.
+YAYIN_KANALLARI = [{"ad": "TBF TV", "kullanici": "TBF"}, {"ad": "HT Spor", "kullanici": "htspor"}]
+# Başlıklarda kısaltılan adlar ve takımların kanallarda geçen diğer adları
+YAYIN_KISALTMA = {"bsb": "buyuksehir belediye spor", "bb": "buyuksehir belediye", "bbsk": "buyuksehir belediye spor", "kbb": "k b b",
+                  "klj": "kolejliler", "bld": "belediye", "bel": "belediye"}
+YAYIN_DIGER_AD = {"kipas-k-b-b": ["Kahramanmaraş Büyükşehir Belediye Spor", "Kipaş İstiklal"], "mersin-spor": ["Mersin Basketbol"]}
+
+
+def yt_indir(url, veri=None):
+    istek = urllib.request.Request(url, data=veri, headers={"User-Agent": TARAYICI, "Accept-Language": "tr-TR",
+                                                            **({"Content-Type": "application/json"} if veri else {})})
+    with urllib.request.urlopen(istek, timeout=30) as y:
+        return y.read()
+
+
+def yt_kartlar(o, kartlar, devam):
+    """YouTube sayfa verisindeki video kartları (kimlik, başlık, alt satırlar) ve sonraki sayfanın anahtarı."""
+    if isinstance(o, dict):
+        if "lockupViewModel" in o:
+            v = o["lockupViewModel"]
+            md = v.get("metadata", {}).get("lockupMetadataViewModel", {})
+            satirlar = [p.get("text", {}).get("content", "") for r in md.get("metadata", {}).get("contentMetadataViewModel", {}).get("metadataRows", [])
+                        for p in r.get("metadataParts", [])]
+            if v.get("contentId"):
+                kartlar.append({"id": v["contentId"], "baslik": md.get("title", {}).get("content", ""), "satirlar": satirlar})
+        if "continuationItemRenderer" in o:
+            t = o["continuationItemRenderer"].get("continuationEndpoint", {}).get("continuationCommand", {}).get("token")
+            if t:
+                devam.append(t)
+        for x in o.values():
+            yt_kartlar(x, kartlar, devam)
+    elif isinstance(o, list):
+        for x in o:
+            yt_kartlar(x, kartlar, devam)
+
+
+def yt_canli_sekmesi(kullanici, sayfa):
+    """Kanalın Canlı sekmesindeki yayınlar, en yenisi başta; sayfa başına ~30 yayın."""
+    html = yt_indir(f"https://www.youtube.com/@{kullanici}/streams").decode("utf-8", "replace")
+    veri = re.search(r"var ytInitialData = (\{.*?\});</script>", html)
+    surum = re.search(r'"INNERTUBE_CLIENT_VERSION":"([^"]+)"', html)
+    kartlar, devam = [], []
+    if veri:
+        yt_kartlar(json.loads(veri.group(1)), kartlar, devam)
+    for _ in range(sayfa - 1):
+        if not devam or not surum:
+            break
+        istek = json.dumps({"context": {"client": {"clientName": "WEB", "clientVersion": surum.group(1), "hl": "tr", "gl": "TR"}},
+                            "continuation": devam[0]}).encode()
+        yeni, devam = [], []
+        yt_kartlar(json.loads(yt_indir("https://www.youtube.com/youtubei/v1/browse?prettyPrint=false", istek)), yeni, devam)
+        if not yeni:
+            break
+        kartlar += yeni
+        time.sleep(0.5)
+    return kartlar
+
+
+def _jetonlar(ad):
+    out = []
+    for t in anahtar(ad).split("-"):
+        out += YAYIN_KISALTMA.get(t, t).split()
+    birlesik, tek = [], ""  # tek harfler birleşir: k b b -> kbb
+    for t in out:
+        if len(t) == 1:
+            tek += t
+            continue
+        if tek:
+            birlesik.append(tek)
+            tek = ""
+        birlesik.append(t)
+    return birlesik + ([tek] if tek else [])
+
+
+def _benzer(a, b):
+    import difflib
+    return a == b or (len(a) >= 3 and len(b) >= 3 and (a.startswith(b) or b.startswith(a))) \
+        or (len(a) >= 5 and len(b) >= 5 and difflib.SequenceMatcher(None, a, b).ratio() >= 0.8)
+
+
+def yayin_takimi(yazi, takimlar):
+    """Başlıktaki takım adının bu sezonki takımı (en iyi eşleşen; emin değilse None)."""
+    bt = _jetonlar(yazi)
+    if not bt:
+        return None
+
+    def puan(ad):
+        tt = _jetonlar(ad)
+        if tt and "".join(bt) == "".join(tt):  # "Final Spor" = "FİNALSPOR"
+            return 1.5
+        return sum(any(_benzer(x, y) for y in tt) for x in bt) / len(bt) + (0.5 if tt and _benzer(bt[0], tt[0]) else 0)
+
+    # Başlıktaki kelimelerin çoğu (en az %80) takımın adında olmalı: "Fenerbahçe Koleji" Fenerbahçe Gelişim değildir
+    s = sorted(((max(puan(a) for a in [ad, *YAYIN_DIGER_AD.get(tid, [])]), tid) for tid, ad in takimlar.items()), reverse=True)
+    return s[0][1] if s and s[0][0] >= 1.3 and (len(s) < 2 or s[0][0] > s[1][0]) else None
+
+
+YAYIN_DESEN = re.compile(r"^(?:#CANLI\s*\|?\s*)?(.+?)\s+(?:\d+\s*)?[-–]\s*(?:\d+\s+)?(.+?)\s*(?:\||Türkiye Sigorta|$)")
+
+
+def yayin_tarihi(satirlar, simdi):
+    """Kart satırlarından yayının yaklaşık tarihi ve hata payı (gün): planlanan tarih, canlı, 'N gün önce' vb."""
+    metin = " ".join(satirlar)
+    m = re.search(r"(\d{2})\.(\d{2})\.(\d{4})", metin)
+    if m:
+        return datetime(int(m.group(3)), int(m.group(2)), int(m.group(1)), tzinfo=timezone.utc), 1.5
+    if "izliyor" in metin or "watching" in metin:
+        return simdi, 1
+    m = re.search(r"(\d+)\s*(dakika|dk|saat|sa|gün|hafta|hf|ay|yıl)\b", metin)
+    if not m:
+        return None, None
+    n, birim = int(m.group(1)), {"dakika": "dk", "saat": "sa", "hafta": "hf"}.get(m.group(2), m.group(2))
+    gun, pay = {"dk": (0, 1), "sa": (n / 24, 1), "gün": (n, 1.5), "hf": (7 * n + 3, 5), "ay": (30 * n + 15, 20), "yıl": (365 * n, 0)}[birim]
+    return simdi - timedelta(days=gun), pay
+
+
+def tbl_yayin_uret(sayfa=3):
+    """TBL maçlarının YouTube yayınları -> site/data/tbl/yayin.json {maç id: {v: video, kanal}}."""
+    tk = json.loads((CIKTI / "tbl" / "takimlar.json").read_text(encoding="utf-8"))
+    takimlar = {t["id"]: t["ad"] for t in tk["takimlar"]}
+    ciftler = {(m["ev"], m["dep"]): m for m in tk["maclar"]}  # çift devreli lig: her ev-deplasman sırası sezonda bir kez
+    sezon_basi = datetime.fromisoformat(min(m["tarih"] for m in tk["maclar"])).replace(tzinfo=timezone.utc) - timedelta(days=10)
+    yol = CIKTI / "tbl" / "yayin.json"
+    onceki = json.loads(yol.read_text(encoding="utf-8")).get("maclar", {}) if yol.exists() else {}
+    bulunan, simdi = {}, datetime.now(timezone.utc)
+    for kanal in YAYIN_KANALLARI:
+        try:
+            kartlar = yt_canli_sekmesi(kanal["kullanici"], sayfa)
+        except Exception as e:  # bir kanal okunamazsa diğeri ve önceki eşleşmeler kalır
+            print(f"{kanal['ad']} okunamadı:", e)
+            continue
+        for k in kartlar:
+            b = k["baslik"]
+            if not re.search(r"Türkiye Basketbol Ligi|TBL\b", b) \
+                    or re.search(r"2\.\s*Lig|Kadın|Gençler|Bölgesel|Play-?Off|Play-?In|Yarı Final|Çeyrek Final|Final Serisi|Kura", b, re.I):
+                continue
+            p = YAYIN_DESEN.match(b)
+            if not p:
+                continue
+            ev = yayin_takimi(re.sub(r"\s+\d+$", "", p.group(1).strip()), takimlar)
+            dep = yayin_takimi(re.sub(r"^\d+\s+", "", p.group(2).strip()), takimlar)
+            m = ciftler.get((ev, dep))
+            if not m:
+                continue
+            h = re.search(r"(\d+)\.\s*Hafta", b)
+            if h and int(h.group(1)) != m["hafta"]:
+                continue
+            # Geçen sezonun aynı eşleşmesi karışmasın: yayın tarihi (YouTube'un "3 hf. önce" gibi kaba yazısından) sezon içinde
+            # ve maç gününe yakın olmalı
+            tarih, pay = yayin_tarihi(k["satirlar"], simdi)
+            mac_tarihi = datetime.fromisoformat(m["tarih"]).replace(tzinfo=timezone(timedelta(hours=3)))
+            if tarih is None or tarih < sezon_basi or abs((tarih - mac_tarihi).total_seconds()) > (pay + 10) * 86400:
+                continue
+            bulunan.setdefault(str(m["id"]), {"v": k["id"], "kanal": kanal["ad"]})  # en yenisi başta
+    maclar = {**onceki, **bulunan}
+    yaz(yol, {"guncelleme": simdi.isoformat(timespec="seconds"), "kanallar": YAYIN_KANALLARI,
+              "maclar": dict(sorted(maclar.items(), key=lambda x: int(x[0])))})
+    return len(bulunan), len(maclar)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--kaynak", default=VARSAYILAN_KAYNAK)
     ap.add_argument("--gunluk", action="store_true", help="günde 2 kezlik güncelleme: liderler ve (Cumartesi–Salı) seyirci sayıları")
     # Bilgisayar döngüsü (veri/pc_dongu.py) YouTube listesini ayrı saatlerde yeniler: hayir = ligler, sadece = yalnızca YouTube
     ap.add_argument("--youtube", choices=["evet", "hayir", "sadece"], default="evet")
+    # TBL maç yayınları: kanalların Canlı sekmesinde kaç sayfa geriye bakılır (~30 yayın/sayfa; sezon başı için 40)
+    ap.add_argument("--yayin-sayfa", type=int, default=3)
     args = ap.parse_args()
     if args.youtube == "sadece":
         y, v = youtube_uret()
         print(f"youtube: {y} canlı yayın, {v} video")
+        try:
+            b, t = tbl_yayin_uret(args.yayin_sayfa)
+            print(f"tbl yayınları: {b} bulundu, toplam {t} maç")
+        except Exception as e:
+            print("tbl yayınları okunamadı:", e)
         return 0
     index = oku(args.kaynak, "hafta/index.json")
     meta = {"guncelleme": datetime.now(timezone.utc).isoformat(timespec="seconds"), "kaynakGuncelleme": index.get("guncelleme"), "ligler": {}}

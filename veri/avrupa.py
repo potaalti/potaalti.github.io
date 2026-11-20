@@ -117,7 +117,7 @@ def oyuncu_satiri(id_, ad, no, ilk5, sn, s):
 
 # Temsilcilerimizin adları kaynaklarda İngilizce ve Türkçe harfsiz: uygulamada Türkçe yazılır
 TR_AD = {
-    "Anadolu Efes Istanbul": "Anadolu Efes", "Besiktas Istanbul": "Beşiktaş", "Fenerbahce Tarfin Istanbul": "Fenerbahçe Tarfin",
+    "Anadolu Efes Istanbul": "Anadolu Efes", "Besiktas Istanbul": "Beşiktaş Fuzul", "Fenerbahce Tarfin Istanbul": "Fenerbahçe Tarfin",
     "Bahcesehir College Istanbul": "Bahçeşehir Koleji", "Tofas Bursa": "Tofaş", "Turk Telekom Ankara": "Türk Telekom",
     "Biotekno Korfez Basket": "Biotekno Körfez Basket",
 }

@@ -28,6 +28,15 @@ CACHE = ROOT / "cache"
 API = "https://www.tbf.org.tr/api"
 LIG_ID = 22214  # BSL 2026-2027
 SEZON_ID = 174
+# Sezon içinde adı değişen takımlar: TBF eski maçlarda ve fikstürde eski adı, yenilerde yeni adı veriyor; hepsi yeni ada
+# yazılır (takım kimliği addan üretiliyor, iki ayrı takım görünmesin). Eski TBL deposunda fetch_tbf.py'de de aynı liste.
+TAKIM_AD = {"BEŞİKTAŞ": "BEŞİKTAŞ FUZUL"}  # 2026-11-15 (BSL 8. hafta)
+
+
+def takim_adi(ad):
+    return TAKIM_AD.get(ad, ad)
+
+
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0 Safari/537.36",
     "Accept": "application/json, text/plain, */*",
@@ -191,8 +200,8 @@ def guncelleme_gerekli():
 def mac_kaydi(m):
     return {
         "id": m["matchId"], "tarih": m["matchDate"], "durum": durum_adi(m["matchStatusId"]),
-        "ev": m["homeTeam"]["name"], "evId": m["homeTeam"]["id"], "evSkor": m["homeTeam"]["score"] or None,
-        "dep": m["awayTeam"]["name"], "depId": m["awayTeam"]["id"], "depSkor": m["awayTeam"]["score"] or None,
+        "ev": takim_adi(m["homeTeam"]["name"]), "evId": m["homeTeam"]["id"], "evSkor": m["homeTeam"]["score"] or None,
+        "dep": takim_adi(m["awayTeam"]["name"]), "depId": m["awayTeam"]["id"], "depSkor": m["awayTeam"]["score"] or None,
         "salon": m.get("salonAdi"), "yayin": m.get("broadcastChannel"),
     }
 
@@ -246,7 +255,7 @@ def kadrolar():
             rehber[str(o["personId"])] = {
                 "id": str(o["personId"]),
                 "ad": f"{o.get('firstName') or ''} {o.get('lastName') or ''}".strip(),
-                "takim": t["teamName"], "takimId": t["teamProcessId"], "takimKod": t.get("teamCode") or "",
+                "takim": takim_adi(t["teamName"]), "takimId": t["teamProcessId"], "takimKod": t.get("teamCode") or "",
                 "ulke": ulke, "turk": turk_mu(ulke), "aktif": True,
                 "mac": o.get("macSayisi") or 0,
                 "vpOrt": round(o.get("verimlilikPuani") or 0, 1),

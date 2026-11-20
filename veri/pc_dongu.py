@@ -5,13 +5,14 @@ kaynak budur; telefon ve GitHub yedektir. Telefon, son 5 dakikada '(pc)' etiketl
 etiketiyle gönderir; o arada başkası (telefon, GitHub) göndermişse son hali alıp yeniden üretir.
 
   python veri/pc_dongu.py canli    dakikada bir: TBL ve BSL canlı skor ve VP (maç saatinde; değilse internete çıkmadan
-                                   biter), Avrupa (Türkiye saatiyle 18:00–02:00)
+                                   biter), Avrupa (Türkiye saatiyle 18:00–02:00), TBL maç günü YouTube maç yayınları (20
+                                   dakikada bir ve her maçtan 1-2 dakika önce)
   python veri/pc_dongu.py gunluk   15 dakikada bir, zamanı gelen işler (Türkiye saati; o saat kaçtıysa açılınca bir kez):
       TBL ve BSL verilerinin tamamı (TBL takım kadroları dahil), istatistik liderleri, seyirci, oyuncu fotoğrafı ve
       takım logoları: 08, 13, 18, 23
       puan tablosu, takım ve oyuncu istatistikleri: saat başı
       YouTube canlı yayın ve video listesi, TBL maç yayınları (TBF TV, HT Spor): 07'den 23'e iki saatte bir
-  --is ad1,ad2   zamanına bakmadan yalnızca bu işler (tbl, bsl, avrupa | veri, istatistik, gunluk, youtube)
+  --is ad1,ad2   zamanına bakmadan yalnızca bu işler (tbl, bsl, avrupa, yayin | veri, istatistik, gunluk, youtube)
   --kuru         üretir ama göndermez       --kok KLASÖR   kopyaların yeri (varsayılan ~/pota-pc)
 Kayıt: ~/pota-pc.log. Kopyalar: ~/pota-pc/<canli|gunluk>/{app,tbl} (çalışma klasörlerine dokunmaz).
 """
@@ -118,6 +119,37 @@ def canli(kok, secili, kuru):
         is_yap("BSL canlı", app, [(["veri_guncelle.py", "--akilli"], "bsl", 300)], ["site/bsl/data"], "BSL canlı veriler güncellendi (pc)", kuru)
     if (not secili and tr_simdi().hour in AVRUPA_SAATLERI) or "avrupa" in secili:
         is_yap("Avrupa", app, [(["veri/avrupa.py"], ".", 600)], ["site/data/avrupa"], "Avrupa verileri güncellendi (pc)", kuru)
+    if (not secili and yayin_zamani(kok, app)) or "yayin" in secili:
+        is_yap("TBL maç yayınları", app, [(["veri/uret.py", "--youtube", "yayin", "--yayin-sayfa", "1"], ".", 120)],
+               ["site/data/tbl/yayin.json"], "TBL maç yayınları güncellendi (pc)", kuru)
+
+
+def yayin_zamani(kok, app):
+    """TBL maç günü YouTube'da maç yayınları aranır mı: ilk maçtan 3 saat önceden son maçtan 2,5 saat sonrasına kadar 20 dakikada
+    bir, ayrıca her maçın başlamasından 1-2 dakika önce (TBF TV ve HT Spor yayını son anda açabiliyor). Yapılanlar kok/yayin.json'da."""
+    try:
+        maclar = json.loads((app / "site" / "data" / "tbl" / "takimlar.json").read_text(encoding="utf-8"))["maclar"]
+    except (OSError, ValueError, KeyError):
+        return False
+    simdi = tr_simdi().replace(tzinfo=None)
+    bugun = [datetime.fromisoformat(m["tarih"]) for m in maclar
+             if m["tarih"].startswith(f"{simdi:%Y-%m-%d}") and not m["tarih"].endswith("T00:00:00")]
+    if not bugun:
+        return False
+    anahtar = None
+    if any(timedelta(0) < b - simdi <= timedelta(minutes=2, seconds=30) for b in bugun):
+        anahtar = f"once-{min(b for b in bugun if b > simdi):%Y-%m-%d-%H%M}"
+    elif min(bugun) - timedelta(hours=3) <= simdi <= max(bugun) + timedelta(hours=2, minutes=30):
+        anahtar = f"{simdi:%Y-%m-%d-%H}-{simdi.minute // 20}"
+    yol = kok / "yayin.json"
+    try:
+        yapilan = json.loads(yol.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        yapilan = []
+    if not anahtar or anahtar in yapilan:
+        return False
+    yol.write_text(json.dumps((yapilan + [anahtar])[-60:]), encoding="utf-8")
+    return True
 
 
 def zamani_gelen(durum, ad, saatler):

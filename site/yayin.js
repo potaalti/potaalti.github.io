@@ -59,6 +59,9 @@ export async function canliKontrol() {
 setInterval(canliKontrol, 3 * 60000);
 
 // ---------- Görünümler ----------
+// Yayın sekmesinin iki bölümü: TBL maç yayınları (TBF TV, HT Spor; app.js gorunumIzle) ve Pota Altı'nın kendi kanalı
+export const sekmeler = aktif => `<div class="secenekler" style="margin-bottom:12px">${[['mac', '#/izle', '▶ Maç yayınları'], ['pota', '#/yayin', 'Pota Altı YouTube']]
+  .map(([k, href, ad]) => `<a class="secenek ${k === aktif ? 'aktif' : ''}" href="${href}">${ad}</a>`).join('')}</div>`;
 // Ana sayfanın en üstü: kanal canlıysa canlı yayın, değilse son canlı yayın
 export function anaKart() {
   yukle();
@@ -88,9 +91,8 @@ export function gorunum(secilenId) {
     : Y.canli ?? v.yayinlar.find(y => !y.planli) ?? v.videolar[0];
   const kisalar = v.videolar.filter(x => x.kisa);
   const uzunlar = v.videolar.filter(x => !x.kisa && !v.yayinlar.some(y => y.id === x.id));
-  return `<div class="sayfa-baslik baslik-satir"><h1>Pota Altı YouTube</h1>
-      <span class="satir"><a class="secenek" href="#/izle">▶ TBL'yi izle</a>
-      <a class="secenek" href="${kanalLinki(v.kanal)}" target="_blank" rel="noopener">Kanala git ›</a>
+  return `${sekmeler('pota')}<div class="sayfa-baslik baslik-satir"><h1>Pota Altı YouTube</h1>
+      <span class="satir"><a class="secenek" href="${kanalLinki(v.kanal)}" target="_blank" rel="noopener">Kanala git ›</a>
       <a class="secenek aktif" href="${kanalLinki(v.kanal)}/join" target="_blank" rel="noopener">Katıl</a></span></div>
     ${Y.canli ? `<p style="margin:0 0 10px"><span class="canli-rozet">● CANLI</span> <b>Pota Altı şu an yayında</b></p>` : ''}
     ${secili ? `<div class="kart" style="padding:0;overflow:hidden">${oynatici(secili.id, secili.baslik)}

@@ -812,8 +812,9 @@ def tbl_yayin_uret(sayfa=3):
                 continue
             bulunan.setdefault(str(m["id"]), {"v": k["id"], "kanal": kanal["ad"]})  # en yenisi başta
     maclar = {**onceki, **bulunan}
-    yaz(yol, {"guncelleme": simdi.isoformat(timespec="seconds"), "kanallar": YAYIN_KANALLARI,
-              "maclar": dict(sorted(maclar.items(), key=lambda x: int(x[0])))})
+    if maclar != onceki or not yol.exists():  # değişiklik yoksa dosyaya dokunulmaz (maç günü sık aramalar boş gönderim yapmasın)
+        yaz(yol, {"guncelleme": simdi.isoformat(timespec="seconds"), "kanallar": YAYIN_KANALLARI,
+                  "maclar": dict(sorted(maclar.items(), key=lambda x: int(x[0])))})
     return len(bulunan), len(maclar)
 
 
@@ -821,11 +822,16 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--kaynak", default=VARSAYILAN_KAYNAK)
     ap.add_argument("--gunluk", action="store_true", help="günde 2 kezlik güncelleme: liderler ve (Cumartesi–Salı) seyirci sayıları")
-    # Bilgisayar döngüsü (veri/pc_dongu.py) YouTube listesini ayrı saatlerde yeniler: hayir = ligler, sadece = yalnızca YouTube
-    ap.add_argument("--youtube", choices=["evet", "hayir", "sadece"], default="evet")
+    # Bilgisayar döngüsü (veri/pc_dongu.py) YouTube listesini ayrı saatlerde yeniler: hayir = ligler, sadece = yalnızca YouTube,
+    # yayin = yalnızca TBL maç yayınları (maç günleri sık sık ve maçtan hemen önce)
+    ap.add_argument("--youtube", choices=["evet", "hayir", "sadece", "yayin"], default="evet")
     # TBL maç yayınları: kanalların Canlı sekmesinde kaç sayfa geriye bakılır (~30 yayın/sayfa; sezon başı için 40)
     ap.add_argument("--yayin-sayfa", type=int, default=3)
     args = ap.parse_args()
+    if args.youtube == "yayin":
+        b, t = tbl_yayin_uret(args.yayin_sayfa)
+        print(f"tbl yayınları: {b} bulundu, toplam {t} maç")
+        return 0
     if args.youtube == "sadece":
         y, v = youtube_uret()
         print(f"youtube: {y} canlı yayın, {v} video")

@@ -762,7 +762,7 @@
  {
   "id": "397202",
   "ad": "Ante Zizic",
-  "takim": "BEŞİKTAŞ",
+  "takim": "BEŞİKTAŞ FUZUL",
   "takimId": 265992,
   "takimKod": "BJK",
   "ulke": "HIRVATİSTAN",
@@ -800,7 +800,7 @@
  {
   "id": "501381",
   "ad": "Anthony Brown",
-  "takim": "BEŞİKTAŞ",
+  "takim": "BEŞİKTAŞ FUZUL",
   "takimId": 265992,
   "takimKod": "BJK",
   "ulke": "ABD",
@@ -1389,7 +1389,7 @@
  {
   "id": "777635",
   "ad": "Wenyen Gabriel",
-  "takim": "BEŞİKTAŞ",
+  "takim": "BEŞİKTAŞ FUZUL",
   "takimId": 265992,
   "takimKod": "BJK",
   "ulke": "ABD",
@@ -1427,7 +1427,7 @@
  {
   "id": "782996",
   "ad": "Lonnie Walker IV",
-  "takim": "BEŞİKTAŞ",
+  "takim": "BEŞİKTAŞ FUZUL",
   "takimId": 265992,
   "takimKod": "BJK",
   "ulke": "ABD",
@@ -1598,7 +1598,7 @@
  {
   "id": "697020",
   "ad": "David DeJulius",
-  "takim": "BEŞİKTAŞ",
+  "takim": "BEŞİKTAŞ FUZUL",
   "takimId": 265992,
   "takimKod": "BJK",
   "ulke": "ABD",
@@ -1674,7 +1674,7 @@
  {
   "id": "133112",
   "ad": "Metecan Birsen",
-  "takim": "BEŞİKTAŞ",
+  "takim": "BEŞİKTAŞ FUZUL",
   "takimId": 265992,
   "takimKod": "BJK",
   "ulke": "TÜRKİYE",
@@ -1807,7 +1807,7 @@
  {
   "id": "777634",
   "ad": "Daquan Jeffries",
-  "takim": "BEŞİKTAŞ",
+  "takim": "BEŞİKTAŞ FUZUL",
   "takimId": 265992,
   "takimKod": "BJK",
   "ulke": "ABD",
@@ -2053,7 +2053,7 @@
  {
   "id": "777636",
   "ad": "Eugene Omoruyi",
-  "takim": "BEŞİKTAŞ",
+  "takim": "BEŞİKTAŞ FUZUL",
   "takimId": 265992,
   "takimKod": "BJK",
   "ulke": "KANADA",
@@ -2091,7 +2091,7 @@
  {
   "id": "163489",
   "ad": "Furkan Korkmaz",
-  "takim": "BEŞİKTAŞ",
+  "takim": "BEŞİKTAŞ FUZUL",
   "takimId": 265992,
   "takimKod": "BJK",
   "ulke": "TÜRKİYE",
@@ -2129,7 +2129,7 @@
  {
   "id": "114257",
   "ad": "Berk Uğurlu",
-  "takim": "BEŞİKTAŞ",
+  "takim": "BEŞİKTAŞ FUZUL",
   "takimId": 265992,
   "takimKod": "BJK",
   "ulke": "TÜRKİYE",
@@ -2298,25 +2298,6 @@
   "astOrt": 1.8
  },
  {
-  "id": "778461",
-  "ad": "Nate Watson",
-  "takim": "BURSASPOR BASKETBOL",
-  "takimId": 266176,
-  "takimKod": "BUR",
-  "ulke": "ABD",
-  "turk": false,
-  "aktif": true,
-  "mac": 8,
-  "vpOrt": 7.2,
-  "sayiOrt": 7.5,
-  "sureOrt": "18:06",
-  "foto": "https://tbf.org.tr/res/4a312c48-547e-44fe-a239-fd9e9f5df1c0_7.webp",
-  "boy": null,
-  "mevkiTahmini": "on",
-  "ribOrt": 4.4,
-  "astOrt": 0.2
- },
- {
   "id": "501871",
   "ad": "Isaiah Canaan",
   "takim": "TRABZONSPOR",
@@ -2431,7 +2412,7 @@
  {
   "id": "589830",
   "ad": "Conor Morgan",
-  "takim": "BEŞİKTAŞ",
+  "takim": "BEŞİKTAŞ FUZUL",
   "takimId": 265992,
   "takimKod": "BJK",
   "ulke": "KANADA",
@@ -2507,7 +2488,7 @@
  {
   "id": "777637",
   "ad": "Jaylen Nowell",
-  "takim": "BEŞİKTAŞ",
+  "takim": "BEŞİKTAŞ FUZUL",
   "takimId": 265992,
   "takimKod": "BJK",
   "ulke": "ABD",
@@ -2583,7 +2564,7 @@
  {
   "id": "735336",
   "ad": "Devon Dotson",
-  "takim": "BEŞİKTAŞ",
+  "takim": "BEŞİKTAŞ FUZUL",
   "takimId": 265992,
   "takimKod": "BJK",
   "ulke": "ABD",
@@ -3436,7 +3417,7 @@
  {
   "id": "363061",
   "ad": "Scottie Wilbekin",
-  "takim": "BEŞİKTAŞ",
+  "takim": "BEŞİKTAŞ FUZUL",
   "takimId": 265992,
   "takimKod": "BJK",
   "ulke": "TÜRKİYE",
@@ -4004,7 +3985,7 @@
  {
   "id": "381972",
   "ad": "Yağız Aksu",
-  "takim": "BEŞİKTAŞ",
+  "takim": "BEŞİKTAŞ FUZUL",
   "takimId": 265992,
   "takimKod": "BJK",
   "ulke": "TÜRKİYE",
@@ -4326,7 +4307,7 @@
  {
   "id": "445794",
   "ad": "Burak Çeçen",
-  "takim": "BEŞİKTAŞ",
+  "takim": "BEŞİKTAŞ FUZUL",
   "takimId": 265992,
   "takimKod": "BJK",
   "ulke": "TÜRKİYE",
@@ -4545,7 +4526,7 @@
   "vpOrt": 0,
   "sayiOrt": 0,
   "sureOrt": "00:00:00",
-  "foto": "https://tbf.org.tr/res/1bdbf3cc-4ea0-49e7-9b60-c378f1c9cdd1_6279.jpg",
+  "foto": "https://tbf.org.tr/res/426b1495-076a-4318-b71a-8b3d49ae8290_9.webp",
   "boy": null,
   "mevkiTahmini": null,
   "ribOrt": 0,
@@ -4609,6 +4590,25 @@
   "astOrt": 0
  },
  {
+  "id": "358242",
+  "ad": "Martynas Sajus",
+  "takim": "BURSASPOR BASKETBOL",
+  "takimId": 266176,
+  "takimKod": "BUR",
+  "ulke": "LİTVANYA",
+  "turk": false,
+  "aktif": true,
+  "mac": 0,
+  "vpOrt": 0,
+  "sayiOrt": 0,
+  "sureOrt": "00:00:00",
+  "foto": "https://tbf.org.tr/res/9c040c1b-c7ce-4211-b5ae-2316194bbbb0_19.webp",
+  "boy": null,
+  "mevkiTahmini": null,
+  "ribOrt": 0,
+  "astOrt": 0
+ },
+ {
   "id": "47659",
   "ad": "Maxim Mutaf",
   "takim": "BAHÇEŞEHİR KOLEJİ",
@@ -4645,6 +4645,25 @@
   "mevkiTahmini": null,
   "ribOrt": 0,
   "astOrt": 0
+ },
+ {
+  "id": "778461",
+  "ad": "Nate Watson",
+  "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+  "takimId": 265994,
+  "takimKod": "ÇBK",
+  "ulke": "ABD",
+  "turk": false,
+  "aktif": true,
+  "mac": 0,
+  "vpOrt": 0,
+  "sayiOrt": 0,
+  "sureOrt": "00:00:00",
+  "foto": "https://tbf.org.tr/res/a37e6cda-8bf0-4875-b437-a8f56898ffcf_6734.jpg",
+  "boy": null,
+  "mevkiTahmini": "on",
+  "ribOrt": 4.4,
+  "astOrt": 0.2
  },
  {
   "id": "445722",
@@ -4773,6 +4792,25 @@
   "sayiOrt": 0,
   "sureOrt": "00:00:00",
   "foto": "https://tbf.org.tr/res/33088b55-996b-478a-8490-24f65339aff6_9.webp",
+  "boy": null,
+  "mevkiTahmini": null,
+  "ribOrt": 0,
+  "astOrt": 0
+ },
+ {
+  "id": "411169",
+  "ad": "Will Cummings",
+  "takim": "BURSASPOR BASKETBOL",
+  "takimId": 266176,
+  "takimKod": "BUR",
+  "ulke": "ABD",
+  "turk": false,
+  "aktif": true,
+  "mac": 0,
+  "vpOrt": 0,
+  "sayiOrt": 0,
+  "sureOrt": "00:00:00",
+  "foto": "https://tbf.org.tr/res/b5e57780-efbf-457f-b922-00dace2218aa_4659435d1d20157d861.webp",
   "boy": null,
   "mevkiTahmini": null,
   "ribOrt": 0,

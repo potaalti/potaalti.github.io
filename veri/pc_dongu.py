@@ -1,5 +1,6 @@
 """Bilgisayar veri döngüsü (Windows Görev Zamanlayıcı): telefonun işlerinin bilgisayardaki karşılığı. Bilgisayar açıkken asıl
-kaynak budur; telefon ve GitHub yedektir. Telefon, son 5 dakikada '(pc)' etiketli gönderim görünce canlı turunu atlar.
+kaynak budur; telefon ve GitHub yedektir. Telefon, son 2 dakikada '(pc)' etiketli gönderim görünce canlı turunu atlar; görmezse (bilgisayar
+kapalı, uykuda ya da internetsiz) kendisi günceller.
 
 Üst üste basmaz: her iş kendi kopyasında GitHub'daki son hali alır (git reset), veriyi üretir, değişiklik varsa '(pc)'
 etiketiyle gönderir; o arada başkası (telefon, GitHub) göndermişse son hali alıp yeniden üretir.

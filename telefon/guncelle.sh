@@ -100,7 +100,7 @@ bsl_mac=0
 
 # Yapılacak bir şey yoksa internete çıkmadan biter. Varsa: GitHub'daki son hali alır (git reset; telefondaki veriler her seferinde
 # yeniden üretildiği için yerel farklar güvenle atılır), üretir, gönderir; o arada bilgisayar ya da GitHub göndermişse son hali
-# alıp yeniden üretir (en çok 3 kez). Bilgisayar açıkken (son 5 dakikada '(pc)' gönderimi) BSL canlı turu bilgisayara bırakılır.
+# alıp yeniden üretir (en çok 3 kez). Bilgisayar açıkken (son 2 dakikada '(pc)' gönderimi) BSL canlı turu bilgisayara bırakılır.
 # Hepsi tek fonksiyon ve tek satırla çağrılır: git reset bu dosyayı çalışırken değiştirse bile bash eski metni okumaya devam eder.
 guncelle() {
   [ $bsl_mac = 0 ] && [ $gunluk = 0 ] && [ $saatlik = 0 ] && return 0
@@ -113,7 +113,7 @@ guncelle() {
     git reset -q --hard origin/main
     if [ $bsl_mac = 1 ]; then
       son_pc=$(git log -1 --format=%ct --grep='(pc)$' origin/main)
-      if [ $tam = 0 ] && [ -n "$son_pc" ] && [ $(( $(date +%s) - son_pc )) -lt 300 ]; then
+      if [ $tam = 0 ] && [ -n "$son_pc" ] && [ $(( $(date +%s) - son_pc )) -lt 120 ]; then
         [ $deneme = 1 ] && echo "$(date '+%F %T') bilgisayar çekiyor: BSL canlı turu atlandı"
       else
         (cd bsl && timeout 600 python veri_guncelle.py --akilli) || echo "$(date '+%F %T') BSL canlı veri alınamadı"

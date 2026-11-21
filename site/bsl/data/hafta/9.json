@@ -33,7 +33,7 @@
    "durum": "canli",
    "ev": "BAHÇEŞEHİR KOLEJİ",
    "evId": 265991,
-   "evSkor": "108",
+   "evSkor": "111",
    "dep": "BİOTEKNO KÖRFEZ BASKET",
    "depId": 268222,
    "depSkor": "72",
@@ -41,7 +41,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "01:47",
+    "saat": "00:58",
     "uzatma": false
    }
   },
@@ -548,8 +548,8 @@
    "ad": "Aleksa Avramovic",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 7,
-   "saniye": 1307,
+   "vp": 9,
+   "saniye": 1359,
    "mac": 1
   },
   "358272": {
@@ -557,7 +557,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 16,
-   "saniye": 920,
+   "saniye": 972,
    "mac": 1
   },
   "776654": {
@@ -573,31 +573,31 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 11,
-   "saniye": 1301,
+   "saniye": 1353,
    "mac": 1
   },
   "47659": {
    "ad": "Maxim Mutaf",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 1,
-   "saniye": 185,
+   "vp": 5,
+   "saniye": 237,
    "mac": 1
   },
   "776656": {
    "ad": "Isiaha Mike",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 11,
-   "saniye": 1317,
+   "vp": 10,
+   "saniye": 1369,
    "mac": 1
   },
   "778181": {
    "ad": "Boo Buie",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 11,
-   "saniye": 1472,
+   "vp": 9,
+   "saniye": 1524,
    "mac": 1
   },
   "778161": {
@@ -605,7 +605,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 19,
-   "saniye": 1904,
+   "saniye": 1956,
    "mac": 1
   },
   "419874": {
@@ -621,7 +621,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 11,
-   "saniye": 1529,
+   "saniye": 1581,
    "mac": 1
   },
   "778182": {
@@ -661,7 +661,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 1,
-   "saniye": 697,
+   "saniye": 748,
    "mac": 1
   },
   "778184": {
@@ -677,7 +677,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 19,
-   "saniye": 1413,
+   "saniye": 1465,
    "mac": 1
   },
   "470601": {

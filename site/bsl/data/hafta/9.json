@@ -28,7 +28,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "05:04",
+    "saat": "04:52",
     "uzatma": false
    }
   },
@@ -317,7 +317,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 8,
-   "saniye": 390,
+   "saniye": 403,
    "mac": 1
   },
   "778727": {
@@ -333,7 +333,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 6,
-   "saniye": 575,
+   "saniye": 588,
    "mac": 1
   },
   "386159": {
@@ -341,7 +341,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 5,
-   "saniye": 461,
+   "saniye": 474,
    "mac": 1
   },
   "408785": {
@@ -357,7 +357,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 3,
-   "saniye": 528,
+   "saniye": 541,
    "mac": 1
   },
   "112715": {
@@ -389,7 +389,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 7,
-   "saniye": 528,
+   "saniye": 541,
    "mac": 1
   },
   "272903": {
@@ -404,8 +404,8 @@
    "ad": "Sadık Kabaca",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": -2,
-   "saniye": 538,
+   "vp": -1,
+   "saniye": 551,
    "mac": 1
   },
   "508900": {
@@ -413,7 +413,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 424,
+   "saniye": 437,
    "mac": 1
   },
   "778401": {
@@ -421,7 +421,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 8,
-   "saniye": 662,
+   "saniye": 675,
    "mac": 1
   },
   "778399": {
@@ -429,15 +429,15 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 606,
+   "saniye": 619,
    "mac": 1
   },
   "778398": {
    "ad": "Gabe Brown",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 5,
-   "saniye": 397,
+   "vp": 4,
+   "saniye": 410,
    "mac": 1
   },
   "452216": {

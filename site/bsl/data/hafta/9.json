@@ -20,7 +20,7 @@
    "durum": "canli",
    "ev": "TÜRK TELEKOM",
    "evId": 266030,
-   "evSkor": "42",
+   "evSkor": "44",
    "dep": "TOFAŞ",
    "depId": 265995,
    "depSkor": "28",
@@ -28,7 +28,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "04:24",
+    "saat": "04:21",
     "uzatma": false
    }
   },
@@ -308,8 +308,8 @@
    "ad": "Jerrick Harding",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 5,
-   "saniye": 324,
+   "vp": 6,
+   "saniye": 327,
    "mac": 1
   },
   "410568": {
@@ -317,7 +317,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 8,
-   "saniye": 431,
+   "saniye": 434,
    "mac": 1
   },
   "778727": {
@@ -325,15 +325,15 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 2,
-   "saniye": 395,
+   "saniye": 398,
    "mac": 1
   },
   "277894": {
    "ad": "Göktuğ Baş",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 7,
-   "saniye": 616,
+   "vp": 9,
+   "saniye": 619,
    "mac": 1
   },
   "386159": {
@@ -341,7 +341,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 5,
-   "saniye": 502,
+   "saniye": 505,
    "mac": 1
   },
   "408785": {
@@ -405,7 +405,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -3,
-   "saniye": 579,
+   "saniye": 582,
    "mac": 1
   },
   "508900": {
@@ -413,7 +413,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 465,
+   "saniye": 468,
    "mac": 1
   },
   "778401": {
@@ -429,7 +429,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 647,
+   "saniye": 650,
    "mac": 1
   },
   "778398": {
@@ -437,7 +437,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 438,
+   "saniye": 441,
    "mac": 1
   },
   "452216": {
@@ -469,7 +469,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 393,
+   "saniye": 396,
    "mac": 1
   },
   "389934": {

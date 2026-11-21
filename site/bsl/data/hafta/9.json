@@ -28,7 +28,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "01:59",
+    "saat": "01:35",
     "uzatma": false
    }
   },
@@ -309,7 +309,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 20,
-   "saniye": 1468,
+   "saniye": 1492,
    "mac": 1
   },
   "410568": {
@@ -317,7 +317,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 14,
-   "saniye": 1283,
+   "saniye": 1307,
    "mac": 1
   },
   "778727": {
@@ -333,15 +333,15 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 15,
-   "saniye": 1364,
+   "saniye": 1388,
    "mac": 1
   },
   "386159": {
    "ad": "Shaquille Mckissic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 15,
-   "saniye": 1541,
+   "vp": 14,
+   "saniye": 1565,
    "mac": 1
   },
   "408785": {
@@ -388,8 +388,8 @@
    "ad": "Kris Bankston",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 15,
-   "saniye": 1357,
+   "vp": 16,
+   "saniye": 1381,
    "mac": 1
   },
   "272903": {
@@ -413,7 +413,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 1008,
+   "saniye": 1032,
    "mac": 1
   },
   "778401": {
@@ -421,7 +421,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 6,
-   "saniye": 1403,
+   "saniye": 1427,
    "mac": 1
   },
   "778399": {
@@ -429,7 +429,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 16,
-   "saniye": 1642,
+   "saniye": 1666,
    "mac": 1
   },
   "778398": {
@@ -460,8 +460,8 @@
    "ad": "Tre'shawn Thurman",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 23,
-   "saniye": 1629,
+   "vp": 24,
+   "saniye": 1653,
    "mac": 1
   },
   "732657": {
@@ -477,7 +477,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 8,
-   "saniye": 1341,
+   "saniye": 1365,
    "mac": 1
   },
   "434482": {

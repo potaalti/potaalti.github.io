@@ -49,12 +49,12 @@
    "evSkor": "15",
    "dep": "PİZZABULLS BORDO BANDIRMA",
    "depId": 265993,
-   "depSkor": "24",
+   "depSkor": "26",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "08:12",
+    "saat": "08:06",
     "uzatma": false
    }
   },
@@ -709,7 +709,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 2,
-   "saniye": 708,
+   "saniye": 714,
    "mac": 1
   },
   "778459": {
@@ -725,7 +725,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 393,
+   "saniye": 400,
    "mac": 1
   },
   "736260": {
@@ -733,7 +733,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 8,
-   "saniye": 241,
+   "saniye": 248,
    "mac": 1
   },
   "402930": {
@@ -757,7 +757,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 4,
-   "saniye": 315,
+   "saniye": 316,
    "mac": 1
   },
   "303549": {
@@ -765,7 +765,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 411,
+   "saniye": 418,
    "mac": 1
   },
   "358242": {
@@ -773,7 +773,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 1,
-   "saniye": 442,
+   "saniye": 449,
    "mac": 1
   },
   "227653": {
@@ -788,8 +788,8 @@
    "ad": "Ty Gordon",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 5,
-   "saniye": 374,
+   "vp": 7,
+   "saniye": 381,
    "mac": 1
   },
   "130898": {
@@ -821,7 +821,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 11,
-   "saniye": 597,
+   "saniye": 604,
    "mac": 1
   },
   "441857": {
@@ -845,7 +845,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 108,
+   "saniye": 115,
    "mac": 1
   },
   "85925": {
@@ -861,7 +861,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 2,
-   "saniye": 222,
+   "saniye": 229,
    "mac": 1
   },
   "667625": {
@@ -869,7 +869,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 1,
-   "saniye": 190,
+   "saniye": 197,
    "mac": 1
   },
   "307500": {

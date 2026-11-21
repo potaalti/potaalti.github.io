@@ -23,12 +23,12 @@
    "evSkor": "46",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "32",
+   "depSkor": "34",
    "salon": "Ankara Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "02:51",
+    "saat": "02:14",
     "uzatma": false
    }
   },
@@ -308,8 +308,8 @@
    "ad": "Jerrick Harding",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 6,
-   "saniye": 416,
+   "vp": 5,
+   "saniye": 484,
    "mac": 1
   },
   "410568": {
@@ -317,7 +317,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 9,
-   "saniye": 523,
+   "saniye": 591,
    "mac": 1
   },
   "778727": {
@@ -325,7 +325,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 3,
-   "saniye": 487,
+   "saniye": 555,
    "mac": 1
   },
   "277894": {
@@ -341,7 +341,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 5,
-   "saniye": 594,
+   "saniye": 662,
    "mac": 1
   },
   "408785": {
@@ -349,7 +349,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 4,
-   "saniye": 409,
+   "saniye": 477,
    "mac": 1
   },
   "202579": {
@@ -413,7 +413,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 557,
+   "saniye": 625,
    "mac": 1
   },
   "778401": {
@@ -428,8 +428,8 @@
    "ad": "Shavar Reynolds Jr.",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 4,
-   "saniye": 739,
+   "vp": 6,
+   "saniye": 807,
    "mac": 1
   },
   "778398": {
@@ -437,7 +437,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 6,
-   "saniye": 530,
+   "saniye": 598,
    "mac": 1
   },
   "452216": {
@@ -460,8 +460,8 @@
    "ad": "Tre'shawn Thurman",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 6,
-   "saniye": 438,
+   "vp": 8,
+   "saniye": 506,
    "mac": 1
   },
   "732657": {
@@ -477,7 +477,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -1,
-   "saniye": 477,
+   "saniye": 545,
    "mac": 1
   },
   "434482": {

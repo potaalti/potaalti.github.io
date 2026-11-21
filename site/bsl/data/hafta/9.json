@@ -49,12 +49,12 @@
    "evSkor": "42",
    "dep": "PİZZABULLS BORDO BANDIRMA",
    "depId": 265993,
-   "depSkor": "44",
+   "depSkor": "45",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "08:02",
+    "saat": "07:50",
     "uzatma": false
    }
   },
@@ -788,7 +788,7 @@
    "ad": "Ty Gordon",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 11,
+   "vp": 12,
    "saniye": 832,
    "mac": 1
   },
@@ -836,7 +836,7 @@
    "ad": "Kadir Bayram",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 1,
+   "vp": 2,
    "saniye": 605,
    "mac": 1
   },

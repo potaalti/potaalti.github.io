@@ -23,12 +23,12 @@
    "evSkor": "15",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "6",
+   "depSkor": "8",
    "salon": "Ankara Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "05:04",
+    "saat": "04:44",
     "uzatma": false
    }
   },
@@ -325,7 +325,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 2,
-   "saniye": 296,
+   "saniye": 315,
    "mac": 1
   },
   "277894": {
@@ -333,15 +333,15 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": -1,
-   "saniye": 296,
+   "saniye": 315,
    "mac": 1
   },
   "386159": {
    "ad": "Shaquille Mckissic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 4,
-   "saniye": 296,
+   "vp": 3,
+   "saniye": 315,
    "mac": 1
   },
   "408785": {
@@ -372,8 +372,8 @@
    "ad": "Uros Trifunovic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 1,
+   "saniye": 19,
    "mac": 1
   },
   "129216": {
@@ -381,7 +381,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 19,
    "mac": 1
   },
   "668012": {
@@ -404,8 +404,8 @@
    "ad": "Sadık Kabaca",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": -2,
-   "saniye": 296,
+   "vp": -1,
+   "saniye": 315,
    "mac": 1
   },
   "508900": {
@@ -420,8 +420,8 @@
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 4,
-   "saniye": 296,
+   "vp": 6,
+   "saniye": 315,
    "mac": 1
   },
   "778399": {
@@ -452,8 +452,8 @@
    "ad": "Terrell Carter Ii",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 4,
-   "saniye": 158,
+   "vp": 5,
+   "saniye": 177,
    "mac": 1
   },
   "736069": {
@@ -468,8 +468,8 @@
    "ad": "Mantas Rubstavicius",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 0,
-   "saniye": 61,
+   "vp": -1,
+   "saniye": 80,
    "mac": 1
   },
   "389934": {
@@ -477,7 +477,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 61,
+   "saniye": 80,
    "mac": 1
   },
   "434482": {

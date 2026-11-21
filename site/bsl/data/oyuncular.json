@@ -547,8 +547,8 @@
   "foto": "https://tbf.org.tr/res/bbc7d201-8660-439c-b1e5-1336c2edbc74_turktelekom_0007_18.webp",
   "boy": 191,
   "mevkiTahmini": "arka",
-  "ribOrt": 5.4,
-  "astOrt": 5.5
+  "ribOrt": 4.8,
+  "astOrt": 4.9
  },
  {
   "id": "120437",
@@ -1212,8 +1212,8 @@
   "foto": "https://tbf.org.tr/res/96e9e881-9839-4a3d-9721-f82cc13a82d7_turktelekom_0008_10.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 3.0,
-  "astOrt": 0.8
+  "ribOrt": 2.7,
+  "astOrt": 0.7
  },
  {
   "id": "781548",
@@ -1535,7 +1535,7 @@
   "foto": "https://tbf.org.tr/res/8110f8d4-72d6-4c17-8a8e-a95e98dfc342_5.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 3.1,
+  "ribOrt": 3.2,
   "astOrt": 1.0
  },
  {

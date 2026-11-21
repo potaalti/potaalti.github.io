@@ -20,7 +20,7 @@
    "durum": "canli",
    "ev": "TÜRK TELEKOM",
    "evId": 266030,
-   "evSkor": "46",
+   "evSkor": "49",
    "dep": "TOFAŞ",
    "depId": 265995,
    "depSkor": "34",
@@ -28,7 +28,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "02:22",
+    "saat": "02:00",
     "uzatma": false
    }
   },
@@ -372,7 +372,7 @@
    "ad": "Uros Trifunovic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 9,
+   "vp": 12,
    "saniye": 543,
    "mac": 1
   },
@@ -380,7 +380,7 @@
    "ad": "Doğuş Özdemiroğlu",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 4,
+   "vp": 5,
    "saniye": 543,
    "mac": 1
   },
@@ -412,7 +412,7 @@
    "ad": "Jamuni Mcneace",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 4,
+   "vp": 3,
    "saniye": 625,
    "mac": 1
   },

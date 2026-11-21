@@ -20,7 +20,7 @@
    "durum": "canli",
    "ev": "TÜRK TELEKOM",
    "evId": 266030,
-   "evSkor": "34",
+   "evSkor": "36",
    "dep": "TOFAŞ",
    "depId": 265995,
    "depSkor": "23",
@@ -372,7 +372,7 @@
    "ad": "Uros Trifunovic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 7,
+   "vp": 9,
    "saniye": 461,
    "mac": 1
   },

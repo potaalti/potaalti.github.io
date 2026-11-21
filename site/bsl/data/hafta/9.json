@@ -7,15 +7,15 @@
    "durum": "canli",
    "ev": "KARŞIYAKA",
    "evId": 266027,
-   "evSkor": "42",
+   "evSkor": "44",
    "dep": "YUKATEL DENİZLİ BASKET",
    "depId": 266028,
-   "depSkor": "41",
+   "depSkor": "43",
    "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "08:30",
+    "saat": "07:46",
     "uzatma": false
    }
   },
@@ -116,8 +116,8 @@
    "ad": "Briante Weber",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 9,
-   "saniye": 1001,
+   "vp": 10,
+   "saniye": 1044,
    "mac": 1
   },
   "779071": {
@@ -125,7 +125,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 4,
-   "saniye": 994,
+   "saniye": 1037,
    "mac": 1
   },
   "500079": {
@@ -149,7 +149,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 17,
-   "saniye": 1071,
+   "saniye": 1114,
    "mac": 1
   },
   "228502": {
@@ -157,7 +157,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 7,
-   "saniye": 808,
+   "saniye": 851,
    "mac": 1
   },
   "410874": {
@@ -172,8 +172,8 @@
    "ad": "Hakan Sayılı",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 7,
-   "saniye": 759,
+   "vp": 8,
+   "saniye": 802,
    "mac": 1
   },
   "400519": {
@@ -220,8 +220,8 @@
    "ad": "Erten Gazi",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 2,
-   "saniye": 549,
+   "vp": 4,
+   "saniye": 593,
    "mac": 1
   },
   "736366": {
@@ -229,7 +229,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 8,
-   "saniye": 1084,
+   "saniye": 1127,
    "mac": 1
   },
   "411597": {
@@ -237,7 +237,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 7,
-   "saniye": 680,
+   "saniye": 723,
    "mac": 1
   },
   "470765": {
@@ -245,7 +245,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 13,
-   "saniye": 829,
+   "saniye": 872,
    "mac": 1
   },
   "779011": {
@@ -285,7 +285,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": -2,
-   "saniye": 807,
+   "saniye": 850,
    "mac": 1
   },
   "124128": {

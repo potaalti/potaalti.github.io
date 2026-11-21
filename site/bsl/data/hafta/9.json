@@ -20,7 +20,7 @@
    "durum": "canli",
    "ev": "TÜRK TELEKOM",
    "evId": 266030,
-   "evSkor": "80",
+   "evSkor": "82",
    "dep": "TOFAŞ",
    "depId": 265995,
    "depSkor": "72",
@@ -308,7 +308,7 @@
    "ad": "Jerrick Harding",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 12,
+   "vp": 14,
    "saniye": 1342,
    "mac": 1
   },

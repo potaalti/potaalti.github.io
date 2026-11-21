@@ -20,7 +20,7 @@
    "durum": "canli",
    "ev": "TÜRK TELEKOM",
    "evId": 266030,
-   "evSkor": "90",
+   "evSkor": "92",
    "dep": "TOFAŞ",
    "depId": 265995,
    "depSkor": "75",
@@ -28,7 +28,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "02:31",
+    "saat": "01:59",
     "uzatma": false
    }
   },
@@ -309,7 +309,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 20,
-   "saniye": 1436,
+   "saniye": 1468,
    "mac": 1
   },
   "410568": {
@@ -317,7 +317,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 14,
-   "saniye": 1251,
+   "saniye": 1283,
    "mac": 1
   },
   "778727": {
@@ -332,8 +332,8 @@
    "ad": "Göktuğ Baş",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 14,
-   "saniye": 1332,
+   "vp": 15,
+   "saniye": 1364,
    "mac": 1
   },
   "386159": {
@@ -341,7 +341,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 15,
-   "saniye": 1509,
+   "saniye": 1541,
    "mac": 1
   },
   "408785": {
@@ -388,8 +388,8 @@
    "ad": "Kris Bankston",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 13,
-   "saniye": 1325,
+   "vp": 15,
+   "saniye": 1357,
    "mac": 1
   },
   "272903": {
@@ -413,7 +413,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 976,
+   "saniye": 1008,
    "mac": 1
   },
   "778401": {
@@ -421,7 +421,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 6,
-   "saniye": 1371,
+   "saniye": 1403,
    "mac": 1
   },
   "778399": {
@@ -429,7 +429,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 16,
-   "saniye": 1610,
+   "saniye": 1642,
    "mac": 1
   },
   "778398": {
@@ -461,7 +461,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 23,
-   "saniye": 1597,
+   "saniye": 1629,
    "mac": 1
   },
   "732657": {
@@ -477,7 +477,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 8,
-   "saniye": 1309,
+   "saniye": 1341,
    "mac": 1
   },
   "434482": {

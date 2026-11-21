@@ -33,15 +33,15 @@
    "durum": "canli",
    "ev": "BAHÇEŞEHİR KOLEJİ",
    "evId": 265991,
-   "evSkor": "80",
+   "evSkor": "84",
    "dep": "BİOTEKNO KÖRFEZ BASKET",
    "depId": 268222,
-   "depSkor": "45",
+   "depSkor": "48",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "01:46",
+    "saat": "00:53",
     "uzatma": false
    }
   },
@@ -540,16 +540,16 @@
    "ad": "Marcquise Reed",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 0,
-   "saniye": 752,
+   "vp": 2,
+   "saniye": 806,
    "mac": 1
   },
   "776935": {
    "ad": "Aleksa Avramovic",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": -2,
-   "saniye": 708,
+   "vp": -1,
+   "saniye": 762,
    "mac": 1
   },
   "358272": {
@@ -564,16 +564,16 @@
    "ad": "Damien Inglis",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 11,
-   "saniye": 608,
+   "vp": 12,
+   "saniye": 662,
    "mac": 1
   },
   "283725": {
    "ad": "Furkan Haltalı",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 8,
-   "saniye": 702,
+   "vp": 10,
+   "saniye": 757,
    "mac": 1
   },
   "47659": {
@@ -589,7 +589,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 8,
-   "saniye": 898,
+   "saniye": 952,
    "mac": 1
   },
   "778181": {
@@ -597,7 +597,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 7,
-   "saniye": 1235,
+   "saniye": 1289,
    "mac": 1
   },
   "778161": {
@@ -620,8 +620,8 @@
    "ad": "Matt Mitchell",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 6,
-   "saniye": 930,
+   "vp": 7,
+   "saniye": 985,
    "mac": 1
   },
   "778182": {
@@ -629,7 +629,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": -4,
-   "saniye": 1149,
+   "saniye": 1127,
    "mac": 1
   },
   "254785": {
@@ -645,7 +645,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 4,
-   "saniye": 651,
+   "saniye": 705,
    "mac": 1
   },
   "358964": {
@@ -676,8 +676,8 @@
    "ad": "Paulius Danusevicius",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 7,
-   "saniye": 792,
+   "vp": 10,
+   "saniye": 868,
    "mac": 1
   },
   "470601": {
@@ -685,7 +685,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": -5,
-   "saniye": 926,
+   "saniye": 980,
    "mac": 1
   }
  }

@@ -41,7 +41,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "01:15",
+    "saat": "00:45",
     "uzatma": false
    }
   },
@@ -541,7 +541,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": -1,
-   "saniye": 117,
+   "saniye": 152,
    "mac": 1
   },
   "776935": {
@@ -549,7 +549,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 0,
-   "saniye": 213,
+   "saniye": 248,
    "mac": 1
   },
   "358272": {
@@ -565,15 +565,15 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 0,
-   "saniye": 117,
+   "saniye": 152,
    "mac": 1
   },
   "283725": {
    "ad": "Furkan Haltalı",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 5,
-   "saniye": 274,
+   "vp": 4,
+   "saniye": 309,
    "mac": 1
   },
   "47659": {
@@ -589,7 +589,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 3,
-   "saniye": 310,
+   "saniye": 345,
    "mac": 1
   },
   "778181": {
@@ -621,7 +621,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 2,
-   "saniye": 398,
+   "saniye": 433,
    "mac": 1
   },
   "778182": {
@@ -637,7 +637,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 0,
-   "saniye": 16,
+   "saniye": 51,
    "mac": 1
   },
   "217226": {
@@ -660,8 +660,8 @@
    "ad": "Altan Çamoğlu",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 0,
-   "saniye": 323,
+   "vp": 1,
+   "saniye": 358,
    "mac": 1
   },
   "778184": {
@@ -676,8 +676,8 @@
    "ad": "Paulius Danusevicius",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 1,
-   "saniye": 117,
+   "vp": 0,
+   "saniye": 152,
    "mac": 1
   },
   "470601": {
@@ -685,7 +685,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": -3,
-   "saniye": 213,
+   "saniye": 248,
    "mac": 1
   }
  }

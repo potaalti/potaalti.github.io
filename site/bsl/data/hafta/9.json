@@ -43,7 +43,7 @@
   {
    "id": 346344,
    "tarih": "2026-11-21T20:30:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "BURSASPOR BASKETBOL",
    "evId": 266176,
    "evSkor": "85",
@@ -51,12 +51,7 @@
    "depId": 265993,
    "depSkor": "89",
    "salon": "Tofaş Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "00:00",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346342,
@@ -797,7 +792,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": -3,
-   "saniye": 463,
+   "saniye": 462,
    "mac": 1
   },
   "473261": {
@@ -837,7 +832,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 3,
-   "saniye": 1366,
+   "saniye": 1367,
    "mac": 1
   },
   "109611": {

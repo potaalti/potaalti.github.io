@@ -49,7 +49,7 @@
    "evSkor": "33",
    "dep": "PİZZABULLS BORDO BANDIRMA",
    "depId": 265993,
-   "depSkor": "34",
+   "depSkor": "35",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
@@ -693,7 +693,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 11,
-   "saniye": 673,
+   "saniye": 688,
    "mac": 1
   },
   "247547": {
@@ -701,7 +701,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 3,
-   "saniye": 557,
+   "saniye": 572,
    "mac": 1
   },
   "778460": {
@@ -709,7 +709,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 5,
-   "saniye": 1010,
+   "saniye": 1025,
    "mac": 1
   },
   "778459": {
@@ -717,7 +717,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 4,
-   "saniye": 562,
+   "saniye": 577,
    "mac": 1
   },
   "502519": {
@@ -757,7 +757,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 9,
-   "saniye": 659,
+   "saniye": 674,
    "mac": 1
   },
   "303549": {
@@ -805,7 +805,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 3,
-   "saniye": 714,
+   "saniye": 729,
    "mac": 1
   },
   "778310": {
@@ -813,15 +813,15 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 7,
-   "saniye": 713,
+   "saniye": 728,
    "mac": 1
   },
   "501076": {
    "ad": "Quentin Peterson",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 11,
-   "saniye": 947,
+   "vp": 12,
+   "saniye": 962,
    "mac": 1
   },
   "441857": {
@@ -829,7 +829,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 2,
-   "saniye": 496,
+   "saniye": 511,
    "mac": 1
   },
   "106461": {
@@ -837,7 +837,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 411,
+   "saniye": 426,
    "mac": 1
   },
   "109611": {

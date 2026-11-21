@@ -7,7 +7,7 @@
    "durum": "canli",
    "ev": "KARŞIYAKA",
    "evId": 266027,
-   "evSkor": "66",
+   "evSkor": "68",
    "dep": "YUKATEL DENİZLİ BASKET",
    "depId": 266028,
    "depSkor": "63",
@@ -15,7 +15,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "08:23",
+    "saat": "08:02",
     "uzatma": false
    }
   },
@@ -116,8 +116,8 @@
    "ad": "Briante Weber",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 12,
-   "saniye": 1384,
+   "vp": 14,
+   "saniye": 1405,
    "mac": 1
   },
   "779071": {
@@ -125,7 +125,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 12,
-   "saniye": 1601,
+   "saniye": 1622,
    "mac": 1
   },
   "500079": {
@@ -149,7 +149,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 20,
-   "saniye": 1318,
+   "saniye": 1339,
    "mac": 1
   },
   "228502": {
@@ -173,7 +173,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 15,
-   "saniye": 1204,
+   "saniye": 1225,
    "mac": 1
   },
   "400519": {
@@ -196,8 +196,8 @@
    "ad": "Yakuba Ouattara",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": -2,
-   "saniye": 520,
+   "vp": -1,
+   "saniye": 541,
    "mac": 1
   },
   "786430": {
@@ -213,7 +213,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 10,
-   "saniye": 1448,
+   "saniye": 1469,
    "mac": 1
   },
   "278617": {
@@ -229,7 +229,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 15,
-   "saniye": 1600,
+   "saniye": 1621,
    "mac": 1
   },
   "411597": {
@@ -269,7 +269,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 14,
-   "saniye": 1055,
+   "saniye": 1076,
    "mac": 1
   },
   "392627": {
@@ -285,7 +285,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": -3,
-   "saniye": 1064,
+   "saniye": 1085,
    "mac": 1
   },
   "124128": {
@@ -293,7 +293,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 4,
-   "saniye": 671,
+   "saniye": 692,
    "mac": 1
   }
  }

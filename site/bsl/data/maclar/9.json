@@ -20,7 +20,7 @@
    "durum": "canli",
    "ev": "TÜRK TELEKOM",
    "evId": 266030,
-   "evSkor": "21",
+   "evSkor": "23",
    "dep": "TOFAŞ",
    "depId": 265995,
    "depSkor": "14",
@@ -28,7 +28,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "03:01",
+    "saat": "02:53",
     "uzatma": false
    }
   },

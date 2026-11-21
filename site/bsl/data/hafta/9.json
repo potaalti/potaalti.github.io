@@ -7,15 +7,15 @@
    "durum": "canli",
    "ev": "KARŞIYAKA",
    "evId": 266027,
-   "evSkor": "75",
+   "evSkor": "77",
    "dep": "YUKATEL DENİZLİ BASKET",
    "depId": 266028,
-   "depSkor": "69",
+   "depSkor": "72",
    "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "02:49",
+    "saat": "02:17",
     "uzatma": false
    }
   },
@@ -116,8 +116,8 @@
    "ad": "Briante Weber",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 15,
-   "saniye": 1733,
+   "vp": 17,
+   "saniye": 1750,
    "mac": 1
   },
   "779071": {
@@ -133,7 +133,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": -2,
-   "saniye": 922,
+   "saniye": 939,
    "mac": 1
   },
   "254789": {
@@ -149,7 +149,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 23,
-   "saniye": 1667,
+   "saniye": 1684,
    "mac": 1
   },
   "228502": {
@@ -157,7 +157,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 13,
-   "saniye": 1434,
+   "saniye": 1451,
    "mac": 1
   },
   "410874": {
@@ -197,7 +197,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 1,
-   "saniye": 741,
+   "saniye": 758,
    "mac": 1
   },
   "786430": {
@@ -212,16 +212,16 @@
    "ad": "Brae Ivey",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 11,
-   "saniye": 1797,
+   "vp": 12,
+   "saniye": 1814,
    "mac": 1
   },
   "278617": {
    "ad": "Erten Gazi",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 3,
-   "saniye": 1047,
+   "vp": 6,
+   "saniye": 1064,
    "mac": 1
   },
   "736366": {
@@ -229,7 +229,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 19,
-   "saniye": 1949,
+   "saniye": 1966,
    "mac": 1
   },
   "411597": {
@@ -237,7 +237,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 7,
-   "saniye": 1056,
+   "saniye": 1073,
    "mac": 1
   },
   "470765": {
@@ -245,7 +245,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 14,
-   "saniye": 1455,
+   "saniye": 1472,
    "mac": 1
   },
   "779011": {

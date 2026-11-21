@@ -15,7 +15,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "07:15",
+    "saat": "06:43",
     "uzatma": false
    }
   },
@@ -116,8 +116,8 @@
    "ad": "Briante Weber",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 14,
-   "saniye": 1452,
+   "vp": 15,
+   "saniye": 1504,
    "mac": 1
   },
   "779071": {
@@ -125,7 +125,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 15,
-   "saniye": 1669,
+   "saniye": 1721,
    "mac": 1
   },
   "500079": {
@@ -149,7 +149,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 21,
-   "saniye": 1386,
+   "saniye": 1438,
    "mac": 1
   },
   "228502": {
@@ -173,7 +173,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 15,
-   "saniye": 1272,
+   "saniye": 1324,
    "mac": 1
   },
   "400519": {
@@ -197,7 +197,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 0,
-   "saniye": 588,
+   "saniye": 640,
    "mac": 1
   },
   "786430": {
@@ -212,8 +212,8 @@
    "ad": "Brae Ivey",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 10,
-   "saniye": 1516,
+   "vp": 9,
+   "saniye": 1568,
    "mac": 1
   },
   "278617": {
@@ -221,15 +221,15 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 5,
-   "saniye": 766,
+   "saniye": 818,
    "mac": 1
   },
   "736366": {
    "ad": "John Meeks",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 15,
-   "saniye": 1668,
+   "vp": 14,
+   "saniye": 1720,
    "mac": 1
   },
   "411597": {
@@ -268,8 +268,8 @@
    "ad": "Marko Pecarski",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 14,
-   "saniye": 1123,
+   "vp": 15,
+   "saniye": 1175,
    "mac": 1
   },
   "392627": {
@@ -293,7 +293,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 4,
-   "saniye": 739,
+   "saniye": 791,
    "mac": 1
   }
  }

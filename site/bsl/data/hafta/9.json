@@ -23,12 +23,12 @@
    "evSkor": "17",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "8",
+   "depSkor": "10",
    "salon": "Ankara Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "04:22",
+    "saat": "03:53",
     "uzatma": false
    }
   },
@@ -325,7 +325,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 2,
-   "saniye": 338,
+   "saniye": 367,
    "mac": 1
   },
   "277894": {
@@ -333,7 +333,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 1,
-   "saniye": 338,
+   "saniye": 367,
    "mac": 1
   },
   "386159": {
@@ -341,7 +341,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 3,
-   "saniye": 338,
+   "saniye": 367,
    "mac": 1
   },
   "408785": {
@@ -373,7 +373,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 1,
-   "saniye": 42,
+   "saniye": 71,
    "mac": 1
   },
   "129216": {
@@ -381,7 +381,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 0,
-   "saniye": 42,
+   "saniye": 71,
    "mac": 1
   },
   "668012": {
@@ -405,7 +405,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -1,
-   "saniye": 338,
+   "saniye": 367,
    "mac": 1
   },
   "508900": {
@@ -420,8 +420,8 @@
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 6,
-   "saniye": 338,
+   "vp": 8,
+   "saniye": 367,
    "mac": 1
   },
   "778399": {
@@ -453,7 +453,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 5,
-   "saniye": 200,
+   "saniye": 229,
    "mac": 1
   },
   "736069": {
@@ -469,7 +469,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -1,
-   "saniye": 103,
+   "saniye": 132,
    "mac": 1
   },
   "389934": {
@@ -477,7 +477,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 103,
+   "saniye": 132,
    "mac": 1
   },
   "434482": {

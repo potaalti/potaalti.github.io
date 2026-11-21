@@ -33,15 +33,15 @@
    "durum": "canli",
    "ev": "BAHÇEŞEHİR KOLEJİ",
    "evId": 265991,
-   "evSkor": "67",
+   "evSkor": "69",
    "dep": "BİOTEKNO KÖRFEZ BASKET",
    "depId": 268222,
-   "depSkor": "37",
+   "depSkor": "39",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "06:17",
+    "saat": "05:22",
     "uzatma": false
    }
   },
@@ -501,7 +501,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 17,
-   "saniye": 787,
+   "saniye": 837,
    "mac": 1
   },
   "608898": {
@@ -509,31 +509,31 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 22,
-   "saniye": 849,
+   "saniye": 899,
    "mac": 1
   },
   "384595": {
    "ad": "Mateusz Ponitka",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 6,
-   "saniye": 440,
+   "vp": 7,
+   "saniye": 490,
    "mac": 1
   },
   "734505": {
    "ad": "Trevion Williams",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 14,
-   "saniye": 889,
+   "vp": 16,
+   "saniye": 939,
    "mac": 1
   },
   "131296": {
    "ad": "Kenan Sipahi",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 4,
-   "saniye": 916,
+   "vp": 5,
+   "saniye": 966,
    "mac": 1
   },
   "609095": {
@@ -597,15 +597,15 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 7,
-   "saniye": 966,
+   "saniye": 1016,
    "mac": 1
   },
   "778161": {
    "ad": "Johnny Davis",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 13,
-   "saniye": 1334,
+   "vp": 16,
+   "saniye": 1384,
    "mac": 1
   },
   "419874": {
@@ -629,7 +629,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": -3,
-   "saniye": 880,
+   "saniye": 930,
    "mac": 1
   },
   "254785": {
@@ -644,8 +644,8 @@
    "ad": "Atahan Demirtaş",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 3,
-   "saniye": 382,
+   "vp": 2,
+   "saniye": 432,
    "mac": 1
   },
   "358964": {
@@ -684,8 +684,8 @@
    "ad": "Filip Barna",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": -4,
-   "saniye": 811,
+   "vp": -5,
+   "saniye": 861,
    "mac": 1
   }
  }

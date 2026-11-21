@@ -33,15 +33,15 @@
    "durum": "canli",
    "ev": "BAHÇEŞEHİR KOLEJİ",
    "evId": 265991,
-   "evSkor": "84",
+   "evSkor": "86",
    "dep": "BİOTEKNO KÖRFEZ BASKET",
    "depId": 268222,
-   "depSkor": "48",
+   "depSkor": "50",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "10:00",
+    "saat": "09:21",
     "uzatma": false
    }
   },
@@ -541,15 +541,15 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 2,
-   "saniye": 858,
+   "saniye": 896,
    "mac": 1
   },
   "776935": {
    "ad": "Aleksa Avramovic",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 0,
-   "saniye": 814,
+   "vp": 2,
+   "saniye": 852,
    "mac": 1
   },
   "358272": {
@@ -557,7 +557,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 7,
-   "saniye": 427,
+   "saniye": 465,
    "mac": 1
   },
   "776654": {
@@ -573,7 +573,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 10,
-   "saniye": 808,
+   "saniye": 846,
    "mac": 1
   },
   "47659": {
@@ -589,7 +589,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 8,
-   "saniye": 1004,
+   "saniye": 1042,
    "mac": 1
   },
   "778181": {
@@ -621,7 +621,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 7,
-   "saniye": 1036,
+   "saniye": 1074,
    "mac": 1
   },
   "778182": {
@@ -629,15 +629,15 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": -4,
-   "saniye": 1181,
+   "saniye": 1219,
    "mac": 1
   },
   "254785": {
    "ad": "Mert Akay",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": -1,
-   "saniye": 443,
+   "vp": -2,
+   "saniye": 481,
    "mac": 1
   },
   "217226": {
@@ -676,8 +676,8 @@
    "ad": "Paulius Danusevicius",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 8,
-   "saniye": 920,
+   "vp": 11,
+   "saniye": 958,
    "mac": 1
   },
   "470601": {
@@ -685,7 +685,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": -5,
-   "saniye": 1032,
+   "saniye": 1070,
    "mac": 1
   }
  }

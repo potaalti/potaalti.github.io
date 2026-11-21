@@ -1,5 +1,5 @@
 {
- "guncelHafta": 8,
+ "guncelHafta": 9,
  "haftalar": [
   {
    "hafta": 1,
@@ -182,5 +182,5 @@
    "bitti": false
   }
  ],
- "guncelleme": "2026-11-21T12:15:14+00:00"
+ "guncelleme": "2026-11-21T12:15:46+00:00"
 }

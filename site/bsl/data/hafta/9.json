@@ -4,7 +4,7 @@
   {
    "id": 346343,
    "tarih": "2026-11-21T13:00:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "KARŞIYAKA",
    "evId": 266027,
    "evSkor": "82",
@@ -12,12 +12,7 @@
    "depId": 266028,
    "depSkor": "79",
    "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "00:00",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346340,
@@ -125,7 +120,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 15,
-   "saniye": 1912,
+   "saniye": 1911,
    "mac": 1
   },
   "500079": {
@@ -278,6 +273,14 @@
    "takimId": 266028,
    "vp": 0,
    "saniye": 0,
+   "mac": 1
+  },
+  "779130": {
+   "ad": "Ty  Brewer",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": -1,
+   "saniye": 463,
    "mac": 1
   },
   "779010": {

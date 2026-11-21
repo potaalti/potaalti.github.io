@@ -7,15 +7,15 @@
    "durum": "canli",
    "ev": "KARŞIYAKA",
    "evId": 266027,
-   "evSkor": "39",
+   "evSkor": "41",
    "dep": "YUKATEL DENİZLİ BASKET",
    "depId": 266028,
-   "depSkor": "38",
+   "depSkor": "40",
    "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "10:00",
+    "saat": "09:01",
     "uzatma": false
    }
   },
@@ -116,8 +116,8 @@
    "ad": "Briante Weber",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 9,
-   "saniye": 911,
+   "vp": 8,
+   "saniye": 969,
    "mac": 1
   },
   "779071": {
@@ -125,7 +125,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 4,
-   "saniye": 904,
+   "saniye": 962,
    "mac": 1
   },
   "500079": {
@@ -148,16 +148,16 @@
    "ad": "Steven Enoch",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 15,
-   "saniye": 981,
+   "vp": 17,
+   "saniye": 1039,
    "mac": 1
   },
   "228502": {
    "ad": "Muhaymin Mustafa",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 5,
-   "saniye": 718,
+   "vp": 6,
+   "saniye": 776,
    "mac": 1
   },
   "410874": {
@@ -173,7 +173,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 7,
-   "saniye": 669,
+   "saniye": 727,
    "mac": 1
   },
   "400519": {
@@ -213,7 +213,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 6,
-   "saniye": 911,
+   "saniye": 969,
    "mac": 1
   },
   "278617": {
@@ -229,23 +229,23 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 7,
-   "saniye": 994,
+   "saniye": 1052,
    "mac": 1
   },
   "411597": {
    "ad": "Isaiah Miles",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 6,
-   "saniye": 590,
+   "vp": 7,
+   "saniye": 648,
    "mac": 1
   },
   "470765": {
    "ad": "Mahir Ağva",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 11,
-   "saniye": 739,
+   "vp": 12,
+   "saniye": 797,
    "mac": 1
   },
   "779011": {
@@ -285,7 +285,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": -2,
-   "saniye": 717,
+   "saniye": 775,
    "mac": 1
   },
   "124128": {

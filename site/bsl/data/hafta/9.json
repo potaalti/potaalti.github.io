@@ -49,12 +49,12 @@
    "evSkor": "55",
    "dep": "PİZZABULLS BORDO BANDIRMA",
    "depId": 265993,
-   "depSkor": "64",
+   "depSkor": "66",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "02:18",
+    "saat": "01:57",
     "uzatma": false
    }
   },
@@ -708,16 +708,16 @@
    "ad": "Brandon Taylor",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 4,
-   "saniye": 1365,
+   "vp": 3,
+   "saniye": 1386,
    "mac": 1
   },
   "778459": {
    "ad": "Warren Washington",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 4,
-   "saniye": 711,
+   "vp": 5,
+   "saniye": 732,
    "mac": 1
   },
   "502519": {
@@ -732,8 +732,8 @@
    "ad": "Micheal Moore",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 6,
-   "saniye": 443,
+   "vp": 5,
+   "saniye": 464,
    "mac": 1
   },
   "402930": {
@@ -757,7 +757,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 16,
-   "saniye": 1071,
+   "saniye": 1092,
    "mac": 1
   },
   "303549": {
@@ -765,7 +765,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 587,
+   "saniye": 608,
    "mac": 1
   },
   "358242": {
@@ -789,7 +789,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 14,
-   "saniye": 1100,
+   "saniye": 1121,
    "mac": 1
   },
   "130898": {
@@ -812,8 +812,8 @@
    "ad": "Zach Hankins",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 14,
-   "saniye": 1124,
+   "vp": 16,
+   "saniye": 1145,
    "mac": 1
   },
   "501076": {
@@ -829,7 +829,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 9,
-   "saniye": 746,
+   "saniye": 767,
    "mac": 1
   },
   "106461": {
@@ -845,7 +845,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 344,
+   "saniye": 365,
    "mac": 1
   },
   "85925": {
@@ -869,7 +869,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 490,
+   "saniye": 511,
    "mac": 1
   },
   "307500": {

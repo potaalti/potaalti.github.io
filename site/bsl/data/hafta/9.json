@@ -20,7 +20,7 @@
    "durum": "canli",
    "ev": "TÜRK TELEKOM",
    "evId": 266030,
-   "evSkor": "44",
+   "evSkor": "45",
    "dep": "TOFAŞ",
    "depId": 265995,
    "depSkor": "30",
@@ -316,7 +316,7 @@
    "ad": "Tony Taylor",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 8,
+   "vp": 9,
    "saniye": 476,
    "mac": 1
   },

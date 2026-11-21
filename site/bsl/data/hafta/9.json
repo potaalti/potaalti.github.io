@@ -33,15 +33,15 @@
    "durum": "canli",
    "ev": "BAHÇEŞEHİR KOLEJİ",
    "evId": 265991,
-   "evSkor": "69",
+   "evSkor": "72",
    "dep": "BİOTEKNO KÖRFEZ BASKET",
    "depId": 268222,
-   "depSkor": "39",
+   "depSkor": "41",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "05:22",
+    "saat": "05:01",
     "uzatma": false
    }
   },
@@ -500,8 +500,8 @@
    "ad": "Malachi Flynn",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 17,
-   "saniye": 837,
+   "vp": 16,
+   "saniye": 862,
    "mac": 1
   },
   "608898": {
@@ -509,23 +509,23 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 22,
-   "saniye": 899,
+   "saniye": 924,
    "mac": 1
   },
   "384595": {
    "ad": "Mateusz Ponitka",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 7,
-   "saniye": 490,
+   "vp": 10,
+   "saniye": 498,
    "mac": 1
   },
   "734505": {
    "ad": "Trevion Williams",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 16,
-   "saniye": 939,
+   "vp": 18,
+   "saniye": 964,
    "mac": 1
   },
   "131296": {
@@ -533,7 +533,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 5,
-   "saniye": 966,
+   "saniye": 991,
    "mac": 1
   },
   "609095": {
@@ -589,15 +589,15 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 5,
-   "saniye": 687,
+   "saniye": 704,
    "mac": 1
   },
   "778181": {
    "ad": "Boo Buie",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 7,
-   "saniye": 1016,
+   "vp": 9,
+   "saniye": 1041,
    "mac": 1
   },
   "778161": {
@@ -605,7 +605,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 16,
-   "saniye": 1384,
+   "saniye": 1409,
    "mac": 1
   },
   "419874": {
@@ -629,7 +629,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": -3,
-   "saniye": 930,
+   "saniye": 955,
    "mac": 1
   },
   "254785": {
@@ -645,7 +645,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 2,
-   "saniye": 432,
+   "saniye": 457,
    "mac": 1
   },
   "358964": {
@@ -685,7 +685,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": -5,
-   "saniye": 861,
+   "saniye": 886,
    "mac": 1
   }
  }

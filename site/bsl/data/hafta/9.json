@@ -20,15 +20,15 @@
    "durum": "canli",
    "ev": "TÜRK TELEKOM",
    "evId": 266030,
-   "evSkor": "23",
+   "evSkor": "24",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "14",
+   "depSkor": "16",
    "salon": "Ankara Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "02:53",
+    "saat": "02:44",
     "uzatma": false
    }
   },
@@ -349,7 +349,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 0,
-   "saniye": 60,
+   "saniye": 69,
    "mac": 1
   },
   "202579": {
@@ -357,7 +357,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 2,
-   "saniye": 60,
+   "saniye": 69,
    "mac": 1
   },
   "112715": {
@@ -373,15 +373,15 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 1,
-   "saniye": 131,
+   "saniye": 140,
    "mac": 1
   },
   "129216": {
    "ad": "Doğuş Özdemiroğlu",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 2,
-   "saniye": 131,
+   "vp": 3,
+   "saniye": 140,
    "mac": 1
   },
   "668012": {
@@ -389,7 +389,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 0,
-   "saniye": 60,
+   "saniye": 69,
    "mac": 1
   },
   "272903": {
@@ -412,8 +412,8 @@
    "ad": "Jamuni Mcneace",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 0,
-   "saniye": 146,
+   "vp": 2,
+   "saniye": 155,
    "mac": 1
   },
   "778401": {
@@ -429,7 +429,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -3,
-   "saniye": 295,
+   "saniye": 304,
    "mac": 1
   },
   "778398": {
@@ -460,16 +460,16 @@
    "ad": "Tre'shawn Thurman",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 3,
-   "saniye": 60,
+   "vp": 4,
+   "saniye": 69,
    "mac": 1
   },
   "732657": {
    "ad": "Mantas Rubstavicius",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 1,
-   "saniye": 192,
+   "vp": 2,
+   "saniye": 201,
    "mac": 1
   },
   "389934": {
@@ -477,7 +477,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 192,
+   "saniye": 201,
    "mac": 1
   },
   "434482": {

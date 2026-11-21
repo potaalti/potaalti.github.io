@@ -20,7 +20,7 @@
    "durum": "canli",
    "ev": "TÜRK TELEKOM",
    "evId": 266030,
-   "evSkor": "59",
+   "evSkor": "60",
    "dep": "TOFAŞ",
    "depId": 265995,
    "depSkor": "47",
@@ -308,8 +308,8 @@
    "ad": "Jerrick Harding",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 8,
-   "saniye": 858,
+   "vp": 9,
+   "saniye": 878,
    "mac": 1
   },
   "410568": {
@@ -333,7 +333,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 12,
-   "saniye": 889,
+   "saniye": 884,
    "mac": 1
   },
   "386159": {
@@ -341,7 +341,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 6,
-   "saniye": 1036,
+   "saniye": 1056,
    "mac": 1
   },
   "408785": {
@@ -373,7 +373,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 11,
-   "saniye": 647,
+   "saniye": 672,
    "mac": 1
   },
   "129216": {
@@ -381,7 +381,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 4,
-   "saniye": 700,
+   "saniye": 720,
    "mac": 1
   },
   "668012": {
@@ -389,7 +389,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 7,
-   "saniye": 546,
+   "saniye": 566,
    "mac": 1
   },
   "272903": {
@@ -405,14 +405,14 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 643,
+   "saniye": 663,
    "mac": 1
   },
   "508900": {
    "ad": "Jamuni Mcneace",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 3,
+   "vp": 4,
    "saniye": 908,
    "mac": 1
   },
@@ -420,8 +420,8 @@
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 11,
-   "saniye": 945,
+   "vp": 10,
+   "saniye": 965,
    "mac": 1
   },
   "778399": {
@@ -429,7 +429,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 8,
-   "saniye": 931,
+   "saniye": 951,
    "mac": 1
   },
   "778398": {
@@ -461,7 +461,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 17,
-   "saniye": 818,
+   "saniye": 838,
    "mac": 1
   },
   "732657": {
@@ -469,7 +469,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 629,
+   "saniye": 649,
    "mac": 1
   },
   "389934": {

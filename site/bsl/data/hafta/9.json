@@ -7,7 +7,7 @@
    "durum": "canli",
    "ev": "KARŞIYAKA",
    "evId": 266027,
-   "evSkor": "74",
+   "evSkor": "75",
    "dep": "YUKATEL DENİZLİ BASKET",
    "depId": 266028,
    "depSkor": "69",
@@ -15,7 +15,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "03:15",
+    "saat": "02:49",
     "uzatma": false
    }
   },
@@ -117,7 +117,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 15,
-   "saniye": 1692,
+   "saniye": 1733,
    "mac": 1
   },
   "779071": {
@@ -133,7 +133,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": -2,
-   "saniye": 881,
+   "saniye": 922,
    "mac": 1
   },
   "254789": {
@@ -149,7 +149,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 23,
-   "saniye": 1626,
+   "saniye": 1667,
    "mac": 1
   },
   "228502": {
@@ -157,7 +157,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 13,
-   "saniye": 1393,
+   "saniye": 1434,
    "mac": 1
   },
   "410874": {
@@ -196,8 +196,8 @@
    "ad": "Yakuba Ouattara",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 0,
-   "saniye": 700,
+   "vp": 1,
+   "saniye": 741,
    "mac": 1
   },
   "786430": {
@@ -213,7 +213,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 11,
-   "saniye": 1756,
+   "saniye": 1797,
    "mac": 1
   },
   "278617": {
@@ -221,7 +221,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 3,
-   "saniye": 1006,
+   "saniye": 1047,
    "mac": 1
   },
   "736366": {
@@ -229,15 +229,15 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 19,
-   "saniye": 1908,
+   "saniye": 1949,
    "mac": 1
   },
   "411597": {
    "ad": "Isaiah Miles",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 8,
-   "saniye": 1015,
+   "vp": 7,
+   "saniye": 1056,
    "mac": 1
   },
   "470765": {
@@ -245,7 +245,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 14,
-   "saniye": 1414,
+   "saniye": 1455,
    "mac": 1
   },
   "779011": {

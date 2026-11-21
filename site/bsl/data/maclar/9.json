@@ -46,7 +46,7 @@
    "durum": "canli",
    "ev": "BURSASPOR BASKETBOL",
    "evId": 266176,
-   "evSkor": "75",
+   "evSkor": "80",
    "dep": "PİZZABULLS BORDO BANDIRMA",
    "depId": 265993,
    "depSkor": "85",
@@ -54,7 +54,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "02:06",
+    "saat": "01:29",
     "uzatma": false
    }
   },

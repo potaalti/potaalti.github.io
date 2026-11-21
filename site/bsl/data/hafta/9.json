@@ -28,7 +28,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "07:28",
+    "saat": "07:18",
     "uzatma": false
    }
   },
@@ -309,15 +309,15 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 7,
-   "saniye": 151,
+   "saniye": 163,
    "mac": 1
   },
   "410568": {
    "ad": "Tony Taylor",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 3,
-   "saniye": 151,
+   "vp": 4,
+   "saniye": 163,
    "mac": 1
   },
   "778727": {
@@ -325,7 +325,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 2,
-   "saniye": 151,
+   "saniye": 163,
    "mac": 1
   },
   "277894": {
@@ -333,7 +333,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": -1,
-   "saniye": 151,
+   "saniye": 163,
    "mac": 1
   },
   "386159": {
@@ -341,7 +341,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 1,
-   "saniye": 151,
+   "saniye": 163,
    "mac": 1
   },
   "408785": {
@@ -405,7 +405,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -2,
-   "saniye": 151,
+   "saniye": 163,
    "mac": 1
   },
   "508900": {
@@ -421,15 +421,15 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 151,
+   "saniye": 163,
    "mac": 1
   },
   "778399": {
    "ad": "Shavar Reynolds Jr.",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 0,
-   "saniye": 151,
+   "vp": -1,
+   "saniye": 163,
    "mac": 1
   },
   "778398": {
@@ -437,7 +437,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 151,
+   "saniye": 163,
    "mac": 1
   },
   "452216": {
@@ -453,7 +453,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 13,
+   "saniye": 25,
    "mac": 1
   },
   "736069": {

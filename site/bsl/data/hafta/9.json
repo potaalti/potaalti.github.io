@@ -46,7 +46,7 @@
    "durum": "canli",
    "ev": "BURSASPOR BASKETBOL",
    "evId": 266176,
-   "evSkor": "68",
+   "evSkor": "71",
    "dep": "PİZZABULLS BORDO BANDIRMA",
    "depId": 265993,
    "depSkor": "82",
@@ -54,7 +54,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "04:32",
+    "saat": "04:25",
     "uzatma": false
    }
   },
@@ -692,7 +692,7 @@
    "ad": "Leyton Hammonds",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 17,
+   "vp": 20,
    "saniye": 1344,
    "mac": 1
   },
@@ -708,7 +708,7 @@
    "ad": "Brandon Taylor",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 10,
+   "vp": 11,
    "saniye": 1834,
    "mac": 1
   },

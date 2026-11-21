@@ -15,7 +15,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "10:00",
+    "saat": "09:41",
     "uzatma": false
    }
   },
@@ -117,7 +117,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 12,
-   "saniye": 1287,
+   "saniye": 1306,
    "mac": 1
   },
   "779071": {
@@ -125,7 +125,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 12,
-   "saniye": 1504,
+   "saniye": 1523,
    "mac": 1
   },
   "500079": {
@@ -173,7 +173,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 14,
-   "saniye": 1107,
+   "saniye": 1126,
    "mac": 1
   },
   "400519": {
@@ -197,7 +197,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": -2,
-   "saniye": 423,
+   "saniye": 442,
    "mac": 1
   },
   "786430": {
@@ -205,7 +205,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 6,
-   "saniye": 482,
+   "saniye": 501,
    "mac": 1
   },
   "778996": {
@@ -213,7 +213,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 9,
-   "saniye": 1351,
+   "saniye": 1370,
    "mac": 1
   },
   "278617": {
@@ -228,8 +228,8 @@
    "ad": "John Meeks",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 12,
-   "saniye": 1503,
+   "vp": 11,
+   "saniye": 1522,
    "mac": 1
   },
   "411597": {
@@ -269,7 +269,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 14,
-   "saniye": 958,
+   "saniye": 977,
    "mac": 1
   },
   "392627": {
@@ -285,7 +285,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": -3,
-   "saniye": 967,
+   "saniye": 986,
    "mac": 1
   },
   "124128": {
@@ -293,7 +293,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 1,
-   "saniye": 574,
+   "saniye": 593,
    "mac": 1
   }
  }

@@ -184,7 +184,7 @@ function haftaFiksturu(lig, istenenHafta, taban) {
     ${yoneticiMi() && maclar?.length ? programDugmeleri(lig, n, maclar) : ''}
     ${!maclar ? '<p class="bos">Yükleniyor…</p>' : maclar.length ? gunlereGore(lig, maclar) : '<p class="bos">Bu haftanın maçları henüz belli değil.</p>'}
     ${maclar?.length ? bayYazisi(lig, maclar) : ''}
-    <p class="soluk kucuk">Maça dokununca kutu skor açılır (oynanmamış maçta maç önü). Maç saatlerinde skorlar dakikada bir yenilenir.</p>`;
+    <p class="soluk kucuk">Maça dokununca kutu skor açılır (oynanmamış maçta maç önü). Maç saatlerinde skorlar yarım dakikada bir yenilenir.</p>`;
 }
 // Avrupa fikstürü: haftalar Pazartesi–Pazar; dört kupada temsilcilerimizin maçları gün gün
 function avrupaFiksturu(istenen) {
@@ -1357,7 +1357,7 @@ function gorunumFantezi() {
 
 function altBilgi() {
   const g = S.meta?.guncelleme;
-  return `<p class="alt-bilgi">Veriler: TBF · İstatistikler ${g ? tarihSaat(g) : '-'} itibarıyla · Canlı skorlar maç saatlerinde dakikada bir yenilenir${yoneticiMi() ? ' · <a href="#/durum">Sistem durumu</a> · <a href="#/istatistik">Ziyaret istatistikleri</a>' : ''}</p>`;
+  return `<p class="alt-bilgi">Veriler: TBF · İstatistikler ${g ? tarihSaat(g) : '-'} itibarıyla · Canlı skorlar maç saatlerinde yarım dakikada bir yenilenir${yoneticiMi() ? ' · <a href="#/durum">Sistem durumu</a> · <a href="#/istatistik">Ziyaret istatistikleri</a>' : ''}</p>`;
 }
 
 // ---------- Avrupa'daki temsilcilerimiz (2026-11-12) ----------
@@ -2223,7 +2223,7 @@ async function canliYenile() {
   }
   ciz();
 }
-setInterval(canliYenile, 30 * 1000); // canlı skor: bilgisayar dakikada bir gönderir, Pages ~40 sn sonra yayınlar
+setInterval(canliYenile, 15 * 1000); // canlı skor: bilgisayar maç saatinde 30 sn'de bir gönderir, Pages ~35 sn sonra yayınlar; yalnız maç sürerken indirir
 document.addEventListener('visibilitychange', () => { if (!document.hidden) canliYenile(); });
 
 Yayin.baglan(() => ciz());

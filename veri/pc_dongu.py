@@ -4,8 +4,8 @@ kaynak budur; telefon ve GitHub yedektir. Telefon, son 5 dakikada '(pc)' etiketl
 Üst üste basmaz: her iş kendi kopyasında GitHub'daki son hali alır (git reset), veriyi üretir, değişiklik varsa '(pc)'
 etiketiyle gönderir; o arada başkası (telefon, GitHub) göndermişse son hali alıp yeniden üretir.
 
-  python veri/pc_dongu.py canli    dakikada bir: TBL ve BSL canlı skor ve VP (maç saatinde; değilse internete çıkmadan
-                                   biter), Avrupa (Türkiye saatiyle 18:00–02:00), TBL maç günü YouTube maç yayınları (20
+  python veri/pc_dongu.py canli    dakikada bir: TBL ve BSL canlı skor ve VP (maç saatinde dakikada iki tur; değilse
+                                   internete çıkmadan biter), Avrupa (Türkiye saatiyle 18:00–02:00), TBL maç günü YouTube maç yayınları (20
                                    dakikada bir ve her maçtan 1-2 dakika önce)
   python veri/pc_dongu.py gunluk   15 dakikada bir, zamanı gelen işler (Türkiye saati; o saat kaçtıysa açılınca bir kez):
       TBL ve BSL verilerinin tamamı (TBL takım kadroları dahil), istatistik liderleri, seyirci, oyuncu fotoğrafı ve
@@ -21,6 +21,7 @@ import json
 import os
 import subprocess
 import sys
+import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -109,19 +110,45 @@ def is_yap(ad, depo, komutlar, ekle, mesaj, kuru):
     return False
 
 
+def mac_saatinde(tbl):
+    """TBL ya da BSL maç saatinde miyiz (TBL kopyasındaki son veriden; fetch_tbf.py --akilli ile aynı pencere: başlamadan
+    10 dakika önceden maç TBF'de kesinleşene kadar, en çok 4 saat)."""
+    try:
+        maclar = json.loads((tbl / "site" / "data" / "hafta" / "index.json").read_text(encoding="utf-8")).get("macSaatleri", [])
+    except (OSError, ValueError):
+        return False
+    simdi = tr_simdi().replace(tzinfo=None)
+    return any(not m.get("bitti") and not m["tarih"].endswith("T00:00:00")
+               and datetime.fromisoformat(m["tarih"]) - timedelta(minutes=10) <= simdi <= datetime.fromisoformat(m["tarih"]) + timedelta(hours=4)
+               for m in maclar)
+
+
 def canli(kok, secili, kuru):
     tbl, app = kok / "canli" / "tbl", kok / "canli" / "app"
     hazirla(tbl, TBL_URL)
     hazirla(app, APP_URL, APP_SEYREK)
-    if not secili or "tbl" in secili:  # TBL (ve ana uygulamanın BSL maç listesi) canlı skor ve VP; maç saatinde değilse hemen biter
-        is_yap("TBL canlı", tbl, [(["fetch_tbf.py", "--akilli"], ".", 300)], ["."], "Veriler güncellendi (pc)", kuru)
-    if not secili or "bsl" in secili:  # BSL Fantezi canlı VP
-        is_yap("BSL canlı", app, [(["veri_guncelle.py", "--akilli"], "bsl", 300)], ["site/bsl/data"], "BSL canlı veriler güncellendi (pc)", kuru)
+    bas = time.monotonic()
+
+    def canli_skor():
+        if not secili or "tbl" in secili:  # TBL (ve ana uygulamanın BSL maç listesi) canlı skor ve VP; maç saatinde değilse hemen biter
+            is_yap("TBL canlı", tbl, [(["fetch_tbf.py", "--akilli"], ".", 300)], ["."], "Veriler güncellendi (pc)", kuru)
+        if not secili or "bsl" in secili:  # BSL Fantezi canlı VP
+            is_yap("BSL canlı", app, [(["veri_guncelle.py", "--akilli"], "bsl", 300)], ["site/bsl/data"], "BSL canlı veriler güncellendi (pc)", kuru)
+
+    canli_skor()
     if (not secili and tr_simdi().hour in AVRUPA_SAATLERI) or "avrupa" in secili:
         is_yap("Avrupa", app, [(["veri/avrupa.py"], ".", 600)], ["site/data/avrupa"], "Avrupa verileri güncellendi (pc)", kuru)
     if (not secili and yayin_zamani(kok, app)) or "yayin" in secili:
         is_yap("TBL maç yayınları", app, [(["veri/uret.py", "--youtube", "yayin", "--yayin-sayfa", "1"], ".", 120)],
                ["site/data/tbl/yayin.json"], "TBL maç yayınları güncellendi (pc)", kuru)
+    # Maç saatinde dakikada iki tur (2026-11-21, kullanıcı: her alanda en hızlısı): ilk tur 25 sn'den kısa sürdüyse dakikanın
+    # yarısında canlı skorlar bir kez daha. Görev Zamanlayıcı en sık dakikada bir başlatır; ikinci tur bir sonraki başlatmaya
+    # taşmasın diye uzun turda atlanır. GitHub'ın yayın sırası yalnızca en son bekleyeni tuttuğundan yayınlar birikmez.
+    if not secili and mac_saatinde(tbl):
+        gecen = time.monotonic() - bas
+        if gecen < 25:
+            time.sleep(30 - gecen)
+            canli_skor()
 
 
 def yayin_zamani(kok, app):

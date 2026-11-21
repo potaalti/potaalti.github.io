@@ -1996,7 +1996,7 @@ function gorunumMaclar(istenen) {
   return `${cipler}${secici}${bloklar || '<p class="bos">Bu haftanın maçları henüz belli değil.</p>'}
     ${maclar.length && bay.length ? `<p class="bay-yazisi">Bay: ${bay.map(esc).join(', ')}</p>` : ''}
     <p class="soluk kucuk">Maça dokununca kutu skor ve o maçtaki fantezi oyuncuları açılır. ${S.tblVerisi && eksikHaftalar().includes(n)
-      ? `Canlı skorlar TBL Fantezi Ligi'nin güncellemesinden, dakikada bir yenilenir (son: ${S.tblVerisi.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}).`
+      ? `Canlı skorlar TBL Fantezi Ligi'nin güncellemesinden, yarım dakikada bir yenilenir (son: ${S.tblVerisi.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}).`
       : `Son güncelleme: ${S.index?.guncelleme ? tarih(S.index.guncelleme) : '-'}.`}</p>`;
 }
 
@@ -3157,7 +3157,7 @@ async function canliYenile() {
   }
   S.canliYenileniyor = false;
 }
-setInterval(canliYenile, 30 * 1000); // canlı skor: bilgisayar dakikada bir gönderir, Pages ~40 sn sonra yayınlar
+setInterval(canliYenile, 15 * 1000); // canlı skor: bilgisayar maç saatinde 30 sn'de bir gönderir, Pages ~35 sn sonra yayınlar; yalnız maç sürerken indirir
 
 // Yönetici kendi takımına katılır: önce takıma yönetici yetkisi verilir (yöneticilik sürsün), sonra hesap takıma bağlanır
 async function yoneticiTakimaKatil(tid, kod) {

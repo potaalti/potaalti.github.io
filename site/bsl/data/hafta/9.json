@@ -20,7 +20,7 @@
    "durum": "canli",
    "ev": "TÜRK TELEKOM",
    "evId": 266030,
-   "evSkor": "3",
+   "evSkor": "6",
    "dep": "TOFAŞ",
    "depId": 265995,
    "depSkor": "0",
@@ -28,7 +28,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "08:44",
+    "saat": "07:55",
     "uzatma": false
    }
   },
@@ -308,24 +308,24 @@
    "ad": "Jerrick Harding",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 3,
-   "saniye": 76,
+   "vp": 4,
+   "saniye": 124,
    "mac": 1
   },
   "410568": {
    "ad": "Tony Taylor",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 0,
-   "saniye": 76,
+   "vp": 3,
+   "saniye": 124,
    "mac": 1
   },
   "778727": {
    "ad": "Ismael Bako",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 1,
-   "saniye": 76,
+   "vp": 2,
+   "saniye": 124,
    "mac": 1
   },
   "277894": {
@@ -333,15 +333,15 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": -1,
-   "saniye": 76,
+   "saniye": 124,
    "mac": 1
   },
   "386159": {
    "ad": "Shaquille Mckissic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 0,
-   "saniye": 76,
+   "vp": 1,
+   "saniye": 124,
    "mac": 1
   },
   "408785": {
@@ -404,16 +404,16 @@
    "ad": "Sadık Kabaca",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": -1,
-   "saniye": 76,
+   "vp": -2,
+   "saniye": 124,
    "mac": 1
   },
   "508900": {
    "ad": "Jamuni Mcneace",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 1,
-   "saniye": 76,
+   "vp": 0,
+   "saniye": 124,
    "mac": 1
   },
   "778401": {
@@ -421,7 +421,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 76,
+   "saniye": 124,
    "mac": 1
   },
   "778399": {
@@ -429,7 +429,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 76,
+   "saniye": 124,
    "mac": 1
   },
   "778398": {
@@ -437,7 +437,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 76,
+   "saniye": 124,
    "mac": 1
   },
   "452216": {

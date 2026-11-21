@@ -7,7 +7,7 @@
    "durum": "canli",
    "ev": "KARŞIYAKA",
    "evId": 266027,
-   "evSkor": "71",
+   "evSkor": "73",
    "dep": "YUKATEL DENİZLİ BASKET",
    "depId": 266028,
    "depSkor": "63",
@@ -15,7 +15,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "06:23",
+    "saat": "06:10",
     "uzatma": false
    }
   },
@@ -117,15 +117,15 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 15,
-   "saniye": 1504,
+   "saniye": 1516,
    "mac": 1
   },
   "779071": {
    "ad": "Ishmael El-Amin",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 15,
-   "saniye": 1721,
+   "vp": 17,
+   "saniye": 1733,
    "mac": 1
   },
   "500079": {
@@ -133,7 +133,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 0,
-   "saniye": 693,
+   "saniye": 705,
    "mac": 1
   },
   "254789": {
@@ -149,7 +149,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 21,
-   "saniye": 1438,
+   "saniye": 1450,
    "mac": 1
   },
   "228502": {
@@ -157,7 +157,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 12,
-   "saniye": 1205,
+   "saniye": 1217,
    "mac": 1
   },
   "410874": {
@@ -213,15 +213,15 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 9,
-   "saniye": 1568,
+   "saniye": 1580,
    "mac": 1
   },
   "278617": {
    "ad": "Erten Gazi",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 5,
-   "saniye": 818,
+   "vp": 4,
+   "saniye": 830,
    "mac": 1
   },
   "736366": {
@@ -229,7 +229,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 14,
-   "saniye": 1720,
+   "saniye": 1732,
    "mac": 1
   },
   "411597": {
@@ -237,7 +237,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 7,
-   "saniye": 827,
+   "saniye": 839,
    "mac": 1
   },
   "470765": {
@@ -245,7 +245,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 13,
-   "saniye": 1226,
+   "saniye": 1238,
    "mac": 1
   },
   "779011": {

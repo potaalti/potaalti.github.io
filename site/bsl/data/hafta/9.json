@@ -49,12 +49,12 @@
    "evSkor": "13",
    "dep": "PİZZABULLS BORDO BANDIRMA",
    "depId": 265993,
-   "depSkor": "22",
+   "depSkor": "24",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "09:13",
+    "saat": "08:48",
     "uzatma": false
    }
   },
@@ -709,7 +709,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 1,
-   "saniye": 647,
+   "saniye": 672,
    "mac": 1
   },
   "778459": {
@@ -725,7 +725,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 332,
+   "saniye": 357,
    "mac": 1
   },
   "736260": {
@@ -733,7 +733,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 6,
-   "saniye": 180,
+   "saniye": 205,
    "mac": 1
   },
   "402930": {
@@ -764,16 +764,16 @@
    "ad": "Buğra Çal",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 1,
-   "saniye": 350,
+   "vp": 0,
+   "saniye": 375,
    "mac": 1
   },
   "358242": {
    "ad": "Martynas Sajus",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 0,
-   "saniye": 381,
+   "vp": 1,
+   "saniye": 406,
    "mac": 1
   },
   "227653": {
@@ -788,8 +788,8 @@
    "ad": "Ty Gordon",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 4,
-   "saniye": 313,
+   "vp": 5,
+   "saniye": 338,
    "mac": 1
   },
   "130898": {
@@ -821,7 +821,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 11,
-   "saniye": 537,
+   "saniye": 561,
    "mac": 1
   },
   "441857": {
@@ -829,7 +829,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 3,
-   "saniye": 381,
+   "saniye": 382,
    "mac": 1
   },
   "106461": {
@@ -845,7 +845,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 47,
+   "saniye": 72,
    "mac": 1
   },
   "85925": {
@@ -860,16 +860,16 @@
    "ad": "Boubacar Toure",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 1,
-   "saniye": 161,
+   "vp": 2,
+   "saniye": 186,
    "mac": 1
   },
   "667625": {
    "ad": "Damien Jefferson",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": -1,
-   "saniye": 129,
+   "vp": 1,
+   "saniye": 154,
    "mac": 1
   },
   "307500": {

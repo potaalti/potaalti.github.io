@@ -28,7 +28,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "00:13",
+    "saat": "00:00",
     "uzatma": false
    }
   },
@@ -309,7 +309,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 4,
-   "saniye": 574,
+   "saniye": 588,
    "mac": 1
   },
   "410568": {
@@ -325,7 +325,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 4,
-   "saniye": 645,
+   "saniye": 659,
    "mac": 1
   },
   "277894": {
@@ -341,7 +341,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 5,
-   "saniye": 752,
+   "saniye": 766,
    "mac": 1
   },
   "408785": {
@@ -373,15 +373,15 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 11,
-   "saniye": 633,
+   "saniye": 647,
    "mac": 1
   },
   "129216": {
    "ad": "Doğuş Özdemiroğlu",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 5,
-   "saniye": 633,
+   "vp": 4,
+   "saniye": 647,
    "mac": 1
   },
   "668012": {
@@ -429,7 +429,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 8,
-   "saniye": 897,
+   "saniye": 911,
    "mac": 1
   },
   "778398": {
@@ -437,7 +437,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 6,
-   "saniye": 688,
+   "saniye": 702,
    "mac": 1
   },
   "452216": {
@@ -453,7 +453,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 3,
-   "saniye": 495,
+   "saniye": 509,
    "mac": 1
   },
   "736069": {
@@ -469,7 +469,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 485,
+   "saniye": 499,
    "mac": 1
   },
   "389934": {
@@ -477,7 +477,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 2,
-   "saniye": 635,
+   "saniye": 649,
    "mac": 1
   },
   "434482": {

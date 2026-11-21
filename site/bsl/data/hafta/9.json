@@ -54,7 +54,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "00:45",
+    "saat": "00:04",
     "uzatma": false
    }
   },
@@ -709,7 +709,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 5,
-   "saniye": 1458,
+   "saniye": 1499,
    "mac": 1
   },
   "778459": {
@@ -717,7 +717,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 5,
-   "saniye": 804,
+   "saniye": 844,
    "mac": 1
   },
   "502519": {
@@ -733,7 +733,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 5,
-   "saniye": 535,
+   "saniye": 576,
    "mac": 1
   },
   "402930": {
@@ -756,8 +756,8 @@
    "ad": "Will Cummings",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 18,
-   "saniye": 1163,
+   "vp": 17,
+   "saniye": 1204,
    "mac": 1
   },
   "303549": {
@@ -765,7 +765,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 679,
+   "saniye": 720,
    "mac": 1
   },
   "358242": {
@@ -789,7 +789,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 14,
-   "saniye": 1193,
+   "saniye": 1233,
    "mac": 1
   },
   "130898": {
@@ -805,15 +805,15 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 8,
-   "saniye": 1357,
+   "saniye": 1397,
    "mac": 1
   },
   "778310": {
    "ad": "Zach Hankins",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 16,
-   "saniye": 1217,
+   "vp": 17,
+   "saniye": 1257,
    "mac": 1
   },
   "501076": {
@@ -829,7 +829,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 9,
-   "saniye": 839,
+   "saniye": 879,
    "mac": 1
   },
   "106461": {
@@ -845,7 +845,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 437,
+   "saniye": 477,
    "mac": 1
   },
   "85925": {

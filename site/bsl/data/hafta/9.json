@@ -15,7 +15,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "08:02",
+    "saat": "07:36",
     "uzatma": false
    }
   },
@@ -117,7 +117,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 14,
-   "saniye": 1405,
+   "saniye": 1431,
    "mac": 1
   },
   "779071": {
@@ -125,7 +125,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 12,
-   "saniye": 1622,
+   "saniye": 1648,
    "mac": 1
   },
   "500079": {
@@ -148,8 +148,8 @@
    "ad": "Steven Enoch",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 20,
-   "saniye": 1339,
+   "vp": 21,
+   "saniye": 1365,
    "mac": 1
   },
   "228502": {
@@ -173,7 +173,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 15,
-   "saniye": 1225,
+   "saniye": 1251,
    "mac": 1
   },
   "400519": {
@@ -197,7 +197,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": -1,
-   "saniye": 541,
+   "saniye": 567,
    "mac": 1
   },
   "786430": {
@@ -213,7 +213,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 10,
-   "saniye": 1469,
+   "saniye": 1495,
    "mac": 1
   },
   "278617": {
@@ -229,7 +229,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 15,
-   "saniye": 1621,
+   "saniye": 1647,
    "mac": 1
   },
   "411597": {
@@ -269,7 +269,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 14,
-   "saniye": 1076,
+   "saniye": 1102,
    "mac": 1
   },
   "392627": {
@@ -284,8 +284,8 @@
    "ad": "Victor Bailey Jr.",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": -3,
-   "saniye": 1085,
+   "vp": -4,
+   "saniye": 1111,
    "mac": 1
   },
   "124128": {
@@ -293,7 +293,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 4,
-   "saniye": 692,
+   "saniye": 718,
    "mac": 1
   }
  }

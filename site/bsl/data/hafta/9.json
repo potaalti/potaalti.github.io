@@ -10,12 +10,12 @@
    "evSkor": "61",
    "dep": "YUKATEL DENİZLİ BASKET",
    "depId": 266028,
-   "depSkor": "52",
+   "depSkor": "53",
    "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "01:16",
+    "saat": "01:06",
     "uzatma": false
    }
   },
@@ -125,7 +125,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 9,
-   "saniye": 1428,
+   "saniye": 1438,
    "mac": 1
   },
   "500079": {
@@ -133,7 +133,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 1,
-   "saniye": 630,
+   "saniye": 640,
    "mac": 1
   },
   "254789": {
@@ -181,7 +181,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 0,
-   "saniye": 148,
+   "saniye": 158,
    "mac": 1
   },
   "444058": {
@@ -197,7 +197,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": -3,
-   "saniye": 347,
+   "saniye": 357,
    "mac": 1
   },
   "786430": {
@@ -205,15 +205,15 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 5,
-   "saniye": 406,
+   "saniye": 416,
    "mac": 1
   },
   "778996": {
    "ad": "Brae Ivey",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 8,
-   "saniye": 1288,
+   "vp": 9,
+   "saniye": 1298,
    "mac": 1
   },
   "278617": {
@@ -221,7 +221,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 3,
-   "saniye": 702,
+   "saniye": 713,
    "mac": 1
   },
   "736366": {
@@ -252,8 +252,8 @@
    "ad": "Jhonathan Dunn",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": -2,
-   "saniye": 290,
+   "vp": 0,
+   "saniye": 300,
    "mac": 1
   },
   "379563": {
@@ -269,7 +269,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 14,
-   "saniye": 882,
+   "saniye": 892,
    "mac": 1
   },
   "392627": {
@@ -293,7 +293,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 1,
-   "saniye": 498,
+   "saniye": 508,
    "mac": 1
   }
  }

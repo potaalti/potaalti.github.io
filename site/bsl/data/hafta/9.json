@@ -49,12 +49,12 @@
    "evSkor": "39",
    "dep": "PİZZABULLS BORDO BANDIRMA",
    "depId": 265993,
-   "depSkor": "41",
+   "depSkor": "43",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "09:49",
+    "saat": "09:32",
     "uzatma": false
    }
   },
@@ -693,7 +693,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 14,
-   "saniye": 826,
+   "saniye": 843,
    "mac": 1
   },
   "247547": {
@@ -701,7 +701,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 3,
-   "saniye": 710,
+   "saniye": 727,
    "mac": 1
   },
   "778460": {
@@ -709,7 +709,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 6,
-   "saniye": 1141,
+   "saniye": 1158,
    "mac": 1
   },
   "778459": {
@@ -725,7 +725,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": -1,
-   "saniye": 479,
+   "saniye": 496,
    "mac": 1
   },
   "736260": {
@@ -773,7 +773,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 1,
-   "saniye": 611,
+   "saniye": 628,
    "mac": 1
   },
   "227653": {
@@ -788,8 +788,8 @@
    "ad": "Ty Gordon",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 10,
-   "saniye": 713,
+   "vp": 11,
+   "saniye": 730,
    "mac": 1
   },
   "130898": {
@@ -797,7 +797,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": -1,
-   "saniye": 314,
+   "saniye": 331,
    "mac": 1
   },
   "473261": {
@@ -805,7 +805,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 6,
-   "saniye": 867,
+   "saniye": 884,
    "mac": 1
   },
   "778310": {
@@ -820,8 +820,8 @@
    "ad": "Quentin Peterson",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 11,
-   "saniye": 1100,
+   "vp": 13,
+   "saniye": 1117,
    "mac": 1
   },
   "441857": {
@@ -861,7 +861,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 6,
-   "saniye": 337,
+   "saniye": 354,
    "mac": 1
   },
   "667625": {

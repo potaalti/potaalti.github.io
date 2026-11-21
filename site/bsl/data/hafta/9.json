@@ -54,7 +54,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "02:30",
+    "saat": "02:02",
     "uzatma": false
    }
   },
@@ -693,7 +693,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 1,
-   "saniye": 450,
+   "saniye": 467,
    "mac": 1
   },
   "247547": {
@@ -709,7 +709,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 1,
-   "saniye": 450,
+   "saniye": 478,
    "mac": 1
   },
   "778459": {
@@ -733,7 +733,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 11,
    "mac": 1
   },
   "402930": {
@@ -756,8 +756,8 @@
    "ad": "Will Cummings",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 2,
-   "saniye": 184,
+   "vp": 1,
+   "saniye": 212,
    "mac": 1
   },
   "303549": {
@@ -765,7 +765,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 153,
+   "saniye": 181,
    "mac": 1
   },
   "358242": {
@@ -773,7 +773,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 184,
+   "saniye": 212,
    "mac": 1
   },
   "227653": {
@@ -804,8 +804,8 @@
    "ad": "Peyton Aldridge",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 6,
-   "saniye": 450,
+   "vp": 5,
+   "saniye": 478,
    "mac": 1
   },
   "778310": {
@@ -813,7 +813,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 5,
-   "saniye": 450,
+   "saniye": 467,
    "mac": 1
   },
   "501076": {
@@ -821,15 +821,15 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 12,
-   "saniye": 450,
+   "saniye": 478,
    "mac": 1
   },
   "441857": {
    "ad": "Alex Perez",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 0,
-   "saniye": 184,
+   "vp": 1,
+   "saniye": 212,
    "mac": 1
   },
   "106461": {
@@ -837,7 +837,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 1,
-   "saniye": 147,
+   "saniye": 175,
    "mac": 1
   },
   "109611": {
@@ -861,7 +861,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 11,
    "mac": 1
   },
   "667625": {

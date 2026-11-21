@@ -20,7 +20,7 @@
    "durum": "canli",
    "ev": "TÜRK TELEKOM",
    "evId": 266030,
-   "evSkor": "50",
+   "evSkor": "52",
    "dep": "TOFAŞ",
    "depId": 265995,
    "depSkor": "39",
@@ -28,7 +28,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "10:00",
+    "saat": "09:20",
     "uzatma": false
    }
   },
@@ -309,31 +309,31 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 4,
-   "saniye": 588,
+   "saniye": 627,
    "mac": 1
   },
   "410568": {
    "ad": "Tony Taylor",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 9,
-   "saniye": 553,
+   "vp": 10,
+   "saniye": 592,
    "mac": 1
   },
   "778727": {
    "ad": "Ismael Bako",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 4,
-   "saniye": 659,
+   "vp": 6,
+   "saniye": 698,
    "mac": 1
   },
   "277894": {
    "ad": "Göktuğ Baş",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 9,
-   "saniye": 619,
+   "vp": 10,
+   "saniye": 658,
    "mac": 1
   },
   "386159": {
@@ -341,7 +341,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 5,
-   "saniye": 766,
+   "saniye": 805,
    "mac": 1
   },
   "408785": {
@@ -413,7 +413,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 3,
-   "saniye": 658,
+   "saniye": 697,
    "mac": 1
   },
   "778401": {
@@ -421,7 +421,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 8,
-   "saniye": 675,
+   "saniye": 714,
    "mac": 1
   },
   "778399": {
@@ -436,8 +436,8 @@
    "ad": "Gabe Brown",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 6,
-   "saniye": 702,
+   "vp": 5,
+   "saniye": 741,
    "mac": 1
   },
   "452216": {
@@ -461,7 +461,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 11,
-   "saniye": 548,
+   "saniye": 587,
    "mac": 1
   },
   "732657": {
@@ -477,7 +477,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 2,
-   "saniye": 649,
+   "saniye": 688,
    "mac": 1
   },
   "434482": {

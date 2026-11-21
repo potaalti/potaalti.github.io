@@ -376,7 +376,7 @@
   "foto": "https://tbf.org.tr/res/3f90ba5d-4797-4175-9de4-39bbd26bf8b6_turktelekom_0004_28.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 6.6,
+  "ribOrt": 5.9,
   "astOrt": 0.4
  },
  {
@@ -414,8 +414,8 @@
   "foto": "https://tbf.org.tr/res/45493984-b693-4d12-a67b-8b96e9d85fa5_32.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 3.0,
-  "astOrt": 5.9
+  "ribOrt": 2.7,
+  "astOrt": 5.2
  },
  {
   "id": "500074",
@@ -775,8 +775,8 @@
   "foto": "https://tbf.org.tr/res/4b72c315-e936-47f2-8c84-55d343c575b8_turktelekom_0011_7.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 1.7,
-  "astOrt": 2.0
+  "ribOrt": 1.5,
+  "astOrt": 1.8
  },
  {
   "id": "501381",
@@ -1193,8 +1193,8 @@
   "foto": "https://tbf.org.tr/res/563685d1-787e-4940-bcef-0d8c1d203fea_33.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 2.2,
-  "astOrt": 3.6
+  "ribOrt": 2.0,
+  "astOrt": 3.2
  },
  {
   "id": "418533",
@@ -1364,8 +1364,8 @@
   "foto": "https://tbf.org.tr/res/5e90181f-aab4-462b-a016-d9cf02252d33_44.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 3.0,
-  "astOrt": 0.6
+  "ribOrt": 2.6,
+  "astOrt": 0.5
  },
  {
   "id": "777635",
@@ -1630,8 +1630,8 @@
   "foto": "https://tbf.org.tr/res/1dea80db-9d22-402c-ab8f-c962e2d1f03d_turktelekom_0000_77.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 2.3,
-  "astOrt": 2.8
+  "ribOrt": 2.0,
+  "astOrt": 2.4
  },
  {
   "id": "667814",
@@ -1877,7 +1877,7 @@
   "foto": "https://tbf.org.tr/res/e3039a3a-d86e-4753-aca7-9280b49b4115_8.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 5.0,
+  "ribOrt": 4.4,
   "astOrt": 0.4
  },
  {
@@ -2085,8 +2085,8 @@
   "foto": "https://tbf.org.tr/res/97dc82a9-b43e-4b66-94a8-3358bfd40efc_turktelekom_0006_21.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 1.8,
-  "astOrt": 3.8
+  "ribOrt": 1.5,
+  "astOrt": 3.2
  },
  {
   "id": "163489",
@@ -2256,8 +2256,8 @@
   "foto": "https://tbf.org.tr/res/1ca20802-51d4-422b-81b8-746fc5c65b13_6.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 2.9,
-  "astOrt": 1.8
+  "ribOrt": 2.6,
+  "astOrt": 1.6
  },
  {
   "id": "736340",
@@ -2956,8 +2956,8 @@
   "foto": "https://tbf.org.tr/res/55d452c6-111a-4042-a843-ba0cfc66468c_turktelekom_0001_57.webp",
   "boy": null,
   "mevkiTahmini": "arka",
-  "ribOrt": 1.4,
-  "astOrt": 1.1
+  "ribOrt": 1.2,
+  "astOrt": 1.0
  },
  {
   "id": "442131",

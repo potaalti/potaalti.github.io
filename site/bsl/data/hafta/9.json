@@ -49,12 +49,12 @@
    "evSkor": "80",
    "dep": "PİZZABULLS BORDO BANDIRMA",
    "depId": 265993,
-   "depSkor": "85",
+   "depSkor": "87",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "01:29",
+    "saat": "01:05",
     "uzatma": false
    }
   },
@@ -693,7 +693,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 24,
-   "saniye": 1520,
+   "saniye": 1544,
    "mac": 1
   },
   "247547": {
@@ -709,7 +709,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 16,
-   "saniye": 2010,
+   "saniye": 2034,
    "mac": 1
   },
   "778459": {
@@ -725,7 +725,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 10,
-   "saniye": 1166,
+   "saniye": 1190,
    "mac": 1
   },
   "736260": {
@@ -733,7 +733,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 4,
-   "saniye": 1092,
+   "saniye": 1116,
    "mac": 1
   },
   "402930": {
@@ -765,7 +765,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 2,
-   "saniye": 1165,
+   "saniye": 1189,
    "mac": 1
   },
   "358242": {
@@ -789,7 +789,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 21,
-   "saniye": 1596,
+   "saniye": 1620,
    "mac": 1
   },
   "130898": {
@@ -813,7 +813,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 16,
-   "saniye": 1768,
+   "saniye": 1792,
    "mac": 1
   },
   "501076": {
@@ -821,15 +821,15 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 26,
-   "saniye": 1866,
+   "saniye": 1890,
    "mac": 1
   },
   "441857": {
    "ad": "Alex Perez",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 6,
-   "saniye": 1163,
+   "vp": 8,
+   "saniye": 1187,
    "mac": 1
   },
   "106461": {
@@ -837,7 +837,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 3,
-   "saniye": 1322,
+   "saniye": 1346,
    "mac": 1
   },
   "109611": {

@@ -20,15 +20,15 @@
    "durum": "canli",
    "ev": "TÜRK TELEKOM",
    "evId": 266030,
-   "evSkor": "9",
+   "evSkor": "12",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "0",
+   "depSkor": "2",
    "salon": "Ankara Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "07:18",
+    "saat": "06:28",
     "uzatma": false
    }
   },

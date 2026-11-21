@@ -41,7 +41,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "03:03",
+    "saat": "02:41",
     "uzatma": false
    }
   },
@@ -541,7 +541,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 1,
-   "saniye": 10,
+   "saniye": 31,
    "mac": 1
   },
   "776935": {
@@ -549,7 +549,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 0,
-   "saniye": 106,
+   "saniye": 127,
    "mac": 1
   },
   "358272": {
@@ -565,7 +565,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 0,
-   "saniye": 10,
+   "saniye": 31,
    "mac": 1
   },
   "283725": {
@@ -573,7 +573,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 4,
-   "saniye": 167,
+   "saniye": 188,
    "mac": 1
   },
   "47659": {
@@ -589,7 +589,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 3,
-   "saniye": 203,
+   "saniye": 224,
    "mac": 1
   },
   "778181": {
@@ -597,7 +597,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": -3,
-   "saniye": 418,
+   "saniye": 439,
    "mac": 1
   },
   "778161": {
@@ -605,7 +605,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 1,
-   "saniye": 418,
+   "saniye": 439,
    "mac": 1
   },
   "419874": {
@@ -661,7 +661,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 0,
-   "saniye": 216,
+   "saniye": 237,
    "mac": 1
   },
   "778184": {
@@ -677,15 +677,15 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 0,
-   "saniye": 10,
+   "saniye": 31,
    "mac": 1
   },
   "470601": {
    "ad": "Filip Barna",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": -1,
-   "saniye": 106,
+   "vp": -2,
+   "saniye": 127,
    "mac": 1
   }
  }

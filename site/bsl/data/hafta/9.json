@@ -28,7 +28,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "01:37",
+    "saat": "01:14",
     "uzatma": false
    }
   },
@@ -317,7 +317,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 10,
-   "saniye": 810,
+   "saniye": 834,
    "mac": 1
   },
   "778727": {
@@ -349,7 +349,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 4,
-   "saniye": 439,
+   "saniye": 463,
    "mac": 1
   },
   "202579": {
@@ -373,7 +373,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 12,
-   "saniye": 885,
+   "saniye": 909,
    "mac": 1
   },
   "129216": {
@@ -381,7 +381,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 3,
-   "saniye": 933,
+   "saniye": 957,
    "mac": 1
   },
   "668012": {
@@ -389,7 +389,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 9,
-   "saniye": 779,
+   "saniye": 803,
    "mac": 1
   },
   "272903": {
@@ -405,7 +405,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 876,
+   "saniye": 900,
    "mac": 1
   },
   "508900": {
@@ -429,7 +429,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 13,
-   "saniye": 1164,
+   "saniye": 1188,
    "mac": 1
   },
   "778398": {
@@ -461,7 +461,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 19,
-   "saniye": 1051,
+   "saniye": 1075,
    "mac": 1
   },
   "732657": {
@@ -477,7 +477,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 1003,
+   "saniye": 1027,
    "mac": 1
   },
   "434482": {
@@ -493,7 +493,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 431,
+   "saniye": 455,
    "mac": 1
   }
  }

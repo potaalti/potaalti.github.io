@@ -36,12 +36,12 @@
    "evSkor": "108",
    "dep": "BİOTEKNO KÖRFEZ BASKET",
    "depId": 268222,
-   "depSkor": "69",
+   "depSkor": "71",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "02:37",
+    "saat": "02:28",
     "uzatma": false
    }
   },
@@ -549,7 +549,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 7,
-   "saniye": 1257,
+   "saniye": 1266,
    "mac": 1
   },
   "358272": {
@@ -557,7 +557,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 16,
-   "saniye": 870,
+   "saniye": 879,
    "mac": 1
   },
   "776654": {
@@ -573,7 +573,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 12,
-   "saniye": 1251,
+   "saniye": 1260,
    "mac": 1
   },
   "47659": {
@@ -581,7 +581,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 1,
-   "saniye": 135,
+   "saniye": 144,
    "mac": 1
   },
   "776656": {
@@ -589,23 +589,23 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 11,
-   "saniye": 1267,
+   "saniye": 1276,
    "mac": 1
   },
   "778181": {
    "ad": "Boo Buie",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 10,
-   "saniye": 1422,
+   "vp": 11,
+   "saniye": 1431,
    "mac": 1
   },
   "778161": {
    "ad": "Johnny Davis",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 17,
-   "saniye": 1854,
+   "vp": 19,
+   "saniye": 1863,
    "mac": 1
   },
   "419874": {
@@ -621,7 +621,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 11,
-   "saniye": 1479,
+   "saniye": 1488,
    "mac": 1
   },
   "778182": {
@@ -661,7 +661,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 1,
-   "saniye": 647,
+   "saniye": 656,
    "mac": 1
   },
   "778184": {
@@ -677,7 +677,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 18,
-   "saniye": 1363,
+   "saniye": 1372,
    "mac": 1
   },
   "470601": {

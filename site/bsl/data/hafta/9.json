@@ -33,7 +33,7 @@
    "durum": "canli",
    "ev": "BAHÇEŞEHİR KOLEJİ",
    "evId": 265991,
-   "evSkor": "40",
+   "evSkor": "42",
    "dep": "BİOTEKNO KÖRFEZ BASKET",
    "depId": 268222,
    "depSkor": "15",
@@ -41,7 +41,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "05:02",
+    "saat": "04:57",
     "uzatma": false
    }
   },
@@ -501,15 +501,15 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 7,
-   "saniye": 495,
+   "saniye": 500,
    "mac": 1
   },
   "608898": {
    "ad": "Tyler Cavanaugh",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 13,
-   "saniye": 495,
+   "vp": 15,
+   "saniye": 500,
    "mac": 1
   },
   "384595": {
@@ -525,7 +525,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 9,
-   "saniye": 457,
+   "saniye": 462,
    "mac": 1
   },
   "131296": {
@@ -557,7 +557,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 5,
-   "saniye": 298,
+   "saniye": 303,
    "mac": 1
   },
   "776654": {
@@ -589,7 +589,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 3,
-   "saniye": 385,
+   "saniye": 390,
    "mac": 1
   },
   "778181": {
@@ -597,7 +597,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": -3,
-   "saniye": 439,
+   "saniye": 444,
    "mac": 1
   },
   "778161": {
@@ -605,7 +605,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 7,
-   "saniye": 807,
+   "saniye": 812,
    "mac": 1
   },
   "419874": {
@@ -629,7 +629,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": -3,
-   "saniye": 588,
+   "saniye": 593,
    "mac": 1
   },
   "254785": {
@@ -661,7 +661,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 1,
-   "saniye": 398,
+   "saniye": 403,
    "mac": 1
   },
   "778184": {
@@ -677,7 +677,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 3,
-   "saniye": 490,
+   "saniye": 495,
    "mac": 1
   },
   "470601": {

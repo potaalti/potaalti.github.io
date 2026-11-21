@@ -23,7 +23,7 @@
    "evSkor": "72",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "62",
+   "depSkor": "64",
    "salon": "Ankara Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
@@ -444,7 +444,7 @@
    "ad": "Kerem Çorumlular",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 0,
+   "vp": 2,
    "saniye": 69,
    "mac": 1
   },

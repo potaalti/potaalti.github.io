@@ -4605,8 +4605,8 @@
   "foto": "https://tbf.org.tr/res/210a442d-7603-4194-9ceb-6879d58244fb_4.webp",
   "boy": null,
   "mevkiTahmini": null,
-  "ribOrt": 0,
-  "astOrt": 0
+  "ribOrt": 0.0,
+  "astOrt": 0.0
  },
  {
   "id": "358242",

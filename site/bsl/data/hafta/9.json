@@ -23,7 +23,7 @@
    "evSkor": "69",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "57",
+   "depSkor": "59",
    "salon": "Ankara Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
@@ -428,8 +428,8 @@
    "ad": "Shavar Reynolds Jr.",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 13,
-   "saniye": 1188,
+   "vp": 15,
+   "saniye": 1187,
    "mac": 1
   },
   "778398": {
@@ -445,7 +445,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 1,
    "mac": 1
   },
   "485299": {

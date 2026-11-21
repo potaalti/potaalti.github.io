@@ -36,12 +36,12 @@
    "evSkor": "74",
    "dep": "BİOTEKNO KÖRFEZ BASKET",
    "depId": 268222,
-   "depSkor": "41",
+   "depSkor": "43",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "04:42",
+    "saat": "03:46",
     "uzatma": false
    }
   },
@@ -532,8 +532,8 @@
    "ad": "Kenan Sipahi",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 5,
-   "saniye": 1009,
+   "vp": 6,
+   "saniye": 1075,
    "mac": 1
   },
   "609095": {
@@ -541,7 +541,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 0,
-   "saniye": 576,
+   "saniye": 642,
    "mac": 1
   },
   "776935": {
@@ -564,8 +564,8 @@
    "ad": "Damien Inglis",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 11,
-   "saniye": 432,
+   "vp": 10,
+   "saniye": 498,
    "mac": 1
   },
   "283725": {
@@ -573,7 +573,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 7,
-   "saniye": 526,
+   "saniye": 592,
    "mac": 1
   },
   "47659": {
@@ -589,7 +589,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 5,
-   "saniye": 722,
+   "saniye": 788,
    "mac": 1
   },
   "778181": {
@@ -597,7 +597,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 8,
-   "saniye": 1059,
+   "saniye": 1125,
    "mac": 1
   },
   "778161": {
@@ -605,7 +605,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 16,
-   "saniye": 1427,
+   "saniye": 1493,
    "mac": 1
   },
   "419874": {
@@ -620,16 +620,16 @@
    "ad": "Matt Mitchell",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 3,
-   "saniye": 754,
+   "vp": 5,
+   "saniye": 820,
    "mac": 1
   },
   "778182": {
    "ad": "Alex Reese",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": -3,
-   "saniye": 973,
+   "vp": -4,
+   "saniye": 1039,
    "mac": 1
   },
   "254785": {
@@ -644,8 +644,8 @@
    "ad": "Atahan Demirtaş",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 2,
-   "saniye": 475,
+   "vp": 3,
+   "saniye": 541,
    "mac": 1
   },
   "358964": {

@@ -3524,8 +3524,8 @@
   "sureOrt": "00:53",
   "foto": "https://tbf.org.tr/res/e64f3185-ae70-4e98-97f6-085352f18103_karyaka_0011_10.webp",
   "boy": null,
-  "mevkiTahmini": null,
-  "ribOrt": 0.0,
+  "mevkiTahmini": "on",
+  "ribOrt": 0.5,
   "astOrt": 0.0
  },
  {

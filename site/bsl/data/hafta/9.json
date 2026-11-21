@@ -4,15 +4,20 @@
   {
    "id": 346343,
    "tarih": "2026-11-21T13:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "KARŞIYAKA",
    "evId": 266027,
-   "evSkor": null,
+   "evSkor": "13",
    "dep": "YUKATEL DENİZLİ BASKET",
    "depId": 266028,
-   "depSkor": null,
+   "depSkor": "18",
    "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "02:26",
+    "uzatma": false
+   }
   },
   {
    "id": 346340,
@@ -106,5 +111,190 @@
    "yayin": "beINSports"
   }
  ],
- "oyuncular": {}
+ "oyuncular": {
+  "573226": {
+   "ad": "Briante Weber",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": -1,
+   "saniye": 359,
+   "mac": 1
+  },
+  "779071": {
+   "ad": "Ishmael El-Amin",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 4,
+   "saniye": 480,
+   "mac": 1
+  },
+  "500079": {
+   "ad": "Rashard Kelly",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 3,
+   "saniye": 359,
+   "mac": 1
+  },
+  "254789": {
+   "ad": "Yavuz Gültekin",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 172,
+   "mac": 1
+  },
+  "609083": {
+   "ad": "Steven Enoch",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 4,
+   "saniye": 480,
+   "mac": 1
+  },
+  "228502": {
+   "ad": "Muhaymin Mustafa",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 1,
+   "saniye": 308,
+   "mac": 1
+  },
+  "410874": {
+   "ad": "Markel Starks",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 2,
+   "saniye": 121,
+   "mac": 1
+  },
+  "218536": {
+   "ad": "Hakan Sayılı",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 2,
+   "saniye": 121,
+   "mac": 1
+  },
+  "400519": {
+   "ad": "Yalın Yıldız",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "444058": {
+   "ad": "Egemen Yapıcı",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "781757": {
+   "ad": "Yakuba Ouattara",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "786430": {
+   "ad": "Cyril Langevine",
+   "takim": "KARŞIYAKA",
+   "takimId": 266027,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "778996": {
+   "ad": "Brae Ivey",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 2,
+   "saniye": 480,
+   "mac": 1
+  },
+  "278617": {
+   "ad": "Erten Gazi",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 4,
+   "saniye": 335,
+   "mac": 1
+  },
+  "736366": {
+   "ad": "John Meeks",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 0,
+   "saniye": 480,
+   "mac": 1
+  },
+  "411597": {
+   "ad": "Isaiah Miles",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 4,
+   "saniye": 374,
+   "mac": 1
+  },
+  "470765": {
+   "ad": "Mahir Ağva",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 11,
+   "saniye": 480,
+   "mac": 1
+  },
+  "779011": {
+   "ad": "Jhonathan Dunn",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "379563": {
+   "ad": "Mustafa Yılmaz",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "373162": {
+   "ad": "Marko Pecarski",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 2,
+   "saniye": 106,
+   "mac": 1
+  },
+  "392627": {
+   "ad": "Yaman Alişan",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "779010": {
+   "ad": "Victor Bailey Jr.",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "124128": {
+   "ad": "Egemen Güven",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "takimId": 266028,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  }
+ }
 }

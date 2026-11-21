@@ -4,15 +4,20 @@
   {
    "id": 346343,
    "tarih": "2026-11-21T13:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "KARŞIYAKA",
    "evId": 266027,
-   "evSkor": null,
+   "evSkor": "13",
    "dep": "YUKATEL DENİZLİ BASKET",
    "depId": 266028,
-   "depSkor": null,
+   "depSkor": "18",
    "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "02:26",
+    "uzatma": false
+   }
   },
   {
    "id": 346340,

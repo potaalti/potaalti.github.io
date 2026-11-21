@@ -54,7 +54,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "10:00",
+    "saat": "09:44",
     "uzatma": false
    }
   },
@@ -709,7 +709,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 1,
-   "saniye": 600,
+   "saniye": 616,
    "mac": 1
   },
   "778459": {
@@ -724,8 +724,8 @@
    "ad": "Bryce Brown",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": -1,
-   "saniye": 285,
+   "vp": 0,
+   "saniye": 301,
    "mac": 1
   },
   "736260": {
@@ -733,7 +733,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 6,
-   "saniye": 133,
+   "saniye": 149,
    "mac": 1
   },
   "402930": {
@@ -765,7 +765,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 2,
-   "saniye": 303,
+   "saniye": 319,
    "mac": 1
   },
   "358242": {
@@ -773,7 +773,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 334,
+   "saniye": 350,
    "mac": 1
   },
   "227653": {
@@ -789,7 +789,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 4,
-   "saniye": 266,
+   "saniye": 282,
    "mac": 1
   },
   "130898": {
@@ -829,7 +829,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 3,
-   "saniye": 334,
+   "saniye": 350,
    "mac": 1
   },
   "106461": {
@@ -845,7 +845,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 16,
    "mac": 1
   },
   "85925": {
@@ -861,15 +861,15 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 114,
+   "saniye": 130,
    "mac": 1
   },
   "667625": {
    "ad": "Damien Jefferson",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 0,
-   "saniye": 82,
+   "vp": -1,
+   "saniye": 98,
    "mac": 1
   },
   "307500": {

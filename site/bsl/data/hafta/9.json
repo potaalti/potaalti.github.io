@@ -33,7 +33,7 @@
    "durum": "canli",
    "ev": "BAHÇEŞEHİR KOLEJİ",
    "evId": 265991,
-   "evSkor": "24",
+   "evSkor": "26",
    "dep": "BİOTEKNO KÖRFEZ BASKET",
    "depId": 268222,
    "depSkor": "6",
@@ -41,7 +41,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "10:00",
+    "saat": "09:41",
     "uzatma": false
    }
   },
@@ -540,8 +540,8 @@
    "ad": "Marcquise Reed",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": -1,
-   "saniye": 192,
+   "vp": 2,
+   "saniye": 234,
    "mac": 1
   },
   "776935": {
@@ -549,7 +549,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": -1,
-   "saniye": 288,
+   "saniye": 330,
    "mac": 1
   },
   "358272": {
@@ -557,7 +557,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 42,
    "mac": 1
   },
   "776654": {
@@ -565,7 +565,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 1,
-   "saniye": 192,
+   "saniye": 234,
    "mac": 1
   },
   "283725": {
@@ -573,7 +573,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 4,
-   "saniye": 349,
+   "saniye": 391,
    "mac": 1
   },
   "47659": {
@@ -605,7 +605,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 1,
-   "saniye": 509,
+   "saniye": 551,
    "mac": 1
   },
   "419874": {
@@ -621,7 +621,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 1,
-   "saniye": 473,
+   "saniye": 515,
    "mac": 1
   },
   "778182": {
@@ -637,7 +637,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 0,
-   "saniye": 91,
+   "saniye": 133,
    "mac": 1
   },
   "217226": {
@@ -677,15 +677,15 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 0,
-   "saniye": 192,
+   "saniye": 234,
    "mac": 1
   },
   "470601": {
    "ad": "Filip Barna",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": -3,
-   "saniye": 288,
+   "vp": -4,
+   "saniye": 330,
    "mac": 1
   }
  }

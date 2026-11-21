@@ -46,15 +46,15 @@
    "durum": "canli",
    "ev": "BURSASPOR BASKETBOL",
    "evId": 266176,
-   "evSkor": "42",
+   "evSkor": "43",
    "dep": "PİZZABULLS BORDO BANDIRMA",
    "depId": 265993,
-   "depSkor": "46",
+   "depSkor": "48",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "07:30",
+    "saat": "06:47",
     "uzatma": false
    }
   },
@@ -693,7 +693,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 15,
-   "saniye": 965,
+   "saniye": 1011,
    "mac": 1
   },
   "247547": {
@@ -701,7 +701,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 3,
-   "saniye": 849,
+   "saniye": 895,
    "mac": 1
   },
   "778460": {
@@ -725,7 +725,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 618,
+   "saniye": 664,
    "mac": 1
   },
   "736260": {
@@ -757,7 +757,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 11,
-   "saniye": 828,
+   "saniye": 874,
    "mac": 1
   },
   "303549": {
@@ -773,7 +773,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 1,
-   "saniye": 750,
+   "saniye": 796,
    "mac": 1
   },
   "227653": {
@@ -788,8 +788,8 @@
    "ad": "Ty Gordon",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 12,
-   "saniye": 852,
+   "vp": 11,
+   "saniye": 898,
    "mac": 1
   },
   "130898": {
@@ -805,7 +805,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 6,
-   "saniye": 1006,
+   "saniye": 1052,
    "mac": 1
   },
   "778310": {
@@ -820,8 +820,8 @@
    "ad": "Quentin Peterson",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 13,
-   "saniye": 1239,
+   "vp": 16,
+   "saniye": 1285,
    "mac": 1
   },
   "441857": {
@@ -837,7 +837,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 2,
-   "saniye": 625,
+   "saniye": 671,
    "mac": 1
   },
   "109611": {
@@ -861,7 +861,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 7,
-   "saniye": 476,
+   "saniye": 522,
    "mac": 1
   },
   "667625": {

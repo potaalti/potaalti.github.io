@@ -46,15 +46,15 @@
    "durum": "canli",
    "ev": "BURSASPOR BASKETBOL",
    "evId": 266176,
-   "evSkor": "42",
+   "evSkor": "43",
    "dep": "PİZZABULLS BORDO BANDIRMA",
    "depId": 265993,
-   "depSkor": "46",
+   "depSkor": "48",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "07:30",
+    "saat": "06:47",
     "uzatma": false
    }
   },

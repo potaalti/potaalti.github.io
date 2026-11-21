@@ -7,15 +7,15 @@
    "durum": "canli",
    "ev": "KARŞIYAKA",
    "evId": 266027,
-   "evSkor": "13",
+   "evSkor": "39",
    "dep": "YUKATEL DENİZLİ BASKET",
    "depId": 266028,
-   "depSkor": "18",
+   "depSkor": "38",
    "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
-    "periyot": 1,
-    "saat": "02:26",
+    "periyot": 2,
+    "saat": "00:00",
     "uzatma": false
    }
   },

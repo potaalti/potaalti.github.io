@@ -7,15 +7,15 @@
    "durum": "canli",
    "ev": "KARŞIYAKA",
    "evId": 266027,
-   "evSkor": "13",
+   "evSkor": "39",
    "dep": "YUKATEL DENİZLİ BASKET",
    "depId": 266028,
-   "depSkor": "18",
+   "depSkor": "38",
    "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
-    "periyot": 1,
-    "saat": "02:26",
+    "periyot": 2,
+    "saat": "00:00",
     "uzatma": false
    }
   },
@@ -116,8 +116,8 @@
    "ad": "Briante Weber",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": -1,
-   "saniye": 359,
+   "vp": 9,
+   "saniye": 911,
    "mac": 1
   },
   "779071": {
@@ -125,15 +125,15 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 4,
-   "saniye": 480,
+   "saniye": 904,
    "mac": 1
   },
   "500079": {
    "ad": "Rashard Kelly",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 3,
-   "saniye": 359,
+   "vp": 1,
+   "saniye": 531,
    "mac": 1
   },
   "254789": {
@@ -148,32 +148,32 @@
    "ad": "Steven Enoch",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 4,
-   "saniye": 480,
+   "vp": 15,
+   "saniye": 981,
    "mac": 1
   },
   "228502": {
    "ad": "Muhaymin Mustafa",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 1,
-   "saniye": 308,
+   "vp": 5,
+   "saniye": 718,
    "mac": 1
   },
   "410874": {
    "ad": "Markel Starks",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 2,
-   "saniye": 121,
+   "vp": 4,
+   "saniye": 585,
    "mac": 1
   },
   "218536": {
    "ad": "Hakan Sayılı",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 2,
-   "saniye": 121,
+   "vp": 7,
+   "saniye": 669,
    "mac": 1
   },
   "400519": {
@@ -196,48 +196,48 @@
    "ad": "Yakuba Ouattara",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 0,
-   "saniye": 0,
+   "vp": -3,
+   "saniye": 310,
    "mac": 1
   },
   "786430": {
    "ad": "Cyril Langevine",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 3,
+   "saniye": 219,
    "mac": 1
   },
   "778996": {
    "ad": "Brae Ivey",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 2,
-   "saniye": 480,
+   "vp": 6,
+   "saniye": 911,
    "mac": 1
   },
   "278617": {
    "ad": "Erten Gazi",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 4,
-   "saniye": 335,
+   "vp": 2,
+   "saniye": 549,
    "mac": 1
   },
   "736366": {
    "ad": "John Meeks",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 0,
-   "saniye": 480,
+   "vp": 7,
+   "saniye": 994,
    "mac": 1
   },
   "411597": {
    "ad": "Isaiah Miles",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 4,
-   "saniye": 374,
+   "vp": 6,
+   "saniye": 590,
    "mac": 1
   },
   "470765": {
@@ -245,15 +245,15 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 11,
-   "saniye": 480,
+   "saniye": 739,
    "mac": 1
   },
   "779011": {
    "ad": "Jhonathan Dunn",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 0,
-   "saniye": 0,
+   "vp": -1,
+   "saniye": 191,
    "mac": 1
   },
   "379563": {
@@ -268,8 +268,8 @@
    "ad": "Marko Pecarski",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 2,
-   "saniye": 106,
+   "vp": 12,
+   "saniye": 595,
    "mac": 1
   },
   "392627": {
@@ -284,16 +284,16 @@
    "ad": "Victor Bailey Jr.",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 0,
-   "saniye": 0,
+   "vp": -2,
+   "saniye": 717,
    "mac": 1
   },
   "124128": {
    "ad": "Egemen Güven",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 1,
+   "saniye": 461,
    "mac": 1
   }
  }

@@ -46,7 +46,7 @@
    "durum": "canli",
    "ev": "BURSASPOR BASKETBOL",
    "evId": 266176,
-   "evSkor": "37",
+   "evSkor": "39",
    "dep": "PİZZABULLS BORDO BANDIRMA",
    "depId": 265993,
    "depSkor": "41",
@@ -54,7 +54,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "10:00",
+    "saat": "09:49",
     "uzatma": false
    }
   },
@@ -692,8 +692,8 @@
    "ad": "Leyton Hammonds",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 12,
-   "saniye": 815,
+   "vp": 14,
+   "saniye": 826,
    "mac": 1
   },
   "247547": {
@@ -701,15 +701,15 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 3,
-   "saniye": 699,
+   "saniye": 710,
    "mac": 1
   },
   "778460": {
    "ad": "Brandon Taylor",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 5,
-   "saniye": 1130,
+   "vp": 6,
+   "saniye": 1141,
    "mac": 1
   },
   "778459": {
@@ -725,7 +725,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": -1,
-   "saniye": 468,
+   "saniye": 479,
    "mac": 1
   },
   "736260": {
@@ -773,7 +773,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 1,
-   "saniye": 600,
+   "saniye": 611,
    "mac": 1
   },
   "227653": {
@@ -789,7 +789,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 10,
-   "saniye": 702,
+   "saniye": 713,
    "mac": 1
   },
   "130898": {
@@ -797,7 +797,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": -1,
-   "saniye": 303,
+   "saniye": 314,
    "mac": 1
   },
   "473261": {
@@ -805,7 +805,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 6,
-   "saniye": 856,
+   "saniye": 867,
    "mac": 1
   },
   "778310": {
@@ -821,7 +821,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 11,
-   "saniye": 1089,
+   "saniye": 1100,
    "mac": 1
   },
   "441857": {
@@ -861,7 +861,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 6,
-   "saniye": 326,
+   "saniye": 337,
    "mac": 1
   },
   "667625": {

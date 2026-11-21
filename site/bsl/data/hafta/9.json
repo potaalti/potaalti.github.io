@@ -41,7 +41,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "07:53",
+    "saat": "07:23",
     "uzatma": false
    }
   },
@@ -501,7 +501,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 15,
-   "saniye": 689,
+   "saniye": 745,
    "mac": 1
   },
   "608898": {
@@ -509,7 +509,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 22,
-   "saniye": 751,
+   "saniye": 807,
    "mac": 1
   },
   "384595": {
@@ -517,7 +517,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 6,
-   "saniye": 342,
+   "saniye": 398,
    "mac": 1
   },
   "734505": {
@@ -525,7 +525,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 14,
-   "saniye": 791,
+   "saniye": 847,
    "mac": 1
   },
   "131296": {
@@ -533,7 +533,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 4,
-   "saniye": 818,
+   "saniye": 874,
    "mac": 1
   },
   "609095": {
@@ -597,15 +597,15 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 7,
-   "saniye": 868,
+   "saniye": 924,
    "mac": 1
   },
   "778161": {
    "ad": "Johnny Davis",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 14,
-   "saniye": 1236,
+   "vp": 13,
+   "saniye": 1292,
    "mac": 1
   },
   "419874": {
@@ -629,7 +629,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": -4,
-   "saniye": 782,
+   "saniye": 838,
    "mac": 1
   },
   "254785": {
@@ -645,7 +645,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 1,
-   "saniye": 284,
+   "saniye": 340,
    "mac": 1
   },
   "358964": {
@@ -685,7 +685,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": -5,
-   "saniye": 713,
+   "saniye": 769,
    "mac": 1
   }
  }

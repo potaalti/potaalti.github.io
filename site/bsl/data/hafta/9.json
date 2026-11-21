@@ -49,12 +49,12 @@
    "evSkor": "67",
    "dep": "PİZZABULLS BORDO BANDIRMA",
    "depId": 265993,
-   "depSkor": "81",
+   "depSkor": "82",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "05:50",
+    "saat": "05:23",
     "uzatma": false
    }
   },
@@ -693,7 +693,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 17,
-   "saniye": 1259,
+   "saniye": 1286,
    "mac": 1
   },
   "247547": {
@@ -709,7 +709,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 10,
-   "saniye": 1749,
+   "saniye": 1776,
    "mac": 1
   },
   "778459": {
@@ -733,7 +733,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 1,
-   "saniye": 831,
+   "saniye": 858,
    "mac": 1
   },
   "402930": {
@@ -756,16 +756,16 @@
    "ad": "Will Cummings",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 17,
-   "saniye": 1227,
+   "vp": 16,
+   "saniye": 1254,
    "mac": 1
   },
   "303549": {
    "ad": "Buğra Çal",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": -1,
-   "saniye": 904,
+   "vp": 0,
+   "saniye": 931,
    "mac": 1
   },
   "358242": {
@@ -789,7 +789,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 20,
-   "saniye": 1488,
+   "saniye": 1515,
    "mac": 1
   },
   "130898": {
@@ -812,24 +812,24 @@
    "ad": "Zach Hankins",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 16,
-   "saniye": 1507,
+   "vp": 17,
+   "saniye": 1534,
    "mac": 1
   },
   "501076": {
    "ad": "Quentin Peterson",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 24,
-   "saniye": 1605,
+   "vp": 25,
+   "saniye": 1632,
    "mac": 1
   },
   "441857": {
    "ad": "Alex Perez",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 10,
-   "saniye": 902,
+   "vp": 9,
+   "saniye": 929,
    "mac": 1
   },
   "106461": {
@@ -845,7 +845,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 500,
+   "saniye": 527,
    "mac": 1
   },
   "85925": {

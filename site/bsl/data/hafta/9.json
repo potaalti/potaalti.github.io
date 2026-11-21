@@ -20,7 +20,7 @@
    "durum": "canli",
    "ev": "TÜRK TELEKOM",
    "evId": 266030,
-   "evSkor": "38",
+   "evSkor": "42",
    "dep": "TOFAŞ",
    "depId": 265995,
    "depSkor": "28",
@@ -28,7 +28,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "06:04",
+    "saat": "05:29",
     "uzatma": false
    }
   },
@@ -316,8 +316,8 @@
    "ad": "Tony Taylor",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 7,
-   "saniye": 331,
+   "vp": 8,
+   "saniye": 365,
    "mac": 1
   },
   "778727": {
@@ -332,8 +332,8 @@
    "ad": "Göktuğ Baş",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 3,
-   "saniye": 516,
+   "vp": 6,
+   "saniye": 550,
    "mac": 1
   },
   "386159": {
@@ -341,7 +341,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 5,
-   "saniye": 402,
+   "saniye": 436,
    "mac": 1
   },
   "408785": {
@@ -356,8 +356,8 @@
    "ad": "Ata Kahraman",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 2,
-   "saniye": 469,
+   "vp": 3,
+   "saniye": 503,
    "mac": 1
   },
   "112715": {
@@ -388,8 +388,8 @@
    "ad": "Kris Bankston",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 5,
-   "saniye": 469,
+   "vp": 7,
+   "saniye": 503,
    "mac": 1
   },
   "272903": {
@@ -405,7 +405,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -2,
-   "saniye": 479,
+   "saniye": 513,
    "mac": 1
   },
   "508900": {
@@ -413,15 +413,15 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 3,
-   "saniye": 365,
+   "saniye": 399,
    "mac": 1
   },
   "778401": {
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 10,
-   "saniye": 603,
+   "vp": 9,
+   "saniye": 637,
    "mac": 1
   },
   "778399": {
@@ -429,7 +429,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 547,
+   "saniye": 581,
    "mac": 1
   },
   "778398": {
@@ -437,7 +437,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 5,
-   "saniye": 338,
+   "saniye": 372,
    "mac": 1
   },
   "452216": {

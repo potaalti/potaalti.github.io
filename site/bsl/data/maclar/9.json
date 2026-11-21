@@ -33,7 +33,7 @@
    "durum": "canli",
    "ev": "BAHÇEŞEHİR KOLEJİ",
    "evId": 265991,
-   "evSkor": "2",
+   "evSkor": "5",
    "dep": "BİOTEKNO KÖRFEZ BASKET",
    "depId": 268222,
    "depSkor": "0",
@@ -41,7 +41,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "09:41",
+    "saat": "09:15",
     "uzatma": false
    }
   },

@@ -23,12 +23,12 @@
    "evSkor": "15",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "4",
+   "depSkor": "6",
    "salon": "Ankara Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "05:35",
+    "saat": "05:04",
     "uzatma": false
    }
   },
@@ -308,8 +308,8 @@
    "ad": "Jerrick Harding",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 6,
-   "saniye": 265,
+   "vp": 5,
+   "saniye": 296,
    "mac": 1
   },
   "410568": {
@@ -317,7 +317,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 8,
-   "saniye": 265,
+   "saniye": 296,
    "mac": 1
   },
   "778727": {
@@ -325,7 +325,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 2,
-   "saniye": 265,
+   "saniye": 296,
    "mac": 1
   },
   "277894": {
@@ -333,7 +333,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": -1,
-   "saniye": 265,
+   "saniye": 296,
    "mac": 1
   },
   "386159": {
@@ -341,7 +341,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 4,
-   "saniye": 265,
+   "saniye": 296,
    "mac": 1
   },
   "408785": {
@@ -405,7 +405,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -2,
-   "saniye": 265,
+   "saniye": 296,
    "mac": 1
   },
   "508900": {
@@ -420,8 +420,8 @@
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 2,
-   "saniye": 265,
+   "vp": 4,
+   "saniye": 296,
    "mac": 1
   },
   "778399": {
@@ -452,8 +452,8 @@
    "ad": "Terrell Carter Ii",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 2,
-   "saniye": 127,
+   "vp": 4,
+   "saniye": 158,
    "mac": 1
   },
   "736069": {
@@ -469,7 +469,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 30,
+   "saniye": 61,
    "mac": 1
   },
   "389934": {
@@ -477,7 +477,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 30,
+   "saniye": 61,
    "mac": 1
   },
   "434482": {

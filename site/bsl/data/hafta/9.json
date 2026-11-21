@@ -46,15 +46,15 @@
    "durum": "canli",
    "ev": "BURSASPOR BASKETBOL",
    "evId": 266176,
-   "evSkor": "52",
+   "evSkor": "55",
    "dep": "PİZZABULLS BORDO BANDIRMA",
    "depId": 265993,
-   "depSkor": "59",
+   "depSkor": "61",
    "salon": "Tofaş Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "04:21",
+    "saat": "03:22",
     "uzatma": false
    }
   },
@@ -692,8 +692,8 @@
    "ad": "Leyton Hammonds",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 18,
-   "saniye": 1153,
+   "vp": 17,
+   "saniye": 1215,
    "mac": 1
   },
   "247547": {
@@ -701,31 +701,31 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 3,
-   "saniye": 1037,
+   "saniye": 1097,
    "mac": 1
   },
   "778460": {
    "ad": "Brandon Taylor",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 5,
-   "saniye": 1241,
+   "vp": 6,
+   "saniye": 1303,
    "mac": 1
   },
   "778459": {
    "ad": "Warren Washington",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 4,
-   "saniye": 587,
+   "vp": 5,
+   "saniye": 649,
    "mac": 1
   },
   "502519": {
    "ad": "Bryce Brown",
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
-   "vp": 2,
-   "saniye": 806,
+   "vp": 5,
+   "saniye": 866,
    "mac": 1
   },
   "736260": {
@@ -757,7 +757,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 16,
-   "saniye": 1007,
+   "saniye": 1009,
    "mac": 1
   },
   "303549": {
@@ -765,7 +765,7 @@
    "takim": "BURSASPOR BASKETBOL",
    "takimId": 266176,
    "vp": 0,
-   "saniye": 523,
+   "saniye": 525,
    "mac": 1
   },
   "358242": {
@@ -789,7 +789,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 14,
-   "saniye": 1040,
+   "saniye": 1100,
    "mac": 1
   },
   "130898": {
@@ -805,7 +805,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 6,
-   "saniye": 1194,
+   "saniye": 1256,
    "mac": 1
   },
   "778310": {
@@ -813,7 +813,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 13,
-   "saniye": 1000,
+   "saniye": 1062,
    "mac": 1
   },
   "501076": {
@@ -828,8 +828,8 @@
    "ad": "Alex Perez",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
-   "vp": 5,
-   "saniye": 622,
+   "vp": 7,
+   "saniye": 684,
    "mac": 1
   },
   "106461": {
@@ -837,7 +837,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 2,
-   "saniye": 813,
+   "saniye": 875,
    "mac": 1
   },
   "109611": {
@@ -869,7 +869,7 @@
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
    "vp": 0,
-   "saniye": 426,
+   "saniye": 428,
    "mac": 1
   },
   "307500": {

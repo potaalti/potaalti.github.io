@@ -23,12 +23,12 @@
    "evSkor": "44",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "28",
+   "depSkor": "30",
    "salon": "Ankara Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "04:21",
+    "saat": "03:39",
     "uzatma": false
    }
   },
@@ -309,7 +309,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 6,
-   "saniye": 345,
+   "saniye": 369,
    "mac": 1
   },
   "410568": {
@@ -317,7 +317,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 8,
-   "saniye": 452,
+   "saniye": 476,
    "mac": 1
   },
   "778727": {
@@ -325,7 +325,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 2,
-   "saniye": 416,
+   "saniye": 440,
    "mac": 1
   },
   "277894": {
@@ -341,7 +341,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 5,
-   "saniye": 523,
+   "saniye": 547,
    "mac": 1
   },
   "408785": {
@@ -349,7 +349,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 4,
-   "saniye": 338,
+   "saniye": 362,
    "mac": 1
   },
   "202579": {
@@ -404,8 +404,8 @@
    "ad": "Sadık Kabaca",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": -2,
-   "saniye": 600,
+   "vp": 0,
+   "saniye": 624,
    "mac": 1
   },
   "508900": {
@@ -413,7 +413,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 486,
+   "saniye": 510,
    "mac": 1
   },
   "778401": {
@@ -429,7 +429,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 668,
+   "saniye": 692,
    "mac": 1
   },
   "778398": {
@@ -437,7 +437,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 459,
+   "saniye": 483,
    "mac": 1
   },
   "452216": {
@@ -469,7 +469,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 3,
-   "saniye": 414,
+   "saniye": 438,
    "mac": 1
   },
   "389934": {

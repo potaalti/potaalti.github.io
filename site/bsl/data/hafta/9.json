@@ -23,7 +23,7 @@
    "evSkor": "21",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "12",
+   "depSkor": "14",
    "salon": "Ankara Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
@@ -468,7 +468,7 @@
    "ad": "Mantas Rubstavicius",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 0,
+   "vp": 1,
    "saniye": 184,
    "mac": 1
   },

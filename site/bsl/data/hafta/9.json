@@ -23,7 +23,7 @@
    "evSkor": "92",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "76",
+   "depSkor": "77",
    "salon": "Ankara Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
@@ -420,8 +420,8 @@
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 5,
-   "saniye": 1427,
+   "vp": 6,
+   "saniye": 1425,
    "mac": 1
   },
   "778399": {
@@ -445,7 +445,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 3,
-   "saniye": 320,
+   "saniye": 322,
    "mac": 1
   },
   "485299": {

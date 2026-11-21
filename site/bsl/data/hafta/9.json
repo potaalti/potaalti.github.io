@@ -20,15 +20,15 @@
    "durum": "canli",
    "ev": "TÜRK TELEKOM",
    "evId": 266030,
-   "evSkor": "36",
+   "evSkor": "38",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "25",
+   "depSkor": "27",
    "salon": "Ankara Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "07:07",
+    "saat": "06:39",
     "uzatma": false
    }
   },
@@ -332,8 +332,8 @@
    "ad": "Göktuğ Baş",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 1,
-   "saniye": 453,
+   "vp": 3,
+   "saniye": 481,
    "mac": 1
   },
   "386159": {
@@ -357,7 +357,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 2,
-   "saniye": 406,
+   "saniye": 434,
    "mac": 1
   },
   "112715": {
@@ -373,15 +373,15 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 9,
-   "saniye": 477,
+   "saniye": 505,
    "mac": 1
   },
   "129216": {
    "ad": "Doğuş Özdemiroğlu",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 3,
-   "saniye": 477,
+   "vp": 4,
+   "saniye": 505,
    "mac": 1
   },
   "668012": {
@@ -389,7 +389,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 4,
-   "saniye": 406,
+   "saniye": 434,
    "mac": 1
   },
   "272903": {
@@ -405,7 +405,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -1,
-   "saniye": 416,
+   "saniye": 444,
    "mac": 1
   },
   "508900": {
@@ -413,7 +413,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 3,
-   "saniye": 302,
+   "saniye": 330,
    "mac": 1
   },
   "778401": {
@@ -421,15 +421,15 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 10,
-   "saniye": 540,
+   "saniye": 568,
    "mac": 1
   },
   "778399": {
    "ad": "Shavar Reynolds Jr.",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 1,
-   "saniye": 484,
+   "vp": 3,
+   "saniye": 512,
    "mac": 1
   },
   "778398": {
@@ -437,7 +437,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 4,
-   "saniye": 275,
+   "saniye": 303,
    "mac": 1
   },
   "452216": {

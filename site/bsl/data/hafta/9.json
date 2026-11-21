@@ -33,7 +33,7 @@
    "durum": "canli",
    "ev": "BAHÇEŞEHİR KOLEJİ",
    "evId": 265991,
-   "evSkor": "14",
+   "evSkor": "16",
    "dep": "BİOTEKNO KÖRFEZ BASKET",
    "depId": 268222,
    "depSkor": "3",
@@ -41,7 +41,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "05:49",
+    "saat": "05:28",
     "uzatma": false
    }
   },
@@ -501,7 +501,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 5,
-   "saniye": 253,
+   "saniye": 271,
    "mac": 1
   },
   "608898": {
@@ -509,7 +509,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 6,
-   "saniye": 253,
+   "saniye": 271,
    "mac": 1
   },
   "384595": {
@@ -533,7 +533,7 @@
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
    "vp": 1,
-   "saniye": 253,
+   "saniye": 271,
    "mac": 1
   },
   "609095": {
@@ -572,8 +572,8 @@
    "ad": "Furkan Haltalı",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 0,
-   "saniye": 2,
+   "vp": 1,
+   "saniye": 20,
    "mac": 1
   },
   "47659": {
@@ -588,8 +588,8 @@
    "ad": "Isiaha Mike",
    "takim": "BAHÇEŞEHİR KOLEJİ",
    "takimId": 265991,
-   "vp": 0,
-   "saniye": 38,
+   "vp": 2,
+   "saniye": 56,
    "mac": 1
   },
   "778181": {
@@ -597,7 +597,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": -2,
-   "saniye": 253,
+   "saniye": 271,
    "mac": 1
   },
   "778161": {
@@ -605,7 +605,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 2,
-   "saniye": 253,
+   "saniye": 271,
    "mac": 1
   },
   "419874": {
@@ -621,15 +621,15 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": -1,
-   "saniye": 253,
+   "saniye": 271,
    "mac": 1
   },
   "778182": {
    "ad": "Alex Reese",
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
-   "vp": 1,
-   "saniye": 253,
+   "vp": 0,
+   "saniye": 271,
    "mac": 1
   },
   "254785": {
@@ -661,7 +661,7 @@
    "takim": "BİOTEKNO KÖRFEZ BASKET",
    "takimId": 268222,
    "vp": 0,
-   "saniye": 51,
+   "saniye": 69,
    "mac": 1
   },
   "778184": {

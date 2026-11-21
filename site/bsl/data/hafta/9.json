@@ -15,7 +15,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "01:44",
+    "saat": "01:16",
     "uzatma": false
    }
   },
@@ -125,7 +125,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 9,
-   "saniye": 1400,
+   "saniye": 1428,
    "mac": 1
   },
   "500079": {
@@ -133,7 +133,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 1,
-   "saniye": 602,
+   "saniye": 630,
    "mac": 1
   },
   "254789": {
@@ -180,8 +180,8 @@
    "ad": "Yalın Yıldız",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 1,
-   "saniye": 120,
+   "vp": 0,
+   "saniye": 148,
    "mac": 1
   },
   "444058": {
@@ -197,7 +197,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": -3,
-   "saniye": 319,
+   "saniye": 347,
    "mac": 1
   },
   "786430": {
@@ -205,7 +205,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 5,
-   "saniye": 378,
+   "saniye": 406,
    "mac": 1
   },
   "778996": {
@@ -213,7 +213,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 8,
-   "saniye": 1260,
+   "saniye": 1288,
    "mac": 1
   },
   "278617": {
@@ -221,7 +221,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 3,
-   "saniye": 675,
+   "saniye": 702,
    "mac": 1
   },
   "736366": {
@@ -253,7 +253,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": -2,
-   "saniye": 262,
+   "saniye": 290,
    "mac": 1
   },
   "379563": {
@@ -268,8 +268,8 @@
    "ad": "Marko Pecarski",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 13,
-   "saniye": 854,
+   "vp": 14,
+   "saniye": 882,
    "mac": 1
   },
   "392627": {
@@ -293,7 +293,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 1,
-   "saniye": 470,
+   "saniye": 498,
    "mac": 1
   }
  }

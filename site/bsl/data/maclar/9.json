@@ -17,7 +17,7 @@
   {
    "id": 346340,
    "tarih": "2026-11-21T15:30:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "TÜRK TELEKOM",
    "evId": 266030,
    "evSkor": "95",
@@ -25,12 +25,7 @@
    "depId": 265995,
    "depSkor": "78",
    "salon": "Ankara Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "00:00",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346338,

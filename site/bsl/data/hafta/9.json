@@ -15,7 +15,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "08:43",
+    "saat": "08:30",
     "uzatma": false
    }
   },
@@ -117,7 +117,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 9,
-   "saniye": 988,
+   "saniye": 1001,
    "mac": 1
   },
   "779071": {
@@ -125,7 +125,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 4,
-   "saniye": 981,
+   "saniye": 994,
    "mac": 1
   },
   "500079": {
@@ -149,7 +149,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 17,
-   "saniye": 1058,
+   "saniye": 1071,
    "mac": 1
   },
   "228502": {
@@ -157,7 +157,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 7,
-   "saniye": 795,
+   "saniye": 808,
    "mac": 1
   },
   "410874": {
@@ -173,7 +173,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 7,
-   "saniye": 746,
+   "saniye": 759,
    "mac": 1
   },
   "400519": {
@@ -212,8 +212,8 @@
    "ad": "Brae Ivey",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 7,
-   "saniye": 988,
+   "vp": 6,
+   "saniye": 1001,
    "mac": 1
   },
   "278617": {
@@ -229,7 +229,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 7,
-   "saniye": 1071,
+   "saniye": 1084,
    "mac": 1
   },
   "411597": {
@@ -237,15 +237,15 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 7,
-   "saniye": 667,
+   "saniye": 680,
    "mac": 1
   },
   "470765": {
    "ad": "Mahir Ağva",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 12,
-   "saniye": 816,
+   "vp": 13,
+   "saniye": 829,
    "mac": 1
   },
   "779011": {
@@ -285,7 +285,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": -2,
-   "saniye": 794,
+   "saniye": 807,
    "mac": 1
   },
   "124128": {

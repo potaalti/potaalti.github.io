@@ -621,10 +621,17 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
 .yo-ust { display: flex; align-items: center; gap: 6px; padding: 6px 8px 6px 12px; background: #0b2329; color: #fff; }
 .yo-ust span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .84rem; font-weight: 800; }
 .yo-ust small { margin-left: 8px; color: rgba(255, 255, 255, .62); font-weight: 600; font-size: .74rem; }
-.yo-ust button { flex: none; width: 32px; height: 30px; border: 0; border-radius: 8px; background: rgba(255, 255, 255, .13); color: #fff; font-size: 1rem; cursor: pointer; }
+.yo-ust button { flex: none; width: 30px; height: 30px; padding: 0; border: 0; border-radius: 8px; background: rgba(255, 255, 255, .13); color: #fff; font-size: 1rem; cursor: pointer; }
 .yo-ust button:hover { background: rgba(255, 255, 255, .24); }
 .yo-video { position: relative; aspect-ratio: 16 / 9; }
 .yo-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+/* Perde: video oynarken üstünü kapatır, YouTube'un başlık/paylaş/"Diğer videolar" yazıları fareyi görmeyip kaybolur */
+.yo-perde { position: absolute; inset: 0; display: none; cursor: pointer; }
+.yuzen-oynatici.perdeli .yo-perde { display: block; }
+.yo-ust button.acik { background: var(--vurgu, #0b8a99); }
+.yuzen-oynatici:fullscreen { width: 100% !important; height: 100% !important; left: 0 !important; top: 0 !important; border-radius: 0; display: flex; flex-direction: column; }
+.yuzen-oynatici:fullscreen .yo-video { flex: 1; aspect-ratio: auto; height: auto; }
+.yuzen-oynatici:fullscreen .yo-tutamak { display: none; }
 .yo-ust { cursor: move; touch-action: none; user-select: none; -webkit-user-select: none; }
 .yo-tutamak { position: absolute; width: 22px; height: 22px; z-index: 2; touch-action: none; cursor: nwse-resize; }
 .yo-tutamak::after { content: ''; position: absolute; width: 10px; height: 10px; border: 0 solid rgba(255, 255, 255, .75); }

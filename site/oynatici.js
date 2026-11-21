@@ -7,6 +7,11 @@
 import { esc } from './ortak.js';
 
 let kap = null;
+// Oynatıcının durumu (YouTube'un gömülü oynatıcısı postMessage ile bildirir; enablejsapi=1): oynuyor mu, sesi kapalı mı.
+// Video oynamaya başlayınca üstüne görünmez perde gelir: fare YouTube'a ulaşmaz, başlık, paylaş, "Diğer videolar" gibi yazılar
+// birkaç saniyede kaybolur ve kutu skorda gezinirken geri gelmez. Oynat/durdur, ses ve tam ekran üst çubukta; ⚙ perdeyi
+// kaldırır (kalite, altyazı gibi YouTube ayarları için).
+const D = { oynuyor: false, sessiz: false, ytKontrol: false };
 const KAYIT = 'oynaticiKonum';
 const KUCUK = 420, BUYUK = 880, EN_AZ = 240, PAY = 8;
 
@@ -46,11 +51,18 @@ export function ac({ v, ad, kanal }, buyuk = false) {
   }
   if (kap.dataset.v !== v) {
     kap.dataset.v = v;
+    Object.assign(D, { oynuyor: false, sessiz: false, ytKontrol: false });
+    kap.classList.remove('perdeli');
     kap.innerHTML = `<div class="yo-ust" data-oynatici-tasi title="Tutup taşı"><span>${esc(ad)}<small>${esc(kanal)} · YouTube</small></span>
+      <button type="button" data-oynatici="oynat" title="Oynat / durdur" aria-label="Oynat veya durdur">⏸</button>
+      <button type="button" data-oynatici="ses" title="Sesi aç / kapat" aria-label="Sesi aç veya kapat">🔊</button>
+      <button type="button" data-oynatici="tam" title="Tam ekran" aria-label="Tam ekran">⛶</button>
+      <button type="button" data-oynatici="yt" title="YouTube ayarları (kalite, altyazı)" aria-label="YouTube ayarları">⚙</button>
       <button type="button" data-oynatici="buyut" title="Büyüt / küçült" aria-label="Büyüt veya küçült">⤢</button>
       <button type="button" data-oynatici="kapat" title="Kapat" aria-label="Kapat">✕</button></div>
-      <div class="yo-video"><iframe src="https://www.youtube.com/embed/${encodeURIComponent(v)}?autoplay=1&rel=0&playsinline=1" title="${esc(ad)}"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+      <div class="yo-video"><iframe src="https://www.youtube.com/embed/${encodeURIComponent(v)}?autoplay=1&rel=0&playsinline=1&iv_load_policy=3&enablejsapi=1&origin=${encodeURIComponent(location.origin)}" title="${esc(ad)}"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
+        <div class="yo-perde" data-oynatici="perde" title="Oynat / durdur (çift tık: tam ekran)"></div></div>
       <span class="yo-tutamak sol-ust" data-oynatici-boyut="sol-ust" title="Tutup büyüt / küçült"></span>
       <span class="yo-tutamak sag-alt" data-oynatici-boyut="sag-alt" title="Tutup büyüt / küçült"></span>`;
   }
@@ -61,7 +73,42 @@ export function ac({ v, ad, kanal }, buyuk = false) {
   else if (yeni) kap.classList.toggle('buyuk', buyuk);
 }
 
+// YouTube oynatıcısına komut ve ondan gelen durum bildirimleri
+const iframe = () => kap?.querySelector('iframe');
+const komut = (func, args = []) => iframe()?.contentWindow?.postMessage(JSON.stringify({ event: 'command', func, args }), '*');
+function dugmeleriGuncelle() {
+  if (!kap) return;
+  const o = kap.querySelector('[data-oynatici="oynat"]'), s = kap.querySelector('[data-oynatici="ses"]'), y = kap.querySelector('[data-oynatici="yt"]');
+  if (o) o.textContent = D.oynuyor ? '⏸' : '▶';
+  if (s) s.textContent = D.sessiz ? '🔇' : '🔊';
+  y?.classList.toggle('acik', D.ytKontrol);
+  // Perde yalnızca video oynarken (oynamadan önce YouTube'un kendi oynat düğmesine dokunulabilsin; telefonda gerekiyor)
+  kap.classList.toggle('perdeli', D.oynuyor && !D.ytKontrol);
+}
+addEventListener('message', e => {
+  if (!kap || e.source !== iframe()?.contentWindow) return;
+  let v;
+  try { v = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch { return; }
+  const bilgi = v?.info;
+  if (!bilgi || typeof bilgi !== 'object') return;
+  if (typeof bilgi.playerState === 'number') D.oynuyor = bilgi.playerState === 1 || bilgi.playerState === 3;
+  if (typeof bilgi.muted === 'boolean') D.sessiz = bilgi.muted;
+  dugmeleriGuncelle();
+});
+// Oynatıcı yüklenince durum bildirimlerini iste (YouTube "listening" mesajından sonra infoDelivery gönderir)
+document.addEventListener('load', e => {
+  if (e.target === iframe()) e.target.contentWindow?.postMessage(JSON.stringify({ event: 'listening', id: 'pota', channel: 'widget' }), '*');
+}, true);
+
+function tamEkran() {
+  if (document.fullscreenElement) { document.exitFullscreen?.(); return; }
+  if (kap?.requestFullscreen) kap.requestFullscreen().catch(() => buyutKucult());
+  else if (kap?.webkitRequestFullscreen) kap.webkitRequestFullscreen();
+  else buyutKucult(); // iPhone Safari'de öğe tam ekranı yok: en büyük boyut
+}
+
 export function kapat() {
+  if (document.fullscreenElement === kap) document.exitFullscreen?.();
   kap?.remove();
   kap = null;
   document.body.classList.remove('oynatici-acik');
@@ -107,7 +154,7 @@ function surukle(e, tur) {
 }
 
 document.addEventListener('pointerdown', e => {
-  if (!kap || !kap.contains(e.target) || e.target.closest('button')) return;
+  if (!kap || !kap.contains(e.target) || e.target.closest('button') || e.target.closest('.yo-perde')) return;
   const b = e.target.closest('[data-oynatici-boyut]');
   if (b) surukle(e, b.dataset.oynaticiBoyut);
   else if (e.target.closest('[data-oynatici-tasi]')) surukle(e, 'tasi');
@@ -121,10 +168,16 @@ document.addEventListener('click', e => {
     return;
   }
   const k = e.target.closest('[data-oynatici]');
-  if (!k) return;
-  if (k.dataset.oynatici === 'kapat') kapat();
-  else buyutKucult();
+  if (!k || !kap) return;
+  const is = k.dataset.oynatici;
+  if (is === 'kapat') kapat();
+  else if (is === 'buyut') buyutKucult();
+  else if (is === 'oynat' || is === 'perde') { komut(D.oynuyor ? 'pauseVideo' : 'playVideo'); D.oynuyor = !D.oynuyor; dugmeleriGuncelle(); }
+  else if (is === 'ses') { komut(D.sessiz ? 'unMute' : 'mute'); D.sessiz = !D.sessiz; dugmeleriGuncelle(); }
+  else if (is === 'tam') tamEkran();
+  else if (is === 'yt') { D.ytKontrol = !D.ytKontrol; dugmeleriGuncelle(); }
 });
+document.addEventListener('dblclick', e => { if (e.target.closest?.('.yo-perde')) tamEkran(); });
 
 // Ekran döndürülünce ya da pencere küçülünce oynatıcı dışarıda kalmasın
 addEventListener('resize', () => { if (kap?.classList.contains('serbest')) yerlestir(simdiki()); });

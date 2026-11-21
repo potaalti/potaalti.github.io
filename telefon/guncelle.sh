@@ -32,7 +32,7 @@ if [ -f "$ESKI_PID" ]; then
   fi
 fi
 # Eski görev Termux'ta hiç tetiklenmese bile maç saatinde canlı skor dursun: döngüsü yoksa ve 20 dakikadır kaydına bir şey
-# yazmadıysa eski betik buradan başlatılır (maç döngüsünü kendisi açar)
+# yazmadıysa eski betik buradan başlatılır (maç gününün döngüsünü kendisi açar: ilk maçtan 3 saat önceden itibaren)
 ESKI_LOG="$HOME/tbl-guncelle.log"
 if [ ! -f "$ESKI_PID" ] && [ -f "$HOME/tbl-fantezi/telefon/guncelle.sh" ]    && [ $(( $(date +%s) - $(stat -c %Y "$ESKI_LOG" 2>/dev/null || echo 0) )) -gt 1200 ]    && python - "$HOME/tbl-fantezi/site/data/hafta/index.json" <<'PY'
 import json, sys
@@ -43,7 +43,7 @@ except Exception:
     sys.exit(1)
 simdi = datetime.now()
 sys.exit(0 if any(not m.get("bitti") and not m["tarih"].endswith("T00:00:00")
-                  and datetime.fromisoformat(m["tarih"]) - timedelta(minutes=10) <= simdi <= datetime.fromisoformat(m["tarih"]) + timedelta(hours=4)
+                  and datetime.fromisoformat(m["tarih"]) - timedelta(hours=3) <= simdi <= datetime.fromisoformat(m["tarih"]) + timedelta(hours=4)
                   for m in ms) else 1)
 PY
 then

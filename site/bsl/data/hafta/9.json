@@ -10,12 +10,12 @@
    "evSkor": "66",
    "dep": "YUKATEL DENİZLİ BASKET",
    "depId": 266028,
-   "depSkor": "60",
+   "depSkor": "63",
    "salon": "Mustafa Kemal Atatürk Karşıyaka Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "09:02",
+    "saat": "08:24",
     "uzatma": false
    }
   },
@@ -117,7 +117,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 12,
-   "saniye": 1345,
+   "saniye": 1384,
    "mac": 1
   },
   "779071": {
@@ -125,7 +125,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 12,
-   "saniye": 1562,
+   "saniye": 1601,
    "mac": 1
   },
   "500079": {
@@ -173,7 +173,7 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": 15,
-   "saniye": 1165,
+   "saniye": 1204,
    "mac": 1
   },
   "400519": {
@@ -197,23 +197,23 @@
    "takim": "KARŞIYAKA",
    "takimId": 266027,
    "vp": -2,
-   "saniye": 481,
+   "saniye": 520,
    "mac": 1
   },
   "786430": {
    "ad": "Cyril Langevine",
    "takim": "KARŞIYAKA",
    "takimId": 266027,
-   "vp": 8,
-   "saniye": 540,
+   "vp": 7,
+   "saniye": 579,
    "mac": 1
   },
   "778996": {
    "ad": "Brae Ivey",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 9,
-   "saniye": 1409,
+   "vp": 10,
+   "saniye": 1448,
    "mac": 1
   },
   "278617": {
@@ -228,8 +228,8 @@
    "ad": "John Meeks",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 14,
-   "saniye": 1561,
+   "vp": 15,
+   "saniye": 1600,
    "mac": 1
   },
   "411597": {
@@ -269,7 +269,7 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": 14,
-   "saniye": 1016,
+   "saniye": 1055,
    "mac": 1
   },
   "392627": {
@@ -285,15 +285,15 @@
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
    "vp": -3,
-   "saniye": 1025,
+   "saniye": 1064,
    "mac": 1
   },
   "124128": {
    "ad": "Egemen Güven",
    "takim": "YUKATEL DENİZLİ BASKET",
    "takimId": 266028,
-   "vp": 1,
-   "saniye": 632,
+   "vp": 4,
+   "saniye": 671,
    "mac": 1
   }
  }

@@ -20,15 +20,15 @@
    "durum": "canli",
    "ev": "TÜRK TELEKOM",
    "evId": 266030,
-   "evSkor": "29",
+   "evSkor": "34",
    "dep": "TOFAŞ",
    "depId": 265995,
-   "depSkor": "21",
+   "depSkor": "23",
    "salon": "Ankara Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "08:33",
+    "saat": "07:47",
     "uzatma": false
    }
   },
@@ -333,7 +333,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 1,
-   "saniye": 367,
+   "saniye": 413,
    "mac": 1
   },
   "386159": {
@@ -356,8 +356,8 @@
    "ad": "Ata Kahraman",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 1,
-   "saniye": 320,
+   "vp": 3,
+   "saniye": 366,
    "mac": 1
   },
   "112715": {
@@ -372,16 +372,16 @@
    "ad": "Uros Trifunovic",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 3,
-   "saniye": 391,
+   "vp": 6,
+   "saniye": 437,
    "mac": 1
   },
   "129216": {
    "ad": "Doğuş Özdemiroğlu",
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
-   "vp": 1,
-   "saniye": 391,
+   "vp": 3,
+   "saniye": 437,
    "mac": 1
   },
   "668012": {
@@ -389,7 +389,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 4,
-   "saniye": 320,
+   "saniye": 366,
    "mac": 1
   },
   "272903": {
@@ -420,8 +420,8 @@
    "ad": "Bryce Jones",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 8,
-   "saniye": 454,
+   "vp": 10,
+   "saniye": 500,
    "mac": 1
   },
   "778399": {
@@ -452,8 +452,8 @@
    "ad": "Terrell Carter Ii",
    "takim": "TOFAŞ",
    "takimId": 265995,
-   "vp": 5,
-   "saniye": 368,
+   "vp": 4,
+   "saniye": 414,
    "mac": 1
   },
   "736069": {
@@ -461,7 +461,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 6,
-   "saniye": 320,
+   "saniye": 366,
    "mac": 1
   },
   "732657": {
@@ -477,7 +477,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -1,
-   "saniye": 359,
+   "saniye": 405,
    "mac": 1
   },
   "434482": {
@@ -493,7 +493,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 0,
-   "saniye": 180,
+   "saniye": 226,
    "mac": 1
   }
  }

@@ -20,7 +20,7 @@
    "durum": "canli",
    "ev": "TÜRK TELEKOM",
    "evId": 266030,
-   "evSkor": "94",
+   "evSkor": "95",
    "dep": "TOFAŞ",
    "depId": 265995,
    "depSkor": "78",
@@ -309,7 +309,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 21,
-   "saniye": 1586,
+   "saniye": 1587,
    "mac": 1
   },
   "410568": {
@@ -333,7 +333,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 15,
-   "saniye": 1482,
+   "saniye": 1483,
    "mac": 1
   },
   "386159": {
@@ -341,7 +341,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 14,
-   "saniye": 1659,
+   "saniye": 1660,
    "mac": 1
   },
   "408785": {
@@ -373,7 +373,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 14,
-   "saniye": 1155,
+   "saniye": 1156,
    "mac": 1
   },
   "129216": {
@@ -389,7 +389,7 @@
    "takim": "TÜRK TELEKOM",
    "takimId": 266030,
    "vp": 15,
-   "saniye": 1475,
+   "saniye": 1476,
    "mac": 1
   },
   "272903": {
@@ -413,7 +413,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 5,
-   "saniye": 1126,
+   "saniye": 1127,
    "mac": 1
   },
   "778401": {
@@ -429,7 +429,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 16,
-   "saniye": 1760,
+   "saniye": 1761,
    "mac": 1
   },
   "778398": {
@@ -445,7 +445,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 3,
-   "saniye": 416,
+   "saniye": 417,
    "mac": 1
   },
   "485299": {
@@ -477,7 +477,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": 8,
-   "saniye": 1459,
+   "saniye": 1460,
    "mac": 1
   },
   "434482": {
@@ -485,7 +485,7 @@
    "takim": "TOFAŞ",
    "takimId": 265995,
    "vp": -1,
-   "saniye": 68,
+   "saniye": 69,
    "mac": 1
   },
   "197570": {

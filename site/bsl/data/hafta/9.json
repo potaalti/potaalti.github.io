@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "07:58",
+    "saat": "07:32",
     "uzatma": false
    }
   }
@@ -1453,7 +1453,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 3,
-   "saniye": 387,
+   "saniye": 413,
    "mac": 1
   },
   "777634": {
@@ -1461,7 +1461,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 244,
+   "saniye": 270,
    "mac": 1
   },
   "782996": {
@@ -1477,7 +1477,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 387,
+   "saniye": 413,
    "mac": 1
   },
   "397202": {
@@ -1516,8 +1516,8 @@
    "ad": "Scottie Wilbekin",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 2,
-   "saniye": 393,
+   "vp": 1,
+   "saniye": 419,
    "mac": 1
   },
   "777636": {
@@ -1533,7 +1533,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 243,
+   "saniye": 269,
    "mac": 1
   },
   "163489": {
@@ -1565,7 +1565,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 404,
+   "saniye": 430,
    "mac": 1
   },
   "777704": {
@@ -1573,7 +1573,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 404,
+   "saniye": 430,
    "mac": 1
   },
   "777705": {
@@ -1589,7 +1589,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 284,
+   "saniye": 310,
    "mac": 1
   },
   "667814": {
@@ -1597,7 +1597,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 360,
+   "saniye": 386,
    "mac": 1
   },
   "27541": {
@@ -1628,8 +1628,8 @@
    "ad": "Will Clyburn",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 2,
-   "saniye": 360,
+   "vp": 1,
+   "saniye": 386,
    "mac": 1
   }
  }

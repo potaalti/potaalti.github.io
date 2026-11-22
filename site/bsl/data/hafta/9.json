@@ -62,12 +62,12 @@
    "evSkor": "2",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": "0",
+   "depSkor": "3",
    "salon": "Çayırova Belediyesi Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "09:28",
+    "saat": "08:44",
     "uzatma": false
    }
   },
@@ -885,15 +885,15 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 1,
-   "saniye": 45,
+   "saniye": 75,
    "mac": 1
   },
   "666080": {
    "ad": "Fabian White Jr.",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 2,
-   "saniye": 45,
+   "vp": 1,
+   "saniye": 75,
    "mac": 1
   },
   "160245": {
@@ -901,7 +901,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 0,
-   "saniye": 45,
+   "saniye": 75,
    "mac": 1
   },
   "500074": {
@@ -909,7 +909,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 0,
-   "saniye": 45,
+   "saniye": 75,
    "mac": 1
   },
   "502472": {
@@ -917,7 +917,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 0,
-   "saniye": 45,
+   "saniye": 75,
    "mac": 1
   },
   "107520": {
@@ -973,7 +973,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 45,
+   "saniye": 75,
    "mac": 1
   },
   "606624": {
@@ -981,7 +981,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": -1,
-   "saniye": 45,
+   "saniye": 75,
    "mac": 1
   },
   "667498": {
@@ -989,15 +989,15 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 45,
+   "saniye": 75,
    "mac": 1
   },
   "776570": {
    "ad": "Kevin Yebo",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 0,
-   "saniye": 45,
+   "vp": 1,
+   "saniye": 75,
    "mac": 1
   },
   "120437": {
@@ -1005,7 +1005,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 45,
+   "saniye": 75,
    "mac": 1
   },
   "359434": {

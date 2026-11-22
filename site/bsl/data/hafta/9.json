@@ -88,12 +88,12 @@
    "evSkor": "40",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
-   "depSkor": "36",
+   "depSkor": "37",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "02:08",
+    "saat": "02:09",
     "uzatma": false
    }
   },
@@ -1372,7 +1372,7 @@
    "ad": "Yiğit Onan",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 7,
+   "vp": 8,
    "saniye": 619,
    "mac": 1
   },

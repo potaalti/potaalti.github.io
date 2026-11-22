@@ -62,12 +62,12 @@
    "evSkor": "69",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": "59",
+   "depSkor": "61",
    "salon": "Çayırova Belediyesi Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "06:51",
+    "saat": "06:26",
     "uzatma": false
    }
   },
@@ -885,7 +885,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 8,
-   "saniye": 1534,
+   "saniye": 1558,
    "mac": 1
   },
   "666080": {
@@ -893,7 +893,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 24,
-   "saniye": 1714,
+   "saniye": 1738,
    "mac": 1
   },
   "160245": {
@@ -901,7 +901,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 8,
-   "saniye": 757,
+   "saniye": 781,
    "mac": 1
   },
   "500074": {
@@ -909,7 +909,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 11,
-   "saniye": 1177,
+   "saniye": 1201,
    "mac": 1
   },
   "502472": {
@@ -949,7 +949,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 8,
-   "saniye": 1064,
+   "saniye": 1088,
    "mac": 1
   },
   "122136": {
@@ -981,7 +981,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 27,
-   "saniye": 1801,
+   "saniye": 1825,
    "mac": 1
   },
   "667498": {
@@ -989,7 +989,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 1,
-   "saniye": 795,
+   "saniye": 819,
    "mac": 1
   },
   "776570": {
@@ -1013,7 +1013,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 3,
-   "saniye": 1136,
+   "saniye": 1160,
    "mac": 1
   },
   "502518": {
@@ -1029,15 +1029,15 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 4,
-   "saniye": 653,
+   "saniye": 677,
    "mac": 1
   },
   "351474": {
    "ad": "Melih Tunca",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 0,
-   "saniye": 471,
+   "vp": 2,
+   "saniye": 495,
    "mac": 1
   },
   "57737": {

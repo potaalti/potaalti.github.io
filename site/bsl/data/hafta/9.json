@@ -98,7 +98,7 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ FUZUL",
    "evId": 265992,
-   "evSkor": "84",
+   "evSkor": "86",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
    "depSkor": "72",
@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "04:37",
+    "saat": "04:22",
     "uzatma": false
    }
   }
@@ -1453,7 +1453,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 1,
-   "saniye": 1204,
+   "saniye": 1219,
    "mac": 1
   },
   "777634": {
@@ -1477,7 +1477,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 842,
+   "saniye": 857,
    "mac": 1
   },
   "397202": {
@@ -1509,7 +1509,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 7,
-   "saniye": 811,
+   "saniye": 826,
    "mac": 1
   },
   "363061": {
@@ -1517,7 +1517,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 14,
-   "saniye": 1214,
+   "saniye": 1229,
    "mac": 1
   },
   "777636": {
@@ -1540,8 +1540,8 @@
    "ad": "Furkan Korkmaz",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 12,
-   "saniye": 1180,
+   "vp": 14,
+   "saniye": 1195,
    "mac": 1
   },
   "54659": {
@@ -1549,7 +1549,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 10,
-   "saniye": 819,
+   "saniye": 834,
    "mac": 1
   },
   "735811": {
@@ -1557,7 +1557,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 19,
-   "saniye": 1267,
+   "saniye": 1282,
    "mac": 1
   },
   "777679": {
@@ -1589,7 +1589,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 8,
-   "saniye": 1160,
+   "saniye": 1175,
    "mac": 1
   },
   "667814": {
@@ -1621,7 +1621,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 721,
+   "saniye": 736,
    "mac": 1
   },
   "386832": {
@@ -1629,7 +1629,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 6,
-   "saniye": 1231,
+   "saniye": 1246,
    "mac": 1
   }
  }

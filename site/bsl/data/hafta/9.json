@@ -85,15 +85,15 @@
    "durum": "canli",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
-   "evSkor": "48",
+   "evSkor": "53",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
-   "depSkor": "41",
+   "depSkor": "43",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "08:26",
+    "saat": "07:41",
     "uzatma": false
    }
   },
@@ -1260,24 +1260,24 @@
    "ad": "Jerome Robinson Jr.",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 6,
-   "saniye": 551,
+   "vp": 7,
+   "saniye": 596,
    "mac": 1
   },
   "250129": {
    "ad": "Şehmus Hazer",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 15,
-   "saniye": 1006,
+   "vp": 17,
+   "saniye": 1051,
    "mac": 1
   },
   "502492": {
    "ad": "Aleksej Nikolic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 5,
-   "saniye": 842,
+   "vp": 9,
+   "saniye": 887,
    "mac": 1
   },
   "779275": {
@@ -1285,7 +1285,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 5,
-   "saniye": 929,
+   "saniye": 974,
    "mac": 1
   },
   "779274": {
@@ -1293,7 +1293,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 2,
-   "saniye": 630,
+   "saniye": 675,
    "mac": 1
   },
   "128768": {
@@ -1372,8 +1372,8 @@
    "ad": "Yiğit Onan",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 8,
-   "saniye": 842,
+   "vp": 10,
+   "saniye": 887,
    "mac": 1
   },
   "675128": {
@@ -1389,7 +1389,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": -2,
-   "saniye": 757,
+   "saniye": 802,
    "mac": 1
   },
   "778279": {
@@ -1397,7 +1397,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 6,
-   "saniye": 652,
+   "saniye": 697,
    "mac": 1
   },
   "778246": {
@@ -1405,15 +1405,15 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 7,
-   "saniye": 1023,
+   "saniye": 1068,
    "mac": 1
   },
   "269217": {
    "ad": "Tibet Görener",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 3,
-   "saniye": 548,
+   "vp": 2,
+   "saniye": 593,
    "mac": 1
   },
   "284983": {

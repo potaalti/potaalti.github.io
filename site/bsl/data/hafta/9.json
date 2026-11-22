@@ -85,7 +85,7 @@
    "durum": "canli",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
-   "evSkor": "33",
+   "evSkor": "34",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
    "depSkor": "26",
@@ -1260,7 +1260,7 @@
    "ad": "Jerome Robinson Jr.",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 4,
+   "vp": 5,
    "saniye": 270,
    "mac": 1
   },

@@ -59,7 +59,7 @@
    "durum": "canli",
    "ev": "GLİNT ÇAYIROVA BELEDİYESİ",
    "evId": 265994,
-   "evSkor": "63",
+   "evSkor": "66",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
    "depSkor": "55",
@@ -67,7 +67,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "09:32",
+    "saat": "09:22",
     "uzatma": false
    }
   },
@@ -885,7 +885,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 7,
-   "saniye": 1373,
+   "saniye": 1382,
    "mac": 1
   },
   "666080": {
@@ -893,15 +893,15 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 23,
-   "saniye": 1553,
+   "saniye": 1562,
    "mac": 1
   },
   "160245": {
    "ad": "Enes Berkay Taşkıran",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 3,
-   "saniye": 596,
+   "vp": 6,
+   "saniye": 605,
    "mac": 1
   },
   "500074": {
@@ -917,7 +917,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 3,
-   "saniye": 876,
+   "saniye": 885,
    "mac": 1
   },
   "107520": {
@@ -941,7 +941,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 7,
-   "saniye": 709,
+   "saniye": 718,
    "mac": 1
   },
   "510739": {
@@ -981,7 +981,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 28,
-   "saniye": 1640,
+   "saniye": 1649,
    "mac": 1
   },
   "667498": {
@@ -1005,7 +1005,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 10,
-   "saniye": 1473,
+   "saniye": 1482,
    "mac": 1
   },
   "359434": {
@@ -1013,7 +1013,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 1,
-   "saniye": 975,
+   "saniye": 984,
    "mac": 1
   },
   "502518": {
@@ -1021,7 +1021,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 3,
-   "saniye": 568,
+   "saniye": 577,
    "mac": 1
   },
   "778079": {
@@ -1061,7 +1061,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 4,
-   "saniye": 709,
+   "saniye": 718,
    "mac": 1
   }
  }

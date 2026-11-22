@@ -85,7 +85,7 @@
    "durum": "canli",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
-   "evSkor": "76",
+   "evSkor": "77",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
    "depSkor": "62",
@@ -1348,7 +1348,7 @@
    "ad": "Kj Simpson",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 9,
+   "vp": 11,
    "saniye": 1543,
    "mac": 1
   },

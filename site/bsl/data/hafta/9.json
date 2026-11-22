@@ -98,15 +98,15 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ FUZUL",
    "evId": 265992,
-   "evSkor": "25",
+   "evSkor": "27",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": "11",
+   "depSkor": "13",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "02:01",
+    "saat": "01:26",
     "uzatma": false
    }
   }
@@ -1469,7 +1469,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 3,
-   "saniye": 136,
+   "saniye": 171,
    "mac": 1
   },
   "133112": {
@@ -1492,8 +1492,8 @@
    "ad": "Berk Uğurlu",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 6,
-   "saniye": 214,
+   "vp": 7,
+   "saniye": 249,
    "mac": 1
   },
   "445794": {
@@ -1508,8 +1508,8 @@
    "ad": "Conor Morgan",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 0,
-   "saniye": 117,
+   "vp": 2,
+   "saniye": 152,
    "mac": 1
   },
   "363061": {
@@ -1525,15 +1525,15 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 214,
+   "saniye": 249,
    "mac": 1
   },
   "501381": {
    "ad": "Anthony Brown",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 1,
+   "saniye": 35,
    "mac": 1
   },
   "163489": {
@@ -1580,8 +1580,8 @@
    "ad": "Shavon Shields",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 2,
-   "saniye": 251,
+   "vp": 4,
+   "saniye": 286,
    "mac": 1
   },
   "442131": {
@@ -1589,7 +1589,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 49,
+   "saniye": 84,
    "mac": 1
   },
   "667814": {
@@ -1597,7 +1597,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 117,
+   "saniye": 152,
    "mac": 1
   },
   "27541": {
@@ -1629,7 +1629,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 117,
+   "saniye": 152,
    "mac": 1
   }
  }

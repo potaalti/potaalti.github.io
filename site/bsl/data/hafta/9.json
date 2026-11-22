@@ -72,7 +72,7 @@
    "durum": "canli",
    "ev": "TRABZONSPOR",
    "evId": 266029,
-   "evSkor": "25",
+   "evSkor": "27",
    "dep": "ANADOLU EFES",
    "depId": 265990,
    "depSkor": "29",
@@ -80,7 +80,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "06:53",
+    "saat": "06:07",
     "uzatma": false
    }
   },
@@ -1077,7 +1077,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": -1,
-   "saniye": 438,
+   "saniye": 483,
    "mac": 1
   },
   "473256": {
@@ -1085,7 +1085,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 2,
-   "saniye": 422,
+   "saniye": 467,
    "mac": 1
   },
   "590409": {
@@ -1109,7 +1109,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 0,
-   "saniye": 537,
+   "saniye": 582,
    "mac": 1
   },
   "133530": {
@@ -1133,15 +1133,15 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 6,
-   "saniye": 418,
+   "saniye": 463,
    "mac": 1
   },
   "741031": {
    "ad": "Royce Hamm Jr.",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 7,
-   "saniye": 373,
+   "vp": 9,
+   "saniye": 418,
    "mac": 1
   },
   "129295": {
@@ -1165,7 +1165,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 14,
-   "saniye": 787,
+   "saniye": 832,
    "mac": 1
   },
   "333434": {
@@ -1213,7 +1213,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": -1,
-   "saniye": 69,
+   "saniye": 114,
    "mac": 1
   },
   "609323": {
@@ -1221,7 +1221,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 6,
-   "saniye": 537,
+   "saniye": 582,
    "mac": 1
   },
   "137459": {
@@ -1244,8 +1244,8 @@
    "ad": "Matthew Strazel",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": -1,
-   "saniye": 310,
+   "vp": -2,
+   "saniye": 355,
    "mac": 1
   },
   "157002": {
@@ -1253,7 +1253,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 2,
-   "saniye": 69,
+   "saniye": 114,
    "mac": 1
   }
  }

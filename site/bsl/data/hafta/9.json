@@ -59,7 +59,7 @@
    "durum": "canli",
    "ev": "GLİNT ÇAYIROVA BELEDİYESİ",
    "evId": 265994,
-   "evSkor": "8",
+   "evSkor": "11",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
    "depSkor": "5",
@@ -67,7 +67,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "07:18",
+    "saat": "06:40",
     "uzatma": false
    }
   },
@@ -884,16 +884,16 @@
    "ad": "Jordon Crawford",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 3,
-   "saniye": 162,
+   "vp": 6,
+   "saniye": 206,
    "mac": 1
   },
   "666080": {
    "ad": "Fabian White Jr.",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 3,
-   "saniye": 162,
+   "vp": 4,
+   "saniye": 206,
    "mac": 1
   },
   "160245": {
@@ -901,7 +901,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 0,
-   "saniye": 162,
+   "saniye": 206,
    "mac": 1
   },
   "500074": {
@@ -909,15 +909,15 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 4,
-   "saniye": 162,
+   "saniye": 206,
    "mac": 1
   },
   "502472": {
    "ad": "Michal Sokolowski",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 1,
-   "saniye": 162,
+   "vp": 2,
+   "saniye": 206,
    "mac": 1
   },
   "107520": {
@@ -973,7 +973,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 1,
-   "saniye": 162,
+   "saniye": 206,
    "mac": 1
   },
   "606624": {
@@ -981,15 +981,15 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 2,
-   "saniye": 162,
+   "saniye": 206,
    "mac": 1
   },
   "667498": {
    "ad": "James Webb Iii",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 0,
-   "saniye": 162,
+   "vp": -1,
+   "saniye": 206,
    "mac": 1
   },
   "776570": {
@@ -997,7 +997,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": -1,
-   "saniye": 162,
+   "saniye": 206,
    "mac": 1
   },
   "120437": {
@@ -1005,7 +1005,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 1,
-   "saniye": 162,
+   "saniye": 206,
    "mac": 1
   },
   "359434": {

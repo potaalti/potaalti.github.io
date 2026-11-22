@@ -59,7 +59,7 @@
    "durum": "canli",
    "ev": "GLİNT ÇAYIROVA BELEDİYESİ",
    "evId": 265994,
-   "evSkor": "49",
+   "evSkor": "51",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
    "depSkor": "40",
@@ -67,7 +67,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "06:35",
+    "saat": "06:22",
     "uzatma": false
    }
   },
@@ -884,8 +884,8 @@
    "ad": "Jordon Crawford",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 6,
-   "saniye": 1086,
+   "vp": 7,
+   "saniye": 1099,
    "mac": 1
   },
   "666080": {
@@ -893,7 +893,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 14,
-   "saniye": 1160,
+   "saniye": 1173,
    "mac": 1
   },
   "160245": {
@@ -908,8 +908,8 @@
    "ad": "Jeremy Simmons",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 8,
-   "saniye": 907,
+   "vp": 10,
+   "saniye": 920,
    "mac": 1
   },
   "502472": {
@@ -949,7 +949,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 8,
-   "saniye": 729,
+   "saniye": 742,
    "mac": 1
   },
   "122136": {
@@ -957,7 +957,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 12,
-   "saniye": 867,
+   "saniye": 880,
    "mac": 1
   },
   "367110": {
@@ -981,7 +981,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 24,
-   "saniye": 1217,
+   "saniye": 1230,
    "mac": 1
   },
   "667498": {
@@ -989,7 +989,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": -2,
-   "saniye": 612,
+   "saniye": 625,
    "mac": 1
   },
   "776570": {
@@ -997,7 +997,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 2,
-   "saniye": 821,
+   "saniye": 834,
    "mac": 1
   },
   "120437": {
@@ -1005,7 +1005,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 2,
-   "saniye": 1050,
+   "saniye": 1063,
    "mac": 1
   },
   "359434": {
@@ -1045,7 +1045,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 5,
-   "saniye": 477,
+   "saniye": 490,
    "mac": 1
   },
   "249031": {

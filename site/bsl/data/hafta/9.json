@@ -101,12 +101,12 @@
    "evSkor": "73",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": "56",
+   "depSkor": "58",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "09:31",
+    "saat": "09:14",
     "uzatma": false
    }
   }
@@ -1453,7 +1453,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 952,
+   "saniye": 971,
    "mac": 1
   },
   "777634": {
@@ -1461,7 +1461,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 697,
+   "saniye": 716,
    "mac": 1
   },
   "782996": {
@@ -1509,7 +1509,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 6,
-   "saniye": 706,
+   "saniye": 725,
    "mac": 1
   },
   "363061": {
@@ -1517,7 +1517,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 6,
-   "saniye": 920,
+   "saniye": 939,
    "mac": 1
   },
   "777636": {
@@ -1532,8 +1532,8 @@
    "ad": "Anthony Brown",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 4,
-   "saniye": 954,
+   "vp": 3,
+   "saniye": 973,
    "mac": 1
   },
   "163489": {
@@ -1556,8 +1556,8 @@
    "ad": "Talen Horton-Tucker",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 10,
-   "saniye": 973,
+   "vp": 12,
+   "saniye": 992,
    "mac": 1
   },
   "777679": {
@@ -1565,7 +1565,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 8,
-   "saniye": 1464,
+   "saniye": 1483,
    "mac": 1
   },
   "777704": {
@@ -1581,7 +1581,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 6,
-   "saniye": 864,
+   "saniye": 883,
    "mac": 1
   },
   "442131": {
@@ -1620,8 +1620,8 @@
    "ad": "Onuralp Bitim",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 0,
-   "saniye": 427,
+   "vp": 1,
+   "saniye": 446,
    "mac": 1
   },
   "386832": {

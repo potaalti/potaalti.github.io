@@ -75,12 +75,12 @@
    "evSkor": "27",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "31",
+   "depSkor": "32",
    "salon": "Hayri Gür Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "04:52",
+    "saat": "04:32",
     "uzatma": false
    }
   },
@@ -1069,23 +1069,23 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 13,
-   "saniye": 787,
+   "saniye": 814,
    "mac": 1
   },
   "105532": {
    "ad": "Yiğit Arslan",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 0,
-   "saniye": 559,
+   "vp": 1,
+   "saniye": 586,
    "mac": 1
   },
   "473256": {
    "ad": "Emanuel Terry",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 2,
-   "saniye": 543,
+   "vp": 1,
+   "saniye": 570,
    "mac": 1
   },
   "590409": {
@@ -1093,7 +1093,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": -2,
-   "saniye": 483,
+   "saniye": 510,
    "mac": 1
   },
   "192987": {
@@ -1109,7 +1109,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": -1,
-   "saniye": 658,
+   "saniye": 685,
    "mac": 1
   },
   "133530": {
@@ -1180,8 +1180,8 @@
    "ad": "Cameron Payne",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 8,
-   "saniye": 546,
+   "vp": 9,
+   "saniye": 573,
    "mac": 1
   },
   "281408": {
@@ -1197,7 +1197,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 6,
-   "saniye": 319,
+   "saniye": 346,
    "mac": 1
   },
   "508583": {
@@ -1213,7 +1213,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": -1,
-   "saniye": 190,
+   "saniye": 217,
    "mac": 1
   },
   "609323": {
@@ -1245,15 +1245,15 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": -2,
-   "saniye": 431,
+   "saniye": 458,
    "mac": 1
   },
   "157002": {
    "ad": "Erkan Yılmaz",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 2,
-   "saniye": 190,
+   "vp": 4,
+   "saniye": 217,
    "mac": 1
   }
  }

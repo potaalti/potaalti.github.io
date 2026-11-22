@@ -62,7 +62,7 @@
    "evSkor": "25",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": "14",
+   "depSkor": "15",
    "salon": "Çayırova Belediyesi Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
@@ -1012,7 +1012,7 @@
    "ad": "Errick Mccollum",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 1,
+   "vp": 2,
    "saniye": 105,
    "mac": 1
   },

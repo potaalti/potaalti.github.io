@@ -72,7 +72,7 @@
    "durum": "canli",
    "ev": "TRABZONSPOR",
    "evId": 266029,
-   "evSkor": "32",
+   "evSkor": "34",
    "dep": "ANADOLU EFES",
    "depId": 265990,
    "depSkor": "41",
@@ -1068,7 +1068,7 @@
    "ad": "Brandon Boston Jr.",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 11,
+   "vp": 13,
    "saniye": 1059,
    "mac": 1
   },
@@ -1108,7 +1108,7 @@
    "ad": "Marcus Keene",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": -3,
+   "vp": -2,
    "saniye": 772,
    "mac": 1
   },

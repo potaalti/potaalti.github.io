@@ -101,12 +101,12 @@
    "evSkor": "29",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": "18",
+   "depSkor": "20",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "10:00",
+    "saat": "08:48",
     "uzatma": false
    }
   }
@@ -1453,7 +1453,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 3,
-   "saniye": 265,
+   "saniye": 345,
    "mac": 1
   },
   "777634": {
@@ -1468,8 +1468,8 @@
    "ad": "Lonnie Walker Iv",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 2,
-   "saniye": 257,
+   "vp": 1,
+   "saniye": 337,
    "mac": 1
   },
   "133112": {
@@ -1477,7 +1477,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 265,
+   "saniye": 345,
    "mac": 1
   },
   "397202": {
@@ -1508,8 +1508,8 @@
    "ad": "Conor Morgan",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 2,
-   "saniye": 238,
+   "vp": 3,
+   "saniye": 318,
    "mac": 1
   },
   "363061": {
@@ -1532,8 +1532,8 @@
    "ad": "Anthony Brown",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 1,
-   "saniye": 121,
+   "vp": 0,
+   "saniye": 201,
    "mac": 1
   },
   "163489": {
@@ -1556,8 +1556,8 @@
    "ad": "Talen Horton-Tucker",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 6,
-   "saniye": 484,
+   "vp": 8,
+   "saniye": 564,
    "mac": 1
   },
   "777679": {
@@ -1580,8 +1580,8 @@
    "ad": "Shavon Shields",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 5,
-   "saniye": 372,
+   "vp": 6,
+   "saniye": 452,
    "mac": 1
   },
   "442131": {
@@ -1589,7 +1589,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 162,
+   "saniye": 242,
    "mac": 1
   },
   "667814": {
@@ -1597,7 +1597,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 238,
+   "saniye": 318,
    "mac": 1
   },
   "27541": {
@@ -1629,7 +1629,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 238,
+   "saniye": 318,
    "mac": 1
   }
  }

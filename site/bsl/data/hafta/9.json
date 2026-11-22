@@ -80,7 +80,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "09:14",
+    "saat": "08:39",
     "uzatma": false
    }
   },
@@ -1069,7 +1069,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": -1,
-   "saniye": 46,
+   "saniye": 81,
    "mac": 1
   },
   "105532": {
@@ -1077,23 +1077,23 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 0,
-   "saniye": 46,
+   "saniye": 81,
    "mac": 1
   },
   "473256": {
    "ad": "Emanuel Terry",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 0,
-   "saniye": 46,
+   "vp": 1,
+   "saniye": 81,
    "mac": 1
   },
   "590409": {
    "ad": "Brady Manek",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 1,
-   "saniye": 46,
+   "vp": 0,
+   "saniye": 81,
    "mac": 1
   },
   "192987": {
@@ -1101,7 +1101,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 0,
-   "saniye": 46,
+   "saniye": 81,
    "mac": 1
   },
   "779255": {
@@ -1165,7 +1165,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 0,
-   "saniye": 46,
+   "saniye": 81,
    "mac": 1
   },
   "333434": {
@@ -1173,31 +1173,31 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": -1,
-   "saniye": 46,
+   "saniye": 81,
    "mac": 1
   },
   "782949": {
    "ad": "Cameron Payne",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 0,
-   "saniye": 46,
+   "vp": -1,
+   "saniye": 81,
    "mac": 1
   },
   "281408": {
    "ad": "David Mutaf",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 0,
-   "saniye": 46,
+   "vp": -1,
+   "saniye": 81,
    "mac": 1
   },
   "735850": {
    "ad": "Kai Jones",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 0,
-   "saniye": 46,
+   "vp": 1,
+   "saniye": 81,
    "mac": 1
   },
   "508583": {

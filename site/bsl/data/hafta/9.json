@@ -67,7 +67,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "10:00",
+    "saat": "09:37",
     "uzatma": false
    }
   },
@@ -885,15 +885,15 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 7,
-   "saniye": 1345,
+   "saniye": 1369,
    "mac": 1
   },
   "666080": {
    "ad": "Fabian White Jr.",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 22,
-   "saniye": 1525,
+   "vp": 23,
+   "saniye": 1549,
    "mac": 1
   },
   "160245": {
@@ -901,7 +901,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 3,
-   "saniye": 568,
+   "saniye": 592,
    "mac": 1
   },
   "500074": {
@@ -917,7 +917,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 3,
-   "saniye": 848,
+   "saniye": 872,
    "mac": 1
   },
   "107520": {
@@ -941,7 +941,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 7,
-   "saniye": 681,
+   "saniye": 705,
    "mac": 1
   },
   "510739": {
@@ -980,8 +980,8 @@
    "ad": "Mike Davis Jr.",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 27,
-   "saniye": 1612,
+   "vp": 28,
+   "saniye": 1636,
    "mac": 1
   },
   "667498": {
@@ -1004,8 +1004,8 @@
    "ad": "Egehan Arna",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 11,
-   "saniye": 1445,
+   "vp": 10,
+   "saniye": 1469,
    "mac": 1
   },
   "359434": {
@@ -1013,15 +1013,15 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 1,
-   "saniye": 947,
+   "saniye": 971,
    "mac": 1
   },
   "502518": {
    "ad": "Jordan Usher",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 4,
-   "saniye": 540,
+   "vp": 3,
+   "saniye": 564,
    "mac": 1
   },
   "778079": {
@@ -1061,7 +1061,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 4,
-   "saniye": 681,
+   "saniye": 705,
    "mac": 1
   }
  }

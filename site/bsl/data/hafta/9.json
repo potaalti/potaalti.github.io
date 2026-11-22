@@ -98,15 +98,15 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ FUZUL",
    "evId": 265992,
-   "evSkor": "13",
+   "evSkor": "18",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": "9",
+   "depSkor": "11",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "05:19",
+    "saat": "04:27",
     "uzatma": false
    }
   }
@@ -1484,16 +1484,16 @@
    "ad": "Ante Zizic",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 3,
-   "saniye": 281,
+   "vp": 2,
+   "saniye": 332,
    "mac": 1
   },
   "114257": {
    "ad": "Berk Uğurlu",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 0,
-   "saniye": 16,
+   "vp": 1,
+   "saniye": 67,
    "mac": 1
   },
   "445794": {
@@ -1517,7 +1517,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 145,
+   "saniye": 196,
    "mac": 1
   },
   "777636": {
@@ -1525,7 +1525,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 16,
+   "saniye": 67,
    "mac": 1
   },
   "501381": {
@@ -1540,8 +1540,8 @@
    "ad": "Furkan Korkmaz",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 1,
-   "saniye": 79,
+   "vp": 7,
+   "saniye": 130,
    "mac": 1
   },
   "54659": {
@@ -1556,8 +1556,8 @@
    "ad": "Talen Horton-Tucker",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 5,
-   "saniye": 281,
+   "vp": 7,
+   "saniye": 332,
    "mac": 1
   },
   "777679": {
@@ -1565,7 +1565,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 281,
+   "saniye": 332,
    "mac": 1
   },
   "777704": {
@@ -1573,7 +1573,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -3,
-   "saniye": 281,
+   "saniye": 332,
    "mac": 1
   },
   "777705": {
@@ -1621,7 +1621,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 79,
+   "saniye": 130,
    "mac": 1
   },
   "386832": {

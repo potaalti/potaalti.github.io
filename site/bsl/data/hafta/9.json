@@ -82,15 +82,20 @@
   {
    "id": 346339,
    "tarih": "2026-11-22T18:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
-   "evSkor": null,
+   "evSkor": "5",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
-   "depSkor": null,
+   "depSkor": "2",
    "salon": "Sinan Erdem Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "09:05",
+    "uzatma": false
+   }
   },
   {
    "id": 346345,
@@ -1249,6 +1254,198 @@
    "takimId": 265990,
    "vp": 10,
    "saniye": 1082,
+   "mac": 1
+  },
+  "736340": {
+   "ad": "Jerome Robinson Jr.",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 54,
+   "mac": 1
+  },
+  "250129": {
+   "ad": "Şehmus Hazer",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 4,
+   "saniye": 54,
+   "mac": 1
+  },
+  "502492": {
+   "ad": "Aleksej Nikolic",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 54,
+   "mac": 1
+  },
+  "779275": {
+   "ad": "Chimezie Metu",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 54,
+   "mac": 1
+  },
+  "779274": {
+   "ad": "Oumar Ballo",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 2,
+   "saniye": 54,
+   "mac": 1
+  },
+  "128768": {
+   "ad": "Berkan Durmaz",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "221447": {
+   "ad": "Can Korkmaz",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "779278": {
+   "ad": "Alen Smailagic",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "363559": {
+   "ad": "Efe Şekeroğlu",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "54128": {
+   "ad": "Buğrahan Tuncer",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "500054": {
+   "ad": "Dyshawn Pierre",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "781548": {
+   "ad": "Kj Simpson",
+   "takim": "GALATASARAY MCT TECHNIC",
+   "takimId": 266026,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "516236": {
+   "ad": "Khyri Thomas",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 0,
+   "saniye": 54,
+   "mac": 1
+  },
+  "778249": {
+   "ad": "Keandre Cook",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 0,
+   "saniye": 54,
+   "mac": 1
+  },
+  "310250": {
+   "ad": "Yiğit Onan",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": -1,
+   "saniye": 54,
+   "mac": 1
+  },
+  "675128": {
+   "ad": "Anzejs Pasecniks",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 3,
+   "saniye": 54,
+   "mac": 1
+  },
+  "572386": {
+   "ad": "Olivier Hanlan",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 0,
+   "saniye": 54,
+   "mac": 1
+  },
+  "778279": {
+   "ad": "Chris Horton",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "778246": {
+   "ad": "Max Abmas",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "269217": {
+   "ad": "Tibet Görener",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "284983": {
+   "ad": "Ozan Yılmaz",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "470691": {
+   "ad": "Thomas Akyazılı",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "475706": {
+   "ad": "Osman Nurveren",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "450046": {
+   "ad": "Yusuf Gündüz",
+   "takim": "ALİAĞA PETKİM SPOR",
+   "takimId": 266048,
+   "vp": 0,
+   "saniye": 0,
    "mac": 1
   }
  }

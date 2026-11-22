@@ -82,15 +82,20 @@
   {
    "id": 346339,
    "tarih": "2026-11-22T18:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
-   "evSkor": null,
+   "evSkor": "5",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
-   "depSkor": null,
+   "depSkor": "2",
    "salon": "Sinan Erdem Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "09:05",
+    "uzatma": false
+   }
   },
   {
    "id": 346345,

@@ -80,7 +80,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "00:24",
+    "saat": "00:00",
     "uzatma": false
    }
   },
@@ -1068,8 +1068,8 @@
    "ad": "Brandon Boston Jr.",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 17,
-   "saniye": 1634,
+   "vp": 16,
+   "saniye": 1659,
    "mac": 1
   },
   "105532": {
@@ -1077,7 +1077,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 8,
-   "saniye": 1163,
+   "saniye": 1188,
    "mac": 1
   },
   "473256": {
@@ -1085,7 +1085,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 2,
-   "saniye": 1151,
+   "saniye": 1176,
    "mac": 1
   },
   "590409": {
@@ -1101,7 +1101,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 10,
-   "saniye": 797,
+   "saniye": 822,
    "mac": 1
   },
   "779255": {
@@ -1133,7 +1133,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 5,
-   "saniye": 813,
+   "saniye": 837,
    "mac": 1
   },
   "741031": {
@@ -1165,15 +1165,15 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 15,
-   "saniye": 1245,
+   "saniye": 1269,
    "mac": 1
   },
   "333434": {
    "ad": "Dario Saric",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 20,
-   "saniye": 1038,
+   "vp": 21,
+   "saniye": 1063,
    "mac": 1
   },
   "782949": {
@@ -1181,7 +1181,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 10,
-   "saniye": 1070,
+   "saniye": 1095,
    "mac": 1
   },
   "281408": {
@@ -1189,7 +1189,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 0,
-   "saniye": 1293,
+   "saniye": 1318,
    "mac": 1
   },
   "735850": {
@@ -1221,7 +1221,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 11,
-   "saniye": 979,
+   "saniye": 1004,
    "mac": 1
   },
   "137459": {

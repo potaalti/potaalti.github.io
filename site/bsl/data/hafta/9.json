@@ -59,15 +59,15 @@
    "durum": "canli",
    "ev": "GLİNT ÇAYIROVA BELEDİYESİ",
    "evId": 265994,
-   "evSkor": "2",
+   "evSkor": "4",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": "3",
+   "depSkor": "5",
    "salon": "Çayırova Belediyesi Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "08:44",
+    "saat": "07:55",
     "uzatma": false
    }
   },
@@ -884,16 +884,16 @@
    "ad": "Jordon Crawford",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 1,
-   "saniye": 75,
+   "vp": 0,
+   "saniye": 125,
    "mac": 1
   },
   "666080": {
    "ad": "Fabian White Jr.",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 1,
-   "saniye": 75,
+   "vp": 2,
+   "saniye": 125,
    "mac": 1
   },
   "160245": {
@@ -901,23 +901,23 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 0,
-   "saniye": 75,
+   "saniye": 125,
    "mac": 1
   },
   "500074": {
    "ad": "Jeremy Simmons",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 0,
-   "saniye": 75,
+   "vp": 2,
+   "saniye": 125,
    "mac": 1
   },
   "502472": {
    "ad": "Michal Sokolowski",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 0,
-   "saniye": 75,
+   "vp": 1,
+   "saniye": 125,
    "mac": 1
   },
   "107520": {
@@ -972,16 +972,16 @@
    "ad": "Keye Van Der Vuurst",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 0,
-   "saniye": 75,
+   "vp": 1,
+   "saniye": 125,
    "mac": 1
   },
   "606624": {
    "ad": "Mike Davis Jr.",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": -1,
-   "saniye": 75,
+   "vp": 2,
+   "saniye": 125,
    "mac": 1
   },
   "667498": {
@@ -989,23 +989,23 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 75,
+   "saniye": 125,
    "mac": 1
   },
   "776570": {
    "ad": "Kevin Yebo",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 1,
-   "saniye": 75,
+   "vp": 2,
+   "saniye": 125,
    "mac": 1
   },
   "120437": {
    "ad": "Egehan Arna",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 0,
-   "saniye": 75,
+   "vp": 1,
+   "saniye": 125,
    "mac": 1
   },
   "359434": {

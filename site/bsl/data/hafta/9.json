@@ -85,7 +85,7 @@
    "durum": "canli",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
-   "evSkor": "62",
+   "evSkor": "65",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
    "depSkor": "55",
@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "02:09",
+    "saat": "00:56",
     "uzatma": false
    }
   },
@@ -1301,7 +1301,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 1,
-   "saniye": 366,
+   "saniye": 438,
    "mac": 1
   },
   "221447": {
@@ -1316,8 +1316,8 @@
    "ad": "Alen Smailagic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 7,
-   "saniye": 815,
+   "vp": 11,
+   "saniye": 887,
    "mac": 1
   },
   "363559": {
@@ -1332,24 +1332,24 @@
    "ad": "Buğrahan Tuncer",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 7,
-   "saniye": 515,
+   "vp": 6,
+   "saniye": 587,
    "mac": 1
   },
   "500054": {
    "ad": "Dyshawn Pierre",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 2,
-   "saniye": 351,
+   "vp": 3,
+   "saniye": 423,
    "mac": 1
   },
   "781548": {
    "ad": "Kj Simpson",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 4,
-   "saniye": 1062,
+   "vp": 5,
+   "saniye": 1134,
    "mac": 1
   },
   "516236": {
@@ -1357,7 +1357,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 6,
-   "saniye": 921,
+   "saniye": 993,
    "mac": 1
   },
   "778249": {
@@ -1365,7 +1365,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 3,
-   "saniye": 868,
+   "saniye": 940,
    "mac": 1
   },
   "310250": {
@@ -1373,15 +1373,15 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 14,
-   "saniye": 1218,
+   "saniye": 1290,
    "mac": 1
   },
   "675128": {
    "ad": "Anzejs Pasecniks",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 19,
-   "saniye": 705,
+   "vp": 18,
+   "saniye": 777,
    "mac": 1
   },
   "572386": {
@@ -1404,8 +1404,8 @@
    "ad": "Max Abmas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 11,
-   "saniye": 1399,
+   "vp": 10,
+   "saniye": 1471,
    "mac": 1
   },
   "269217": {

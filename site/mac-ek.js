@@ -141,10 +141,18 @@ export function macGovdesi(kutu, ayar) {
   const veri = { ev: tarafVerisi('ev'), dep: tarafVerisi('dep') };
   const kutuTarafi = taraf => kutuSkorTablosu(veri[taraf].t, veri[taraf].takim, a, kutu[taraf].koc ?? ileri?.[taraf]?.koc);
   const hucum = hucumVerisi(veri.ev, veri.dep);
-  // Tempo: bu maçın (ya da seçili dönemin) hücum sayısı, ligin 40 dakikalık ortalamasının o süreye düşen payıyla kıyaslanır
+  // Tempo: bu maçın (ya da seçili dönemin) hücum sayısı, ligin 40 dakikalık ortalamasının OYNANAN süreye düşen payıyla
+  // kıyaslanır. Oynanan süre oyuncuların sürelerinin toplamının beşte biri (iki takımın ortalaması): canlıda maçın o ana kadarki
+  // süresi, bitende uzatmalar dahil tam süre. 2026-11-22: canlıda 40 dakikalık beklentiyle kıyaslanıp hep "çok yavaş" çıkıyordu.
+  // Süre verisi yoksa dönemin tam süresi.
   const n = Math.max(kutu.ev.ceyrekler?.length ?? 0, kutu.dep.ceyrekler?.length ?? 0, donemler?.length ?? 0, 4);
-  const sure = secim === 'T' ? 2400 + (n - 4) * 300 : secim.startsWith('U') ? 300 : secim.startsWith('Y') ? 1200 : 600;
-  if (hucum && a.tempoOrt) hucum.tempo = { beklenen: (a.tempoOrt * sure) / 2400, ort: a.tempoOrt, ad: a.tempoAd ?? 'lig ortalaması', donem: secim !== 'T' };
+  const tamSure = secim === 'T' ? 2400 + (n - 4) * 300 : secim.startsWith('U') ? 300 : secim.startsWith('Y') ? 1200 : 600;
+  const oynanan = ['ev', 'dep'].map(t => (veri[t].t?.oyuncular ?? []).reduce((x, o) => x + sureSn(o.sure), 0) / 5);
+  const sure = oynanan.every(s => s >= 60) ? Math.min(tamSure, (oynanan[0] + oynanan[1]) / 2) : tamSure;
+  if (hucum && a.tempoOrt) {
+    hucum.tempo = { beklenen: (a.tempoOrt * sure) / 2400, ort: a.tempoOrt, ad: a.tempoAd ?? 'lig ortalaması', donem: secim !== 'T' || Math.abs(sure - 2400) > 30,
+      dakika: Math.round(sure / 60) };
+  }
   const secici = donemler ? `<div class="secenekler kutu-donem">${secenekler.map(([k, ad]) =>
     `<button class="secenek ${k === secim ? 'aktif' : ''}" data-is="kutu-donem" data-id="${k}">${ad}</button>`).join('')}</div>` : '';
   // TBL maçının YouTube yayını (data/tbl/yayin.json): yüzen oynatıcıda açılır, kutu skora bakarken video sürer
@@ -340,7 +348,7 @@ export function ileriIstatistikKarti(evAd, depAd, ileri, evLink, depLink, donemA
   const a1 = hucum?.ev.atilan, b1 = hucum?.dep.atilan;
   const hucumBolumu = !hucum ? '' : `<div class="ileri-satir"><b class="${a1 > b1 ? 'iyi' : ''}">${ondalik(a1)}</b><span>100 hücumda sayı</span><b class="${b1 > a1 ? 'iyi' : ''}">${ondalik(b1)}</b></div>
     ${hucum.tempo ? `<div class="ileri-satir orta tempo"><span>Tempo <b>${tempoAdi(hucum.ham / hucum.tempo.beklenen)}</b></span>
-      <small>${hucum.hucum} hücum · ${hucum.tempo.ad}${hucum.tempo.donem ? ' bu sürede' : ''} ${Math.round(hucum.tempo.beklenen)}</small></div>`
+      <small>${hucum.hucum} hücum · ${hucum.tempo.ad}${hucum.tempo.donem ? ` ${hucum.tempo.dakika} dakikada` : ''} ${Math.round(hucum.tempo.beklenen)}</small></div>`
     : `<div class="ileri-satir orta"><span>Hücum sayısı <b>${hucum.hucum}</b></span></div>`}`;
   const ileriBolumu = !ev || !dep ? '' : `${ILERI_CUBUKLAR.filter(([k]) => ev[k] != null && dep[k] != null).map(cubuk).join('')}
     ${satir('En büyük fark', ev.fark, dep.fark)}${satir('En büyük seri', ev.seri, dep.seri)}${satir('Liderlik süresi', dakikaSaniye(ev.lider), dakikaSaniye(dep.lider))}

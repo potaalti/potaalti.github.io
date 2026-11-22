@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "04:27",
+    "saat": "03:58",
     "uzatma": false
    }
   }
@@ -1485,7 +1485,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 332,
+   "saniye": 362,
    "mac": 1
   },
   "114257": {
@@ -1493,7 +1493,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 1,
-   "saniye": 67,
+   "saniye": 97,
    "mac": 1
   },
   "445794": {
@@ -1517,15 +1517,15 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 196,
+   "saniye": 226,
    "mac": 1
   },
   "777636": {
    "ad": "Eugene Omoruyi",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 0,
-   "saniye": 67,
+   "vp": 1,
+   "saniye": 97,
    "mac": 1
   },
   "501381": {
@@ -1541,7 +1541,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 7,
-   "saniye": 130,
+   "saniye": 160,
    "mac": 1
   },
   "54659": {
@@ -1556,8 +1556,8 @@
    "ad": "Talen Horton-Tucker",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 7,
-   "saniye": 332,
+   "vp": 6,
+   "saniye": 362,
    "mac": 1
   },
   "777679": {
@@ -1565,7 +1565,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 332,
+   "saniye": 362,
    "mac": 1
   },
   "777704": {
@@ -1573,7 +1573,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -3,
-   "saniye": 332,
+   "saniye": 362,
    "mac": 1
   },
   "777705": {
@@ -1621,7 +1621,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 130,
+   "saniye": 160,
    "mac": 1
   },
   "386832": {

@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "00:20",
+    "saat": "00:11",
     "uzatma": false
    }
   }
@@ -1461,7 +1461,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 1012,
+   "saniye": 1021,
    "mac": 1
   },
   "782996": {
@@ -1469,7 +1469,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 10,
-   "saniye": 944,
+   "saniye": 954,
    "mac": 1
   },
   "133112": {
@@ -1509,7 +1509,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 8,
-   "saniye": 1067,
+   "saniye": 1077,
    "mac": 1
   },
   "363061": {
@@ -1517,7 +1517,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 16,
-   "saniye": 1470,
+   "saniye": 1479,
    "mac": 1
   },
   "777636": {
@@ -1533,7 +1533,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 1121,
+   "saniye": 1131,
    "mac": 1
   },
   "163489": {
@@ -1557,7 +1557,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 32,
-   "saniye": 1523,
+   "saniye": 1533,
    "mac": 1
   },
   "777679": {
@@ -1581,15 +1581,15 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 8,
-   "saniye": 1086,
+   "saniye": 1095,
    "mac": 1
   },
   "442131": {
    "ad": "Shane Larkin",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 14,
-   "saniye": 1416,
+   "vp": 13,
+   "saniye": 1426,
    "mac": 1
   },
   "667814": {
@@ -1629,7 +1629,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 6,
-   "saniye": 1487,
+   "saniye": 1497,
    "mac": 1
   }
  }

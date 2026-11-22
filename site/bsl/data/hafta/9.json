@@ -59,7 +59,7 @@
    "durum": "canli",
    "ev": "GLİNT ÇAYIROVA BELEDİYESİ",
    "evId": 265994,
-   "evSkor": "14",
+   "evSkor": "17",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
    "depSkor": "9",
@@ -67,7 +67,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "04:03",
+    "saat": "03:11",
     "uzatma": false
    }
   },
@@ -884,8 +884,8 @@
    "ad": "Jordon Crawford",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 7,
-   "saniye": 357,
+   "vp": 6,
+   "saniye": 409,
    "mac": 1
   },
   "666080": {
@@ -893,15 +893,15 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 2,
-   "saniye": 357,
+   "saniye": 409,
    "mac": 1
   },
   "160245": {
    "ad": "Enes Berkay Taşkıran",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 0,
-   "saniye": 357,
+   "vp": 3,
+   "saniye": 409,
    "mac": 1
   },
   "500074": {
@@ -916,8 +916,8 @@
    "ad": "Michal Sokolowski",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 3,
-   "saniye": 357,
+   "vp": 4,
+   "saniye": 409,
    "mac": 1
   },
   "107520": {
@@ -940,8 +940,8 @@
    "ad": "Nate Watson",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 0,
-   "saniye": 42,
+   "vp": 1,
+   "saniye": 94,
    "mac": 1
   },
   "510739": {
@@ -973,15 +973,15 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 1,
-   "saniye": 357,
+   "saniye": 409,
    "mac": 1
   },
   "606624": {
    "ad": "Mike Davis Jr.",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 4,
-   "saniye": 357,
+   "vp": 5,
+   "saniye": 409,
    "mac": 1
   },
   "667498": {
@@ -1004,8 +1004,8 @@
    "ad": "Egehan Arna",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 4,
-   "saniye": 357,
+   "vp": 3,
+   "saniye": 409,
    "mac": 1
   },
   "359434": {
@@ -1028,8 +1028,8 @@
    "ad": "Amadou Sow",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 0,
-   "saniye": 42,
+   "vp": 1,
+   "saniye": 94,
    "mac": 1
   },
   "351474": {
@@ -1060,8 +1060,8 @@
    "ad": "Muhsin Yaşar",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 2,
-   "saniye": 137,
+   "vp": 1,
+   "saniye": 189,
    "mac": 1
   }
  }

@@ -88,12 +88,12 @@
    "evSkor": "20",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
-   "depSkor": "10",
+   "depSkor": "12",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "03:18",
+    "saat": "02:50",
     "uzatma": false
    }
   },
@@ -1269,7 +1269,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 8,
-   "saniye": 402,
+   "saniye": 430,
    "mac": 1
   },
   "502492": {
@@ -1277,7 +1277,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 4,
-   "saniye": 402,
+   "saniye": 430,
    "mac": 1
   },
   "779275": {
@@ -1285,7 +1285,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 2,
-   "saniye": 402,
+   "saniye": 430,
    "mac": 1
   },
   "779274": {
@@ -1317,7 +1317,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 1,
-   "saniye": 76,
+   "saniye": 104,
    "mac": 1
   },
   "363559": {
@@ -1348,8 +1348,8 @@
    "ad": "Kj Simpson",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 4,
-   "saniye": 237,
+   "vp": 3,
+   "saniye": 265,
    "mac": 1
   },
   "516236": {
@@ -1365,15 +1365,15 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": -1,
-   "saniye": 402,
+   "saniye": 430,
    "mac": 1
   },
   "310250": {
    "ad": "Yiğit Onan",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 3,
-   "saniye": 402,
+   "vp": 5,
+   "saniye": 430,
    "mac": 1
   },
   "675128": {
@@ -1389,15 +1389,15 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": -1,
-   "saniye": 402,
+   "saniye": 430,
    "mac": 1
   },
   "778279": {
    "ad": "Chris Horton",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 0,
-   "saniye": 76,
+   "vp": 2,
+   "saniye": 104,
    "mac": 1
   },
   "778246": {
@@ -1405,7 +1405,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 1,
-   "saniye": 130,
+   "saniye": 158,
    "mac": 1
   },
   "269217": {

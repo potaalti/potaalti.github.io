@@ -72,15 +72,15 @@
    "durum": "canli",
    "ev": "TRABZONSPOR",
    "evId": 266029,
-   "evSkor": "50",
+   "evSkor": "52",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "59",
+   "depSkor": "61",
    "salon": "Hayri Gür Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "02:00",
+    "saat": "01:15",
     "uzatma": false
    }
   },
@@ -1068,8 +1068,8 @@
    "ad": "Brandon Boston Jr.",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 15,
-   "saniye": 1539,
+   "vp": 17,
+   "saniye": 1583,
    "mac": 1
   },
   "105532": {
@@ -1077,7 +1077,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 9,
-   "saniye": 1068,
+   "saniye": 1112,
    "mac": 1
   },
   "473256": {
@@ -1101,7 +1101,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 10,
-   "saniye": 702,
+   "saniye": 746,
    "mac": 1
   },
   "779255": {
@@ -1133,7 +1133,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 5,
-   "saniye": 717,
+   "saniye": 761,
    "mac": 1
   },
   "741031": {
@@ -1149,7 +1149,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 2,
-   "saniye": 556,
+   "saniye": 600,
    "mac": 1
   },
   "369269": {
@@ -1164,8 +1164,8 @@
    "ad": "Jordan Loyd",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 13,
-   "saniye": 1149,
+   "vp": 15,
+   "saniye": 1193,
    "mac": 1
   },
   "333434": {
@@ -1173,7 +1173,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 20,
-   "saniye": 943,
+   "saniye": 987,
    "mac": 1
   },
   "782949": {
@@ -1181,7 +1181,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 9,
-   "saniye": 975,
+   "saniye": 1019,
    "mac": 1
   },
   "281408": {
@@ -1189,7 +1189,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 0,
-   "saniye": 1198,
+   "saniye": 1242,
    "mac": 1
   },
   "735850": {
@@ -1221,7 +1221,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 9,
-   "saniye": 884,
+   "saniye": 928,
    "mac": 1
   },
   "137459": {

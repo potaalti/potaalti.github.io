@@ -98,7 +98,7 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ FUZUL",
    "evId": 265992,
-   "evSkor": "9",
+   "evSkor": "11",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
    "depSkor": "9",
@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "06:38",
+    "saat": "06:10",
     "uzatma": false
    }
   }
@@ -1453,7 +1453,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 218,
+   "saniye": 231,
    "mac": 1
   },
   "777634": {
@@ -1477,7 +1477,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 218,
+   "saniye": 231,
    "mac": 1
   },
   "397202": {
@@ -1485,7 +1485,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 218,
+   "saniye": 231,
    "mac": 1
   },
   "114257": {
@@ -1516,8 +1516,8 @@
    "ad": "Scottie Wilbekin",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 0,
-   "saniye": 82,
+   "vp": 2,
+   "saniye": 95,
    "mac": 1
   },
   "777636": {
@@ -1541,7 +1541,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 16,
+   "saniye": 29,
    "mac": 1
   },
   "54659": {
@@ -1557,7 +1557,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 5,
-   "saniye": 218,
+   "saniye": 231,
    "mac": 1
   },
   "777679": {
@@ -1565,15 +1565,15 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 218,
+   "saniye": 231,
    "mac": 1
   },
   "777704": {
    "ad": "Trent Forrest",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": -1,
-   "saniye": 218,
+   "vp": -2,
+   "saniye": 231,
    "mac": 1
   },
   "777705": {
@@ -1621,7 +1621,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 16,
+   "saniye": 29,
    "mac": 1
   },
   "386832": {

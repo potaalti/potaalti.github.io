@@ -72,15 +72,15 @@
    "durum": "canli",
    "ev": "TRABZONSPOR",
    "evId": 266029,
-   "evSkor": "66",
+   "evSkor": "68",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "72",
+   "depSkor": "75",
    "salon": "Hayri Gür Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "01:55",
+    "saat": "00:54",
     "uzatma": false
    }
   },
@@ -1068,24 +1068,24 @@
    "ad": "Brandon Boston Jr.",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 19,
-   "saniye": 2157,
+   "vp": 20,
+   "saniye": 2206,
    "mac": 1
   },
   "105532": {
    "ad": "Yiğit Arslan",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 10,
-   "saniye": 1686,
+   "vp": 11,
+   "saniye": 1735,
    "mac": 1
   },
   "473256": {
    "ad": "Emanuel Terry",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 5,
-   "saniye": 1674,
+   "vp": 6,
+   "saniye": 1723,
    "mac": 1
   },
   "590409": {
@@ -1108,8 +1108,8 @@
    "ad": "Marcus Keene",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 1,
-   "saniye": 1445,
+   "vp": 0,
+   "saniye": 1494,
    "mac": 1
   },
   "133530": {
@@ -1141,7 +1141,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 20,
-   "saniye": 1266,
+   "saniye": 1315,
    "mac": 1
   },
   "129295": {
@@ -1165,15 +1165,15 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 19,
-   "saniye": 1767,
+   "saniye": 1816,
    "mac": 1
   },
   "333434": {
    "ad": "Dario Saric",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 22,
-   "saniye": 1278,
+   "vp": 21,
+   "saniye": 1327,
    "mac": 1
   },
   "782949": {
@@ -1181,7 +1181,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 10,
-   "saniye": 1593,
+   "saniye": 1641,
    "mac": 1
   },
   "281408": {
@@ -1244,16 +1244,16 @@
    "ad": "Matthew Strazel",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 2,
-   "saniye": 1411,
+   "vp": 5,
+   "saniye": 1459,
    "mac": 1
   },
   "157002": {
    "ad": "Erkan Yılmaz",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 7,
-   "saniye": 980,
+   "vp": 9,
+   "saniye": 1028,
    "mac": 1
   }
  }

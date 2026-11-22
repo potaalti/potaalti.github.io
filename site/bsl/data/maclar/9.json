@@ -72,15 +72,15 @@
    "durum": "canli",
    "ev": "TRABZONSPOR",
    "evId": 266029,
-   "evSkor": "66",
+   "evSkor": "68",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "72",
+   "depSkor": "75",
    "salon": "Hayri Gür Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "01:55",
+    "saat": "00:54",
     "uzatma": false
    }
   },

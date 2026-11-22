@@ -101,12 +101,12 @@
    "evSkor": "84",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": "70",
+   "depSkor": "72",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "05:22",
+    "saat": "04:37",
     "uzatma": false
    }
   }
@@ -1453,7 +1453,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 1,
-   "saniye": 1159,
+   "saniye": 1204,
    "mac": 1
   },
   "777634": {
@@ -1477,7 +1477,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 796,
+   "saniye": 842,
    "mac": 1
   },
   "397202": {
@@ -1508,8 +1508,8 @@
    "ad": "Conor Morgan",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 6,
-   "saniye": 765,
+   "vp": 7,
+   "saniye": 811,
    "mac": 1
   },
   "363061": {
@@ -1517,7 +1517,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 14,
-   "saniye": 1168,
+   "saniye": 1214,
    "mac": 1
   },
   "777636": {
@@ -1540,16 +1540,16 @@
    "ad": "Furkan Korkmaz",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 13,
-   "saniye": 1134,
+   "vp": 12,
+   "saniye": 1180,
    "mac": 1
   },
   "54659": {
    "ad": "Sertaç Şanlı",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 7,
-   "saniye": 773,
+   "vp": 10,
+   "saniye": 819,
    "mac": 1
   },
   "735811": {
@@ -1557,7 +1557,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 19,
-   "saniye": 1221,
+   "saniye": 1267,
    "mac": 1
   },
   "777679": {
@@ -1588,8 +1588,8 @@
    "ad": "Shane Larkin",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 7,
-   "saniye": 1114,
+   "vp": 8,
+   "saniye": 1160,
    "mac": 1
   },
   "667814": {
@@ -1621,7 +1621,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 675,
+   "saniye": 721,
    "mac": 1
   },
   "386832": {
@@ -1629,7 +1629,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 6,
-   "saniye": 1185,
+   "saniye": 1231,
    "mac": 1
   }
  }

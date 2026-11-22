@@ -72,7 +72,7 @@
    "durum": "canli",
    "ev": "TRABZONSPOR",
    "evId": 266029,
-   "evSkor": "40",
+   "evSkor": "43",
    "dep": "ANADOLU EFES",
    "depId": 265990,
    "depSkor": "47",
@@ -80,7 +80,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "07:04",
+    "saat": "06:33",
     "uzatma": false
    }
   },
@@ -1069,15 +1069,15 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 14,
-   "saniye": 1235,
+   "saniye": 1269,
    "mac": 1
   },
   "105532": {
    "ad": "Yiğit Arslan",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 1,
-   "saniye": 764,
+   "vp": 4,
+   "saniye": 798,
    "mac": 1
   },
   "473256": {
@@ -1085,7 +1085,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 2,
-   "saniye": 1011,
+   "saniye": 1045,
    "mac": 1
   },
   "590409": {
@@ -1100,8 +1100,8 @@
    "ad": "Rıdvan Öncel",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 9,
-   "saniye": 585,
+   "vp": 10,
+   "saniye": 619,
    "mac": 1
   },
   "779255": {
@@ -1141,7 +1141,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 17,
-   "saniye": 779,
+   "saniye": 813,
    "mac": 1
   },
   "129295": {
@@ -1172,8 +1172,8 @@
    "ad": "Dario Saric",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 8,
-   "saniye": 639,
+   "vp": 9,
+   "saniye": 673,
    "mac": 1
   },
   "782949": {
@@ -1189,7 +1189,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": -1,
-   "saniye": 894,
+   "saniye": 928,
    "mac": 1
   },
   "735850": {
@@ -1197,7 +1197,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 7,
-   "saniye": 748,
+   "saniye": 782,
    "mac": 1
   },
   "508583": {
@@ -1213,7 +1213,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 5,
-   "saniye": 658,
+   "saniye": 692,
    "mac": 1
   },
   "609323": {
@@ -1244,8 +1244,8 @@
    "ad": "Matthew Strazel",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 6,
-   "saniye": 899,
+   "vp": 5,
+   "saniye": 933,
    "mac": 1
   },
   "157002": {

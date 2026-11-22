@@ -98,15 +98,15 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ FUZUL",
    "evId": 265992,
-   "evSkor": "7",
+   "evSkor": "9",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": "7",
+   "depSkor": "9",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "07:44",
+    "saat": "07:00",
     "uzatma": false
    }
   }

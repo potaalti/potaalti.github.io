@@ -98,15 +98,15 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ FUZUL",
    "evId": 265992,
-   "evSkor": "7",
+   "evSkor": "9",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": "7",
+   "depSkor": "9",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "07:44",
+    "saat": "07:00",
     "uzatma": false
    }
   }
@@ -1452,16 +1452,16 @@
    "ad": "Devon Dotson",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 1,
-   "saniye": 142,
+   "vp": 4,
+   "saniye": 179,
    "mac": 1
   },
   "777634": {
    "ad": "Daquan Jeffries",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 4,
-   "saniye": 142,
+   "vp": 2,
+   "saniye": 179,
    "mac": 1
   },
   "782996": {
@@ -1477,7 +1477,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 142,
+   "saniye": 179,
    "mac": 1
   },
   "397202": {
@@ -1485,7 +1485,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 142,
+   "saniye": 179,
    "mac": 1
   },
   "114257": {
@@ -1517,7 +1517,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 6,
+   "saniye": 43,
    "mac": 1
   },
   "777636": {
@@ -1549,7 +1549,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 1,
-   "saniye": 142,
+   "saniye": 179,
    "mac": 1
   },
   "735811": {
@@ -1557,15 +1557,15 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 6,
-   "saniye": 142,
+   "saniye": 179,
    "mac": 1
   },
   "777679": {
    "ad": "Johnny  Juzang",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": -1,
-   "saniye": 142,
+   "vp": 2,
+   "saniye": 179,
    "mac": 1
   },
   "777704": {
@@ -1573,7 +1573,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 142,
+   "saniye": 179,
    "mac": 1
   },
   "777705": {
@@ -1581,7 +1581,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 142,
+   "saniye": 179,
    "mac": 1
   },
   "442131": {

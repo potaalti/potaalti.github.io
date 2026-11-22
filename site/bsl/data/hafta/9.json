@@ -95,15 +95,20 @@
   {
    "id": 346345,
    "tarih": "2026-11-22T20:30:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "BEŞİKTAŞ FUZUL",
    "evId": 265992,
-   "evSkor": null,
+   "evSkor": "0",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": null,
+   "depSkor": "2",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "09:29",
+    "uzatma": false
+   }
   }
  ],
  "oyuncular": {
@@ -1439,6 +1444,190 @@
    "ad": "Yusuf Gündüz",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "735336": {
+   "ad": "Devon Dotson",
+   "takim": "BEŞİKTAŞ FUZUL",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 31,
+   "mac": 1
+  },
+  "777634": {
+   "ad": "Daquan Jeffries",
+   "takim": "BEŞİKTAŞ FUZUL",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 31,
+   "mac": 1
+  },
+  "782996": {
+   "ad": "Lonnie Walker Iv",
+   "takim": "BEŞİKTAŞ FUZUL",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 31,
+   "mac": 1
+  },
+  "133112": {
+   "ad": "Metecan Birsen",
+   "takim": "BEŞİKTAŞ FUZUL",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 31,
+   "mac": 1
+  },
+  "397202": {
+   "ad": "Ante Zizic",
+   "takim": "BEŞİKTAŞ FUZUL",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 31,
+   "mac": 1
+  },
+  "114257": {
+   "ad": "Berk Uğurlu",
+   "takim": "BEŞİKTAŞ FUZUL",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "445794": {
+   "ad": "Burak Çeçen",
+   "takim": "BEŞİKTAŞ FUZUL",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "589830": {
+   "ad": "Conor Morgan",
+   "takim": "BEŞİKTAŞ FUZUL",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "363061": {
+   "ad": "Scottie Wilbekin",
+   "takim": "BEŞİKTAŞ FUZUL",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "777636": {
+   "ad": "Eugene Omoruyi",
+   "takim": "BEŞİKTAŞ FUZUL",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "501381": {
+   "ad": "Anthony Brown",
+   "takim": "BEŞİKTAŞ FUZUL",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "163489": {
+   "ad": "Furkan Korkmaz",
+   "takim": "BEŞİKTAŞ FUZUL",
+   "takimId": 265992,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "54659": {
+   "ad": "Sertaç Şanlı",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 31,
+   "mac": 1
+  },
+  "735811": {
+   "ad": "Talen Horton-Tucker",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 31,
+   "mac": 1
+  },
+  "777679": {
+   "ad": "Johnny  Juzang",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 31,
+   "mac": 1
+  },
+  "777704": {
+   "ad": "Trent Forrest",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 31,
+   "mac": 1
+  },
+  "777705": {
+   "ad": "Shavon Shields",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 2,
+   "saniye": 31,
+   "mac": 1
+  },
+  "442131": {
+   "ad": "Shane Larkin",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "667814": {
+   "ad": "Wade Baldwin Iv",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "27541": {
+   "ad": "Melih Mahmutoğlu",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "378292": {
+   "ad": "Yiğit Yancı",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "144725": {
+   "ad": "Onuralp Bitim",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "386832": {
+   "ad": "Will Clyburn",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
    "vp": 0,
    "saniye": 0,
    "mac": 1

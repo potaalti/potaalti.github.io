@@ -95,15 +95,20 @@
   {
    "id": 346345,
    "tarih": "2026-11-22T20:30:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "BEŞİKTAŞ FUZUL",
    "evId": 265992,
-   "evSkor": null,
+   "evSkor": "0",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": null,
+   "depSkor": "2",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "09:29",
+    "uzatma": false
+   }
   }
  ]
 }

@@ -85,7 +85,7 @@
    "durum": "canli",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
-   "evSkor": "26",
+   "evSkor": "29",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
    "depSkor": "18",
@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "00:51",
+    "saat": "00:31",
     "uzatma": false
    }
   },

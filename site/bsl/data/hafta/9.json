@@ -88,12 +88,12 @@
    "evSkor": "34",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
-   "depSkor": "26",
+   "depSkor": "29",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "06:37",
+    "saat": "05:17",
     "uzatma": false
    }
   },
@@ -1261,7 +1261,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 5,
-   "saniye": 270,
+   "saniye": 348,
    "mac": 1
   },
   "250129": {
@@ -1269,7 +1269,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 8,
-   "saniye": 516,
+   "saniye": 594,
    "mac": 1
   },
   "502492": {
@@ -1285,7 +1285,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 2,
-   "saniye": 439,
+   "saniye": 517,
    "mac": 1
   },
   "779274": {
@@ -1316,8 +1316,8 @@
    "ad": "Alen Smailagic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 5,
-   "saniye": 479,
+   "vp": 6,
+   "saniye": 557,
    "mac": 1
   },
   "363559": {
@@ -1332,8 +1332,8 @@
    "ad": "Buğrahan Tuncer",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 6,
-   "saniye": 375,
+   "vp": 5,
+   "saniye": 453,
    "mac": 1
   },
   "500054": {
@@ -1365,7 +1365,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 4,
-   "saniye": 728,
+   "saniye": 806,
    "mac": 1
   },
   "310250": {
@@ -1397,15 +1397,15 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 6,
-   "saniye": 479,
+   "saniye": 557,
    "mac": 1
   },
   "778246": {
    "ad": "Max Abmas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 2,
-   "saniye": 533,
+   "vp": 5,
+   "saniye": 611,
    "mac": 1
   },
   "269217": {
@@ -1413,7 +1413,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 3,
-   "saniye": 375,
+   "saniye": 453,
    "mac": 1
   },
   "284983": {
@@ -1429,7 +1429,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 0,
-   "saniye": 375,
+   "saniye": 453,
    "mac": 1
   },
   "475706": {

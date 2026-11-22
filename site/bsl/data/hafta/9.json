@@ -72,7 +72,7 @@
    "durum": "canli",
    "ev": "TRABZONSPOR",
    "evId": 266029,
-   "evSkor": "13",
+   "evSkor": "15",
    "dep": "ANADOLU EFES",
    "depId": 265990,
    "depSkor": "21",
@@ -80,7 +80,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "01:24",
+    "saat": "00:56",
     "uzatma": false
    }
   },
@@ -1068,8 +1068,8 @@
    "ad": "Brandon Boston Jr.",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 11,
-   "saniye": 515,
+   "vp": 13,
+   "saniye": 544,
    "mac": 1
   },
   "105532": {
@@ -1109,7 +1109,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": -3,
-   "saniye": 265,
+   "saniye": 294,
    "mac": 1
   },
   "133530": {
@@ -1133,7 +1133,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 2,
-   "saniye": 146,
+   "saniye": 175,
    "mac": 1
   },
   "741031": {
@@ -1141,7 +1141,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 0,
-   "saniye": 101,
+   "saniye": 130,
    "mac": 1
   },
   "129295": {
@@ -1149,7 +1149,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 1,
-   "saniye": 162,
+   "saniye": 191,
    "mac": 1
   },
   "369269": {
@@ -1164,8 +1164,8 @@
    "ad": "Jordan Loyd",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 5,
-   "saniye": 515,
+   "vp": 6,
+   "saniye": 544,
    "mac": 1
   },
   "333434": {
@@ -1188,8 +1188,8 @@
    "ad": "David Mutaf",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 1,
-   "saniye": 515,
+   "vp": 0,
+   "saniye": 544,
    "mac": 1
   },
   "735850": {
@@ -1221,7 +1221,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 2,
-   "saniye": 265,
+   "saniye": 294,
    "mac": 1
   },
   "137459": {
@@ -1237,7 +1237,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": -1,
-   "saniye": 52,
+   "saniye": 81,
    "mac": 1
   },
   "778421": {
@@ -1245,7 +1245,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 0,
-   "saniye": 38,
+   "saniye": 67,
    "mac": 1
   },
   "157002": {

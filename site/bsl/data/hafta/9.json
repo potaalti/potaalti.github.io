@@ -72,7 +72,7 @@
    "durum": "canli",
    "ev": "TRABZONSPOR",
    "evId": 266029,
-   "evSkor": "36",
+   "evSkor": "40",
    "dep": "ANADOLU EFES",
    "depId": 265990,
    "depSkor": "46",
@@ -80,7 +80,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "07:51",
+    "saat": "07:15",
     "uzatma": false
    }
   },
@@ -1068,8 +1068,8 @@
    "ad": "Brandon Boston Jr.",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 13,
-   "saniye": 1203,
+   "vp": 14,
+   "saniye": 1224,
    "mac": 1
   },
   "105532": {
@@ -1077,7 +1077,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 1,
-   "saniye": 732,
+   "saniye": 753,
    "mac": 1
   },
   "473256": {
@@ -1085,7 +1085,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 2,
-   "saniye": 979,
+   "saniye": 1000,
    "mac": 1
   },
   "590409": {
@@ -1100,8 +1100,8 @@
    "ad": "Rıdvan Öncel",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 5,
-   "saniye": 553,
+   "vp": 8,
+   "saniye": 574,
    "mac": 1
   },
   "779255": {
@@ -1140,8 +1140,8 @@
    "ad": "Royce Hamm Jr.",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 15,
-   "saniye": 747,
+   "vp": 17,
+   "saniye": 768,
    "mac": 1
   },
   "129295": {
@@ -1173,7 +1173,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 8,
-   "saniye": 607,
+   "saniye": 628,
    "mac": 1
   },
   "782949": {
@@ -1189,15 +1189,15 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": -1,
-   "saniye": 862,
+   "saniye": 883,
    "mac": 1
   },
   "735850": {
    "ad": "Kai Jones",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 8,
-   "saniye": 716,
+   "vp": 7,
+   "saniye": 737,
    "mac": 1
   },
   "508583": {
@@ -1213,7 +1213,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 6,
-   "saniye": 626,
+   "saniye": 647,
    "mac": 1
   },
   "609323": {
@@ -1245,7 +1245,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 5,
-   "saniye": 867,
+   "saniye": 888,
    "mac": 1
   },
   "157002": {

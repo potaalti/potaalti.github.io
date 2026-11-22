@@ -101,12 +101,12 @@
    "evSkor": "79",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": "65",
+   "depSkor": "67",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "06:55",
+    "saat": "06:39",
     "uzatma": false
    }
   }
@@ -1461,7 +1461,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 3,
-   "saniye": 856,
+   "saniye": 869,
    "mac": 1
   },
   "782996": {
@@ -1477,7 +1477,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 715,
+   "saniye": 720,
    "mac": 1
   },
   "397202": {
@@ -1485,7 +1485,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 13,
-   "saniye": 1044,
+   "saniye": 1057,
    "mac": 1
   },
   "114257": {
@@ -1493,7 +1493,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 11,
-   "saniye": 897,
+   "saniye": 910,
    "mac": 1
   },
   "445794": {
@@ -1517,7 +1517,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 11,
-   "saniye": 1079,
+   "saniye": 1092,
    "mac": 1
   },
   "777636": {
@@ -1532,8 +1532,8 @@
    "ad": "Anthony Brown",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 3,
-   "saniye": 1113,
+   "vp": 2,
+   "saniye": 1121,
    "mac": 1
   },
   "163489": {
@@ -1548,16 +1548,16 @@
    "ad": "Sertaç Şanlı",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 3,
-   "saniye": 684,
+   "vp": 4,
+   "saniye": 697,
    "mac": 1
   },
   "735811": {
    "ad": "Talen Horton-Tucker",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 17,
-   "saniye": 1132,
+   "vp": 19,
+   "saniye": 1145,
    "mac": 1
   },
   "777679": {
@@ -1565,7 +1565,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 10,
-   "saniye": 1623,
+   "saniye": 1631,
    "mac": 1
   },
   "777704": {
@@ -1581,7 +1581,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 8,
-   "saniye": 1023,
+   "saniye": 1035,
    "mac": 1
   },
   "442131": {
@@ -1620,8 +1620,8 @@
    "ad": "Onuralp Bitim",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 1,
-   "saniye": 586,
+   "vp": 2,
+   "saniye": 599,
    "mac": 1
   },
   "386832": {
@@ -1629,7 +1629,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 7,
-   "saniye": 1104,
+   "saniye": 1109,
    "mac": 1
   }
  }

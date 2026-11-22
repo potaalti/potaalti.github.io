@@ -80,7 +80,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "03:21",
+    "saat": "03:06",
     "uzatma": false
    }
   },
@@ -1069,7 +1069,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 9,
-   "saniye": 413,
+   "saniye": 414,
    "mac": 1
   },
   "105532": {
@@ -1092,8 +1092,8 @@
    "ad": "Brady Manek",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": -1,
-   "saniye": 413,
+   "vp": -2,
+   "saniye": 414,
    "mac": 1
   },
   "192987": {
@@ -1109,7 +1109,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": -2,
-   "saniye": 163,
+   "saniye": 164,
    "mac": 1
   },
   "133530": {
@@ -1133,7 +1133,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 0,
-   "saniye": 44,
+   "saniye": 45,
    "mac": 1
   },
   "741031": {
@@ -1149,7 +1149,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 1,
-   "saniye": 60,
+   "saniye": 61,
    "mac": 1
   },
   "369269": {
@@ -1165,7 +1165,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 6,
-   "saniye": 413,
+   "saniye": 414,
    "mac": 1
   },
   "333434": {
@@ -1173,7 +1173,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 8,
-   "saniye": 413,
+   "saniye": 414,
    "mac": 1
   },
   "782949": {
@@ -1181,7 +1181,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 4,
-   "saniye": 413,
+   "saniye": 414,
    "mac": 1
   },
   "281408": {
@@ -1189,7 +1189,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 1,
-   "saniye": 413,
+   "saniye": 414,
    "mac": 1
   },
   "735850": {
@@ -1221,7 +1221,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 3,
-   "saniye": 163,
+   "saniye": 164,
    "mac": 1
   },
   "137459": {

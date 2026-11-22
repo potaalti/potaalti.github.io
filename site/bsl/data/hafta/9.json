@@ -80,7 +80,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "09:29",
+    "saat": "08:47",
     "uzatma": false
    }
   },
@@ -1069,7 +1069,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 13,
-   "saniye": 648,
+   "saniye": 675,
    "mac": 1
   },
   "105532": {
@@ -1108,8 +1108,8 @@
    "ad": "Marcus Keene",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 0,
-   "saniye": 398,
+   "vp": -1,
+   "saniye": 425,
    "mac": 1
   },
   "133530": {
@@ -1132,8 +1132,8 @@
    "ad": "Akwasi Yeboah",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 2,
-   "saniye": 279,
+   "vp": 3,
+   "saniye": 306,
    "mac": 1
   },
   "741031": {
@@ -1141,7 +1141,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 3,
-   "saniye": 234,
+   "saniye": 261,
    "mac": 1
   },
   "129295": {
@@ -1149,7 +1149,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 0,
-   "saniye": 295,
+   "saniye": 322,
    "mac": 1
   },
   "369269": {
@@ -1164,8 +1164,8 @@
    "ad": "Jordan Loyd",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 8,
-   "saniye": 648,
+   "vp": 9,
+   "saniye": 675,
    "mac": 1
   },
   "333434": {
@@ -1189,7 +1189,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": -1,
-   "saniye": 648,
+   "saniye": 675,
    "mac": 1
   },
   "735850": {
@@ -1221,7 +1221,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 2,
-   "saniye": 398,
+   "saniye": 425,
    "mac": 1
   },
   "137459": {
@@ -1236,8 +1236,8 @@
    "ad": "Ercan Osmani",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": -1,
-   "saniye": 185,
+   "vp": -2,
+   "saniye": 212,
    "mac": 1
   },
   "778421": {
@@ -1245,7 +1245,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": -1,
-   "saniye": 171,
+   "saniye": 198,
    "mac": 1
   },
   "157002": {

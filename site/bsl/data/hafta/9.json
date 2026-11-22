@@ -85,7 +85,7 @@
    "durum": "canli",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
-   "evSkor": "73",
+   "evSkor": "75",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
    "depSkor": "58",
@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "06:43",
+    "saat": "06:14",
     "uzatma": false
    }
   },
@@ -1269,7 +1269,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 18,
-   "saniye": 1320,
+   "saniye": 1348,
    "mac": 1
   },
   "502492": {
@@ -1317,7 +1317,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 11,
-   "saniye": 1141,
+   "saniye": 1169,
    "mac": 1
   },
   "363559": {
@@ -1333,23 +1333,23 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 10,
-   "saniye": 841,
+   "saniye": 869,
    "mac": 1
   },
   "500054": {
    "ad": "Dyshawn Pierre",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 6,
-   "saniye": 677,
+   "vp": 7,
+   "saniye": 705,
    "mac": 1
   },
   "781548": {
    "ad": "Kj Simpson",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 6,
-   "saniye": 1388,
+   "vp": 8,
+   "saniye": 1416,
    "mac": 1
   },
   "516236": {
@@ -1357,7 +1357,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 3,
-   "saniye": 1247,
+   "saniye": 1275,
    "mac": 1
   },
   "778249": {
@@ -1380,8 +1380,8 @@
    "ad": "Anzejs Pasecniks",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 18,
-   "saniye": 1026,
+   "vp": 19,
+   "saniye": 1054,
    "mac": 1
   },
   "572386": {
@@ -1389,7 +1389,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 0,
-   "saniye": 1273,
+   "saniye": 1301,
    "mac": 1
   },
   "778279": {
@@ -1404,8 +1404,8 @@
    "ad": "Max Abmas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 9,
-   "saniye": 1624,
+   "vp": 8,
+   "saniye": 1652,
    "mac": 1
   },
   "269217": {
@@ -1428,8 +1428,8 @@
    "ad": "Thomas Akyazılı",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 3,
-   "saniye": 812,
+   "vp": 2,
+   "saniye": 840,
    "mac": 1
   },
   "475706": {

@@ -4642,9 +4642,9 @@
   "sureOrt": "00:00:00",
   "foto": "https://tbf.org.tr/res/426b1495-076a-4318-b71a-8b3d49ae8290_9.webp",
   "boy": null,
-  "mevkiTahmini": null,
+  "mevkiTahmini": "arka",
   "ribOrt": 0.0,
-  "astOrt": 0.0
+  "astOrt": 1.0
  },
  {
   "id": "356549",

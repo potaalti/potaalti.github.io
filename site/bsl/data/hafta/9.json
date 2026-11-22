@@ -75,12 +75,12 @@
    "evSkor": "11",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "13",
+   "depSkor": "16",
    "salon": "Hayri Gür Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "04:45",
+    "saat": "04:07",
     "uzatma": false
    }
   },
@@ -1069,7 +1069,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 9,
-   "saniye": 315,
+   "saniye": 353,
    "mac": 1
   },
   "105532": {
@@ -1077,7 +1077,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 0,
-   "saniye": 315,
+   "saniye": 353,
    "mac": 1
   },
   "473256": {
@@ -1085,7 +1085,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 3,
-   "saniye": 315,
+   "saniye": 353,
    "mac": 1
   },
   "590409": {
@@ -1093,7 +1093,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 0,
-   "saniye": 315,
+   "saniye": 353,
    "mac": 1
   },
   "192987": {
@@ -1109,7 +1109,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": -2,
-   "saniye": 65,
+   "saniye": 103,
    "mac": 1
   },
   "133530": {
@@ -1165,15 +1165,15 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 3,
-   "saniye": 315,
+   "saniye": 353,
    "mac": 1
   },
   "333434": {
    "ad": "Dario Saric",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 4,
-   "saniye": 315,
+   "vp": 7,
+   "saniye": 353,
    "mac": 1
   },
   "782949": {
@@ -1181,7 +1181,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 3,
-   "saniye": 315,
+   "saniye": 353,
    "mac": 1
   },
   "281408": {
@@ -1189,7 +1189,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 2,
-   "saniye": 315,
+   "saniye": 353,
    "mac": 1
   },
   "735850": {
@@ -1220,8 +1220,8 @@
    "ad": "Georgios Papagiannis",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 3,
-   "saniye": 65,
+   "vp": 4,
+   "saniye": 103,
    "mac": 1
   },
   "137459": {

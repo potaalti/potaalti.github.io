@@ -101,12 +101,12 @@
    "evSkor": "79",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": "63",
+   "depSkor": "65",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "07:47",
+    "saat": "07:21",
     "uzatma": false
    }
   }
@@ -1452,8 +1452,8 @@
    "ad": "Devon Dotson",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 2,
-   "saniye": 1057,
+   "vp": 1,
+   "saniye": 1082,
    "mac": 1
   },
   "777634": {
@@ -1461,7 +1461,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 3,
-   "saniye": 801,
+   "saniye": 829,
    "mac": 1
   },
   "782996": {
@@ -1485,7 +1485,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 13,
-   "saniye": 989,
+   "saniye": 1016,
    "mac": 1
   },
   "114257": {
@@ -1493,7 +1493,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 11,
-   "saniye": 868,
+   "saniye": 869,
    "mac": 1
   },
   "445794": {
@@ -1517,7 +1517,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 11,
-   "saniye": 1024,
+   "saniye": 1051,
    "mac": 1
   },
   "777636": {
@@ -1533,7 +1533,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 3,
-   "saniye": 1058,
+   "saniye": 1085,
    "mac": 1
   },
   "163489": {
@@ -1549,15 +1549,15 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 3,
-   "saniye": 629,
+   "saniye": 656,
    "mac": 1
   },
   "735811": {
    "ad": "Talen Horton-Tucker",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 17,
-   "saniye": 1077,
+   "vp": 18,
+   "saniye": 1104,
    "mac": 1
   },
   "777679": {
@@ -1565,7 +1565,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 10,
-   "saniye": 1568,
+   "saniye": 1595,
    "mac": 1
   },
   "777704": {
@@ -1581,7 +1581,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 7,
-   "saniye": 968,
+   "saniye": 995,
    "mac": 1
   },
   "442131": {
@@ -1621,7 +1621,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 1,
-   "saniye": 531,
+   "saniye": 558,
    "mac": 1
   },
   "386832": {

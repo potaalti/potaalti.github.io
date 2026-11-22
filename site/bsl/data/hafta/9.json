@@ -62,7 +62,7 @@
    "evSkor": "49",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": "39",
+   "depSkor": "40",
    "salon": "Çayırova Belediyesi Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
@@ -988,7 +988,7 @@
    "ad": "James Webb Iii",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": -2,
+   "vp": -1,
    "saniye": 579,
    "mac": 1
   },

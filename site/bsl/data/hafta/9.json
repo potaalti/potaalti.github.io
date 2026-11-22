@@ -80,7 +80,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "06:33",
+    "saat": "06:16",
     "uzatma": false
    }
   },
@@ -1069,15 +1069,15 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 14,
-   "saniye": 1269,
+   "saniye": 1283,
    "mac": 1
   },
   "105532": {
    "ad": "Yiğit Arslan",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 4,
-   "saniye": 798,
+   "vp": 5,
+   "saniye": 812,
    "mac": 1
   },
   "473256": {
@@ -1085,7 +1085,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 2,
-   "saniye": 1045,
+   "saniye": 1059,
    "mac": 1
   },
   "590409": {
@@ -1100,8 +1100,8 @@
    "ad": "Rıdvan Öncel",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 10,
-   "saniye": 619,
+   "vp": 9,
+   "saniye": 633,
    "mac": 1
   },
   "779255": {
@@ -1141,7 +1141,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 17,
-   "saniye": 813,
+   "saniye": 827,
    "mac": 1
   },
   "129295": {
@@ -1172,8 +1172,8 @@
    "ad": "Dario Saric",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 9,
-   "saniye": 673,
+   "vp": 8,
+   "saniye": 687,
    "mac": 1
   },
   "782949": {
@@ -1188,8 +1188,8 @@
    "ad": "David Mutaf",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": -1,
-   "saniye": 928,
+   "vp": -2,
+   "saniye": 942,
    "mac": 1
   },
   "735850": {
@@ -1197,7 +1197,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 7,
-   "saniye": 782,
+   "saniye": 796,
    "mac": 1
   },
   "508583": {
@@ -1212,8 +1212,8 @@
    "ad": "Santi Yusta",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 5,
-   "saniye": 692,
+   "vp": 6,
+   "saniye": 706,
    "mac": 1
   },
   "609323": {
@@ -1245,7 +1245,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 5,
-   "saniye": 933,
+   "saniye": 947,
    "mac": 1
   },
   "157002": {

@@ -59,7 +59,7 @@
    "durum": "canli",
    "ev": "GLİNT ÇAYIROVA BELEDİYESİ",
    "evId": 265994,
-   "evSkor": "31",
+   "evSkor": "33",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
    "depSkor": "25",
@@ -67,7 +67,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "05:43",
+    "saat": "05:13",
     "uzatma": false
    }
   },
@@ -885,7 +885,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 9,
-   "saniye": 538,
+   "saniye": 568,
    "mac": 1
   },
   "666080": {
@@ -893,15 +893,15 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 7,
-   "saniye": 612,
+   "saniye": 642,
    "mac": 1
   },
   "160245": {
    "ad": "Enes Berkay Taşkıran",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 2,
-   "saniye": 455,
+   "vp": 4,
+   "saniye": 485,
    "mac": 1
   },
   "500074": {
@@ -909,7 +909,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 6,
-   "saniye": 572,
+   "saniye": 602,
    "mac": 1
   },
   "502472": {
@@ -948,8 +948,8 @@
    "ad": "Rasheed Sulaimon",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 2,
-   "saniye": 365,
+   "vp": 3,
+   "saniye": 395,
    "mac": 1
   },
   "122136": {
@@ -981,7 +981,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 15,
-   "saniye": 669,
+   "saniye": 699,
    "mac": 1
   },
   "667498": {
@@ -997,7 +997,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 1,
-   "saniye": 330,
+   "saniye": 360,
    "mac": 1
   },
   "120437": {
@@ -1013,7 +1013,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": -1,
-   "saniye": 364,
+   "saniye": 394,
    "mac": 1
   },
   "502518": {
@@ -1029,7 +1029,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 4,
-   "saniye": 542,
+   "saniye": 572,
    "mac": 1
   },
   "351474": {
@@ -1037,7 +1037,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 12,
+   "saniye": 42,
    "mac": 1
   },
   "57737": {

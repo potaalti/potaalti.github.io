@@ -85,7 +85,7 @@
    "durum": "canli",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
-   "evSkor": "29",
+   "evSkor": "31",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
    "depSkor": "22",
@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "08:20",
+    "saat": "07:57",
     "uzatma": false
    }
   },
@@ -1261,7 +1261,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 4,
-   "saniye": 165,
+   "saniye": 188,
    "mac": 1
   },
   "250129": {
@@ -1300,8 +1300,8 @@
    "ad": "Berkan Durmaz",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 0,
-   "saniye": 270,
+   "vp": 1,
+   "saniye": 293,
    "mac": 1
   },
   "221447": {
@@ -1317,7 +1317,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 4,
-   "saniye": 374,
+   "saniye": 397,
    "mac": 1
   },
   "363559": {
@@ -1332,8 +1332,8 @@
    "ad": "Buğrahan Tuncer",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 4,
-   "saniye": 270,
+   "vp": 6,
+   "saniye": 293,
    "mac": 1
   },
   "500054": {
@@ -1341,7 +1341,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 2,
-   "saniye": 193,
+   "saniye": 216,
    "mac": 1
   },
   "781548": {
@@ -1365,7 +1365,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 0,
-   "saniye": 623,
+   "saniye": 646,
    "mac": 1
   },
   "310250": {
@@ -1397,15 +1397,15 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 5,
-   "saniye": 374,
+   "saniye": 397,
    "mac": 1
   },
   "778246": {
    "ad": "Max Abmas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 3,
-   "saniye": 428,
+   "vp": 2,
+   "saniye": 451,
    "mac": 1
   },
   "269217": {
@@ -1413,7 +1413,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 3,
-   "saniye": 270,
+   "saniye": 293,
    "mac": 1
   },
   "284983": {
@@ -1429,7 +1429,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 0,
-   "saniye": 270,
+   "saniye": 293,
    "mac": 1
   },
   "475706": {

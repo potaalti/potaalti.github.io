@@ -80,7 +80,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "07:46",
+    "saat": "07:25",
     "uzatma": false
    }
   },
@@ -1069,15 +1069,15 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 0,
-   "saniye": 133,
+   "saniye": 166,
    "mac": 1
   },
   "105532": {
    "ad": "Yiğit Arslan",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 0,
-   "saniye": 133,
+   "vp": -1,
+   "saniye": 166,
    "mac": 1
   },
   "473256": {
@@ -1085,7 +1085,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 3,
-   "saniye": 133,
+   "saniye": 166,
    "mac": 1
   },
   "590409": {
@@ -1093,7 +1093,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 0,
-   "saniye": 133,
+   "saniye": 166,
    "mac": 1
   },
   "192987": {
@@ -1101,7 +1101,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 0,
-   "saniye": 133,
+   "saniye": 166,
    "mac": 1
   },
   "779255": {
@@ -1165,23 +1165,23 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 3,
-   "saniye": 133,
+   "saniye": 166,
    "mac": 1
   },
   "333434": {
    "ad": "Dario Saric",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 2,
-   "saniye": 133,
+   "vp": 3,
+   "saniye": 166,
    "mac": 1
   },
   "782949": {
    "ad": "Cameron Payne",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 1,
-   "saniye": 133,
+   "vp": 2,
+   "saniye": 166,
    "mac": 1
   },
   "281408": {
@@ -1189,7 +1189,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": -1,
-   "saniye": 133,
+   "saniye": 166,
    "mac": 1
   },
   "735850": {
@@ -1197,7 +1197,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 1,
-   "saniye": 133,
+   "saniye": 166,
    "mac": 1
   },
   "508583": {

@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "06:24",
+    "saat": "05:49",
     "uzatma": false
    }
   }
@@ -1453,7 +1453,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 481,
+   "saniye": 524,
    "mac": 1
   },
   "777634": {
@@ -1461,7 +1461,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 338,
+   "saniye": 381,
    "mac": 1
   },
   "782996": {
@@ -1476,8 +1476,8 @@
    "ad": "Metecan Birsen",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 2,
-   "saniye": 481,
+   "vp": 1,
+   "saniye": 503,
    "mac": 1
   },
   "397202": {
@@ -1517,7 +1517,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 5,
-   "saniye": 487,
+   "saniye": 530,
    "mac": 1
   },
   "777636": {
@@ -1525,15 +1525,15 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 7,
-   "saniye": 327,
+   "saniye": 348,
    "mac": 1
   },
   "501381": {
    "ad": "Anthony Brown",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 0,
-   "saniye": 337,
+   "vp": 1,
+   "saniye": 380,
    "mac": 1
   },
   "163489": {
@@ -1556,8 +1556,8 @@
    "ad": "Talen Horton-Tucker",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 9,
-   "saniye": 605,
+   "vp": 8,
+   "saniye": 649,
    "mac": 1
   },
   "777679": {
@@ -1565,15 +1565,15 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 498,
+   "saniye": 541,
    "mac": 1
   },
   "777704": {
    "ad": "Trent Forrest",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": -1,
-   "saniye": 498,
+   "vp": 0,
+   "saniye": 520,
    "mac": 1
   },
   "777705": {
@@ -1589,15 +1589,15 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 1,
-   "saniye": 378,
+   "saniye": 421,
    "mac": 1
   },
   "667814": {
    "ad": "Wade Baldwin Iv",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": -1,
-   "saniye": 413,
+   "vp": -2,
+   "saniye": 434,
    "mac": 1
   },
   "27541": {
@@ -1628,8 +1628,8 @@
    "ad": "Will Clyburn",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 0,
-   "saniye": 454,
+   "vp": 1,
+   "saniye": 497,
    "mac": 1
   }
  }

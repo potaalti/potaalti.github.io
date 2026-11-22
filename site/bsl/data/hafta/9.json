@@ -101,12 +101,12 @@
    "evSkor": "31",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": "22",
+   "depSkor": "24",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "08:10",
+    "saat": "07:58",
     "uzatma": false
    }
   }
@@ -1453,7 +1453,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 3,
-   "saniye": 375,
+   "saniye": 387,
    "mac": 1
   },
   "777634": {
@@ -1461,7 +1461,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 232,
+   "saniye": 244,
    "mac": 1
   },
   "782996": {
@@ -1477,7 +1477,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 375,
+   "saniye": 387,
    "mac": 1
   },
   "397202": {
@@ -1517,7 +1517,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 381,
+   "saniye": 393,
    "mac": 1
   },
   "777636": {
@@ -1533,7 +1533,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 231,
+   "saniye": 243,
    "mac": 1
   },
   "163489": {
@@ -1565,7 +1565,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 392,
+   "saniye": 404,
    "mac": 1
   },
   "777704": {
@@ -1573,7 +1573,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 392,
+   "saniye": 404,
    "mac": 1
   },
   "777705": {
@@ -1589,7 +1589,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 272,
+   "saniye": 284,
    "mac": 1
   },
   "667814": {
@@ -1597,7 +1597,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 348,
+   "saniye": 360,
    "mac": 1
   },
   "27541": {
@@ -1628,8 +1628,8 @@
    "ad": "Will Clyburn",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 0,
-   "saniye": 348,
+   "vp": 2,
+   "saniye": 360,
    "mac": 1
   }
  }

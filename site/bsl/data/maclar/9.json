@@ -95,7 +95,7 @@
   {
    "id": 346345,
    "tarih": "2026-11-22T20:30:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "BEŞİKTAŞ FUZUL",
    "evId": 265992,
    "evSkor": "92",
@@ -103,12 +103,7 @@
    "depId": 266025,
    "depSkor": "88",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "00:00",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   }
  ]
 }

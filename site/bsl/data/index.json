@@ -53,7 +53,7 @@
    "hafta": 9,
    "ilkMac": "2026-11-21T13:00:00+03:00",
    "macSayisi": 8,
-   "bitti": false
+   "bitti": true
   },
   {
    "hafta": 10,
@@ -182,5 +182,5 @@
    "bitti": false
   }
  ],
- "guncelleme": "2026-11-22T19:59:16+00:00"
+ "guncelleme": "2026-11-22T20:00:20+00:00"
 }

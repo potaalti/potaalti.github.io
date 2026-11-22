@@ -95,7 +95,7 @@
   {
    "id": 346345,
    "tarih": "2026-11-22T20:30:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "BEŞİKTAŞ FUZUL",
    "evId": 265992,
    "evSkor": "92",
@@ -103,12 +103,7 @@
    "depId": 266025,
    "depSkor": "88",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "00:00",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   }
  ],
  "oyuncular": {
@@ -1461,11 +1456,11 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 1033,
+   "saniye": 1032,
    "mac": 1
   },
   "782996": {
-   "ad": "Lonnie Walker Iv",
+   "ad": "Lonnie Walker IV",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 10,
@@ -1593,7 +1588,7 @@
    "mac": 1
   },
   "667814": {
-   "ad": "Wade Baldwin Iv",
+   "ad": "Wade Baldwin IV",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 3,
@@ -1605,7 +1600,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 503,
+   "saniye": 504,
    "mac": 1
   },
   "378292": {
@@ -1614,6 +1609,14 @@
    "takimId": 266025,
    "vp": 0,
    "saniye": 0,
+   "mac": 1
+  },
+  "785063": {
+   "ad": "Dwight Powell",
+   "takim": "FENERBAHÇE TARFİN",
+   "takimId": 266025,
+   "vp": 6,
+   "saniye": 1032,
    "mac": 1
   },
   "144725": {

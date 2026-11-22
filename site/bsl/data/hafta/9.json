@@ -62,7 +62,7 @@
    "evSkor": "17",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": "9",
+   "depSkor": "11",
    "salon": "Çayırova Belediyesi Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
@@ -980,7 +980,7 @@
    "ad": "Mike Davis Jr.",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 5,
+   "vp": 7,
    "saniye": 409,
    "mac": 1
   },
@@ -1004,7 +1004,7 @@
    "ad": "Egehan Arna",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 3,
+   "vp": 4,
    "saniye": 409,
    "mac": 1
   },

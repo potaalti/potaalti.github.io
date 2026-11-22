@@ -69,15 +69,20 @@
   {
    "id": 346341,
    "tarih": "2026-11-22T15:30:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "TRABZONSPOR",
    "evId": 266029,
-   "evSkor": null,
+   "evSkor": "0",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": null,
+   "depSkor": "0",
    "salon": "Hayri Gür Spor Salonu",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "09:58",
+    "uzatma": false
+   }
   },
   {
    "id": 346339,

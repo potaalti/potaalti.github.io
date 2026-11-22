@@ -4738,8 +4738,8 @@
   "foto": "https://tbf.org.tr/res/1b6ce577-1535-43b1-88f0-069759c67338_OsmanNurveren.webp",
   "boy": null,
   "mevkiTahmini": null,
-  "ribOrt": 0,
-  "astOrt": 0
+  "ribOrt": 0.0,
+  "astOrt": 0.0
  },
  {
   "id": "450092",

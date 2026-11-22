@@ -72,7 +72,7 @@
    "durum": "canli",
    "ev": "TRABZONSPOR",
    "evId": 266029,
-   "evSkor": "5",
+   "evSkor": "8",
    "dep": "ANADOLU EFES",
    "depId": 265990,
    "depSkor": "8",
@@ -80,7 +80,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "06:30",
+    "saat": "06:06",
     "uzatma": false
    }
   },

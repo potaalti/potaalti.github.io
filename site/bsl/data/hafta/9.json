@@ -85,7 +85,7 @@
    "durum": "canli",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
-   "evSkor": "17",
+   "evSkor": "20",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
    "depSkor": "8",
@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "04:34",
+    "saat": "04:30",
     "uzatma": false
    }
   },
@@ -1269,7 +1269,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 8,
-   "saniye": 326,
+   "saniye": 330,
    "mac": 1
   },
   "502492": {
@@ -1277,7 +1277,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 4,
-   "saniye": 326,
+   "saniye": 330,
    "mac": 1
   },
   "779275": {
@@ -1285,7 +1285,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 3,
-   "saniye": 326,
+   "saniye": 330,
    "mac": 1
   },
   "779274": {
@@ -1316,8 +1316,8 @@
    "ad": "Alen Smailagic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 0,
-   "saniye": 0,
+   "vp": 1,
+   "saniye": 4,
    "mac": 1
   },
   "363559": {
@@ -1348,8 +1348,8 @@
    "ad": "Kj Simpson",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 2,
-   "saniye": 161,
+   "vp": 5,
+   "saniye": 165,
    "mac": 1
   },
   "516236": {
@@ -1365,7 +1365,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": -1,
-   "saniye": 326,
+   "saniye": 330,
    "mac": 1
   },
   "310250": {
@@ -1373,7 +1373,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 1,
-   "saniye": 326,
+   "saniye": 330,
    "mac": 1
   },
   "675128": {
@@ -1389,7 +1389,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": -1,
-   "saniye": 326,
+   "saniye": 330,
    "mac": 1
   },
   "778279": {
@@ -1397,7 +1397,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 4,
    "mac": 1
   },
   "778246": {
@@ -1405,7 +1405,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 0,
-   "saniye": 54,
+   "saniye": 58,
    "mac": 1
   },
   "269217": {

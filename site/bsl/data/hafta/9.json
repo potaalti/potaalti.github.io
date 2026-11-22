@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "06:24",
+    "saat": "05:08",
     "uzatma": false
    }
   },
@@ -1268,16 +1268,16 @@
    "ad": "Şehmus Hazer",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 18,
-   "saniye": 1127,
+   "vp": 16,
+   "saniye": 1214,
    "mac": 1
   },
   "502492": {
    "ad": "Aleksej Nikolic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 8,
-   "saniye": 963,
+   "vp": 7,
+   "saniye": 1050,
    "mac": 1
   },
   "779275": {
@@ -1285,7 +1285,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 6,
-   "saniye": 1050,
+   "saniye": 1137,
    "mac": 1
   },
   "779274": {
@@ -1293,7 +1293,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 1,
-   "saniye": 751,
+   "saniye": 838,
    "mac": 1
   },
   "128768": {
@@ -1348,16 +1348,16 @@
    "ad": "Kj Simpson",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 1,
-   "saniye": 807,
+   "vp": 2,
+   "saniye": 894,
    "mac": 1
   },
   "516236": {
    "ad": "Khyri Thomas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 2,
-   "saniye": 666,
+   "vp": 4,
+   "saniye": 753,
    "mac": 1
   },
   "778249": {
@@ -1372,8 +1372,8 @@
    "ad": "Yiğit Onan",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 10,
-   "saniye": 963,
+   "vp": 11,
+   "saniye": 1050,
    "mac": 1
   },
   "675128": {
@@ -1389,23 +1389,23 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": -2,
-   "saniye": 878,
+   "saniye": 965,
    "mac": 1
   },
   "778279": {
    "ad": "Chris Horton",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 8,
-   "saniye": 773,
+   "vp": 7,
+   "saniye": 860,
    "mac": 1
   },
   "778246": {
    "ad": "Max Abmas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 8,
-   "saniye": 1144,
+   "vp": 7,
+   "saniye": 1231,
    "mac": 1
   },
   "269217": {

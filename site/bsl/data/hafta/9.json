@@ -101,12 +101,12 @@
    "evSkor": "29",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": "16",
+   "depSkor": "18",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "00:26",
+    "saat": "00:08",
     "uzatma": false
    }
   }
@@ -1469,7 +1469,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 230,
+   "saniye": 249,
    "mac": 1
   },
   "133112": {
@@ -1493,7 +1493,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 6,
-   "saniye": 308,
+   "saniye": 327,
    "mac": 1
   },
   "445794": {
@@ -1509,7 +1509,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 211,
+   "saniye": 230,
    "mac": 1
   },
   "363061": {
@@ -1525,7 +1525,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 7,
-   "saniye": 308,
+   "saniye": 327,
    "mac": 1
   },
   "501381": {
@@ -1533,7 +1533,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 1,
-   "saniye": 94,
+   "saniye": 113,
    "mac": 1
   },
   "163489": {
@@ -1557,7 +1557,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 6,
-   "saniye": 458,
+   "saniye": 476,
    "mac": 1
   },
   "777679": {
@@ -1581,15 +1581,15 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 5,
-   "saniye": 345,
+   "saniye": 364,
    "mac": 1
   },
   "442131": {
    "ad": "Shane Larkin",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 0,
-   "saniye": 143,
+   "vp": 2,
+   "saniye": 162,
    "mac": 1
   },
   "667814": {
@@ -1597,7 +1597,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 211,
+   "saniye": 230,
    "mac": 1
   },
   "27541": {
@@ -1629,7 +1629,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 211,
+   "saniye": 230,
    "mac": 1
   }
  }

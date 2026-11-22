@@ -59,15 +59,15 @@
    "durum": "canli",
    "ev": "GLİNT ÇAYIROVA BELEDİYESİ",
    "evId": 265994,
-   "evSkor": "35",
+   "evSkor": "37",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": "26",
+   "depSkor": "27",
    "salon": "Çayırova Belediyesi Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "03:59",
+    "saat": "03:33",
     "uzatma": false
    }
   },
@@ -884,16 +884,16 @@
    "ad": "Jordon Crawford",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 9,
-   "saniye": 642,
+   "vp": 10,
+   "saniye": 668,
    "mac": 1
   },
   "666080": {
    "ad": "Fabian White Jr.",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 10,
-   "saniye": 716,
+   "vp": 12,
+   "saniye": 742,
    "mac": 1
   },
   "160245": {
@@ -909,7 +909,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 6,
-   "saniye": 676,
+   "saniye": 702,
    "mac": 1
   },
   "502472": {
@@ -949,7 +949,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 4,
-   "saniye": 469,
+   "saniye": 495,
    "mac": 1
   },
   "122136": {
@@ -957,7 +957,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 7,
-   "saniye": 423,
+   "saniye": 449,
    "mac": 1
   },
   "367110": {
@@ -980,8 +980,8 @@
    "ad": "Mike Davis Jr.",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 16,
-   "saniye": 773,
+   "vp": 17,
+   "saniye": 799,
    "mac": 1
   },
   "667498": {
@@ -997,7 +997,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 1,
-   "saniye": 434,
+   "saniye": 460,
    "mac": 1
   },
   "120437": {
@@ -1013,7 +1013,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": -2,
-   "saniye": 468,
+   "saniye": 494,
    "mac": 1
   },
   "502518": {
@@ -1037,7 +1037,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": -1,
-   "saniye": 116,
+   "saniye": 142,
    "mac": 1
   },
   "57737": {
@@ -1061,7 +1061,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 294,
+   "saniye": 320,
    "mac": 1
   }
  }

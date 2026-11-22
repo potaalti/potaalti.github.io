@@ -75,12 +75,12 @@
    "evSkor": "27",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "32",
+   "depSkor": "35",
    "salon": "Hayri Gür Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "04:16",
+    "saat": "03:41",
     "uzatma": false
    }
   },
@@ -1069,7 +1069,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 13,
-   "saniye": 823,
+   "saniye": 857,
    "mac": 1
   },
   "105532": {
@@ -1077,7 +1077,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 1,
-   "saniye": 595,
+   "saniye": 629,
    "mac": 1
   },
   "473256": {
@@ -1085,7 +1085,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 1,
-   "saniye": 579,
+   "saniye": 613,
    "mac": 1
   },
   "590409": {
@@ -1093,7 +1093,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": -2,
-   "saniye": 519,
+   "saniye": 553,
    "mac": 1
   },
   "192987": {
@@ -1108,8 +1108,8 @@
    "ad": "Marcus Keene",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": -1,
-   "saniye": 694,
+   "vp": -2,
+   "saniye": 728,
    "mac": 1
   },
   "133530": {
@@ -1181,7 +1181,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 8,
-   "saniye": 582,
+   "saniye": 616,
    "mac": 1
   },
   "281408": {
@@ -1197,7 +1197,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 7,
-   "saniye": 355,
+   "saniye": 389,
    "mac": 1
   },
   "508583": {
@@ -1212,8 +1212,8 @@
    "ad": "Santi Yusta",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": -1,
-   "saniye": 226,
+   "vp": 2,
+   "saniye": 260,
    "mac": 1
   },
   "609323": {
@@ -1245,15 +1245,15 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": -2,
-   "saniye": 467,
+   "saniye": 501,
    "mac": 1
   },
   "157002": {
    "ad": "Erkan Yılmaz",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 3,
-   "saniye": 226,
+   "vp": 4,
+   "saniye": 260,
    "mac": 1
   }
  }

@@ -98,7 +98,7 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ FUZUL",
    "evId": 265992,
-   "evSkor": "2",
+   "evSkor": "4",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
    "depSkor": "4",
@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "09:14",
+    "saat": "08:27",
     "uzatma": false
    }
   }
@@ -1453,15 +1453,15 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 45,
+   "saniye": 93,
    "mac": 1
   },
   "777634": {
    "ad": "Daquan Jeffries",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 2,
-   "saniye": 45,
+   "vp": 4,
+   "saniye": 93,
    "mac": 1
   },
   "782996": {
@@ -1469,7 +1469,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 45,
+   "saniye": 93,
    "mac": 1
   },
   "133112": {
@@ -1477,7 +1477,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 45,
+   "saniye": 93,
    "mac": 1
   },
   "397202": {
@@ -1485,7 +1485,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 45,
+   "saniye": 93,
    "mac": 1
   },
   "114257": {
@@ -1549,7 +1549,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 45,
+   "saniye": 93,
    "mac": 1
   },
   "735811": {
@@ -1557,15 +1557,15 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 45,
+   "saniye": 93,
    "mac": 1
   },
   "777679": {
    "ad": "Johnny  Juzang",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 0,
-   "saniye": 45,
+   "vp": -1,
+   "saniye": 93,
    "mac": 1
   },
   "777704": {
@@ -1573,7 +1573,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 45,
+   "saniye": 93,
    "mac": 1
   },
   "777705": {
@@ -1581,7 +1581,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 45,
+   "saniye": 93,
    "mac": 1
   },
   "442131": {

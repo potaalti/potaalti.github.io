@@ -72,7 +72,7 @@
    "durum": "canli",
    "ev": "TRABZONSPOR",
    "evId": 266029,
-   "evSkor": "57",
+   "evSkor": "59",
    "dep": "ANADOLU EFES",
    "depId": 265990,
    "depSkor": "65",
@@ -80,7 +80,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "07:45",
+    "saat": "06:53",
     "uzatma": false
    }
   },
@@ -1069,15 +1069,15 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 18,
-   "saniye": 1794,
+   "saniye": 1846,
    "mac": 1
   },
   "105532": {
    "ad": "Yiğit Arslan",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 10,
-   "saniye": 1323,
+   "vp": 11,
+   "saniye": 1375,
    "mac": 1
   },
   "473256": {
@@ -1085,7 +1085,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 4,
-   "saniye": 1311,
+   "saniye": 1363,
    "mac": 1
   },
   "590409": {
@@ -1108,8 +1108,8 @@
    "ad": "Marcus Keene",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": -3,
-   "saniye": 1082,
+   "vp": -1,
+   "saniye": 1134,
    "mac": 1
   },
   "133530": {
@@ -1140,8 +1140,8 @@
    "ad": "Royce Hamm Jr.",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 17,
-   "saniye": 903,
+   "vp": 18,
+   "saniye": 955,
    "mac": 1
   },
   "129295": {
@@ -1164,8 +1164,8 @@
    "ad": "Jordan Loyd",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 15,
-   "saniye": 1404,
+   "vp": 14,
+   "saniye": 1456,
    "mac": 1
   },
   "333434": {
@@ -1181,7 +1181,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 11,
-   "saniye": 1230,
+   "saniye": 1282,
    "mac": 1
   },
   "281408": {
@@ -1221,7 +1221,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 12,
-   "saniye": 1139,
+   "saniye": 1191,
    "mac": 1
   },
   "137459": {
@@ -1244,8 +1244,8 @@
    "ad": "Matthew Strazel",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 4,
-   "saniye": 1048,
+   "vp": 3,
+   "saniye": 1100,
    "mac": 1
   },
   "157002": {
@@ -1253,7 +1253,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 4,
-   "saniye": 617,
+   "saniye": 669,
    "mac": 1
   }
  }

@@ -80,7 +80,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "06:16",
+    "saat": "06:02",
     "uzatma": false
    }
   },
@@ -1069,7 +1069,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 14,
-   "saniye": 1283,
+   "saniye": 1297,
    "mac": 1
   },
   "105532": {
@@ -1077,7 +1077,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 5,
-   "saniye": 812,
+   "saniye": 826,
    "mac": 1
   },
   "473256": {
@@ -1085,7 +1085,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 2,
-   "saniye": 1059,
+   "saniye": 1073,
    "mac": 1
   },
   "590409": {
@@ -1093,7 +1093,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": -2,
-   "saniye": 596,
+   "saniye": 611,
    "mac": 1
   },
   "192987": {
@@ -1108,8 +1108,8 @@
    "ad": "Marcus Keene",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": -2,
-   "saniye": 895,
+   "vp": -3,
+   "saniye": 909,
    "mac": 1
   },
   "133530": {
@@ -1165,7 +1165,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 13,
-   "saniye": 893,
+   "saniye": 907,
    "mac": 1
   },
   "333434": {
@@ -1173,7 +1173,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 8,
-   "saniye": 687,
+   "saniye": 701,
    "mac": 1
   },
   "782949": {
@@ -1189,7 +1189,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": -2,
-   "saniye": 942,
+   "saniye": 956,
    "mac": 1
   },
   "735850": {
@@ -1220,8 +1220,8 @@
    "ad": "Georgios Papagiannis",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 6,
-   "saniye": 628,
+   "vp": 7,
+   "saniye": 642,
    "mac": 1
   },
   "137459": {
@@ -1245,7 +1245,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 5,
-   "saniye": 947,
+   "saniye": 961,
    "mac": 1
   },
   "157002": {

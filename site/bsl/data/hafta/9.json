@@ -1069,15 +1069,15 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 20,
-   "saniye": 2206,
+   "saniye": 2227,
    "mac": 1
   },
   "105532": {
    "ad": "Yiğit Arslan",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 10,
-   "saniye": 1735,
+   "vp": 9,
+   "saniye": 1756,
    "mac": 1
   },
   "473256": {
@@ -1085,7 +1085,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 6,
-   "saniye": 1723,
+   "saniye": 1744,
    "mac": 1
   },
   "590409": {
@@ -1109,7 +1109,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 0,
-   "saniye": 1494,
+   "saniye": 1515,
    "mac": 1
   },
   "133530": {
@@ -1133,7 +1133,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 4,
-   "saniye": 896,
+   "saniye": 918,
    "mac": 1
   },
   "741031": {
@@ -1165,7 +1165,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 19,
-   "saniye": 1816,
+   "saniye": 1838,
    "mac": 1
   },
   "333434": {
@@ -1173,7 +1173,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 21,
-   "saniye": 1327,
+   "saniye": 1348,
    "mac": 1
   },
   "782949": {
@@ -1213,7 +1213,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 6,
-   "saniye": 706,
+   "saniye": 728,
    "mac": 1
   },
   "609323": {
@@ -1245,15 +1245,15 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 5,
-   "saniye": 1459,
+   "saniye": 1481,
    "mac": 1
   },
   "157002": {
    "ad": "Erkan Yılmaz",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 9,
-   "saniye": 1028,
+   "vp": 10,
+   "saniye": 1050,
    "mac": 1
   }
  }

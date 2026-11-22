@@ -98,15 +98,15 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ FUZUL",
    "evId": 265992,
-   "evSkor": "61",
+   "evSkor": "63",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": "43",
+   "depSkor": "46",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "05:49",
+    "saat": "05:19",
     "uzatma": false
    }
   }
@@ -1468,8 +1468,8 @@
    "ad": "Lonnie Walker Iv",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 11,
-   "saniye": 691,
+   "vp": 13,
+   "saniye": 699,
    "mac": 1
   },
   "133112": {
@@ -1493,7 +1493,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 11,
-   "saniye": 852,
+   "saniye": 860,
    "mac": 1
   },
   "445794": {
@@ -1509,7 +1509,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 5,
-   "saniye": 351,
+   "saniye": 359,
    "mac": 1
   },
   "363061": {
@@ -1533,7 +1533,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 811,
+   "saniye": 819,
    "mac": 1
   },
   "163489": {
@@ -1541,7 +1541,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 12,
-   "saniye": 732,
+   "saniye": 740,
    "mac": 1
   },
   "54659": {
@@ -1549,7 +1549,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 3,
-   "saniye": 566,
+   "saniye": 573,
    "mac": 1
   },
   "735811": {
@@ -1564,8 +1564,8 @@
    "ad": "Johnny  Juzang",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 5,
-   "saniye": 1156,
+   "vp": 8,
+   "saniye": 1164,
    "mac": 1
   },
   "777704": {
@@ -1596,8 +1596,8 @@
    "ad": "Wade Baldwin Iv",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 2,
-   "saniye": 790,
+   "vp": 3,
+   "saniye": 798,
    "mac": 1
   },
   "27541": {
@@ -1621,7 +1621,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 269,
+   "saniye": 277,
    "mac": 1
   },
   "386832": {
@@ -1629,7 +1629,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 778,
+   "saniye": 786,
    "mac": 1
   }
  }

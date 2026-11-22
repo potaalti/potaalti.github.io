@@ -98,15 +98,15 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ FUZUL",
    "evId": 265992,
-   "evSkor": "47",
+   "evSkor": "51",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": "33",
+   "depSkor": "35",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "01:23",
+    "saat": "00:26",
     "uzatma": false
    }
   }
@@ -1468,8 +1468,8 @@
    "ad": "Lonnie Walker Iv",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 3,
-   "saniye": 467,
+   "vp": 2,
+   "saniye": 522,
    "mac": 1
   },
   "133112": {
@@ -1485,15 +1485,15 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 10,
-   "saniye": 614,
+   "saniye": 669,
    "mac": 1
   },
   "114257": {
    "ad": "Berk Uğurlu",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 8,
-   "saniye": 579,
+   "vp": 11,
+   "saniye": 634,
    "mac": 1
   },
   "445794": {
@@ -1532,8 +1532,8 @@
    "ad": "Anthony Brown",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 1,
-   "saniye": 459,
+   "vp": 5,
+   "saniye": 514,
    "mac": 1
   },
   "163489": {
@@ -1541,7 +1541,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 11,
-   "saniye": 534,
+   "saniye": 589,
    "mac": 1
   },
   "54659": {
@@ -1549,7 +1549,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 3,
-   "saniye": 451,
+   "saniye": 506,
    "mac": 1
   },
   "735811": {
@@ -1565,7 +1565,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 5,
-   "saniye": 800,
+   "saniye": 855,
    "mac": 1
   },
   "777704": {
@@ -1581,7 +1581,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 6,
-   "saniye": 512,
+   "saniye": 567,
    "mac": 1
   },
   "442131": {
@@ -1597,15 +1597,15 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 649,
+   "saniye": 704,
    "mac": 1
   },
   "27541": {
    "ad": "Melih Mahmutoğlu",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 3,
-   "saniye": 249,
+   "vp": 2,
+   "saniye": 304,
    "mac": 1
   },
   "378292": {

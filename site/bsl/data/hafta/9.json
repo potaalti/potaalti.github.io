@@ -62,12 +62,12 @@
    "evSkor": "56",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": "46",
+   "depSkor": "49",
    "salon": "Çayırova Belediyesi Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "03:03",
+    "saat": "02:22",
     "uzatma": false
    }
   },
@@ -893,7 +893,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 20,
-   "saniye": 1372,
+   "saniye": 1413,
    "mac": 1
   },
   "160245": {
@@ -917,7 +917,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 3,
-   "saniye": 695,
+   "saniye": 736,
    "mac": 1
   },
   "107520": {
@@ -925,7 +925,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 1,
-   "saniye": 627,
+   "saniye": 668,
    "mac": 1
   },
   "127089": {
@@ -941,15 +941,15 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 6,
-   "saniye": 498,
+   "saniye": 539,
    "mac": 1
   },
   "510739": {
    "ad": "Rasheed Sulaimon",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 7,
-   "saniye": 941,
+   "vp": 6,
+   "saniye": 982,
    "mac": 1
   },
   "122136": {
@@ -981,7 +981,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 25,
-   "saniye": 1429,
+   "saniye": 1470,
    "mac": 1
   },
   "667498": {
@@ -1004,8 +1004,8 @@
    "ad": "Egehan Arna",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 8,
-   "saniye": 1262,
+   "vp": 10,
+   "saniye": 1303,
    "mac": 1
   },
   "359434": {
@@ -1013,15 +1013,15 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 764,
+   "saniye": 805,
    "mac": 1
   },
   "502518": {
    "ad": "Jordan Usher",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": -1,
-   "saniye": 357,
+   "vp": 2,
+   "saniye": 398,
    "mac": 1
   },
   "778079": {
@@ -1061,7 +1061,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 1,
-   "saniye": 498,
+   "saniye": 539,
    "mac": 1
   }
  }

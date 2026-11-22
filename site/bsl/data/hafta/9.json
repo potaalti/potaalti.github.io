@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "07:00",
+    "saat": "06:38",
     "uzatma": false
    }
   }
@@ -1453,7 +1453,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 179,
+   "saniye": 218,
    "mac": 1
   },
   "777634": {
@@ -1461,7 +1461,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 179,
+   "saniye": 202,
    "mac": 1
   },
   "782996": {
@@ -1477,7 +1477,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 179,
+   "saniye": 218,
    "mac": 1
   },
   "397202": {
@@ -1485,7 +1485,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 179,
+   "saniye": 218,
    "mac": 1
   },
   "114257": {
@@ -1517,7 +1517,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 43,
+   "saniye": 82,
    "mac": 1
   },
   "777636": {
@@ -1541,7 +1541,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 16,
    "mac": 1
   },
   "54659": {
@@ -1549,15 +1549,15 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 1,
-   "saniye": 179,
+   "saniye": 202,
    "mac": 1
   },
   "735811": {
    "ad": "Talen Horton-Tucker",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 6,
-   "saniye": 179,
+   "vp": 5,
+   "saniye": 218,
    "mac": 1
   },
   "777679": {
@@ -1565,7 +1565,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 179,
+   "saniye": 218,
    "mac": 1
   },
   "777704": {
@@ -1573,7 +1573,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 179,
+   "saniye": 218,
    "mac": 1
   },
   "777705": {
@@ -1581,7 +1581,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 179,
+   "saniye": 202,
    "mac": 1
   },
   "442131": {
@@ -1621,7 +1621,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 0,
-   "saniye": 0,
+   "saniye": 16,
    "mac": 1
   },
   "386832": {

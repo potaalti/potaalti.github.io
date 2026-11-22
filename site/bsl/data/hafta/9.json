@@ -59,7 +59,7 @@
    "durum": "canli",
    "ev": "GLİNT ÇAYIROVA BELEDİYESİ",
    "evId": 265994,
-   "evSkor": "4",
+   "evSkor": "5",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
    "depSkor": "5",
@@ -884,7 +884,7 @@
    "ad": "Jordon Crawford",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 0,
+   "vp": 1,
    "saniye": 125,
    "mac": 1
   },

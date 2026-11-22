@@ -59,7 +59,7 @@
    "durum": "canli",
    "ev": "GLİNT ÇAYIROVA BELEDİYESİ",
    "evId": 265994,
-   "evSkor": "83",
+   "evSkor": "85",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
    "depSkor": "78",
@@ -67,7 +67,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "00:16",
+    "saat": "00:00",
     "uzatma": false
    }
   },

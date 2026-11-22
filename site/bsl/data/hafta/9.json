@@ -75,7 +75,7 @@
    "evSkor": "46",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "54",
+   "depSkor": "55",
    "salon": "Hayri Gür Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
@@ -1188,7 +1188,7 @@
    "ad": "David Mutaf",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": -2,
+   "vp": -1,
    "saniye": 1129,
    "mac": 1
   },

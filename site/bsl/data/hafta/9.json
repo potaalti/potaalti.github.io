@@ -88,12 +88,12 @@
    "evSkor": "5",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
-   "depSkor": "2",
+   "depSkor": "4",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "09:05",
+    "saat": "08:39",
     "uzatma": false
    }
   },
@@ -1261,7 +1261,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 0,
-   "saniye": 54,
+   "saniye": 81,
    "mac": 1
   },
   "250129": {
@@ -1269,7 +1269,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 4,
-   "saniye": 54,
+   "saniye": 81,
    "mac": 1
   },
   "502492": {
@@ -1277,7 +1277,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 0,
-   "saniye": 54,
+   "saniye": 81,
    "mac": 1
   },
   "779275": {
@@ -1285,7 +1285,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 0,
-   "saniye": 54,
+   "saniye": 81,
    "mac": 1
   },
   "779274": {
@@ -1293,7 +1293,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 2,
-   "saniye": 54,
+   "saniye": 81,
    "mac": 1
   },
   "128768": {
@@ -1356,8 +1356,8 @@
    "ad": "Khyri Thomas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 0,
-   "saniye": 54,
+   "vp": 1,
+   "saniye": 81,
    "mac": 1
   },
   "778249": {
@@ -1365,7 +1365,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 0,
-   "saniye": 54,
+   "saniye": 81,
    "mac": 1
   },
   "310250": {
@@ -1373,15 +1373,15 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": -1,
-   "saniye": 54,
+   "saniye": 81,
    "mac": 1
   },
   "675128": {
    "ad": "Anzejs Pasecniks",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 3,
-   "saniye": 54,
+   "vp": 5,
+   "saniye": 81,
    "mac": 1
   },
   "572386": {
@@ -1389,7 +1389,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 0,
-   "saniye": 54,
+   "saniye": 81,
    "mac": 1
   },
   "778279": {

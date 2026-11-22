@@ -56,15 +56,20 @@
   {
    "id": 346342,
    "tarih": "2026-11-22T13:00:00",
-   "durum": "oynanmadi",
+   "durum": "canli",
    "ev": "GLİNT ÇAYIROVA BELEDİYESİ",
    "evId": 265994,
-   "evSkor": null,
+   "evSkor": "2",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": null,
+   "depSkor": "0",
    "salon": "Çayırova Belediyesi Spor Kompleksi",
-   "yayin": "beINSports"
+   "yayin": "beINSports",
+   "canliDurum": {
+    "periyot": 1,
+    "saat": "09:40",
+    "uzatma": false
+   }
   },
   {
    "id": 346341,
@@ -871,6 +876,190 @@
    "ad": "Mehmet Oğuzhan Kızıl",
    "takim": "PİZZABULLS BORDO BANDIRMA",
    "takimId": 265993,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "501134": {
+   "ad": "Jordon Crawford",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 1,
+   "saniye": 20,
+   "mac": 1
+  },
+  "666080": {
+   "ad": "Fabian White Jr.",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 2,
+   "saniye": 20,
+   "mac": 1
+  },
+  "160245": {
+   "ad": "Enes Berkay Taşkıran",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 0,
+   "saniye": 20,
+   "mac": 1
+  },
+  "500074": {
+   "ad": "Jeremy Simmons",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 0,
+   "saniye": 20,
+   "mac": 1
+  },
+  "502472": {
+   "ad": "Michal Sokolowski",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 0,
+   "saniye": 20,
+   "mac": 1
+  },
+  "107520": {
+   "ad": "Kartal Özmızrak",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "127089": {
+   "ad": "Erdi Gülaslan",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "778461": {
+   "ad": "Nate Watson",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "510739": {
+   "ad": "Rasheed Sulaimon",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "122136": {
+   "ad": "Canberk Kuş",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "367110": {
+   "ad": "Emin Kara",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "takimId": 265994,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "470574": {
+   "ad": "Keye Van Der Vuurst",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 20,
+   "mac": 1
+  },
+  "606624": {
+   "ad": "Mike Davis Jr.",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 20,
+   "mac": 1
+  },
+  "667498": {
+   "ad": "James Webb Iii",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 20,
+   "mac": 1
+  },
+  "776570": {
+   "ad": "Kevin Yebo",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 20,
+   "mac": 1
+  },
+  "120437": {
+   "ad": "Egehan Arna",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 20,
+   "mac": 1
+  },
+  "359434": {
+   "ad": "Errick Mccollum",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "502518": {
+   "ad": "Jordan Usher",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "778079": {
+   "ad": "Amadou Sow",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "351474": {
+   "ad": "Melih Tunca",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "57737": {
+   "ad": "Yunus Emre Sonsırma",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "249031": {
+   "ad": "Metehan Akyel",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
+   "vp": 0,
+   "saniye": 0,
+   "mac": 1
+  },
+  "151935": {
+   "ad": "Muhsin Yaşar",
+   "takim": "ESENLER EROKSPOR",
+   "takimId": 266024,
    "vp": 0,
    "saniye": 0,
    "mac": 1

@@ -98,7 +98,7 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ FUZUL",
    "evId": 265992,
-   "evSkor": "51",
+   "evSkor": "54",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
    "depSkor": "35",
@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "00:03",
+    "saat": "00:00",
     "uzatma": false
    }
   }
@@ -1453,7 +1453,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 531,
+   "saniye": 535,
    "mac": 1
   },
   "777634": {
@@ -1461,15 +1461,15 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 510,
+   "saniye": 514,
    "mac": 1
   },
   "782996": {
    "ad": "Lonnie Walker Iv",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 2,
-   "saniye": 546,
+   "vp": 5,
+   "saniye": 549,
    "mac": 1
   },
   "133112": {
@@ -1517,7 +1517,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 5,
-   "saniye": 540,
+   "saniye": 544,
    "mac": 1
   },
   "777636": {
@@ -1525,7 +1525,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 9,
-   "saniye": 535,
+   "saniye": 538,
    "mac": 1
   },
   "501381": {
@@ -1549,7 +1549,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 3,
-   "saniye": 530,
+   "saniye": 533,
    "mac": 1
   },
   "735811": {
@@ -1557,7 +1557,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 7,
-   "saniye": 726,
+   "saniye": 729,
    "mac": 1
   },
   "777679": {
@@ -1565,7 +1565,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 5,
-   "saniye": 879,
+   "saniye": 882,
    "mac": 1
   },
   "777704": {
@@ -1589,7 +1589,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 597,
+   "saniye": 600,
    "mac": 1
   },
   "667814": {
@@ -1597,7 +1597,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 728,
+   "saniye": 731,
    "mac": 1
   },
   "27541": {

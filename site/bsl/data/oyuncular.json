@@ -775,7 +775,7 @@
   "foto": "https://tbf.org.tr/res/975ed748-6274-4548-a085-7659415f5a0a_BJKWEB41.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 5.0,
+  "ribOrt": 5.1,
   "astOrt": 0.5
  },
  {
@@ -1459,7 +1459,7 @@
   "foto": "https://tbf.org.tr/res/bf951fc2-94f2-4b33-9fac-dc5b99f91649_LonnieWalker.webp",
   "boy": null,
   "mevkiTahmini": "on",
-  "ribOrt": 2.0,
+  "ribOrt": 2.3,
   "astOrt": 0.7
  },
  {
@@ -1840,7 +1840,7 @@
   "boy": null,
   "mevkiTahmini": "on",
   "ribOrt": 2.5,
-  "astOrt": 0.8
+  "astOrt": 1.0
  },
  {
   "id": "777634",

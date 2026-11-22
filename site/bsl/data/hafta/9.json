@@ -85,7 +85,7 @@
    "durum": "canli",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
-   "evSkor": "70",
+   "evSkor": "73",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
    "depSkor": "55",
@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "08:19",
+    "saat": "07:14",
     "uzatma": false
    }
   },
@@ -1300,8 +1300,8 @@
    "ad": "Berkan Durmaz",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 5,
-   "saniye": 596,
+   "vp": 7,
+   "saniye": 670,
    "mac": 1
   },
   "221447": {
@@ -1317,7 +1317,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 11,
-   "saniye": 1045,
+   "saniye": 1119,
    "mac": 1
   },
   "363559": {
@@ -1333,15 +1333,15 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 10,
-   "saniye": 745,
+   "saniye": 819,
    "mac": 1
   },
   "500054": {
    "ad": "Dyshawn Pierre",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 3,
-   "saniye": 581,
+   "vp": 6,
+   "saniye": 655,
    "mac": 1
   },
   "781548": {
@@ -1349,15 +1349,15 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 6,
-   "saniye": 1292,
+   "saniye": 1366,
    "mac": 1
   },
   "516236": {
    "ad": "Khyri Thomas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 5,
-   "saniye": 1151,
+   "vp": 3,
+   "saniye": 1225,
    "mac": 1
   },
   "778249": {
@@ -1381,7 +1381,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 18,
-   "saniye": 930,
+   "saniye": 1004,
    "mac": 1
   },
   "572386": {
@@ -1389,7 +1389,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": -3,
-   "saniye": 1177,
+   "saniye": 1251,
    "mac": 1
   },
   "778279": {
@@ -1405,7 +1405,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 9,
-   "saniye": 1528,
+   "saniye": 1602,
    "mac": 1
   },
   "269217": {
@@ -1428,8 +1428,8 @@
    "ad": "Thomas Akyazılı",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 1,
-   "saniye": 716,
+   "vp": 2,
+   "saniye": 790,
    "mac": 1
   },
   "475706": {

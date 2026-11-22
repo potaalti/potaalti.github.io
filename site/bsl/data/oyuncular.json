@@ -1535,8 +1535,8 @@
   "foto": "https://tbf.org.tr/res/6bed5bb7-a457-47a5-b35e-335eadec19da_galatasaray_0003_3.webp",
   "boy": 205,
   "mevkiTahmini": "on",
-  "ribOrt": 3.0,
-  "astOrt": 0.9
+  "ribOrt": 3.1,
+  "astOrt": 1.0
  },
  {
   "id": "590409",
@@ -2653,7 +2653,7 @@
   "foto": "https://tbf.org.tr/res/67fb5688-ce68-4c02-804a-fdfe69527a62_galatasaray_0009_19.webp",
   "boy": 194,
   "mevkiTahmini": "arka",
-  "ribOrt": 2.0,
+  "ribOrt": 2.1,
   "astOrt": 4.0
  },
  {

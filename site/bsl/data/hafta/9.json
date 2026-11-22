@@ -75,12 +75,12 @@
    "evSkor": "64",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "65",
+   "depSkor": "67",
    "salon": "Hayri Gür Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "04:44",
+    "saat": "04:16",
     "uzatma": false
    }
   },
@@ -1069,7 +1069,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 19,
-   "saniye": 1974,
+   "saniye": 2003,
    "mac": 1
   },
   "105532": {
@@ -1077,7 +1077,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 11,
-   "saniye": 1503,
+   "saniye": 1532,
    "mac": 1
   },
   "473256": {
@@ -1085,7 +1085,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 3,
-   "saniye": 1491,
+   "saniye": 1520,
    "mac": 1
   },
   "590409": {
@@ -1108,8 +1108,8 @@
    "ad": "Marcus Keene",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 2,
-   "saniye": 1262,
+   "vp": 1,
+   "saniye": 1291,
    "mac": 1
   },
   "133530": {
@@ -1141,7 +1141,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 21,
-   "saniye": 1083,
+   "saniye": 1112,
    "mac": 1
   },
   "129295": {
@@ -1164,16 +1164,16 @@
    "ad": "Jordan Loyd",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 13,
-   "saniye": 1584,
+   "vp": 14,
+   "saniye": 1613,
    "mac": 1
   },
   "333434": {
    "ad": "Dario Saric",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 20,
-   "saniye": 1095,
+   "vp": 21,
+   "saniye": 1124,
    "mac": 1
   },
   "782949": {
@@ -1181,7 +1181,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 11,
-   "saniye": 1410,
+   "saniye": 1439,
    "mac": 1
   },
   "281408": {
@@ -1245,15 +1245,15 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 3,
-   "saniye": 1228,
+   "saniye": 1257,
    "mac": 1
   },
   "157002": {
    "ad": "Erkan Yılmaz",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 4,
-   "saniye": 797,
+   "vp": 6,
+   "saniye": 826,
    "mac": 1
   }
  }

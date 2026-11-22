@@ -62,12 +62,12 @@
    "evSkor": "31",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": "23",
+   "depSkor": "25",
    "salon": "Çayırova Belediyesi Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "06:14",
+    "saat": "05:55",
     "uzatma": false
    }
   },
@@ -885,7 +885,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 9,
-   "saniye": 506,
+   "saniye": 526,
    "mac": 1
   },
   "666080": {
@@ -900,8 +900,8 @@
    "ad": "Enes Berkay Taşkıran",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 3,
-   "saniye": 423,
+   "vp": 2,
+   "saniye": 443,
    "mac": 1
   },
   "500074": {
@@ -909,7 +909,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 6,
-   "saniye": 540,
+   "saniye": 560,
    "mac": 1
   },
   "502472": {
@@ -917,7 +917,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 3,
-   "saniye": 634,
+   "saniye": 654,
    "mac": 1
   },
   "107520": {
@@ -949,7 +949,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 2,
-   "saniye": 333,
+   "saniye": 353,
    "mac": 1
   },
   "122136": {
@@ -980,8 +980,8 @@
    "ad": "Mike Davis Jr.",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 12,
-   "saniye": 637,
+   "vp": 15,
+   "saniye": 657,
    "mac": 1
   },
   "667498": {
@@ -997,7 +997,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 1,
-   "saniye": 298,
+   "saniye": 318,
    "mac": 1
   },
   "120437": {
@@ -1005,15 +1005,15 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 3,
-   "saniye": 825,
+   "saniye": 845,
    "mac": 1
   },
   "359434": {
    "ad": "Errick Mccollum",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": -2,
-   "saniye": 332,
+   "vp": -1,
+   "saniye": 352,
    "mac": 1
   },
   "502518": {
@@ -1029,7 +1029,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 4,
-   "saniye": 510,
+   "saniye": 530,
    "mac": 1
   },
   "351474": {

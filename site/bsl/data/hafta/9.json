@@ -82,7 +82,7 @@
   {
    "id": 346339,
    "tarih": "2026-11-22T18:00:00",
-   "durum": "canli",
+   "durum": "bitti",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
    "evSkor": "81",
@@ -90,12 +90,7 @@
    "depId": 266048,
    "depSkor": "64",
    "salon": "Sinan Erdem Spor Salonu",
-   "yayin": "beINSports",
-   "canliDurum": {
-    "periyot": 4,
-    "saat": "00:00",
-    "uzatma": false
-   }
+   "yayin": "beINSports"
   },
   {
    "id": 346345,
@@ -1345,7 +1340,7 @@
    "mac": 1
   },
   "781548": {
-   "ad": "Kj Simpson",
+   "ad": "KJ Simpson",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 11,

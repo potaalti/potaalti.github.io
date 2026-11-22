@@ -101,12 +101,12 @@
    "evSkor": "88",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": "81",
+   "depSkor": "85",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "02:19",
+    "saat": "01:22",
     "uzatma": false
    }
   }
@@ -1460,8 +1460,8 @@
    "ad": "Daquan Jeffries",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 3,
-   "saniye": 892,
+   "vp": 2,
+   "saniye": 950,
    "mac": 1
   },
   "782996": {
@@ -1469,7 +1469,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 11,
-   "saniye": 825,
+   "saniye": 883,
    "mac": 1
   },
   "133112": {
@@ -1477,7 +1477,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 4,
-   "saniye": 979,
+   "saniye": 1037,
    "mac": 1
   },
   "397202": {
@@ -1509,7 +1509,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 6,
-   "saniye": 948,
+   "saniye": 1006,
    "mac": 1
   },
   "363061": {
@@ -1517,7 +1517,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 15,
-   "saniye": 1351,
+   "saniye": 1409,
    "mac": 1
   },
   "777636": {
@@ -1548,16 +1548,16 @@
    "ad": "Sertaç Şanlı",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 12,
-   "saniye": 956,
+   "vp": 13,
+   "saniye": 1014,
    "mac": 1
   },
   "735811": {
    "ad": "Talen Horton-Tucker",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 26,
-   "saniye": 1404,
+   "vp": 30,
+   "saniye": 1462,
    "mac": 1
   },
   "777679": {
@@ -1589,7 +1589,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 11,
-   "saniye": 1297,
+   "saniye": 1355,
    "mac": 1
   },
   "667814": {
@@ -1605,7 +1605,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 434,
+   "saniye": 492,
    "mac": 1
   },
   "378292": {
@@ -1629,7 +1629,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 6,
-   "saniye": 1368,
+   "saniye": 1426,
    "mac": 1
   }
  }

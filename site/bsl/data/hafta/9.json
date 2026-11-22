@@ -59,7 +59,7 @@
    "durum": "canli",
    "ev": "GLİNT ÇAYIROVA BELEDİYESİ",
    "evId": 265994,
-   "evSkor": "56",
+   "evSkor": "59",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
    "depSkor": "49",
@@ -67,7 +67,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "02:22",
+    "saat": "01:28",
     "uzatma": false
    }
   },
@@ -893,7 +893,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 20,
-   "saniye": 1413,
+   "saniye": 1468,
    "mac": 1
   },
   "160245": {
@@ -917,15 +917,15 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 3,
-   "saniye": 736,
+   "saniye": 791,
    "mac": 1
   },
   "107520": {
    "ad": "Kartal Özmızrak",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 1,
-   "saniye": 668,
+   "vp": 2,
+   "saniye": 723,
    "mac": 1
   },
   "127089": {
@@ -940,16 +940,16 @@
    "ad": "Nate Watson",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 6,
-   "saniye": 539,
+   "vp": 7,
+   "saniye": 594,
    "mac": 1
   },
   "510739": {
    "ad": "Rasheed Sulaimon",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 6,
-   "saniye": 982,
+   "vp": 9,
+   "saniye": 1037,
    "mac": 1
   },
   "122136": {
@@ -981,7 +981,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 25,
-   "saniye": 1470,
+   "saniye": 1525,
    "mac": 1
   },
   "667498": {
@@ -1005,7 +1005,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 10,
-   "saniye": 1303,
+   "saniye": 1358,
    "mac": 1
   },
   "359434": {
@@ -1013,15 +1013,15 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 805,
+   "saniye": 860,
    "mac": 1
   },
   "502518": {
    "ad": "Jordan Usher",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 2,
-   "saniye": 398,
+   "vp": 1,
+   "saniye": 453,
    "mac": 1
   },
   "778079": {
@@ -1061,7 +1061,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 1,
-   "saniye": 539,
+   "saniye": 594,
    "mac": 1
   }
  }

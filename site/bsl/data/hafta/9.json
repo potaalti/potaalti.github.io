@@ -72,15 +72,15 @@
    "durum": "canli",
    "ev": "TRABZONSPOR",
    "evId": 266029,
-   "evSkor": "48",
+   "evSkor": "50",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "56",
+   "depSkor": "59",
    "salon": "Hayri Gür Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "02:39",
+    "saat": "02:00",
     "uzatma": false
    }
   },
@@ -1069,7 +1069,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 15,
-   "saniye": 1526,
+   "saniye": 1539,
    "mac": 1
   },
   "105532": {
@@ -1077,7 +1077,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 9,
-   "saniye": 1055,
+   "saniye": 1068,
    "mac": 1
   },
   "473256": {
@@ -1100,8 +1100,8 @@
    "ad": "Rıdvan Öncel",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 9,
-   "saniye": 689,
+   "vp": 10,
+   "saniye": 702,
    "mac": 1
   },
   "779255": {
@@ -1133,7 +1133,7 @@
    "takim": "TRABZONSPOR",
    "takimId": 266029,
    "vp": 5,
-   "saniye": 704,
+   "saniye": 717,
    "mac": 1
   },
   "741031": {
@@ -1148,8 +1148,8 @@
    "ad": "Ege Arar",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 0,
-   "saniye": 543,
+   "vp": 2,
+   "saniye": 556,
    "mac": 1
   },
   "369269": {
@@ -1165,23 +1165,23 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 13,
-   "saniye": 1136,
+   "saniye": 1149,
    "mac": 1
   },
   "333434": {
    "ad": "Dario Saric",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 17,
-   "saniye": 930,
+   "vp": 20,
+   "saniye": 943,
    "mac": 1
   },
   "782949": {
    "ad": "Cameron Payne",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 8,
-   "saniye": 962,
+   "vp": 9,
+   "saniye": 975,
    "mac": 1
   },
   "281408": {
@@ -1189,7 +1189,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 0,
-   "saniye": 1185,
+   "saniye": 1198,
    "mac": 1
   },
   "735850": {
@@ -1221,7 +1221,7 @@
    "takim": "ANADOLU EFES",
    "takimId": 265990,
    "vp": 9,
-   "saniye": 871,
+   "saniye": 884,
    "mac": 1
   },
   "137459": {

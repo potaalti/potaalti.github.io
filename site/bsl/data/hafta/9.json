@@ -75,7 +75,7 @@
    "evSkor": "55",
    "dep": "ANADOLU EFES",
    "depId": 265990,
-   "depSkor": "63",
+   "depSkor": "65",
    "salon": "Hayri Gür Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
@@ -1180,7 +1180,7 @@
    "ad": "Cameron Payne",
    "takim": "ANADOLU EFES",
    "takimId": 265990,
-   "vp": 10,
+   "vp": 12,
    "saniye": 1123,
    "mac": 1
   },

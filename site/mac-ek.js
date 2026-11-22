@@ -152,6 +152,11 @@ export function macGovdesi(kutu, ayar) {
   if (hucum && a.tempoOrt) {
     hucum.tempo = { beklenen: (a.tempoOrt * sure) / 2400, ort: a.tempoOrt, ad: a.tempoAd ?? 'lig ortalaması', donem: secim !== 'T' || Math.abs(sure - 2400) > 30,
       dakika: Math.round(sure / 60) };
+    // Bu iki takımın kendi sezon temposu (iki takımın maç başı hücum sayısının ortalaması): "bu takımlar normalde böyle mi
+    // oynar?" sorusu için (lig ortalaması "ligin geneline göre" sorusu için). Kullanıcı 2026-11-22.
+    const evT = takimBul(a.takimlar, kutu.ev.ad), depT = takimBul(a.takimlar, kutu.dep.ad);
+    const evH = evT && takimTempo(evT), depH = depT && takimTempo(depT);
+    if (evH && depH) hucum.tempo.ikili = ((evH + depH) / 2) * sure / 2400;
   }
   const secici = donemler ? `<div class="secenekler kutu-donem">${secenekler.map(([k, ad]) =>
     `<button class="secenek ${k === secim ? 'aktif' : ''}" data-is="kutu-donem" data-id="${k}">${ad}</button>`).join('')}</div>` : '';
@@ -317,12 +322,18 @@ export function hucumVerisi(evVeri, depVeri) {
   const yuz = v => Math.round((1000 * v) / n) / 10;
   return { hucum: Math.round(n), ham: n, ev: { atilan: yuz(e.sayi), yenilen: yuz(d.sayi) }, dep: { atilan: yuz(d.sayi), yenilen: yuz(e.sayi) } };
 }
-// Ligin maç başına (40 dk) ortalama hücum sayısı, takımların sezon toplamlarından (takimlar.json: o, ort.hr, ort.tk, atis)
+// Takımın maç başına hücum sayısı, sezon toplamlarından (takimlar.json: o, ort.hr, ort.tk, atis): şut denemesi + 0,44 × serbest
+// atış denemesi − hücum ribaundu + top kaybı
+export const takimTempo = t => (t?.o > 0 && t.atis && t.ort
+  ? ((t.atis.iki?.[1] ?? 0) + (t.atis.uc?.[1] ?? 0) + 0.44 * (t.atis.sa?.[1] ?? 0)) / t.o - (t.ort.hr ?? 0) + (t.ort.tk ?? 0) : null);
+const takimListesi = takimlar => (Array.isArray(takimlar) ? takimlar : Object.values(takimlar ?? {}));
+const adNorm = ad => String(ad ?? '').toLocaleUpperCase('tr').replace(/\s+/g, ' ').trim();
+const takimBul = (takimlar, ad) => takimListesi(takimlar).find(t => adNorm(t?.ad) === adNorm(ad)) ?? null;
+// Ligin maç başına (40 dk) ortalama hücum sayısı: takımların ortalaması
 export function ligTempoOrtalamasi(takimlar) {
-  const liste = (Array.isArray(takimlar) ? takimlar : Object.values(takimlar ?? {})).filter(t => t?.o > 0 && t.atis && t.ort);
+  const liste = takimListesi(takimlar).filter(t => takimTempo(t) != null);
   if (liste.length < 4) return null;
-  const hucum = t => ((t.atis.iki?.[1] ?? 0) + (t.atis.uc?.[1] ?? 0) + 0.44 * (t.atis.sa?.[1] ?? 0)) / t.o - (t.ort.hr ?? 0) + (t.ort.tk ?? 0);
-  return liste.reduce((x, t) => x + hucum(t), 0) / liste.length;
+  return liste.reduce((x, t) => x + takimTempo(t), 0) / liste.length;
 }
 // Tempo adı: hücum sayısının beklenene oranından
 const tempoAdi = r => (r >= 1.08 ? 'Çok hızlı' : r >= 1.03 ? 'Hızlı' : r > 0.97 ? 'Ortalama' : r > 0.92 ? 'Yavaş' : 'Çok yavaş');
@@ -347,8 +358,9 @@ export function ileriIstatistikKarti(evAd, depAd, ileri, evLink, depLink, donemA
   // 100 hücumda sayı: yüksek olan vurgulu. Yenilen sayı rakibin atılanıyla aynı olduğundan ayrıca yazılmaz (kullanıcı 2026-11-17)
   const a1 = hucum?.ev.atilan, b1 = hucum?.dep.atilan;
   const hucumBolumu = !hucum ? '' : `<div class="ileri-satir"><b class="${a1 > b1 ? 'iyi' : ''}">${ondalik(a1)}</b><span>100 hücumda sayı</span><b class="${b1 > a1 ? 'iyi' : ''}">${ondalik(b1)}</b></div>
-    ${hucum.tempo ? `<div class="ileri-satir orta tempo"><span>Tempo <b>${tempoAdi(hucum.ham / hucum.tempo.beklenen)}</b></span>
-      <small>${hucum.hucum} hücum · ${hucum.tempo.ad}${hucum.tempo.donem ? ` ${hucum.tempo.dakika} dakikada` : ''} ${Math.round(hucum.tempo.beklenen)}</small></div>`
+    ${hucum.tempo ? `<div class="ileri-satir orta tempo"><span>Tempo <b>${tempoAdi(hucum.hucum / Math.round(hucum.tempo.beklenen))}</b></span>
+      <small>${hucum.hucum} hücum · ${hucum.tempo.ad}${hucum.tempo.donem ? ` ${hucum.tempo.dakika} dakikada` : ''} ${Math.round(hucum.tempo.beklenen)}</small>
+      ${hucum.tempo.ikili ? `<small>Bu iki takımın sezon ortalaması ${Math.round(hucum.tempo.ikili)}: onlara göre <b>${tempoAdi(hucum.hucum / Math.round(hucum.tempo.ikili)).toLocaleLowerCase('tr')}</b></small>` : ''}</div>`
     : `<div class="ileri-satir orta"><span>Hücum sayısı <b>${hucum.hucum}</b></span></div>`}`;
   const ileriBolumu = !ev || !dep ? '' : `${ILERI_CUBUKLAR.filter(([k]) => ev[k] != null && dep[k] != null).map(cubuk).join('')}
     ${satir('En büyük fark', ev.fark, dep.fark)}${satir('En büyük seri', ev.seri, dep.seri)}${satir('Liderlik süresi', dakikaSaniye(ev.lider), dakikaSaniye(dep.lider))}
@@ -357,5 +369,5 @@ export function ileriIstatistikKarti(evAd, depAd, ileri, evLink, depLink, donemA
     <div class="ileri-takimlar"><span>${evLink ?? esc(evAd)}</span><span>${depLink ?? esc(depAd)}</span></div>
     ${ileriBolumu}${hucumBolumu}
     ${hucum ? `<div class="ileri-aciklama"><p><b>100 hücumda sayı:</b> takım 100 hücum yapsaydı kaç sayı atacağı; maçın hızından bağımsız olarak hücumun ne kadar verimli olduğunu gösterir. Yüksek olan daha verimli oynamıştır.</p>
-      ${hucum.tempo ? `<p><b>Tempo:</b> maçın ne kadar hızlı oynandığı. Her takımın kullandığı hücum sayısı (şut, top kaybı ya da serbest atışla biten her top) ${hucum.tempo.ad}yla kıyaslanır: hızlı tempoda daha çok hücum, genelde daha çok sayı olur.</p>` : ''}</div>` : ''}</div>`;
+      ${hucum.tempo ? `<p><b>Tempo:</b> maçın ne kadar hızlı oynandığı. Her takımın kullandığı hücum sayısı (şut, top kaybı ya da serbest atışla biten her top) ${hucum.tempo.ad}yla kıyaslanır: hızlı tempoda daha çok hücum, genelde daha çok sayı olur.${hucum.tempo.ikili ? ' Altında bu iki takımın kendi sezon temposuyla kıyas: iki yavaş takım ligden yavaş oynayınca kendileri için normal tempodadır.' : ''} Canlı maçta o ana kadar oynanan süreye göre kıyaslanır.</p>` : ''}</div>` : ''}</div>`;
 }

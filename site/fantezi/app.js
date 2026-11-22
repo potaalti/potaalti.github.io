@@ -2125,7 +2125,7 @@ function gorunumMac(id) {
   const benim = benimTakimim();
   return `${ust}${ME.macGovdesi(kutu, {
     yayin: macYayini(id),
-    canli, sirala: S.ui.kutuSirala, donem: S.ui.kutuDonem, takimIst: takimIstatistigi(kutu.id), tempoOrt: ligTempoOrt(),
+    canli, sirala: S.ui.kutuSirala, donem: S.ui.kutuDonem, takimIst: takimIstatistigi(kutu.id), tempoOrt: ligTempoOrt(), takimlar: S.ligTakimlar,
     ileriDosya: kutu.ev.ileri ? null : ileriIstatistigi(kutu.id),
     fark: !kutu.fark && ME.farkVarMi(LIG.kod, kutu.hafta ?? n) ? farkVerisi(id) : null,
     oyuncuAdi: o => oyuncuLinki(o.id, o.ad),

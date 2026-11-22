@@ -270,7 +270,7 @@ function gorunumMac(lig, id) {
   const benim = takimim(lig);
   return `${ust}${ME.macGovdesi(kutu, {
     yayin: macYayinVerisi(lig, m),
-    canli, sirala: S.ui.kutuSirala, donem: S.ui.kutuDonem, takimIst: takimIstatistigi(lig, kutu.id), tempoOrt: ME.ligTempoOrtalamasi(ligVerisi(lig, 'takimlar')?.takimlar),
+    canli, sirala: S.ui.kutuSirala, donem: S.ui.kutuDonem, takimIst: takimIstatistigi(lig, kutu.id), tempoOrt: ME.ligTempoOrtalamasi(ligVerisi(lig, 'takimlar')?.takimlar), takimlar: ligVerisi(lig, 'takimlar')?.takimlar,
     ileriDosya: kutu.ev.ileri ? null : ileriIstatistigi(lig, kutu.id), fark: S.farklar[id],
     takimBasligi: t => takimLinki(lig, t.ad),
     oyuncuAdi: o => (String(o.id).startsWith('fiba-') ? esc(o.ad) : `<a href="#/oyuncu/${lig}/${o.id}" class="oyuncu-link">${esc(o.ad)}</a>`),

@@ -98,7 +98,7 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ FUZUL",
    "evId": 265992,
-   "evSkor": "31",
+   "evSkor": "34",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
    "depSkor": "24",
@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "07:32",
+    "saat": "07:05",
     "uzatma": false
    }
   }
@@ -1452,8 +1452,8 @@
    "ad": "Devon Dotson",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 3,
-   "saniye": 413,
+   "vp": 4,
+   "saniye": 440,
    "mac": 1
   },
   "777634": {
@@ -1461,7 +1461,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 270,
+   "saniye": 297,
    "mac": 1
   },
   "782996": {
@@ -1477,7 +1477,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 413,
+   "saniye": 440,
    "mac": 1
   },
   "397202": {
@@ -1516,8 +1516,8 @@
    "ad": "Scottie Wilbekin",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 1,
-   "saniye": 419,
+   "vp": 5,
+   "saniye": 446,
    "mac": 1
   },
   "777636": {
@@ -1533,7 +1533,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 0,
-   "saniye": 269,
+   "saniye": 296,
    "mac": 1
   },
   "163489": {
@@ -1565,7 +1565,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 430,
+   "saniye": 457,
    "mac": 1
   },
   "777704": {
@@ -1573,7 +1573,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 430,
+   "saniye": 457,
    "mac": 1
   },
   "777705": {
@@ -1589,7 +1589,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 310,
+   "saniye": 337,
    "mac": 1
   },
   "667814": {
@@ -1597,7 +1597,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 386,
+   "saniye": 413,
    "mac": 1
   },
   "27541": {
@@ -1628,8 +1628,8 @@
    "ad": "Will Clyburn",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": 1,
-   "saniye": 386,
+   "vp": 0,
+   "saniye": 413,
    "mac": 1
   }
  }

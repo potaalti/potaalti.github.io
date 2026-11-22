@@ -88,12 +88,12 @@
    "evSkor": "42",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
-   "depSkor": "39",
+   "depSkor": "41",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "01:01",
+    "saat": "00:00",
     "uzatma": false
    }
   },
@@ -1269,15 +1269,15 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 15,
-   "saniye": 850,
+   "saniye": 911,
    "mac": 1
   },
   "502492": {
    "ad": "Aleksej Nikolic",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 3,
-   "saniye": 686,
+   "vp": 2,
+   "saniye": 747,
    "mac": 1
   },
   "779275": {
@@ -1285,7 +1285,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 4,
-   "saniye": 773,
+   "saniye": 834,
    "mac": 1
   },
   "779274": {
@@ -1293,7 +1293,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 1,
-   "saniye": 474,
+   "saniye": 535,
    "mac": 1
   },
   "128768": {
@@ -1348,16 +1348,16 @@
    "ad": "Kj Simpson",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 2,
-   "saniye": 683,
+   "vp": 1,
+   "saniye": 744,
    "mac": 1
   },
   "516236": {
    "ad": "Khyri Thomas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 1,
-   "saniye": 528,
+   "vp": 2,
+   "saniye": 589,
    "mac": 1
   },
   "778249": {
@@ -1372,16 +1372,16 @@
    "ad": "Yiğit Onan",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 8,
-   "saniye": 686,
+   "vp": 9,
+   "saniye": 747,
    "mac": 1
   },
   "675128": {
    "ad": "Anzejs Pasecniks",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 17,
-   "saniye": 582,
+   "vp": 19,
+   "saniye": 643,
    "mac": 1
   },
   "572386": {
@@ -1389,7 +1389,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": -2,
-   "saniye": 601,
+   "saniye": 662,
    "mac": 1
   },
   "778279": {
@@ -1404,8 +1404,8 @@
    "ad": "Max Abmas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 6,
-   "saniye": 867,
+   "vp": 7,
+   "saniye": 928,
    "mac": 1
   },
   "269217": {

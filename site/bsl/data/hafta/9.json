@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "00:47",
+    "saat": "00:17",
     "uzatma": false
    }
   },
@@ -1260,8 +1260,8 @@
    "ad": "Jerome Robinson Jr.",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 7,
-   "saniye": 650,
+   "vp": 6,
+   "saniye": 681,
    "mac": 1
   },
   "250129": {
@@ -1277,7 +1277,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 7,
-   "saniye": 1446,
+   "saniye": 1477,
    "mac": 1
   },
   "779275": {
@@ -1285,7 +1285,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 12,
-   "saniye": 1378,
+   "saniye": 1409,
    "mac": 1
   },
   "779274": {
@@ -1325,7 +1325,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 0,
-   "saniye": 7,
+   "saniye": 38,
    "mac": 1
   },
   "54128": {
@@ -1349,7 +1349,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 11,
-   "saniye": 1584,
+   "saniye": 1615,
    "mac": 1
   },
   "516236": {
@@ -1372,8 +1372,8 @@
    "ad": "Yiğit Onan",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 13,
-   "saniye": 1579,
+   "vp": 14,
+   "saniye": 1610,
    "mac": 1
   },
   "675128": {
@@ -1397,7 +1397,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 18,
-   "saniye": 1268,
+   "saniye": 1299,
    "mac": 1
   },
   "778246": {
@@ -1405,15 +1405,15 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 8,
-   "saniye": 1889,
+   "saniye": 1920,
    "mac": 1
   },
   "269217": {
    "ad": "Tibet Görener",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 1,
-   "saniye": 857,
+   "vp": 0,
+   "saniye": 888,
    "mac": 1
   },
   "284983": {
@@ -1421,7 +1421,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 0,
-   "saniye": 131,
+   "saniye": 162,
    "mac": 1
   },
   "470691": {

@@ -59,7 +59,7 @@
    "durum": "canli",
    "ev": "GLİNT ÇAYIROVA BELEDİYESİ",
    "evId": 265994,
-   "evSkor": "33",
+   "evSkor": "35",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
    "depSkor": "26",
@@ -67,7 +67,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "04:55",
+    "saat": "04:20",
     "uzatma": false
    }
   },
@@ -885,15 +885,15 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 9,
-   "saniye": 585,
+   "saniye": 621,
    "mac": 1
   },
   "666080": {
    "ad": "Fabian White Jr.",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 7,
-   "saniye": 659,
+   "vp": 9,
+   "saniye": 695,
    "mac": 1
   },
   "160245": {
@@ -901,7 +901,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 3,
-   "saniye": 502,
+   "saniye": 538,
    "mac": 1
   },
   "500074": {
@@ -909,7 +909,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 6,
-   "saniye": 619,
+   "saniye": 655,
    "mac": 1
   },
   "502472": {
@@ -948,8 +948,8 @@
    "ad": "Rasheed Sulaimon",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 3,
-   "saniye": 412,
+   "vp": 4,
+   "saniye": 448,
    "mac": 1
   },
   "122136": {
@@ -981,7 +981,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 16,
-   "saniye": 716,
+   "saniye": 752,
    "mac": 1
   },
   "667498": {
@@ -997,7 +997,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 1,
-   "saniye": 377,
+   "saniye": 413,
    "mac": 1
   },
   "120437": {
@@ -1012,8 +1012,8 @@
    "ad": "Errick Mccollum",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": -1,
-   "saniye": 411,
+   "vp": -2,
+   "saniye": 447,
    "mac": 1
   },
   "502518": {
@@ -1029,7 +1029,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 4,
-   "saniye": 589,
+   "saniye": 625,
    "mac": 1
   },
   "351474": {
@@ -1037,7 +1037,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 59,
+   "saniye": 95,
    "mac": 1
   },
   "57737": {

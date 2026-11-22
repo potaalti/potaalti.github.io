@@ -62,12 +62,12 @@
    "evSkor": "69",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": "57",
+   "depSkor": "59",
    "salon": "Çayırova Belediyesi Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "07:19",
+    "saat": "07:07",
     "uzatma": false
    }
   },
@@ -885,7 +885,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 8,
-   "saniye": 1506,
+   "saniye": 1518,
    "mac": 1
   },
   "666080": {
@@ -893,7 +893,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 24,
-   "saniye": 1686,
+   "saniye": 1698,
    "mac": 1
   },
   "160245": {
@@ -901,7 +901,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 8,
-   "saniye": 729,
+   "saniye": 741,
    "mac": 1
   },
   "500074": {
@@ -909,7 +909,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 11,
-   "saniye": 1149,
+   "saniye": 1161,
    "mac": 1
   },
   "502472": {
@@ -949,7 +949,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 9,
-   "saniye": 1036,
+   "saniye": 1048,
    "mac": 1
   },
   "122136": {
@@ -981,15 +981,15 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 27,
-   "saniye": 1773,
+   "saniye": 1785,
    "mac": 1
   },
   "667498": {
    "ad": "James Webb Iii",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": -1,
-   "saniye": 767,
+   "vp": 1,
+   "saniye": 779,
    "mac": 1
   },
   "776570": {
@@ -1012,8 +1012,8 @@
    "ad": "Errick Mccollum",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 2,
-   "saniye": 1108,
+   "vp": 3,
+   "saniye": 1120,
    "mac": 1
   },
   "502518": {
@@ -1029,7 +1029,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 4,
-   "saniye": 625,
+   "saniye": 637,
    "mac": 1
   },
   "351474": {
@@ -1037,7 +1037,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 443,
+   "saniye": 455,
    "mac": 1
   },
   "57737": {

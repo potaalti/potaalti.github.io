@@ -85,15 +85,15 @@
    "durum": "canli",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
-   "evSkor": "20",
+   "evSkor": "23",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
-   "depSkor": "13",
+   "depSkor": "14",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 1,
-    "saat": "02:50",
+    "saat": "02:19",
     "uzatma": false
    }
   },

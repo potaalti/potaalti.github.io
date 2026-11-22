@@ -62,12 +62,12 @@
    "evSkor": "75",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": "66",
+   "depSkor": "68",
    "salon": "Çayırova Belediyesi Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "04:34",
+    "saat": "04:19",
     "uzatma": false
    }
   },
@@ -885,7 +885,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 9,
-   "saniye": 1671,
+   "saniye": 1685,
    "mac": 1
   },
   "666080": {
@@ -909,7 +909,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 12,
-   "saniye": 1314,
+   "saniye": 1328,
    "mac": 1
   },
   "502472": {
@@ -917,7 +917,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 2,
-   "saniye": 1091,
+   "saniye": 1105,
    "mac": 1
   },
   "107520": {
@@ -949,7 +949,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 11,
-   "saniye": 1201,
+   "saniye": 1215,
    "mac": 1
   },
   "122136": {
@@ -957,7 +957,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 12,
-   "saniye": 1057,
+   "saniye": 1071,
    "mac": 1
   },
   "367110": {
@@ -980,8 +980,8 @@
    "ad": "Mike Davis Jr.",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 27,
-   "saniye": 1938,
+   "vp": 29,
+   "saniye": 1952,
    "mac": 1
   },
   "667498": {
@@ -989,7 +989,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 0,
-   "saniye": 932,
+   "saniye": 946,
    "mac": 1
   },
   "776570": {
@@ -1013,7 +1013,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 6,
-   "saniye": 1273,
+   "saniye": 1287,
    "mac": 1
   },
   "502518": {
@@ -1029,7 +1029,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 7,
-   "saniye": 790,
+   "saniye": 804,
    "mac": 1
   },
   "351474": {
@@ -1037,7 +1037,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 2,
-   "saniye": 608,
+   "saniye": 622,
    "mac": 1
   },
   "57737": {

@@ -92,8 +92,8 @@
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
-    "periyot": 1,
-    "saat": "00:31",
+    "periyot": 2,
+    "saat": "10:00",
     "uzatma": false
    }
   },
@@ -1301,7 +1301,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 0,
-   "saniye": 139,
+   "saniye": 170,
    "mac": 1
   },
   "221447": {
@@ -1317,7 +1317,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 4,
-   "saniye": 243,
+   "saniye": 274,
    "mac": 1
   },
   "363559": {
@@ -1333,7 +1333,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 4,
-   "saniye": 139,
+   "saniye": 170,
    "mac": 1
   },
   "500054": {
@@ -1341,15 +1341,15 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 3,
-   "saniye": 62,
+   "saniye": 93,
    "mac": 1
   },
   "781548": {
    "ad": "Kj Simpson",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 3,
-   "saniye": 404,
+   "vp": 2,
+   "saniye": 435,
    "mac": 1
   },
   "516236": {
@@ -1364,8 +1364,8 @@
    "ad": "Keandre Cook",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": -1,
-   "saniye": 492,
+   "vp": 0,
+   "saniye": 523,
    "mac": 1
   },
   "310250": {
@@ -1397,15 +1397,15 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 6,
-   "saniye": 243,
+   "saniye": 274,
    "mac": 1
   },
   "778246": {
    "ad": "Max Abmas",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 3,
-   "saniye": 297,
+   "vp": 2,
+   "saniye": 328,
    "mac": 1
   },
   "269217": {
@@ -1413,7 +1413,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 0,
-   "saniye": 139,
+   "saniye": 170,
    "mac": 1
   },
   "284983": {
@@ -1429,7 +1429,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": -1,
-   "saniye": 139,
+   "saniye": 170,
    "mac": 1
   },
   "475706": {

@@ -98,7 +98,7 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ FUZUL",
    "evId": 265992,
-   "evSkor": "59",
+   "evSkor": "61",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
    "depSkor": "43",
@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 3,
-    "saat": "05:59",
+    "saat": "05:49",
     "uzatma": false
    }
   }

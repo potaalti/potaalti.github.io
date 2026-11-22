@@ -67,7 +67,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "08:30",
+    "saat": "08:22",
     "uzatma": false
    }
   },
@@ -885,7 +885,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 7,
-   "saniye": 1435,
+   "saniye": 1443,
    "mac": 1
   },
   "666080": {
@@ -893,7 +893,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 23,
-   "saniye": 1615,
+   "saniye": 1623,
    "mac": 1
   },
   "160245": {
@@ -901,7 +901,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 5,
-   "saniye": 658,
+   "saniye": 666,
    "mac": 1
   },
   "500074": {
@@ -917,7 +917,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 3,
-   "saniye": 938,
+   "saniye": 946,
    "mac": 1
   },
   "107520": {
@@ -941,7 +941,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 7,
-   "saniye": 771,
+   "saniye": 779,
    "mac": 1
   },
   "510739": {
@@ -981,7 +981,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 28,
-   "saniye": 1702,
+   "saniye": 1710,
    "mac": 1
   },
   "667498": {
@@ -1013,7 +1013,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 2,
-   "saniye": 1037,
+   "saniye": 1045,
    "mac": 1
   },
   "502518": {
@@ -1021,7 +1021,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 3,
-   "saniye": 630,
+   "saniye": 638,
    "mac": 1
   },
   "778079": {
@@ -1037,7 +1037,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": -1,
-   "saniye": 372,
+   "saniye": 380,
    "mac": 1
   },
   "57737": {
@@ -1061,7 +1061,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 7,
-   "saniye": 771,
+   "saniye": 779,
    "mac": 1
   }
  }

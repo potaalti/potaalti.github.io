@@ -98,7 +98,7 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ FUZUL",
    "evId": 265992,
-   "evSkor": "35",
+   "evSkor": "37",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
    "depSkor": "24",
@@ -106,7 +106,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "05:08",
+    "saat": "04:36",
     "uzatma": false
    }
   }
@@ -1461,7 +1461,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 1,
-   "saniye": 414,
+   "saniye": 446,
    "mac": 1
   },
   "782996": {
@@ -1484,8 +1484,8 @@
    "ad": "Ante Zizic",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 2,
-   "saniye": 388,
+   "vp": 4,
+   "saniye": 420,
    "mac": 1
   },
   "114257": {
@@ -1493,7 +1493,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 6,
-   "saniye": 353,
+   "saniye": 385,
    "mac": 1
   },
   "445794": {
@@ -1524,8 +1524,8 @@
    "ad": "Eugene Omoruyi",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 8,
-   "saniye": 381,
+   "vp": 9,
+   "saniye": 413,
    "mac": 1
   },
   "501381": {
@@ -1541,7 +1541,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 10,
-   "saniye": 308,
+   "saniye": 340,
    "mac": 1
   },
   "54659": {
@@ -1549,7 +1549,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 1,
-   "saniye": 225,
+   "saniye": 257,
    "mac": 1
   },
   "735811": {
@@ -1557,7 +1557,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 7,
-   "saniye": 681,
+   "saniye": 713,
    "mac": 1
   },
   "777679": {
@@ -1565,7 +1565,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 574,
+   "saniye": 606,
    "mac": 1
   },
   "777704": {
@@ -1589,7 +1589,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 1,
-   "saniye": 431,
+   "saniye": 463,
    "mac": 1
   },
   "667814": {
@@ -1605,7 +1605,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 1,
-   "saniye": 23,
+   "saniye": 55,
    "mac": 1
   },
   "378292": {

@@ -98,15 +98,15 @@
    "durum": "canli",
    "ev": "BEŞİKTAŞ FUZUL",
    "evId": 265992,
-   "evSkor": "30",
+   "evSkor": "31",
    "dep": "FENERBAHÇE TARFİN",
    "depId": 266025,
-   "depSkor": "20",
+   "depSkor": "22",
    "salon": "Turkcell Basketbol Gelişim Merkezi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "08:40",
+    "saat": "08:10",
     "uzatma": false
    }
   }
@@ -1453,7 +1453,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 3,
-   "saniye": 345,
+   "saniye": 375,
    "mac": 1
   },
   "777634": {
@@ -1461,7 +1461,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 202,
+   "saniye": 232,
    "mac": 1
   },
   "782996": {
@@ -1476,8 +1476,8 @@
    "ad": "Metecan Birsen",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 1,
-   "saniye": 345,
+   "vp": 2,
+   "saniye": 375,
    "mac": 1
   },
   "397202": {
@@ -1517,7 +1517,7 @@
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
    "vp": 2,
-   "saniye": 351,
+   "saniye": 381,
    "mac": 1
   },
   "777636": {
@@ -1532,8 +1532,8 @@
    "ad": "Anthony Brown",
    "takim": "BEŞİKTAŞ FUZUL",
    "takimId": 265992,
-   "vp": 1,
-   "saniye": 201,
+   "vp": 0,
+   "saniye": 231,
    "mac": 1
   },
   "163489": {
@@ -1565,15 +1565,15 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 362,
+   "saniye": 392,
    "mac": 1
   },
   "777704": {
    "ad": "Trent Forrest",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": -3,
-   "saniye": 362,
+   "vp": -1,
+   "saniye": 392,
    "mac": 1
   },
   "777705": {
@@ -1589,7 +1589,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": 2,
-   "saniye": 242,
+   "saniye": 272,
    "mac": 1
   },
   "667814": {
@@ -1597,7 +1597,7 @@
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
    "vp": -1,
-   "saniye": 318,
+   "saniye": 348,
    "mac": 1
   },
   "27541": {
@@ -1628,8 +1628,8 @@
    "ad": "Will Clyburn",
    "takim": "FENERBAHÇE TARFİN",
    "takimId": 266025,
-   "vp": -1,
-   "saniye": 318,
+   "vp": 0,
+   "saniye": 348,
    "mac": 1
   }
  }

@@ -62,12 +62,12 @@
    "evSkor": "81",
    "dep": "ESENLER EROKSPOR",
    "depId": 266024,
-   "depSkor": "75",
+   "depSkor": "76",
    "salon": "Çayırova Belediyesi Spor Kompleksi",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "00:36",
+    "saat": "00:28",
     "uzatma": false
    }
   },
@@ -884,8 +884,8 @@
    "ad": "Jordon Crawford",
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
-   "vp": 13,
-   "saniye": 1909,
+   "vp": 12,
+   "saniye": 1916,
    "mac": 1
   },
   "666080": {
@@ -909,7 +909,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 12,
-   "saniye": 1552,
+   "saniye": 1559,
    "mac": 1
   },
   "502472": {
@@ -917,7 +917,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 1,
-   "saniye": 1300,
+   "saniye": 1308,
    "mac": 1
   },
   "107520": {
@@ -949,7 +949,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 11,
-   "saniye": 1439,
+   "saniye": 1446,
    "mac": 1
   },
   "122136": {
@@ -957,7 +957,7 @@
    "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
    "takimId": 265994,
    "vp": 16,
-   "saniye": 1295,
+   "saniye": 1302,
    "mac": 1
   },
   "367110": {
@@ -981,15 +981,15 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 29,
-   "saniye": 2176,
+   "saniye": 2183,
    "mac": 1
   },
   "667498": {
    "ad": "James Webb Iii",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 0,
-   "saniye": 1170,
+   "vp": 1,
+   "saniye": 1177,
    "mac": 1
   },
   "776570": {
@@ -1012,8 +1012,8 @@
    "ad": "Errick Mccollum",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 11,
-   "saniye": 1511,
+   "vp": 12,
+   "saniye": 1518,
    "mac": 1
   },
   "502518": {
@@ -1028,8 +1028,8 @@
    "ad": "Amadou Sow",
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
-   "vp": 7,
-   "saniye": 1028,
+   "vp": 8,
+   "saniye": 1035,
    "mac": 1
   },
   "351474": {
@@ -1037,7 +1037,7 @@
    "takim": "ESENLER EROKSPOR",
    "takimId": 266024,
    "vp": 5,
-   "saniye": 846,
+   "saniye": 853,
    "mac": 1
   },
   "57737": {

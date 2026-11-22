@@ -88,12 +88,12 @@
    "evSkor": "76",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
-   "depSkor": "60",
+   "depSkor": "62",
    "salon": "Sinan Erdem Spor Salonu",
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 4,
-    "saat": "02:01",
+    "saat": "01:29",
     "uzatma": false
    }
   },
@@ -1269,7 +1269,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 16,
-   "saniye": 1602,
+   "saniye": 1634,
    "mac": 1
   },
   "502492": {
@@ -1277,7 +1277,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 7,
-   "saniye": 1373,
+   "saniye": 1405,
    "mac": 1
   },
   "779275": {
@@ -1285,7 +1285,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 9,
-   "saniye": 1305,
+   "saniye": 1337,
    "mac": 1
   },
   "779274": {
@@ -1301,7 +1301,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 10,
-   "saniye": 836,
+   "saniye": 868,
    "mac": 1
   },
   "221447": {
@@ -1349,7 +1349,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 9,
-   "saniye": 1511,
+   "saniye": 1543,
    "mac": 1
   },
   "516236": {
@@ -1373,7 +1373,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 13,
-   "saniye": 1506,
+   "saniye": 1538,
    "mac": 1
   },
   "675128": {
@@ -1388,16 +1388,16 @@
    "ad": "Olivier Hanlan",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 0,
-   "saniye": 1555,
+   "vp": -1,
+   "saniye": 1587,
    "mac": 1
   },
   "778279": {
    "ad": "Chris Horton",
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
-   "vp": 15,
-   "saniye": 1195,
+   "vp": 18,
+   "saniye": 1227,
    "mac": 1
   },
   "778246": {
@@ -1413,7 +1413,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 1,
-   "saniye": 784,
+   "saniye": 816,
    "mac": 1
   },
   "284983": {
@@ -1421,7 +1421,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 0,
-   "saniye": 58,
+   "saniye": 90,
    "mac": 1
   },
   "470691": {

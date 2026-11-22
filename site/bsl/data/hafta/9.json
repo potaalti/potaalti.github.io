@@ -85,7 +85,7 @@
    "durum": "canli",
    "ev": "GALATASARAY MCT TECHNIC",
    "evId": 266026,
-   "evSkor": "39",
+   "evSkor": "40",
    "dep": "ALİAĞA PETKİM SPOR",
    "depId": 266048,
    "depSkor": "36",
@@ -93,7 +93,7 @@
    "yayin": "beINSports",
    "canliDurum": {
     "periyot": 2,
-    "saat": "02:28",
+    "saat": "02:08",
     "uzatma": false
    }
   },
@@ -1268,8 +1268,8 @@
    "ad": "Şehmus Hazer",
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
-   "vp": 12,
-   "saniye": 763,
+   "vp": 13,
+   "saniye": 783,
    "mac": 1
   },
   "502492": {
@@ -1277,7 +1277,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 3,
-   "saniye": 599,
+   "saniye": 619,
    "mac": 1
   },
   "779275": {
@@ -1285,7 +1285,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 4,
-   "saniye": 686,
+   "saniye": 706,
    "mac": 1
   },
   "779274": {
@@ -1293,7 +1293,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 2,
-   "saniye": 387,
+   "saniye": 407,
    "mac": 1
   },
   "128768": {
@@ -1349,7 +1349,7 @@
    "takim": "GALATASARAY MCT TECHNIC",
    "takimId": 266026,
    "vp": 2,
-   "saniye": 596,
+   "saniye": 616,
    "mac": 1
   },
   "516236": {
@@ -1357,7 +1357,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": -1,
-   "saniye": 441,
+   "saniye": 461,
    "mac": 1
   },
   "778249": {
@@ -1373,7 +1373,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 7,
-   "saniye": 599,
+   "saniye": 619,
    "mac": 1
   },
   "675128": {
@@ -1381,7 +1381,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 17,
-   "saniye": 495,
+   "saniye": 515,
    "mac": 1
   },
   "572386": {
@@ -1389,7 +1389,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": -1,
-   "saniye": 514,
+   "saniye": 534,
    "mac": 1
   },
   "778279": {
@@ -1405,7 +1405,7 @@
    "takim": "ALİAĞA PETKİM SPOR",
    "takimId": 266048,
    "vp": 5,
-   "saniye": 780,
+   "saniye": 800,
    "mac": 1
   },
   "269217": {

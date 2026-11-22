@@ -72,7 +72,7 @@
    "durum": "canli",
    "ev": "TRABZONSPOR",
    "evId": 266029,
-   "evSkor": "30",
+   "evSkor": "27",
    "dep": "ANADOLU EFES",
    "depId": 265990,
    "depSkor": "29",
@@ -1108,7 +1108,7 @@
    "ad": "Marcus Keene",
    "takim": "TRABZONSPOR",
    "takimId": 266029,
-   "vp": 3,
+   "vp": 0,
    "saniye": 589,
    "mac": 1
   },

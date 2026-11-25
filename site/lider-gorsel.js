@@ -3,6 +3,7 @@
 // logosu. Lider büyük kartta, 2–5 ince şeritlerde. Takım renkleri logodan (en çok kullanılan iki renk) çıkarılır; TAKIM_RENK
 // ile elle düzeltilebilir. Dekupe fotoğrafta (TBF'nin formalı fotoğrafları, kullanıcının gönderdikleri) baş kartın üstüne taşar.
 import { markaYazilari, logoCiz, logoDaire, sosyalCiz } from './marka.js';
+import { adBuyuk } from './ortak.js';
 const YAZI_TIPLERI = 'https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;600;700&family=Montserrat:wght@500;600;700&display=block';
 const G = 1080, Y = 1350;
 const LIG = {
@@ -160,8 +161,8 @@ function kart(g, o, i, x, y, w, h, L) {
   const [ad, soyad] = adParcala(o.ad);
   // Yazı genişliği satırın yüksekliğine göre: sağdaki eğik bloğa değmesin
   const ax = fx0 + fw + 22, agen = t => x + w - pw - egim * t - ax - 22;
-  yaz(g, buyuk(ad), ax, y + h * 0.235, { font: '600 28px Oswald', renk: 'rgba(255,255,255,0.86)', gen: agen(0.33) });
-  yaz(g, buyuk(soyad), ax, y + h * 0.535, { font: '56px Anton', gen: agen(0.68), golge: true });
+  yaz(g, adBuyuk(ad, o), ax, y + h * 0.235, { font: '600 28px Oswald', renk: 'rgba(255,255,255,0.86)', gen: agen(0.33) });
+  yaz(g, adBuyuk(soyad, o), ax, y + h * 0.535, { font: '56px Anton', gen: agen(0.68), golge: true });
   yaz(g, buyuk(o.alt), ax, y + h * 0.81, { font: '600 18px Montserrat', renk: 'rgba(255,255,255,0.72)', gen: agen(0.9) });
 }
 

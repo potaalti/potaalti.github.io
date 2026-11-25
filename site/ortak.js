@@ -33,6 +33,14 @@ export const baslik = ad => String(ad ?? '').split(' ').map(k =>
   k !== k.toLocaleUpperCase('tr') || k.replace(/\./g, '').length <= 3 ? k
     : k.toLocaleLowerCase('tr').replace(/(^|[.\-])(\p{L})/gu, (_, a, b) => a + b.toLocaleUpperCase('tr')),
 ).join(' ').replace(/Technıc/u, 'Technic');
+// Görsellerde adın büyük harfi: yerli (Türk) oyuncu Türkçe (i -> İ), yabancı ve devşirme İngilizce (i -> I). Devşirme: Türk
+// vatandaşı (yerli sayılır) ama yabancı kökenli; kullanıcı 2026-11-25: "Wilbekin, Flynn yerli ama İ kullanma, I kullan".
+// Türkçe harf (ç ğ ı ö ş ü) içeren ad her zaman Türkçe. Yeni devşirme gelince kimliği (TBF personId) buraya eklenir.
+export const DEVSIRMELER = new Set(['363061', '734506', '442131']); // Scottie Wilbekin, Malachi Flynn, Shane Larkin
+const DEVSIRME_ADLARI = new Set(['scottie wilbekin', 'malachi flynn', 'shane larkin', 'bobi klintman']);
+export const devsirmeMi = (id, ad) => DEVSIRMELER.has(String(id ?? '')) || DEVSIRME_ADLARI.has(String(ad ?? '').toLocaleLowerCase('tr').trim());
+export const adBuyuk = (ad, { yerli = false, id } = {}) => String(ad ?? '').toLocaleUpperCase(
+  /[çğıöşüÇĞİÖŞÜ]/.test(String(ad ?? '')) || (yerli && !devsirmeMi(id, ad)) ? 'tr' : 'en');
 export const gunBasligi = iso => new Date(iso).toLocaleDateString('tr-TR', { weekday: 'long', day: 'numeric', month: 'long' });
 // TBF saati henüz belli olmayan maçları 00:00 olarak verir
 export const saatYazisi = iso => (iso.endsWith('T00:00:00') ? 'Saat belli değil' : new Date(iso).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }));

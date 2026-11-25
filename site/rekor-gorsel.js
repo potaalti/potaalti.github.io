@@ -1,6 +1,7 @@
 // Sezon rekorları görseli (yönetici, Rekorlar sekmesi): her kategori ayrı, ilk 10, takım logolu, 1080x1350.
 // Pota Altı logosu ve sosyal medya şeridi marka.js'ten; renkler lige göre (TBL turkuaz, BSL mor; seyirci görselleriyle aynı).
 import { markaYazilari, logoCiz, logoDaire, sosyalCiz } from './marka.js';
+import { adBuyuk } from './ortak.js';
 const YAZI_TIPLERI = 'https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;600;700&family=Montserrat:wght@500;600;700&display=block';
 const G = 1080, Y = 1350;
 const LIG = {
@@ -65,7 +66,7 @@ export async function rekorGorseli({ lig, baslik, satirlar }) {
     // Logo
     const lg = logolar[i];
     if (lg) logoDaire(g, lg, 186, orta, Math.min(38, h / 2 - 4));
-    yaz(g, buyuk(x.ad), 240, orta - 15, { font: '700 32px Oswald', gen: 600 });
+    yaz(g, adBuyuk(x.ad, x), 240, orta - 15, { font: '700 32px Oswald', gen: 600 });
     yaz(g, buyuk(x.alt), 240, orta + 20, { font: '600 20px Montserrat', renk: 'rgba(255,255,255,0.7)', gen: 600 });
     yaz(g, String(x.deger), G - 80, orta + 2, { font: '58px Anton', renk: i === 0 ? L.vurgu : '#ffffff', hiza: 'right' });
   });

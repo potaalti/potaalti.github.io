@@ -1011,9 +1011,13 @@ function tabloKarti(lig, ilk = null) {
 
 // Yerli liderler: bütün oyuncuların ortalamalarından (en az eşik kadar maç), oyuncu rehberinde Türk olanlar; rehber
 // TBL'de { id: { ulke } }, BSL'de [{ id, turk }]
-function yerliLiderleri(lig, kod, esik, oyuncular, rehberHam) {
+// Rehberden (BSL: liste, TBL: { id: kayıt }) oyuncu Türk mü
+function turkBulucu(rehberHam) {
   const rehber = new Map((Array.isArray(rehberHam) ? rehberHam : Object.entries(rehberHam ?? {}).map(([id, v]) => ({ id, ...v }))).map(r => [String(r.id), r]));
-  const turkMu = id => { const r = rehber.get(String(id)); return typeof r?.turk === 'boolean' ? r.turk : ['TÜRKİYE', 'KKTC'].includes(r?.ulke); };
+  return id => { const r = rehber.get(String(id)); return typeof r?.turk === 'boolean' ? r.turk : ['TÜRKİYE', 'KKTC'].includes(r?.ulke); };
+}
+function yerliLiderleri(lig, kod, esik, oyuncular, rehberHam) {
+  const turkMu = turkBulucu(rehberHam);
   return (oyuncular ?? []).filter(o => o.mac >= esik && turkMu(o.id))
     .map(o => ({ id: o.id, ad: o.ad, takim: o.takim, mac: o.mac, deger: liderDegeri(kod, o), atis: kod === 'uc' ? o.uc : null }))
     .sort((a, b) => b.deger - a.deger);
@@ -1070,7 +1074,8 @@ async function liderGorselPaylas(anahtar, indir) {
   const l = ligVerisi(lig, 'liderler');
   const k = l.kategoriler.find(x => x.id === kod);
   const [gorsel, elle, rehberHam] = await Promise.all([getir(`data/${lig}/gorsel.json`).catch(() => ({ foto: {}, logo: {} })),
-    getir('odul/foto/liste.json').catch(() => ({})), yerli ? S.rehber[lig] ?? getir(rehberAdresi(lig)) : null]);
+    getir('odul/foto/liste.json').catch(() => ({})), S.rehber[lig] ?? getir(rehberAdresi(lig)).catch(() => null)]);
+  const turk = turkBulucu(rehberHam);
   const logolar = new Map(Object.entries(gorsel.logo ?? {}).map(([ad, url]) => [takimAnahtari(ad), `data/${lig}/logo/${dosyaAnahtari(ad)}${uzanti(url)}`]));
   const foto = id => (elle[id] ? `odul/foto/${elle[id]}` : gorsel.foto?.[id] ? `data/${lig}/foto/${id}${uzanti(gorsel.foto[id])}` : null);
   let liste;
@@ -1081,7 +1086,7 @@ async function liderGorselPaylas(anahtar, indir) {
     liste = k.liste.slice(0, 5);
   }
   const [baslik, ingilizce, birim] = LIDER_GORSEL[kod];
-  const satirlar = liste.map(x => ({ ad: x.ad, takimId: x.takim, deger: liderYazisi(kod, x.deger), foto: foto(x.id),
+  const satirlar = liste.map(x => ({ ad: x.ad, id: x.id, yerli: turk(x.id), takimId: x.takim, deger: liderYazisi(kod, x.deger), foto: foto(x.id),
     logo: logolar.get(takimAnahtari(takimAdi(lig, x.takim))) ?? null,
     alt: kod === 'uc' && x.atis?.[1] ? `${takimAdi(lig, x.takim)} · ${x.atis[0]}/${x.atis[1]} · %${Math.round((100 * x.atis[0]) / x.atis[1])}` : `${takimAdi(lig, x.takim)} · ${x.mac} maç` }));
   const blob = await LG.liderGorseli({ lig, baslik, yerli, ingilizce, birim, altBilgi: '2026-27', satirlar });
@@ -1725,21 +1730,22 @@ function rekorKarti(lig) {
 async function rekorGorselPaylas(anahtar, indir) {
   const [lig, grup, id] = anahtar.split('|');
   const d = S.rekorlar[lig];
-  const gorsel = await getir(`data/${lig}/gorsel.json`);
+  const [gorsel, rehberHam] = await Promise.all([getir(`data/${lig}/gorsel.json`), S.rehber[lig] ?? getir(rehberAdresi(lig)).catch(() => null)]);
+  const turk = turkBulucu(rehberHam);
   const logolar = new Map(Object.entries(gorsel.logo ?? {}).map(([ad, url]) => [takimAnahtari(ad), `data/${lig}/logo/${dosyaAnahtari(ad)}${uzanti(url)}`]));
   const T = t => takimAdi(lig, t);
   let baslik, satirlar;
   if (grup === 'oyuncu') {
     const k = d.oyuncu.find(x => x.id === id);
     baslik = `TEK MAÇTA EN ÇOK ${k.ad.toLocaleUpperCase('tr')}`;
-    satirlar = k.liste.map(x => ({ ad: x.ad, alt: `${T(x.takim)} · ${x.hafta}. hafta · ${x.evde ? '' : '@ '}${T(x.rakip)}`, deger: x.deger, logo: logolar.get(x.takim) }));
+    satirlar = k.liste.map(x => ({ ad: x.ad, id: x.oyuncu, yerli: turk(x.oyuncu), alt: `${T(x.takim)} · ${x.hafta}. hafta · ${x.evde ? '' : '@ '}${T(x.rakip)}`, deger: x.deger, logo: logolar.get(x.takim) }));
   } else if (grup === 'dd') {
     baslik = 'EN ÇOK DOUBLE-DOUBLE';
-    satirlar = d.dd.slice(0, 10).map(x => ({ ad: x.ad, alt: `${T(x.takim)}${x.td ? ` · ${x.td} triple-double` : ''}`, deger: x.dd, logo: logolar.get(x.takim) }));
+    satirlar = d.dd.slice(0, 10).map(x => ({ ad: x.ad, id: x.oyuncu, yerli: turk(x.oyuncu), alt: `${T(x.takim)}${x.td ? ` · ${x.td} triple-double` : ''}`, deger: x.dd, logo: logolar.get(x.takim) }));
   } else {
     const k = d.takim.find(x => x.id === id);
     baslik = k.ad.toLocaleUpperCase('tr');
-    satirlar = k.liste.map(x => ({ ad: T(x.takim), logo: logolar.get(x.takim),
+    satirlar = k.liste.map(x => ({ ad: T(x.takim), yerli: true, logo: logolar.get(x.takim),
       alt: id === 'seri' ? (x.suruyor ? 'Seri sürüyor' : 'Sezon içinde') : `${x.hafta}. hafta · ${T(x.rakip)} · ${x.skor}-${x.rakipSkor}${id === 'ucluk' ? ` · ${x.deneme} deneme` : ''}`,
       deger: rekorDegeri(id, x.deger) }));
   }

@@ -1,6 +1,7 @@
 // +/- liderleri yayın görseli: Pota Altı'nın hazır şablonları (sablon/artieksi-<lig>.webp, 1280x1600, 10 boş şerit) doldurulur;
 // oyuncu, takım ve +/- Farro, başlık Heading Now yerine Anton. Şablonu olmayan lig eski TBL Fantezi'deki çizimle oluşur.
 // Ana uygulamanın TBL/BSL sayfasındaki +/- sekmesi kullanır; yazı tipleri ilk görselde yüklenir.
+import { devsirmeMi } from '../ortak.js';
 const TURK_ULKELER = new Set(['TÜRKİYE', 'KKTC']);
 const baslik = s => String(s ?? '').split(' ').map(k =>
   k !== k.toLocaleUpperCase('tr') || k.replace(/\./g, '').length <= 3 ? k
@@ -29,9 +30,8 @@ const kisaTakim = ad => baslik(ad).replace(/Büyükşehir Belediye(si)? Spor/u, 
 // Türk vatandaşı yabancı kökenli oyuncular yabancı gibi yazılır ("SHANE LARKIN", "LARKİN" değil).
 const ISIM_EKI = /^(jr\.?|sr\.?|ii|iii|iv)$/i;
 const SOYAD_ONEKI = /^(van|von|der|den|de|da|di|del|della|dos|du|la|le|mc|st\.?)$/i;
-const YABANCI_KOKENLI = new Set(['shane larkin', 'scottie wilbekin', 'bobi klintman']);
 function gorselIsmi(k) {
-  const turk = (TURK_ULKELER.has(k.ulke) && !YABANCI_KOKENLI.has(k.ad.toLowerCase())) || /[çğıöşüÇĞİÖŞÜ]/.test(k.ad);
+  const turk = (TURK_ULKELER.has(k.ulke) && !devsirmeMi(k.id, k.ad)) || /[çğıöşüÇĞİÖŞÜ]/.test(k.ad);
   if (turk) return k.ad.toLocaleUpperCase('tr');
   const kelimeler = k.ad.split(/\s+/);
   const ek = kelimeler.length > 2 && ISIM_EKI.test(kelimeler.at(-1)) ? kelimeler.pop() : null;

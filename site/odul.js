@@ -4,6 +4,7 @@
 // istatistik etiketleri silinip damga olarak ayrıldı, gelen istatistiklere göre yerleştirilir).
 // Yazı tipleri (Canva'dakilerin ücretsiz benzerleri): Heading Now -> Big Shoulders Display, Posey -> Russo One,
 // istatistik rakamları -> Lilita One, 5'li isimler Farro (Canva'daki de Farro).
+import { adBuyuk } from './ortak.js';
 const YAZI_TIPLERI = 'https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800&family=Russo+One&family=Lilita+One&family=Farro:wght@700&display=block';
 const G = 1280, Y = 1600;
 const RENKLER = { tbl: '#026584', bsl: '#0b298b' };
@@ -240,7 +241,7 @@ export async function tekli({ lig = 'tbl', tur, hafta, o, foto, logo }) {
   // Şerit: MVP'de aralıklı yazı; diğer ödüllerde şablondaki gibi dar ve kalın, şeridi dolduran yazı
   if (mvp) seritYazisi(g, TB[0], 921, 247, 530, 27);
   else seritDar(g, TB[0], 921, 248, 537, 28);
-  seritYazisi(g, buyuk(o.ad, o.yerli), 921, 653, 530, 27);
+  seritYazisi(g, adBuyuk(o.ad, o), 921, 653, 530, 27);
   if (TB[1]) {
     const boylar = tur.startsWith('kaybeden') ? [80, 128] : [136, 144];
     const ara = 30, toplam = boylar.reduce((a, b) => a + b, 0) + ara;
@@ -326,7 +327,7 @@ async function besliKartlar(g, oyuncular) {
     g.save(); g.beginPath(); g.arc(cx, cy, 27.5, 0, 7); g.fillStyle = '#fff'; g.fill(); g.restore();
     if (l) sigdir(g, logoKirp(l), cx - 21, cy - 21, 42, 42);
     // İsim: şeridin eğimiyle, iki satır (ad / soyad)
-    const parca = buyuk(o.ad, o.yerli).split(' ');
+    const parca = adBuyuk(o.ad, o).split(' ');
     const satir = parca.length > 1 ? [parca.slice(0, -1).join(' '), parca.at(-1)] : [parca[0]];
     const mx = (sx1 + sx2) / 2, my = (sy1 + sy2) / 2 + 31;
     g.save(); g.translate(mx, my); g.rotate(Math.atan2(sy2 - sy1, sx2 - sx1));

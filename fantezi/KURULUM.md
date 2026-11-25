@@ -27,7 +27,8 @@ hesaplanır.
 5. Sol menü **Build → Firestore Database** → **Create database** → konum: `eur3 (europe-west)` →
    **Start in production mode** → Oluştur.
 6. Aynı sayfada **Rules** sekmesi → oradaki her şeyi sil → bu projedeki `fantezi/firestore.rules` dosyasının
-   tamamını yapıştır → **Publish**.
+   tamamını yapıştır → içindeki `KURUCU_EPOSTA` yazısını **kendi Gmail adresinle** değiştir (yalnız sen ligi kurabilesin;
+   adres depoya yazılmaz, sadece konsolda durur) → **Publish**.
 7. Sol menü **Build → Authentication** → **Get started** → **Sign-in method**:
    - **Google** → **Enable** → "Project support email" olarak kendi Gmail adresini seç → Save.
      (Menajerler davet linkini açıp Google hesabıyla girer; şifre yok.)
@@ -45,7 +46,9 @@ hesaplanır.
 
 ## 3. Ligi kur (bir kez)
 
-1. Siteyi aç → **Google ile giriş yap** → "Ligi kur" ekranı gelir (lig henüz kurulmadıysa).
+1. Siteyi sonuna `?kurulum=1` ekleyerek aç (ör. `potaalti.github.io/bsl/?kurulum=1`; tarayıcı bunu hatırlar) → **Google ile giriş yap**
+   → "Ligi kur" ekranı gelir (lig henüz kurulmadıysa). Bu adres olmadan herkes "yakında" yazısını görür; kurallar da yalnız
+   kurucu Gmail adresinin ligi kurmasına izin verir.
 2. Lig adını, puanlamanın başlayacağı **BSL haftasını** (draftın bittiği haftadan sonraki ilk hafta)
    seçim süresini (90 sn = 1,5 dk) ve takım sayısını gir → **Ligi kur**. Takım sayısının sınırı yok; kura çekilene kadar
    Yönetici sayfasından **+ Takım ekle** / **Son takımı çıkar** ile değiştirilebilir (oyuncu havuzu bütün seçimlere

@@ -529,7 +529,26 @@ const tblAktarimAyari = () => ({
   degisiklikHakki: LIG.degisiklikHakki ?? 99, ortakHak: !!LIG.ortakHak, beklemeSaat: LIG.beklemeSaat ?? 36, asEnFazlaYabanci: 2, mevkilerHazir: false,
 });
 
+// Kurulum ekranı yalnızca kurucunun adresinde: ?kurulum=1 ile açılınca bu tarayıcıda hatırlanır. Başkaları "yakında" yazısını
+// görür. Asıl kilit Firestore kurallarında (kurucu(): yalnız kurucunun Google hesabı ligi kurabilir).
+const KURULUM_ANAHTARI = `${LIG.kod}Kurulum`;
+function kurulumIzni() {
+  try {
+    if (new URLSearchParams(location.search).get('kurulum') === '1') localStorage.setItem(KURULUM_ANAHTARI, '1');
+    return localStorage.getItem(KURULUM_ANAHTARI) === '1';
+  } catch { return new URLSearchParams(location.search).get('kurulum') === '1'; }
+}
+
 function gorunumKurulum() {
+  if (S.ayarEksik && kurulumIzni()) {
+    return `<div class="kart hata-kutu"><h2>Firebase bağlı değil</h2><p>Firebase ayarları girilmemiş: <code>site/${LIG.kod}/config.js</code>
+      dosyasını <code>fantezi/KURULUM.md</code>'deki gibi doldur. Ziyaretçiler bu arada "yakında" yazısını görür.</p></div>`;
+  }
+  if (S.ayarEksik || (!S.kurulumSonucu && !kurulumIzni())) {
+    return `<div class="kart"><h2>${esc(LIG.ad)} yakında başlıyor</h2>
+      <p>Lig henüz kurulmadı. Kurulunca katılacak menajerlere kendi davet linkleri gönderilecek; linki açıp Google hesabınla girerek takımına katılacaksın.</p>
+      <p class="soluk kucuk">Bu arada <a href="../">Pota Altı</a>'nda canlı skorlara ve istatistiklere bakabilirsin.</p></div>`;
+  }
   if (S.kurulumSonucu) {
     return `<div class="kart">
       <h2>Lig kuruldu 🎉</h2>
@@ -3225,7 +3244,10 @@ async function girisYap() {
 
 async function basla() {
   if (!YEREL && String(firebaseConfig.apiKey).startsWith('BURAYA')) {
-    S.hataMesaji = 'Firebase ayarları girilmemiş: <code>site/config.js</code> dosyasını KURULUM.md\'deki gibi doldurun.';
+    // Firebase projesi henüz bağlanmadı: ziyaretçiye teknik hata yerine "yakında" (kurucuya ne eksik olduğu)
+    S.hazir = true;
+    S.ligYok = true;
+    S.ayarEksik = true;
     return ciz();
   }
   try {

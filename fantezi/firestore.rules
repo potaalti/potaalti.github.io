@@ -23,9 +23,15 @@ service cloud.firestore {
     function kadroSonra(tid) { return getAfter(/databases/$(database)/documents/kadrolar/$(tid)).data; }
     function oyunculari(k) { return k.as.concat(k.yedek); }
 
+    // Ligi yalnızca kurucu kurabilir (2026-11-25: uygulama herkese açıkken başkası "Ligi kur" deyip yönetici olmasın).
+    // KURUCU_EPOSTA kurallar Firebase konsoluna yapıştırılırken kurucunun Gmail adresiyle değiştirilir (depoya yazılmaz);
+    // değiştirilmezse kimse kuramaz. Kurulmuş ligleri etkilemez.
+    function kurucu() {
+      return request.auth.token.email == 'KURUCU_EPOSTA' && request.auth.token.email_verified == true;
+    }
     // İlk kurulum: lig/ayar henüz yokken, onu oluşturan tek toplu yazmanın parçası
     function kurulumda() {
-      return google()
+      return google() && kurucu()
         && !exists(/databases/$(database)/documents/lig/ayar)
         && existsAfter(/databases/$(database)/documents/lig/ayar);
     }

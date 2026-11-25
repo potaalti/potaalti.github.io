@@ -1,0 +1,96 @@
+{
+ "hafta": 12,
+ "guncelleme": "2026-11-25T19:38:07.640Z",
+ "notlar": [
+  "Koralp Türk (iLab Basketbol): formalı fotoğrafı yok, TBF'de vesikalık var",
+  "Yiğit Baran Sarıkaya (Yalova Harem Spor): formalı fotoğrafı yok, TBF'de vesikalık var",
+  "Kendall Munson (Konya Büyükşehir Belediyesi Spor): formalı fotoğrafı yok, TBF'de vesikalık var"
+ ],
+ "gorseller": [
+  {
+   "dosya": "01-12-haftanin-panoramasi.jpg",
+   "tur": "kapak",
+   "baslik": "12. Haftanın Panoraması"
+  },
+  {
+   "dosya": "02-mvp-jamari-traylor.jpg",
+   "tur": "mvp",
+   "baslik": "MVP",
+   "oyuncu": "Jamari Traylor",
+   "takim": "KEÇİÖREN BELEDİYESİ BAĞLUM",
+   "vp": 38
+  },
+  {
+   "dosya": "03-yerli-mvp-koralp-turk.jpg",
+   "tur": "yerli",
+   "baslik": "Yerli MVP",
+   "oyuncu": "Koralp Türk",
+   "takim": "iLab BASKETBOL",
+   "vp": 26
+  },
+  {
+   "dosya": "04-kaybeden-yabanci-mvp-jordan-barnes.jpg",
+   "tur": "kaybedenYabanci",
+   "baslik": "Kaybeden Yabancı MVP",
+   "oyuncu": "Jordan Barnes",
+   "takim": "BÜYÜKÇEKMECE BASKETBOL",
+   "vp": 24
+  },
+  {
+   "dosya": "05-kaybeden-yerli-mvp-mustafa-basturk.jpg",
+   "tur": "kaybedenYerli",
+   "baslik": "Kaybeden Yerli MVP",
+   "oyuncu": "Mustafa Baştürk",
+   "takim": "BÜYÜKÇEKMECE BASKETBOL",
+   "vp": 24
+  },
+  {
+   "dosya": "06-yerli-5.jpg",
+   "tur": "besli",
+   "baslik": "Yerli 5",
+   "oyuncular": [
+    "Oğuzhan Tosun",
+    "Baran Avşar",
+    "Batuhan Acar",
+    "Yiğit Çoban",
+    "Koralp Türk"
+   ]
+  },
+  {
+   "dosya": "07-yabanci-5.jpg",
+   "tur": "besli",
+   "baslik": "Yabancı 5",
+   "oyuncular": [
+    "Fred Cleveland",
+    "Stefan Moody",
+    "Robert Smith",
+    "Jamari Traylor",
+    "Abdoulaye Gueye"
+   ]
+  },
+  {
+   "dosya": "08-mansiyon-5-i-i.jpg",
+   "tur": "besli",
+   "baslik": "Mansiyon 5'i – I",
+   "oyuncular": [
+    "Brandon Jefferson",
+    "Tobin Carberry",
+    "Jarmar Gulley",
+    "İlker Tunalı",
+    "Yiğit Baran Sarıkaya"
+   ]
+  },
+  {
+   "dosya": "09-mansiyon-5-i-ii.jpg",
+   "tur": "besli",
+   "baslik": "Mansiyon 5'i – II",
+   "oyuncular": [
+    "Diante Watkins",
+    "Sam Sessoms",
+    "Zahid İsaoğlu",
+    "Mustafa Baki Görür",
+    "Kendall Munson"
+   ]
+  }
+ ]
+}

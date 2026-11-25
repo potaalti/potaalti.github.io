@@ -1256,6 +1256,7 @@ function gorunumOyuncu(pid) {
   const td = talepDurumu(pid);
   const durum = sahip
     ? `<a href="#/takim/${sahip}"><b>${esc(takimAdi(sahip))}</b></a> <span class="rozet ${k.as.includes(pid) ? 'as' : 'yedek'}">${k.as.includes(pid) ? 'As' : 'Yedek'}</span>`
+    : o.haric ? '<span class="rozet uyari">Fantezi ligden çıkarıldı</span>' : o.veda ? '<span class="rozet uyari">Kulübü veda etti</span>'
     : o.aktif === false ? '<span class="rozet uyari">TBF\'de lisansı görünmüyor</span>'
       : td?.evre === 'kura' ? '<span class="rozet uyari">🎲 Talep süresi bitti, kura bekleniyor</span>'
         : kalan ? `<span class="rozet uyari">⏳ Talep süresinde · ${sureYazisi(kalan)} kaldı</span>` : '<span class="rozet">Boşta</span>';
@@ -2158,14 +2159,17 @@ function macDetayi(m, n) {
 }
 
 // ---------- Zorunlu değişiklik bandı (lisansı düşen oyuncusu olan takıma her sayfada) ----------
+// Oyuncu neden takımından çıkıyor: fantezi ligden çıkarıldı, kulübü veda etti ya da TBF'de lisansı düştü
+const cikisNedeni = p => (S.rehber.get(p)?.haric ? 'fantezi ligden çıkarıldı' : S.rehber.get(p)?.veda ? 'kulübü veda etti'
+  : "TBF'de lisansı görünmüyor, ligden ayrıldı");
 function zorunluBandi() {
   const tid = benimTakimim();
   const liste = tid ? zorunluBekleyen(tid) : [];
   if (!liste.length) return '';
-  return `<div class="kart hata-kutu zorunlu-bant"><b>⚠️ Zorunlu değişiklik:</b> ${liste.map(p => `<b>${esc(oyuncu(p).ad)}</b>`).join(', ')}
-    artık TBF'de lisanslı görünmüyor (ligden ayrıldı). Yerine boştakilerden kurallara uygun bir oyuncu almalısın; bu değişiklik
-    ${hakAdi()}ndan düşmez. Değişikliği yapana kadar ${LIG.takas ? 'takas ve ' : ''}As–Yedek değişikliği yapamazsın.
-    <a class="btn kucuk ana" href="#/bostakiler">Oyuncu seç</a></div>`;
+  return `<div class="kart hata-kutu zorunlu-bant"><b>⚠️ Oyuncu ekle:</b> ${liste.map(p => `<b>${esc(oyuncu(p).ad)}</b> (${cikisNedeni(p)})`).join(', ')}
+    takımından çıkarıldı. Yerine boştakilerden kurallara uygun bir oyuncu eklemelisin; bu ekleme ${hakAdi()}ndan düşmez.
+    Ekleyene kadar ${LIG.takas ? 'takas ve ' : ''}As–Yedek değişikliği yapamazsın.
+    <a class="btn kucuk ana" href="#/bostakiler">Oyuncu ekle</a></div>`;
 }
 
 // Kura çekilmeden takım sayısı serbestçe değişir; havuz bütün seçimlere yetmeli
@@ -3259,7 +3263,7 @@ async function basla() {
     const haric = new Set(LIG.haricOyuncular ?? []);
     // Kulübün veda ettiği ama TBF'de lisansı henüz düşmeyen oyuncular ayrılmış sayılır (zorunlu/otomatik değişiklik çalışsın)
     const veda = new Set(LIG.vedaEdenler ?? []);
-    S.rehber = new Map(rehber.map(o => [o.id, haric.has(o.id) ? { ...o, aktif: false, haric: true } : veda.has(o.id) ? { ...o, aktif: false } : o]));
+    S.rehber = new Map(rehber.map(o => [o.id, haric.has(o.id) ? { ...o, aktif: false, haric: true } : veda.has(o.id) ? { ...o, aktif: false, veda: true } : o]));
     // Bu ve sıradaki haftanın maçları: başlamış ama bizim verimizde bitmemiş maç varsa TBL'nin canlı verisi okunur
     Promise.all([index.guncelHafta, index.guncelHafta + 1].map(n => VERI.maclar(n)
       .then(m => { S.maclar[n] = m; }).catch(() => {}))).then(() => { ciz(); canliYenile(); });

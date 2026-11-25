@@ -1,0 +1,112 @@
+{
+ "hafta": 9,
+ "guncelleme": "2026-11-25T19:29:21.549Z",
+ "notlar": [],
+ "gorseller": [
+  {
+   "dosya": "01-9-haftanin-panoramasi.jpg",
+   "tur": "kapak",
+   "baslik": "9. Haftanın Panoraması"
+  },
+  {
+   "dosya": "02-mvp-qj-peterson.jpg",
+   "tur": "mvp",
+   "baslik": "MVP",
+   "oyuncu": "QJ Peterson",
+   "takim": "PİZZABULLS BORDO BANDIRMA",
+   "vp": 27
+  },
+  {
+   "dosya": "03-mvp-fabian-white.jpg",
+   "tur": "mvp",
+   "baslik": "MVP",
+   "oyuncu": "Fabian White",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "vp": 27
+  },
+  {
+   "dosya": "04-kazanan-yerli-mvp-canberk-kus.jpg",
+   "tur": "yerli",
+   "baslik": "Kazanan Yerli MVP",
+   "oyuncu": "Canberk Kuş",
+   "takim": "GLİNT ÇAYIROVA BELEDİYESİ",
+   "vp": 19
+  },
+  {
+   "dosya": "05-kaybeden-yabanci-mvp-talen-horton-tucker.jpg",
+   "tur": "kaybedenYabanci",
+   "baslik": "Kaybeden Yabancı MVP",
+   "oyuncu": "Talen Horton-Tucker",
+   "takim": "FENERBAHÇE TARFİN",
+   "vp": 32
+  },
+  {
+   "dosya": "06-kaybeden-yerli-mvp-mahir-agva.jpg",
+   "tur": "kaybedenYerli",
+   "baslik": "Kaybeden Yerli MVP",
+   "oyuncu": "Mahir Ağva",
+   "takim": "YUKATEL DENİZLİ BASKET",
+   "vp": 20
+  },
+  {
+   "dosya": "07-altin-5.jpg",
+   "tur": "besli",
+   "baslik": "Altın 5",
+   "oyuncular": [
+    "Briante Weber",
+    "QJ Peterson",
+    "Jerrick Harding",
+    "Fabian White",
+    "Steven Enoch"
+   ]
+  },
+  {
+   "dosya": "08-gumus-5.jpg",
+   "tur": "besli",
+   "baslik": "Gümüş 5",
+   "oyuncular": [
+    "Scottie Wilbekin",
+    "Ty Gordon",
+    "Ishmael El-Amin",
+    "Dario Saric",
+    "Zach Hankins"
+   ]
+  },
+  {
+   "dosya": "09-bronz-5.jpg",
+   "tur": "besli",
+   "baslik": "Bronz 5",
+   "oyuncular": [
+    "Şehmus Hazer",
+    "Malachi Flynn",
+    "Jordan Loyd",
+    "Canberk Kuş",
+    "Tyler Cavanaugh"
+   ]
+  },
+  {
+   "dosya": "10-mansiyon-5.jpg",
+   "tur": "besli",
+   "baslik": "Mansiyon 5",
+   "oyuncular": [
+    "İsmet Akpınar",
+    "Furkan Korkmaz",
+    "Shaq McKissic",
+    "Göktuğ Baş",
+    "Hakan Sayılı"
+   ]
+  },
+  {
+   "dosya": "11-kaybedenler-kulubu.jpg",
+   "tur": "besli",
+   "baslik": "Kaybedenler Kulübü",
+   "oyuncular": [
+    "Talen Horton-Tucker",
+    "Mike Davis Jr.",
+    "Leyton Hammonds",
+    "Tre'shawn Thurman",
+    "Mahir Ağva"
+   ]
+  }
+ ]
+}

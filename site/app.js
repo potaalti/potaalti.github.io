@@ -703,10 +703,12 @@ async function odulHazirla(h, yayinListesi = null) {
     if (sart && !sart(b.o)) sonuc.hatalar.push(`${tekliAd(tur)}: ${b.o.ad} şarta uymuyor (${b.o.yerli ? 'yerli' : 'yabancı'}, takımı ${b.o.kazandi ? 'kazandı' : 'kaybetti'}); yine de hazırlandı`);
     secilenler.set(b.o.id, b.o);
     // Görselde yazılan ad (TBF'deki göbek adları yazılmasın: "Jaquan Scott", "Jaquan Elijah Scott" değil); yazılan ad soyadla
-    // bitmiyorsa ("ÖMER YASİR") resmi tam ad kalır
+    // bitmiyorsa ("ÖMER YASİR") resmi tam ad kalır. Takma ad ve ek de yazıldığı gibi (2026-11-25): "QJ Peterson" (TBF: Quentin
+    // Peterson), "Fabian White" (TBF: Fabian White Jr.): soyad (Jr./Sr./II/III/IV eki sayılmadan) ve ilk harf aynıysa yeter.
     const yazilan = sorgu.split(/\s+\d/)[0].trim();
-    const yk = kelimeler(yazilan), rk = kelimeler(b.o.ad);
-    if (yk.length > 1 && yk.at(-1) === rk.at(-1) && yk.every(k => rk.includes(k))) b.o = { ...b.o, ad: yazilan };
+    const EK = new Set(['jr', 'sr', 'ii', 'iii', 'iv']);
+    const yk = kelimeler(yazilan).filter(k => !EK.has(k)), rk = kelimeler(b.o.ad).filter(k => !EK.has(k));
+    if (yk.length > 1 && yk.at(-1) === rk.at(-1) && (yk.every(k => rk.includes(k)) || yk[0][0] === rk[0]?.[0])) b.o = { ...b.o, ad: yazilan };
     isler.push({ ad: `${tekliAd(tur)} · ${b.o.ad}`, bilgi: { tur, baslik: tekliAd(tur), oyuncu: b.o.ad, takim: b.o.takim, vp: b.o.vp }, yap: () => OD.tekli({ lig: OL(), tur, hafta: h, o: b.o, foto: b.o.foto, logo: b.o.logo }) });
   }
   liste.gruplar.forEach((grup, i) => {

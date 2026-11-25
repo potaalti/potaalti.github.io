@@ -7,9 +7,11 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Süren yayın iptal edilmez; sırada yalnızca en son bekleyen kalır (aradakiler atlanır). 2026-11-25: Avrupa verisi dakikada bir
+# gönderilince her yayın bir sonrakince iptal ediliyor, site hiç güncellenmiyordu.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   yayinla:

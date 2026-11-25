@@ -19,12 +19,20 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.yayin.outputs.page_url }}
+      url: ${{ steps.yayin.outputs.page_url || steps.yayin2.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
+      # deploy-pages bazen yüklenen paketi göremiyor ("No artifacts named github-pages were found"; 2026-11-25 akşamı sık
+      # gönderimde yayınların yarısı düştü): bir kez daha bekleyip yeniden dener
       - id: yayin
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+      - if: steps.yayin.outcome == 'failure'
+        run: sleep 20
+      - id: yayin2
+        if: steps.yayin.outcome == 'failure'
         uses: actions/deploy-pages@v4

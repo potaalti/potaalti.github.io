@@ -982,9 +982,15 @@ const BOLGELER = {
   tbl: [[1, 'ust', 'Üst lige çıkar'], [7, 'po', 'Play-off (2–7)'], [11, 'pi', 'Play-in (8–11)']],
   bsl: [[1, 'ust', 'Lider', false], [8, 'po', 'Play-off (ilk 8)']], // 4. alan false: altına kesik çizgi yok (lider de play-off'ta)
 };
-const bolgeSinifi = (lig, sira) => (BOLGELER[lig] ?? []).find(([son]) => sira <= son)?.[1] ?? '';
-const bolgeSiniri = (lig, sira) => (BOLGELER[lig] ?? []).some(([son, , , cizgi]) => son === sira && cizgi !== false);
-const bolgeLejanti = lig => (BOLGELER[lig] ? `<p class="bolge-lejant">${BOLGELER[lig].map(([, s, ad]) => `<span><i class="bolge-${s}"></i>${ad}</span>`).join('')}</p>` : '');
+// Küme düşme: tablonun sonundan kaç takım (kullanıcı 2026-11-27: BSL'de son 2, TBL'de son takım düşer). n: takım sayısı
+const DUSME = { bsl: 2, tbl: 1 };
+const dusuyor = (lig, sira, n) => !!DUSME[lig] && n > DUSME[lig] && sira > n - DUSME[lig];
+const bolgeSinifi = (lig, sira, n) => (dusuyor(lig, sira, n) ? 'dus' : (BOLGELER[lig] ?? []).find(([son]) => sira <= son)?.[1] ?? '');
+const bolgeSiniri = (lig, sira, n) => (BOLGELER[lig] ?? []).some(([son, , , cizgi]) => son === sira && cizgi !== false)
+  || (!!DUSME[lig] && sira === n - DUSME[lig]);
+const bolgeLejanti = (lig, dusme = true) => (BOLGELER[lig] ? `<p class="bolge-lejant">${[...BOLGELER[lig].map(([, s, ad]) => [s, ad]),
+  ...(dusme && DUSME[lig] ? [['dus', DUSME[lig] > 1 ? `Küme düşer (son ${DUSME[lig]})` : 'Küme düşer (son takım)']] : [])]
+  .map(([s, ad]) => `<span><i class="bolge-${s}"></i>${ad}</span>`).join('')}</p>` : '');
 
 function tabloKarti(lig, ilk = null) {
   const t0 = canliTablo(lig, ligVerisi(lig, 'tablo'));
@@ -995,8 +1001,9 @@ function tabloKarti(lig, ilk = null) {
   const t = ps ? [...t0].sort((a, b) => ps.yon * (b[ps.k] - a[ps.k]) || a.sira - b.sira) : t0;
   const th = (k, ad, ek = '') => ilk ? `<th class="sayi ${ek}">${ad}</th>`
     : `<th class="sayi sirala ${ek} ${ps?.k === k ? 'aktif' : ''}" data-is="pt-sirala" data-id="${k}">${ad}${ps?.k === k ? (ps.yon > 0 ? ' ▼' : ' ▲') : ''}</th>`;
-  const satirlar = (ilk ? t.slice(0, ilk) : t).map((s, i, liste) => `<tr class="tikla${!ps && i < liste.length - 1 && bolgeSiniri(lig, s.sira) ? ' bolge-sinir' : ''}" onclick="location.hash='#/takim/${lig}/${s.id}'">
-      <td class="sira"><span class="madalya ${bolgeSinifi(lig, s.sira) && `bolge-${bolgeSinifi(lig, s.sira)}`}">${s.sira}</span></td><td class="takim-ad">${esc(baslik(s.ad))}${s.canli ? ' <span class="canli-yazi kucuk">canlı</span>' : ''}</td>
+  const n = t0.length;
+  const satirlar = (ilk ? t.slice(0, ilk) : t).map((s, i, liste) => `<tr class="tikla${!ps && i < liste.length - 1 && bolgeSiniri(lig, s.sira, n) ? ' bolge-sinir' : ''}${dusuyor(lig, s.sira, n) ? ' bolge-dus-satir' : ''}" onclick="location.hash='#/takim/${lig}/${s.id}'">
+      <td class="sira"><span class="madalya ${bolgeSinifi(lig, s.sira, n) && `bolge-${bolgeSinifi(lig, s.sira, n)}`}">${s.sira}</span></td><td class="takim-ad">${esc(baslik(s.ad))}${s.canli ? ' <span class="canli-yazi kucuk">canlı</span>' : ''}</td>
       <td class="sayi">${s.o}</td><td class="sayi"><b>${s.g}</b></td><td class="sayi">${s.m}</td>${lig === 'tbl' ? `<td class="sayi">${yuzdeYazisi(s)}</td>` : ''}
       <td class="sayi dar-gizle">${s.atilan}</td><td class="sayi dar-gizle">${s.yenilen}</td><td class="sayi">${isaretli(s.averaj)}</td>
       ${ilk ? '' : `<td><span class="form">${s.son5.map(x => `<i class="${x}">${x}</i>`).join('')}</span></td>`}</tr>`).join('');
@@ -1006,7 +1013,7 @@ function tabloKarti(lig, ilk = null) {
     <thead><tr><th>#</th><th>Takım</th><th class="sayi">O</th><th class="sayi">G</th><th class="sayi">M</th>${lig === 'tbl' ? '<th class="sayi">G%</th>' : ''}
       ${th('atilan', 'A', 'dar-gizle')}${th('yenilen', 'Y', 'dar-gizle')}${th('averaj', 'Av.')}${ilk ? '' : '<th>Son 5</th>'}</tr></thead>
     <tbody>${satirlar}</tbody></table></div>
-    ${bolgeLejanti(lig)}
+    ${bolgeLejanti(lig, !ilk)}
     ${ilk ? '' : `<p class="soluk kucuk" style="margin:8px 0 0">O: oynanan · G: galibiyet · M: mağlubiyet · A/Y: atılan/yenilen sayı · Av.: averaj. ${lig === 'tbl' ? 'G%: galibiyet yüzdesi. Sıralama galibiyet yüzdesine göre, eşitlikte averaj' : 'Sıralama galibiyete göre, eşitlikte averaj'} (resmi sıralamada ikili averaj gibi farklı kurallar olabilir). A, Y ya da Av. başlığına dokununca o sütuna göre sıralanır; üçüncü dokunuş resmi sıraya döner.</p>`}</div>`;
 }
 

@@ -991,33 +991,31 @@ function benimDraftim() {
     ${oyuncular.length ? `<div>${[...k.as.map(p => [p, 'as']), ...k.yedek.map(p => [p, 'yedek'])].map(([p, rol]) => `<span class="secim-chip">${oyuncuAdi(p)} <span class="rozet ${rol}">${rol === 'as' ? 'As' : 'Yedek'}</span></span>`).join('')}</div>`
       : '<p class="soluk" style="margin:0">Henüz oyuncu seçmedin.</p>'}
     ${oyuncular.length < kadroBoyu() ? `<p class="kucuk soluk" style="margin:6px 0 0">${S.istek.length
-      ? `İstek listende ${S.istek.length} oyuncu${istekSiradaki(tid) ? ` · süren dolarsa seçilecek: <b>${esc(istekSiradaki(tid).ad)}</b>` : ' · listede şu an uygun oyuncu yok'}`
+      ? `İstek listende ${S.istek.length} oyuncu${istekUygunlar(tid).length ? ` · ${istekUygunlar(tid).length} uygun` : ' · şu an uygun oyuncu yok'}`
       : 'Süren dolarsa diye'} · <a href="#" data-is="draft-sekme" data-id="istek">${S.istek.length ? 'Listeyi düzenle' : 'istek listeni hazırla'}</a></p>` : ''}
   </div>`;
 }
 
-// İstek listesinde, süre dolarsa seçilecek oyuncu: ilk müsait ve kadro kuralına uyan
-function istekSiradaki(tid, liste = S.istek) {
+// İstek listesinde, süre dolarsa seçilebilecek oyuncular: müsait ve kadro kuralına uyanlar. Süre dolunca bunlardan
+// RASTGELE biri seçilir (kullanıcı 2026-11-26: liste sırası önemli değil)
+function istekUygunlar(tid, liste = S.istek) {
   const sahip = sahipler();
   const izin = izinliTipler(tid);
-  return liste.map(id => S.havuzMap.get(id)).find(o => o && !sahip.has(o.id) && izin.includes(C.tipi(o.mevki, o.turk)));
+  return liste.map(id => S.havuzMap.get(id)).filter(o => o && !sahip.has(o.id) && izin.includes(C.tipi(o.mevki, o.turk)));
 }
 
 function istekListesiKarti() {
   const tid = benimTakimim();
   const sahip = sahipler();
   const izin = izinliTipler(tid);
-  const siradaki = istekSiradaki(tid);
   const liste = S.istek.map(id => S.havuzMap.get(id) ?? { ...oyuncu(id), mevki: mevki(id) });
   return `<div class="kart"><h3>İstek listem</h3>
     ${liste.length ? `<ol class="istek-liste">${liste.map((o, i) => {
       const kimde = sahip.get(o.id);
       const engel = !kimde && !izin.includes(C.tipi(o.mevki, o.turk));
-      return `<li class="${kimde ? 'alindi' : ''}"><span><span class="no">${i + 1}</span> ${esc(o.ad)} ${mevkiRozeti(o.mevki)}${trRozeti(o)} <span class="bsl">${esc(o.takimKod || o.takim || '')}</span>
-          ${kimde ? `<span class="soluk kucuk">· ${esc(takimAdi(kimde))} aldı</span>` : engel ? '<span class="soluk kucuk">· şu an kadro kuralına uymuyor</span>' : siradaki?.id === o.id ? '<span class="rozet as">sıradaki</span>' : ''}</span>
+      return `<li class="${kimde ? 'alindi' : ''}"><span>${esc(o.ad)} ${mevkiRozeti(o.mevki)}${trRozeti(o)} <span class="bsl">${esc(o.takimKod || o.takim || '')}</span>
+          ${kimde ? `<span class="soluk kucuk">· ${esc(takimAdi(kimde))} aldı</span>` : engel ? '<span class="soluk kucuk">· şu an kadro kuralına uymuyor</span>' : ''}</span>
         <span class="satir" style="flex-wrap:nowrap">
-          <button class="btn kucuk" data-is="istek-tasi" data-id="${o.id}" data-yon="-1" ${i === 0 ? 'disabled' : ''} title="Yukarı">↑</button>
-          <button class="btn kucuk" data-is="istek-tasi" data-id="${o.id}" data-yon="1" ${i === liste.length - 1 ? 'disabled' : ''} title="Aşağı">↓</button>
           <button class="btn kucuk" data-is="istek" data-id="${o.id}" title="Listeden çıkar">✕</button></span></li>`;
     }).join('')}</ol>` : '<p class="soluk" style="margin:0">Listen boş.</p>'}
     ${liste.some(o => sahip.has(o.id)) ? '<button class="btn kucuk" data-is="istek-temizle" style="margin-top:8px">Alınanları listeden çıkar</button>' : ''}
@@ -2066,7 +2064,7 @@ function gorunumKurallar() {
       <li>${a.takimSayisi} takım. Draft sırası sistemde kurayla belirlenir ve herkese canlı gösterilir.</li>
       <li>Yılan draft: 1. tur 1→${a.takimSayisi}, 2. tur ${a.takimSayisi}→1, 3. tur yine 1→${a.takimSayisi}…</li>
       <li>Her takım ${kadroBoyu()} oyuncu seçer: ${a.asSayisi} As + ${a.yedekSayisi} Yedek (toplam ${a.takimSayisi * kadroBoyu()} seçim). Bir oyuncu sadece bir takımda olabilir.</li>
-      <li>Her seçim için süre ${sureMetni(a.secimSuresi)}. Süre dolarsa, takımın istek listesindeki ilk müsait (ve kadro kuralına uyan) oyuncu seçilir; listede uygun oyuncu yoksa müsait oyuncular içinden bu sezonun ${LIG.kisa} maç başı VP ortalamasına göre en iyi 15 oyuncudan rastgele biri otomatik seçilir. İstek listesini sadece takımın kendisi görür.</li>
+      <li>Her seçim için süre ${sureMetni(a.secimSuresi)}. Süre dolarsa, takımın istek listesindeki müsait (ve kadro kuralına uyan) oyunculardan rastgele biri seçilir; listede uygun oyuncu yoksa müsait oyuncular içinden bu sezonun ${LIG.kisa} maç başı VP ortalamasına göre en iyi 15 oyuncudan rastgele biri otomatik seçilir. İstek listesini sadece takımın kendisi görür.</li>
       <li>Aynı ${LIG.kisa} takımından istediğin kadar oyuncu seçebilirsin.</li>
       <li>Her oyuncu <b>Ön</b> (uzun/forvet) ya da <b>Arka</b> (oyun kurucu/şutör) sahadır. As beşi <b>${kural().asOn} Ön + ${kural().asArka} Arka</b>; ${kural().yedek} Yedeğin mevkisi serbest.</li>
       <li>As'ta en az 1, Yedekte en az 1 Türk oyuncu (TÜRKİYE / KKTC) olmalı.</li>
@@ -3239,8 +3237,9 @@ async function otomatikKontrol() {
   try {
     const n = d.secimNo;
     const tid = d.secimSirasi[n];
-    // Süresi dolan takımın istek listesi (süre dolunca okunabilir): ilk müsait ve kurala uyan oyuncu
-    const istenen = istekSiradaki(tid, await D.istekListesiGetir(tid));
+    // Süresi dolan takımın istek listesi (süre dolunca okunabilir): müsait ve kurala uyanlardan rastgele biri
+    const uygunlar = istekUygunlar(tid, await D.istekListesiGetir(tid));
+    const istenen = uygunlar.length ? C.rastgele(uygunlar) : null;
     const adaylar = C.otomatikAdaylar(S.havuz, new Set(sahipler().keys()), izinliTipler(tid));
     if (!istenen && !adaylar.length) throw new D.Hata('Otomatik seçim için uygun oyuncu yok.');
     await D.secimYap({ takim: tid, oyuncu: istenen ?? C.rastgele(adaylar), otomatik: true, beklenenNo: n, dizilis: draftDizilisi });

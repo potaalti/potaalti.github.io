@@ -410,3 +410,15 @@ body.yayin-modu .icerik { max-width: none; margin: 0; padding: 0; }
 
 /* Telefonda kısa ipuçları da gizli (kullanıcı 2026-11-26: mobilde çok yazı) */
 @media (max-width: 700px) { .ipucu { display: none; } }
+
+/* 13+ takımda (16–20) sıkı tahta: yan sütun dar, yazılar küçük */
+body.yayin-modu .ye-govde:has(.ye-tahta.cok) { grid-template-columns: 19vw 1fr; gap: 1vw; padding: 1.6vh 1.4vw; }
+.ye-tahta.cok { border-spacing: .2vw .55vh; }
+.ye-tahta.cok thead th { font-size: 1.15vh; letter-spacing: 0; white-space: normal; word-break: normal; overflow-wrap: break-word; }
+body.yayin-modu .ye-govde:has(.ye-tahta.cok) .ye-son:nth-of-type(n+5) { display: none; }
+.ye-tahta.cok td { padding: .4vh .25vw; border-radius: .6vh; }
+.ye-tahta.cok td b { font-size: 1.5vh; }
+.ye-tahta.cok td small { font-size: 1.2vh; }
+.ye-tahta.cok th:first-child { width: 1.6vw; }
+body.yayin-modu .ye-govde:has(.ye-tahta.cok) .ye-siradaki { font-size: 3.8vh; }
+body.yayin-modu .ye-govde:has(.ye-tahta.cok) .ye-sayac { font-size: 9vh; }

@@ -418,6 +418,8 @@ function yayinFoto(pid) {
   const adaylar = [yayinVeri.dekupe[pid] && `../odul/foto/${yayinVeri.dekupe[pid]}`, `../data/${LIG.kod}/foto/${pid}.webp`, o.foto].filter(Boolean);
   return { src: adaylar[0], yedek: adaylar.slice(1), dekupe: !!yayinVeri.dekupe[pid] };
 }
+// Çok takımda tahtaya yalnız soyadı (Jr./II gibi ekler soyadla kalır)
+const soyad = ad => { const p = String(ad ?? '').trim().split(/\s+/); return p.length > 2 && /^(jr\.?|sr\.?|ii|iii|iv)$/i.test(p.at(-1)) ? p.slice(-2).join(' ') : p.at(-1) ?? ''; };
 const kisaAd = ad => { const p = String(ad ?? '').trim().split(/\s+/); return p.length > 1 ? `${p[0][0]}. ${p.slice(1).join(' ')}` : p[0] ?? ''; };
 
 function yayinTahta() {
@@ -434,12 +436,12 @@ function yayinTahta() {
       const simdiki = ['draft', 'duraklatildi'].includes(d.asama) && n === d.secimNo;
       const mv = sc?.mevki ?? (sc && mevki(sc.oyuncu));
       hucreler += `<td class="${simdiki ? 'simdi' : ''} ${sc ? `dolu mv-${mv}` : ''}">${sc
-        ? `<b>${esc(kisaAd(sc.ad))}</b><small>${esc(oyuncu(sc.oyuncu).takimKod || sc.bslTakim || '')}${sc.turk ? ' · TR' : ''}${sc.otomatik ? ' · oto' : ''}</small>`
+        ? `<b>${esc(T > 12 ? soyad(sc.ad) : kisaAd(sc.ad))}</b><small>${esc(oyuncu(sc.oyuncu).takimKod || sc.bslTakim || '')}${sc.turk ? ' · TR' : ''}${sc.otomatik ? ' · oto' : ''}</small>`
         : simdiki ? '<b class="seciyor">seçiyor…</b>' : `<small>${n + 1}</small>`}</td>`;
     }
     govde += `<tr><th>${r + 1}</th>${hucreler}</tr>`;
   }
-  return `<table class="ye-tahta"><thead><tr><th></th>${d.sira.map(t => `<th>${esc(takimAdi(t))}</th>`).join('')}</tr></thead><tbody>${govde}</tbody></table>`;
+  return `<table class="ye-tahta ${T > 12 ? 'cok' : ''}"><thead><tr><th></th>${d.sira.map(t => `<th>${esc(takimAdi(t))}</th>`).join('')}</tr></thead><tbody>${govde}</tbody></table>`;
 }
 
 function yayinEkrani() {
@@ -2095,7 +2097,7 @@ function gorunumKurallar() {
       <li>Puanlama ${a.baslangicHaftasi}. ${LIG.kisa} haftasından itibaren başlar${LIG.fanteziHaftasi ? ` (fantezi ligin 1. haftası)` : ''}.</li>
       <li>Takımın haftalık puanı, ${a.asSayisi} As oyuncunun o hafta ${LIG.kisa}'de aldığı verimlilik (VP) puanlarının toplamıdır.</li>
       <li>Bir As hafta içinde hiç süre almazsa (0 dakika oynarsa ya da takımı bay geçerse), yedeklerden o hafta en yüksek VP alan onun yerine sayılır.</li>
-      <li>Haftalık sıralamaya göre lig puanı: ${C.PUAN_TABLOSU.map((p, i) => `${i + 1}. ${p}`).join(', ')}.</li>
+      <li>Haftalık sıralamaya göre lig puanı: ${C.puanTablosuOlustur(takimlar().length).map((p, i) => `${i + 1}. ${p}`).join(', ')}.</li>
       <li>Haftalık eşitlikte, sayılan oyuncular içindeki en yüksek VP'li Türk oyuncusu daha yüksek olan takım üstte yer alır; bu da eşitse aynı sırayı ve puanı paylaşırlar.</li>
       <li>Genel klasman haftalık lig puanlarının toplamıdır; eşitlikte toplam VP yüksek olan üstte.</li>
     </ul></div>`;

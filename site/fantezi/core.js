@@ -2,6 +2,13 @@
 // Saf fonksiyonlar (Firebase'e bağlı değil), tarayıcıda ve testlerde aynen kullanılır.
 
 export const PUAN_TABLOSU = [5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1, 1];
+// Takım sayısına göre haftalık puan tablosu: 17 takımdaki dağılımın oranıyla (3×5, 4×4, 4×3, 3×2, 3×1); 17'de aynı tablo.
+// BSL Fantezi'de takım sayısı belirsiz (en az 16, 20 de olabilir): 18. ve sonrası 0 almasın (kullanıcı 2026-11-26)
+export function puanTablosuOlustur(n) {
+  if (!n || n === PUAN_TABLOSU.length) return PUAN_TABLOSU;
+  const sinir = [3, 7, 11, 14, 17].map(k => Math.round((k * n) / 17));
+  return Array.from({ length: n }, (_, i) => 5 - sinir.findIndex(b => i < b));
+}
 export const OTOMATIK_ADAY = 15;
 
 // Yılan (snake) draft: 1. tur 1→N, 2. tur N→1, ...
@@ -232,7 +239,7 @@ export function takimHaftaPuani(takim, hafta) {
   return { ...takim, toplam, aslar, yedekler };
 }
 
-export function haftaSiralamasi(takimlar, hafta, puanTablosu = PUAN_TABLOSU) {
+export function haftaSiralamasi(takimlar, hafta, puanTablosu = puanTablosuOlustur(takimlar.length)) {
   const sonuclar = takimlar.map(t => {
     const s = takimHaftaPuani(t, hafta);
     const turkler = [...s.aslar, ...s.yedekler].filter(o => o.sayildi && o.turk).sort((a, b) => b.vp - a.vp);
@@ -260,7 +267,7 @@ export function haftaDurumu(hafta) {
 }
 
 // kadroBul(haftaNo) o hafta geçerli olan takımları döndürür
-export function genelKlasman(kadroBul, haftalar, puanTablosu = PUAN_TABLOSU) {
+export function genelKlasman(kadroBul, haftalar, puanTablosu = undefined) {
   const tablo = new Map();
   for (const hafta of haftalar) {
     for (const s of haftaSiralamasi(kadroBul(hafta.hafta), hafta, puanTablosu)) {

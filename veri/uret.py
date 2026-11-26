@@ -307,10 +307,12 @@ def uzanti(url):
 def gorsel_uret(lig):
     """Haftanın ödülleri görselleri için oyuncu fotoğrafları ve takım logoları (TBF'den, sitenin kendi dosyalarına; TBF'nin
     resimleri başka siteden çizilemiyor). Sadece yeni ya da adresi değişenler indirilir.
-      site/data/<lig>/gorsel.json   {"foto": {oyuncu id: TBF adresi}, "logo": {takım adı: TBF adresi}}
+      site/data/<lig>/gorsel.json   {"foto": {oyuncu id: TBF adresi}, "logo": {takım adı: TBF adresi},
+                                     "dogum": {oyuncu id: "YYYY-AA-GG"}}  (doğum tarihi: oyuncu sayfasında yaş; ayrılanlar kalır)
       site/data/<lig>/foto/<id>.<uzantı>, site/data/<lig>/logo/<takım anahtarı>.<uzantı> (uzantı TBF adresindeki)"""
     yol = CIKTI / lig / "gorsel.json"
     kayit = json.loads(yol.read_text(encoding="utf-8")) if yol.exists() else {"foto": {}, "logo": {}}
+    kayit.setdefault("dogum", {})
     degisti = False
     try:
         takimlar = tbf_getir(lig, f"/Team/get-teams-by-leauge?leaugeId={TBF_LIG[lig]}") or []
@@ -324,6 +326,10 @@ def gorsel_uret(lig):
                                    f"&SeasonId={TBF_SEZON}&TeamProcessId={t['teamProcessId']}&prefix={lig}") or []
             for o in kadro:
                 pid, url = str(o["personId"]), o.get("playerPhoto")
+                dogum = (o.get("birthDay") or "")[:10]
+                if dogum and kayit["dogum"].get(pid) != dogum:
+                    kayit["dogum"][pid] = dogum
+                    degisti = True
                 if url and kayit["foto"].get(pid) != url:
                     tbf_resim(url, CIKTI / lig / "foto" / f"{pid}{uzanti(url)}")
                     kayit["foto"][pid] = url
@@ -430,6 +436,10 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
             g["logo"] = logolar[p["takim"]]
         return g
 
+    # Doğum tarihleri (gorsel_uret'in günlük kadro taramasından)
+    gorsel_yol = CIKTI / lig / "gorsel.json"
+    dogumlar = json.loads(gorsel_yol.read_text(encoding="utf-8")).get("dogum", {}) if gorsel_yol.exists() else {}
+
     oyuncu_ozet = []
     for p in oyuncular.values():
         biten = [x for x in p["maclar"] if x["durum"] == "bitti" and x["sn"] > 0]
@@ -441,6 +451,7 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
             "ilk5": sum(1 for x in biten if x["ilk5"]),
             "dk": ort(top["sn"] / 60, n), **{a: ort(top[a], n) for a in ALANLAR}, "pm": top["pm"], "pmOrt": ort(top["pm"], n),
             "iki": atis["iki"], "uc": atis["uc"], "sa": atis["sa"],
+            **({"dogum": dogumlar[p["id"]]} if p["id"] in dogumlar else {}),
         }
         oyuncu_ozet.append(p["ozet"])
         yaz(CIKTI / lig / "oyuncu" / f"{p['id']}.json", {"ozet": p["ozet"], "gorsel": gorsel(p), "maclar": sorted(p["maclar"], key=lambda x: x["tarih"])})

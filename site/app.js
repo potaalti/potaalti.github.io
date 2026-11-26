@@ -1212,7 +1212,19 @@ function oyuncuVitrini(lig, o, g = {}, a = {}) {
       <h1>${ad ? `<span>${esc(ad)}</span>` : ''}${esc(soyad)}</h1>
       <a class="ov-takim" href="${a.takimHref ?? `#/takim/${lig}/${o.takim}`}">${g.logo ? `<img src="${yol(g.logo)}" alt="" decoding="async">` : ''}${esc(a.takimAd ?? takimAdi(lig, o.takim))}</a>
       <small>${o.mac} maç · ${o.ilk5} kez ilk 5${o.mac ? ` · ${sayi(o.dk)} dk` : ''}${a.ek ?? ''}</small>
+      ${dogumYazisi(o.dogum)}
     </div>${foto}</div>`;
+}
+// Doğum tarihi ve yaş (TBF kadrolarından, veri/uret.py gorsel_uret); doğum günüyse pasta
+function dogumYazisi(d) {
+  const [y, a, g] = String(d ?? '').split('-').map(Number);
+  if (!y || !a || !g) return '';
+  const b = new Date();
+  const ay = b.getMonth() + 1;
+  const yas = b.getFullYear() - y - (ay < a || (ay === a && b.getDate() < g) ? 1 : 0);
+  const bugun = ay === a && b.getDate() === g;
+  const tarih = new Date(y, a - 1, g).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+  return `<small class="ov-dogum">${bugun ? '🎂 Bugün doğum günü · ' : ''}${tarih} · ${yas} yaş</small>`;
 }
 function gorunumOyuncu(lig, id) {
   S.oyuncu[lig] ??= {};

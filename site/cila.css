@@ -587,6 +587,7 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
 .ov-takim:hover { background: rgba(255, 255, 255, .22); }
 .ov-takim img { width: 28px; height: 28px; flex: none; object-fit: contain; background: #fff; border-radius: 50%; padding: 3px; box-sizing: border-box; }
 .oyuncu-vitrin small { display: block; margin-top: 10px; font-size: .8rem; opacity: .8; }
+.oyuncu-vitrin small.ov-dogum { margin-top: 3px; }
 .ov-foto { flex: none; position: relative; }
 .ov-foto.dekupe { height: 260px; margin: -22px -12px -18px 0; }
 .ov-foto.dekupe img { height: 100%; width: auto; display: block; filter: drop-shadow(0 8px 18px rgba(0, 0, 0, .35)); }

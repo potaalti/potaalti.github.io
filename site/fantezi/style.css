@@ -407,3 +407,6 @@ body.yayin-modu .icerik { max-width: none; margin: 0; padding: 0; }
 .ys-istat { display: flex; gap: 2.4vw; margin-top: 1vh; }
 .ys-istat b { font-family: Anton, Oswald, sans-serif; font-size: 5.4vh; display: block; line-height: 1; }
 .ys-istat small { font-size: 1.6vh; letter-spacing: .14em; opacity: .7; }
+
+/* Telefonda kısa ipuçları da gizli (kullanıcı 2026-11-26: mobilde çok yazı) */
+@media (max-width: 700px) { .ipucu { display: none; } }

@@ -899,8 +899,7 @@ function durumKarti() {
     case 'kurulum':
       return `<div class="kart"><h2>Draft henüz başlamadı</h2>
         <p>Önce yönetici kurayı çekecek; çıkan sıra herkese burada canlı gösterilir. Sonra draft başlar.</p>
-        <p class="soluk">${S.ayar.takimSayisi} takım · Yılan draft: 1. tur 1→${S.ayar.takimSayisi}, 2. tur ${S.ayar.takimSayisi}→1, … · Her takım ${kadroBoyu()} oyuncu (As ${kural().asOn} Ön + ${kural().asArka} Arka, ${kural().yedek} Yedek) ·
-        Seçim süresi ${sureMetni(S.ayar.secimSuresi)}</p></div>`;
+        <p class="soluk">${S.ayar.takimSayisi} takım · ${kadroBoyu()} tur · seçim süresi ${sureMetni(S.ayar.secimSuresi)} · <a href="#/kurallar">Kurallar</a></p></div>`;
     case 'kura':
       return kuraKarti(true);
     case 'draft':
@@ -920,7 +919,6 @@ function durumKarti() {
         ${d.asama === 'duraklatildi' ? '<div class="uyari-kutu">Draft yönetici tarafından duraklatıldı.</div>' : ''}
         ${kisit ? `<div class="uyari-kutu">Kadro kuralı gereği ${benimSiram ? `bu seçimde ${kisit} seçebilirsin` : `bu takım ${kisit} seçebilir`}.</div>` : ''}
         ${sonrakiler.length ? `<div class="sonraki saat-sonraki"><span class="soluk" style="border:0;background:none">Sıradakiler:</span>${sonrakiler.map(t => `<span class="${t === benimTakimim() ? 'rozet uyari' : ''}">${esc(takimAdi(t))}</span>`).join('')}</div>` : ''}
-        <p class="kucuk soluk saat-aciklama" style="margin-bottom:0">Süre dolarsa takımın istek listesindeki ilk uygun oyuncu, listede yoksa müsait en iyi 15 oyuncudan (sezon VP ortalamasına göre) rastgele biri seçilir.</p>
       </div>`;
     }
     case 'kadro':
@@ -966,7 +964,6 @@ function kuraKarti(canli) {
   const bitti = acilan >= T;
   return `<div class="kart">
     <h2>${canli && !bitti ? 'Kura çekiliyor…' : 'Draft sırası'}</h2>
-    ${canli && !bitti ? '<p class="soluk">Sıra sondan başa doğru açılıyor.</p>' : ''}
     <ol class="kura">${d.sira.map((tid, i) => {
       const acik = i >= T - acilan;
       const yeni = canli && i === T - acilan;
@@ -975,7 +972,6 @@ function kuraKarti(canli) {
         : `<li class="gizli"><span class="no">${i + 1}</span><span>?</span></li>`;
     }).join('')}</ol>
     ${canli && bitti ? '<p style="margin-bottom:0">Draft, yönetici başlatınca başlayacak.</p>' : ''}
-    <p class="kucuk soluk" style="margin-bottom:0">Yılan draft: tek turlarda 1→${T}, çift turlarda ${T}→1.</p>
   </div>`;
 }
 
@@ -989,7 +985,6 @@ function benimDraftim() {
   return `<div class="kart">
     <div class="baslik-satir"><h3>${esc(takimAdi(tid))} <span class="soluk kucuk">${oyuncular.length}/${kadroBoyu()}${mevkilerHazir() ? ` · Ön ${(k?.tip?.oT ?? 0) + (k?.tip?.oY ?? 0)} · Arka ${(k?.tip?.aT ?? 0) + (k?.tip?.aY ?? 0)}` : ''} · Türk ${(k?.tip?.oT ?? 0) + (k?.tip?.aT ?? 0)}</span></h3>
     ${siradaki != null && S.durum.asama !== 'kurulum' ? `<span class="soluk kucuk">Sıradaki seçimin: ${siradaki + 1}. seçim${siradaki > S.durum.secimNo ? ` (${siradaki - S.durum.secimNo} seçim sonra)` : ''}</span>` : ''}</div>
-    <p class="kucuk soluk" style="margin:0 0 6px">Kadro kuralı: As ${kural().asOn} Ön + ${kural().asArka} Arka, ${kural().yedek} Yedek (mevki serbest); As'ta ve Yedekte en az 1'er Türk.</p>
     ${secimKisiti(tid) && oyuncular.length < kadroBoyu() && siradakiTakim() !== tid ? `<div class="uyari-kutu kucuk">Sıradaki seçiminde ${secimKisiti(tid)} seçebilirsin.</div>` : ''}
     ${oyuncular.length ? `<div>${[...k.as.map(p => [p, 'as']), ...k.yedek.map(p => [p, 'yedek'])].map(([p, rol]) => `<span class="secim-chip">${oyuncuAdi(p)} <span class="rozet ${rol}">${rol === 'as' ? 'As' : 'Yedek'}</span></span>`).join('')}</div>`
       : '<p class="soluk" style="margin:0">Henüz oyuncu seçmedin.</p>'}
@@ -1013,7 +1008,6 @@ function istekListesiKarti() {
   const siradaki = istekSiradaki(tid);
   const liste = S.istek.map(id => S.havuzMap.get(id) ?? { ...oyuncu(id), mevki: mevki(id) });
   return `<div class="kart"><h3>İstek listem</h3>
-    <p class="kucuk soluk">Seçim süren dolarsa bu listedeki ilk müsait ve kadro kuralına uyan oyuncu senin adına otomatik seçilir; listede uygun oyuncu kalmazsa en iyi 15 oyuncudan rastgele biri seçilir. Listeni sadece sen (ve varsa ortak menajerin) görürsün. Oyuncu eklemek için <b>Oyuncular</b> sekmesinde ☆'a bas.</p>
     ${liste.length ? `<ol class="istek-liste">${liste.map((o, i) => {
       const kimde = sahip.get(o.id);
       const engel = !kimde && !izin.includes(C.tipi(o.mevki, o.turk));
@@ -1067,12 +1061,9 @@ function draftOyunculari() {
       <label class="secenek"><input type="checkbox" id="f-alinan" data-ui="alinanlar" ${S.ui.alinanlar ? 'checked' : ''}> Seçilenleri de göster</label>
       <select id="f-draft-sira" data-ui="draftSira" title="Sıralama">${Object.entries(SIRALAR).map(([k, [ad]]) => `<option value="${k}" ${k === sirala ? 'selected' : ''}>Sırala: ${ad}</option>`).join('')}</select>
     </div>
-    <p class="kucuk soluk">${musait} müsait oyuncu · # = bu sezonun maç başı VP ortalamasına göre sıra.
-      <b>Form</b>: son 3 maçın VP ortalaması (▲▼ sezona göre). <b>Fikstür</b>: ${haftalar.length ? `${haftalar.map(hf).join(', ')}. haftalardaki rakipler` : 'önümüzdeki haftalar'},
-      <span class="fk fk-kolay">yeşil</span> rakip oyunculara çok VP verdiren (kolay), <span class="fk fk-zor">kırmızı</span> az verdiren (zor) takım, @ deplasman.
-      <b>Beklenti</b>: bu 3 haftada tahmini toplam VP (sezon ortalaması ve form, rakibe göre; bay haftası 0).</p>
+    <p class="kucuk soluk ipucu">${musait} müsait oyuncu</p>
     <div class="tablo-kap"><table class="draft-havuz">
-      <thead><tr><th class="sayi">#</th><th>Oyuncu</th><th>${LIG.kisa} takımı</th><th class="sayi dar-gizle">Maç</th><th class="sayi">VP ort.</th><th class="sayi">Form</th><th>Fikstür</th><th class="sayi">Beklenti</th><th></th></tr></thead>
+      <thead><tr><th class="sayi">#</th><th>Oyuncu</th><th>${LIG.kisa} takımı</th><th class="sayi dar-gizle">Maç</th><th class="sayi">VP ort.</th><th class="sayi" title="Son 3 maçın VP ortalaması">Form</th><th title="${haftalar.map(hf).join(', ')}. haftaların rakipleri · yeşil kolay, kırmızı zor, @ deplasman">Fikstür</th><th class="sayi" title="Bu 3 haftada tahmini toplam VP">Beklenti</th><th></th></tr></thead>
       <tbody>${liste.slice(0, 300).map(o => {
         const kimde = sahip.get(o.id);
         const engel = !izin.includes(C.tipi(o.mevki, o.turk));
@@ -1239,7 +1230,6 @@ function genelKart(haftalar) {
           <td class="sayi"><b>${s.puan}</b>${puanEsit(tablo, s) ? `<div class="kucuk soluk" style="white-space:nowrap">${sayi(s.vp)} VP</div>` : ''}</td><td class="dar-gizle">${haftaCubuklari(s)}</td>
           <td class="sayi soluk dar-gizle" style="white-space:nowrap">${sh ? `${sh.sira}. · ${sayi(sh.vp)} VP` : ''}</td></tr>`;
       }).join('')}</tbody></table></div>
-    <p class="kucuk soluk" style="margin-bottom:0">Haftalık sıraya göre ${C.PUAN_TABLOSU.join(', ')} puan. Eşit puanda toplam VP yüksek olan üstte.</p>
   </div>`;
 }
 
@@ -1360,7 +1350,6 @@ function haftaKart(haftalar, secili) {
           <td class="sayi"><b>${sayi(s.toplam)}</b></td><td class="sayi">${s.puan}</td></tr>
         ${S.ui.acik === s.id ? `<tr class="detay"><td colspan="4">${haftaDetayi(s, h)}</td></tr>` : ''}`).join('')}</tbody>
     </table></div>
-    <p class="kucuk soluk" style="margin-bottom:0">Satıra dokununca takımın o haftaki oyuncuları açılır.</p>
   </div>`;
 }
 
@@ -1505,8 +1494,8 @@ function gorunumOyuncu(pid) {
   const hakVar = benimT && S.kadrolar[benimT] && S.kadrolar[benimT].fa < S.ayar.faHakki;
   const talepKarti = !sahip && td ? `<div class="kart ${td.talepler[benimT] ? 'sira-sende' : ''}"><h3>Talepler <span class="soluk">(${td.talipler.length})</span></h3>
       <p class="kucuk soluk" style="margin-top:0">${td.evre === 'talep'
-        ? `Bu oyuncuyu ${sureYazisi(td.kalan)} daha kimse alamaz. Bu sürede talep eden takımlar arasında süre bitince kura çekilir; kimse talep etmezse boştakilere düşer.`
-        : 'Talep süresi bitti; kura, bir yöneticinin ekranında otomatik çekilecek.'}</p>
+        ? `⏳ ${sureYazisi(td.kalan)} kaldı · süre bitince talipler arasında kura.`
+        : 'Süre bitti, kura çekilecek.'}</p>
       ${td.talipler.length ? `<ul class="oyuncu-liste">${td.talipler.map(t => `<li><span><a href="#/takim/${t}"><b>${esc(takimAdi(t))}</b></a></span>${t === benimT ? `<span class="soluk kucuk">bırakacağın: ${esc(oyuncu(td.talepler[t]).ad)}</span>` : ''}</li>`).join('')}</ul>`
         : '<p class="soluk" style="margin:0">Henüz talip olan yok.</p>'}
       <div class="satir" style="margin-top:8px">
@@ -1556,7 +1545,7 @@ function gorunumOyuncu(pid) {
     <div class="kart"><h3>Sezon ortalamaları</h3><div class="istatistik">${istatistik.map(([ad, d]) => `<div><b>${d}</b><span>${ad}</span></div>`).join('')}</div></div>
     <div class="kart"><h3>Hafta hafta</h3>${kutuk.length ? `<div class="tablo-kap"><table class="mac-mac">
       <thead><tr><th>Hf</th><th>Rakip</th><th class="sayi">Dk</th><th class="sayi">Sy</th><th class="sayi">Rb</th><th class="sayi">As</th><th class="sayi">VP</th></tr></thead>
-      <tbody>${kutuk.join('')}</tbody></table></div>${macMac?.length ? '<p class="soluk kucuk" style="margin:6px 0 0">Maça dokununca kutu skor açılır.</p>' : ''}`
+      <tbody>${kutuk.join('')}</tbody></table></div>`
       : `<p class="soluk" style="margin:0">${S.tumHaftalarYuklendi && macMac !== undefined ? 'Bu sezon henüz maçı yok.' : 'Yükleniyor…'}</p>`}
       ${gelecek.length ? `<h4>Sıradaki maçlar</h4>${gelecek.map(m => `<div class="kucuk">${tarih(m.tarih)} · ${m.evId === o.takimId ? `${takimLinki(m.dep)} (iç saha)` : `@ ${takimLinki(m.ev)}`}</div>`).join('')}` : ''}</div>
     ${ilgili.length ? `<div class="kart"><h3>Fantezi hareketleri</h3>${ilgili.map(hareketSatiri).join('')}</div>` : ''}`;
@@ -1652,7 +1641,7 @@ function sahaKarti(tid, kGuncel, secilebilir) {
     ${secimModu ? '' : gezgin}
     <div class="saha"><div class="saha-cizgi"></div>${k.as.map(p => kart(p, 'as')).join('')}</div>
     <div class="kulube"><span class="kulube-ad">Yedek</span>${k.yedek.map(p => kart(p, 'yedek')).join('')}</div>
-    ${secimModu ? cubuk : '<p class="kucuk soluk" style="margin:10px 0 0">Oyuncuya dokununca hafta hafta performansı açılır.</p>'}
+    ${secimModu ? cubuk : ''}
   </div>`;
 }
 
@@ -1911,7 +1900,6 @@ function gorunumSerbest() {
       </div>
       <div class="secenekler">${Object.entries(SIRALAR).map(([k2, [ad]]) => `<button class="secenek ${k2 === sirala ? 'aktif' : ''}" data-is="fa-sirala" data-id="${k2}">${ad}</button>`).join('')}</div>
       ${listeHtml}
-      <p class="kucuk soluk" style="margin:8px 0 0">Form: oyuncunun süre aldığı son 3 maçın VP ortalaması. <span class="form-ok yukari">▲</span> sezon ortalamasının 3 VP ve daha fazla üstünde, <span class="form-ok asagi">▼</span> altında. "Bay": değişikliğin sayılacağı haftada takımının maçı yok.</p>
     </div>`;
 }
 
@@ -1991,7 +1979,7 @@ function gorunumTakas() {
         ${sorun ? `<div class="hata-kutu kucuk">${esc(sorun)}</div>` : ''}`;
     }
     yeni = `<div class="kart"><h3>Yeni takas teklifi</h3>
-      <p class="kucuk soluk">Her iki taraftan aynı sayıda (1–3) oyuncu seç. Seçim sırası eşleşmeyi belirler: 1. verdiğinin yerine 1. aldığın geçer (As ya da Yedek). ${kuralCumlesi()}. Karşı taraf kabul edince takas yönetici onayına gider; yönetici onaylayınca o an kadro değişikliğinin geçerli olabileceği ilk haftadan (şu an <b>${hf(etkinHafta())}. hafta</b>) itibaren geçerli olur.</p>
+      <p class="kucuk soluk ipucu">İki taraftan aynı sayıda (1–3) oyuncu seç; 1. verdiğinin yerine 1. aldığın geçer. <a href="#/kurallar">Kurallar</a></p>
       <select id="takas-takim" data-ui="takasTakim"><option value="">Takım seç</option>${takimlar().filter(t => t.id !== tid).map(t => `<option value="${t.id}" ${t.id === S.ui.takasTakim ? 'selected' : ''}>${esc(t.ad)}</option>`).join('')}</select>
       ${karsi ? `<div class="iki-kolon" style="margin-top:10px">
         <div><b>Vereceklerin</b><div>${[...k.as, ...k.yedek].map(p => chip(p, S.ui.verilen, 'tk-ver')).join('')}</div></div>
@@ -2098,6 +2086,11 @@ function gorunumKurallar() {
         : `Diziliş, As–Yedek değişikliği, takas ve serbest oyuncu sonrasında da As ${kural().asOn} Ön + ${kural().asArka} Arka olmalı ve As'ta en az 1, Yedekte en az 1 Türk kalmalı. Bu yüzden As'taki bir oyuncunun yerine ancak aynı mevkiden oyuncu gelebilir.`}</li>
       <li>Kadro değişiklikleri, ilk maçı henüz başlamamış ilk haftadan itibaren geçerlidir (hafta ortasında yapılan değişiklik bir sonraki haftadan sayılır). Geçmiş haftalar değişmez.</li>
     </ul>
+    ${tbl ? '' : `<h3>Draft havuzundaki sütunlar</h3><ul>
+      <li><b>Form:</b> oyuncunun süre aldığı son 3 maçın VP ortalaması; ▲ sezon ortalamasının 3 VP ve daha fazla üstünde, ▼ altında.</li>
+      <li><b>Fikstür:</b> önümüzdeki 3 haftanın rakipleri (@ deplasman). Yeşil: rakip oyunculara maç başı en çok VP verdiren takımlar (kolay), kırmızı: en az verdirenler (zor).</li>
+      <li><b>Beklenti:</b> bu 3 haftada tahmini toplam VP: sezon ortalaması %60 + form %40, rakibin verdirdiği VP'ye göre ayarlanır; bay haftası 0.</li>
+    </ul>`}
     <h3>Puanlama</h3><ul>
       <li>Puanlama ${a.baslangicHaftasi}. ${LIG.kisa} haftasından itibaren başlar${LIG.fanteziHaftasi ? ` (fantezi ligin 1. haftası)` : ''}.</li>
       <li>Takımın haftalık puanı, ${a.asSayisi} As oyuncunun o hafta ${LIG.kisa}'de aldığı verimlilik (VP) puanlarının toplamıdır.</li>
@@ -2168,8 +2161,7 @@ function gorunumYonetici() {
   adimlar.push(`<div class="kart"><h3>Ayarlar</h3><div class="form-izgara">
       <label for="ay-sure">Seçim süresi (saniye)</label><input type="number" id="ay-sure" min="5" max="600" value="${S.ayar.secimSuresi}">
       <label for="ay-hafta">Puanlamanın başlayacağı ${LIG.kisa} haftası</label><input type="number" id="ay-hafta" min="1" max="40" value="${S.ayar.baslangicHaftasi}" ${a === 'sezon' ? 'disabled' : ''}>
-    </div><p><button class="btn" data-is="ayar-kaydet">Ayarları kaydet</button></p>
-    <p class="kucuk soluk" style="margin:0">Seçim süresi değişikliği bir sonraki seçimden itibaren geçerli olur.</p></div>`);
+    </div><p><button class="btn" data-is="ayar-kaydet">Ayarları kaydet</button></p></div>`);
   const akis = [];
   if (['kurulum', 'kura'].includes(a)) akis.push(`<button class="btn ${a === 'kurulum' ? 'ana' : ''}" data-is="kura" ${S.havuz.length ? '' : 'disabled'}>${a === 'kura' ? 'Kurayı yeniden çek' : 'Kurayı çek'}</button>`);
   if (a === 'kura') akis.push('<button class="btn ana" data-is="draft-baslat">Draftı başlat</button>');
@@ -2315,7 +2307,7 @@ function gorunumMaclar(istenen) {
   const bay = [...takimAdlari].filter(([id]) => !oynayan.has(id)).map(([, ad]) => baslik(ad));
   return `${cipler}${secici}${bloklar || '<p class="bos">Bu haftanın maçları henüz belli değil.</p>'}
     ${maclar.length && bay.length ? `<p class="bay-yazisi">Bay: ${bay.map(esc).join(', ')}</p>` : ''}
-    <p class="soluk kucuk">Maça dokununca kutu skor ve o maçtaki fantezi oyuncuları açılır. ${S.tblVerisi && eksikHaftalar().includes(n)
+    <p class="soluk kucuk">${S.tblVerisi && eksikHaftalar().includes(n)
       ? `Canlı skorlar TBL Fantezi Ligi'nin güncellemesinden, yarım dakikada bir yenilenir (son: ${S.tblVerisi.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}).`
       : `Son güncelleme: ${S.index?.guncelleme ? tarih(S.index.guncelleme) : '-'}.`}</p>`;
 }
@@ -2518,20 +2510,17 @@ function gorunumBildirimler() {
   return `${onay.length ? `<div class="kart sira-sende"><h2>Onayını bekleyen takaslar <span class="soluk">(${onay.length})</span></h2>
       ${onay.map(t => teklifKarti(t, `<button class="btn ana" data-is="takas-onayla" data-id="${t.id}" ${teklifGecerliligi(t) ? 'disabled' : ''}>Onayla</button><button class="btn tehlike" data-is="takas-reddet" data-id="${t.id}">Reddet</button>`)).join('')}</div>` : ''}
     ${!LIG.mevki ? '' : `<div class="kart"><h2>Mevkisi belirlenecek oyuncular <span class="soluk">(${mevkisiz.length})</span></h2>
-      <p class="kucuk soluk">Listende olmayan oyuncular (genelde yeni transferler). Mevkisini seçince bu listeden çıkar.</p>
       ${mevkisiz.length ? `<div class="tablo-kap"><table>${mevkisiz.map(o => `<tr>
         <td><a href="#/oyuncu/${o.id}" class="oyuncu-link">${esc(o.ad)}</a>${trRozeti(o)}<div class="kucuk soluk">${o.mac} maç · VP ${sayi(o.vpOrt)} · rib ${sayi(o.ribOrt)} · ast ${sayi(o.astOrt)}${o.mevkiTahmini ? ` · tahmin: ${C.MEVKI_ADI[o.mevkiTahmini]}` : ''}</div></td>
         <td class="kucuk">${bslTakimHucre(o)}</td>
         <td><div class="satir" style="flex-wrap:nowrap">${['on', 'arka'].map(x => `<button class="btn kucuk" data-is="mevki" data-id="${o.id}" data-mevki="${x}">${C.MEVKI_ADI[x]}</button>`).join('')}</div></td></tr>`).join('')}</table></div>`
         : '<p class="soluk" style="margin:0">Hepsi tamam ✓</p>'}</div>`}
     <div class="kart"><h2>Lisansı düşen oyuncular <span class="soluk">(${dusen.length})</span></h2>
-      <p class="kucuk soluk">Bir fantezi takımında olup TBF'de artık lisanslı görünmeyenler. O takımın menajeri yerine boştakilerden oyuncu almak zorunda (hakkından düşmez).</p>
       ${dusen.length ? dusen.map(({ pid, tid }) => `<div class="teklif"><b>${esc(oyuncu(pid).ad)}</b> <span class="soluk kucuk">${esc(oyuncu(pid).takim)}</span>
         → <b>${esc(takimAdi(tid))}</b> <span class="rozet ${S.lisanssiz.includes(pid) ? 'uyari' : ''}">${asama() === 'sezon' ? 'değişiklik bekleniyor' : 'sezon başlayınca'}</span></div>`).join('')
         : '<p class="soluk" style="margin:0">Yok ✓</p>'}</div>
     <div class="kart"><div class="baslik-satir"><h2>${LIG.kisa} kadro hareketleri</h2>
       ${gorulmemisHareketler().length ? '<button class="btn kucuk" data-is="bildirim-gordum">Hepsini gördüm</button>' : ''}</div>
-      <p class="kucuk soluk">TBF kadrolarındaki değişiklikler (veriler her güncellendiğinde, son 90 gün).</p>
       ${S.bslHareketleri.length ? S.bslHareketleri.map(h => `<div class="teklif ${h.zaman > goruldu ? 'yeni-bildirim' : ''}">
         <div class="kucuk soluk">${tarih(h.zaman)} · ${turAdi[h.tur] ?? h.tur}</div>
         <b>${esc(h.ad)}</b> ${h.tur === 'transfer' ? `${esc(h.eskiTakim)} → ${esc(h.yeniTakim)}` : esc(h.yeniTakim ?? h.eskiTakim ?? '')}

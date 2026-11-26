@@ -992,7 +992,7 @@ function benimDraftim() {
       : '<p class="soluk" style="margin:0">Henüz oyuncu seçmedin.</p>'}
     ${oyuncular.length < kadroBoyu() ? `<p class="kucuk soluk" style="margin:6px 0 0">${S.istek.length
       ? `İstek listende ${S.istek.length} oyuncu${istekUygunlar(tid).length ? ` · ${istekUygunlar(tid).length} uygun` : ' · şu an uygun oyuncu yok'}`
-      : 'Süren dolarsa diye'} · <a href="#" data-is="draft-sekme" data-id="istek">${S.istek.length ? 'Listeyi düzenle' : 'istek listeni hazırla'}</a></p>` : ''}
+      : ''}${S.istek.length ? ' · ' : ''}<a href="#" data-is="draft-sekme" data-id="istek">${S.istek.length ? 'Listeyi düzenle' : 'İstek listeni hazırla'}</a></p>` : ''}
   </div>`;
 }
 
@@ -1852,7 +1852,7 @@ function gorunumSerbest() {
       .filter(([p]) => hak > 0 || zorunlu.includes(p))
       .sort(([a], [b]) => zorunlu.includes(b) - zorunlu.includes(a));
     panel = `<div class="kart sira-sende"><h3>${esc(al.ad)} ${trRozeti(al)} <span class="soluk kucuk">${esc(al.takim)}</span></h3>
-      <p>Kimin yerine alıyorsun? Gelen oyuncu, bıraktığın oyuncunun yerine (As ya da Yedek) geçer; ${kuralCumlesi()}. Değişiklik <b>${hf(etkinHafta())}. haftadan</b> itibaren sayılır. Bıraktığın oyuncu serbest kalır.</p>
+      <p>Kimin yerine alıyorsun? <span class="soluk kucuk">${hf(etkinHafta())}. haftadan geçerli</span></p>
       <div class="satir"><select id="fa-birak"><option value="">Bırakılacak oyuncu</option>
         ${birakilabilir.map(([p, rol]) => `<option value="${p}" ${zorunlu[0] === p ? 'selected' : ''}>${esc(oyuncu(p).ad)} (${rol})${zorunlu.includes(p) ? ' · lisansı düştü, hak kullanmaz' : ''}</option>`).join('')}</select>
       <button class="btn ana" data-is="fa-onayla">Onayla</button><button class="btn" data-is="fa-vazgec">Vazgeç</button></div></div>`;

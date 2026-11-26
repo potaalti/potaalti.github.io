@@ -96,7 +96,7 @@ function aktifMenu() {
 const menuListesi = () => [...MENU.slice(0, 4), ['avrupa', 'Avrupa', '🌍'], ...MENU.slice(4)];
 function menuCiz() {
   const aktif = aktifMenu();
-  $('#menu').innerHTML = [...menuListesi(), ...(yoneticiMi() ? [['durum', 'Durum', '🛠️'], ['istatistik', 'İstatistik', '📊']] : [])].map(([y, ad, ikon]) => `<a href="#/${y}" class="${y === aktif ? 'aktif' : ''}"><span class="ikon">${ikon}</span><span>${ad}</span></a>`).join('');
+  $('#menu').innerHTML = [...menuListesi(), ...(yoneticiMi() ? [['durum', 'Durum', '🛠️'], ['istatistik', 'İstatistik', '📊'], ['dogum', 'Doğum günleri', '🎂']] : [])].map(([y, ad, ikon]) => `<a href="#/${y}" class="${y === aktif ? 'aktif' : ''}"><span class="ikon">${ikon}</span><span>${ad}</span></a>`).join('');
   $('#alt-menu').innerHTML = menuListesi().map(([y, ad, ikon]) => `<a href="#/${y}" class="${y === aktif ? 'aktif' : ''}"><span class="ikon">${ikon}</span><span>${ad}</span></a>`).join('');
 }
 
@@ -130,6 +130,7 @@ function gorunum() {
     case 'izle': return `<div class="dar">${gorunumIzle(a)}</div>`;
     case 'durum': return `<div class="dar">${gorunumDurum()}</div>`;
     case 'istatistik': return `<div class="dar">${gorunumIstatistik()}</div>`;
+    case 'dogum': return `<div class="dar">${gorunumDogum()}</div>`;
     case 'avrupa': return `<div class="dar">${gorunumAvrupa(a, b, rota()[3])}</div>`;
     case 'fantezi':
       if (a === 'tbl') { location.replace('tbl/'); return ''; } // eski adres: TBL Fantezi artık kendi sayfasında
@@ -1887,6 +1888,37 @@ function sureYazisi(dk) {
   if (dk < 48 * 60) return `${Math.floor(dk / 60)} sa ${dk % 60} dk önce`;
   return `${Math.floor(dk / 1440)} gün önce`;
 }
+// Yönetici: önümüzdeki 30 günde doğum günü olan BSL ve TBL oyuncuları, en yakından uzağa. Bugünün tarihine göre
+// tarayıcıda hesaplanır, her gün kendiliğinden yenilenir (doğum tarihleri: data/<lig>/oyuncular.json, veri/uret.py)
+const DOGUM_GUN = 30;
+function gorunumDogum() {
+  if (!yoneticiMi()) return '<p class="bos">Bu sayfa yöneticiye özel.</p>';
+  const listeler = ['bsl', 'tbl'].map(lig => { ligVerisi(lig, 'tablo'); return [lig, ligVerisi(lig, 'oyuncular')]; });
+  if (listeler.some(([, l]) => !l)) return '<p class="bos">Yükleniyor…</p>';
+  const bugun = new Date();
+  bugun.setHours(0, 0, 0, 0);
+  const satirlar = [];
+  for (const [lig, liste] of listeler) {
+    for (const o of liste) {
+      const [y, a, g] = String(o.dogum ?? '').split('-').map(Number);
+      if (!y || !a || !g) continue;
+      let gun = new Date(bugun.getFullYear(), a - 1, g);
+      if (gun < bugun) gun = new Date(bugun.getFullYear() + 1, a - 1, g);
+      const kalan = Math.round((gun - bugun) / 864e5);
+      if (kalan <= DOGUM_GUN) satirlar.push({ lig, o, kalan, gun, yas: gun.getFullYear() - y });
+    }
+  }
+  satirlar.sort((x, z) => x.kalan - z.kalan || x.o.ad.localeCompare(z.o.ad, 'tr'));
+  const kalanYazisi = k => (k === 0 ? '<b class="dg-bugun">Bugün 🎂</b>' : k === 1 ? '<b>Yarın</b>' : `<b>${k}</b> gün`);
+  return `<div class="kart"><h2>Doğum günleri 🎂</h2>
+    <p class="soluk kucuk" style="margin-top:0">Önümüzdeki ${DOGUM_GUN} gün · BSL ve TBL · ${satirlar.length} oyuncu</p>
+    ${satirlar.length ? `<div class="tablo-kap"><table class="dogum-tablo"><tbody>${satirlar.map(({ lig, o, kalan, gun, yas }) => `<tr class="tikla${kalan === 0 ? ' dg-bugun-satir' : ''}" onclick="location.hash='#/oyuncu/${lig}/${o.id}'">
+      <td class="sayi dg-kalan">${kalanYazisi(kalan)}</td>
+      <td><a href="#/oyuncu/${lig}/${o.id}"><b>${esc(o.ad)}</b></a><div class="soluk kucuk">${LIGLER[lig].kisa} · ${esc(takimAdi(lig, o.takim))}</div></td>
+      <td class="sayi kucuk">${gun.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', weekday: 'short' })}<div class="soluk">${yas} yaşına</div></td></tr>`).join('')}</tbody></table></div>`
+      : `<p class="bos">Önümüzdeki ${DOGUM_GUN} günde doğum günü yok.</p>`}</div>`;
+}
+
 function gorunumDurum() {
   if (!yoneticiMi()) return '<p class="bos">Bu sayfa yöneticiye özel.</p>';
   durumYukle();

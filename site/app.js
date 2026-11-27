@@ -1159,21 +1159,29 @@ function takimLiderleriKarti(lig) {
   S.ui.takimLiderAcik ??= {};
   S.ui.takimLiderIzin ??= {};
   const grup = S.ui.takimLiderGrup === 'g' ? 'g' : 't';
-  return `<div class="baslik-satir" style="margin-bottom:8px">${grupDugmeleri('ld-takim-grup', grup)}</div>
+  // Takım ara (kullanıcı 2026-11-27): yazılan takım her kartta kendi sırasıyla görünür (ilk 5'te değilse altta "7. Takım")
+  const ara = aramaNorm(S.ui.takimLiderAra ?? '').trim();
+  const eslesir = x => ara.length >= 2 && [takimAdi(lig, x.id), takimKisa(lig, x.id)].some(a => aramaNorm(a).includes(ara));
+  const satir = (r, sira, vurgu) => `<li class="${vurgu ? 'bulunan' : ''}"><span class="no">${sira}</span>
+        <span class="ad"><a href="#/takim/${lig}/${r.x.id}" class="oyuncu-link" title="${esc(takimAdi(lig, r.x.id))}"><b>${esc(takimKisa(lig, r.x.id))}</b></a></span>
+        <span class="deger"${r.alt ? ` title="Maç başı isabet/deneme: ${r.alt}"` : ''}>${yaz(r.kod, r.deger)}</span></li>`;
+  return `<div class="baslik-satir tl-ust" style="margin-bottom:8px">${grupDugmeleri('ld-takim-grup', grup)}
+    <input type="search" id="tl-ara" data-ui="takimLiderAra" placeholder="Takım ara" value="${esc(S.ui.takimLiderAra ?? '')}" class="tl-ara"></div>
     <div class="izgara takim-lider-izgara">${TAKIM_LIDER.filter(([, , , g]) => g === grup).map(([kod, ad, yon0, , izinVar]) => {
       const anahtar = `${lig}|${kod}`;
       const acik = !!S.ui.takimLiderAcik[anahtar];
       const izin = !!izinVar && !!S.ui.takimLiderIzin[anahtar];
       const yon = izin ? -yon0 : yon0;
       const kac = acik ? Infinity : TAKIM_LIDER_KAC;
-      const liste = veri.map(x => ({ x, ...takimLiderDegeri(x, kod, mod, izin) })).filter(r => r.deger != null)
-        .sort((a, b) => yon * (b.deger - a.deger) || a.x.ad.localeCompare(b.x.ad, 'tr')).slice(0, kac);
+      const tum = veri.map(x => ({ x, kod, ...takimLiderDegeri(x, kod, mod, izin) })).filter(r => r.deger != null)
+        .sort((a, b) => yon * (b.deger - a.deger) || a.x.ad.localeCompare(b.x.ad, 'tr'));
+      const liste = tum.slice(0, kac);
+      // Aranan takım görünen listede yoksa sırasıyla alta eklenir
+      const ekler = tum.map((r, i) => [r, i + 1]).filter(([r, sira]) => sira > liste.length && eslesir(r.x));
       const baslik = izin && kod === 'sayi' ? 'Yenilen sayı' : ad; // izin verilen durumu düğme (turuncu) ve kart kenarından belli
       return `<div class="kart takim-lider${acik ? ' acik' : ''}${izin ? ' izin' : ''}" style="margin:0"><div class="baslik-satir"><h3${TAKIM_LIDER_ACIKLAMA[kod] ? ` title="${TAKIM_LIDER_ACIKLAMA[kod]}"` : ''}>${esc(baslik)}${yon < 0 ? ' <small class="soluk">(en az)</small>' : ''}</h3>
         <span class="kart-dugmeler">${izinVar ? `<button class="tl-ac${izin ? ' aktif' : ''}" data-is="ld-takim-izin" data-id="${anahtar}" title="${izin ? 'Takımın yaptığı' : 'Rakiplerinin bu takıma karşı yaptığı'}">${izin ? 'Yaptığı' : 'İzin verilen'}</button>` : ''}
-        <span class="sag"><button class="tl-ac${acik ? ' aktif' : ''}" data-is="ld-takim-ac" data-id="${anahtar}" title="${acik ? `İlk ${TAKIM_LIDER_KAC}` : 'Bütün takımlar'}">${acik ? `İlk ${TAKIM_LIDER_KAC}` : 'Tümü'}</button></span></span></div>${liste.length ? `<ol class="lider-listesi">${liste.map((r, i) => `<li><span class="no">${i + 1}</span>
-        <span class="ad"><a href="#/takim/${lig}/${r.x.id}" class="oyuncu-link" title="${esc(takimKisa(lig, r.x.id))}"><b>${esc(takimKisa(lig, r.x.id))}</b></a></span>
-        <span class="deger"${r.alt ? ` title="Maç başı isabet/deneme: ${r.alt}"` : ''}>${yaz(kod, r.deger)}</span></li>`).join('')}</ol>` : '<p class="bos">Veri yok</p>'}</div>`;
+        <span class="sag"><button class="tl-ac${acik ? ' aktif' : ''}" data-is="ld-takim-ac" data-id="${anahtar}" title="${acik ? `İlk ${TAKIM_LIDER_KAC}` : 'Bütün takımlar'}">${acik ? `İlk ${TAKIM_LIDER_KAC}` : 'Tümü'}</button></span></span></div>${liste.length ? `<ol class="lider-listesi">${liste.map((r, i) => satir(r, i + 1, eslesir(r.x))).join('')}${ekler.length ? `<li class="tl-ayrac">…</li>${ekler.map(([r, sira]) => satir(r, sira, true)).join('')}` : ''}</ol>` : '<p class="bos">Veri yok</p>'}</div>`;
     }).join('')}</div>`;
 }
 

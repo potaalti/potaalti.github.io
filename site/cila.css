@@ -694,3 +694,7 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
 .izgara.esit .lider-listesi .ad > a, .takim-lider .lider-listesi .ad > a { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .izgara.esit .lider-listesi .ad small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .izgara.esit .lider-listesi li { min-height: 3.1em; }
+.tl-ust { flex-direction: row !important; align-items: center !important; gap: 10px; flex-wrap: wrap; }
+.tl-ara { flex: 1; min-width: 140px; max-width: 260px; padding: 6px 12px; border-radius: 99px; border: 1px solid var(--cizgi); background: var(--kart); color: var(--yazi); font: inherit; font-size: .9rem; }
+.lider-listesi li.bulunan { background: color-mix(in srgb, var(--vurgu) 14%, transparent); border-radius: 8px; }
+.lider-listesi li.tl-ayrac { justify-content: center; color: var(--soluk); padding: 0; min-height: 0; border-top: 0; line-height: 1; }

@@ -1077,7 +1077,7 @@ const TAKIM_LIDER = [
   ['tks', 'Top kaybından sayı', 1, 'g'], ['benc', 'Yedeklerden sayı', 1, 'g'],
 ];
 const YUZDE_LIDER = new Set(['iki%', 'uc%', 'sa%', 'efg', 'ts', 'astor']);
-const TAKIM_LIDER_KAC = 5; // her istatistikte ilk 5 takım; "Tüm takımlar" düğmesi bütün listeyi açar (kullanıcı 2026-11-27)
+const TAKIM_LIDER_KAC = 5; // her istatistikte ilk 5 takım; her kartın kendi "Tümü" düğmesi o kartı açar (kullanıcı 2026-11-27)
 function takimLiderVerisi(lig) {
   const t = ligVerisi(lig, 'takimlar');
   const tablo = ligVerisi(lig, 'tablo');

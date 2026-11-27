@@ -660,3 +660,7 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
 .dogum-tablo td:last-child { white-space: nowrap; width: 1%; }
 .dg-bugun { color: var(--turuncu, #c2570c); }
 .dg-bugun-satir { background: var(--vurgu-acik); }
+
+/* Liderler: Oyuncular | Takımlar seçimi */
+.ld-tur { margin: 0 0 12px; }
+.ld-tur .ld-sec { font-size: .95rem; padding: 6px 16px; }

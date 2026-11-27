@@ -501,6 +501,8 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
         takim_ozet.append({
             "id": t["id"], "ad": t["ad"], "o": t["o"], "g": t["g"], "m": t["m"],
             "ort": {a: ort(t["toplam"][a], n) for a in ALANLAR}, "atis": {a: t["toplam"][a] for a in ("iki", "uc", "sa")},
+            # Takım liderleri (toplam): oyuncuların kutu skor toplamı ve kutu skoru olan maç sayısı
+            "toplam": {a: t["toplam"][a] for a in ALANLAR}, "kutuMac": n,
             "kadro": sorted((o for o in oyuncu_ozet if o["takim"] == t["id"]), key=lambda o: -o["dk"]),
             "maclar": t["maclar"],
         })

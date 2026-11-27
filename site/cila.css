@@ -671,3 +671,9 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
 .takim-lider .lider-listesi li { min-height: 2.6em; }
 .takim-lider .tl-atis { font-weight: 400; font-size: .72rem; margin-right: 6px; }
 .lider-listesi .deger small.mb-deger { display: block; font-size: .7rem; font-weight: 600; color: var(--soluk); text-align: right; line-height: 1.1; }
+.takim-lider .baslik-satir { margin-bottom: 2px; }
+.takim-lider .baslik-satir h3 { margin: 0; }
+.tl-ac { flex: none; font: inherit; font-size: .74rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--cizgi); background: transparent; color: var(--vurgu); cursor: pointer; }
+.tl-ac.aktif { background: var(--vurgu); border-color: var(--vurgu); color: #fff; }
+/* Açılan kart satırdaki diğerlerini uzatmasın */
+.takim-lider-izgara:has(.takim-lider.acik) { align-items: start; }

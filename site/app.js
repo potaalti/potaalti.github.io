@@ -1064,13 +1064,19 @@ function liderlerKarti(lig) {
 // Kaynak: takimlar.json (oyuncuların kutu skor toplamı, kutuMac), takim-istatistik.json (takım ribaundu / takım top kaybı;
 // ribaund ve top kaybına eklenir), ileri-istatistik.json (boyalı alan, hızlı hücum, ikinci şans, top kaybından ve yedeklerden
 // sayı; maç maç), tablo.json (yenilen sayı). yon -1: az olan üstte.
+// [kod, ad, yön, grup] grup: 't' temel, 'g' gelişmiş (kullanıcı 2026-11-27: Temel / Gelişmiş düğmesiyle ayrı)
 const TAKIM_LIDER = [
-  ['sayi', 'Sayı', 1], ['yenilen', 'Yenilen sayı (en az)', -1], ['rib', 'Ribaund', 1], ['hr', 'Hücum ribaundu', 1], ['sr', 'Savunma ribaundu', 1],
-  ['ast', 'Asist', 1], ['tc', 'Top çalma', 1], ['blk', 'Blok', 1], ['tk', 'Top kaybı (en az)', -1], ['vp', 'Verimlilik', 1],
-  ['ucI', 'İsabetli üçlük', 1], ['iki%', '2 sayı %', 1], ['uc%', '3 sayı %', 1], ['sa%', 'Serbest atış %', 1],
-  ['ba', 'Boyalı alan sayısı', 1], ['hh', 'Hızlı hücum sayısı', 1], ['is', 'İkinci şans sayısı', 1], ['tks', 'Top kaybından sayı', 1],
-  ['benc', 'Yedeklerden sayı', 1], ['faul', 'Faul (en az)', -1],
+  ['sayi', 'Sayı', 1, 't'], ['yenilen', 'Yenilen sayı (en az)', -1, 't'], ['rib', 'Ribaund', 1, 't'], ['hr', 'Hücum ribaundu', 1, 't'],
+  ['sr', 'Savunma ribaundu', 1, 't'], ['ast', 'Asist', 1, 't'], ['tc', 'Top çalma', 1, 't'], ['blk', 'Blok', 1, 't'],
+  ['tk', 'Top kaybı (en az)', -1, 't'], ['vp', 'Verimlilik', 1, 't'], ['ucI', 'İsabetli üçlük', 1, 't'], ['iki%', '2 sayı %', 1, 't'],
+  ['uc%', '3 sayı %', 1, 't'], ['sa%', 'Serbest atış %', 1, 't'], ['faul', 'Faul (en az)', -1, 't'],
+  ['hv', 'Hücum verimliliği (100 hücumda sayı)', 1, 'g'], ['sv', 'Savunma verimliliği (100 hücumda yenilen, en az)', -1, 'g'],
+  ['net', 'Net verimlilik', 1, 'g'], ['tempo', 'Tempo (maç başı hücum)', 1, 'g'], ['efg', 'Etkili isabet (eFG%)', 1, 'g'],
+  ['ts', 'Gerçek isabet (TS%)', 1, 'g'], ['astk', 'Asist / top kaybı', 1, 'g'], ['astor', 'Asistli basket oranı', 1, 'g'],
+  ['ba', 'Boyalı alan sayısı', 1, 'g'], ['hh', 'Hızlı hücum sayısı', 1, 'g'], ['is', 'İkinci şans sayısı', 1, 'g'],
+  ['tks', 'Top kaybından sayı', 1, 'g'], ['benc', 'Yedeklerden sayı', 1, 'g'],
 ];
+const YUZDE_LIDER = new Set(['iki%', 'uc%', 'sa%', 'efg', 'ts', 'astor']);
 const TAKIM_LIDER_KAC = 5; // her istatistikte ilk 5 takım; "Tüm takımlar" düğmesi bütün listeyi açar (kullanıcı 2026-11-27)
 function takimLiderVerisi(lig) {
   const t = ligVerisi(lig, 'takimlar');
@@ -1106,22 +1112,39 @@ function takimLiderDegeri(x, kod, mod) {
   if (kod === 'ucI') return { deger: bol(x.atis.uc[0], x.n) };
   if (kod === 'yenilen') return { deger: x.yenilen == null ? null : bol(x.yenilen, x.o) };
   if (['ba', 'hh', 'is', 'tks', 'benc'].includes(kod)) return { deger: x.ileriN ? bol(x.ileri[kod], x.ileriN) : null };
+  // Gelişmiş: hücum sayısı ≈ atış denemesi + 0,44 × serbest atış denemesi − hücum ribaundu + top kaybı (sezon toplamı)
+  const sb = (x.atis.iki[0] ?? 0) + (x.atis.uc[0] ?? 0), sd = (x.atis.iki[1] ?? 0) + (x.atis.uc[1] ?? 0);
+  const hucum = sd + 0.44 * (x.atis.sa[1] ?? 0) - (x.top.hr ?? 0) + (x.top.tk ?? 0);
+  const yenilen = x.yenilen == null ? null : (x.yenilen * x.n) / (x.o || x.n);
+  if (kod === 'tempo') return { deger: x.n && hucum > 0 ? hucum / x.n : null };
+  if (kod === 'hv') return { deger: hucum > 0 ? (100 * (x.top.sayi ?? 0)) / hucum : null };
+  if (kod === 'sv') return { deger: hucum > 0 && yenilen != null ? (100 * yenilen) / hucum : null };
+  if (kod === 'net') return { deger: hucum > 0 && yenilen != null ? (100 * ((x.top.sayi ?? 0) - yenilen)) / hucum : null };
+  if (kod === 'efg') return { deger: sd ? (100 * (sb + 0.5 * (x.atis.uc[0] ?? 0))) / sd : null };
+  if (kod === 'ts') { const p = 2 * (sd + 0.44 * (x.atis.sa[1] ?? 0)); return { deger: p ? (100 * (x.top.sayi ?? 0)) / p : null }; }
+  if (kod === 'astk') return { deger: x.top.tk ? (x.top.ast ?? 0) / x.top.tk : null };
+  if (kod === 'astor') return { deger: sb ? (100 * (x.top.ast ?? 0)) / sb : null };
   return { deger: bol(x.top[kod] ?? 0, x.n) };
 }
+// Temel | Gelişmiş seçimi (takım liderleri ve takım rekorları)
+const grupDugmeleri = (is, secili) => `<span class="ld-dugmeler">${[['t', 'Temel'], ['g', 'Gelişmiş']].map(([k, ad]) => `<button class="ld-sec${secili === k ? ' aktif' : ''}" data-is="${is}" data-id="${k}">${ad}</button>`).join('')}</span>`;
 function takimLiderleriKarti(lig) {
   const veri = takimLiderVerisi(lig);
   if (!veri) return '<p class="bos">Yükleniyor…</p>';
   // Yalnız maç başı ortalama (kullanıcı 2026-11-27: toplam olmasın)
   const mod = 'ort';
-  const yaz = (kod, v) => (kod.endsWith('%') ? `%${sayi(v)}` : sayi(v));
-  const hepsi = !!S.ui.takimLiderHepsi;
-  const kac = hepsi ? Infinity : TAKIM_LIDER_KAC;
-  return `<div class="baslik-satir" style="margin-bottom:8px"><p class="soluk kucuk" style="margin:0">Maç başı ortalama · ${hepsi ? 'bütün takımlar' : `ilk ${TAKIM_LIDER_KAC} takım`}</p>
-    <button class="ld-sec${hepsi ? ' aktif' : ''}" data-is="ld-takim-hepsi">${hepsi ? `İlk ${TAKIM_LIDER_KAC}` : 'Tüm takımlar'}</button></div>
-    <div class="izgara takim-lider-izgara">${TAKIM_LIDER.map(([kod, ad, yon]) => {
+  const yaz = (kod, v) => (YUZDE_LIDER.has(kod) ? `%${sayi(v)}` : kod === 'net' ? `${v > 0 ? '+' : ''}${sayi(v)}` : kod === 'astk' ? v.toLocaleString('tr-TR', { maximumFractionDigits: 2 }) : sayi(v));
+  // Her kartın başlığında kendi düğmesi: o kartın listesi bütün takımlara açılır (kullanıcı 2026-11-27)
+  S.ui.takimLiderAcik ??= {};
+  const grup = S.ui.takimLiderGrup === 'g' ? 'g' : 't';
+  return `<div class="baslik-satir" style="margin-bottom:8px">${grupDugmeleri('ld-takim-grup', grup)}</div>
+    <div class="izgara takim-lider-izgara">${TAKIM_LIDER.filter(([, , , g]) => g === grup).map(([kod, ad, yon]) => {
+      const acik = !!S.ui.takimLiderAcik[`${lig}|${kod}`];
+      const kac = acik ? Infinity : TAKIM_LIDER_KAC;
       const liste = veri.map(x => ({ x, ...takimLiderDegeri(x, kod, mod) })).filter(r => r.deger != null)
         .sort((a, b) => yon * (b.deger - a.deger) || a.x.ad.localeCompare(b.x.ad, 'tr')).slice(0, kac);
-      return `<div class="kart takim-lider" style="margin:0"><h3>${esc(ad)}</h3>${liste.length ? `<ol class="lider-listesi">${liste.map((r, i) => `<li><span class="no">${i + 1}</span>
+      return `<div class="kart takim-lider${acik ? ' acik' : ''}" style="margin:0"><div class="baslik-satir"><h3>${esc(ad)}</h3>
+        <button class="tl-ac${acik ? ' aktif' : ''}" data-is="ld-takim-ac" data-id="${lig}|${kod}" title="${acik ? `İlk ${TAKIM_LIDER_KAC}` : 'Bütün takımlar'}">${acik ? `İlk ${TAKIM_LIDER_KAC}` : 'Tümü'}</button></div>${liste.length ? `<ol class="lider-listesi">${liste.map((r, i) => `<li><span class="no">${i + 1}</span>
         <span class="ad"><a href="#/takim/${lig}/${r.x.id}" class="oyuncu-link" title="${esc(takimAdi(lig, r.x.id))}"><b>${esc(takimAdi(lig, r.x.id))}</b></a></span>
         <span class="deger"${r.alt ? ` title="Maç başı isabet/deneme: ${r.alt}"` : ''}>${yaz(kod, r.deger)}</span></li>`).join('')}</ol>` : '<p class="bos">Veri yok</p>'}</div>`;
     }).join('')}</div>`;
@@ -1810,6 +1833,8 @@ const rekorDegeri = (id, v) => (id === 'fark' ? `+${v}` : id === 'seri' ? `${v} 
 // Oyuncu tek maç rekoru: +/- işaretli, süre "38:12" (veride yazı olarak)
 const oyuncuRekorDegeri = (id, v) => (id === 'pm' ? isaretli(v) : v);
 const ATIS_REKOR = ['iki', 'uc', 'sa'];
+// Takım rekorlarında gelişmiş olanlar (FIBA LiveStats ileri istatistikleri)
+const GELISMIS_REKOR = new Set(['ba', 'hh', 'is', 'tks', 'benc']);
 function rekorKarti(lig) {
   const d = ligVerisi(lig, 'rekorlar');
   ligVerisi(lig, 'tablo');
@@ -1831,14 +1856,15 @@ function rekorKarti(lig) {
   const kart = (ad, grup, id, ic) => `<div class="kart" style="margin:0"><div class="baslik-satir"><h3>${esc(ad)}</h3>${dugme(grup, id)}</div>${ic}</div>`;
   // Oyuncular | Takımlar (Liderler'deki gibi; kullanıcı 2026-11-27)
   const tur = S.ui.rekorTur === 'takim' ? 'takim' : 'oyuncu';
+  const rkGrup = S.ui.rekorTakimGrup === 'g' ? 'g' : 't';
   const secim = `<div class="ld-tur"><span class="ld-dugmeler">${[['oyuncu', 'Oyuncular'], ['takim', 'Takımlar']].map(([k, ad]) => `<button class="ld-sec${tur === k ? ' aktif' : ''}" data-is="rk-tur" data-id="${k}">${ad}</button>`).join('')}</span></div>`;
   return `${secim}<p class="soluk kucuk">Bu sezonun biten maçlarından. Maça dokununca kutu skor açılır.</p>
     ${tur === 'oyuncu' ? `<h2 class="bolum-baslik">Tek maçta en çok</h2>
     <div class="izgara">${d.oyuncu.map(k => kart(k.ad, 'oyuncu', k.id, oyuncuListesi(k))).join('')}
       ${kart('Double-double', 'dd', 'dd', `<p class="soluk kucuk" style="margin:0 0 6px">Sezonda toplam ${d.ddToplam} double-double, ${d.tdToplam} triple-double
         (sayı, ribaund, asist, top çalma, bloktan en az ikisinde 10+)</p>${dd}`)}</div>`
-    : `<h2 class="bolum-baslik">Takım rekorları</h2>
-    <div class="izgara">${d.takim.map(k => kart(k.ad, 'takim', k.id, takimListesi(k))).join('')}</div>`}`;
+    : `<div class="baslik-satir"><h2 class="bolum-baslik">Takım rekorları</h2>${grupDugmeleri('rk-takim-grup', rkGrup)}</div>
+    <div class="izgara">${d.takim.filter(k => GELISMIS_REKOR.has(k.id) === (rkGrup === 'g')).map(k => kart(k.ad, 'takim', k.id, takimListesi(k))).join('')}</div>`}`;
 }
 
 async function rekorGorselPaylas(anahtar, indir) {
@@ -2255,7 +2281,9 @@ document.addEventListener('click', e => {
   if (/^(ae|sy|odul|av|rk)-(paylas|indir)$|^odul-hepsi(-indir|-paylas)?$/.test(el.dataset.is) && !yoneticiMi()) return;
   if (el.dataset.is === 'ld-tur') { S.ui.liderTur = el.dataset.id; ciz(); return; }
   if (el.dataset.is === 'rk-tur') { S.ui.rekorTur = el.dataset.id; ciz(); return; }
-  if (el.dataset.is === 'ld-takim-hepsi') { S.ui.takimLiderHepsi = !S.ui.takimLiderHepsi; ciz(); return; }
+  if (el.dataset.is === 'ld-takim-grup') { S.ui.takimLiderGrup = el.dataset.id; ciz(); return; }
+  if (el.dataset.is === 'rk-takim-grup') { S.ui.rekorTakimGrup = el.dataset.id; ciz(); return; }
+  if (el.dataset.is === 'ld-takim-ac') { S.ui.takimLiderAcik ??= {}; S.ui.takimLiderAcik[el.dataset.id] = !S.ui.takimLiderAcik[el.dataset.id]; ciz(); return; }
   if (el.dataset.is === 'ld-yerli') {
     const [lig, kod, yerli] = el.dataset.id.split('|');
     S.ui.liderYerli[`${lig}|${kod}`] = yerli === '1';

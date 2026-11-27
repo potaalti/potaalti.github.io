@@ -48,6 +48,10 @@ const kazananSinifi = (m, taraf) => {
 const takimAnahtari = ad => String(ad).replace(/İ/g, 'I').replace(/ı/g, 'i').toLowerCase().normalize('NFKD')
   .replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const takimAdi = (lig, id) => baslik(S.tablo[lig]?.find(t => t.id === id)?.ad ?? id);
+// Liderler ve rekorlar listelerinde kısa ad (kullanıcı 2026-11-27): Konya BŞB, Keçiören Bld. Bağlum, Bursaspor
+const kisaAd = ad => String(ad ?? '').replace(/Büyükşehir Belediye(si)?( Spor)?/u, 'BŞB').replace(/Belediyesi/u, 'Bld.')
+  .replace(/ (Basketbol|Basket)$/u, '').trim();
+const takimKisa = (lig, id) => kisaAd(takimAdi(lig, id));
 const takimLinki = (lig, ad) => `<a href="#/takim/${lig}/${takimAnahtari(ad)}">${esc(baslik(ad))}</a>`;
 
 
@@ -1049,7 +1053,7 @@ function liderListesi(lig, k, kac) {
   const deger = x => (k.tur === 'atis' ? `${x.atis[0]}<small class="soluk" style="font-weight:400"> / ${x.atis[1]}</small>` : k.tur === 'toplam' ? isaretli(x.deger) : sayi(x.deger));
   if (!k.liste.length) return '<p class="bos">Yükleniyor…</p>';
   return `<ol class="lider-listesi">${k.liste.slice(0, kac).map((x, i) => `<li><span class="no">${i + 1}</span>
-    <span class="ad"><a href="#/oyuncu/${lig}/${x.id}" class="oyuncu-link"><b>${esc(x.ad)}</b></a><small><a href="#/takim/${lig}/${x.takim}">${esc(takimAdi(lig, x.takim))}</a> · ${x.mac} maç</small></span>
+    <span class="ad"><a href="#/oyuncu/${lig}/${x.id}" class="oyuncu-link"><b>${esc(x.ad)}</b></a><small><a href="#/takim/${lig}/${x.takim}">${esc(takimKisa(lig, x.takim))}</a> · ${x.mac} maç</small></span>
     <span class="deger">${deger(x)}${['uc', 'pm'].includes(k.id) ? `<small class="mb-deger">${macBasiLider(k.id, x)} / maç</small>` : ''}</span></li>`).join('')}</ol>`;
 }
 
@@ -1168,7 +1172,7 @@ function takimLiderleriKarti(lig) {
       return `<div class="kart takim-lider${acik ? ' acik' : ''}${izin ? ' izin' : ''}" style="margin:0"><div class="baslik-satir"><h3${TAKIM_LIDER_ACIKLAMA[kod] ? ` title="${TAKIM_LIDER_ACIKLAMA[kod]}"` : ''}>${esc(baslik)}${yon < 0 ? ' <small class="soluk">(en az)</small>' : ''}</h3>
         <span class="kart-dugmeler">${izinVar ? `<button class="tl-ac${izin ? ' aktif' : ''}" data-is="ld-takim-izin" data-id="${anahtar}" title="${izin ? 'Takımın yaptığı' : 'Rakiplerinin bu takıma karşı yaptığı'}">${izin ? 'Yaptığı' : 'İzin verilen'}</button>` : ''}
         <span class="sag"><button class="tl-ac${acik ? ' aktif' : ''}" data-is="ld-takim-ac" data-id="${anahtar}" title="${acik ? `İlk ${TAKIM_LIDER_KAC}` : 'Bütün takımlar'}">${acik ? `İlk ${TAKIM_LIDER_KAC}` : 'Tümü'}</button></span></span></div>${liste.length ? `<ol class="lider-listesi">${liste.map((r, i) => `<li><span class="no">${i + 1}</span>
-        <span class="ad"><a href="#/takim/${lig}/${r.x.id}" class="oyuncu-link" title="${esc(takimAdi(lig, r.x.id))}"><b>${esc(takimAdi(lig, r.x.id))}</b></a></span>
+        <span class="ad"><a href="#/takim/${lig}/${r.x.id}" class="oyuncu-link" title="${esc(takimKisa(lig, r.x.id))}"><b>${esc(takimKisa(lig, r.x.id))}</b></a></span>
         <span class="deger"${r.alt ? ` title="Maç başı isabet/deneme: ${r.alt}"` : ''}>${yaz(kod, r.deger)}</span></li>`).join('')}</ol>` : '<p class="bos">Veri yok</p>'}</div>`;
     }).join('')}</div>`;
 }
@@ -1864,17 +1868,17 @@ function rekorKarti(lig) {
   const d = ligVerisi(lig, 'rekorlar');
   ligVerisi(lig, 'tablo');
   if (!d) return '<p class="bos">Yükleniyor…</p>';
-  const macBilgi = x => `${x.hafta}. hafta · ${x.evde ? '' : '@ '}${esc(takimAdi(lig, x.rakip))}`;
+  const macBilgi = x => `${x.hafta}. hafta · ${x.evde ? '' : '@ '}${esc(takimKisa(lig, x.rakip))}`;
   const oyuncuListesi = k => `<ol class="lider-listesi">${k.liste.slice(0, kartKac(`${lig}|rk|oyuncu|${k.id}`)).map((x, i) => `<li><span class="no">${i + 1}</span>
     <span class="ad"><a href="#/oyuncu/${lig}/${x.oyuncu}" class="oyuncu-link"><b>${esc(x.ad)}</b></a>
-      <small><a href="#/takim/${lig}/${x.takim}">${esc(takimAdi(lig, x.takim))}</a> · <a href="#/mac/${lig}/${x.mac}">${macBilgi(x)}</a></small></span>
+      <small><a href="#/takim/${lig}/${x.takim}">${esc(takimKisa(lig, x.takim))}</a> · <a href="#/mac/${lig}/${x.mac}">${macBilgi(x)}</a></small></span>
     <span class="deger">${oyuncuRekorDegeri(k.id, x.deger)}${ATIS_REKOR.includes(k.id) && x.deneme != null ? `<small class="mb-deger">${x.isabet ?? x.deger}/${x.deneme}</small>` : ''}</span></li>`).join('')}</ol>`;
   const takimListesi = k => `<ol class="lider-listesi">${k.liste.slice(0, kartKac(`${lig}|rk|takim|${k.id}`)).map((x, i) => `<li><span class="no">${i + 1}</span>
-    <span class="ad"><a href="#/takim/${lig}/${x.takim}"><b>${esc(takimAdi(lig, x.takim))}</b></a>
-      <small>${k.id === 'seri' ? (x.suruyor ? 'seri sürüyor' : 'sezon içinde') : `<a href="#/mac/${lig}/${x.mac}">${x.hafta}. hafta · ${esc(takimAdi(lig, x.rakip))} · ${x.skor}-${x.rakipSkor}${x.deneme != null ? ` · ${x.deneme} deneme` : ''}</a>`}</small></span>
+    <span class="ad"><a href="#/takim/${lig}/${x.takim}"><b>${esc(takimKisa(lig, x.takim))}</b></a>
+      <small>${k.id === 'seri' ? (x.suruyor ? 'seri sürüyor' : 'sezon içinde') : `<a href="#/mac/${lig}/${x.mac}">${x.hafta}. hafta · ${esc(takimKisa(lig, x.rakip))} · ${x.skor}-${x.rakipSkor}${x.deneme != null ? ` · ${x.deneme} deneme` : ''}</a>`}</small></span>
     <span class="deger">${rekorDegeri(k.id, x.deger)}</span></li>`).join('')}</ol>`;
   const dd = `<ol class="lider-listesi">${d.dd.slice(0, kartKac(`${lig}|rk|dd|dd`)).map((x, i) => `<li><span class="no">${i + 1}</span>
-    <span class="ad"><a href="#/oyuncu/${lig}/${x.oyuncu}" class="oyuncu-link"><b>${esc(x.ad)}</b></a><small><a href="#/takim/${lig}/${x.takim}">${esc(takimAdi(lig, x.takim))}</a>${x.td ? ` · ${x.td} triple-double` : ''}</small></span>
+    <span class="ad"><a href="#/oyuncu/${lig}/${x.oyuncu}" class="oyuncu-link"><b>${esc(x.ad)}</b></a><small><a href="#/takim/${lig}/${x.takim}">${esc(takimKisa(lig, x.takim))}</a>${x.td ? ` · ${x.td} triple-double` : ''}</small></span>
     <span class="deger">${x.dd}</span></li>`).join('') || '<li class="bos">Henüz yok</li>'}</ol>`;
   // Yöneticiye her kategori için ayrı görsel (ilk 10, takım logolu)
   const dugme = (grup, id) => (!yoneticiMi() ? '' : `<button class="secenek kart-indir" data-is="rk-indir" data-id="${lig}|${grup}|${id}" title="Görseli indir">⬇</button>`);

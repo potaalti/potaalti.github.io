@@ -1071,7 +1071,7 @@ const TAKIM_LIDER = [
   ['ba', 'Boyalı alan sayısı', 1], ['hh', 'Hızlı hücum sayısı', 1], ['is', 'İkinci şans sayısı', 1], ['tks', 'Top kaybından sayı', 1],
   ['benc', 'Yedeklerden sayı', 1], ['faul', 'Faul (en az)', -1],
 ];
-const TAKIM_LIDER_KAC = 7; // her istatistikte ilk 7 takım (kullanıcı 2026-11-27)
+const TAKIM_LIDER_KAC = 5; // her istatistikte ilk 5 takım; "Tüm takımlar" düğmesi bütün listeyi açar (kullanıcı 2026-11-27)
 function takimLiderVerisi(lig) {
   const t = ligVerisi(lig, 'takimlar');
   const tablo = ligVerisi(lig, 'tablo');
@@ -1114,10 +1114,13 @@ function takimLiderleriKarti(lig) {
   // Yalnız maç başı ortalama (kullanıcı 2026-11-27: toplam olmasın)
   const mod = 'ort';
   const yaz = (kod, v) => (kod.endsWith('%') ? `%${sayi(v)}` : sayi(v));
-  return `<p class="soluk kucuk" style="margin:0 0 8px">Maç başı ortalama · ilk ${TAKIM_LIDER_KAC} takım</p>
+  const hepsi = !!S.ui.takimLiderHepsi;
+  const kac = hepsi ? Infinity : TAKIM_LIDER_KAC;
+  return `<div class="baslik-satir" style="margin-bottom:8px"><p class="soluk kucuk" style="margin:0">Maç başı ortalama · ${hepsi ? 'bütün takımlar' : `ilk ${TAKIM_LIDER_KAC} takım`}</p>
+    <button class="ld-sec${hepsi ? ' aktif' : ''}" data-is="ld-takim-hepsi">${hepsi ? `İlk ${TAKIM_LIDER_KAC}` : 'Tüm takımlar'}</button></div>
     <div class="izgara takim-lider-izgara">${TAKIM_LIDER.map(([kod, ad, yon]) => {
       const liste = veri.map(x => ({ x, ...takimLiderDegeri(x, kod, mod) })).filter(r => r.deger != null)
-        .sort((a, b) => yon * (b.deger - a.deger) || a.x.ad.localeCompare(b.x.ad, 'tr')).slice(0, TAKIM_LIDER_KAC);
+        .sort((a, b) => yon * (b.deger - a.deger) || a.x.ad.localeCompare(b.x.ad, 'tr')).slice(0, kac);
       return `<div class="kart takim-lider" style="margin:0"><h3>${esc(ad)}</h3>${liste.length ? `<ol class="lider-listesi">${liste.map((r, i) => `<li><span class="no">${i + 1}</span>
         <span class="ad"><a href="#/takim/${lig}/${r.x.id}" class="oyuncu-link" title="${esc(takimAdi(lig, r.x.id))}"><b>${esc(takimAdi(lig, r.x.id))}</b></a></span>
         <span class="deger"${r.alt ? ` title="Maç başı isabet/deneme: ${r.alt}"` : ''}>${yaz(kod, r.deger)}</span></li>`).join('')}</ol>` : '<p class="bos">Veri yok</p>'}</div>`;
@@ -2252,6 +2255,7 @@ document.addEventListener('click', e => {
   if (/^(ae|sy|odul|av|rk)-(paylas|indir)$|^odul-hepsi(-indir|-paylas)?$/.test(el.dataset.is) && !yoneticiMi()) return;
   if (el.dataset.is === 'ld-tur') { S.ui.liderTur = el.dataset.id; ciz(); return; }
   if (el.dataset.is === 'rk-tur') { S.ui.rekorTur = el.dataset.id; ciz(); return; }
+  if (el.dataset.is === 'ld-takim-hepsi') { S.ui.takimLiderHepsi = !S.ui.takimLiderHepsi; ciz(); return; }
   if (el.dataset.is === 'ld-yerli') {
     const [lig, kod, yerli] = el.dataset.id.split('|');
     S.ui.liderYerli[`${lig}|${kod}`] = yerli === '1';

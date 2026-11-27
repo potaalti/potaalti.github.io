@@ -26,7 +26,7 @@ const S = {
   maclar: {}, // `${lig}-${hafta}` -> maç listesi
   kutular: {}, // maç id -> kutu skor (null: yok)
   farklar: {}, // maç id -> skor farkı grafiği verisi (biten maçlar, null: yok)
-  ui: { ara: '', oyuncuSirala: 'vp', seyirciSirala: { k: 'ort', yon: 1 }, seyirciHaftaSirala: { k: 'seyirci', yon: 1 }, tabloSirala: null, kadroSirala: null, liderKategori: {}, liderYerli: {}, liderTur: 'oyuncu', takimLiderMod: 'ort', anaLig: anaLigOku(), istDonem: 'hafta' },
+  ui: { ara: '', oyuncuSirala: 'vp', seyirciSirala: { k: 'ort', yon: 1 }, seyirciHaftaSirala: { k: 'seyirci', yon: 1 }, tabloSirala: null, kadroSirala: null, liderKategori: {}, liderYerli: {}, liderTur: 'oyuncu', anaLig: anaLigOku(), istDonem: 'hafta' },
 };
 // Telefon ve bilgisayar ayrı düzen: telefonda ana sayfa tek lig gösterir (BSL | TBL seçici), bilgisayarda yan menü ve iki sütun
 const TELEFON = matchMedia('(max-width: 759px)');
@@ -1088,7 +1088,7 @@ function takimLiderDegeri(x, kod, mod) {
   const bol = (v, n) => (mod === 'ort' ? (n ? v / n : null) : v);
   if (kod.endsWith('%')) {
     const [i, d] = x.atis[kod.slice(0, -1)] ?? [0, 0];
-    return { deger: d ? (100 * i) / d : null, alt: `${i}/${d}` };
+    return { deger: d ? (100 * i) / d : null, alt: x.n ? `${sayi(i / x.n)}/${sayi(d / x.n)}` : '' };
   }
   if (kod === 'ucI') return { deger: bol(x.atis.uc[0], x.n) };
   if (kod === 'yenilen') return { deger: x.yenilen == null ? null : bol(x.yenilen, x.o) };
@@ -1098,10 +1098,10 @@ function takimLiderDegeri(x, kod, mod) {
 function takimLiderleriKarti(lig) {
   const veri = takimLiderVerisi(lig);
   if (!veri) return '<p class="bos">Yükleniyor…</p>';
-  const mod = S.ui.takimLiderMod === 'toplam' ? 'toplam' : 'ort';
-  const modSecim = `<span class="ld-dugmeler">${[['ort', 'Ortalama'], ['toplam', 'Toplam']].map(([k, ad]) => `<button class="ld-sec${mod === k ? ' aktif' : ''}" data-is="ld-takim-mod" data-id="${k}">${ad}</button>`).join('')}</span>`;
-  const yaz = (kod, v) => (kod.endsWith('%') ? `%${sayi(v)}` : mod === 'toplam' ? Math.round(v).toLocaleString('tr-TR') : sayi(v));
-  return `<div class="baslik-satir" style="margin-bottom:8px"><p class="soluk kucuk ipucu" style="margin:0">${mod === 'ort' ? 'Maç başı ortalama' : 'Sezon toplamı'} · ilk 5 takım</p>${modSecim}</div>
+  // Yalnız maç başı ortalama (kullanıcı 2026-11-27: toplam olmasın)
+  const mod = 'ort';
+  const yaz = (kod, v) => (kod.endsWith('%') ? `%${sayi(v)}` : sayi(v));
+  return `<p class="soluk kucuk" style="margin:0 0 8px">Maç başı ortalama · ilk 5 takım</p>
     <div class="izgara">${TAKIM_LIDER.map(([kod, ad, yon]) => {
       const liste = veri.map(x => ({ x, ...takimLiderDegeri(x, kod, mod) })).filter(r => r.deger != null)
         .sort((a, b) => yon * (b.deger - a.deger) || a.x.ad.localeCompare(b.x.ad, 'tr')).slice(0, 5);
@@ -2230,7 +2230,6 @@ document.addEventListener('click', e => {
   // Paylaş / İndir yalnızca yöneticiye (kullanıcı kararı 2026-11-09); ödül üreticisi (?uret) zaten yöneticiye
   if (/^(ae|sy|odul|av|rk)-(paylas|indir)$|^odul-hepsi(-indir|-paylas)?$/.test(el.dataset.is) && !yoneticiMi()) return;
   if (el.dataset.is === 'ld-tur') { S.ui.liderTur = el.dataset.id; ciz(); return; }
-  if (el.dataset.is === 'ld-takim-mod') { S.ui.takimLiderMod = el.dataset.id; ciz(); return; }
   if (el.dataset.is === 'ld-yerli') {
     const [lig, kod, yerli] = el.dataset.id.split('|');
     S.ui.liderYerli[`${lig}|${kod}`] = yerli === '1';

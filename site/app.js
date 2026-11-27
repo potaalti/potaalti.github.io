@@ -50,7 +50,7 @@ const takimAnahtari = ad => String(ad).replace(/İ/g, 'I').replace(/ı/g, 'i').t
 const takimAdi = (lig, id) => baslik(S.tablo[lig]?.find(t => t.id === id)?.ad ?? id);
 // Liderler ve rekorlar listelerinde kısa ad (kullanıcı 2026-11-27): Konya BŞB, Keçiören Bld. Bağlum, Bursaspor
 const kisaAd = ad => String(ad ?? '').replace(/Büyükşehir Belediye(si)?( Spor)?/u, 'BŞB').replace(/Belediyesi/u, 'Bld.')
-  .replace(/ (Basketbol|Basket)$/u, '').trim();
+  .replace(/ (Basketbol|Basket)$/u, '').trim().replace(/^Cedi Osman$/u, 'CO Basket');
 const takimKisa = (lig, id) => kisaAd(takimAdi(lig, id));
 const takimLinki = (lig, ad) => `<a href="#/takim/${lig}/${takimAnahtari(ad)}">${esc(baslik(ad))}</a>`;
 

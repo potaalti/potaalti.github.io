@@ -1039,12 +1039,18 @@ function yerliLiderleri(lig, kod, esik, oyuncular, rehberHam) {
 }
 const rehberAdresi = lig => (lig === 'bsl' ? 'bsl/data/oyuncular.json' : `${KAYNAK}/oyuncular.json`);
 
+// Toplam olan liderlerde (3 sayılık isabet, +/-) maç başı değeri de (kullanıcı 2026-11-27): "2,8" / "+5,1"
+function macBasiLider(kod, x) {
+  if (!x.mac) return '';
+  const v = Math.round(((kod === 'uc' ? x.atis?.[0] ?? x.deger : x.deger) / x.mac) * 10) / 10;
+  return kod === 'pm' ? `${v > 0 ? '+' : ''}${sayi(v)}` : sayi(v);
+}
 function liderListesi(lig, k, kac) {
   const deger = x => (k.tur === 'atis' ? `${x.atis[0]}<small class="soluk" style="font-weight:400"> / ${x.atis[1]}</small>` : k.tur === 'toplam' ? isaretli(x.deger) : sayi(x.deger));
   if (!k.liste.length) return '<p class="bos">Yükleniyor…</p>';
   return `<ol class="lider-listesi">${k.liste.slice(0, kac).map((x, i) => `<li><span class="no">${i + 1}</span>
     <span class="ad"><a href="#/oyuncu/${lig}/${x.id}" class="oyuncu-link"><b>${esc(x.ad)}</b></a><small><a href="#/takim/${lig}/${x.takim}">${esc(takimAdi(lig, x.takim))}</a> · ${x.mac} maç</small></span>
-    <span class="deger">${deger(x)}</span></li>`).join('')}</ol>`;
+    <span class="deger">${deger(x)}${['uc', 'pm'].includes(k.id) ? `<small class="mb-deger">${macBasiLider(k.id, x)} / maç</small>` : ''}</span></li>`).join('')}</ol>`;
 }
 
 // Liderler sekmesi: Oyuncular (liderler.json) | Takımlar (takımların istatistiklerinden, ilk 5)
@@ -1174,7 +1180,8 @@ async function liderGorselPaylas(anahtar, indir) {
   const [baslik, ingilizce, birim] = LIDER_GORSEL[kod];
   const satirlar = liste.map(x => ({ ad: x.ad, id: x.id, yerli: turk(x.id), takimId: x.takim, deger: liderYazisi(kod, x.deger), foto: foto(x.id),
     logo: logolar.get(takimAnahtari(takimAdi(lig, x.takim))) ?? null,
-    alt: kod === 'uc' && x.atis?.[1] ? `${takimAdi(lig, x.takim)} · ${x.atis[0]}/${x.atis[1]} · %${Math.round((100 * x.atis[0]) / x.atis[1])}` : `${takimAdi(lig, x.takim)} · ${x.mac} maç` }));
+    alt: kod === 'uc' && x.atis?.[1] ? `${takimAdi(lig, x.takim)} · ${x.atis[0]}/${x.atis[1]} · %${Math.round((100 * x.atis[0]) / x.atis[1])} · ${macBasiLider(kod, x)}/maç`
+      : kod === 'pm' ? `${takimAdi(lig, x.takim)} · ${x.mac} maç · ${macBasiLider(kod, x)}/maç` : `${takimAdi(lig, x.takim)} · ${x.mac} maç` }));
   const blob = await LG.liderGorseli({ lig, baslik, yerli, ingilizce, birim, altBilgi: '2026-27', satirlar });
   const dosya = new File([blob], `pota-alti-${lig}-lider-${kod}${yerli ? '-yerli' : ''}.png`, { type: 'image/png' });
   if (!indir && navigator.canShare?.({ files: [dosya] })) {

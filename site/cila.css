@@ -670,3 +670,4 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
 .takim-lider .lider-listesi .ad a { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .takim-lider .lider-listesi li { min-height: 2.6em; }
 .takim-lider .tl-atis { font-weight: 400; font-size: .72rem; margin-right: 6px; }
+.lider-listesi .deger small.mb-deger { display: block; font-size: .7rem; font-weight: 600; color: var(--soluk); text-align: right; line-height: 1.1; }

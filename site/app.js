@@ -26,7 +26,7 @@ const S = {
   maclar: {}, // `${lig}-${hafta}` -> maç listesi
   kutular: {}, // maç id -> kutu skor (null: yok)
   farklar: {}, // maç id -> skor farkı grafiği verisi (biten maçlar, null: yok)
-  ui: { ara: '', oyuncuSirala: 'vp', seyirciSirala: { k: 'ort', yon: 1 }, seyirciHaftaSirala: { k: 'seyirci', yon: 1 }, tabloSirala: null, kadroSirala: null, liderKategori: {}, liderYerli: {}, liderTur: 'oyuncu', anaLig: anaLigOku(), istDonem: 'hafta' },
+  ui: { ara: '', oyuncuSirala: 'vp', seyirciSirala: { k: 'ort', yon: 1 }, seyirciHaftaSirala: { k: 'seyirci', yon: 1 }, tabloSirala: null, kadroSirala: null, liderKategori: {}, liderYerli: {}, liderTur: 'oyuncu', rekorTur: 'oyuncu', anaLig: anaLigOku(), istDonem: 'hafta' },
 };
 // Telefon ve bilgisayar ayrı düzen: telefonda ana sayfa tek lig gösterir (BSL | TBL seçici), bilgisayarda yan menü ve iki sütun
 const TELEFON = matchMedia('(max-width: 759px)');
@@ -1180,8 +1180,8 @@ async function liderGorselPaylas(anahtar, indir) {
   const [baslik, ingilizce, birim] = LIDER_GORSEL[kod];
   const satirlar = liste.map(x => ({ ad: x.ad, id: x.id, yerli: turk(x.id), takimId: x.takim, deger: liderYazisi(kod, x.deger), foto: foto(x.id),
     logo: logolar.get(takimAnahtari(takimAdi(lig, x.takim))) ?? null,
-    alt: kod === 'uc' && x.atis?.[1] ? `${takimAdi(lig, x.takim)} · ${x.atis[0]}/${x.atis[1]} · %${Math.round((100 * x.atis[0]) / x.atis[1])} · ${macBasiLider(kod, x)}/maç`
-      : kod === 'pm' ? `${takimAdi(lig, x.takim)} · ${x.mac} maç · ${macBasiLider(kod, x)}/maç` : `${takimAdi(lig, x.takim)} · ${x.mac} maç` }));
+    alt: kod === 'uc' && x.atis?.[1] ? `${takimAdi(lig, x.takim)} · ${x.atis[0]}/${x.atis[1]} · %${Math.round((100 * x.atis[0]) / x.atis[1])}` : `${takimAdi(lig, x.takim)} · ${x.mac} maç`,
+    alt2: ['uc', 'pm'].includes(kod) && x.mac ? `Maç başı ${macBasiLider(kod, x)}` : null }));
   const blob = await LG.liderGorseli({ lig, baslik, yerli, ingilizce, birim, altBilgi: '2026-27', satirlar });
   const dosya = new File([blob], `pota-alti-${lig}-lider-${kod}${yerli ? '-yerli' : ''}.png`, { type: 'image/png' });
   if (!indir && navigator.canShare?.({ files: [dosya] })) {
@@ -1804,6 +1804,9 @@ function gorunumAvrupa(kod, tur, id) {
 
 // ---------- Sezon rekorları (data/<lig>/rekorlar.json, veri/uret.py) ----------
 const rekorDegeri = (id, v) => (id === 'fark' ? `+${v}` : id === 'seri' ? `${v} G` : id === 'seyirci' ? binlik(v) : v);
+// Oyuncu tek maç rekoru: +/- işaretli, süre "38:12" (veride yazı olarak)
+const oyuncuRekorDegeri = (id, v) => (id === 'pm' ? isaretli(v) : v);
+const ATIS_REKOR = ['iki', 'uc', 'sa'];
 function rekorKarti(lig) {
   const d = ligVerisi(lig, 'rekorlar');
   ligVerisi(lig, 'tablo');
@@ -1812,10 +1815,10 @@ function rekorKarti(lig) {
   const oyuncuListesi = k => `<ol class="lider-listesi">${k.liste.map((x, i) => `<li><span class="no">${i + 1}</span>
     <span class="ad"><a href="#/oyuncu/${lig}/${x.oyuncu}" class="oyuncu-link"><b>${esc(x.ad)}</b></a>
       <small><a href="#/takim/${lig}/${x.takim}">${esc(takimAdi(lig, x.takim))}</a> · <a href="#/mac/${lig}/${x.mac}">${macBilgi(x)}</a></small></span>
-    <span class="deger">${x.deger}</span></li>`).join('')}</ol>`;
+    <span class="deger">${oyuncuRekorDegeri(k.id, x.deger)}${ATIS_REKOR.includes(k.id) && x.deneme != null ? `<small class="mb-deger">${x.deger}/${x.deneme}</small>` : ''}</span></li>`).join('')}</ol>`;
   const takimListesi = k => `<ol class="lider-listesi">${k.liste.map((x, i) => `<li><span class="no">${i + 1}</span>
     <span class="ad"><a href="#/takim/${lig}/${x.takim}"><b>${esc(takimAdi(lig, x.takim))}</b></a>
-      <small>${k.id === 'seri' ? (x.suruyor ? 'seri sürüyor' : 'sezon içinde') : `<a href="#/mac/${lig}/${x.mac}">${x.hafta}. hafta · ${esc(takimAdi(lig, x.rakip))} · ${x.skor}-${x.rakipSkor}${k.id === 'ucluk' ? ` · ${x.deneme} deneme` : ''}</a>`}</small></span>
+      <small>${k.id === 'seri' ? (x.suruyor ? 'seri sürüyor' : 'sezon içinde') : `<a href="#/mac/${lig}/${x.mac}">${x.hafta}. hafta · ${esc(takimAdi(lig, x.rakip))} · ${x.skor}-${x.rakipSkor}${x.deneme != null ? ` · ${x.deneme} deneme` : ''}</a>`}</small></span>
     <span class="deger">${rekorDegeri(k.id, x.deger)}</span></li>`).join('')}</ol>`;
   const dd = `<ol class="lider-listesi">${d.dd.map((x, i) => `<li><span class="no">${i + 1}</span>
     <span class="ad"><a href="#/oyuncu/${lig}/${x.oyuncu}" class="oyuncu-link"><b>${esc(x.ad)}</b></a><small><a href="#/takim/${lig}/${x.takim}">${esc(takimAdi(lig, x.takim))}</a>${x.td ? ` · ${x.td} triple-double` : ''}</small></span>
@@ -1823,13 +1826,16 @@ function rekorKarti(lig) {
   // Yöneticiye her kategori için ayrı görsel (ilk 10, takım logolu)
   const dugme = (grup, id) => (!yoneticiMi() ? '' : `<span class="satir"><button class="secenek" data-is="rk-paylas" data-id="${lig}|${grup}|${id}">📤</button><button class="secenek" data-is="rk-indir" data-id="${lig}|${grup}|${id}">⬇</button></span>`);
   const kart = (ad, grup, id, ic) => `<div class="kart" style="margin:0"><div class="baslik-satir"><h3>${esc(ad)}</h3>${dugme(grup, id)}</div>${ic}</div>`;
-  return `<p class="soluk kucuk">Bu sezonun biten maçlarından. Tek maç rekorlarında maça dokununca kutu skor açılır.</p>
-    <h2 class="bolum-baslik">Tek maçta en çok</h2>
+  // Oyuncular | Takımlar (Liderler'deki gibi; kullanıcı 2026-11-27)
+  const tur = S.ui.rekorTur === 'takim' ? 'takim' : 'oyuncu';
+  const secim = `<div class="ld-tur"><span class="ld-dugmeler">${[['oyuncu', 'Oyuncular'], ['takim', 'Takımlar']].map(([k, ad]) => `<button class="ld-sec${tur === k ? ' aktif' : ''}" data-is="rk-tur" data-id="${k}">${ad}</button>`).join('')}</span></div>`;
+  return `${secim}<p class="soluk kucuk">Bu sezonun biten maçlarından. Maça dokununca kutu skor açılır.</p>
+    ${tur === 'oyuncu' ? `<h2 class="bolum-baslik">Tek maçta en çok</h2>
     <div class="izgara">${d.oyuncu.map(k => kart(k.ad, 'oyuncu', k.id, oyuncuListesi(k))).join('')}
       ${kart('Double-double', 'dd', 'dd', `<p class="soluk kucuk" style="margin:0 0 6px">Sezonda toplam ${d.ddToplam} double-double, ${d.tdToplam} triple-double
-        (sayı, ribaund, asist, top çalma, bloktan en az ikisinde 10+)</p>${dd}`)}</div>
-    <h2 class="bolum-baslik">Takım rekorları</h2>
-    <div class="izgara">${d.takim.map(k => kart(k.ad, 'takim', k.id, takimListesi(k))).join('')}</div>`;
+        (sayı, ribaund, asist, top çalma, bloktan en az ikisinde 10+)</p>${dd}`)}</div>`
+    : `<h2 class="bolum-baslik">Takım rekorları</h2>
+    <div class="izgara">${d.takim.map(k => kart(k.ad, 'takim', k.id, takimListesi(k))).join('')}</div>`}`;
 }
 
 async function rekorGorselPaylas(anahtar, indir) {
@@ -1843,7 +1849,8 @@ async function rekorGorselPaylas(anahtar, indir) {
   if (grup === 'oyuncu') {
     const k = d.oyuncu.find(x => x.id === id);
     baslik = `TEK MAÇTA EN ÇOK ${k.ad.toLocaleUpperCase('tr')}`;
-    satirlar = k.liste.map(x => ({ ad: x.ad, id: x.oyuncu, yerli: turk(x.oyuncu), alt: `${T(x.takim)} · ${x.hafta}. hafta · ${x.evde ? '' : '@ '}${T(x.rakip)}`, deger: x.deger, logo: logolar.get(x.takim) }));
+    satirlar = k.liste.map(x => ({ ad: x.ad, id: x.oyuncu, yerli: turk(x.oyuncu), alt: `${T(x.takim)} · ${x.hafta}. hafta · ${x.evde ? '' : '@ '}${T(x.rakip)}${x.deneme != null ? ` · ${x.deger}/${x.deneme}` : ''}`,
+      deger: oyuncuRekorDegeri(id, x.deger), logo: logolar.get(x.takim) }));
   } else if (grup === 'dd') {
     baslik = 'EN ÇOK DOUBLE-DOUBLE';
     satirlar = d.dd.slice(0, 10).map(x => ({ ad: x.ad, id: x.oyuncu, yerli: turk(x.oyuncu), alt: `${T(x.takim)}${x.td ? ` · ${x.td} triple-double` : ''}`, deger: x.dd, logo: logolar.get(x.takim) }));
@@ -1851,7 +1858,7 @@ async function rekorGorselPaylas(anahtar, indir) {
     const k = d.takim.find(x => x.id === id);
     baslik = k.ad.toLocaleUpperCase('tr');
     satirlar = k.liste.map(x => ({ ad: T(x.takim), yerli: true, logo: logolar.get(x.takim),
-      alt: id === 'seri' ? (x.suruyor ? 'Seri sürüyor' : 'Sezon içinde') : `${x.hafta}. hafta · ${T(x.rakip)} · ${x.skor}-${x.rakipSkor}${id === 'ucluk' ? ` · ${x.deneme} deneme` : ''}`,
+      alt: id === 'seri' ? (x.suruyor ? 'Seri sürüyor' : 'Sezon içinde') : `${x.hafta}. hafta · ${T(x.rakip)} · ${x.skor}-${x.rakipSkor}${x.deneme != null ? ` · ${x.deneme} deneme` : ''}`,
       deger: rekorDegeri(id, x.deger) }));
   }
   const blob = await RG.rekorGorseli({ lig, baslik, satirlar });
@@ -2244,6 +2251,7 @@ document.addEventListener('click', e => {
   // Paylaş / İndir yalnızca yöneticiye (kullanıcı kararı 2026-11-09); ödül üreticisi (?uret) zaten yöneticiye
   if (/^(ae|sy|odul|av|rk)-(paylas|indir)$|^odul-hepsi(-indir|-paylas)?$/.test(el.dataset.is) && !yoneticiMi()) return;
   if (el.dataset.is === 'ld-tur') { S.ui.liderTur = el.dataset.id; ciz(); return; }
+  if (el.dataset.is === 'rk-tur') { S.ui.rekorTur = el.dataset.id; ciz(); return; }
   if (el.dataset.is === 'ld-yerli') {
     const [lig, kod, yerli] = el.dataset.id.split('|');
     S.ui.liderYerli[`${lig}|${kod}`] = yerli === '1';

@@ -161,9 +161,12 @@ function kart(g, o, i, x, y, w, h, L) {
   const [ad, soyad] = adParcala(o.ad);
   // Yazı genişliği satırın yüksekliğine göre: sağdaki eğik bloğa değmesin
   const ax = fx0 + fw + 22, agen = t => x + w - pw - egim * t - ax - 22;
-  yaz(g, adBuyuk(ad, o), ax, y + h * 0.235, { font: '600 28px Oswald', renk: 'rgba(255,255,255,0.86)', gen: agen(0.33) });
-  yaz(g, adBuyuk(soyad, o), ax, y + h * 0.535, { font: '56px Anton', gen: agen(0.68), golge: true });
-  yaz(g, buyuk(o.alt), ax, y + h * 0.81, { font: '600 18px Montserrat', renk: 'rgba(255,255,255,0.72)', gen: agen(0.9) });
+  // alt2 (ör. maç başı değer) varsa ikinci satır: yazılar biraz yukarı
+  const k = o.alt2 ? -0.035 : 0;
+  yaz(g, adBuyuk(ad, o), ax, y + h * (0.235 + k), { font: '600 28px Oswald', renk: 'rgba(255,255,255,0.86)', gen: agen(0.33) });
+  yaz(g, adBuyuk(soyad, o), ax, y + h * (0.535 + k), { font: '56px Anton', gen: agen(0.68), golge: true });
+  yaz(g, buyuk(o.alt), ax, y + h * (0.81 + k * 1.6), { font: '600 18px Montserrat', renk: 'rgba(255,255,255,0.72)', gen: agen(0.9) });
+  if (o.alt2) yaz(g, buyuk(o.alt2), ax, y + h * 0.9, { font: '600 18px Montserrat', renk: 'rgba(255,255,255,0.95)', gen: agen(0.97) });
 }
 
 // satirlar: [{ ad, alt (takım · maç), deger (yazı), foto, logo }] (sıralı, ilk 5); baslik: 'SAYI LİDERLERİ'; yerli: başına "YERLİ";

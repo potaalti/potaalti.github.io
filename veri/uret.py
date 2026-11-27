@@ -341,6 +341,19 @@ def gorsel_uret(lig):
         yaz(yol, kayit)
 
 
+def lisansli_oyuncular(kaynak, lig):
+    """TBF'de şu an lisansı olan oyuncuların kimlikleri (boş küme: bilinmiyor)."""
+    try:
+        if lig == "bsl":
+            rehber = json.loads((KOK / "site" / "bsl" / "data" / "oyuncular.json").read_text(encoding="utf-8"))
+            return {str(o["id"]) for o in rehber if o.get("aktif")}
+        rehber = oku(kaynak, "oyuncular.json") or {}
+        return {str(pid) for pid, o in rehber.items() if o.get("aktif")}
+    except Exception as e:  # noqa: BLE001
+        print(f"{lig}: lisans listesi okunamadı:", e)
+        return set()
+
+
 def lig_uret(kaynak, lig, bilgi, gunluk=False):
     haftalar = bilgi["haftalar"]
     hafta_ozet = []  # TBL Fantezi için: haftaların ilk maç saati ve maç sayısı
@@ -477,6 +490,11 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
     en_cok = max((t["o"] for t in takimlar.values()), default=0)
     esik = max(1, math.ceil(en_cok / 2))
     uygun = [o for o in oyuncu_ozet if o["mac"] >= esik]
+    # Lisansı düşen (artık ligde olmayan) oyuncular liderlerde yok (kullanıcı 2026-11-27, ör. Freeman-Liberty).
+    # BSL: sitenin oyuncu rehberi (bsl/veri_guncelle.py), TBL: eski TBL Fantezi'nin rehberi; okunamazsa süzülmez
+    aktifler = lisansli_oyuncular(kaynak, lig)
+    if aktifler:
+        uygun = [o for o in uygun if o["id"] in aktifler]
     kategoriler = [
         ("sayi", "Sayı", "ort"), ("rib", "Ribaund", "ort"), ("ast", "Asist", "ort"), ("vp", "Verimlilik (VP)", "ort"),
         ("tc", "Top çalma", "ort"), ("blk", "Blok", "ort"), ("pm", "+/- (toplam)", "toplam"), ("dk", "Süre (dk)", "ort"),

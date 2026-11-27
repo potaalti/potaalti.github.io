@@ -1024,10 +1024,16 @@ function turkBulucu(rehberHam) {
   const rehber = new Map((Array.isArray(rehberHam) ? rehberHam : Object.entries(rehberHam ?? {}).map(([id, v]) => ({ id, ...v }))).map(r => [String(r.id), r]));
   return id => { const r = rehber.get(String(id)); return typeof r?.turk === 'boolean' ? r.turk : ['TÜRKİYE', 'KKTC'].includes(r?.ulke); };
 }
+// Lisansı düşen oyuncular (rehberde aktif: false) liderlerde yok; rehberde hiç olmayan bilinmez, gösterilir
+function aktifBulucu(rehberHam) {
+  const rehber = new Map((Array.isArray(rehberHam) ? rehberHam : Object.entries(rehberHam ?? {}).map(([id, v]) => ({ id, ...v }))).map(r => [String(r.id), r]));
+  return id => rehber.get(String(id))?.aktif !== false;
+}
 function yerliLiderleri(lig, kod, esik, oyuncular, rehberHam) {
   const turkMu = turkBulucu(rehberHam);
   // Devşirmeler (Larkin, Wilbekin, Flynn) yerli listesinde yok, Tümü'nde normal sırada (kullanıcı 2026-11-27)
-  return (oyuncular ?? []).filter(o => o.mac >= esik && turkMu(o.id) && !devsirmeMi(o.id, o.ad))
+  const aktif = aktifBulucu(rehberHam);
+  return (oyuncular ?? []).filter(o => o.mac >= esik && turkMu(o.id) && !devsirmeMi(o.id, o.ad) && aktif(o.id))
     .map(o => ({ id: o.id, ad: o.ad, takim: o.takim, mac: o.mac, deger: liderDegeri(kod, o), atis: kod === 'uc' ? o.uc : null }))
     .sort((a, b) => b.deger - a.deger);
 }

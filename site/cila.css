@@ -677,3 +677,4 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
 .tl-ac.aktif { background: var(--vurgu); border-color: var(--vurgu); color: #fff; }
 /* Açılan kart satırdaki diğerlerini uzatmasın */
 .takim-lider-izgara:has(.takim-lider.acik) { align-items: start; }
+.kart-dugmeler { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }

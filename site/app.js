@@ -1126,6 +1126,9 @@ function takimLiderDegeri(x, kod, mod) {
   if (kod === 'astor') return { deger: sb ? (100 * (x.top.ast ?? 0)) / sb : null };
   return { deger: bol(x.top[kod] ?? 0, x.n) };
 }
+// Oyuncu liderleri ve rekor kartları ilk 5; kartın "Tümü" düğmesi 10'a açar (kullanıcı 2026-11-27)
+const kartKac = anahtar => (S.ui.kartAcik?.[anahtar] ? 10 : 5);
+const kartAcDugme = anahtar => `<button class="tl-ac${S.ui.kartAcik?.[anahtar] ? ' aktif' : ''}" data-is="kart-ac" data-id="${anahtar}">${S.ui.kartAcik?.[anahtar] ? 'İlk 5' : 'Tümü'}</button>`;
 // Temel | Gelişmiş seçimi (takım liderleri ve takım rekorları)
 const grupDugmeleri = (is, secili) => `<span class="ld-dugmeler">${[['t', 'Temel'], ['g', 'Gelişmiş']].map(([k, ad]) => `<button class="ld-sec${secili === k ? ' aktif' : ''}" data-is="${is}" data-id="${k}">${ad}</button>`).join('')}</span>`;
 function takimLiderleriKarti(lig) {
@@ -1164,7 +1167,7 @@ function oyuncuLiderleriKarti(lig) {
         yukle(S.rehber, lig, rehberAdresi(lig));
         liste = { ...k, liste: oyuncular && S.rehber[lig] ? yerliLiderleri(lig, k.id, l.esik, oyuncular, S.rehber[lig]) : [] };
       }
-      return `<div class="kart" style="margin:0"><div class="baslik-satir"><h3>${esc(k.ad)}${yerli ? ' <small class="soluk">· Yerli</small>' : ''}</h3>${liderDugmeleri(lig, k.id, yerli)}</div>${liderListesi(lig, liste, 10)}</div>`;
+      return `<div class="kart" style="margin:0"><div class="baslik-satir"><h3>${esc(k.ad)}${yerli ? ' <small class="soluk">· Yerli</small>' : ''}</h3><span class="kart-dugmeler">${liderDugmeleri(lig, k.id, yerli)}${kartAcDugme(`${lig}|ld|${k.id}`)}</span></div>${liderListesi(lig, liste, kartKac(`${lig}|ld|${k.id}`))}</div>`;
     }).join('')}</div>`;
 }
 
@@ -1840,20 +1843,20 @@ function rekorKarti(lig) {
   ligVerisi(lig, 'tablo');
   if (!d) return '<p class="bos">Yükleniyor…</p>';
   const macBilgi = x => `${x.hafta}. hafta · ${x.evde ? '' : '@ '}${esc(takimAdi(lig, x.rakip))}`;
-  const oyuncuListesi = k => `<ol class="lider-listesi">${k.liste.map((x, i) => `<li><span class="no">${i + 1}</span>
+  const oyuncuListesi = k => `<ol class="lider-listesi">${k.liste.slice(0, kartKac(`${lig}|rk|oyuncu|${k.id}`)).map((x, i) => `<li><span class="no">${i + 1}</span>
     <span class="ad"><a href="#/oyuncu/${lig}/${x.oyuncu}" class="oyuncu-link"><b>${esc(x.ad)}</b></a>
       <small><a href="#/takim/${lig}/${x.takim}">${esc(takimAdi(lig, x.takim))}</a> · <a href="#/mac/${lig}/${x.mac}">${macBilgi(x)}</a></small></span>
     <span class="deger">${oyuncuRekorDegeri(k.id, x.deger)}${ATIS_REKOR.includes(k.id) && x.deneme != null ? `<small class="mb-deger">${x.deger}/${x.deneme}</small>` : ''}</span></li>`).join('')}</ol>`;
-  const takimListesi = k => `<ol class="lider-listesi">${k.liste.map((x, i) => `<li><span class="no">${i + 1}</span>
+  const takimListesi = k => `<ol class="lider-listesi">${k.liste.slice(0, kartKac(`${lig}|rk|takim|${k.id}`)).map((x, i) => `<li><span class="no">${i + 1}</span>
     <span class="ad"><a href="#/takim/${lig}/${x.takim}"><b>${esc(takimAdi(lig, x.takim))}</b></a>
       <small>${k.id === 'seri' ? (x.suruyor ? 'seri sürüyor' : 'sezon içinde') : `<a href="#/mac/${lig}/${x.mac}">${x.hafta}. hafta · ${esc(takimAdi(lig, x.rakip))} · ${x.skor}-${x.rakipSkor}${x.deneme != null ? ` · ${x.deneme} deneme` : ''}</a>`}</small></span>
     <span class="deger">${rekorDegeri(k.id, x.deger)}</span></li>`).join('')}</ol>`;
-  const dd = `<ol class="lider-listesi">${d.dd.map((x, i) => `<li><span class="no">${i + 1}</span>
+  const dd = `<ol class="lider-listesi">${d.dd.slice(0, kartKac(`${lig}|rk|dd|dd`)).map((x, i) => `<li><span class="no">${i + 1}</span>
     <span class="ad"><a href="#/oyuncu/${lig}/${x.oyuncu}" class="oyuncu-link"><b>${esc(x.ad)}</b></a><small><a href="#/takim/${lig}/${x.takim}">${esc(takimAdi(lig, x.takim))}</a>${x.td ? ` · ${x.td} triple-double` : ''}</small></span>
     <span class="deger">${x.dd}</span></li>`).join('') || '<li class="bos">Henüz yok</li>'}</ol>`;
   // Yöneticiye her kategori için ayrı görsel (ilk 10, takım logolu)
   const dugme = (grup, id) => (!yoneticiMi() ? '' : `<span class="satir"><button class="secenek" data-is="rk-paylas" data-id="${lig}|${grup}|${id}">📤</button><button class="secenek" data-is="rk-indir" data-id="${lig}|${grup}|${id}">⬇</button></span>`);
-  const kart = (ad, grup, id, ic) => `<div class="kart" style="margin:0"><div class="baslik-satir"><h3>${esc(ad)}</h3>${dugme(grup, id)}</div>${ic}</div>`;
+  const kart = (ad, grup, id, ic) => `<div class="kart" style="margin:0"><div class="baslik-satir"><h3>${esc(ad)}</h3><span class="kart-dugmeler">${dugme(grup, id)}${kartAcDugme(`${lig}|rk|${grup}|${id}`)}</span></div>${ic}</div>`;
   // Oyuncular | Takımlar (Liderler'deki gibi; kullanıcı 2026-11-27)
   const tur = S.ui.rekorTur === 'takim' ? 'takim' : 'oyuncu';
   const rkGrup = S.ui.rekorTakimGrup === 'g' ? 'g' : 't';
@@ -2283,6 +2286,7 @@ document.addEventListener('click', e => {
   if (el.dataset.is === 'rk-tur') { S.ui.rekorTur = el.dataset.id; ciz(); return; }
   if (el.dataset.is === 'ld-takim-grup') { S.ui.takimLiderGrup = el.dataset.id; ciz(); return; }
   if (el.dataset.is === 'rk-takim-grup') { S.ui.rekorTakimGrup = el.dataset.id; ciz(); return; }
+  if (el.dataset.is === 'kart-ac') { S.ui.kartAcik ??= {}; S.ui.kartAcik[el.dataset.id] = !S.ui.kartAcik[el.dataset.id]; ciz(); return; }
   if (el.dataset.is === 'ld-takim-ac') { S.ui.takimLiderAcik ??= {}; S.ui.takimLiderAcik[el.dataset.id] = !S.ui.takimLiderAcik[el.dataset.id]; ciz(); return; }
   if (el.dataset.is === 'ld-yerli') {
     const [lig, kod, yerli] = el.dataset.id.split('|');

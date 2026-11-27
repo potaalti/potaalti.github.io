@@ -496,7 +496,7 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
     if aktifler:
         uygun = [o for o in uygun if o["id"] in aktifler]
     kategoriler = [
-        ("sayi", "Sayı", "ort"), ("rib", "Ribaund", "ort"), ("ast", "Asist", "ort"), ("vp", "Verimlilik (VP)", "ort"),
+        ("sayi", "Sayı", "ort"), ("rib", "Ribaund", "ort"), ("hr", "Hücum ribaundu", "ort"), ("ast", "Asist", "ort"), ("vp", "Verimlilik (VP)", "ort"),
         ("tc", "Top çalma", "ort"), ("blk", "Blok", "ort"), ("pm", "+/- (toplam)", "toplam"), ("dk", "Süre (dk)", "ort"),
         ("uc", "3 sayılık (isabet)", "atis"),
     ]
@@ -513,6 +513,31 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
              **({"atis": o[anah]} if tur == "atis" else {})} for o in sirali[:15]]})
 
     # ---------- Takımlar ----------
+    # Rakibe verilenler (kullanıcı 2026-11-27): her takımın rakiplerinin o maçlardaki toplamı (oyuncular + takım ribaundu)
+    tist_yol = CIKTI / lig / "takim-istatistik.json"
+    tist = json.loads(tist_yol.read_text(encoding="utf-8")) if tist_yol.exists() else {}
+    mac_takim = {}
+    for p in oyuncular.values():
+        for x in p["maclar"]:
+            if x["durum"] != "bitti":
+                continue
+            v = mac_takim.setdefault((x["mac"], x["takim"]), {**{a: 0 for a in ALANLAR}, "iki": [0, 0], "uc": [0, 0], "sa": [0, 0],
+                                                               "rakip": x["rakip"], "taraf": "ev" if x["evde"] else "dep"})
+            for a in ALANLAR:
+                v[a] += x[a]
+            for a in ("iki", "uc", "sa"):
+                v[a][0] += x[a][0]
+                v[a][1] += x[a][1]
+    rakip_toplam = {}
+    for (mac, _), v in mac_takim.items():
+        r = rakip_toplam.setdefault(v["rakip"], {**{a: 0 for a in ALANLAR}, "iki": [0, 0], "uc": [0, 0], "sa": [0, 0]})
+        ek = (tist.get(str(mac)) or {}).get(v["taraf"]) or {}
+        for a in ALANLAR:
+            r[a] += v[a] + (ek.get(a) or 0 if a in ("rib", "hr", "sr", "tk") else 0)
+        for a in ("iki", "uc", "sa"):
+            r[a][0] += v[a][0]
+            r[a][1] += v[a][1]
+
     takim_ozet = []
     for t in takimlar.values():
         n = t["kutuMac"]
@@ -520,7 +545,7 @@ def lig_uret(kaynak, lig, bilgi, gunluk=False):
             "id": t["id"], "ad": t["ad"], "o": t["o"], "g": t["g"], "m": t["m"],
             "ort": {a: ort(t["toplam"][a], n) for a in ALANLAR}, "atis": {a: t["toplam"][a] for a in ("iki", "uc", "sa")},
             # Takım liderleri (toplam): oyuncuların kutu skor toplamı ve kutu skoru olan maç sayısı
-            "toplam": {a: t["toplam"][a] for a in ALANLAR}, "kutuMac": n,
+            "toplam": {a: t["toplam"][a] for a in ALANLAR}, "kutuMac": n, "rakipToplam": rakip_toplam.get(t["id"]),
             "kadro": sorted((o for o in oyuncu_ozet if o["takim"] == t["id"]), key=lambda o: -o["dk"]),
             "maclar": t["maclar"],
         })
@@ -562,6 +587,19 @@ def rekor_uret(lig, oyuncular, takimlar, maclar):
         oyuncu.append({"id": anah, "ad": ad, "liste": [{"oyuncu": p["id"], "ad": p["ad"], "takim": x["takim"], "rakip": x["rakip"], "mac": x["mac"],
                                                        "hafta": x["hafta"], "evde": x["evde"], "deger": x["sure"] if anah == "dk" else f(x),
                                                        **({"deneme": x[anah][1]} if anah in ("iki", "uc", "sa") else {})} for p, x in sirali]})
+    def rekor_listesi(sirali, deger, ek=lambda x: {}):
+        return [{"oyuncu": p["id"], "ad": p["ad"], "takim": x["takim"], "rakip": x["rakip"], "mac": x["mac"], "hafta": x["hafta"],
+                 "evde": x["evde"], "deger": deger(x), **ek(x)} for p, x in sirali[:10]]
+    yedek = sorted([px for px in satirlar if not px[1]["ilk5"]], key=lambda px: (-px[1]["sayi"], px[1]["tarih"]))
+    oyuncu.append({"id": "yedek", "ad": "Yedekten gelip sayı", "liste": rekor_listesi(yedek, lambda x: x["sayi"])})
+    isabet = lambda x: (x["iki"][0] + x["uc"][0], x["iki"][1] + x["uc"][1])
+    yuksek = sorted([px for px in satirlar if isabet(px[1])[1] >= 10],
+                    key=lambda px: (-isabet(px[1])[0] / isabet(px[1])[1], -isabet(px[1])[1], px[1]["tarih"]))
+    oyuncu.append({"id": "fg", "ad": "En yüksek isabet (en az 10 atış)", "liste": rekor_listesi(
+        yuksek, lambda x: round(100 * isabet(x)[0] / isabet(x)[1]), lambda x: {"isabet": isabet(x)[0], "deneme": isabet(x)[1]})})
+    ucd = sorted(satirlar, key=lambda px: (-px[1]["uc"][1], -px[1]["uc"][0], px[1]["tarih"]))
+    oyuncu.append({"id": "ucd", "ad": "3 sayılık deneme", "liste": rekor_listesi(
+        ucd, lambda x: x["uc"][1], lambda x: {"isabet": x["uc"][0], "deneme": x["uc"][1]})})
     cift = {}
     for p, x in satirlar:
         on = sum(1 for a in ("sayi", "rib", "ast", "tc", "blk") if x[a] >= 10)
@@ -640,6 +678,7 @@ def rekor_uret(lig, oyuncular, takimlar, maclar):
         tek_mac("is", "Bir maçta en çok ikinci şans sayısı", ileri("is")),
         tek_mac("tks", "Bir maçta en çok top kaybından sayı", ileri("tks")),
         tek_mac("benc", "Bir maçta en çok yedeklerden sayı", ileri("benc")),
+        tek_mac("iseri", "Bir maçta en büyük sayı serisi", ileri("seri")),
     ]
     takim = [
         {"id": "skor", "ad": "En yüksek skor", "liste": [{**x, "deger": x["skor"]} for x in sorted(skorlar, key=lambda x: (-x["skor"], x["mac"]))[:10]]},

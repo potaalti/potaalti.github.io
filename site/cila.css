@@ -678,3 +678,9 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
 /* Açılan kart satırdaki diğerlerini uzatmasın */
 .takim-lider-izgara:has(.takim-lider.acik) { align-items: start; }
 .kart-dugmeler { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.takim-lider.izin { box-shadow: inset 3px 0 0 var(--turuncu); }
+/* Kart başlıkları hizalı (kullanıcı 2026-11-27): üstte tek satır başlık, altında düğme satırı; Tümü her kartta aynı yerde,
+   listeler aynı yükseklikten başlar */
+.takim-lider > .baslik-satir, .izgara > .kart > .baslik-satir { flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 6px; margin-bottom: 8px; }
+.takim-lider > .baslik-satir h3, .izgara > .kart > .baslik-satir h3 { margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.3; }
+.takim-lider .kart-dugmeler, .izgara > .kart > .baslik-satir .kart-dugmeler, .izgara > .kart > .baslik-satir > .satir { justify-content: flex-start; flex-wrap: nowrap; min-height: 26px; }

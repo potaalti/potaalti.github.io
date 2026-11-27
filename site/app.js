@@ -1059,6 +1059,7 @@ const TAKIM_LIDER = [
   ['ba', 'Boyalı alan sayısı', 1], ['hh', 'Hızlı hücum sayısı', 1], ['is', 'İkinci şans sayısı', 1], ['tks', 'Top kaybından sayı', 1],
   ['benc', 'Yedeklerden sayı', 1], ['faul', 'Faul (en az)', -1],
 ];
+const TAKIM_LIDER_KAC = 7; // her istatistikte ilk 7 takım (kullanıcı 2026-11-27)
 function takimLiderVerisi(lig) {
   const t = ligVerisi(lig, 'takimlar');
   const tablo = ligVerisi(lig, 'tablo');
@@ -1101,13 +1102,13 @@ function takimLiderleriKarti(lig) {
   // Yalnız maç başı ortalama (kullanıcı 2026-11-27: toplam olmasın)
   const mod = 'ort';
   const yaz = (kod, v) => (kod.endsWith('%') ? `%${sayi(v)}` : sayi(v));
-  return `<p class="soluk kucuk" style="margin:0 0 8px">Maç başı ortalama · ilk 5 takım</p>
-    <div class="izgara">${TAKIM_LIDER.map(([kod, ad, yon]) => {
+  return `<p class="soluk kucuk" style="margin:0 0 8px">Maç başı ortalama · ilk ${TAKIM_LIDER_KAC} takım</p>
+    <div class="izgara takim-lider-izgara">${TAKIM_LIDER.map(([kod, ad, yon]) => {
       const liste = veri.map(x => ({ x, ...takimLiderDegeri(x, kod, mod) })).filter(r => r.deger != null)
-        .sort((a, b) => yon * (b.deger - a.deger) || a.x.ad.localeCompare(b.x.ad, 'tr')).slice(0, 5);
-      return `<div class="kart" style="margin:0"><h3>${esc(ad)}</h3>${liste.length ? `<ol class="lider-listesi">${liste.map((r, i) => `<li><span class="no">${i + 1}</span>
-        <span class="ad"><a href="#/takim/${lig}/${r.x.id}" class="oyuncu-link"><b>${esc(takimAdi(lig, r.x.id))}</b></a></span>
-        <span class="deger">${yaz(kod, r.deger)}${r.alt ? `<small class="soluk" style="font-weight:400;display:block;font-size:.72rem">${r.alt}</small>` : ''}</span></li>`).join('')}</ol>` : '<p class="bos">Veri yok</p>'}</div>`;
+        .sort((a, b) => yon * (b.deger - a.deger) || a.x.ad.localeCompare(b.x.ad, 'tr')).slice(0, TAKIM_LIDER_KAC);
+      return `<div class="kart takim-lider" style="margin:0"><h3>${esc(ad)}</h3>${liste.length ? `<ol class="lider-listesi">${liste.map((r, i) => `<li><span class="no">${i + 1}</span>
+        <span class="ad"><a href="#/takim/${lig}/${r.x.id}" class="oyuncu-link" title="${esc(takimAdi(lig, r.x.id))}"><b>${esc(takimAdi(lig, r.x.id))}</b></a></span>
+        <span class="deger"${r.alt ? ` title="Maç başı isabet/deneme: ${r.alt}"` : ''}>${yaz(kod, r.deger)}</span></li>`).join('')}</ol>` : '<p class="bos">Veri yok</p>'}</div>`;
     }).join('')}</div>`;
 }
 

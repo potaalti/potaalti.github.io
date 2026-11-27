@@ -689,3 +689,8 @@ h3 small.koc { font-weight: 500; font-size: .78rem; color: var(--soluk); margin-
 .kart-dugmeler .sag { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; }
 .kart-dugmeler .ld-dugmeler { gap: 4px; }
 .kart-dugmeler .kart-indir { padding: 2px 8px; font-size: .78rem; line-height: 1.4; }
+/* Liderler ve rekorlar: kartlar hep aynı boyda (kullanıcı 2026-11-27) — adlar tek satır (sığmazsa …), satırlar aynı yükseklikte */
+.izgara.esit, .takim-lider-izgara { align-items: stretch; }
+.izgara.esit .lider-listesi .ad > a, .takim-lider .lider-listesi .ad > a { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.izgara.esit .lider-listesi .ad small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.izgara.esit .lider-listesi li { min-height: 3.1em; }

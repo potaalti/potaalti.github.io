@@ -1178,7 +1178,7 @@ function oyuncuLiderleriKarti(lig) {
   ligVerisi(lig, 'tablo');
   if (!l) return '<p class="bos">Yükleniyor…</p>';
   return `<p class="soluk kucuk">Maç başı ortalamalar (+/- ve 3 sayılık: sezon toplamı). Listeye girmek için en az ${l.esik} maç oynamış olmak gerekir.</p>
-    <div class="izgara">${l.kategoriler.map(k => {
+    <div class="izgara esit">${l.kategoriler.map(k => {
       // "Yerli"ye dokununca kartın listesi yalnız yerli oyunculara döner (kullanıcı 2026-11-16), "Tümü" geri getirir
       const yerli = !!S.ui.liderYerli[`${lig}|${k.id}`];
       let liste = k;
@@ -1885,11 +1885,10 @@ function rekorKarti(lig) {
   const secim = `<div class="ld-tur"><span class="ld-dugmeler">${[['oyuncu', 'Oyuncular'], ['takim', 'Takımlar']].map(([k, ad]) => `<button class="ld-sec${tur === k ? ' aktif' : ''}" data-is="rk-tur" data-id="${k}">${ad}</button>`).join('')}</span></div>`;
   return `${secim}<p class="soluk kucuk">Bu sezonun biten maçlarından. Maça dokununca kutu skor açılır.</p>
     ${tur === 'oyuncu' ? `<h2 class="bolum-baslik">Tek maçta en çok</h2>
-    <div class="izgara">${d.oyuncu.map(k => kart(k.ad, 'oyuncu', k.id, oyuncuListesi(k))).join('')}
-      ${kart('Double-double', 'dd', 'dd', `<p class="soluk kucuk" style="margin:0 0 6px">Sezonda toplam ${d.ddToplam} double-double, ${d.tdToplam} triple-double
-        (sayı, ribaund, asist, top çalma, bloktan en az ikisinde 10+)</p>${dd}`)}</div>`
+    <div class="izgara esit">${d.oyuncu.map(k => kart(k.ad, 'oyuncu', k.id, oyuncuListesi(k))).join('')}
+      ${kart(`Double-double · sezonda ${d.ddToplam}`, 'dd', 'dd', dd)}</div>`
     : `<div class="baslik-satir"><h2 class="bolum-baslik">Takım rekorları</h2>${grupDugmeleri('rk-takim-grup', rkGrup)}</div>
-    <div class="izgara">${d.takim.filter(k => GELISMIS_REKOR.has(k.id) === (rkGrup === 'g')).map(k => kart(k.ad, 'takim', k.id, takimListesi(k))).join('')}</div>`}`;
+    <div class="izgara esit">${d.takim.filter(k => GELISMIS_REKOR.has(k.id) === (rkGrup === 'g')).map(k => kart(k.ad, 'takim', k.id, takimListesi(k))).join('')}</div>`}`;
 }
 
 async function rekorGorselPaylas(anahtar, indir) {

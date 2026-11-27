@@ -3,7 +3,7 @@
 // liderler ve sezon istatistikleri veri/uret.py'nin ürettiği site/data dosyalarındandır.
 
 import {
-  KAYNAK, kaynakSec, esc, sayi, isaretli, aramaNorm, baslik, gunBasligi, gunSaat, saatYazisi, tarihSaat, sureSn, getir, canliYazisi,
+  KAYNAK, kaynakSec, esc, sayi, isaretli, aramaNorm, baslik, gunBasligi, gunSaat, saatYazisi, tarihSaat, sureSn, getir, canliYazisi, devsirmeMi,
 } from './ortak.js';
 import * as Yayin from './yayin.js';
 import * as Oynatici from './oynatici.js';
@@ -1026,7 +1026,8 @@ function turkBulucu(rehberHam) {
 }
 function yerliLiderleri(lig, kod, esik, oyuncular, rehberHam) {
   const turkMu = turkBulucu(rehberHam);
-  return (oyuncular ?? []).filter(o => o.mac >= esik && turkMu(o.id))
+  // Devşirmeler (Larkin, Wilbekin, Flynn) yerli listesinde yok, Tümü'nde normal sırada (kullanıcı 2026-11-27)
+  return (oyuncular ?? []).filter(o => o.mac >= esik && turkMu(o.id) && !devsirmeMi(o.id, o.ad))
     .map(o => ({ id: o.id, ad: o.ad, takim: o.takim, mac: o.mac, deger: liderDegeri(kod, o), atis: kod === 'uc' ? o.uc : null }))
     .sort((a, b) => b.deger - a.deger);
 }

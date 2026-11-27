@@ -1146,7 +1146,7 @@ function liderDugmeleri(lig, kod, secili) {
   const yonetici = yoneticiMi() && LIDER_GORSEL[kod];
   const d = (yerli, ad) => `<span class="ld-grup"><button class="ld-sec${!!yerli === !!secili ? ' aktif' : ''}" data-is="ld-yerli" data-id="${lig}|${kod}|${yerli}">${ad}</button>${!yonetici ? ''
     : `<button class="secenek" data-is="ld-paylas" data-id="${lig}|${kod}|${yerli}" title="${ad} görselini paylaş">📤</button><button class="secenek" data-is="ld-indir" data-id="${lig}|${kod}|${yerli}" title="${ad} görselini indir">⬇</button>`}</span>`;
-  return `<span class="ld-dugmeler">${d(0, yonetici ? 'İlk 5' : 'Tümü')}${d(1, 'Yerli')}</span>`;
+  return `<span class="ld-dugmeler">${d(0, 'Genel')}${d(1, 'Yerli')}</span>`; // kullanıcı 2026-11-27: İlk 5 / Tümü yerine Genel
 }
 async function liderGorselPaylas(anahtar, indir) {
   const [lig, kod, yerliMi] = anahtar.split('|');
